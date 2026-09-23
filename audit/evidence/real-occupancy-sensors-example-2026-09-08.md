@@ -1,3 +1,7 @@
+---
+author: "Sepehr Mahmoudian"
+---
+
 # Recorded office sensors: what categorical and continuous shared exclusions can establish
 
 **Evidence status:** the Rust example has compiled, passed Clippy, built in release mode and evaluated all three recordings. It produced categorical MGW results and the three expected continuous-support refusals. A separate calculation from integer event counts agrees with all 21 compared MI and net-atom values within 1e-12 nats. These are finite numerical checks, not a formal Rust refinement or population-calibration theorem. PDF layout and reproduction are assessed separately from these numerical checks.

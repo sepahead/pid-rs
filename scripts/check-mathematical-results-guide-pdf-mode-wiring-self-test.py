@@ -780,19 +780,19 @@ def audit_wrapper(
             'b383e58845ac8655fbc3a6d11cffc133deee7815f134b4f26120dd7c8ac6dea6'
         ),
         "DIAGNOSTICS_SELF_TEST_SHA256": (
-            'a6e31745c49c77bb012ea6cf48dd27f6409cf403b0dab891bfaf2f37809501d0'
+            '1b6e3eae853357207b4b14d646a01f95b48226a1a792a24ddb04516c1f815841'
         ),
         "NORMALIZER_RAW_FIXTURE": (
-            '"$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-v4-normalizer-input.tex"'
+            '"$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-v4-normalizer-input-authorship-2026-09-23.tex"'
         ),
         "NORMALIZER_RAW_FIXTURE_SHA256": (
-            'd17cd98eb82ab69cd43e53377a4da1def4dd36d3c2d8bff84a609a9e42a74aee'
+            '1927bb26900eb31f448a41579f11d0779de5acf6d75f059379faf0fedbb3a320'
         ),
         "CANONICAL_DIAGNOSTICS": (
             '"$ROOT/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json"'
         ),
         "CANONICAL_DIAGNOSTICS_SHA256": (
-            'a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939'
+            'a9589302cad3c5dc69b25aceccd0dee5aaec36cbc9744396d41274aaf6b2eba9'
         ),
         "PANDOC_TEX_NORMALIZER": (
             '"$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py"'
@@ -3137,17 +3137,17 @@ def run_mutation_suite(source: str) -> int:
             'DIAGNOSTICS_CHECK_SHA256 zeroed',
         ),
         (
-            'DIAGNOSTICS_SELF_TEST_SHA256=a6e31745c49c77bb012ea6cf48dd27f6409cf403b0dab891bfaf2f37809501d0',
+            'DIAGNOSTICS_SELF_TEST_SHA256=1b6e3eae853357207b4b14d646a01f95b48226a1a792a24ddb04516c1f815841',
             'DIAGNOSTICS_SELF_TEST_SHA256=0000000000000000000000000000000000000000000000000000000000000000',
             'DIAGNOSTICS_SELF_TEST_SHA256 zeroed',
         ),
         (
-            'NORMALIZER_RAW_FIXTURE_SHA256=d17cd98eb82ab69cd43e53377a4da1def4dd36d3c2d8bff84a609a9e42a74aee',
+            'NORMALIZER_RAW_FIXTURE_SHA256=1927bb26900eb31f448a41579f11d0779de5acf6d75f059379faf0fedbb3a320',
             'NORMALIZER_RAW_FIXTURE_SHA256=0000000000000000000000000000000000000000000000000000000000000000',
             'NORMALIZER_RAW_FIXTURE_SHA256 zeroed',
         ),
         (
-            'CANONICAL_DIAGNOSTICS_SHA256=a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939',
+            'CANONICAL_DIAGNOSTICS_SHA256=a9589302cad3c5dc69b25aceccd0dee5aaec36cbc9744396d41274aaf6b2eba9',
             'CANONICAL_DIAGNOSTICS_SHA256=0000000000000000000000000000000000000000000000000000000000000000',
             'CANONICAL_DIAGNOSTICS_SHA256 zeroed',
         ),

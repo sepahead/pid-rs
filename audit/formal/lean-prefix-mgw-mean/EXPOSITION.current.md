@@ -1,3 +1,7 @@
+---
+author: "Sepehr Mahmoudian"
+---
+
 # From categorical exclusion events to MGW atom expectations
 
 This note explains the finite-row expectation bridge for the categorical shared-exclusions PID of Makkeh, Gutknecht and Wibral (MGW). The three exact targets were accepted locally on 8 September 2026 after the complete semantic and fresh-kernel matrix. The portable replay was also accepted locally after four complete proof replays and the required rejection of an altered final theorem. Hosted replay and mainline publication remain separate. The [verification record](../../evidence/prefix-mgw-mean-formal-verification-2026-09-08/RESULTS.md) separates those statuses.

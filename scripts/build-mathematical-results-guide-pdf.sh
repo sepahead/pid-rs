@@ -16,9 +16,9 @@ PANDOC_TEX_NORMALIZER_SHA256=73f61bc865cafecb45faecbe8a87b9332923a4bed984ae22f65
 DIAGNOSTIC_CHECK="$ROOT/scripts/check-mathematical-results-guide-diagnostics.py"
 DIAGNOSTIC_CHECK_SHA256=b383e58845ac8655fbc3a6d11cffc133deee7815f134b4f26120dd7c8ac6dea6
 CANONICAL_DIAGNOSTICS="$ROOT/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json"
-CANONICAL_DIAGNOSTICS_SHA256=a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939
+CANONICAL_DIAGNOSTICS_SHA256=a9589302cad3c5dc69b25aceccd0dee5aaec36cbc9744396d41274aaf6b2eba9
 LINUX_DIAGNOSTICS="$ROOT/audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json"
-LINUX_DIAGNOSTICS_SHA256=26ba5c4f6f305fc2d66d52cf19188b18d834a29b2584cbdf28f2d91693f6eda4
+LINUX_DIAGNOSTICS_SHA256=04a9c13c5ce37f017f6eb0862727c03f0de79de47a35512cff939f9a7d279df5
 PANDOC_TEMPLATE_LICENSE="$ROOT/audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt"
 PANDOC_TEMPLATE_LICENSE_SHA256=cf5b70694cf50403b51f3315f98d010de6435022ff984911819219034a088180
 CANONICAL_PANDOC_VERSION="pandoc 3.10.2"
@@ -526,7 +526,7 @@ build_once() {
         --lua-filter=mathematical-results-guide-filter.lua \
         --include-in-header=mathematical-results-guide-header.tex \
         --metadata=title:'Mathematical results in pid-rs' \
-        --metadata=author:'pid-rs project analysis' \
+        --metadata=author:'Sepehr Mahmoudian' \
         --metadata=date:'19 September 2026' \
         --variable=colorlinks=true --variable=linkcolor:PidTeal \
         --variable=toccolor:PidTeal \

@@ -12,8 +12,8 @@ import importlib.util
 import json
 from pathlib import Path
 
-RAW_SHA256 = "d17cd98eb82ab69cd43e53377a4da1def4dd36d3c2d8bff84a609a9e42a74aee"
-MANIFEST_SHA256 = "a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939"
+RAW_SHA256 = "1927bb26900eb31f448a41579f11d0779de5acf6d75f059379faf0fedbb3a320"
+MANIFEST_SHA256 = "a9589302cad3c5dc69b25aceccd0dee5aaec36cbc9744396d41274aaf6b2eba9"
 
 
 def require(condition, message):

@@ -23,7 +23,7 @@ import time
 from types import ModuleType
 
 BUILDER = "scripts/build-mgw-derivative-notes-pdf.py"
-MANIFEST = "audit/formal/latex/mgw-derivative-notes/publication-inputs-v3.json"
+MANIFEST = "audit/formal/latex/mgw-derivative-notes/publication-inputs-v4.json"
 FILTER = "audit/formal/latex/mgw-derivative-notes/layout/publication-filter.lua"
 ROSTER = "audit/formal/latex/mgw-derivative-notes/controls/roster-v1.json"
 

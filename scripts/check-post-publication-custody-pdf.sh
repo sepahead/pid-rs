@@ -9,6 +9,10 @@ COMMITTED="$ROOT/output/pdf/post-publication-custody-2026-09-02.pdf"
 VISUAL_RECEIPT="$ROOT/audit/evidence/post-publication-custody-visual-receipt-2026-09-02.md"
 VISUAL_RECEIPT_SHA256="f176cf45a9dd703e490328fdbe8f992e592ec6ddff0fbcef2073aa162bd2fbd4"
 VISUAL_RECEIPT_PDF_SHA256="d122cec2e2f77cf613a00d28601161cc75a28a93f777700e7919afb4f5fb8550"
+HISTORICAL_PDF="$ROOT/audit/evidence/post-publication-custody-2026-09-02.authorship-preimage-v1.pdf.bin"
+AUTHORSHIP_RECEIPT="$ROOT/audit/evidence/post-publication-custody-authorship-2026-09-23.json"
+AUTHORSHIP_RECEIPT_SHA256="0c9afb010793d21a8a151280936958a3e8240e3334586f347597f07ef6a73535"
+AUTHORSHIP_PDF_SHA256="58910977f3204a1c8e051bf15605f05465927c2f89d4c54f60f6e74d5121d60f"
 MODE="${1:---exact}"
 CHECK_NAME="post-publication custody PDF check"
 
@@ -27,7 +31,7 @@ for tool in awk bash cmp grep mktemp pdffonts pdfinfo python3 rm shasum; do
     exit 2
   }
 done
-for path in "$BUILDER" "$RECORD_CHECKER" "$COMMITTED" "$VISUAL_RECEIPT"; do
+for path in "$BUILDER" "$RECORD_CHECKER" "$COMMITTED" "$VISUAL_RECEIPT" "$HISTORICAL_PDF" "$AUTHORSHIP_RECEIPT"; do
   if [[ ! -f "$path" || -L "$path" ]]; then
     echo "$CHECK_NAME: required input is absent, non-regular, or symbolic: $path" >&2
     exit 1
@@ -56,8 +60,13 @@ require_unique_line() {
 
 require_sha256 "$VISUAL_RECEIPT" "$VISUAL_RECEIPT_SHA256" \
   "visual-review receipt"
-require_sha256 "$COMMITTED" "$VISUAL_RECEIPT_PDF_SHA256" \
-  "visual-review receipt subject PDF"
+# The dated full visual review binds its preserved original PDF only.
+require_sha256 "$HISTORICAL_PDF" "$VISUAL_RECEIPT_PDF_SHA256" \
+  "historical visual-review receipt subject PDF"
+require_sha256 "$AUTHORSHIP_RECEIPT" "$AUTHORSHIP_RECEIPT_SHA256" \
+  "authorship successor receipt"
+require_sha256 "$COMMITTED" "$AUTHORSHIP_PDF_SHA256" \
+  "authorship successor subject PDF"
 require_unique_line \
   "schema: \`pid-rs/post-publication-custody-visual-review/v1\`" \
   "visual-review receipt schema"
@@ -137,6 +146,10 @@ cmp -s "$FIRST" "$COMMITTED" || {
 
 LC_ALL=C pdfinfo "$COMMITTED" >"$BUILD_ROOT/pdfinfo"
 LC_ALL=C pdffonts "$COMMITTED" >"$BUILD_ROOT/pdffonts"
+if ! grep -Eq '^Author:[[:space:]]+Sepehr Mahmoudian$' "$BUILD_ROOT/pdfinfo"; then
+  echo "$CHECK_NAME: current PDF author metadata differs" >&2
+  exit 1
+fi
 if ! grep -Eq '^Page size:[[:space:]]+595\.[0-9]+ x 841\.[0-9]+ pts \(A4\)$' "$BUILD_ROOT/pdfinfo"; then
   echo "$CHECK_NAME: committed PDF is not A4" >&2
   exit 1

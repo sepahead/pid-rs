@@ -26,8 +26,8 @@ import xml.etree.ElementTree as ET
 from xml.sax.saxutils import escape
 
 ASSETS = "audit/formal/latex/prefix-mgw-bias/"
-MANIFEST = ASSETS + "publication-inputs-v2.json"
-MANIFEST_SHA256 = "79684b90f94e318f28666808c1514a7526e6f63492f3dc9f3bc296ffb00b5501"
+MANIFEST = ASSETS + "publication-inputs-v3.json"
+MANIFEST_SHA256 = "c449a5c5ec54ebb924555b7bd356959a2be180ac3c6a2bc2cf8b1ba77464ef53"
 NATIVE_PROFILE = ASSETS + "native-tools-v2.json"
 READER_MANIFEST = ASSETS + "reader-source-v2.json"
 EXPECTED_READER_VERSION = "6.16.1"

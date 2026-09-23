@@ -1,5 +1,7 @@
 # Post-publication custody and cleanup receipt
 
+**Author: Sepehr Mahmoudian**
+
 **Observation:** dated snapshot; phases are recorded below\
 **Record:** `PPC-20260902-02`\
 **Repository:** `sepahead/pid-rs`\

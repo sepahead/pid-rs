@@ -1,3 +1,7 @@
+---
+author: "Sepehr Mahmoudian"
+---
+
 # Same shared-exclusions synergy, different added information
 
 **Publication candidate.** The fixed finite-law result has 21 checked Lean targets. A later replay rebuilt every project module from the review export and passed the unchanged judge and a fresh check with the same Lean kernel. The verification scope and retained failures are stated below. A complete public replay system, final publication review and mainline integration remain open.

@@ -1,7 +1,7 @@
 ---
 title: "What the finite-horizon bias bounds tell you"
 subtitle: "Categorical MGW shared exclusions · five exact formal families"
-author: "pid-rs contributors"
+author: "Sepehr Mahmoudian"
 date: "8 September 2026"
 lang: en
 ---

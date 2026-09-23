@@ -105,12 +105,14 @@ required_lines = (
     "set -euo pipefail",
     'MODE="${1:---exact}"',
     'if [[ "$#" -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then',
-    'for path in "$BUILDER" "$RECORD_CHECKER" "$COMMITTED" "$VISUAL_RECEIPT"; do',
+    'for path in "$BUILDER" "$RECORD_CHECKER" "$COMMITTED" "$VISUAL_RECEIPT" "$HISTORICAL_PDF" "$AUTHORSHIP_RECEIPT"; do',
     '  if [[ ! -f "$path" || -L "$path" ]]; then',
     '  observed="$(shasum -a 256 "$path" | awk \'{print $1}\')"',
     '  count="$(grep -Fxc -- "$literal" "$VISUAL_RECEIPT" || true)"',
     'require_sha256 "$VISUAL_RECEIPT" "$VISUAL_RECEIPT_SHA256" \\',
-    'require_sha256 "$COMMITTED" "$VISUAL_RECEIPT_PDF_SHA256" \\',
+    'require_sha256 "$HISTORICAL_PDF" "$VISUAL_RECEIPT_PDF_SHA256" \\',
+    'require_sha256 "$AUTHORSHIP_RECEIPT" "$AUTHORSHIP_RECEIPT_SHA256" \\',
+    'require_sha256 "$COMMITTED" "$AUTHORSHIP_PDF_SHA256" \\',
     '  "schema: \\`pid-rs/post-publication-custody-visual-review/v1\\`" \\',
     '  "subject: \\`output/pdf/post-publication-custody-2026-09-02.pdf\\`" \\',
     'require_unique_line "pdf_sha256: \\`$VISUAL_RECEIPT_PDF_SHA256\\`" \\',
@@ -183,7 +185,7 @@ for block in required_blocks:
     if text.count(block) != 1:
         raise SystemExit(f"checker contract block drifted: {block.splitlines()[0]!r}")
 
-for variable in ("VISUAL_RECEIPT_SHA256", "VISUAL_RECEIPT_PDF_SHA256"):
+for variable in ("VISUAL_RECEIPT_SHA256", "VISUAL_RECEIPT_PDF_SHA256", "AUTHORSHIP_RECEIPT_SHA256", "AUTHORSHIP_PDF_SHA256"):
     match = re.search(rf'^{variable}="([0-9a-f]{{64}})"$', text, re.MULTILINE)
     if match is None:
         raise SystemExit(f"checker digest binding drifted: {variable}")
@@ -231,6 +233,8 @@ make_fixture() {
   cp "$COMMITTED" "$fixture/output/pdf/post-publication-custody-2026-09-02.pdf"
   cp "$COMMITTED" "$fixture/expected-builder-output.pdf"
   cp "$VISUAL_RECEIPT" "$fixture/audit/evidence/"
+  cp "$ROOT/audit/evidence/post-publication-custody-2026-09-02.authorship-preimage-v1.pdf.bin" "$fixture/audit/evidence/"
+  cp "$ROOT/audit/evidence/post-publication-custody-authorship-2026-09-23.json" "$fixture/audit/evidence/"
 
   cat >"$fixture/scripts/check-post-publication-custody.py" <<'PY'
 #!/usr/bin/env python3
@@ -384,24 +388,27 @@ reseal_visual_receipt() {
 }
 
 reseal_visual_pdf_binding() {
-  local fixture="$1"
-  local checker="$fixture/scripts/check-post-publication-custody-pdf.sh"
-  local receipt="$fixture/audit/evidence/post-publication-custody-visual-receipt-2026-09-02.md"
-  local pdf="$fixture/output/pdf/post-publication-custody-2026-09-02.pdf"
-  local old_digest new_digest
-  old_digest="$(awk -F'"' '/^VISUAL_RECEIPT_PDF_SHA256=/ {print $2}' "$checker")"
-  new_digest="$(shasum -a 256 "$pdf" | awk '{print $1}')"
-  if [[ ! "$old_digest" =~ ^[0-9a-f]{64}$ || ! "$new_digest" =~ ^[0-9a-f]{64}$ ]]; then
-    echo "$CHECK_NAME: cannot reseal fixture visual PDF binding" >&2
-    exit 1
-  fi
-  replace_once "$checker" \
-    "VISUAL_RECEIPT_PDF_SHA256=\"$old_digest\"" \
-    "VISUAL_RECEIPT_PDF_SHA256=\"$new_digest\""
-  replace_once "$receipt" \
-    "pdf_sha256: \`$old_digest\`" \
-    "pdf_sha256: \`$new_digest\`"
-  reseal_visual_receipt "$fixture"
+  python3 -I -S - "$1" <<'PY_CURRENT_AUTHORSHIP'
+from pathlib import Path
+import hashlib
+import json
+import re
+import sys
+root = Path(sys.argv[1])
+checker = root / "scripts/check-post-publication-custody-pdf.sh"
+receipt = root / "audit/evidence/post-publication-custody-authorship-2026-09-23.json"
+pdf = (root / "output/pdf/post-publication-custody-2026-09-02.pdf").read_bytes()
+data = json.loads(receipt.read_text())
+data["pdf"] = {"bytes": len(pdf), "sha256": hashlib.sha256(pdf).hexdigest()}
+receipt.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
+text = checker.read_text()
+for name, value in (("AUTHORSHIP_PDF_SHA256", data["pdf"]["sha256"]),
+                    ("AUTHORSHIP_RECEIPT_SHA256", hashlib.sha256(receipt.read_bytes()).hexdigest())):
+    text, count = re.subn(r'^' + name + r'="[0-9a-f]{64}"$', name + '="' + value + '"', text, flags=re.M)
+    if count != 1:
+        raise SystemExit("current authorship fixture binding missing")
+checker.write_text(text)
+PY_CURRENT_AUTHORSHIP
 }
 
 mutate_pdf_version() {
@@ -435,8 +442,8 @@ run_contract_mutation "committed-byte comparison weakening is rejected" \
 run_contract_mutation "visual-receipt identity binding removal is rejected" \
   "require_sha256 \"\$VISUAL_RECEIPT\" \"\$VISUAL_RECEIPT_SHA256\" \\" \
   "# visual-receipt identity omitted \\"
-run_contract_mutation "visual-receipt subject-PDF binding removal is rejected" \
-  "require_sha256 \"\$COMMITTED\" \"\$VISUAL_RECEIPT_PDF_SHA256\" \\" \
+run_contract_mutation "current authorship subject-PDF binding removal is rejected" \
+  "require_sha256 \"\$COMMITTED\" \"\$AUTHORSHIP_PDF_SHA256\" \\" \
   "# visual-receipt PDF binding omitted \\"
 run_contract_mutation "visual-receipt subject-locator weakening is rejected" \
   'subject: \`output/pdf/post-publication-custody-2026-09-02.pdf\`' \

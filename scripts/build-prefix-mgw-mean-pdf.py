@@ -17,12 +17,12 @@ import stat
 import subprocess
 import sys
 
-MANIFEST = "audit/formal/latex/prefix-mgw-mean/publication-inputs-v1.json"
-MANIFEST_SHA = '6f181dcb87d6398075a568ce0156df17081ea14fe68305f7b267f819c2a59ffa'
+MANIFEST = "audit/formal/latex/prefix-mgw-mean/publication-inputs-v2.json"
+MANIFEST_SHA = 'e04063ac8561a0109ba543805ff2ee8b06893cbc1507113fd12ca9fbdfa9f0eb'
 UNIT = "audit/formal/lean-prefix-mgw-mean/"
 ASSETS = "audit/formal/latex/prefix-mgw-mean/"
 TITLE = "# From categorical exclusion events to MGW atom expectations\n\n"
-PDF_SHA = '93ff18e21f56e4770b12b7405d57b003bf7839cef5c4207ed98a56cd6f96f58f'
+PDF_SHA = '3cb3f18b13dc71ba70529fba4c1d10c22aafc6e7b6454bce56fa10be7b74e2f3'
 
 
 def require(ok: bool, message: str) -> None:
@@ -89,6 +89,9 @@ def capture(path: Path) -> tuple[bytes, tuple]:
 
 def transform_markdown(raw: bytes) -> bytes:
     text = raw.decode("utf-8")
+    author = '---\nauthor: "Sepehr Mahmoudian"\n---\n\n'
+    require(text.startswith(author), "publication author boundary changed")
+    text = text[len(author):]
     require(text.startswith(TITLE) and text.count(TITLE) == 1, "title boundary changed")
     text = text[len(TITLE):]
     old = "](../../evidence/prefix-mgw-mean-formal-verification-2026-09-08/RESULTS.md)"

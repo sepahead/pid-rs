@@ -1,0 +1,13 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "historical_visual_receipt": "audit/evidence/post-publication-custody-visual-receipt-2026-09-02.md",
+  "historical_visual_receipt_applies_to_current_pdf": false,
+  "pages": 6,
+  "pdf": {
+    "bytes": 182579,
+    "sha256": "58910977f3204a1c8e051bf15605f05465927c2f89d4c54f60f6e74d5121d60f"
+  },
+  "schema": "pid-rs/publication-authorship-successor/v1",
+  "scope": "Authorship-only successor, 23 September 2026: Sepehr Mahmoudian appears in source, first-page byline and PDF Author metadata. Existing dates and mathematical body are unchanged. Focused source/TeX correspondence, final TeX log, PDF metadata and first-page rendering were inspected; this does not transfer a historical all-page visual review to the new bytes.",
+  "subject": "output/pdf/post-publication-custody-2026-09-02.pdf"
+}

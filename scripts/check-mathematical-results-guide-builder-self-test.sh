@@ -10,8 +10,8 @@ PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc
 DIAGNOSTIC_CHECK="$ROOT/scripts/check-mathematical-results-guide-diagnostics.py"
 CANONICAL_DIAGNOSTICS="$ROOT/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json"
 LINUX_DIAGNOSTICS="$ROOT/audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json"
-RAW_TEX_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-v4-normalizer-input.tex"
-RAW_TEX_FIXTURE_SHA256=d17cd98eb82ab69cd43e53377a4da1def4dd36d3c2d8bff84a609a9e42a74aee
+RAW_TEX_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-v4-normalizer-input-authorship-2026-09-23.tex"
+RAW_TEX_FIXTURE_SHA256=1927bb26900eb31f448a41579f11d0779de5acf6d75f059379faf0fedbb3a320
 PANDOC_TEMPLATE_LICENSE="$ROOT/audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt"
 FIGURE_ASSET_MANIFEST="$ROOT/audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json"
 FIGURE_ASSET_CHECK="$ROOT/scripts/check-mathematical-results-guide-figure-assets.py"
@@ -802,7 +802,7 @@ from pathlib import Path
 import sys
 manifest, output = map(Path, sys.argv[1:])
 raw = manifest.read_bytes()
-if hashlib.sha256(raw).hexdigest() != "a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939":
+if hashlib.sha256(raw).hexdigest() != "a9589302cad3c5dc69b25aceccd0dee5aaec36cbc9744396d41274aaf6b2eba9":
     raise SystemExit("canonical diagnostic fixture digest changed")
 messages = [item["message"] for item in json.loads(raw)["diagnostics"]]
 if len(messages) != 48:

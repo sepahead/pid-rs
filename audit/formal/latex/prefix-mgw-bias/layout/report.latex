@@ -16,7 +16,7 @@
   urlcolor=PidSecondary,
   citecolor=PidSecondary,
   pdftitle={$title-meta$},
-  pdfauthor={pid-rs contributors},
+  pdfauthor={Sepehr Mahmoudian},
   pdfsubject={Finite categorical MGW prefix bias under a complete-row iid law},
   pdfdisplaydoctitle=true
 }

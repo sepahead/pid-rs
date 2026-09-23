@@ -1,5 +1,6 @@
 ---
 title: "PID discovery, verification, and durability blueprint"
+author: "Sepehr Mahmoudian"
 subtitle: "PrimeGaps lessons, semantic-transfer firewalls, a proposed exact-SxPID3 assurance architecture, autoresearch, and durable promotion"
 date: "3 September 2026"
 lang: en

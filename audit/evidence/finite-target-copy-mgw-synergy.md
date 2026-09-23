@@ -1,3 +1,7 @@
+---
+author: "Sepehr Mahmoudian"
+---
+
 # Finite target-copy identities and entropy bounds for categorical MGW synergy
 
 ## Result, scope, and evidence status

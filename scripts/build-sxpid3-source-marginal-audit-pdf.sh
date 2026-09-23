@@ -353,7 +353,7 @@ build_once() {
         --lua-filter=sxpid3-source-marginal-and-bounded-audit-filter.lua \
         --include-in-header=sxpid3-source-marginal-and-bounded-audit-header.tex \
         --metadata=title:'Source-marginal factorization and a bounded exact audit of a declared categorical SxPID3 transcription' \
-        --metadata=author:'pid-rs project analysis' \
+        --metadata=author:'Sepehr Mahmoudian' \
         --metadata=date:'3 September 2026' \
         --variable=papersize:a4 --variable=fontsize:11pt --variable=geometry:margin=20mm \
         --variable=linestretch:1.06 --variable=mainfont:'Latin Modern Roman' \

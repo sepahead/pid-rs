@@ -1,0 +1,55 @@
+{
+  "boundary": "The current ten-input publication manifest and unchanged accepted 48-member proof manifest have distinct roles; their shared retained-rank SVG remains byte-identical. Corrected discovery reference bytes have a separate root artifact admission. This portable builder, its successor controls and exact reproduction remain unexecuted. No proof, calibration or public-integration result follows. Authorship-only successor, 23 September 2026: Sepehr Mahmoudian appears in source, first-page byline and PDF Author metadata. Existing dates and mathematical body are unchanged. Focused source/TeX correspondence, final TeX log, PDF metadata and first-page rendering were inspected; this does not transfer a historical all-page visual review to the new bytes.",
+  "cross_toolchain_relation": "none; explicit status2 refusal before a build",
+  "discovery_artifact_adoption_sha256": "71e05f6d04969e57e84679e88c2b4a89f1311828b640c937afc0937b0000315b",
+  "expected_pages": 9,
+  "expected_pandoc_version": "pandoc 3.10.2",
+  "expected_pdf_sha256": "3cb3f18b13dc71ba70529fba4c1d10c22aafc6e7b6454bce56fa10be7b74e2f3",
+  "files": {
+    "audit/formal/latex/pid-rs-report-tables.sty": {
+      "bytes": 4051,
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    "audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "bytes": 8607,
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    "audit/formal/latex/prefix-mgw-mean/body.expected.md": {
+      "bytes": 20006,
+      "sha256": "69a771ed38f22e3164edda147adecb9410f0c0c6425daa040e435fb4572f950a"
+    },
+    "audit/formal/latex/prefix-mgw-mean/body.expected.tex": {
+      "bytes": 22118,
+      "sha256": "ed7dc45e5a466185905bae980ee8f77ef0c270ebeb94dc8ffefc5ad51d21082f"
+    },
+    "audit/formal/latex/prefix-mgw-mean/prefix-mgw-mean.tex": {
+      "bytes": 1990,
+      "sha256": "acd863c2ab639ec0f357aa55df473afb354417702f9cc9919f24ade334ffaea8"
+    },
+    "audit/formal/latex/prefix-mgw-mean/retained-rank.pdf": {
+      "bytes": 67407,
+      "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894"
+    },
+    "audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md": {
+      "bytes": 20005,
+      "sha256": "548d83285030a255bd8ebbec50bf438de0ed4d89173da3b8ac1ad19f4703ec4e"
+    },
+    "audit/formal/lean-prefix-mgw-mean/retained-rank.svg": {
+      "bytes": 4656,
+      "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd"
+    },
+    "output/pdf/prefix-mgw-mean.pdf": {
+      "bytes": 165469,
+      "sha256": "3cb3f18b13dc71ba70529fba4c1d10c22aafc6e7b6454bce56fa10be7b74e2f3"
+    },
+    "scripts/check-formal-pdf-log.sh": {
+      "bytes": 2417,
+      "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da"
+    }
+  },
+  "historical_HTTPS_successor_review_sha256": "77611473469a648091f157ffa64a18f68825e856ce7ffc0a911eabab36114702",
+  "historical_prototype_review_sha256": "3c3d9f1e831df74c18c0f257ce29684d2bf6031ae0c1558028d3540524c9fa59",
+  "predecessor_publication_manifest_sha256": "e85c572d7221a5a46c1200e9e0dde12f73d50def5a0b5dd5bbaf5e4bd97fe09f",
+  "schema": "pid-rs/prefix-mgw-mean-publication-inputs-v1",
+  "status": "Authorship-only successor; focused publication checks completed."
+}

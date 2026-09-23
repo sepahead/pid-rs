@@ -7,6 +7,8 @@
 
 <h1 align="center">pid-rs</h1>
 
+Author: **Sepehr Mahmoudian**. See [authorship and citation](AUTHORSHIP.md).
+
 <p align="center">
   <strong>Shared-exclusions partial information decomposition and mutual-information estimators in Rust.</strong>
 </p>

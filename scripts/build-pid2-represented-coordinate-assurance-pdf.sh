@@ -85,7 +85,7 @@ trailer_id="$(shasum -a 256 "$source_digest_record" | awk '{print toupper(substr
     --include-in-header="$LATEX_DIR/header.tex" \
     --include-in-header="$TAGPDF_OPENACTION_COMPAT" \
     --metadata=title:'PID2 represented-coordinate assurance' \
-    --metadata=author:'pid-rs project analysis' \
+    --metadata=author:'Sepehr Mahmoudian' \
     --metadata=date:'31 August 2026' \
     --variable=colorlinks=true --variable=linkcolor:PidTeal --variable=toccolor:PidTeal \
     --variable=urlcolor:PidBronze --variable=citecolor:PidTeal \

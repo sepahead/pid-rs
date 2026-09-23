@@ -29,6 +29,9 @@ COMMITTED="output/pdf/mathematical-problem-solving-workflow.pdf"
 RENDERING_RECEIPT="output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
 VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md"
 VISUAL_RECORDS="audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json"
+AUTHORSHIP_DIR="audit/evidence/mathematical-workflow-authorship-2026-09-23"
+AUTHORSHIP_RECEIPT="$AUTHORSHIP_DIR/SUCCESSOR.json"
+AUTHORSHIP_RECEIPT_SHA256="495e7f07d5abb70358fdd428a0dd75d214c9cce6cccad028670fa81d07fa53b6"
 SHARED_STYLE="audit/formal/latex/pid-rs-report-tables.sty"
 PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
@@ -55,8 +58,8 @@ FIGURE_STEMS=(
   "invalidation-publication-state-machine"
 )
 
-if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" && "$MODE" != "--refresh" ]]; then
-  echo "usage: $0 [--exact|--cross-toolchain|--refresh]" >&2
+if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" && "$MODE" != "--refresh" && "$MODE" != "--authorship-only" ]]; then
+  echo "usage: $0 [--exact|--cross-toolchain|--refresh|--authorship-only]" >&2
   exit 2
 fi
 
@@ -655,6 +658,10 @@ if [[ "$MODE" != "--refresh" ]]; then
   # inputs made a clean refresh impossible and falsely enlarged the build dependency closure.
   # Exact and cross-toolchain modes still capture the report, rendering, and visual records.
   manifest_paths+=("$COMMITTED" "$RENDERING_RECEIPT" "$VISUAL_RECEIPT" "$VISUAL_RECORDS")
+  manifest_paths+=("$AUTHORSHIP_RECEIPT" "$AUTHORSHIP_DIR/previous.pdf.bin"
+    "$AUTHORSHIP_DIR/previous-rendering-receipt.tsv.txt" "$AUTHORSHIP_DIR/previous-visual-receipt.md.txt"
+    "$AUTHORSHIP_DIR/previous-actual-views.json.txt" "$AUTHORSHIP_DIR/previous-source.tex.txt"
+    "$AUTHORSHIP_DIR/first-page-120dpi.png")
 fi
 for stem in "${FIGURE_STEMS[@]}"; do
   manifest_paths+=("$FIGURE_DIR/$stem.svg")
@@ -1381,7 +1388,7 @@ markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
 if markdown_digest != "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
-if primer_digest != "9105575ae7d1b202634c375fc1aa5fc6aafac51db3369aecceae2ba7f16cc1da":
+if primer_digest != "80d0f8da82b2d5af40b715ac68acbd4626d58bdf1671a94b0d64e7b51c2e284e":
     fail(f"typeset-only primer exact-byte custody drifted: {primer_digest}")
 style_digest = hashlib.sha256(style_bytes).hexdigest()
 if style_digest != "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9":
@@ -1390,13 +1397,13 @@ PY
 
 if [[ "$MODE" != "--refresh" ]]; then
   python3 -I -S -B - \
-    "$SNAPSHOT_ROOT/$VISUAL_RECEIPT" \
-    "$SNAPSHOT_ROOT/$COMMITTED" \
-    "$SNAPSHOT_ROOT/$RENDERING_RECEIPT" \
+    "$SNAPSHOT_ROOT/$AUTHORSHIP_DIR/previous-visual-receipt.md.txt" \
+    "$SNAPSHOT_ROOT/$AUTHORSHIP_DIR/previous.pdf.bin" \
+    "$SNAPSHOT_ROOT/$AUTHORSHIP_DIR/previous-rendering-receipt.tsv.txt" \
     "$EXPECTED_PAGES" \
     "$RENDER_DPI" \
     "$HIGH_RESOLUTION_DPI" \
-    "$SNAPSHOT_ROOT/$VISUAL_RECORDS" <<'PY'
+    "$SNAPSHOT_ROOT/$AUTHORSHIP_DIR/previous-actual-views.json.txt" <<'PY'
 from __future__ import annotations
 
 from collections import Counter
@@ -1812,6 +1819,96 @@ if hashlib.sha256(records_raw).hexdigest() != field_values["actual_view_records_
     fail("actual-view frozen record digest differs")
 
 PY
+  python3 -I -S -B - "$SNAPSHOT_ROOT" "$AUTHORSHIP_RECEIPT_SHA256" <<'PY_AUTHORSHIP'
+from pathlib import Path
+import hashlib
+import json
+import re
+import subprocess
+import sys
+import xml.etree.ElementTree as ET
+
+root = Path(sys.argv[1])
+record_path = root / 'audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR.json'
+expected_record_sha256 = sys.argv[2]
+
+def fail(message):
+    raise SystemExit('mathematical workflow PDF check: authorship successor ' + message)
+
+raw_record = record_path.read_bytes()
+if hashlib.sha256(raw_record).hexdigest() != expected_record_sha256:
+    fail('record identity differs')
+record = json.loads(raw_record)
+if record['schema'] != 'pid-rs/workflow-authorship-successor/v1' or record['author'] != 'Sepehr Mahmoudian':
+    fail('record identity fields differ')
+for relative, pin in record['files'].items():
+    raw = (root / relative).read_bytes()
+    if len(raw) != pin['bytes'] or hashlib.sha256(raw).hexdigest() != pin['sha256']:
+        fail('bound bytes differ: ' + relative)
+prior = root / 'audit/evidence/mathematical-workflow-authorship-2026-09-23/previous.pdf.bin'
+current = root / 'output/pdf/mathematical-problem-solving-workflow.pdf'
+old_source = (root / 'audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-source.tex.txt').read_bytes()
+new_source = (root / 'audit/formal/latex/mathematical-problem-solving-workflow.tex').read_bytes()
+if old_source.count(b'pid-rs contributors') != 2 or new_source != old_source.replace(b'pid-rs contributors', b'Sepehr Mahmoudian'):
+    fail('TeX source differs beyond the two author substitutions')
+
+def run(args):
+    result = subprocess.run(args, capture_output=True, timeout=45, check=False)
+    if result.returncode or result.stderr or len(result.stdout) > 32 * 1024**2:
+        fail('bounded PDF projection failed: ' + args[0])
+    return result.stdout
+
+info = run(['pdfinfo', str(current)]).decode()
+if not re.search(r'^Author:\s+Sepehr Mahmoudian\s*$', info, re.M):
+    fail('current PDF Author metadata differs')
+if not re.search(r'^Pages:\s+87\s*$', info, re.M):
+    fail('current PDF page count differs')
+
+def pages(path):
+    raw = run(['pdftotext', '-bbox', str(path), '-'])
+    tree = ET.fromstring(raw)
+    result = []
+    for page in tree.iter('{http://www.w3.org/1999/xhtml}page'):
+        words = []
+        for word in page.iter('{http://www.w3.org/1999/xhtml}word'):
+            words.append((word.text or '', tuple(float(word.attrib[key]) for key in ('xMin','yMin','xMax','yMax'))))
+        result.append(((float(page.attrib['width']),float(page.attrib['height'])),words))
+    if len(result) != 87 or any(not words for _, words in result):
+        fail('bounded page/text inventory differs')
+    return result
+
+old_pages, new_pages = pages(prior), pages(current)
+def remove_byline(words, expected):
+    matches = [i for i in range(len(words)-1) if (words[i][0],words[i+1][0]) == expected]
+    if len(matches) != 1:
+        fail('first-page byline is absent or repeated')
+    i = matches[0]
+    return words[:i]+words[i+2:], words[i:i+2]
+
+for number, ((old_geometry,old_words),(new_geometry,new_words)) in enumerate(zip(old_pages,new_pages),1):
+    if old_geometry != new_geometry:
+        fail('page geometry differs on page ' + str(number))
+    if number == 1:
+        old_words, old_byline = remove_byline(old_words,('pid-rs','contributors'))
+        new_words, new_byline = remove_byline(new_words,('Sepehr','Mahmoudian'))
+        if any(abs(old_byline[0][1][i]-new_byline[0][1][i]) > .001 for i in (0,1,3)):
+            fail('author baseline or start position differs')
+    if len(old_words) != len(new_words):
+        fail('non-author word count differs on page ' + str(number))
+    for (old_text,old_box),(new_text,new_box) in zip(old_words,new_words):
+        if old_text != new_text or any(abs(a-b) > .001 for a,b in zip(old_box,new_box)):
+            fail('non-author text or word geometry differs on page ' + str(number))
+print('OK: workflow authorship-only delta: exact bound source/PDF bytes, Author metadata, 87-page text and word geometry, and first-page byline; no full replay, all-page visual-review or current rendering-receipt acceptance')
+PY_AUTHORSHIP
+  if [[ "$MODE" == "--authorship-only" ]]; then
+    verify_snapshot_readonly
+    capture_manifest "$ROOT" "$BUILD_ROOT/authorship-root-inputs.after.tsv" ""
+    if ! cmp -s "$BUILD_ROOT/root-inputs.before.tsv" "$BUILD_ROOT/authorship-root-inputs.after.tsv"; then
+      echo "$CHECK_NAME: source changed during authorship-only verification" >&2
+      exit 1
+    fi
+    exit 0
+  fi
 fi
 
 python3 -I -S -B - "$SNAPSHOT_ROOT/$FIGURE_DIR" "${FIGURE_STEMS[@]}" <<'PY'
@@ -3273,7 +3370,7 @@ writer.add_metadata(
         "/Title": title,
         "/Subject": "Mathematical problem-solving workflow assurance diagram",
         "/Keywords": "pid-rs, mathematical workflow, assurance, evidence",
-        "/Author": "pid-rs contributors",
+        "/Author": "Sepehr Mahmoudian",
         "/Creator": "pid-rs deterministic SVG derivative pipeline",
         "/Producer": "pid-rs deterministic SVG derivative pipeline",
         "/CreationDate": "D:20260803000000Z",
@@ -3420,7 +3517,7 @@ expected_metadata = {
     "/Title": expected_title,
     "/Subject": "Mathematical problem-solving workflow assurance diagram",
     "/Keywords": "pid-rs, mathematical workflow, assurance, evidence",
-    "/Author": "pid-rs contributors",
+    "/Author": "Sepehr Mahmoudian",
     "/Creator": "pid-rs deterministic SVG derivative pipeline",
     "/Producer": "pid-rs deterministic SVG derivative pipeline",
     "/CreationDate": "D:20260803000000Z",
@@ -4613,7 +4710,7 @@ expected_metadata = {
     "/Title": "Mathematical Problem-Solving Workflow for pid-rs",
     "/Subject": "Claim discipline, adversarial proof development, certificates, and layered assurance",
     "/Keywords": "partial information decomposition, proof workflow, formal verification, certified numerics, adversarial audit",
-    "/Author": "pid-rs contributors",
+    "/Author": "Sepehr Mahmoudian",
     "/Creator": "pid-rs deterministic publication pipeline",
     "/Producer": "LuaLaTeX",
 }

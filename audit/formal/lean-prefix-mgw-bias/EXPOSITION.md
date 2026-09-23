@@ -1,7 +1,7 @@
 ---
 title: "Finite-horizon bias bounds for categorical shared-exclusions atoms"
 subtitle: "Exact truncation error, population support and limits of use"
-author: "pid-rs contributors"
+author: "Sepehr Mahmoudian"
 date: "8 September 2026"
 lang: en
 ---

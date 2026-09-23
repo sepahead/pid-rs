@@ -1,0 +1,82 @@
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{seqsplit}
+\usepackage{tikz}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{geometry}
+\geometry{a4paper,margin=22mm,headheight=15pt,headsep=8mm,footskip=12mm}
+
+% Fixed-epoch builds still receive a random LuaTeX trailer ID unless it is
+% explicitly suppressed. This makes same-source, same-toolchain builds exact.
+\ifdefined\pdftrailerid
+  \pdftrailerid{}
+\fi
+\ifdefined\pdfvariable
+  \pdfvariable suppressoptionalinfo=767
+\fi
+
+\definecolor{ink}{HTML}{2C3E50}
+\definecolor{ivory}{HTML}{F7F3E9}
+\definecolor{lapis}{HTML}{1F3F60}
+\definecolor{turquoise}{HTML}{1F6968}
+\definecolor{mineralblue}{HTML}{D2E0E2}
+\definecolor{bronze}{HTML}{916400}
+\definecolor{saffron}{HTML}{B28218}
+\definecolor{pomegranate}{HTML}{743E37}
+
+\pagecolor{ivory}
+\color{ink}
+\hypersetup{colorlinks=true,linkcolor=turquoise,urlcolor=lapis,citecolor=pomegranate,pdfstartpage={},pdftitle={Post-publication custody and cleanup receipt},pdfauthor={pid-rs contributors},pdfsubject={pid-rs repository custody}}
+% This receipt is intentionally untagged; that is a metadata/version choice, not a PDF/UA claim.
+\pdfvariable minorversion=7
+\urlstyle{same}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\setlist{leftmargin=*,itemsep=2pt,topsep=2pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.18}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\titleformat{\section}{\Large\sffamily\bfseries\color{lapis}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\sffamily\bfseries\color{turquoise}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\sffamily\bfseries\color{bronze}}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{16pt plus 4pt minus 2pt}{6pt}
+\titlespacing*{\subsection}{0pt}{12pt plus 3pt minus 2pt}{4pt}
+\titlespacing*{\subsubsection}{0pt}{9pt plus 2pt minus 1pt}{3pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\footnotesize\color{lapis}pid-rs / custody receipt}
+\fancyhead[R]{\sffamily\footnotesize\color{turquoise}PPC-20260902-02}
+\fancyfoot[L]{\sffamily\scriptsize\color{ink}Observation: 2026-09-02 UTC}
+\fancyfoot[R]{\sffamily\scriptsize\color{ink}\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.25pt}
+\makeatletter
+\renewcommand{\headrule}{\hbox to\headwidth{\color{turquoise}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{saffron}\leaders\hrule height \footrulewidth\hfill}}
+\makeatother
+
+% Small registration rosettes keep the CV-derived visual language subordinate to the text.
+\AddToHook{shipout/background}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \draw[lapis,opacity=.12,line width=.45pt] ([xshift=8mm,yshift=-8mm]current page.north west) -- ++(6mm,0) -- ++(0,-6mm);
+    \draw[turquoise,opacity=.12,line width=.45pt] ([xshift=-8mm,yshift=-8mm]current page.north east) -- ++(-6mm,0) -- ++(0,-6mm);
+    \draw[saffron,opacity=.14,line width=.45pt] ([xshift=8mm,yshift=8mm]current page.south west) -- ++(6mm,0) -- ++(0,6mm);
+    \draw[pomegranate,opacity=.12,line width=.45pt] ([xshift=-8mm,yshift=8mm]current page.south east) -- ++(-6mm,0) -- ++(0,6mm);
+  \end{tikzpicture}%
+}
+
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}

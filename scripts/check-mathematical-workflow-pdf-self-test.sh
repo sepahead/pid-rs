@@ -1958,6 +1958,14 @@ copy_manifest_fixture() {
     "audit/evidence/x-thread-citation-source-manifest.json"
     "audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md"
     "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json"
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR.json"
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous.pdf.bin"
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-rendering-receipt.tsv.txt"
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-visual-receipt.md.txt"
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-actual-views.json.txt"
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-source.tex.txt"
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-120dpi.png"
+
     "audit/formal/latex/mathematical-problem-solving-workflow.tex"
     "audit/formal/latex/pid-rs-report-tables.sty"
     "audit/formal/latex/pid-rs-workflow-publication.sty"
@@ -2001,6 +2009,8 @@ BASE_PDF="$BASE_REPOSITORY/output/pdf/mathematical-problem-solving-workflow.pdf"
 BASE_RENDERING_RECEIPT="$BASE_REPOSITORY/output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
 BASE_VISUAL_RECEIPT="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md"
 BASE_VISUAL_RECORDS="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json"
+BASE_HISTORICAL_PDF="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-authorship-2026-09-23/previous.pdf.bin"
+BASE_HISTORICAL_RENDERING_RECEIPT="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-rendering-receipt.tsv.txt"
 BASE_MARKDOWN="$BASE_REPOSITORY/MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 BASE_FIGURE_DIR="$BASE_REPOSITORY/audit/formal/latex/figures/mathematical-workflow"
 
@@ -6162,7 +6172,7 @@ chmod u+w "$VISUAL_CONTROL"
 
 run_visual_validator() {
   python3 -I -S -B "$VISUAL_VALIDATOR" \
-    "$1" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" \
+    "$1" "$BASE_HISTORICAL_PDF" "$BASE_HISTORICAL_RENDERING_RECEIPT" \
     "$EXPECTED_PAGES" "$EXPECTED_DPI" "$EXPECTED_HIGH_RESOLUTION_DPI" "${2:-$BASE_VISUAL_RECORDS}"
 }
 

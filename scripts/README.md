@@ -4,6 +4,18 @@
 
 Operational helper scripts for maintaining **pid-rs** and its downstream consumers.
 
+## Publication authorship
+
+`python3 scripts/check-publication-authorship.py` uses `pypdf` to check that each
+current report in `output/pdf/`, plus the discovery blueprint, names Sepehr
+Mahmoudian on its first page and in its PDF Author metadata. It does not review
+mathematics or certify layout. See [authorship and citation](../AUTHORSHIP.md) for
+historical artifacts and third-party sources.
+
+The workflow and blueprint PDF checkers also accept `--authorship-only`. This mode
+checks the author change against preserved prior bytes without repeating the full
+publication build or transferring an old visual review to the new PDF.
+
 ## Cargo-deny toolchain preflight
 
 `check-cargo-deny-toolchain.sh` is the local execution-environment guard for the two Just recipes

@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Credit Sepehr Mahmoudian in current publication PDF bylines and author metadata,
+  and keep publication sources consistent. Clarify authorship of retained first-party
+  historical artifacts without changing their recorded bytes or third-party provenance.
+
 - Preserve diagnostic values while documenting their rounded-position quantile convention.
   Make categorical SxPID3/N atom lookups return `None` for missing aligned values after caller
   edits, and document the caller-owned alignment contract. Correct the KSG raw-scalar example

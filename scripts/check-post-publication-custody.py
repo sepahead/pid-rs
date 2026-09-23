@@ -42,6 +42,11 @@ MANIFEST = ROOT / "audit/evidence/post-publication-remote-heads-2026-09-02.tsv"
 HISTORICAL_BUILDER = ROOT / "audit/evidence/post-publication-custody/builder-pypdf-6.15.0.sh.txt"
 CURRENT_BUILDER = ROOT / "scripts/build-post-publication-custody-pdf.sh"
 EXPECTED_CURRENT_BUILDER_SHA256 = "25af0f6819d299cb8c9f889371258d54a0f6acc6511d2927861893a9f4bb2b2d"
+HISTORICAL_AUTHORSHIP_INPUTS = {
+    "markdown": ROOT / "audit/evidence/post-publication-custody-2026-09-02.authorship-preimage-v1.md.txt",
+    "header": ROOT / "audit/evidence/post-publication-custody/header.authorship-preimage-v1.tex.txt",
+    "receipt_pdf": ROOT / "audit/evidence/post-publication-custody-2026-09-02.authorship-preimage-v1.pdf.bin",
+}
 
 HEX40 = re.compile(r"^[0-9a-f]{40}$")
 REF = re.compile(r"^refs/heads/[A-Za-z0-9._/-]+$")
@@ -573,7 +578,8 @@ def check_snapshot(record: dict[str, Any], manifest_raw: bytes) -> None:
         require(isinstance(item, dict) and item.get("path") == relative, f"presentation artifact path drifted: {name}")
         digest = item.get("sha256")
         require(isinstance(digest, str) and re.fullmatch(r"[0-9a-f]{64}", digest) is not None, f"presentation artifact digest missing: {name}")
-        artifact_path = HISTORICAL_BUILDER if name == "builder" else ROOT / relative
+        artifact_path = (HISTORICAL_BUILDER if name == "builder" else
+                         HISTORICAL_AUTHORSHIP_INPUTS.get(name, ROOT / relative))
         require(sha256(read_regular(artifact_path)) == digest, f"presentation artifact bytes drifted: {name}")
     require(
         sha256(read_regular(CURRENT_BUILDER)) == EXPECTED_CURRENT_BUILDER_SHA256,
@@ -591,6 +597,15 @@ def check_snapshot(record: dict[str, Any], manifest_raw: bytes) -> None:
     require(artifacts.get("annotation_contract") == "Only HTTPS URI navigation links are admitted; relative, file, and /GoToR actions must be absent.", "annotation contract drifted")
 
     markdown = read_regular(ROOT / expected_artifact_paths["markdown"]).decode("utf-8")
+    original_markdown = read_regular(HISTORICAL_AUTHORSHIP_INPUTS["markdown"]).decode("utf-8")
+    title = "# Post-publication custody and cleanup receipt\n\n"
+    require(original_markdown.startswith(title)
+            and markdown == original_markdown.replace(title, title + "**Author: Sepehr Mahmoudian**\n\n", 1),
+            "current custody Markdown differs beyond the authorship correction")
+    require(read_regular(ROOT / expected_artifact_paths["header"])
+            == read_regular(HISTORICAL_AUTHORSHIP_INPUTS["header"]).replace(
+                b"pid-rs contributors", b"Sepehr Mahmoudian"),
+            "current custody header differs beyond the authorship correction")
     markdown_normalized = " ".join(markdown.split())
     for token in (
         "PPC-20260902-02",

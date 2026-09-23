@@ -28,6 +28,8 @@ EVIDENCE = "audit/evidence/mgw-fixed-world-added-information-2026-09-09/"
 UNIT = "audit/formal/lean-mgw-fixed-world/"
 MARKDOWN = EVIDENCE[:-1] + ".md"
 ARCHIVED_MARKDOWN = EVIDENCE[:-1] + ".citation-preimage-v1.md.txt"
+ARCHIVED_PUBLICATION = ASSETS + "publication.authorship-preimage-v1.tex.txt"
+AUTHOR_FRONT_MATTER = b'---\nauthor: "Sepehr Mahmoudian"\n---\n\n'
 OLD_CITATION = (
     b"[Section VI.3 and Table III of version 5]"
     b"(https://arxiv.org/html/2002.03356v5#S6.SS3)"
@@ -53,14 +55,14 @@ REQUIRED_RECORDED_LOCAL = frozenset({
     "publication.tex", "body.tex", "pid-rs-report-tables.sty",
     "pid-rs-workflow-publication.sty", *(name + ".pdf" for name in FIGURE_NAMES),
 })
-MANIFEST = ASSETS + "publication-inputs-v6.json"
-MANIFEST_SHA = "7019c6d8982dfe327c30e06511d946ae2d334d112a1074c35d9a865a25ad6cd7"
+MANIFEST = ASSETS + "publication-inputs-v7.json"
+MANIFEST_SHA = "1b728896506404991c718a88b48006be28a32ff73280c45bef1363e1ce9b9833"
 RUNTIME = "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py"
 RUNTIME_SHA = "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
-EXPECTED_PDF_SHA = "b43e0d8902d9c919c6ab13a13c3a7c9d55ea07d3d02af1944edd0600d1801185"
-EXPECTED_PDF_BYTES = 231798
+EXPECTED_PDF_SHA = "6fc4cfbe5bb71037515c4ebdd3119b20e6e970ce6f117e1b9659b44a728b565a"
+EXPECTED_PDF_BYTES = 231810
 EXPECTED_PDF_PAGES = 9  # Inspected reference; no PDF page parser runs here.
-EXPECTED_MARKDOWN_SHA = "2407d08a08d55ebd79540d0adbd382b1f5f334ecee0e86dc99b3a163f85a5655"
+EXPECTED_MARKDOWN_SHA = "63a97ed62deb9237a8c2dcf45a97da2509535bea6a103eb045b85b7687c4a8de"
 EXPECTED_BODY_SHA = "2b62fd6dfca9ac3f3e4a3272f86258e782e42aa6aba60c8dc867b446f62a75b7"
 EXPECTED_MATCHED_SVG_SHA = "dd0f9c8197cda333b27ec14ceec7fba0378db66a576a28ac80aca1d1f76e8288"
 EXPECTED_MATCHED_PDF_SHA = "7aea252a79c2b4a904c1afc84c8ca4b678402f2a68654892b04da250dac3ec1c"
@@ -275,7 +277,7 @@ FROZEN_MODULES = [
     }
 ]
 SOURCE_FILES = ARCHIVE_FILES | frozenset({
-    ARCHIVED_MARKDOWN, ARCHIVED_MATCHED_SVG, ARCHIVED_MATCHED_PDF,
+    ARCHIVED_MARKDOWN, ARCHIVED_MATCHED_SVG, ARCHIVED_MATCHED_PDF, ARCHIVED_PUBLICATION,
     "METHODS.md",
     "audit/evidence/mgw-fixed-world-added-information-2026-09-09/source-map.json",
     "audit/evidence/real-occupancy-sensors-example-2026-09-08.md",
@@ -396,11 +398,11 @@ def read_pinned(snapshot: object, path: Path, pin: object, label: str) -> bytes:
 
 
 def verify_citation_projection(archived: bytes, current: bytes) -> None:
-    """Require only the complete fixed citation replacement in the current paper."""
+    """Require the fixed citation replacement and the explicit author header only."""
     require(archived.count(OLD_CITATION) == 1,
             "historical citation anchor changed")
-    require(archived.replace(OLD_CITATION, CURRENT_CITATION, 1) == current,
-            "current Markdown is not the exact citation correction")
+    require(AUTHOR_FRONT_MATTER + archived.replace(OLD_CITATION, CURRENT_CITATION, 1) == current,
+            "current Markdown is not the exact citation and authorship correction")
 
 
 def verify_figure_citation_projection(archived: bytes, current: bytes) -> None:
@@ -438,6 +440,8 @@ def verify_finite_sources(sources: dict[str, bytes], runtime: ModuleType) -> dic
             lookup = ARCHIVED_MATCHED_SVG
         elif original == MATCHED_PDF:
             lookup = ARCHIVED_MATCHED_PDF
+        elif original == ASSETS + "publication.tex":
+            lookup = ARCHIVED_PUBLICATION
         else:
             lookup = original
         raw = sources[lookup]
@@ -453,6 +457,9 @@ def verify_finite_sources(sources: dict[str, bytes], runtime: ModuleType) -> dic
         require(len(raw) == item["bytes"] and sha(raw) == item["sha256"],
                 "finite theorem source changed: " + relative)
     verify_citation_projection(sources[ARCHIVED_MARKDOWN], sources[MARKDOWN])
+    require(sources[ARCHIVED_PUBLICATION].replace(b"pid-rs contributors", b"Sepehr Mahmoudian")
+            == sources[ASSETS + "publication.tex"],
+            "current publication template is not the exact authorship correction")
     verify_figure_citation_projection(sources[ARCHIVED_MATCHED_SVG], sources[MATCHED_SVG])
     return {"scope": "exact archival source joins and fixed Markdown/SVG citation projections only; "
                      "no kernel, solver, theorem replay or acceptance",

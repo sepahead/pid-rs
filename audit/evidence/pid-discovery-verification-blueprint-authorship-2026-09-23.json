@@ -1,0 +1,42 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "current": {
+    "header": {
+      "bytes": 9208,
+      "path": "audit/formal/latex/pid-discovery-verification-and-durability-blueprint-header.tex",
+      "sha256": "5a320a5328eddb67b0724e0c4c07da59c6f2524af5c8a8b6780e9d5af807ba72"
+    },
+    "pdf": {
+      "bytes": 513213,
+      "path": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf",
+      "sha256": "d49a2de87a85ae4d5d7ed626f146bb6eded46cf3d693f3bc4352adf4f9993987"
+    },
+    "source": {
+      "bytes": 115821,
+      "path": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md",
+      "sha256": "20cfc275fa0ce3aa191b659e6b708a37a8d164714dc7381e2699d4dd771e05d7"
+    }
+  },
+  "historical": {
+    "header": {
+      "bytes": 9135,
+      "path": "audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage.tex.bin",
+      "sha256": "b90b75ddbd5526eb99f546a5d21c662bb45628019c27babc1b4d78510f44e234"
+    },
+    "pdf": {
+      "bytes": 513189,
+      "path": "audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage.pdf.bin",
+      "sha256": "b82c5a0a400ccb129195c3db6e765c7861605f84710226cedd01246967cca7d7"
+    },
+    "source": {
+      "bytes": 115793,
+      "path": "audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage.md.bin",
+      "sha256": "8b446accb257531dbf219670a39c8f1e4b794671bb85ff06f3992bdcdfd5e9c1"
+    }
+  },
+  "historical_visual_receipt": "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-03.md",
+  "historical_visual_receipt_applies_to_current_pdf": false,
+  "pages": 31,
+  "schema": "pid-rs/publication-authorship-successor/v1",
+  "scope": "Authorship-only successor. The historical all-page visual receipt remains bound to preserved original PDF and Markdown bytes. Current review is limited to visible cover credit and metadata, exact author-only Markdown/header edits, page count and geometry, and whitespace-normalized per-page text. No new all-page visual review or raster equivalence is claimed."
+}

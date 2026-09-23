@@ -51,68 +51,68 @@
     {
       "path": "output/pdf/certified-sxpid2-executable-assurance.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "2370637b750578fc1818279f6001f4143dd8e1e3d48136077a6953ceb2ee795c",
-      "size_bytes": 481133
+      "sha256": "1d8d38809f877dd4499b8fe79ebe9e469fa116aa1ba4cbc2d5d4e35bafd76800",
+      "size_bytes": 481102
     },
     {
       "path": "output/pdf/dependency-colored-sxpid-concentration.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "dda28c027e9eafccccebef6c165c847563faa8f7a2fe0ace3f1e10104de6cb27",
-      "size_bytes": 824929
+      "sha256": "5c8e4838a809ad437f5096fb83e36bf450b0d8ecd6f8634174bf87e254373763",
+      "size_bytes": 824900
     },
     {
       "path": "output/pdf/ecosystem-compatibility-audit.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "eac0abeb3c5f68c46ab223f29b59328b462a4abe8942af9d5e3a5f87207cc0f1",
-      "size_bytes": 359812
+      "sha256": "2292aa5c037d14b76ff94dad5d8f3d3e2a159fdbb1cd307c27ef3512231c69c4",
+      "size_bytes": 359829
     },
     {
       "path": "output/pdf/exact-log-product-sxpid2-assurance.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "3462a19fadc87fd542da356145413d7f71227f84d8ead1f38f334eec6462a615",
-      "size_bytes": 373617
+      "sha256": "51d8d0b5f34c05ff607a1e1a6348c6789ea46476e66362b74cb01f9af0a2d580",
+      "size_bytes": 373585
     },
     {
       "path": "output/pdf/finite-alphabet-plugin-convergence.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "efc8a236b4bade4a8bce1f6fcdf94e198f295940516f40e778a3b9a0b7c9daf4",
-      "size_bytes": 456897
+      "sha256": "383fdcfd8d79a7a19856ae425bf69dacf5dd29be082eee63c58ca73541a5338f",
+      "size_bytes": 456866
     },
     {
       "path": "output/pdf/formal-tool-adoption-audit.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "938a07768d503b7a2cc289d25160000074bfbc2b418a7e4b3c3e212b612bf6fb",
-      "size_bytes": 381351
+      "sha256": "d983915c2ec288fdb4432c799f8b1b48de1ec1cd51138863f20184165e51f7e3",
+      "size_bytes": 381315
     },
     {
       "path": "output/pdf/foundational-shared-exclusions-pid-audit.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "ca9c295dcb7afc6fbceedd444a8e59ddae36a09845efb05ae14d76acccde207a",
-      "size_bytes": 359015
+      "sha256": "df5c8b645469b7f3f942b37474fce933ac6980fddd157d45594bdfd91a628108",
+      "size_bytes": 359028
     },
     {
       "path": "output/pdf/ksg-m1a-composite-v4-process.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "e9c38547d092b4d1c4940d4f04066d8384232d6afb3ea304f83fb4b18b835265",
-      "size_bytes": 1149221
+      "sha256": "1683a6cf84646edc1a5f2258cf858ea9af707b3bf5712b6820c9fdb7436424d0",
+      "size_bytes": 1149217
     },
     {
       "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf",
-      "size_bytes": 860468
+      "sha256": "24a394e979d0a9430f10e5999790c6d467c502e2ccf6553cc74e5140fbb10263",
+      "size_bytes": 860473
     },
     {
       "path": "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "0fd334a08a6a1af871762b41b6057b0f9af276eb5ba99188a5f2edb5f3c3500c",
-      "size_bytes": 356278
+      "sha256": "4e68897f9f06d8f69e5ecc46be6e30c16a336950b45fbbb3bab25c158224bee8",
+      "size_bytes": 356243
     },
     {
       "path": "output/pdf/two-source-sxpid-count-atom-bridge.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "75aa66c9911dac0e1699795d4b0e8d84ac294d23b482d623381554af151af880",
-      "size_bytes": 429772
+      "sha256": "cccc71bf5bfd02097db7ce1b91bb617e37481c7e12f9adadc5da6477375a9ce6",
+      "size_bytes": 429739
     }
   ],
   "historical_release": {
@@ -315,9 +315,15 @@
       },
       {
         "git_mode": "100644",
+        "path": "AUTHORSHIP.md",
+        "sha256": "975dffd1982397f0809654ca8f2f2902a9e2172ab9737fa0757048697835a13e",
+        "size_bytes": 1173
+      },
+      {
+        "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "560ca042e6a4226371ae10531f4a0de00fff3ced62c5e6e4bb31153d859744d2",
-        "size_bytes": 311339
+        "sha256": "4262d157a101182a7c4d2a8f72b34737e9bf47ce11a02eab514ba840b3c467b0",
+        "size_bytes": 311597
       },
       {
         "git_mode": "100644",
@@ -466,14 +472,14 @@
       {
         "git_mode": "100644",
         "path": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md",
-        "sha256": "8b446accb257531dbf219670a39c8f1e4b794671bb85ff06f3992bdcdfd5e9c1",
-        "size_bytes": 115793
+        "sha256": "20cfc275fa0ce3aa191b659e6b708a37a8d164714dc7381e2699d4dd771e05d7",
+        "size_bytes": 115821
       },
       {
         "git_mode": "100644",
         "path": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf",
-        "sha256": "b82c5a0a400ccb129195c3db6e765c7861605f84710226cedd01246967cca7d7",
-        "size_bytes": 513189
+        "sha256": "d49a2de87a85ae4d5d7ed626f146bb6eded46cf3d693f3bc4352adf4f9993987",
+        "size_bytes": 513213
       },
       {
         "git_mode": "100644",
@@ -490,8 +496,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "a03459439fd46ce3a0ebdf7636242822d690574c2a7cec95b57e01aa6720d5dc",
-        "size_bytes": 88239
+        "sha256": "adfc5a9fd67cb7dab28904561a7a1835cd6bbd97830c5a03556571159d6b2e1b",
+        "size_bytes": 88317
       },
       {
         "git_mode": "100644",
@@ -2884,8 +2890,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/finite-target-copy-mgw-synergy.md",
-        "sha256": "63c6adeb1f9078213e323ba895057e0e949315df45bd33d46ae6fb9e69714671",
-        "size_bytes": 33464
+        "sha256": "caf8746947013ea37ff53f1e1821b8d5564b15c2d1419688d446d3c58cb6b26b",
+        "size_bytes": 33501
       },
       {
         "git_mode": "100644",
@@ -3543,6 +3549,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-v4-normalizer-input-authorship-2026-09-23.tex",
+        "sha256": "1927bb26900eb31f448a41579f11d0779de5acf6d75f059379faf0fedbb3a320",
+        "size_bytes": 100849
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-v4-normalizer-input.tex",
         "sha256": "d17cd98eb82ab69cd43e53377a4da1def4dd36d3c2d8bff84a609a9e42a74aee",
         "size_bytes": 100859
@@ -3627,6 +3639,48 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR.json",
+        "sha256": "495e7f07d5abb70358fdd428a0dd75d214c9cce6cccad028670fa81d07fa53b6",
+        "size_bytes": 4253
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-120dpi.png",
+        "sha256": "4f5dcee0b6127a779792a0383b7bc2b29ed5617b4e209bbd1463ad21265758dd",
+        "size_bytes": 246307
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-actual-views.json.txt",
+        "sha256": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae",
+        "size_bytes": 89628
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-rendering-receipt.tsv.txt",
+        "sha256": "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea",
+        "size_bytes": 19052
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-source.tex.txt",
+        "sha256": "dd59ded265b42a6854014923e0b81e49a0da79eccd9b2440835c1df0c735bb94",
+        "size_bytes": 284090
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-visual-receipt.md.txt",
+        "sha256": "4454d1975ff69a55944258f469e0603ce4cd9065b384218da013436cdfcef602",
+        "size_bytes": 5722
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous.pdf.bin",
+        "sha256": "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf",
+        "size_bytes": 860468
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/mathematical-workflow-publication-profile-2026-09-01/checker-before-2026-09-05-profile-update.sh",
         "sha256": "4729e35f694634549d1d8e841fe4eb169dd7d3a737ff85ba0024f28c6223e54d",
         "size_bytes": 254812
@@ -3706,8 +3760,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/mgw-fixed-world-added-information-2026-09-09.md",
-        "sha256": "2407d08a08d55ebd79540d0adbd382b1f5f334ecee0e86dc99b3a163f85a5655",
-        "size_bytes": 20647
+        "sha256": "63a97ed62deb9237a8c2dcf45a97da2509535bea6a103eb045b85b7687c4a8de",
+        "size_bytes": 20684
       },
       {
         "git_mode": "100644",
@@ -3801,6 +3855,30 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage.md.bin",
+        "sha256": "8b446accb257531dbf219670a39c8f1e4b794671bb85ff06f3992bdcdfd5e9c1",
+        "size_bytes": 115793
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage.pdf.bin",
+        "sha256": "b82c5a0a400ccb129195c3db6e765c7861605f84710226cedd01246967cca7d7",
+        "size_bytes": 513189
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage.tex.bin",
+        "sha256": "b90b75ddbd5526eb99f546a5d21c662bb45628019c27babc1b4d78510f44e234",
+        "size_bytes": 9135
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23.json",
+        "sha256": "bb0f2ec268b21c7c9b7b070625c1ca0682fe00cf1770f14ea84a965f69e2cf8d",
+        "size_bytes": 2043
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md",
         "sha256": "335263a235fc3faf6edbcea2c0683563e54646454c7720959db31e16dca7acdf",
         "size_bytes": 9045
@@ -3837,6 +3915,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/post-publication-custody-2026-09-02.authorship-preimage-v1.md.txt",
+        "sha256": "2530f5bbc3c362246faba904418a5b82cea302f495ab7d7450aa8ed3b4983112",
+        "size_bytes": 23123
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/post-publication-custody-2026-09-02.authorship-preimage-v1.pdf.bin",
+        "sha256": "d122cec2e2f77cf613a00d28601161cc75a28a93f777700e7919afb4f5fb8550",
+        "size_bytes": 182442
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/post-publication-custody-2026-09-02.json",
         "sha256": "e9eda59361a69f3a59b34cbc8f26b12955227ac32e541f904f08bf9d40ec79a2",
         "size_bytes": 28522
@@ -3844,8 +3934,14 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/post-publication-custody-2026-09-02.md",
-        "sha256": "2530f5bbc3c362246faba904418a5b82cea302f495ab7d7450aa8ed3b4983112",
-        "size_bytes": 23123
+        "sha256": "17f066b4d36e134c2050afca7cf20091720d16df4ff315bf7a68243046580c52",
+        "size_bytes": 23154
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/post-publication-custody-authorship-2026-09-23.json",
+        "sha256": "0c9afb010793d21a8a151280936958a3e8240e3334586f347597f07ef6a73535",
+        "size_bytes": 830
       },
       {
         "git_mode": "100644",
@@ -3867,9 +3963,15 @@
       },
       {
         "git_mode": "100644",
-        "path": "audit/evidence/post-publication-custody/header.tex",
+        "path": "audit/evidence/post-publication-custody/header.authorship-preimage-v1.tex.txt",
         "sha256": "4b9b6993f1ff6f6d32cfa4a8fac66d9d92553d0605ca319623dbddfc405c4450",
         "size_bytes": 3579
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/post-publication-custody/header.tex",
+        "sha256": "e8635c294dab71057176c5a93f57109e454659c6f2d4e1c6819b766f4b3a5072",
+        "size_bytes": 3577
       },
       {
         "git_mode": "100644",
@@ -12922,8 +13024,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08.md",
-        "sha256": "0fe76ae499d78913a7bd924bfc7d85a5ab7418173971bfc5496eccd8b3e93c1e",
-        "size_bytes": 29487
+        "sha256": "1cb2072b756cd5d37e9aee1c8e2834d3898eea6acd5f01837f4f2eb93667a72c",
+        "size_bytes": 29524
       },
       {
         "git_mode": "100644",
@@ -13234,26 +13336,26 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
-        "sha256": "297c9fdfae897b2136a3eb870a81c0ab0b3553d1056c1c87492dd0e6fbafdf61",
-        "size_bytes": 87640
+        "sha256": "3fd115f468d251294636dde447316fc43ff6fdce1579ebc39f043aefdc2912e5",
+        "size_bytes": 87628
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/dependency-colored-sxpid-concentration.tex",
-        "sha256": "8ecc354ea8786bd3865a982a7b3bb38ba0125460a627f7f9aa7c8a014e541a64",
-        "size_bytes": 99556
+        "sha256": "f6785f26066b50f512327c02a404d2d5b62ae90f80a586b5f0a87325786b497d",
+        "size_bytes": 99544
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/ecosystem-compatibility-audit.tex",
-        "sha256": "0c2d8b212f82ca5e50e3f0aa69115a0137721c5a042f8429893a09538226fd36",
-        "size_bytes": 47167
+        "sha256": "afcc904724757b61c247be074e0b492545aa1cc8038bc6863b17185ef81f7a3d",
+        "size_bytes": 47173
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
-        "sha256": "05e865acfc2745df6245cc2b99aa81503ac7fbf498a1f41b884afe6f3711d7d1",
-        "size_bytes": 45199
+        "sha256": "d9b6e69720744e8c781769f6435e081c8393ed3e75cfc654c87ab3013aae486e",
+        "size_bytes": 45187
       },
       {
         "git_mode": "100644",
@@ -13600,55 +13702,55 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/finite-alphabet-plugin-convergence.tex",
-        "sha256": "164ae8f4c8e05fe388264fba40a5029228297b163cfcd5cb804f7d533bd78bcf",
-        "size_bytes": 59593
+        "sha256": "7c52af63f30fea224603595487875850aab7166c7290e602cdbb6da7dac60e9b",
+        "size_bytes": 59581
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/formal-tool-adoption-audit.tex",
-        "sha256": "1fc9b4f89a8ea05f381f73289b1b26f20b155aef3609c133dddb57eda5d8feda",
-        "size_bytes": 63738
+        "sha256": "d9d370e9e98c34e753555ff16fb3b78149c2a15d17a1d3c906a5da6a2c184189",
+        "size_bytes": 63726
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/foundational-shared-exclusions-pid-audit.tex",
-        "sha256": "ef972a48c23cc26a03cf8dbb0c5df2722b83ef7c0d3e28698b7d6b0220a00cd3",
-        "size_bytes": 45428
+        "sha256": "058a6230cd6bd790d932d77aa0ab1ae7663ccf6aa94168579f0a2294ebf6ff15",
+        "size_bytes": 45434
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/ksg-m1a-composite-v4-process.tex",
-        "sha256": "21667a4d5d25a875d56d8794486593d4328cae4b24b655d26bc33de527496657",
-        "size_bytes": 28520
+        "sha256": "147785dc2ecba0a0bd246875b9f95c1bb72680f25f5b8981869b4798e5e8ba2b",
+        "size_bytes": 28514
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/ksg-m1a-composite-v5-boundary.tex",
-        "sha256": "8f32bf892c102b73c20d507c92b631d2387ab07b686ab7e0a163eae7f1f52527",
-        "size_bytes": 12800
+        "sha256": "6d2c607629ecf6edf6ed96e3afe729e65adb6f1a37e7572e2257743149e2135c",
+        "size_bytes": 12794
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/ksg-m1a-composite-v6-boundary.tex",
-        "sha256": "d75ed1834dbc5d210bafb2a1f65784e13e465c199dcb36dc461eb27be3857e12",
-        "size_bytes": 13201
+        "sha256": "cda8ea85faa9521359864daeb67297f1ee30ffce26b0eb1204e295a6253a5c1b",
+        "size_bytes": 13195
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/ksg-m1a-composite-v7-boundary.tex",
-        "sha256": "8bb1461d5fc5e7fd883d040b0865a47276e060696176b0c1b4ae8e9c797e5b8b",
-        "size_bytes": 16188
+        "sha256": "f3eb4827ae4dc2a9e9e44be4b043636babe5dc9041a8e29443a157aa0ffc4baf",
+        "size_bytes": 16182
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-problem-solving-workflow.tex",
-        "sha256": "dd59ded265b42a6854014923e0b81e49a0da79eccd9b2440835c1df0c735bb94",
-        "size_bytes": 284090
+        "sha256": "6b1298f2b3b99be00b6e8ae8503420e01855db94fef8f30d63971ab5d7efb7b2",
+        "size_bytes": 284086
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json",
-        "sha256": "a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939",
+        "sha256": "a9589302cad3c5dc69b25aceccd0dee5aaec36cbc9744396d41274aaf6b2eba9",
         "size_bytes": 18943
       },
       {
@@ -13684,8 +13786,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide/header.tex",
-        "sha256": "f570010a4e09faa21538e1956e552efd34d7d19ae1776ff6e2f735aa1ddd89d8",
-        "size_bytes": 5627
+        "sha256": "bb82bfdd016ca58e94a744c89b71b9821ec18f8f2dbf5d8e14d10564448153d6",
+        "size_bytes": 5629
       },
       {
         "git_mode": "100644",
@@ -13702,7 +13804,7 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json",
-        "sha256": "26ba5c4f6f305fc2d66d52cf19188b18d834a29b2584cbdf28f2d91693f6eda4",
+        "sha256": "04a9c13c5ce37f017f6eb0862727c03f0de79de47a35512cff939f9a7d279df5",
         "size_bytes": 18946
       },
       {
@@ -13768,8 +13870,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mgw-derivative-notes/cusp.expected.tex",
-        "sha256": "721e21cfca8303f93dd108dc696748e57c2b0e6555aaac19eb8b37473d500141",
-        "size_bytes": 13270
+        "sha256": "06bf3900b5aea642b793f351d850a76e6ebefbd3b9626097e387cb57dbe9c2fe",
+        "size_bytes": 13285
       },
       {
         "git_mode": "100644",
@@ -13780,8 +13882,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mgw-derivative-notes/gradient.expected.tex",
-        "sha256": "0f402c02fb571d2b17e810aa33008852f55956b47fe2f0fdfaf30e2cdd407003",
-        "size_bytes": 36814
+        "sha256": "92eec35db338014d466fce738004f4aef50965af35bbffaf3600f722734d4709",
+        "size_bytes": 36829
       },
       {
         "git_mode": "100644",
@@ -13792,8 +13894,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mgw-derivative-notes/layout/report.latex",
-        "sha256": "bd2d8f3488b314c7b50fec97346b326b6398073d1769821b8b5e60ebd0de9ece",
-        "size_bytes": 1922
+        "sha256": "6de13191e9b4cc6939be7ce04b5e30b024f9df3e6ea95be9a2a3fe5d3b33cb92",
+        "size_bytes": 1937
       },
       {
         "git_mode": "100644",
@@ -13899,6 +14001,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/publication-inputs-v4.json",
+        "sha256": "1c5303c73888b314689df2e1c74ee69b3eacf3cd23e91358f986880eb4293c07",
+        "size_bytes": 20960
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/mgw-fixed-world/body.expected.tex",
         "sha256": "2b62fd6dfca9ac3f3e4a3272f86258e782e42aa6aba60c8dc867b446f62a75b7",
         "size_bytes": 29078
@@ -13965,9 +14073,21 @@
       },
       {
         "git_mode": "100644",
-        "path": "audit/formal/latex/mgw-fixed-world/publication.tex",
+        "path": "audit/formal/latex/mgw-fixed-world/publication-inputs-v7.json",
+        "sha256": "1b728896506404991c718a88b48006be28a32ff73280c45bef1363e1ce9b9833",
+        "size_bytes": 77714
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/publication.authorship-preimage-v1.tex.txt",
         "sha256": "af1a17dc874708f2e6d678e511c6e3cc78a0cc03b4be8d896303a7758b97a4b2",
         "size_bytes": 2271
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/publication.tex",
+        "sha256": "a8509a08e38e22820b37972da6cea3bedb93496b112d39f8fead00f06deb5fb4",
+        "size_bytes": 2267
       },
       {
         "git_mode": "100644",
@@ -13989,9 +14109,15 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-target-copy/publication-inputs-v5.json",
+        "sha256": "b1a71987523e3df71c138d477d37b10e23818706c15edcbf969971324c87f648",
+        "size_bytes": 44594
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/mgw-target-copy/publication.tex",
-        "sha256": "231980a06519dd643ef252c5929f0e0b8d0a3c3270709a46d572ee6d94a24cc0",
-        "size_bytes": 2186
+        "sha256": "c9b006e64a774d27ce74aa3a31d83c9953da5e8f995414467669f5f0441df700",
+        "size_bytes": 2182
       },
       {
         "git_mode": "100644",
@@ -14002,8 +14128,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/numerical-assurance/header.tex",
-        "sha256": "f8f5f1d4b70c5ce36ab64c46053e3494db4fed9c06624fa33689f77d6f3c560b",
-        "size_bytes": 6102
+        "sha256": "47e5b942d726d13215b8f1491e151dc34bc5e8350b4cd606da07f8a6fe3e3180",
+        "size_bytes": 6146
       },
       {
         "git_mode": "100644",
@@ -14014,8 +14140,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/pid-discovery-verification-and-durability-blueprint-header.tex",
-        "sha256": "b90b75ddbd5526eb99f546a5d21c662bb45628019c27babc1b4d78510f44e234",
-        "size_bytes": 9135
+        "sha256": "5a320a5328eddb67b0724e0c4c07da59c6f2524af5c8a8b6780e9d5af807ba72",
+        "size_bytes": 9208
       },
       {
         "git_mode": "100644",
@@ -14044,8 +14170,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/pid-sensor-placement-and-galadriel-guide/header.tex",
-        "sha256": "23709b7fae000e6663c60a36d7655a38b4d171bba8fa78397654c99743f1ec57",
-        "size_bytes": 6114
+        "sha256": "a82a7f020ecab518c70603003d7943995060d3ca05a3d3bba627b8503e98ae83",
+        "size_bytes": 6158
       },
       {
         "git_mode": "100644",
@@ -14056,8 +14182,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/pid2-represented-coordinate-assurance/header.tex",
-        "sha256": "14daa18e547fbb525f8734484efaae91188dc7e5b44a1479df64b23beeb214eb",
-        "size_bytes": 7454
+        "sha256": "ca19c3b4a5be6075e5a18d022e2e543b65b13a05a9cd65b8f606e7e45a3d8fdb",
+        "size_bytes": 7498
       },
       {
         "git_mode": "100644",
@@ -14230,14 +14356,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-bias/full.expected.tex",
-        "sha256": "93acf2389748642c59c7fd65458b405e76a974a43f66237285a06d6c1edc483c",
-        "size_bytes": 36159
+        "sha256": "e493aa363c04b14a845422fdab5b24c1680bb09ff8af285507ea92825b2e9175",
+        "size_bytes": 36155
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-bias/full.pandoc.expected.tex",
-        "sha256": "b7e6889478234eb4488fed5a18701ee303129191da0f4bea911571d16ec98a6b",
-        "size_bytes": 36000
+        "sha256": "8786a769608690d8bb589f7f2d06e1f87ff6036c3a91c48b2b0ff6635b8e747b",
+        "size_bytes": 35996
       },
       {
         "git_mode": "100644",
@@ -14248,8 +14374,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-bias/layout/report.latex",
-        "sha256": "31ea6b0508d7d5e9dba8a5d0bf6afa47aef1ebfcad522792f3576e9878145326",
-        "size_bytes": 2071
+        "sha256": "43c9ca20723a6dd561cf2df929d443ca547d527d71398bbcce9d7632b5104bdd",
+        "size_bytes": 2069
       },
       {
         "git_mode": "100644",
@@ -14280,6 +14406,12 @@
         "path": "audit/formal/latex/prefix-mgw-bias/publication-inputs-v2.json",
         "sha256": "79684b90f94e318f28666808c1514a7526e6f63492f3dc9f3bc296ffb00b5501",
         "size_bytes": 9708
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/prefix-mgw-bias/publication-inputs-v3.json",
+        "sha256": "c449a5c5ec54ebb924555b7bd356959a2be180ac3c6a2bc2cf8b1ba77464ef53",
+        "size_bytes": 10119
       },
       {
         "git_mode": "100644",
@@ -14314,14 +14446,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-bias/summary.expected.tex",
-        "sha256": "671a1f6ac871015dd8b025c348f197844dc36c9a61cf65dfb97acff54b4f295a",
-        "size_bytes": 5182
+        "sha256": "06e23aef29fc86fd0b60ad5d7eeb376fed11cd4d37959446cbc4ef3a8ce8cc8c",
+        "size_bytes": 5178
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-bias/summary.pandoc.expected.tex",
-        "sha256": "54040364895c7cba711ef22c098685cc57cd442e3aed16d3ac12fe89802ca6fe",
-        "size_bytes": 5176
+        "sha256": "006c3f1202522a3b7c7d87a85e721ec72bef73237273f0a715cb875ca0956c1f",
+        "size_bytes": 5172
       },
       {
         "git_mode": "100644",
@@ -14344,14 +14476,20 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-mean/prefix-mgw-mean.tex",
-        "sha256": "6e424afa695907ad3042d60fb0a45424375efce76b3d62eb58e7ace75496e6f1",
-        "size_bytes": 1994
+        "sha256": "acd863c2ab639ec0f357aa55df473afb354417702f9cc9919f24ade334ffaea8",
+        "size_bytes": 1990
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-mean/publication-inputs-v1.json",
         "sha256": "6f181dcb87d6398075a568ce0156df17081ea14fe68305f7b267f819c2a59ffa",
         "size_bytes": 2962
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/prefix-mgw-mean/publication-inputs-v2.json",
+        "sha256": "e04063ac8561a0109ba543805ff2ee8b06893cbc1507113fd12ca9fbdfa9f0eb",
+        "size_bytes": 3297
       },
       {
         "git_mode": "100644",
@@ -14391,15 +14529,21 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/real-occupancy-sensors/publication-inputs-v4.json",
+        "sha256": "7b1257ac8fd6b9d776b5d2bb6c65d4490802614a50248b2a224074648c3f8948",
+        "size_bytes": 53233
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/real-occupancy-sensors/publication.tex",
-        "sha256": "cb2fa5971159f4a5becdf4d274a0d0261f5ff79d53288bd9937f9b4ea7f78ec5",
-        "size_bytes": 2278
+        "sha256": "48f32c5e90dec3ce4851b4f19dc8810af5afa4b6ac0753f582ced6ae26cbb4cd",
+        "size_bytes": 2274
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/support-change-tolerant-averaged-sxpid-continuity.tex",
-        "sha256": "652a6ee04ba4e4b36e6f5674f62c791c67019a376e29fe2bc49c600d30f8d9e5",
-        "size_bytes": 33587
+        "sha256": "cc6ec516257a4fd79f9688093899f57d6b0b056e08496a1852db9762312cf864",
+        "size_bytes": 33575
       },
       {
         "git_mode": "100644",
@@ -14410,14 +14554,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/sxpid3-source-marginal-and-bounded-audit/header.tex",
-        "sha256": "db26916b0722dcd58280047f4b4bc7397f8a11ae974588955fe8dfbe502d0d6e",
-        "size_bytes": 3114
+        "sha256": "089ff91127cd40587fa527c891a7636cbece0c7089a4d89ed790d0086fdcf201",
+        "size_bytes": 3150
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/two-source-sxpid-count-atom-bridge.tex",
-        "sha256": "e148a1767dab3279f9c47ab1ee5c6de6a5db4843393dc0c75dbb87ce00dc1e6b",
-        "size_bytes": 32405
+        "sha256": "79708485321165c84900754d33c8c6dc648694f9ddda9068ee335f45e997a371",
+        "size_bytes": 32393
       },
       {
         "git_mode": "100644",
@@ -15262,8 +15406,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/lean-prefix-mgw-bias/EXPOSITION.md",
-        "sha256": "466768a02a892cbe7453f4e5fb7af09afdd6f529ab6b571c063a04d2a5932784",
-        "size_bytes": 30333
+        "sha256": "06e7dc1b6e682ea843a38657acf9285f28fc61f8959f4dc7cf32707fac9dcdff",
+        "size_bytes": 30331
       },
       {
         "git_mode": "100644",
@@ -15352,8 +15496,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/lean-prefix-mgw-bias/SUMMARY.md",
-        "sha256": "8daf2f4c10710d8eb83aa585db296d0732557590d1e9cfd1a2c501ed8eb40414",
-        "size_bytes": 2883
+        "sha256": "fda4d848992e959a475875c229166c53ecb58b74a5aa0dca7517bd7ef54cf2b9",
+        "size_bytes": 2881
       },
       {
         "git_mode": "100644",
@@ -23740,8 +23884,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md",
-        "sha256": "d20b5736108f73a4491fe990518482cc2cbd6c9e2b06b61297cdde970114c98f",
-        "size_bytes": 19968
+        "sha256": "548d83285030a255bd8ebbec50bf438de0ed4d89173da3b8ac1ad19f4703ec4e",
+        "size_bytes": 20005
       },
       {
         "git_mode": "100644",
@@ -24478,8 +24622,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
-        "sha256": "f1734c2efb89cb6b03cf384552a73ce84e5cfa7772971750ea6382d7cc5fc7b2",
-        "size_bytes": 31569
+        "sha256": "beb9182bd1b59ed525d03245d60575d5406663cdd6c28b473e3a167b8adec16a",
+        "size_bytes": 31606
       },
       {
         "git_mode": "100644",
@@ -24490,8 +24634,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/support-change-mi-cusp/EXPOSITION.md",
-        "sha256": "04a040676eddff849da8040c9c2bc2cc445ae625a45c1ad7510835ec290e0832",
-        "size_bytes": 10288
+        "sha256": "b27f3f5daf941dfbe42a65d519b8f6e291900a47a0630b8b6d8d0e66bdbcad76",
+        "size_bytes": 10325
       },
       {
         "git_mode": "100644",
@@ -26848,68 +26992,68 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/certified-sxpid2-executable-assurance.pdf",
-        "sha256": "2370637b750578fc1818279f6001f4143dd8e1e3d48136077a6953ceb2ee795c",
-        "size_bytes": 481133
+        "sha256": "1d8d38809f877dd4499b8fe79ebe9e469fa116aa1ba4cbc2d5d4e35bafd76800",
+        "size_bytes": 481102
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/dependency-colored-sxpid-concentration.pdf",
-        "sha256": "dda28c027e9eafccccebef6c165c847563faa8f7a2fe0ace3f1e10104de6cb27",
-        "size_bytes": 824929
+        "sha256": "5c8e4838a809ad437f5096fb83e36bf450b0d8ecd6f8634174bf87e254373763",
+        "size_bytes": 824900
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/ecosystem-compatibility-audit.pdf",
-        "sha256": "eac0abeb3c5f68c46ab223f29b59328b462a4abe8942af9d5e3a5f87207cc0f1",
-        "size_bytes": 359812
+        "sha256": "2292aa5c037d14b76ff94dad5d8f3d3e2a159fdbb1cd307c27ef3512231c69c4",
+        "size_bytes": 359829
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/exact-log-product-sxpid2-assurance.pdf",
-        "sha256": "3462a19fadc87fd542da356145413d7f71227f84d8ead1f38f334eec6462a615",
-        "size_bytes": 373617
+        "sha256": "51d8d0b5f34c05ff607a1e1a6348c6789ea46476e66362b74cb01f9af0a2d580",
+        "size_bytes": 373585
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/finite-alphabet-plugin-convergence.pdf",
-        "sha256": "efc8a236b4bade4a8bce1f6fcdf94e198f295940516f40e778a3b9a0b7c9daf4",
-        "size_bytes": 456897
+        "sha256": "383fdcfd8d79a7a19856ae425bf69dacf5dd29be082eee63c58ca73541a5338f",
+        "size_bytes": 456866
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/finite-prefix-mgw-gradient.pdf",
-        "sha256": "7fe9dc76bce48217a16819c152c7709752ad840b8f9d808ca79068209522d0e0",
-        "size_bytes": 212494
+        "sha256": "7211b2420d245f16d189ccc203561f12ca146b03e3ccf13585960760e0e69d99",
+        "size_bytes": 212517
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/finite-target-copy-mgw-synergy.pdf",
-        "sha256": "b22f6b079cdbc28af184d2f88fe9a71a4e689e37804017decc15dd06e46f7a58",
-        "size_bytes": 182631
+        "sha256": "91015d09176201aa0059c16f535a775382f680a807c1e70fb964edb704955c6b",
+        "size_bytes": 182625
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/formal-tool-adoption-audit.pdf",
-        "sha256": "938a07768d503b7a2cc289d25160000074bfbc2b418a7e4b3c3e212b612bf6fb",
-        "size_bytes": 381351
+        "sha256": "d983915c2ec288fdb4432c799f8b1b48de1ec1cd51138863f20184165e51f7e3",
+        "size_bytes": 381315
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/foundational-shared-exclusions-pid-audit.pdf",
-        "sha256": "ca9c295dcb7afc6fbceedd444a8e59ddae36a09845efb05ae14d76acccde207a",
-        "size_bytes": 359015
+        "sha256": "df5c8b645469b7f3f942b37474fce933ac6980fddd157d45594bdfd91a628108",
+        "size_bytes": 359028
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/ksg-m1a-composite-v4-process.pdf",
-        "sha256": "e9c38547d092b4d1c4940d4f04066d8384232d6afb3ea304f83fb4b18b835265",
-        "size_bytes": 1149221
+        "sha256": "1683a6cf84646edc1a5f2258cf858ea9af707b3bf5712b6820c9fdb7436424d0",
+        "size_bytes": 1149217
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/ksg-m1a-composite-v5-boundary.pdf",
-        "sha256": "bf932cfb2dbe70500458cc8de0d4ce2f3718bfe5d135755e2a9147c3d6621a79",
-        "size_bytes": 1036495
+        "sha256": "17d0fe7473f1f74f431af02d68f8a1c70e6e03a23648e2aaea056fb086950360",
+        "size_bytes": 1036487
       },
       {
         "git_mode": "100644",
@@ -26920,8 +27064,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/ksg-m1a-composite-v6-boundary.pdf",
-        "sha256": "52751c8701ad527040907e399f41ee6579616bc63db1af174bea65e5303da09a",
-        "size_bytes": 1042119
+        "sha256": "bd38024b800d1368b6a6490982c138e714cb96b75dbf6d0ec4ab52eedf6f8718",
+        "size_bytes": 1042111
       },
       {
         "git_mode": "100644",
@@ -26932,8 +27076,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/ksg-m1a-composite-v7-boundary.pdf",
-        "sha256": "2b05eb2e9d1e694d2f2f04b2bed3acf9b7f1c2eb1ac6672c48757ef9d067d33f",
-        "size_bytes": 1049198
+        "sha256": "81baddebb149c1f36693f7050405458b53037cf5374170b36cf985ef724b0bdd",
+        "size_bytes": 1049191
       },
       {
         "git_mode": "100644",
@@ -26944,8 +27088,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
-        "sha256": "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf",
-        "size_bytes": 860468
+        "sha256": "24a394e979d0a9430f10e5999790c6d467c502e2ccf6553cc74e5140fbb10263",
+        "size_bytes": 860473
       },
       {
         "git_mode": "100644",
@@ -26956,86 +27100,86 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-results-guide.pdf",
-        "sha256": "434fae95216282dc08840a1d492076d5c648d64b01bc1cd939884555b0a615a4",
-        "size_bytes": 818425
+        "sha256": "166dd75fc3f60b6f30feee8cbba46076bba28abc5aaaf3d33f8b1475e6ab15f1",
+        "size_bytes": 818505
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/mgw-fixed-world-added-information.pdf",
-        "sha256": "b43e0d8902d9c919c6ab13a13c3a7c9d55ea07d3d02af1944edd0600d1801185",
-        "size_bytes": 231798
+        "sha256": "6fc4cfbe5bb71037515c4ebdd3119b20e6e970ce6f117e1b9659b44a728b565a",
+        "size_bytes": 231810
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/numerical-assurance.pdf",
-        "sha256": "362ac22df6c13db43a3e1fa9a70e23b1cc08ac4d764a0a202e873f67fcbe7e63",
-        "size_bytes": 704862
+        "sha256": "1e853b3f32c207335edfc9a8e31bae575f97d7d7cf54cfdb7886d9170fd3d5d9",
+        "size_bytes": 705435
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/pid-sensor-placement-and-galadriel-guide.pdf",
-        "sha256": "35884332e8294e6c5fd105788f6f2bae5dde3044003452b117ae15c0e66d3f42",
-        "size_bytes": 1476398
+        "sha256": "dd7761af2e99eafa69d5f5db35c836834c51bc8fafca5cfe2d0918ee96e9e6d8",
+        "size_bytes": 1476752
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/pid2-represented-coordinate-assurance.pdf",
-        "sha256": "7a9e3eae66d5e5e269f2d316c23d69f222c75f8226d26238691bcd96af1281f9",
-        "size_bytes": 392201
+        "sha256": "4d1d1af5890fa0ae7f1fed15ac5d140cc8e0520cbe1c44d21943bb805746c6b7",
+        "size_bytes": 392772
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/post-publication-custody-2026-09-02.pdf",
-        "sha256": "d122cec2e2f77cf613a00d28601161cc75a28a93f777700e7919afb4f5fb8550",
-        "size_bytes": 182442
+        "sha256": "58910977f3204a1c8e051bf15605f05465927c2f89d4c54f60f6e74d5121d60f",
+        "size_bytes": 182579
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/prefix-mgw-bias-summary.pdf",
-        "sha256": "6d8cd31d068312c58ffaa15ff263fed4468e4384826d7d1bcff259c1808cc9d4",
-        "size_bytes": 35706
+        "sha256": "1f02e2e459e842ae9798ee69655c84b884474077d1cf8ca1b046e045d440efb7",
+        "size_bytes": 35689
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/prefix-mgw-bias.pdf",
-        "sha256": "d84ef0523047f5ea6fd7852711d309aab033018bf2276cd109232e2bc9bdd91a",
-        "size_bytes": 373350
+        "sha256": "f717285c666c86f8c937cb55eff90b4b3688c5b6713112578dee7743b4a1b67b",
+        "size_bytes": 373340
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/prefix-mgw-mean.pdf",
-        "sha256": "93ff18e21f56e4770b12b7405d57b003bf7839cef5c4207ed98a56cd6f96f58f",
-        "size_bytes": 165475
+        "sha256": "3cb3f18b13dc71ba70529fba4c1d10c22aafc6e7b6454bce56fa10be7b74e2f3",
+        "size_bytes": 165469
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/recorded-office-sensors.pdf",
-        "sha256": "699d32e020cfa225b4014f3eaf18ec30b997c6d7a8e9a477878c412fec713715",
-        "size_bytes": 204448
+        "sha256": "22623c82b48954d33c1a50ed37fd9a3beb6adfae927fe63c42e0e89821cebbfa",
+        "size_bytes": 204450
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/support-change-mi-cusp.pdf",
-        "sha256": "44cc734b45e1e95d2609fcbad2610107e5576d1d82e3b203c3514ff2af0ec3d8",
-        "size_bytes": 67767
+        "sha256": "8d6870fac3f1e070b6b10bd2f975ba318203cc0209b6b35edf5471c40226079a",
+        "size_bytes": 67794
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
-        "sha256": "0fd334a08a6a1af871762b41b6057b0f9af276eb5ba99188a5f2edb5f3c3500c",
-        "size_bytes": 356278
+        "sha256": "4e68897f9f06d8f69e5ecc46be6e30c16a336950b45fbbb3bab25c158224bee8",
+        "size_bytes": 356243
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf",
-        "sha256": "788b993f39133f1bf0b1d5e81f61421d9f6a35ea774db53ff50fa3eed21a8cd2",
-        "size_bytes": 545595
+        "sha256": "97287b5a841a638800f64fe88f7b8771904117d98e63a1ee04cc3ef0c88e127b",
+        "size_bytes": 545949
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/two-source-sxpid-count-atom-bridge.pdf",
-        "sha256": "75aa66c9911dac0e1699795d4b0e8d84ac294d23b482d623381554af151af880",
-        "size_bytes": 429772
+        "sha256": "cccc71bf5bfd02097db7ce1b91bb617e37481c7e12f9adadc5da6477375a9ce6",
+        "size_bytes": 429739
       },
       {
         "git_mode": "100644",
@@ -27046,38 +27190,38 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "dbde2ce48e86b311278db38f6c288ce3b4d8ce58e3d436183c9ff308983aa5e1",
-        "size_bytes": 295584
+        "sha256": "5ffca399c6fb269a30aa64b722d58d9b0cd79ae2c5c5e86a4b5bb96b8490ced6",
+        "size_bytes": 296216
       },
       {
         "git_mode": "100644",
         "path": "scripts/build-finite-target-copy-mgw-pdf.py",
-        "sha256": "ab1eb022cae6d2a10ebebcab26693afc597bf747d8f6f0490e3cbf8aa8f7e9ac",
+        "sha256": "7aba9fdee6135a84ea68ebddef05d631aabcd47be92251e53380df1459d40af6",
         "size_bytes": 11100
       },
       {
         "git_mode": "100755",
         "path": "scripts/build-mathematical-results-guide-pdf.sh",
-        "sha256": "aebff0b1420780f2fff99bb976dd31df2fba83a515ba388013b5bbc09b34d42f",
-        "size_bytes": 44208
+        "sha256": "b35d5e286c529240411dd09830147c1643ef754736acbc26f67fbb5f8569b787",
+        "size_bytes": 44202
       },
       {
         "git_mode": "100644",
         "path": "scripts/build-mgw-derivative-notes-pdf.py",
-        "sha256": "b56f223847c40422daf302a77a572cc38e9d74e491d71b0ffef110f16985e4a4",
+        "sha256": "a1560af6a0daa38285a8473369377188a8ba1370ddd6ea6f09ecc95e7e3a4b8e",
         "size_bytes": 40233
       },
       {
         "git_mode": "100755",
         "path": "scripts/build-mgw-fixed-world-pdf.py",
-        "sha256": "fdce4298c9ce7011fc04aedb27b6075a9af8278e19dc3c777e91197b2fb2b382",
-        "size_bytes": 43507
+        "sha256": "bc0037147a47ce551bb1c2c694327533315ca9ed716f612005627b3ba5d97fb8",
+        "size_bytes": 44037
       },
       {
         "git_mode": "100755",
         "path": "scripts/build-numerical-assurance-pdf.sh",
-        "sha256": "c9b8e22c571a14af140fc3bb3149b7fb71253df487a1fb74d07aee4a84ce317c",
-        "size_bytes": 9605
+        "sha256": "1d868d9f31186f2a5c87d48f5c7d2cc399fd34d0089879d584b0e7d637fd9a10",
+        "size_bytes": 9599
       },
       {
         "git_mode": "100755",
@@ -27088,14 +27232,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/build-pid-sensor-placement-and-galadriel-guide-pdf.sh",
-        "sha256": "efd3ce2013af9a4f0fbbb2af526f91c8850af12ee9b04f7a50c53634f9524894",
-        "size_bytes": 13606
+        "sha256": "0973df7c653ff11c0cb6c1dee3a99b62d0b3a7dcd79829720e878d3b84641330",
+        "size_bytes": 13600
       },
       {
         "git_mode": "100755",
         "path": "scripts/build-pid2-represented-coordinate-assurance-pdf.sh",
-        "sha256": "101ece04e290dae5331e0fb365f633b8c2439492ba791dfd4439e30d374231ce",
-        "size_bytes": 6621
+        "sha256": "50f9dbe7a5d056a961fd5c15091a47b50bd1434bae129429a7ecfe0b9ee0b91e",
+        "size_bytes": 6615
       },
       {
         "git_mode": "100755",
@@ -27106,26 +27250,26 @@
       {
         "git_mode": "100644",
         "path": "scripts/build-prefix-mgw-bias-pdf.py",
-        "sha256": "3f4172690532c39de474650fbb1664fc90821e558659927cc93258dfef893e07",
+        "sha256": "fea1d9e1b252dd5c0cb8be3182f201491d9b71c701ce71c0e8f621d10767f789",
         "size_bytes": 40859
       },
       {
         "git_mode": "100644",
         "path": "scripts/build-prefix-mgw-mean-pdf.py",
-        "sha256": "f21f065eee8fd4a77c373445d858430fc4fd968f2c2b63d983c948d8a1e6fac0",
-        "size_bytes": 14269
+        "sha256": "ed89e74d76e4e4378cf0a2844b7b2051736c62e3b216f21f58f5e81487b524f9",
+        "size_bytes": 14432
       },
       {
         "git_mode": "100755",
         "path": "scripts/build-recorded-office-sensors-pdf.py",
-        "sha256": "18e51835b9c8d2036594fe93ec97336c7689a2d10564e4aa4c407f57e309d57b",
+        "sha256": "313eabead65fab8537e3931638df5159d63db8dcb3259dcac22251af963d37d1",
         "size_bytes": 22659
       },
       {
         "git_mode": "100755",
         "path": "scripts/build-sxpid3-source-marginal-audit-pdf.sh",
-        "sha256": "384c1eecc24df9e620987c5ef760eccbca40903ac396673bd328bb398b888279",
-        "size_bytes": 22413
+        "sha256": "a9f98d8f797f2af73a1ba33fea1996e1181c877eba78d4a4aea823017daa81de",
+        "size_bytes": 22407
       },
       {
         "git_mode": "100644",
@@ -27886,13 +28030,13 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-builder-self-test.sh",
-        "sha256": "8866247f7e2035e006f733dd7d86aa5e0ec959e0af52fb9f604dc458f754706c",
-        "size_bytes": 62292
+        "sha256": "ae004cdabd1a1aa44e2984cd00f4fc85ef0c4136dd7a44266f5ea3859ed0528a",
+        "size_bytes": 62314
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-diagnostics-self-test.py",
-        "sha256": "a6e31745c49c77bb012ea6cf48dd27f6409cf403b0dab891bfaf2f37809501d0",
+        "sha256": "1b6e3eae853357207b4b14d646a01f95b48226a1a792a24ddb04516c1f815841",
         "size_bytes": 5983
       },
       {
@@ -28030,8 +28174,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py",
-        "sha256": "4ecaa2bc7cf6d1e584b3469931df22b4bbbfb1dcb55cb86c7ddb2b514470c013",
-        "size_bytes": 140059
+        "sha256": "059c321e1bf53da53143a0f0031e5e17ae5ce475692976af807e77851c7f06ad",
+        "size_bytes": 140081
       },
       {
         "git_mode": "100755",
@@ -28090,8 +28234,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf.sh",
-        "sha256": "93e5af3b820535b104a4a17e8f9381c71dd5e5760c95f54abb4dbe06f774100e",
-        "size_bytes": 78449
+        "sha256": "558ada53c57b6bb7b999866766c5b8d4ceacf92fc08b649792795fbe8dcfe203",
+        "size_bytes": 78471
       },
       {
         "git_mode": "100644",
@@ -28132,14 +28276,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
-        "sha256": "2b12a0d72281ecfdfa1c96475f0d9eb5db8dfe5a2d6d042d759170f6e1329b98",
-        "size_bytes": 313940
+        "sha256": "774b0145ce12057d6e243154b7c8494a7dc20eb76b062196aee43e0019a9596e",
+        "size_bytes": 314855
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf.sh",
-        "sha256": "bc84cddae22fc9a79136cd97ce3f64dde2f16e57f676066850850597cd7eb65e",
-        "size_bytes": 276031
+        "sha256": "0cdf34d937646891581ddf46ba800008e54f6f978662a48925cab2f74e5d6787",
+        "size_bytes": 281317
       },
       {
         "git_mode": "100644",
@@ -28168,7 +28312,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mgw-derivative-notes-pdf-self-test.py",
-        "sha256": "8ad7dd46f6111ede0ae50e0bab0fe9a57d2f0cf9896a804503a9eae0a7b7d631",
+        "sha256": "fd04b2dcc3a0db931c522932046c24253353f545c5b823e9a68b2da639e52ddc",
         "size_bytes": 25628
       },
       {
@@ -28210,14 +28354,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh",
-        "sha256": "6e606469bc9ec5252a9be3b37ef0027bb75448cf0866a7331cce967ddcb58caa",
-        "size_bytes": 46484
+        "sha256": "96a9156bd0eff32430e8ed0337b80299952f31ec274d08f47f2e6d38a15ef820",
+        "size_bytes": 47863
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-pid-discovery-verification-blueprint-pdf.sh",
-        "sha256": "95c75f3884405442eab8299f05bacee8eead210f711c30a062269bcfc497fb28",
-        "size_bytes": 40927
+        "sha256": "90e25ceca359b7c27fe2b8633d39d1c4e3f0c675c64b2c2eabfd154b6dcae466",
+        "size_bytes": 46489
       },
       {
         "git_mode": "100644",
@@ -28276,14 +28420,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-post-publication-custody-pdf-self-test.sh",
-        "sha256": "8dc079f235eacd90793d9d3b4d85dbccf12b297c80d519e943d26e069bee2153",
-        "size_bytes": 24705
+        "sha256": "c78587902b9f0ca0eb2be655160f0ad8dc1f96573baf48e03a7d01b08287c4ac",
+        "size_bytes": 25313
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-post-publication-custody-pdf.sh",
-        "sha256": "df457c854914c10a7dd734509429039698fb41c60587b6a9a6b94fdff6716c55",
-        "size_bytes": 6364
+        "sha256": "f0194a749bbc92024938ee7eb17c94c78cc78587073fa94c85d9e674c8eed753",
+        "size_bytes": 7221
       },
       {
         "git_mode": "100644",
@@ -28294,8 +28438,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-post-publication-custody.py",
-        "sha256": "0f6871f846699af081a2a4d53b45a3f68fded208744371f3184312a530601016",
-        "size_bytes": 41812
+        "sha256": "4de41c9b3923473facc7f5c6fe9482a71ecfd1351daffc4c58aef93fd1ed728b",
+        "size_bytes": 42919
       },
       {
         "git_mode": "100644",
@@ -28338,6 +28482,12 @@
         "path": "scripts/check-public-api-snapshots.sh",
         "sha256": "5e75b60bc1efb79b995e096560dd47943b7eb410a60f76e415b357472dc4d2f7",
         "size_bytes": 10905
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-publication-authorship.py",
+        "sha256": "cc176c36f63c1119aa6a89e3e605f6dbb79f361d7e1191a7284544ad4840e553",
+        "size_bytes": 1206
       },
       {
         "git_mode": "100644",
@@ -28778,8 +28928,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "114078d1374fd23e8283c50a90b12b2ab000ac8e483f937a1f7066f8b390d646",
-    "entry_count": 4772
+    "entries_sha256": "212d8a9a1023fdf22561505dff8b9e218cd86b8c895f010c6224280dd3aeeb72",
+    "entry_count": 4797
   },
   "subprojections": [
     {
@@ -28791,15 +28941,15 @@
       ]
     },
     {
-      "entries_sha256": "8c4d3b52ea0aeea7b5cec34bffc3d419d3100a8b1bf0644f3986e24703b3043b",
-      "entry_count": 1879,
+      "entries_sha256": "f6ff73d924cdf8f3d5b396c11890395127b0a508ac39f2305f2798e75059e008",
+      "entry_count": 1886,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "51b78eedf98aadfe5608191adf91d862426077e4ebaf9d1aaf08f86ae1822a81",
+      "entries_sha256": "553d29c942a746fe6d91846b5cb0de7834c4cf07d91abcf99482a78676e8fd53",
       "entry_count": 32,
       "name": "generated_pdf_set",
       "selectors": [
@@ -28807,7 +28957,7 @@
       ]
     },
     {
-      "entries_sha256": "2f9cf5e83fd4f41a08be5f8074ebce7ceb1db7bb55d2eb9e6ce662302b4089b6",
+      "entries_sha256": "a0e760acbc360b65cfbd631d13820d8e6d7a843309d761e51efba5c972cc45cc",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

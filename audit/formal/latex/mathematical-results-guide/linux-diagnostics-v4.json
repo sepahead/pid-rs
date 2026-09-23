@@ -432,5 +432,5 @@
   "profile": "linux-pandoc-3.10.2-texlive-2023-debian-guide-v4",
   "schema": "guide-scoped-diagnostics-v1",
   "scope": "content-visual-structure-profile-only",
-  "tex_sha256": "93b388c285b42189dd254e3d5f5972b0d6cff2e9f28e525a9c56f937fe2a1d42"
+  "tex_sha256": "41270f87f5c2be3256236f1bea9f160225b99b7294da36effb68cacdb0d71872"
 }

@@ -23,6 +23,11 @@ CONVENTIONS="$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md"
 PRIMARY_RETIREMENT_LEDGER="$ROOT/audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json"
 SIBLING_RETIREMENT_LEDGER="$ROOT/audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json"
 VISUAL_RECEIPT="$ROOT/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-03.md"
+HISTORICAL_PDF="$ROOT/audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage.pdf.bin"
+HISTORICAL_SOURCE="$ROOT/audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage.md.bin"
+HISTORICAL_HEADER="$ROOT/audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage.tex.bin"
+AUTHORSHIP_RECEIPT="$ROOT/audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23.json"
+AUTHORSHIP_RECEIPT_SHA256="bb0f2ec268b21c7c9b7b070625c1ca0682fe00cf1770f14ea84a965f69e2cf8d"
 DECISION_V2_SHA256="f5bfef2afa6237661e031d416497e17f2aad01b17de61f15e9aba1a6e9ff6c59"
 DECISION_V3_SHA256="24544d7b3af575ecff706e88d20b8c8e18372c13711fc508e60cd31beffcc152"
 EVIDENCE_MATRIX_V3_SHA256="61aa07eb34344608b7683fc00f064ffcc914c74a1c39cb016a9ea0020b82667b"
@@ -44,8 +49,8 @@ MODE="${1:---exact}"
 EXPECTED_PAGES=31
 EXPECTED_PYPDF_VERSION="6.16.1"
 
-if [[ "$#" -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then
-  echo "usage: $0 [--exact|--cross-toolchain]" >&2
+if [[ "$#" -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" && "$MODE" != "--authorship-only" ) ]]; then
+  echo "usage: $0 [--exact|--cross-toolchain|--authorship-only]" >&2
   exit 2
 fi
 if [[ "$MODE" == "--cross-toolchain" ]]; then
@@ -81,6 +86,10 @@ required_inputs=(
   "$PRIMARY_RETIREMENT_LEDGER"
   "$SIBLING_RETIREMENT_LEDGER"
   "$VISUAL_RECEIPT"
+  "$HISTORICAL_PDF"
+  "$HISTORICAL_SOURCE"
+  "$HISTORICAL_HEADER"
+  "$AUTHORSHIP_RECEIPT"
   "$FIGURE_DIRECTORY/semantic-transfer-firewall-source-card.svg"
   "$FIGURE_DIRECTORY/semantic-transfer-firewall-pid-card.svg"
   "$FIGURE_DIRECTORY/durable-promotion-state-machine-stages.svg"
@@ -202,7 +211,7 @@ require_sha256 "$SIBLING_RETIREMENT_LEDGER" "$SIBLING_RETIREMENT_LEDGER_SHA256" 
   "sibling-registry retirement ledger"
 require_sha256 "$VISUAL_RECEIPT" "$VISUAL_RECEIPT_SHA256" \
   "blueprint visual-review receipt"
-require_sha256 "$COMMITTED" "$VISUAL_RECEIPT_PDF_SHA256" \
+require_sha256 "$HISTORICAL_PDF" "$VISUAL_RECEIPT_PDF_SHA256" \
   "visual-review receipt subject PDF"
 
 require_unique_line "$VISUAL_RECEIPT" \
@@ -220,11 +229,11 @@ require_unique_line "$VISUAL_RECEIPT" \
 require_unique_line "$VISUAL_RECEIPT" \
   "source_sha256: \`$VISUAL_RECEIPT_SOURCE_SHA256\`" \
   "visual-review receipt source digest binding"
-if [[ "$(wc -c <"$SOURCE" | tr -d ' ')" != "$VISUAL_RECEIPT_SOURCE_BYTES" ]]; then
+if [[ "$(wc -c <"$HISTORICAL_SOURCE" | tr -d ' ')" != "$VISUAL_RECEIPT_SOURCE_BYTES" ]]; then
   echo "$CHECK_NAME: visual-review receipt source byte binding drifted" >&2
   exit 1
 fi
-require_sha256 "$SOURCE" "$VISUAL_RECEIPT_SOURCE_SHA256" \
+require_sha256 "$HISTORICAL_SOURCE" "$VISUAL_RECEIPT_SOURCE_SHA256" \
   "visual-review receipt source Markdown"
 require_unique_line "$VISUAL_RECEIPT" \
   "pdf_sha256: \`$VISUAL_RECEIPT_PDF_SHA256\`" \
@@ -333,6 +342,93 @@ for required_link in \
   fi
 done
 
+# This successor does not transfer the historical all-page visual review.
+# Default --exact still performs every existing rebuild/PDF/raster predicate.
+validate_authorship_successor() {
+  require_sha256 "$AUTHORSHIP_RECEIPT" "$AUTHORSHIP_RECEIPT_SHA256" \
+    "blueprint authorship successor"
+  python3 -I -B - "$ROOT" "$AUTHORSHIP_RECEIPT" "$EXPECTED_PYPDF_VERSION" <<'PY_AUTHORSHIP'
+import hashlib
+import json
+from pathlib import Path
+import sys
+import pypdf
+
+root = Path(sys.argv[1])
+if pypdf.__version__ != sys.argv[3]:
+    raise SystemExit("authorship delta: unexpected pypdf version")
+record = json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
+if (record.get("schema") != "pid-rs/publication-authorship-successor/v1"
+        or record.get("author") != "Sepehr Mahmoudian"
+        or type(record.get("pages")) is not int or record["pages"] != 31
+        or record.get("historical_visual_receipt_applies_to_current_pdf") is not False
+        or record.get("historical_visual_receipt") !=
+        "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-03.md"):
+    raise SystemExit("authorship delta: successor scope drifted")
+paths = {
+    "current": {
+        "pdf": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf",
+        "source": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md",
+        "header": "audit/formal/latex/pid-discovery-verification-and-durability-blueprint-header.tex",
+    },
+    "historical": {
+        role: "audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage." + suffix
+        for role, suffix in (("pdf", "pdf.bin"), ("source", "md.bin"), ("header", "tex.bin"))
+    },
+}
+contents = {}
+for era, roles in paths.items():
+    for role, relative in roles.items():
+        data = (root / relative).read_bytes()
+        expected = {"path": relative, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+        binding = record[era][role]
+        if type(binding.get("bytes")) is not int or binding != expected:
+            raise SystemExit(f"authorship delta: {era} {role} binding drifted")
+        contents[era, role] = data
+author_line = b'author: "Sepehr Mahmoudian"\n'
+old_source = contents["historical", "source"]
+new_source = contents["current", "source"]
+if new_source.count(author_line) != 1 or new_source.replace(author_line, b"", 1) != old_source:
+    raise SystemExit("authorship delta: Markdown change exceeds author credit")
+old_header = contents["historical", "header"]
+date_line = b'    {\\sffamily\\large\\bfseries\\color{PidBlue}\\@date\\par}'
+author_block = b'    {\\sffamily\\large\\bfseries\\color{PidBlue}\\@author\\par}\n    \\vspace{3mm}\n'
+expected_header = old_header.replace(b'pdfauthor={pid-rs contributors}', b'pdfauthor={Sepehr Mahmoudian}', 1)
+expected_header = expected_header.replace(date_line, author_block + date_line, 1)
+if contents["current", "header"] != expected_header:
+    raise SystemExit("authorship delta: header change exceeds author credit")
+old = pypdf.PdfReader(root / paths["historical"]["pdf"], strict=True)
+new = pypdf.PdfReader(root / paths["current"]["pdf"], strict=True)
+if len(old.pages) != 31 or len(new.pages) != 31:
+    raise SystemExit("authorship delta: page count drifted")
+old_metadata, new_metadata = dict(old.metadata), dict(new.metadata)
+if new_metadata.pop("/Author", None) != "Sepehr Mahmoudian":
+    raise SystemExit("authorship delta: author metadata drifted")
+if old_metadata.pop("/Author", None) != "pid-rs contributors" or old_metadata != new_metadata:
+    raise SystemExit("authorship delta: non-author metadata drifted")
+for number, (before, after) in enumerate(zip(old.pages, new.pages), 1):
+    for box in ("mediabox", "cropbox", "trimbox", "bleedbox", "artbox"):
+        if list(getattr(before, box)) != list(getattr(after, box)):
+            raise SystemExit(f"authorship delta: page {number} geometry drifted")
+    if before.get("/Rotate", 0) != after.get("/Rotate", 0) or before.get("/UserUnit", 1) != after.get("/UserUnit", 1):
+        raise SystemExit(f"authorship delta: page {number} orientation/scale drifted")
+    old_text = "".join((before.extract_text() or "").split())
+    new_text = "".join((after.extract_text() or "").split())
+    if number == 1:
+        if new_text.count("SepehrMahmoudian") != 1:
+            raise SystemExit("authorship delta: visible cover author drifted")
+        new_text = new_text.replace("SepehrMahmoudian", "", 1)
+    if old_text != new_text:
+        raise SystemExit(f"authorship delta: page {number} text change exceeds author credit")
+PY_AUTHORSHIP
+}
+
+if [[ "$MODE" == "--authorship-only" ]]; then
+  validate_authorship_successor
+  printf 'OK: %s authorship-only binding/text/geometry checks passed; no rebuild or all-page visual review issued\n' "$CHECK_NAME"
+  exit 0
+fi
+
 TMP_BASE_INPUT="${TMPDIR:-/tmp}"
 if ! TMP_BASE="$(CDPATH='' cd -- "$TMP_BASE_INPUT" && pwd -P)"; then
   echo "$CHECK_NAME: cannot canonicalize temporary root: $TMP_BASE_INPUT" >&2
@@ -398,7 +494,7 @@ validate_pdf() {
     exit 1
   fi
   for metadata_line in \
-      'Author:          pid-rs contributors' \
+      'Author:          Sepehr Mahmoudian' \
       'Subject:         Proposed PID discovery, verification, and durable-promotion architecture' \
       'Keywords:        partial information decomposition, SxPID3, formal verification, durable research workflow'; do
     if ! grep -Fqx "$metadata_line" "$info"; then
@@ -887,6 +983,8 @@ if ! cmp -s "$BUILT" "$COMMITTED"; then
   echo "$CHECK_NAME: committed PDF is stale or not same-toolchain reproducible" >&2
   exit 1
 fi
+
+validate_authorship_successor
 
 printf 'OK: %s exact committed-byte relation passed (sha256=%s)\n' \
   "$CHECK_NAME" "$(shasum -a 256 "$COMMITTED" | awk '{print $1}')"

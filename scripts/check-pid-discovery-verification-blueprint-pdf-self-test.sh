@@ -8,6 +8,11 @@ ROOT="$(CDPATH='' cd -- "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 CHECKER="$ROOT/scripts/check-pid-discovery-verification-blueprint-pdf.sh"
 BUILDER="$ROOT/scripts/build-pid-discovery-verification-blueprint.sh"
 CHECK_NAME="PID blueprint PDF check self-test"
+MODE="${1:---exact}"
+if [[ "$#" -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--authorship-only" ) ]]; then
+  echo "usage: $0 [--exact|--authorship-only]" >&2
+  exit 2
+fi
 
 for command_name in awk bash cmp cp grep mkdir mktemp mv python3 rm shasum; do
   command -v "$command_name" >/dev/null 2>&1 || {
@@ -112,6 +117,7 @@ make_fixture() {
   cp "$ROOT/audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json" "$fixture/audit/evidence/"
   cp "$ROOT/audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json" "$fixture/audit/evidence/"
   cp "$ROOT/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-03.md" "$fixture/audit/evidence/"
+  cp "$ROOT/audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23"* "$fixture/audit/evidence/"
   cp "$ROOT/audit/formal/latex/pid-discovery-verification-and-durability-blueprint-header.tex" "$fixture/audit/formal/latex/"
   cp "$ROOT/audit/formal/latex/pid-discovery-verification-and-durability-blueprint-filter.lua" "$fixture/audit/formal/latex/"
   cp "$ROOT/audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/"*.svg "$fixture/audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/"
@@ -315,65 +321,41 @@ PY
   reseal_fixture_visual_receipt_pdf "$fixture"
 }
 
-reseal_fixture_visual_receipt_pdf() {
-  local fixture="$1"
-  local checker="$fixture/scripts/check-pid-discovery-verification-blueprint-pdf.sh"
-  local receipt="$fixture/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-03.md"
-  local old_digest new_digest
-  old_digest="$(awk -F'"' '/^VISUAL_RECEIPT_PDF_SHA256=/ {print $2}' "$checker")"
-  new_digest="$(shasum -a 256 "$fixture/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf" | awk '{print $1}')"
-  if [[ ! "$old_digest" =~ ^[0-9a-f]{64}$ || ! "$new_digest" =~ ^[0-9a-f]{64}$ ]]; then
-    echo "$CHECK_NAME: cannot reseal hostile fixture visual-receipt PDF binding" >&2
-    exit 1
-  fi
-  replace_once "$checker" \
-    "VISUAL_RECEIPT_PDF_SHA256=\"$old_digest\"" \
-    "VISUAL_RECEIPT_PDF_SHA256=\"$new_digest\""
-  replace_once "$receipt" \
-    "pdf_sha256: \`$old_digest\`" \
-    "pdf_sha256: \`$new_digest\`"
-  reseal_fixture_input "$fixture" VISUAL_RECEIPT_SHA256 \
-    "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-03.md"
-}
-
-# Cross the byte-identity guards only inside a deliberate coherent source-reseal fixture.
-# The following semantic rejection must still identify the missing link, not a stale digest.
-reseal_fixture_visual_receipt_source() {
-  local fixture="$1"
-  python3 -I -S - "$fixture" <<'PY_RESEAL'
+# Reseal only the current successor inside hostile fixtures. Historical visual
+# receipt and preimage bytes remain unchanged; deeper PDF/source guards run first.
+reseal_fixture_authorship_input() {
+  local fixture="$1" role="$2" relative="$3"
+  python3 -I -S -B - "$fixture" "$role" "$relative" <<'PY_RESEAL'
 from pathlib import Path
 import hashlib
+import json
 import re
 import sys
 
 fixture = Path(sys.argv[1])
-source = fixture / "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md"
+receipt = fixture / "audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23.json"
+record = json.loads(receipt.read_text(encoding="utf-8"))
+data = (fixture / sys.argv[3]).read_bytes()
+record["current"][sys.argv[2]] = {
+    "path": sys.argv[3], "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()
+}
+receipt.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 checker = fixture / "scripts/check-pid-discovery-verification-blueprint-pdf.sh"
-receipt = fixture / "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-03.md"
-source_bytes = source.read_bytes()
-size = len(source_bytes)
-digest = hashlib.sha256(source_bytes).hexdigest()
-checker_text = checker.read_text(encoding="utf-8")
-receipt_text = receipt.read_text(encoding="utf-8")
-
-
-def replace_line(text: str, pattern: str, replacement: str) -> str:
-    result, count = re.subn(pattern, lambda _: replacement, text, flags=re.MULTILINE)
-    if count != 1:
-        raise SystemExit(f"source-reseal anchor count {count}, expected one: {pattern}")
-    return result
-
-
-checker_text = replace_line(checker_text, r'^VISUAL_RECEIPT_SOURCE_BYTES=[0-9]+$', f"VISUAL_RECEIPT_SOURCE_BYTES={size}")
-checker_text = replace_line(checker_text, r'^VISUAL_RECEIPT_SOURCE_SHA256="[0-9a-f]{64}"$', f'VISUAL_RECEIPT_SOURCE_SHA256="{digest}"')
-receipt_text = replace_line(receipt_text, r'^source_bytes: `[0-9]+`$', f"source_bytes: `{size}`")
-receipt_text = replace_line(receipt_text, r'^source_sha256: `[0-9a-f]{64}`$', f"source_sha256: `{digest}`")
-receipt_bytes = receipt_text.encode("utf-8")
-receipt_digest = hashlib.sha256(receipt_bytes).hexdigest()
-checker_text = replace_line(checker_text, r'^VISUAL_RECEIPT_SHA256="[0-9a-f]{64}"$', f'VISUAL_RECEIPT_SHA256="{receipt_digest}"')
-receipt.write_bytes(receipt_bytes)
-checker.write_text(checker_text, encoding="utf-8", newline="\n")
+text, count = re.subn(r'^AUTHORSHIP_RECEIPT_SHA256="[0-9a-f]{64}"$',
+    'AUTHORSHIP_RECEIPT_SHA256="' + hashlib.sha256(receipt.read_bytes()).hexdigest() + '"',
+    checker.read_text(encoding="utf-8"), flags=re.MULTILINE)
+if count != 1:
+    raise SystemExit("successor-reseal anchor count drifted")
+checker.write_text(text, encoding="utf-8")
 PY_RESEAL
+}
+
+reseal_fixture_visual_receipt_pdf() {
+  reseal_fixture_authorship_input "$1" pdf "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf"
+}
+
+reseal_fixture_visual_receipt_source() {
+  reseal_fixture_authorship_input "$1" source "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md"
 }
 
 run_resealed_decision_mutation() {
@@ -435,8 +417,11 @@ required_lines = (
     'require_sha256 "$PRIMARY_RETIREMENT_LEDGER" "$PRIMARY_RETIREMENT_LEDGER_SHA256" \\',
     'require_sha256 "$SIBLING_RETIREMENT_LEDGER" "$SIBLING_RETIREMENT_LEDGER_SHA256" \\',
     'require_sha256 "$VISUAL_RECEIPT" "$VISUAL_RECEIPT_SHA256" \\',
-    'require_sha256 "$COMMITTED" "$VISUAL_RECEIPT_PDF_SHA256" \\',
-    'require_sha256 "$SOURCE" "$VISUAL_RECEIPT_SOURCE_SHA256" \\',
+    'require_sha256 "$HISTORICAL_PDF" "$VISUAL_RECEIPT_PDF_SHA256" \\',
+    'require_sha256 "$HISTORICAL_SOURCE" "$VISUAL_RECEIPT_SOURCE_SHA256" \\',
+    'validate_authorship_successor() {',
+    '  require_sha256 "$AUTHORSHIP_RECEIPT" "$AUTHORSHIP_RECEIPT_SHA256" \\',
+    'validate_authorship_successor',
     '  "source_bytes: \\`$VISUAL_RECEIPT_SOURCE_BYTES\\`" \\',
     '  "source_sha256: \\`$VISUAL_RECEIPT_SOURCE_SHA256\\`" \\',
     '  "pdf_sha256: \\`$VISUAL_RECEIPT_PDF_SHA256\\`" \\',
@@ -469,7 +454,7 @@ required_lines = (
     '  if ! grep -Eq \'^Page size:[[:space:]]+595\\.[0-9]+ x 841\\.[0-9]+ pts \\(A4\\)$\' "$info"; then',
     '  if ! grep -Eq \'^PDF version:[[:space:]]+1\\.7$\' "$info"; then',
     '      \'^Tagged:[[:space:]]+no$\' \\',
-    "      'Author:          pid-rs contributors' \\",
+    "      'Author:          Sepehr Mahmoudian' \\",
     '      \'Dated 1 September 2026 adversarial publication review\' \\',
     '      \'Current 3 September 2026 SxPID3 evidence delta\' \\',
     '      \'PASS identifies evidence bound to\' \\',
@@ -551,6 +536,52 @@ run_contract_mutation() {
   pass "$label"
 }
 
+# This focused mode never invokes the builder or raster renderers.
+if [[ "$MODE" == "--authorship-only" ]]; then
+  validate_checker_contract "$CHECKER"
+  pass "existing full-checker contract remains present"
+  fixture="$TEST_ROOT/authorship-positive"
+  make_fixture "$fixture"
+  bash --noprofile --norc "$fixture/scripts/check-pid-discovery-verification-blueprint-pdf.sh" --authorship-only
+  pass "authorship successor accepts its exact historical/current bindings"
+  for mutation in source-body historical-pdf current-pdf receipt-scope; do
+    fixture="$TEST_ROOT/authorship-$mutation"
+    make_fixture "$fixture"
+    case "$mutation" in
+      source-body)
+        printf '\nUnexpected scientific text.\n' >>"$fixture/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md"
+        reseal_fixture_visual_receipt_source "$fixture"
+        needle="authorship delta: Markdown change exceeds author credit"
+        ;;
+      historical-pdf)
+        printf '\n%% drift\n' >>"$fixture/audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23-preimage.pdf.bin"
+        needle="visual-review receipt subject PDF identity drifted"
+        ;;
+      current-pdf)
+        printf '\n%% drift\n' >>"$fixture/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf"
+        needle="authorship delta: current pdf binding drifted"
+        ;;
+      receipt-scope)
+        replace_once "$fixture/audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23.json" \
+          '"historical_visual_receipt_applies_to_current_pdf": false' \
+          '"historical_visual_receipt_applies_to_current_pdf": true'
+        reseal_fixture_input "$fixture" AUTHORSHIP_RECEIPT_SHA256 \
+          "audit/evidence/pid-discovery-verification-blueprint-authorship-2026-09-23.json"
+        needle="authorship delta: successor scope drifted"
+        ;;
+    esac
+    if bash --noprofile --norc "$fixture/scripts/check-pid-discovery-verification-blueprint-pdf.sh" --authorship-only \
+        >"$fixture/out" 2>"$fixture/err"; then
+      echo "$CHECK_NAME: authorship mutation accepted: $mutation" >&2
+      exit 1
+    fi
+    grep -Fq "$needle" "$fixture/err" || { cat "$fixture/err" >&2; exit 1; }
+    pass "authorship control rejected: $mutation"
+  done
+  printf 'OK: %s focused authorship checks passed (%s); no rebuild/raster suite run\n' "$CHECK_NAME" "$PASS_COUNT"
+  exit 0
+fi
+
 fixture="$TEST_ROOT/positive"
 make_fixture "$fixture"
 expect_success "$fixture"
@@ -616,10 +647,10 @@ run_contract_mutation "visual-receipt identity invocation removal is rejected" \
   "require_sha256 \"\$VISUAL_RECEIPT\" \"\$VISUAL_RECEIPT_SHA256\" \\" \
   "# visual-receipt identity omitted \\"
 run_contract_mutation "visual-receipt subject-PDF binding removal is rejected" \
-  "require_sha256 \"\$COMMITTED\" \"\$VISUAL_RECEIPT_PDF_SHA256\" \\" \
+  "require_sha256 \"\$HISTORICAL_PDF\" \"\$VISUAL_RECEIPT_PDF_SHA256\" \\" \
   "# visual-receipt subject-PDF binding omitted \\"
 run_contract_mutation "visual-receipt source-Markdown binding removal is rejected" \
-  "require_sha256 \"\$SOURCE\" \"\$VISUAL_RECEIPT_SOURCE_SHA256\" \\" \
+  "require_sha256 \"\$HISTORICAL_SOURCE\" \"\$VISUAL_RECEIPT_SOURCE_SHA256\" \\" \
   "# visual-receipt source-Markdown binding omitted \\"
 run_contract_mutation "visual-receipt review-scope weakening is rejected" \
   'color_120_dpi_pages_reviewed: \`1-31\`' \

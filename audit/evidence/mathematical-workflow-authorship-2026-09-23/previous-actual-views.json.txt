@@ -1,0 +1,2132 @@
+{
+  "schema": "pid-rs/workflow-split-actual-views/v1",
+  "pdf_sha256": "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf",
+  "rendering_receipt_sha256": "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea",
+  "scope": "Projection of actual split agent views; no independent complete, external or human review claim.",
+  "stages": [
+    {
+      "id": "science-original",
+      "reviewer": "science",
+      "raw_actual_record_sha256": "9fb52deabb459d8d911680ba243edfdeb13d106badbfe9324cfb784b56147ce9",
+      "actual_image_count": 38,
+      "timing_scope": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times."
+    },
+    {
+      "id": "root-original",
+      "reviewer": "root",
+      "raw_actual_record_sha256": "0ec0a3c76f9f4fbd6cd9984d06d0a5c383dc4b5506cb5698ff609328359bd714",
+      "actual_image_count": 8,
+      "timing_scope": "Exact view times are absent. Normal 57-64 both were reconstructed from actual pre-compaction views after the original deadline; no within-budget timing claim."
+    },
+    {
+      "id": "science-partial",
+      "reviewer": "science",
+      "raw_actual_record_sha256": "c74ee80eb923967674fccd1a19355747df66b4fd812b8be67d70a5eaa0b64891",
+      "actual_image_count": 6,
+      "timing_scope": "Terminal partial stage: six actual normal sheets 65-76 both. Remaining assigned images were not credited by that stage."
+    },
+    {
+      "id": "science-final",
+      "reviewer": "science",
+      "raw_actual_record_sha256": "655589ac768ba5de348ffb2e11e973eca8b22b6241c81d79783d88708e1f3425",
+      "actual_image_count": 20,
+      "timing_scope": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline."
+    }
+  ],
+  "views": [
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "color-300/page-10.png",
+      "sha256": "370ae7778c0eae9c98d8e576da4f2d5a0ae28bc3fd2140fb6c35b82da6e05768",
+      "pages": [
+        10
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:33:33.886362+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Viewed original detail. All five suite labels, shared-cut oracle label, comparison result and separate-route labels fit their boxes. Equation/table and Figure 3 caption readable; no clipping or overlap observed.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "color-300/page-12.png",
+      "sha256": "80d2f06d331339776d4157b3c32aa0bd87162d4cffce1a68b0314144ccea83ab",
+      "pages": [
+        12
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:33:33.887061+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Viewed original detail. Source/generator/artifact/checker/gate/publication labels fit. Changed/checker badge and publication-state badges contained. Dashed invalidation arrows are distinguishable. Figure 4 caption and section transition intact; no blocker observed.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "gray-300/page-10.png",
+      "sha256": "29d015ff083ba4f2b0e78282ea0429740b0ad7bfbb3de3e0dccdd9c819c46aa9",
+      "pages": [
+        10
+      ],
+      "mode": "gray",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:35:08.361173+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: all corrected labels contained; solid/dashed routes and hatched shared cut survive grayscale. Body/table/figure/caption legible; no blocker.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "gray-300/page-12.png",
+      "sha256": "f2ef264d504ab7959f27da07ebcd6e56b48248d80b82a7201d096525c69d2778",
+      "pages": [
+        12
+      ],
+      "mode": "gray",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:35:08.362013+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: state badges and node labels contained; solid dependency and dashed invalidation arrows distinguished without color. Caption and section transition intact; no blocker.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "color-300/page-01.png",
+      "sha256": "234ddf53be67d265815f026da7389bb5c6479e144ee5fa731734d77559885e70",
+      "pages": [
+        1
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:37:54.962649+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: title/subtitle/abstract/contents remain inside margins; Advanced definition appears in hierarchy. No clipping or broken glyphs. Date is visible as 1 September 2026; semantic dating is outside this visual review.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "color-300/page-02.png",
+      "sha256": "052835dcdefab77903febf1e67bd6ae04fb63e3fd0a456ba4c98439ed7437c6d",
+      "pages": [
+        2
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:37:54.963234+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: dense contents continuation has readable indentation and right-aligned page numbers. Long 3.4.2 and 3.4.4 entries approach their numbers but remain separate; no overlap/clipping observed. Advisory density only, no blocker.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "color-300/page-03.png",
+      "sha256": "ec726ac39ecc4a1942761013d846e7ff1de53eb7c8b748d637e3d46012059b8d",
+      "pages": [
+        3
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:39:36.012541+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: final contents entries aligned and legible; large lower whitespace belongs to the contents ending, not clipped content. Footer intact.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "color-300/page-05.png",
+      "sha256": "e70ef8a4cdddb041d6e9edbce3f07f5f0ade1d6608ce57ff700024f009e63691",
+      "pages": [
+        5
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:39:36.013343+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: four assurance cards and A/B/C arrow labels fit; figure-caption association clear. Equations 1 and 2, quantifiers, superscripts and probability subscripts readable. Surrounding route/cut explanation fits margins without collision.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "color-300/page-06.png",
+      "sha256": "8d34a22c607465eec567e5b7cdaed2810546f6c77dc47f9af277f172489df345",
+      "pages": [
+        6
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:41:00.205635+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: premise/AND/OR labels and minimal-cut legend contained; shared cut hatching meaningful. Advanced definition heading and full paragraph readable. Certificate-arrow labels and interval-sign formula fit; no blocker.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "gray-300/page-05.png",
+      "sha256": "98111e323116b302607f371d6c5fb9dba91f6ad0f3692c91da65eae07da888cf",
+      "pages": [
+        5
+      ],
+      "mode": "gray",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:41:00.206483+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: card numbering, arrow labels, definitions and quantifier formulas remain readable without color. No clipping or loss of distinction.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "gray-300/page-06.png",
+      "sha256": "820150fef25ab635c092632d8c348aea7e293a6aae2cdbdc8fabc627773603dd",
+      "pages": [
+        6
+      ],
+      "mode": "gray",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:41:00.206808+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: shared cut hatching, route boxes and OR diamond remain distinct. Small frozen-universe/minimal-cut legend readable. Advanced definition and certificate equations clear; no blocker.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "color-300/page-46.png",
+      "sha256": "1bac52afd9e6f2627e0128d360b40aeb24886a0f4e1ab3db71e4da0722d51619",
+      "pages": [
+        46
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:42:29.851305+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: long heading fits; five-row lane table has aligned columns and readable boundaries. Failure-to-repair table begins with complete header and row; no clipping.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "color-300/page-47.png",
+      "sha256": "50566ebea534739ce35c545c6b55a3a908b51f46e85bf7f45faf670a660a139d",
+      "pages": [
+        47
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:42:29.851875+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: repeated table header and eight failure rows readable; no column overlap. Literal code/path tokens wrap within margins, including a token continued onto page 48; visually less fluent but not truncated. No blocker; source/text identity requires machine gate.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "color-300/page-48.png",
+      "sha256": "3cc9e666803ffd94ecefc70efe29a6d74a4874e654f91b728957bd8f3c67bc63",
+      "pages": [
+        48
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:42:29.852462+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail view: path continuation follows page 47; numbered closure steps 1-11 fit with clear bold lead-ins and consistent hanging indent. Footer separate; no clipping or collision.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-01-04.png",
+      "sha256": "ab064f76b843a036190c2a25133c8d14c4edda788f6f6a53a059026cd353ebcc",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:46:56.918140+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: title, abstract and contents fit. The dense second contents page keeps entries and page numbers separate. The third contents page ends with expected blank space. Page 4 definitions, three displays and the horizontal assurance-chain labels are contained and readable; headers and footers are consistent. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 1,
+          "sha256": "6ecea842b88ba49cbbae5309a5212c3357fe6d914a7b5a16c6a1d5b4408890ed"
+        },
+        {
+          "page": 2,
+          "sha256": "b419dd0785a24522fce58620f5964aac2f0f196c59fa55cb4d114d21455769e7"
+        },
+        {
+          "page": 3,
+          "sha256": "4997aa8add523768a70941ad82cef5f92e5a4f0a030c5ed197353048af740625"
+        },
+        {
+          "page": 4,
+          "sha256": "050a1d12b1bf5e1a570427680594704b2676df2854602ee4cd33a5b4457a3f54"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-01-04.png",
+      "sha256": "19d15ed7760e84b00e2a2b53fa6a59daec27d6285569c60a579b090a62344b13",
+      "pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:46:56.918679+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: all four pages retain readable text and hierarchy in grayscale. The contents density causes no observed overlap. Page 4 formulas and assurance-chain boxes remain distinct without color. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 1,
+          "sha256": "854b753de034aec124b0fe52fd84ae32e6221d3e8a4ca030045de404ffafbcfa"
+        },
+        {
+          "page": 2,
+          "sha256": "b359022f127ee8af46c827d49860bf277825067bffb9d852de7f4abf34d0039f"
+        },
+        {
+          "page": 3,
+          "sha256": "82a979ad99778ef72813b849e68e7c8abcea0aab6ac77d94268a77ce723c7519"
+        },
+        {
+          "page": 4,
+          "sha256": "b48a8aa2b2c1e2dfca7594edafd526efd53a83726954c919ecd9e2488b6a0e0c"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-05-08.png",
+      "sha256": "a72a5464ad0c4970935ab0e822210181f5e5d9d105198d9d42aaf86a2a1d3edb",
+      "pages": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:47:33.786675+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: assurance cards and obligation graph remain contained at 120 dpi; their captions stay together. Advanced definition and certificate displays are readable. PID reconstruction displays and rare-cell equation fit; the rare-cell paragraph continues coherently onto page 8. Section 2 heading and vector displays fit. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 5,
+          "sha256": "a3d5a300c29c05576185f53781162aa7755943490caae96d66f98375393a4118"
+        },
+        {
+          "page": 6,
+          "sha256": "7a39d8111ec122893100f21e8f187ac6d83c6d37156d67df15d8754715d11447"
+        },
+        {
+          "page": 7,
+          "sha256": "ac6aed773a250c460e502f04571c44838b478d1ea388417e2e79dc7fd6a7fd83"
+        },
+        {
+          "page": 8,
+          "sha256": "b3ce5a4763e2c2b811a11d1370d7ab8b723d64b93861c4f800631321fd63006b"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-05-08.png",
+      "sha256": "a9178eb626e39c70f07e67e3a1c06b307450d42ffe208d8be718662fda315ff9",
+      "pages": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:47:33.787399+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: diagrams retain labels, arrow directions, AND/OR distinctions and meaningful hatching in grayscale. All displayed equations, references and body paragraphs are readable with consistent margins. The page 7 to 8 continuation is visible. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 5,
+          "sha256": "64e4775c51a26186771fdff7389360bf1da8a3b014b6e1918d959806b0f86e1b"
+        },
+        {
+          "page": 6,
+          "sha256": "beda9e2c618132465f9642bf2836383182b409bd9be7170da1e4093e87431245"
+        },
+        {
+          "page": 7,
+          "sha256": "279c105b799ba5cc7ac61d75a4b519158bde2caf6d8304542dd8b281a29abd8c"
+        },
+        {
+          "page": 8,
+          "sha256": "cd987c8d3e74f26ccc71e894ac3ce87af4d7c634758ae3bd9d9574f5b38216b0"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-09-12.png",
+      "sha256": "d2c495612bca376cc8f4d6802bac284cccde43871d853aa0b20684cd5b4bd7ed",
+      "pages": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:48:21.906888+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: both assurance tables have aligned columns and contained rows. Probability displays 8 through 12 and their bounds remain in the margins. The numbered eight-premise list is readable. Corrected page 10 suite/oracle labels and page 12 change-control/publication-state labels fit at normal resolution; both figure captions remain adjacent. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 9,
+          "sha256": "f08aa4a0ce339bbbf8fbff10fd468847b4947f27bee67f0425ca8fb2d8898357"
+        },
+        {
+          "page": 10,
+          "sha256": "8673c02841a9ef7222199cd69ac4bf21392cb8c7252109794b9240b316e7a066"
+        },
+        {
+          "page": 11,
+          "sha256": "18edca2a1bacc7ea910efcacd453a8cdb51a3331fa1ec62d3a8d0327901c6e52"
+        },
+        {
+          "page": 12,
+          "sha256": "5c2bb98298c2b5f7f41877cae6dfd111e7c3bd8114fe5b8a70863e57fe75b2db"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-09-12.png",
+      "sha256": "a92916ab2dd25c1495257b0cae0f45de2b4d3e67b10f7a83cef9a96580632f32",
+      "pages": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:48:21.907502+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: table banding, body text and mathematical displays retain adequate distinction in grayscale. Page 10 solid versus dashed routes and shared-oracle hatching remain meaningful. Page 12 state labels, changed badge and return arrows remain readable without color. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 9,
+          "sha256": "9f5b0b443ef461a0f6f418f0e38d2de0384c792f69375b40a79fcc2065e54120"
+        },
+        {
+          "page": 10,
+          "sha256": "ee4b1cfe587054758c2fae554214101dbceeb1607265626665a2df5d3a4422d1"
+        },
+        {
+          "page": 11,
+          "sha256": "750f05356bd32d027efa08fa20e11194c4bcbbdd23fef5f09c54ad6633d5040d"
+        },
+        {
+          "page": 12,
+          "sha256": "44198241b3f1ac1092b120fd812ad8e83199bb865ec64497af0ae32f9e34062e"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-13-16.png",
+      "sha256": "4ac393e5a684dc5bbda5f35cf7b0490dd08818f1b8a504cac45ae37f7eb8872e",
+      "pages": [
+        13,
+        14,
+        15,
+        16
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:53:09.300505+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: glossary bullets, bold terms and source-correction prose remain readable and inside margins. The general-route and KSG paragraphs visibly continue between pages. Page 16 primary-source table is compact but aligned, with readable revision/citation text and complete rows; following headings remain with opening text. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 13,
+          "sha256": "81686bf3c23e56964f1ab884a8f1666dd9d4ba9462125f0a88692b53db6da606"
+        },
+        {
+          "page": 14,
+          "sha256": "85697a1029cee395da981150526891f34195e8811d5874bba46f25da02cb7250"
+        },
+        {
+          "page": 15,
+          "sha256": "ac11d898e79cff4e39379076303348a3a4b0efa2ca0e7ba155d4de37af048b44"
+        },
+        {
+          "page": 16,
+          "sha256": "5abb87b30bbdb640ac928deabdf440d7d3c435a25baa0761c21af9d4467dc6c6"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-13-16.png",
+      "sha256": "19489ba6df421ae0311fc5e1a3f84b22abdbffb0c6c408027f64e5625e699fd1",
+      "pages": [
+        13,
+        14,
+        15,
+        16
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:53:09.301486+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: glossary hierarchy and source-table banding remain clear in grayscale. Citation text is lighter than body prose but still readable at the supplied resolution. Long literal names wrap within margins on pages 14 and 15; no observed clipping or overlap. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 13,
+          "sha256": "b1c74f189d8f9dd06734aa2ce10f687113aea1035ef5243566bd0de86fda57a4"
+        },
+        {
+          "page": 14,
+          "sha256": "cac3353de9ede1f2014c4e6e16c67f2b3ec5e3a920aed19a1dcd330f01f5aa4b"
+        },
+        {
+          "page": 15,
+          "sha256": "552fadb64dbcfc2201a8b3d8a33f6c6bf85a89748d2943100586547fb86aa1d3"
+        },
+        {
+          "page": 16,
+          "sha256": "91db772dcff66ea5bafbad2d5fcdac3d96f1bd119b405d75c1a918fe2a6e3a36"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-17-20.png",
+      "sha256": "3bb91edaf7aa1940649e5463d6ffa2378d3f56fe0bcb98c333e2568efcf51f00",
+      "pages": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:55:38.684322+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: process code block, nine search-rule bullets and source links fit on page 17. Page 18 code fragment and review bullets are contained. Page 19 numbered observations and source digests wrap within margins. Page 20 finite arithmetic example, code block and opening review-table rows remain readable. Paragraph continuations are visible and no footer collision occurs. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 17,
+          "sha256": "8d7e69ffef1b9e80eef37111a0104f2a4282e2d13e5b606c88d9188a0d6d2838"
+        },
+        {
+          "page": 18,
+          "sha256": "c4f95b30c5cd72ad41b4d375a2f42fea5820dc4bb64aa949945c9b17f5e4c792"
+        },
+        {
+          "page": 19,
+          "sha256": "5f742c6a9df15a14f3adbce40c4311f0fb02da7a4a3045cd3faedc800eb8500b"
+        },
+        {
+          "page": 20,
+          "sha256": "7dbdb3fccc42760fd9b2a548747eed9dffa0cb43886bd48541bee1551720dc04"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-17-20.png",
+      "sha256": "436cbd4c293bb0210ee1862935336bf1fc80d99e3985414d4ca21884c1374f6b",
+      "pages": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:55:38.685051+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: literal source names, shaded code blocks, bold table dispositions and linked citations remain legible in grayscale. Long hash/path wraps are typographically dense but do not overlap or truncate. Opening table on page 20 keeps its header with three rows. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 17,
+          "sha256": "c239182c6b0db2ec94fd8aebf1e7579b82f1a483cf3fae56d8fe1cbf01595c51"
+        },
+        {
+          "page": 18,
+          "sha256": "66216efa2afbe78ace65b48fcf2f224af94b7f46b637e77322137effa2c36574"
+        },
+        {
+          "page": 19,
+          "sha256": "ba6d6d3b40b8f0692ec1947e3decc18737cadad0c9f38983a7d2a66febcf46ef"
+        },
+        {
+          "page": 20,
+          "sha256": "5503f59b0de6d94cccb9c60fbc8660e8c45e3495708b65cdd726b62c06156592"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-21-24.png",
+      "sha256": "b524d9fd0c88d1121f9c7046a241b0acee9be3e99c7c472b9e8c9ce19b77fe94",
+      "pages": [
+        21,
+        22,
+        23,
+        24
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:58:27.877262+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: continued review tables repeat their headers, retain complete aligned rows and leave a clear gap before the following section. Page 22 mapping criteria and page 24 three-question list have readable hanging indents. Page 23 ASCII square and witness equality fit within their code box. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 21,
+          "sha256": "704f68c5e8b8eb0cd98fc7844d8e6c0f976d98006246f6ffea51c20e0d2f7aa9"
+        },
+        {
+          "page": 22,
+          "sha256": "e9dcc4803e3fd908367b0b65504f0b5ac536c9f824ec0da247f53b1211f7c12c"
+        },
+        {
+          "page": 23,
+          "sha256": "5271e191ea26466ce8fbe1a620402dff383db18adb55bf9aa9440fa555a77e36"
+        },
+        {
+          "page": 24,
+          "sha256": "b7912a4317e0e088d906945ddcc6b549d76e69ba8f0e99727c86e7eecda3aa63"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-21-24.png",
+      "sha256": "e0d55abedaf36315839339a3f99528e4378b580845d6f99740ab9ad89f755634",
+      "pages": [
+        21,
+        22,
+        23,
+        24
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T15:58:27.878104+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: table row bands, bold dispositions, code-box boundary and linked source names remain distinct in grayscale. The tables continue from page 20 to 21 and page 23 to 24 without visible row or column overlap. All headers and footers remain separate. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 21,
+          "sha256": "fea6b8804c436699a091ed764207e09c86d8459c0256a81fad8343f2ad62f328"
+        },
+        {
+          "page": 22,
+          "sha256": "833dba41956be76c1058d343316705e9f6a48cdeff55e884206ce3396dac0574"
+        },
+        {
+          "page": 23,
+          "sha256": "8edf244a35e488c6b1d8b0e15969d78eed1ac23af721b9684f0caeed9f04fa51"
+        },
+        {
+          "page": 24,
+          "sha256": "5f439d3fc53d5982e197c5da9be1a81d067b575ac831212c6152b09c57de0b75"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-25-28.png",
+      "sha256": "b19b9bb53d8de1a6c3e69c95a0da5b3e6a6169e65cca3082eafe1bcf0321bd18",
+      "pages": [
+        25,
+        26,
+        27,
+        28
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:00:24.770623+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: source-review headings and bullet/numbered lists are contained. Exact-sequence displays on pages 26 and 27 have readable subscripts, superscripts, arrows and zero terms; both finite countermodel code lines fit their boxes. Page 28 seven-lens list and following sections have clear spacing. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 25,
+          "sha256": "2a4f356a612c2d836c462c0a7d05fa60c787afedc792d143d35e73b6e254d536"
+        },
+        {
+          "page": 26,
+          "sha256": "f5cc1c86a804310e99be922beee8b25568b9ab37bc60f61fa7354c92b9715020"
+        },
+        {
+          "page": 27,
+          "sha256": "8e7d2de62badefdb8a0c0acb6d2227640da78fe7f70853c006a2078b8559bf57"
+        },
+        {
+          "page": 28,
+          "sha256": "b53ef5b3fae6b0967e957d1f59862451a21575d2cae871c46ad042c98a426d4f"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-25-28.png",
+      "sha256": "50b7cbf7a39af610035dd94c7541eca20cfcb9c0283b30931385603c600d1344",
+      "pages": [
+        25,
+        26,
+        27,
+        28
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:00:24.771947+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: mathematical displays, cited source revisions and list hierarchy remain legible in grayscale. The fifth list item continues from page 25 to 26, and the proof discussion continues through page 27 to 28 without visible loss or footer collision. This is visual evidence only, not adjudication of the cited mathematics. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 25,
+          "sha256": "08ff5c3fb5c1d6b9bd9fc97c1d35ed648a0d698a1c2618ea8ea967ea5662a470"
+        },
+        {
+          "page": 26,
+          "sha256": "fe528bc9a15e18d8af2075b5cba6dd37b4d030f9f47f3d00fc7142889f156640"
+        },
+        {
+          "page": 27,
+          "sha256": "b4b83174e404638edf496208160e10761c98007a190821d1923f4a81e5392f54"
+        },
+        {
+          "page": 28,
+          "sha256": "719d7979513f4c20b760401776d1c4b01698dcfcd8b31112e9dfb2f1d38ef794"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-29-32.png",
+      "sha256": "c8334b6e3ac2ed078888550b9dcd14263828b854ceb926a50322cba08285960d",
+      "pages": [
+        29,
+        30,
+        31,
+        32
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:02:35.912984+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: dense three-column source and transferable-control tables remain aligned and readable; page 30 repeats the continued table header. The two-column artifact table spans pages 31 and 32 with a repeated header and complete long source-boundary row. Literal executable fields at the bottom of page 32 fit and wrap without clipping. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 29,
+          "sha256": "51a00ac4cd075f147d204b0da37ad00415d0bb0e839e1a005ef21e31f5d8e392"
+        },
+        {
+          "page": 30,
+          "sha256": "658b30409d89c40cb0da915182470888cf9311b2e728a17ebc9b7879f6bb1d29"
+        },
+        {
+          "page": 31,
+          "sha256": "2a1f1ab8a8ab7b4cf6d91234f2ecd70af36cfdaf0e25c49d258763a1f2013a3a"
+        },
+        {
+          "page": 32,
+          "sha256": "6035bc4cb1d837af06a37757b2c00e92fd1120e4528b5771372275f0acec014a"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-29-32.png",
+      "sha256": "5cdccac88f08910a554584da450d564e91e37850862c637ef9b3fbf597a924b2",
+      "pages": [
+        29,
+        30,
+        31,
+        32
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:02:35.913920+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: citations, source digests and small table text remain legible in grayscale, with visible header rules and row bands. The long page 32 row leaves expected empty space in its short left cell, but its right-cell text remains bounded and complete. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 29,
+          "sha256": "6e59c9912bfa653200427267cff7a3acc1dded9e1f7d3c6f24eb59d6a246bf1f"
+        },
+        {
+          "page": 30,
+          "sha256": "85f6220671c4d7953afd16e8bafe86f404624552c4c3d5ed4924b4849cf58b3f"
+        },
+        {
+          "page": 31,
+          "sha256": "2c2a7c9f0781016f483e918844c77d01d6a6577dd21213716a2115bc7f09279b"
+        },
+        {
+          "page": 32,
+          "sha256": "338ce4860b48587aba8e664574cd84a82734352304bb51c5324f24bacf5d6047"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-33-36.png",
+      "sha256": "4039214c2e67d621387079b920f20fb4aa82ec53fa0cbd99b9f0d7eecf1e0316",
+      "pages": [
+        33,
+        34,
+        35,
+        36
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:05:00.545919+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: page 33 source table retains aligned columns and complete records. Page 34 numbered reconstruction and trace/norm displays fit; hats, subscripts, fractions and inequalities are visually distinct. The fifth step continues onto page 35, whose dense formulas and claim locator remain bounded. Page 36 contribution table fits with complete rows. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 33,
+          "sha256": "f90223a2f1d52140ae86c506e350c988d107bf619e2f3dc12fcf41f09f72c017"
+        },
+        {
+          "page": 34,
+          "sha256": "ef3f084737fd26dd7b464c831ada15475c07da360473874a43837a3818ab6345"
+        },
+        {
+          "page": 35,
+          "sha256": "5e67ae0b20a7bd245e01f1ecaa4b0d3886bfafbbf4dd5d697417c3efccea3492"
+        },
+        {
+          "page": 36,
+          "sha256": "193099c1bdf19fcf71ebf805de08558c79909fe9bdeaabc891fa03c4c136a769"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-33-36.png",
+      "sha256": "082fea944222ab940ad57261a213923fc793c4f1fcfb342a303cc8f27ccb6a86",
+      "pages": [
+        33,
+        34,
+        35,
+        36
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:05:00.546885+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: source links, mathematical accents, list numbers and table bands remain legible in grayscale. Whitespace below the page 33 table and before page 36 heading does not hide content. Page 35 literal decimals/path wraps are dense but contained. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 33,
+          "sha256": "02766c035569cd219a84eb911cb19bdc39b8f14d4e9035f84cfe9195261f6dbd"
+        },
+        {
+          "page": 34,
+          "sha256": "1aea20bc01374d813257573f9e1a876c3c7e23d159e39d6e73de8098a90776cc"
+        },
+        {
+          "page": 35,
+          "sha256": "7dd265d584f9a4ccb395f1649d0afa9b5eec23f36d05dd8b9318b1669a0f73cd"
+        },
+        {
+          "page": 36,
+          "sha256": "5642db75208cfb656d82384bd969ffa98a7f9e60c50021fbb75c05a303a1ff4c"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-37-40.png",
+      "sha256": "e1541100988d808a88f88578290f58ed1dabf1053d10a80974d213be7e67a321",
+      "pages": [
+        37,
+        38,
+        39,
+        40
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:07:24.793316+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: contribution table completes on page 37, followed by a four-column process table that repeats its header on page 38. The transfer-audit table begins on page 39 and repeats its header on page 40; numbered lenses and their dispositions remain aligned with their transfer classes. All small text stays within cells and margins. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 37,
+          "sha256": "6306f7cb65f518659dfd85dab9ee7882a68fd376737dd6b7c6f9c8ce242a5dc4"
+        },
+        {
+          "page": 38,
+          "sha256": "9faf568d8e3b3394087f55b577bc6e5cd922a3a85ed9455a580fa4940999c804"
+        },
+        {
+          "page": 39,
+          "sha256": "a5fbd2b8c04006efc73e73ab393e70a2d63e41c27a46ff40f77ad11309a18b20"
+        },
+        {
+          "page": 40,
+          "sha256": "3705c7f7ce069a3cad284cb9cdd64f32ca2492c078e41725af2d81be07eb978f"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-37-40.png",
+      "sha256": "e64d2dbf969178d986a87437a70b4bce91ce6a2d9c48cc27336676554be6ec7b",
+      "pages": [
+        37,
+        38,
+        39,
+        40
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:07:24.794205+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: compact multi-column tables retain readable text, row banding and horizontal rules in grayscale. The continuation paragraph across pages 38 and 39 is visible; no table row intersects a footer or adjacent column. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 37,
+          "sha256": "f8aacc1eafac6945b9b8a5595186a6354067ab4760ef8135924971bcc4bda296"
+        },
+        {
+          "page": 38,
+          "sha256": "4ae38e1c979cd750bdd796f59d01c314bea2586d301dbfd4f72e242d2fbab03d"
+        },
+        {
+          "page": 39,
+          "sha256": "2681e03b1269f64748906aad41cabefe1867777f538baf2bce7f4ea06173749e"
+        },
+        {
+          "page": 40,
+          "sha256": "5919b0251018b164cf9048050230e9004f3843311d87bd9286967def379fa82e"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-41-44.png",
+      "sha256": "cb0c295f7bb55af22cc47f4686f86d56e7c7a7e5eb5c2ba608f5b2127ba9161f",
+      "pages": [
+        41,
+        42,
+        43,
+        44
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:10:45.851839+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: transfer table finishes with rows 26 to 34, followed by three readable countercontrols. Page 42 nine mapping obligations and the negative-control table remain bounded; inline identifiers and formulas are distinct. Pages 43 and 44 preserve heading hierarchy, bold definitions and body spacing with coherent paragraph continuation. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 41,
+          "sha256": "371c0363e13301bd4e6328d638968d915fc0d1a76bc76888d95d20c1521c8b3e"
+        },
+        {
+          "page": 42,
+          "sha256": "1df56e21b98f34d7ef93b03f958ea411d133fd0bd3e7a0c463a9cc7382b1a461"
+        },
+        {
+          "page": 43,
+          "sha256": "1250fb1ce6699db79bb877ddcc593c3f6d0e44ee5867cd5f2ec7b87ce4e9aef2"
+        },
+        {
+          "page": 44,
+          "sha256": "5a3f9e4796e92a3a31ef0a21bb37e915620afbb880a0c123394141b62c0e173d"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-41-44.png",
+      "sha256": "0f90f0973be669258a246dab014728b3a3d2040786f30f6d810ef5b08f3fd2f6",
+      "pages": [
+        41,
+        42,
+        43,
+        44
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:10:45.852700+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: table bands, numbered mapping obligations and bold operational terms remain legible in grayscale. Long literals wrap within margins. Headers and footers remain separate from dense prose; no observed clipping, column collision or missing glyph. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 41,
+          "sha256": "420760f5e11e54cbc8d9c2b70c45063a146f0927992faee9075dde0d5d63e3f7"
+        },
+        {
+          "page": 42,
+          "sha256": "050d5b4d999f24d618802f8dce67a4bb8fbc310027242bc01cf2a6b59fbbfcfe"
+        },
+        {
+          "page": 43,
+          "sha256": "eb88fd72f2d4535f9a605681608d20ae535185c82d55bf48c8d161a12b32ef92"
+        },
+        {
+          "page": 44,
+          "sha256": "41c30f64044b75e6688840abac4ea75e47c14b99bb802ca323db1c8d568c9160"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/color-45-48.png",
+      "sha256": "7b4cdfde50016a895b620945989d1e3a53736df5e2f4e69a2d3f55a72685b486",
+      "pages": [
+        45,
+        46,
+        47,
+        48
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:22:41.821399+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: engineering-transfer table and its following seven-step loop fit, with steps 4 to 7 continuing clearly on page 46. Worktree table and failure-map opening row remain contained; page 47 repeats the failure-map header and completes eight rows. Page 48 shows the path continuation and clear numbered closure steps 1 to 11. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 45,
+          "sha256": "a3d6af6f33330b82641b3b0ab4fb97362ac7b702f706057e484852b3c5e6c2bc"
+        },
+        {
+          "page": 46,
+          "sha256": "72ea210c3226098222d429c18c664b07fc7e85f01e80e9b72c1eda4aefe761d4"
+        },
+        {
+          "page": 47,
+          "sha256": "42f4912f057ce0964b10518ffb2fcb9e5f62a5589de3285d0be36922d347644d"
+        },
+        {
+          "page": 48,
+          "sha256": "557afb5b82d56396f71ba0acbc4c4d1b1924a947fa7cb03b7ff57a2f57dea148"
+        }
+      ]
+    },
+    {
+      "stage": "science-original",
+      "reviewer": "science",
+      "image": "sheets/gray-45-48.png",
+      "sha256": "91ad7a43180aab1c7e80aee9fac54f6b710419aee6281e503054f4cc84a787b7",
+      "pages": [
+        45,
+        46,
+        47,
+        48
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T16:22:41.822409+00:00",
+      "timing_note": "Normal 45-48 both recorded late at 16:22:41 UTC; no within-original-budget credit. Other records retain their recorded times.",
+      "finding": "Actual original-detail sheet view: tables retain readable banding and bold failure names in grayscale; body text and numbered closure steps have consistent spacing. Literal filenames split across lines and from page 47 to 48 remain visible, though less fluent than ordinary prose. No clipping or column/footer collision observed. No blocker.",
+      "normal_render_components": [
+        {
+          "page": 45,
+          "sha256": "1a68f87a204445e1528820f052b3eee74543e0601eb44a54cc1897cb16ecf4df"
+        },
+        {
+          "page": 46,
+          "sha256": "6fa0c37ee0e227db4b0018412b8c008d7f763db77bd2491f1f2acbd9c8e1e618"
+        },
+        {
+          "page": 47,
+          "sha256": "1142c196c8d0ab112e3992b83957754414e568de5a7d7cac5e061aa296f45099"
+        },
+        {
+          "page": 48,
+          "sha256": "2a048aa0502d28b0f29edf11a39dfec394105119abb9a791513cb2587b01a275"
+        }
+      ]
+    },
+    {
+      "stage": "root-original",
+      "reviewer": "root",
+      "image": "sheets/color-49-52.png",
+      "sha256": "e6fb2106672145ace0e1dbcdaa58d30b10360c506c17a00b86430b76aa0cc403",
+      "pages": [
+        49,
+        50,
+        51,
+        52
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": null,
+      "timing_note": "Exact view times are absent. Normal 57-64 both were reconstructed from actual pre-compaction views after the original deadline; no within-budget timing claim.",
+      "finding": "Text and notation readable; tables remain within margins and continue with repeated headings; no visible overlap or clipping.",
+      "normal_render_components": [
+        {
+          "page": 49,
+          "sha256": "8269128c419d373bd2c9fcb02cbe2a7d7166207389883ddcf262959407164aba"
+        },
+        {
+          "page": 50,
+          "sha256": "12a1425968b42c8bc6719ea2d888f33ebba99a8d3ae77b4673e7d1d143ad77f9"
+        },
+        {
+          "page": 51,
+          "sha256": "356cec37b7a415cf7936276e2569b5a100fa4f41a8f9953fa7f368a230917d36"
+        },
+        {
+          "page": 52,
+          "sha256": "2582c350a0da998a610bcfb13a91eb79bd09a76f6bcfbf8b8b3e537c9cb41f8f"
+        }
+      ]
+    },
+    {
+      "stage": "root-original",
+      "reviewer": "root",
+      "image": "sheets/gray-49-52.png",
+      "sha256": "c617723d06960ad33db59f57238d06cbea0f7a2a932998a7c7843951453dbc6f",
+      "pages": [
+        49,
+        50,
+        51,
+        52
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": null,
+      "timing_note": "Exact view times are absent. Normal 57-64 both were reconstructed from actual pre-compaction views after the original deadline; no within-budget timing claim.",
+      "finding": "Text and notation readable; tables remain within margins and continue with repeated headings; no visible overlap or clipping.",
+      "normal_render_components": [
+        {
+          "page": 49,
+          "sha256": "1e17e61e3f8b8def6a9282376e35dedeaa94cf148c6edf872b9a7dd6752c3f7f"
+        },
+        {
+          "page": 50,
+          "sha256": "a4c60db1d85567e5b9b1907312402166f109ba298facc3da0ed1485c8b46954d"
+        },
+        {
+          "page": 51,
+          "sha256": "e5481d9c8d5b78b8d6a61ae2b2e86676e87714f12b2c5c078b4cbfa0ec7b631b"
+        },
+        {
+          "page": 52,
+          "sha256": "06a4230fe463147b5c312d7b08b6fccc992e9651a9c45a39783fdd0403494192"
+        }
+      ]
+    },
+    {
+      "stage": "root-original",
+      "reviewer": "root",
+      "image": "sheets/color-53-56.png",
+      "sha256": "6096788c1ea8b9b6525e1ecc2cbc79e0dcdd84286ffc4d6ec8867327f7290682",
+      "pages": [
+        53,
+        54,
+        55,
+        56
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": null,
+      "timing_note": "Exact view times are absent. Normal 57-64 both were reconstructed from actual pre-compaction views after the original deadline; no within-budget timing claim.",
+      "finding": "Text and notation readable; tables remain within margins and continue with repeated headings; no visible overlap or clipping.",
+      "normal_render_components": [
+        {
+          "page": 53,
+          "sha256": "f9ab82c0a30f15a3333be0602c1d1e344352622d70747de2f83690969c979571"
+        },
+        {
+          "page": 54,
+          "sha256": "f8ad3b74783c747aa83b649ee1d146a2a9921ddf052ccc5a293b4eade3874908"
+        },
+        {
+          "page": 55,
+          "sha256": "3a19077f15ae916ea86fa292caa0f440f789c4c310c0a20e00294da3286c5d57"
+        },
+        {
+          "page": 56,
+          "sha256": "23cc2e17f05c145c5e66b0dae7d11856f1cb081e78659511610bb20acbbd120f"
+        }
+      ]
+    },
+    {
+      "stage": "root-original",
+      "reviewer": "root",
+      "image": "sheets/gray-53-56.png",
+      "sha256": "664e8356eaad6132acb6d12c0d77a8461a93e7e4959e71268eab275d652f1135",
+      "pages": [
+        53,
+        54,
+        55,
+        56
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": null,
+      "timing_note": "Exact view times are absent. Normal 57-64 both were reconstructed from actual pre-compaction views after the original deadline; no within-budget timing claim.",
+      "finding": "Text and notation readable; tables remain within margins and continue with repeated headings; no visible overlap or clipping.",
+      "normal_render_components": [
+        {
+          "page": 53,
+          "sha256": "32307dbd3737245d22a1104e801c0ae3c00394e7324eec2d171d931f0edb922e"
+        },
+        {
+          "page": 54,
+          "sha256": "daf434dcf646e73f95203a003c436514738ccd11b20caa3606cfab541e40ae94"
+        },
+        {
+          "page": 55,
+          "sha256": "e05a12f254e331c56e685df8b181d6c532d171a1efca060970cd057e3cf99696"
+        },
+        {
+          "page": 56,
+          "sha256": "f68d8927cce4977e9591425c795a4886b998fd3d1581508b1df8d22ab18573a4"
+        }
+      ]
+    },
+    {
+      "stage": "root-original",
+      "reviewer": "root",
+      "image": "sheets/color-57-60.png",
+      "sha256": "b1ac3653d670f73e3b5b840f4663aa66dae69a549eceaa812110f17b53deb245",
+      "pages": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": null,
+      "timing_note": "Reconstructed from actual pre-compaction image views; exact view time unavailable. Recorded after original review deadline; no within-budget timing claim.",
+      "finding": "Actually viewed before compaction; template boxes, table columns and headings fit; no visible clipping or overlap.",
+      "normal_render_components": [
+        {
+          "page": 57,
+          "sha256": "50bdc7371a33e04c43f8994c999c0cc277e3e26f7d5e0ec90b0e6d2e48d0f4a4"
+        },
+        {
+          "page": 58,
+          "sha256": "1e05b82cdd9facb400aa4bbb69b2fe6ce73403c14bd2ad99ff61a7ee38ab83be"
+        },
+        {
+          "page": 59,
+          "sha256": "d7ac24951bcedde0f2fd881ca038f27325f422f12a85a34f3ab62dcb6a27e815"
+        },
+        {
+          "page": 60,
+          "sha256": "b1e240ced81252a29acf8ffa561df8fac85270d788e860658828490cb843f973"
+        }
+      ]
+    },
+    {
+      "stage": "root-original",
+      "reviewer": "root",
+      "image": "sheets/gray-57-60.png",
+      "sha256": "42a7878ebd204dec6d5657d306decdb8e96739a0cc8b0da525b273754f864e41",
+      "pages": [
+        57,
+        58,
+        59,
+        60
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": null,
+      "timing_note": "Reconstructed from actual pre-compaction image views; exact view time unavailable. Recorded after original review deadline; no within-budget timing claim.",
+      "finding": "Actually viewed before compaction; template boxes, table columns and headings fit; no visible clipping or overlap.",
+      "normal_render_components": [
+        {
+          "page": 57,
+          "sha256": "430a44b0f3a83367b0687a64b3cf72f8d97448d042cb76b6ebff084ab617a7db"
+        },
+        {
+          "page": 58,
+          "sha256": "673b86754b7ba401d3a2bb90df45939d79e03f4cd672e1af2e167b810e00bcc5"
+        },
+        {
+          "page": 59,
+          "sha256": "abbde4cdd65b8af6158bda3c545511a043ef07d6f9341a4396e106c511e5fb48"
+        },
+        {
+          "page": 60,
+          "sha256": "c7533f3f6127239a03d221d0bba033540305e3e50acc4c0bd248612a4abb298f"
+        }
+      ]
+    },
+    {
+      "stage": "root-original",
+      "reviewer": "root",
+      "image": "sheets/color-61-64.png",
+      "sha256": "e6ec113aa877244f321ff1f4363fe51ce854fc7696a13d4b7a4c764f34654e5e",
+      "pages": [
+        61,
+        62,
+        63,
+        64
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": null,
+      "timing_note": "Reconstructed from actual pre-compaction image views; exact view time unavailable. Recorded after original review deadline; no within-budget timing claim.",
+      "finding": "Actually viewed before compaction; template boxes, table columns and headings fit; no visible clipping or overlap.",
+      "normal_render_components": [
+        {
+          "page": 61,
+          "sha256": "a8d4855225422a763a71f9c065951a4325544e8fa302c4cb1471268c49fffded"
+        },
+        {
+          "page": 62,
+          "sha256": "be10257d5309d3cfb2843980d34955b37e9588272c372039699976f937f6441f"
+        },
+        {
+          "page": 63,
+          "sha256": "c4b256da38aa8e70f7f27978ad582f6865283bd2ee210884b08be714d76a117e"
+        },
+        {
+          "page": 64,
+          "sha256": "efc2fb2cc4cfda7b8a0da2b0802760907023e2d3a8795c15c85b44b0a84d57e3"
+        }
+      ]
+    },
+    {
+      "stage": "root-original",
+      "reviewer": "root",
+      "image": "sheets/gray-61-64.png",
+      "sha256": "139a0c82d054ad813d9696e55a33858475be16495a33ea1f8a7ff7273eb0639a",
+      "pages": [
+        61,
+        62,
+        63,
+        64
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": null,
+      "timing_note": "Reconstructed from actual pre-compaction image views; exact view time unavailable. Recorded after original review deadline; no within-budget timing claim.",
+      "finding": "Actually viewed before compaction; template boxes, table columns and headings fit; no visible clipping or overlap.",
+      "normal_render_components": [
+        {
+          "page": 61,
+          "sha256": "0d2857f55418184bfc00e03df3afabc60117704ce45678207bd5f7b9b11775b6"
+        },
+        {
+          "page": 62,
+          "sha256": "edf4d923bef5de270ca03e6f310fafbb5db1dcf53db0b93c02e6525833cbea5a"
+        },
+        {
+          "page": 63,
+          "sha256": "2602c632bb0834dd9b4bc54413d921d3532e347e6f4e8c4ba50bf9e3b46a1981"
+        },
+        {
+          "page": 64,
+          "sha256": "69b6ced3fb4aff86b25c5b1e7059dd7208f0bf2e0cea31bad61b7d7a08aca0c2"
+        }
+      ]
+    },
+    {
+      "stage": "science-partial",
+      "reviewer": "science",
+      "image": "sheets/color-65-68.png",
+      "sha256": "2ddc2c421549368d2b75f3890f8fec879a5708d06ac05935ce80c6722d61f093",
+      "pages": [
+        65,
+        66,
+        67,
+        68
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T21:10:11.262802+00:00",
+      "timing_note": "Terminal partial stage: six actual normal sheets 65-76 both. Remaining assigned images were not credited by that stage.",
+      "finding": "Actual original-detail view: historical snapshot heading and qualifications are readable; inventory table spans pages 65–66 with repeated header and aligned count/boundary columns. Page 67 bullets and five mapping questions are contained; page 68 registry table and failure list fit with clear spacing. No visual blocker.",
+      "normal_render_components": [
+        {
+          "page": 65,
+          "sha256": "74dd858ec7a7f57ddff8094a05b64c5f7b27ff64ce30a792e77385542baef081"
+        },
+        {
+          "page": 66,
+          "sha256": "2278c05522dae1ab11383b33d3e44b4ab0e3fb6b46c8c4eda2518431fc96809a"
+        },
+        {
+          "page": 67,
+          "sha256": "89e77eaf604a2709b905358e873cc41ecdbf10759369df142643ccff47408d64"
+        },
+        {
+          "page": 68,
+          "sha256": "2e83b23e76eab1b635310a93684bf1b72a7e6bd549929c0eb42a0994b502e950"
+        }
+      ]
+    },
+    {
+      "stage": "science-partial",
+      "reviewer": "science",
+      "image": "sheets/gray-65-68.png",
+      "sha256": "b349ab2f8c1674606e927867dc385875326060899568e890ac8d0e602a452e51",
+      "pages": [
+        65,
+        66,
+        67,
+        68
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T21:10:11.263703+00:00",
+      "timing_note": "Terminal partial stage: six actual normal sheets 65-76 both. Remaining assigned images were not credited by that stage.",
+      "finding": "Actual original-detail view: bold historical qualifiers, table bands, heading hierarchy and list indents remain clear in grayscale. Long literal digests wrap within margins. No clipped text, missing visible glyph or footer collision observed.",
+      "normal_render_components": [
+        {
+          "page": 65,
+          "sha256": "9f95164f89d7d815b6b6f2d14ed121f7366fd884f451643e6fd77eeed6ddb582"
+        },
+        {
+          "page": 66,
+          "sha256": "38db411600f3445faecb922b49d10d39d2e642171296c14f374e38fd4077d1a3"
+        },
+        {
+          "page": 67,
+          "sha256": "75913ff4740e802784739fc41f8a3036d05a77f9d0f6cac0cea208b1bb62f1a9"
+        },
+        {
+          "page": 68,
+          "sha256": "728fa2de61cdb0d170374104008ce1dd3b7eb77b8aff37e362dad49b63076111"
+        }
+      ]
+    },
+    {
+      "stage": "science-partial",
+      "reviewer": "science",
+      "image": "sheets/color-69-72.png",
+      "sha256": "9e01558a5533fac76de0692daab1f2bcb0620a3c3337ab3b320b72fc824ed71a",
+      "pages": [
+        69,
+        70,
+        71,
+        72
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T21:19:48.368617+00:00",
+      "timing_note": "Terminal partial stage: six actual normal sheets 65-76 both. Remaining assigned images were not credited by that stage.",
+      "finding": "Actual original-detail view: correction ledger and certificate-path code block fit; dense certificate prose is contained. Applicability tables on 71–72 retain complete rows and repeated header. Advisory: the Lenses 1–10 heading is at the end of page 70 while its table begins on 71, leaving unused space; content remains readable with no clipping.",
+      "normal_render_components": [
+        {
+          "page": 69,
+          "sha256": "77f6f2d0d4dddceae8891062cb89ed18ec29dca33a77195350bf751dd7b4fc14"
+        },
+        {
+          "page": 70,
+          "sha256": "c48af529a1148b81ecf24680db3ca6afaab1a62e7a85634a3ac34ffbc19fcda2"
+        },
+        {
+          "page": 71,
+          "sha256": "3f893ce52cb84afeb3d11843e0c44a08c49f97232b3a563586b5ccdbaa0c12a2"
+        },
+        {
+          "page": 72,
+          "sha256": "db76b2970ca2ccc97baddc571bed6177379d0b2014f9b222adfb0aafdf6445d9"
+        }
+      ]
+    },
+    {
+      "stage": "science-partial",
+      "reviewer": "science",
+      "image": "sheets/gray-69-72.png",
+      "sha256": "cc77d1ad5cf7adb37e2b26407ab5cbff223ca558f6771108e06d3c3769cef7bc",
+      "pages": [
+        69,
+        70,
+        71,
+        72
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T21:19:48.369402+00:00",
+      "timing_note": "Terminal partial stage: six actual normal sheets 65-76 both. Remaining assigned images were not credited by that stage.",
+      "finding": "Actual original-detail view: table banding, code box and headings remain distinguishable in grayscale. Probability notation and subscripts in page 72 prose are readable. Same page 70 heading/table separation advisory; no visible text collision or loss.",
+      "normal_render_components": [
+        {
+          "page": 69,
+          "sha256": "d9c4957b762adaf34d4808a4311a5442585b6f65c937593cd5d26d386558f490"
+        },
+        {
+          "page": 70,
+          "sha256": "f4eef8c06d8d31271b364bf3683b028268379639cb17ce2fa6e6dabae85fead6"
+        },
+        {
+          "page": 71,
+          "sha256": "76ceabefae5f5dea25784bb7514197e060e2f35b4d2f64b0cd63a4a9f45b1bca"
+        },
+        {
+          "page": 72,
+          "sha256": "75466549867a8fd600b3b54e408190894fd61b1d09e0bad22c352f1f12bbcde6"
+        }
+      ]
+    },
+    {
+      "stage": "science-partial",
+      "reviewer": "science",
+      "image": "sheets/color-73-76.png",
+      "sha256": "f58472801291935ab3a57007ef16bbc71a863d3eb7cd3d1d7347cfb7b9829dd0",
+      "pages": [
+        73,
+        74,
+        75,
+        76
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T21:32:39.617060+00:00",
+      "timing_note": "Terminal partial stage: six actual normal sheets 65-76 both. Remaining assigned images were not credited by that stage.",
+      "finding": "Actual original-detail view: six transfer prerequisites and citation prose are contained on page 73. Imported-theorem template fits its code box on 74; citation-edge numbered steps continue coherently to 75. Invariant bullets continue to 76, followed by a readable holdout section. No clipping or table/figure issue observed.",
+      "normal_render_components": [
+        {
+          "page": 73,
+          "sha256": "6537b5ea830b365ba83d59a23503d54cce1e378e4b4317c79e94edea1059cfc4"
+        },
+        {
+          "page": 74,
+          "sha256": "e8459b2a8e98d672a73ede01b858f78f8a108939a723a14d19d6e6bfcec8be4e"
+        },
+        {
+          "page": 75,
+          "sha256": "102b37ad85d71b63f9bbaef7f5ec3cbb0df2ee7d812f02c9cd489b746928fdeb"
+        },
+        {
+          "page": 76,
+          "sha256": "bda71999b095c474a51dc1269b0dd0278ca976289195a5a713b1b039a20e0d14"
+        }
+      ]
+    },
+    {
+      "stage": "science-partial",
+      "reviewer": "science",
+      "image": "sheets/gray-73-76.png",
+      "sha256": "30b3e70fdb50694d46fc258f97d0e6c28b6eaad1460a762878a2c8768c24b3f8",
+      "pages": [
+        73,
+        74,
+        75,
+        76
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T21:32:39.617991+00:00",
+      "timing_note": "Terminal partial stage: six actual normal sheets 65-76 both. Remaining assigned images were not credited by that stage.",
+      "finding": "Actual original-detail view: source links, code template, numbered indents and mathematical notation remain readable in grayscale. Long checker names fit within paragraph margins; headers and footers remain separate. No visual blocker.",
+      "normal_render_components": [
+        {
+          "page": 73,
+          "sha256": "d9af8002c94ba0c3d134826c08f3261576d05282218f382bb7b58e97408a41c7"
+        },
+        {
+          "page": 74,
+          "sha256": "682e8da6c881d3983e73748332b1d9518bb51c9fc2716b1f998b763d5e4366c3"
+        },
+        {
+          "page": 75,
+          "sha256": "8f901c39d286feb5a1c8a3d5cbf9a3785ac25bd4b548bfef98dc1cdc62d3286e"
+        },
+        {
+          "page": 76,
+          "sha256": "0a2802b9711a7069ea2d37b9d6b6e353d6eda00f1b58fe5b784547ecff97b54f"
+        }
+      ]
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "sheets/color-77-80.png",
+      "sha256": "c37036ffc3e2f913fcfd95bc04e46e4a123219e363c6843e55efe5a3b4415793",
+      "pages": [
+        77,
+        78,
+        79,
+        80
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T22:58:41.663212+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Fresh original-detail view. Numbered steps77 and table continuation78 remain ordered; repeated header identifies the split table. Claim-to-evidence matrix fits all three columns. PID scope and routing paragraphs79-80 stay inside margins; dense identifiers and displayed inline notation remain readable. Final sign-rule bullet continues on81. No clipping or overlap observed.",
+      "normal_render_components": [
+        {
+          "page": 77,
+          "sha256": "be091e232c9f70c7b798f838ed6a3ca4c450309f4121bc47bd8c7b13e810099a"
+        },
+        {
+          "page": 78,
+          "sha256": "cf6fd9545ba0d72ab35531f7b10c594d8424d9fdb0a9027915c06ef78f463183"
+        },
+        {
+          "page": 79,
+          "sha256": "b22146c4cf92810b6e1c9527fc5d842eed925ce42ceee7e74bc25b2de1151155"
+        },
+        {
+          "page": 80,
+          "sha256": "64ea5953335becc595d5d6162d0b551fc4654dd89c9a57eec79e1d084c7c84ef"
+        }
+      ]
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "sheets/gray-77-80.png",
+      "sha256": "839899f9b83bc80b9f8c6d6cc38b6e7ba26aacc785f0dceafe0ac0f5852326c5",
+      "pages": [
+        77,
+        78,
+        79,
+        80
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T22:58:41.664034+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Fresh original-detail grayscale view. Table banding, heading levels, list indentation and citations remain distinguishable without color. Long identifiers and subscripts on80 remain legible. No footer collision or missing visible glyph observed.",
+      "normal_render_components": [
+        {
+          "page": 77,
+          "sha256": "d75bc4a644f3c81d3f42d115aa75c9994bcb7d91476572df528d455b9ef3a217"
+        },
+        {
+          "page": 78,
+          "sha256": "339dc67c3bf618a08efce827c2b21bb05b608bd248da8aa137e0fe5f5e51f520"
+        },
+        {
+          "page": 79,
+          "sha256": "f39d2cc55eec3b199950ae7d73c58bf8043f9c9352a14172e8823f47cb2e06d2"
+        },
+        {
+          "page": 80,
+          "sha256": "c66957fbe7e7d121ee4c0a42add99da871266c78a81d5fd5419e39082796a2fd"
+        }
+      ]
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "sheets/color-81-84.png",
+      "sha256": "525783386f5ffc70dc95da2ad38adeb8254812409593585e7a08c8ab3e0f4381",
+      "pages": [
+        81,
+        82,
+        83,
+        84
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T22:59:54.232286+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Fresh original-detail view. Continuation of sign-rule bullet81 and audit-family list81-82 is intact. Counterexample list82, numbered trust-split steps83 and status ledger84 are readable, aligned and contained. Advisory: monospace NegativeHandling on81 and --trust=0 on82 wrap internally; no characters appear lost. Formal-evidence paragraph continues82-83 without a detached heading.",
+      "normal_render_components": [
+        {
+          "page": 81,
+          "sha256": "8c3a2a40fbe24d699adfec32ad504794e4d68fc5536a1edde06e4475d2660781"
+        },
+        {
+          "page": 82,
+          "sha256": "52aa2c1659499ebeb89c8600c3ee5aded3415dca8fe9a65f4e84b69b127959eb"
+        },
+        {
+          "page": 83,
+          "sha256": "e352d38da64c0e1adc11e0e1ff3d9543fe9a30bd3bffdd320e28a2c14f2237cc"
+        },
+        {
+          "page": 84,
+          "sha256": "21badb2a20f4915ae89b218bcde7943952296728816f15385370f8779df895be"
+        }
+      ]
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "sheets/gray-81-84.png",
+      "sha256": "5505dabbae731067651910a1826a28b697f9a6d2d84d57a9ec53a5d17e24d013",
+      "pages": [
+        81,
+        82,
+        83,
+        84
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T22:59:54.233022+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Fresh original-detail grayscale view. Bold audit-family names, list levels and shaded status ledger remain distinct. Mathematical subscripts and code text are readable; no clipping, collision or loss of table column association observed. Internal code-token wrapping remains visible as in color.",
+      "normal_render_components": [
+        {
+          "page": 81,
+          "sha256": "fd28bd9c7bcf9cc0814dfbc99fd2ab6ce908e2f01fb32149b6f42b40d201a6d4"
+        },
+        {
+          "page": 82,
+          "sha256": "e9fb35280eee1fb34966bc6613399d7d0bd81fb70c4f78f8dfcd73f8eace418c"
+        },
+        {
+          "page": 83,
+          "sha256": "9526d02ab2d2d5315cf7db30c4be8b3f672267a92a85d819f72535c541fdee29"
+        },
+        {
+          "page": 84,
+          "sha256": "61d391337528e05b7f155a39cd0e4b3ddfd08c0a13489629a1eeae20a9b23c15"
+        }
+      ]
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "sheets/color-85-87.png",
+      "sha256": "c58feb88733f95f405bc5bfee4b160aa177a83015fae3e888b76cc482d43e24c",
+      "pages": [
+        85,
+        86,
+        87
+      ],
+      "mode": "color",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:01:24.059005+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Fresh original-detail view. Consumer scope85, exceptional-case list85-86, mathematical graph/support paragraph86, four-column gate table86 and final acceptance section87 are legible and contained. The directory example begins87 after its introduction86; its code box is intact. Last sheet contains only three physical pages; blank fourth quadrant is not a PDF page. No blocker observed.",
+      "normal_render_components": [
+        {
+          "page": 85,
+          "sha256": "405cc4ea85f04d458837dd9188bf6f27619547ea681be1147f7c73423781ddf4"
+        },
+        {
+          "page": 86,
+          "sha256": "692bcef2e35a6da2135707bbbda9f600529e25ad5da36107939c1a9b1f31b8d4"
+        },
+        {
+          "page": 87,
+          "sha256": "f1f6e1ded25ef8f6070dda50a0855c475c684f9ea6b3a1b4d2d020aeb8b98010"
+        }
+      ]
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "sheets/gray-85-87.png",
+      "sha256": "98bb6a4bca682490d784096a13da0ac2f5c14eac1a7f841fa952f348f483aada",
+      "pages": [
+        85,
+        86,
+        87
+      ],
+      "mode": "gray",
+      "dpi": 120,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:01:24.059488+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Fresh original-detail grayscale view. Gate table shading and heading levels remain usable; mathematical product-measure notation86 is visible. Directory tree and final bullets87 fit with clear margins and footer separation. No meaning depends solely on color in these pages.",
+      "normal_render_components": [
+        {
+          "page": 85,
+          "sha256": "a35e90945c0079bfba8102ca292470bd68f74a86c9ac4fd35235a1b10fce0a8b"
+        },
+        {
+          "page": 86,
+          "sha256": "36f2789dc2dc09b0eb6c93586502bdf1083902c7ebb8384dd70be3ab742f9233"
+        },
+        {
+          "page": 87,
+          "sha256": "b7e3264754fe5bb7e4d9135bae594a83a6e5e806dee3e0f61203de2414dcf7b9"
+        }
+      ]
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-49.png",
+      "sha256": "51f845f14080d4a54491027612291aef7f4c778ac2ccdb8a0e6a28b77dd210b7",
+      "pages": [
+        49
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:02:45.188520+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Long retirement and formal-verification paragraphs fit the text area; colored receipt links remain legible. SOURCE_DATE_EPOCH and timestamp fit together. Bottom paragraph continues50 without clipping; footer stays separate. Dense prose is a readability advisory, not a visible layout failure.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-50.png",
+      "sha256": "d6e1ad21618297c8d6841abcee4ff030b4c7666cb79a74a5cebcfa4f88d8be24",
+      "pages": [
+        50
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:02:45.189091+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Continued ledger sentence and ownership heading are visually separated. Long durability and publication-condition paragraphs remain readable with consistent leading and margins. No overlapping lines or obscured characters; final paragraph is dense but complete on this page.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-51.png",
+      "sha256": "364425b7bef21124007e8146c3adc58c8692999c8124f1d12ff80f5c58e5d1cf",
+      "pages": [
+        51
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:06:10.355286+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Six council steps have consistent indentation and paragraph spacing. Evidence-status table has aligned columns, clear monospace labels and readable definitions; every visible row remains contained. No overlapping glyphs or footer collision.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-58.png",
+      "sha256": "24e1270eb59f34e3adcbf6df6ffb4b1a9cd5adc1e52da3f5290db93dda0d07fd",
+      "pages": [
+        58
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:06:10.355802+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Continuity template code box fits, including long record_identity_method field and two explicitly marked continuation lines. All angle brackets, vertical bars, arrows and underscores are visible. Lifecycle heading and three visible numbered steps remain distinct and inside margins.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-60.png",
+      "sha256": "0cc23e97a7667a56d13061572e296ed9e26be78f135d5eb284be7aed7c1e4ee7",
+      "pages": [
+        60
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:07:58.911002+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. State-machine heading, six bullets and long dependency/publication paragraphs have consistent leading. Monospace gate states fit inline. The bottom paragraph continues beyond this page; visible text and footer are separate. No diagram is present, so graph-arrow layout is not applicable here.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-62.png",
+      "sha256": "129c9ac8944c6d719e2e304e67ef772551a22d73d6a324c3a932371762cf56c9",
+      "pages": [
+        62
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:07:58.911868+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Route template box is complete. Three-column distinction table fits; long first-column closure/falsification label stays separate from the second column. Protocol and claim-packet headings retain introductory text. First row of the following table fits above the footer; no clipping or collision.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-65.png",
+      "sha256": "cab0d46b077d8953723e533157621dcfd56bca122d1b6b7e123dd9ae732466da",
+      "pages": [
+        65
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:10:08.324204+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Historical heading and bold historical qualifier are prominent. Long source names and SHA strings wrap internally but remain readable and within margins; this is a density/navigation advisory. Inventory table keeps object class, count and boundary columns distinct, including I_min subscripts and long wrapped descriptions.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-66.png",
+      "sha256": "8bf95caef39ee9e563b82cebc3437cb2c8a8f97daaac0bcd7f5b5bd47d1c2f05",
+      "pages": [
+        66
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:10:08.325082+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Repeated inventory header correctly locates the continuation; dense assurance row has a visible gap between first and second columns. Later-evidence date and non-closure qualification are bold and readable. Inequality1<=N<=5, multiplication signs and denominator-like counts display clearly. No clipping or overlap observed.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-82.png",
+      "sha256": "f1a7da8d178b54b36582e1ecda2cc855f465ba25e782789c295ccd9631e39bad",
+      "pages": [
+        82
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:12:39.406698+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Counterexample list is well spaced and headings retain following prose. Confirms advisory internal line break in --trust=0 after --tr; remaining ust=0 is clearly printed on the next line. No missing characters or clipping. Bottom continuation is legible and separate from footer.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-83.png",
+      "sha256": "01bddefbb890e2fbe76a5f318499205836574ef8f6b78a0022fa2ac8dfc8ac1a",
+      "pages": [
+        83
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:12:39.407755+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Seven comparator steps fit without split list items. Formal-acceptance and hostile-case paragraphs remain contained. Long LEAN_PATH/LEAN_SRC_PATH/LEAN_SYSROOT/ELAN_TOOLCHAIN sequence is legible, with underscores intact and no overlapping surrounding prose. Dense paragraphs are readable at this scale.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-84.png",
+      "sha256": "51008f5b39d0751dfe093c69d45f8eb526c553e3985e2e289a7c350cc89b92b3",
+      "pages": [
+        84
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:14:38.450989+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Status ledger has aligned labels, readable allowed-state lists and sufficient row height. Table bottom rule separates follow-up prose. I_min subscript in benchmark paragraph is intact. Long final paragraph and all table cells stay inside margins; no blocker observed.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-85.png",
+      "sha256": "44a0bb16caf4721090790aee8efbfa57576bf18e8530c4547e24767b5f0893b3",
+      "pages": [
+        85
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:14:38.451489+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Consumer-contract paragraph, full-closure heading, eight-item list and exceptional-case heading have clear hierarchy. Monospace I_min in checklist is visibly distinct and complete. List spacing and footer separation are consistent; final checklist continues86 without clipped items.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-86.png",
+      "sha256": "08149a03baab9b992645888cee9d62ff373359c035ea9d9b096f9cfd14e82692",
+      "pages": [
+        86
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:20:20.265699+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Product-measure symbol, variable subscripts and I(X;Y)=H(Y) remain clearly formed. Four-column G0-G8 table has legible headers, consistent banding and no overlap between long gate names and closure descriptions. Directory introduction is separated from the footer and continues into87. No visual blocker.",
+      "normal_render_components": []
+    },
+    {
+      "stage": "science-final",
+      "reviewer": "science",
+      "image": "color-300/page-87.png",
+      "sha256": "cf839e24d66fa87681ca4f9984feeef74e4183512ab3e7f65b3262fdf75ed766",
+      "pages": [
+        87
+      ],
+      "mode": "color",
+      "dpi": 300,
+      "actual_view": true,
+      "detail": "original",
+      "recorded_after_view_utc": "2026-09-05T23:20:20.267055+00:00",
+      "timing_note": "Fresh 45-minute supplement; all 20 assigned after-view records precede its 23:40:48 UTC deadline.",
+      "finding": "Actual original-detail300dpi view. Entire directory tree is contained in its code box with visible angle brackets and indentation. Acceptance heading, six evidence-class bullets and closing paragraphs are readable, complete and well separated. Final whitespace is an ordinary document ending; no clipping or footer collision.",
+      "normal_render_components": []
+    }
+  ]
+}

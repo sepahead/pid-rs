@@ -1,0 +1,70 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "build_scope": "One converged author-corrected report produced through the existing captured build_report path. No full checker or full current rendering receipt acceptance.",
+  "checks": "Exact current source/PDF/file bindings; Author metadata; all 87 page dimensions and non-author word texts/boxes compared to the original with 0.001 point coordinate tolerance; one first-page byline substitution. First page rendered at 120 dpi for actual inspection.",
+  "date": "2026-09-23",
+  "files": {
+    "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": {
+      "bytes": 250111,
+      "sha256": "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-120dpi.png": {
+      "bytes": 246307,
+      "sha256": "4f5dcee0b6127a779792a0383b7bc2b29ed5617b4e209bbd1463ad21265758dd"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-actual-views.json.txt": {
+      "bytes": 89628,
+      "sha256": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-rendering-receipt.tsv.txt": {
+      "bytes": 19052,
+      "sha256": "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-source.tex.txt": {
+      "bytes": 284090,
+      "sha256": "dd59ded265b42a6854014923e0b81e49a0da79eccd9b2440835c1df0c735bb94"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-visual-receipt.md.txt": {
+      "bytes": 5722,
+      "sha256": "4454d1975ff69a55944258f469e0603ce4cd9065b384218da013436cdfcef602"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous.pdf.bin": {
+      "bytes": 860468,
+      "sha256": "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf"
+    },
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md": {
+      "bytes": 5722,
+      "sha256": "4454d1975ff69a55944258f469e0603ce4cd9065b384218da013436cdfcef602"
+    },
+    "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json": {
+      "bytes": 89628,
+      "sha256": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae"
+    },
+    "audit/formal/latex/mathematical-problem-solving-workflow.tex": {
+      "bytes": 284086,
+      "sha256": "6b1298f2b3b99be00b6e8ae8503420e01855db94fef8f30d63971ab5d7efb7b2"
+    },
+    "audit/formal/latex/pid-rs-report-tables.sty": {
+      "bytes": 4051,
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    "audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "bytes": 8607,
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    "output/pdf/mathematical-problem-solving-workflow.pdf": {
+      "bytes": 860473,
+      "sha256": "24a394e979d0a9430f10e5999790c6d467c502e2ccf6553cc74e5140fbb10263"
+    },
+    "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": {
+      "bytes": 19052,
+      "sha256": "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea"
+    }
+  },
+  "first_page_view": "Actual 120 dpi color image opened and inspected on 23 September 2026: Sepehr Mahmoudian byline is visible, original date is present, title and contents fit, and no first-page clipping was observed. No claim about a new all-page visual review.",
+  "pages": 87,
+  "remaining": "Current output rendering receipt remains the valid original receipt for the previous PDF. A later full refresh must produce a genuine new rendering receipt before the full --exact rendering comparison can pass; that predicate remains unchanged.",
+  "schema": "pid-rs/workflow-authorship-successor/v1",
+  "scope": "Authorship-only current publication successor. The preserved September 5 full visual review and actual-view records apply exclusively to previous.pdf.bin and its preserved rendering receipt. They are not a new full visual review of the current PDF.",
+  "source_change": "Exactly two replacements of pid-rs contributors with Sepehr Mahmoudian in the current TeX source. Markdown, mathematical contents and dates are unchanged."
+}

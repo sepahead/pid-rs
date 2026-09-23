@@ -1,3 +1,7 @@
+---
+author: "Sepehr Mahmoudian"
+---
+
 # Zero cell tangents with a support-changing mutual-information cusp
 
 To study how a categorical information objective changes, it is tempting to differentiate its cell probabilities and substitute those tangents into a score formula. At a boundary of the probability simplex, a newly appearing cell can contribute a first-order entropy change even when its probability has zero derivative. This dossier constructs that failure explicitly. It explains why the [finite-prefix MGW derivative result](../finite-prefix-mgw-gradient/EXPOSITION.md) keeps common positive support, and why a function-value continuity or bias bound cannot simply be differentiated.

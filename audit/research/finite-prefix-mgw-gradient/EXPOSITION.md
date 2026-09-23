@@ -1,3 +1,7 @@
+---
+author: "Sepehr Mahmoudian"
+---
+
 # Finite-prefix MGW derivatives: a score identity, truncation bound and second moment
 
 A finite-prefix mean can approach an information objective without its derivative being a reliable guide to changing that objective. This matters if a finite stochastic encoder changes a chosen categorical source representation: a mean truncation bound alone cannot justify using the prefix experiment's derivative for that change. Direct differentiation of a small known PMF remains a strong simpler route. The sampled-score route considered here is motivated by a finite induced PMF that has not been enumerated, while the encoder's sampled score is evaluable.

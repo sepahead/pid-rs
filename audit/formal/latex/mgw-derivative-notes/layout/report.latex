@@ -16,7 +16,7 @@
   urlcolor=PidSecondary,
   citecolor=PidSecondary,
   pdftitle={$title-meta$},
-  pdfauthor={pid-rs contributors},
+  pdfauthor={Sepehr Mahmoudian},
   pdfsubject={$subject$},
   pdfdisplaydoctitle=true
 }
@@ -43,7 +43,7 @@
 \pretocmd{\section}{\par\Needspace{12\baselineskip}}{}{\PackageError{mgw-note-layout}{Section spacing patch failed}{Inspect the declared article layout.}}
 \pretocmd{\subsection}{\par\Needspace{7\baselineskip}}{}{\PackageError{mgw-note-layout}{Subsection spacing patch failed}{Inspect the declared article layout.}}
 \title{\PidReportTitle{$title$}{$subtitle$}}
-\author{}
+\author{Sepehr Mahmoudian}
 \date{}
 \begin{document}
 \PidMakeTitle
