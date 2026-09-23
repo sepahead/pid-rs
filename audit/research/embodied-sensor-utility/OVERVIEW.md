@@ -50,6 +50,24 @@ CREBAIN produces observations; NCP transports sensor records; Prisoma inspects e
 
 The current two-camera-plus-audio example records five images and 800 pressure samples over six 120-Hz body ticks. That proves a capture composition, not independent statistical replication. The missing step is a frozen feature table joined to future reference labels. Use one declared episode/landmark unit, preserve timing and missingness, fit transforms only on training episodes, and evaluate untouched episodes.
 
+## Where the offline report is useful
+
+The proposed camera/audio adapter processes each RGB or grayscale camera separately with a declared frozen extractor and each audio window with its own declared feature map. Low-dimensional outputs are converted to categories; each sensor is one source group. Hold shared context fixed or use an explicit conditional analysis for sensor-specific attribution. PID then describes those representations against a separately measured outcome. It does not operate directly on raw pixels or recover discarded image/audio information. A fusion predictor is trained and tested separately on the sensor subsets. The detailed report gives an explicit three-source row, distinguishes neural-representation analysis from model-use tests, and explains why a fused output cannot be relabeled as an independent sensor.
+
+| Decision | Role of the report | What still establishes success |
+|---|---|---|
+| Preparation and labeling | Specify time windows, source identity, reference outcomes, exclusions and fitted transforms. | Direct record checks and reference adjudication. PID neither cleans data nor certifies labels. |
+| Feature and fusion design | Explain signed information allocation and nominate a matched representation or model ablation. | Held-out task loss, calibration, failure behavior and cost. |
+| Tuning and training | Test a declared diagnostic-guided change inside development splits. | Untouched evaluation against task-only and masked-training baselines. No PID learner is supplied. |
+| Placement and policy | Shortlist a collection or control experiment with a fixed target and explicit costs. | Candidate-location data or a justified sensor model, then task evaluation; closed-loop evidence for policy claims. |
+| Integrity review | Compare predeclared relationships across retained regimes. | Labeled faults, benign-shift controls and calibrated alerts. Atom changes do not identify tampering. |
+
+The recorded office example makes the boundary concrete. Four training-fitted bins for light and CO₂ give positive added empirical information of about 0.001558 nats on the later recording. Yet the fixed pair predictor has worse mean log loss: 0.050762 versus 0.047443 nats per row for light alone. Its larger predictive excess loss outweighs the information gain. The detailed report gives the data statistics, predictor rule, signed cancellation and complete loss calculation.
+
+A separately measured target is not a statistically independent target: it must retain the relationship being predicted. Split episodes before fitting or tuning, preserve natural missingness, and keep the target law fixed for the mathematical comparison. Changing physical placement or policy changes that law and requires new evidence. Compute PID offline only when its allocation answers a useful question beyond subset MI and direct task performance.
+
+Partial visibility and distortion are separate from missing inputs. Retain quality conditions such as occlusion, blur, clipping and frame age, then compare information and prediction on common episodes within supported regimes. An offline quality label is not automatically available to the deployed predictor. Natural occlusion can depend on the target, so it does not inherit a random-dropout formula. The full report gives the conditional-law interpretation, data fields and evaluation limits.
+
 ## How practical value will be tested
 
 Start offline with all eight sensor subsets. Measure predictive loss, availability, runtime and memory. Keep fixed-model outages separate from retrained subset models. Compare MI/CMI, subset task loss and established masking methods. [Masked sensor training](https://proceedings.mlr.press/v270/skand25a.html) and [MAD multi-view reinforcement learning](https://proceedings.mlr.press/v305/almuzairee25a.html) are relevant baselines; no superiority to them is established here.

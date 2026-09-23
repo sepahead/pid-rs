@@ -1,0 +1,172 @@
+{
+  "schema": "pid-rs/embodied-sensor-offline-use-publication-observation-v1",
+  "author": "Sepehr Mahmoudian",
+  "scope": "Selected source and local PDF-production observation for the offline sensor-use workflow revision. Mathematical, estimator and application evidence have separate scopes.",
+  "observed_utc": "2026-09-23T17:22:41.596309+00:00",
+  "input_profile": "../../formal/latex/embodied-sensor-utility/publication-inputs-v1.json",
+  "profile_sha256": "34f5c6e71b90f8d4fcbdf13bceb729002fdc973575114d7fb51d03abc5ff4728",
+  "selected_sources": {
+    "profile_file_count": 22,
+    "exposition_sha256": "f135158064e892a32fb3c83928771808dd348c2ffd1b891b86b77af707e3b543",
+    "overview_sha256": "d7b1f6f488c0437c5cb957ea974638c0e73bd0294c5454d03c17c14de11d4365",
+    "publication_note_sha256": "cf0e5c9bcc72a8acbe25f12648871b47b2646f634efbd3a5a16f16f23b018d0e",
+    "sensor_data_figure_svg_sha256": "4141779858abf0cad6632d79bb5ec9de16f78f34a5b49fb371b6907e964b2815",
+    "producer_boundary": "The caller registration pins the producer separately to avoid a self-hash cycle; the public input profile binds the enumerated source and native-profile files, not a complete TeX dependency closure."
+  },
+  "source_review": {
+    "scope": "Reviewed the revised exposition, overview and custom vector diagram against the stated finite-categorical workflow and current implementation surface.",
+    "resolved_boundaries": "The selected sources distinguish a separately measured reference target from a statistically independent target, expose common-context and pretrained-weight ancestry, describe image/audio feature encoding, and separate proposed fusion experiments from implemented categorical MGW analysis.",
+    "claim_status": "Source review is editorial and technical critique; it is not a formal proof or a sensor-benefit observation."
+  },
+  "outputs": {
+    "full": {
+      "pages": 26,
+      "pdf": {
+        "bytes": 342158,
+        "sha256": "d6a2b9168026a6267efb4f9930dabd858310a2e4c65e34a262f2ab79f041fac8"
+      },
+      "tex": {
+        "bytes": 96816,
+        "sha256": "86103cb81aae60964074e8a0d61ce4f3b51cf0185b5ab947b5e2d742ef88c1f3"
+      },
+      "figure_pdfs": {
+        "figures/availability-weighted-gain.pdf": {
+          "bytes": 47272,
+          "sha256": "5d6f39ed6e691240d8c4b4b3445da6a79ba7d7b6b332e52bfad42878276127cd"
+        },
+        "figures/sensor-data-to-evidence.pdf": {
+          "bytes": 48726,
+          "sha256": "5ceffd86575d9da2e852410899b6132e96ad3000777e6fe0908f8fa3424d9557"
+        },
+        "figures/signed-atoms-and-sensor-value.pdf": {
+          "bytes": 44338,
+          "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+        }
+      }
+    },
+    "overview": {
+      "pages": 4,
+      "pdf": {
+        "bytes": 96036,
+        "sha256": "4a44f49487bb01757299976ea08626c6f01f49344b8b9d8dfd8f7e824b5534d5"
+      },
+      "tex": {
+        "bytes": 14596,
+        "sha256": "5ed1451683093b0e7b7f62ba4c40ae71507bf4079c4e0b4fd5808e7d1ccd4c73"
+      },
+      "figure_pdfs": {
+        "figures/signed-atoms-and-sensor-value.pdf": {
+          "bytes": 44338,
+          "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+        }
+      }
+    }
+  },
+  "stages": [
+    {
+      "mode": "discovery",
+      "completed_utc": "2026-09-23T17:11:15.477331+00:00",
+      "calls": [
+        {
+          "kind": "full",
+          "actual_outer_returncode": 0,
+          "builds": 2,
+          "primary_commands": 66,
+          "status": "two matching discovery candidates; no adoption within the producer"
+        },
+        {
+          "kind": "overview",
+          "actual_outer_returncode": 0,
+          "builds": 2,
+          "primary_commands": 62,
+          "status": "two matching discovery candidates; no adoption within the producer"
+        }
+      ],
+      "selection": "The reviewed 26-page full and four-page overview identities were selected in the public input profile after source and rendered-page review."
+    },
+    {
+      "mode": "exact",
+      "completed_utc": "2026-09-23T17:22:41.596309+00:00",
+      "calls": [
+        {
+          "kind": "controls-normal",
+          "actual_outer_returncode": 0,
+          "finite_controls": 109,
+          "status": "finite inert source/data controls passed; no native build or PDF parse"
+        },
+        {
+          "kind": "controls-optimized",
+          "actual_outer_returncode": 0,
+          "finite_controls": 109,
+          "status": "finite inert source/data controls passed; no native build or PDF parse"
+        },
+        {
+          "kind": "full",
+          "actual_outer_returncode": 0,
+          "builds": 2,
+          "primary_commands": 66,
+          "status": "two exact-reference builds reproduced the selected PDF, TeX, three figure PDFs and typed reader observations"
+        },
+        {
+          "kind": "overview",
+          "actual_outer_returncode": 0,
+          "builds": 2,
+          "primary_commands": 62,
+          "status": "two exact-reference builds reproduced the selected PDF, TeX, figure PDF and typed reader observations"
+        }
+      ],
+      "affected_reports_adopted": true,
+      "new_formal_results": 0
+    }
+  ],
+  "review": {
+    "full_pages": 26,
+    "full_current_direct_pages": [26],
+    "full_image_identical_joins_to_prior_review": "Pages 1–25 match the predecessor raster byte for byte. Pages 1–10 have a further exact-image join to earlier root-viewed pages; pages 11–25 were viewed directly by a separate reviewer at 1400-pixel width.",
+    "overview_pages": 4,
+    "overview_review": "The selected four-page PDF is byte-identical to a prior directly reviewed four-page build.",
+    "targeted_larger_renders": "The custom data-flow figure on full page 11 and example equations on page 14 were inspected at 2400-pixel width; page 11 also had a grayscale render.",
+    "visible_findings": "The final page retains its conclusion and citation together. No clipping, arrow collision or visible equation/table overflow was observed on reviewed pages. Minor prose and table page breaks remain.",
+    "physical_print_test": false,
+    "accessibility_audit": false
+  },
+  "negative_routes": [
+    {
+      "route": "first offline-workflow discovery registration",
+      "outcome": "Normal and optimized finite controls passed; PDF calls were withdrawn before launch so the source could state quality-information parity and missing-source stratum premises."
+    },
+    {
+      "route": "second discovery registration",
+      "outcome": "Withdrawn before any registered call to add total cost across quality strata and corruption severities."
+    },
+    {
+      "route": "third discovery invocation",
+      "outcome": "Argument admission failed with exit 2 because --discover was omitted. No native production ran; the overview was not invoked."
+    },
+    {
+      "route": "fourth discovery candidate",
+      "outcome": "Both reports built, but its 25-page full layout preceded the explicit image/audio input path and final custom figure; it was not selected."
+    },
+    {
+      "route": "fifth discovery candidate",
+      "outcome": "Both reports built; the 27-page full draft was superseded to clarify shared context and pretrained-weight ancestry and to move an orphan overview heading."
+    },
+    {
+      "route": "sixth discovery candidate",
+      "outcome": "Both reports built; a 27-page full layout stranded the end of its conclusion on a sparse final page, so closing prose was shortened."
+    },
+    {
+      "route": "seventh discovery candidate",
+      "outcome": "Both reports built; the 27-page full draft was superseded to keep the concluding citation compact before final selection."
+    }
+  ],
+  "boundaries": [
+    "This is source, production and visual evidence for two affected reports, not a new theorem or a complete repository-wide exact replay.",
+    "Four separately scoped finite-PMF foundations retain their existing local proof status; 13 downstream conditional sensor/application proof targets remain unaccepted.",
+    "No camera/audio adapter, learner, sensor benchmark, robotics or drone benefit, online latency, estimator calibration or physical deployment result is established here.",
+    "The controls are inert finite checks; rendered page inspection, PDF metadata and same-profile exact reproduction do not prove mathematical or application claims.",
+    "The review and builds share repository sources, tools and custody; there is no independent toolchain or independent-implementation reproduction claim.",
+    "The native profile is bounded, not complete dependency closure. No physical print, accessibility tagging audit, live external-link validation or hosted replay is claimed.",
+    "Containing commit, remote integration and hosted checks require separate evidence."
+  ]
+}

@@ -488,8 +488,8 @@ The current ecosystem can record real simulator payloads. A payload record is no
 
 \begin{figure}
 \centering
-\includegraphics[width=160mm,height=\textheight,keepaspectratio,alt={Separate sensor capture, training-frozen transformations, future labels and offline evaluation. PID is one diagnostic beside proper loss, conditional MI and sensor ablations.}]{figures/sensor-data-to-evidence.pdf}
-\caption{Separate sensor capture, training-frozen transformations, future labels and offline evaluation. PID is one diagnostic beside proper loss, conditional MI and sensor ablations.}
+\includegraphics[width=160mm,height=\textheight,keepaspectratio,alt={Separate RGB or grayscale cameras and audio each produce a declared feature, then a categorical source. A separate reference supplies the target. PID and fusion-model evaluation answer different questions; the quality panel distinguishes partial, distorted and missing observations. The adapter and sensor study are proposed.}]{figures/sensor-data-to-evidence.pdf}
+\caption{Separate RGB or grayscale cameras and audio each produce a declared feature, then a categorical source. A separate reference supplies the target. PID and fusion-model evaluation answer different questions; the quality panel distinguishes partial, distorted and missing observations. The adapter and sensor study are proposed.}
 \end{figure}
 
 \par\Needspace{10\baselineskip}
@@ -550,6 +550,219 @@ Split complete episodes before fitting features, quantizers or predictors. Fit a
 If every source and the target has eight categories, three sources allow \(8^4=4096\) complete cells; four allow \(8^5=32768\). This explains why raw high-dimensional inputs cannot simply be discretized finely. More bins can reduce representation bias while making population estimation worse. Report sensitivity to prespecified coarser encodings. Selecting the best encoding on the final test data invalidates an ordinary held-out comparison.
 
 Hyperbolic latent coordinates do not remove this problem. Quantizing them produces a categorical representation with a declared geometry-dependent encoder. It does not establish a hyperbolic continuous PID estimator or avoid the joint-alphabet cost. Continuous and manifold-supported inputs need their own support and metric analysis.
+
+\par\Needspace{10\baselineskip}
+
+\subsection{Exactly what enters PID for cameras and audio}\label{exactly-what-enters-pid-for-cameras-and-audio}
+
+The runtime estimator receives matrices of categorical labels, not an image file, waveform or neural network. The camera/audio adapter below is a proposed implementation contract. The completed real-data example in this report uses office measurements; no end-to-end camera/audio PID experiment is claimed.
+
+For one camera, let \(H\) and \(W\) denote image height and width in the image-shape notation used here. An RGB frame has shape \(H\) by \(W\) by three channels; a grayscale frame has one intensity channel. Preserve color space, channel order, exposure and pixel scaling. Grayscale conversion discards color and therefore changes the observed representation. It can be a separately tested input choice, not an equivalent replacement for RGB. Resizing, crops and image normalization also belong to the declared feature map.
+
+Encoding every pixel as a categorical coordinate is mathematically possible, but it is not the proposed first estimator. An 8-bit grayscale frame already has up to \(256^{HW}\) possible intensity patterns. When almost every frame is a distinct state, an empirical table can identify individual recorded rows without establishing useful population prediction. A smaller feature representation trades away information to make repeated states and a defensible statistical study possible. Its loss of information must remain explicit.
+
+A frozen vision extractor maps each camera's own pre-target frames to a small feature vector. This can be a geometric feature with calibrated meaning, a detector output, or a learned representation. A detector probability is a prediction, not ground-truth presence, distance or identity. A dense latent with hundreds of coordinates is not automatically an estimable categorical source: its joint alphabet can be prohibitive. Begin with a small, meaningful feature and report what it discards.
+
+A pressure microphone supplies time-indexed samples with declared units and sampling rate. A fixed window ending by the prediction time can be summarized by RMS, band energies, or a frozen audio encoder. State window length, sample rate, channel count, filtering, resampling, normalization and clipping policy. Band energy preserves different information from a single loudness value; neither a scalar energy nor single-microphone RMS establishes direction or object identity. An array-derived direction estimate needs the microphone geometry, synchronization and a separate validated localization method. Missing samples and silence are different observations.
+
+Each sensor must first be transformed separately. Shared network weights across two cameras are permissible if each output depends only on its own camera and declared common context. Record that context and give the comparators the same permitted access to it. If \(X_i=f_i(\mathrm{camera}_i,C)\) uses shared context \(C\), the unconditional PID can include information carried by \(C\). Equal predictor access does not remove that information from the PID. For a sensor-specific interpretation, hold \(C\) fixed or compute and report the finite-law decomposition within each supported context stratum. An average of those decompositions is a conditional analysis, not the unconditional decomposition. If a purported camera-1 feature already consumes camera 2 or audio, the source labels no longer represent separate sensors. A fused network output is not a third independent sensor.
+
+\par\Needspace{10\baselineskip}
+
+\subsection{An explicit illustrative row and fusion experiment}\label{an-explicit-illustrative-row-and-fusion-experiment}
+
+Consider a proposed single-object presence forecast with target \(Y\in\{0,1\}\) at a fixed future horizon. This is one possible study; the future-sector task above uses a different target alphabet and needs its own evaluation. Obtain \(Y\) from a separately justified reference. Train or select the three feature-extraction paths using development data only. Record each model version and weight identity, its pretraining and fine-tuning data, and any overlap with evaluation episodes or reference labels. Frozen weights alone do not establish an uncontaminated evaluation. Freeze the selected maps before outer evaluation:
+
+\begin{itemize}
+\tightlist
+\item
+  one vision extractor applied separately to camera 1 and camera 2;
+\item
+  one audio extractor applied to the pre-target pressure window.
+\end{itemize}
+
+For this illustration, each extractor outputs a scalar event score in \([0,1]\). A score need not be calibrated to serve as a declared source feature; calibration is separately tested if the score is used as a predictive probability. Choose four fixed bins in advance: \([0,1/4)\), \([1/4,1/2)\), \([1/2,3/4)\) and \([3/4,1]\). This fixed map is an alternative to training-fitted edges, not a claim about the fitted quantizer's edges. Handle invalid or unavailable outputs through an explicit status rule rather than putting them in the lowest bin.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2800}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3200}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Field
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Illustrative value
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Meaning
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+Camera 1 score & \(0.72\) & Its separate extractor output; category \(X_1=2\) \\*
+Camera 2 score & \(0.41\) & Its separate extractor output; category \(X_2=1\) \\*
+Audio score & \(0.68\) & Its separate window extractor output; category \(X_3=2\) \\*
+Future reference & \(Y=1\) & An independently sourced outcome after the feature windows \\*
+\end{longtable}
+}
+
+These numbers are invented to explain the interface; they are not recorded measurements or benchmark results. One valid row enters the categorical matrices as source labels \((2,1,2)\) and target label \(1\). Many aligned rows produce counts for a nominal \(4^3\times2=128\)-cell joint PMF. The stable three-source calculation then reports the 18 averaged MGW atoms on that represented empirical law. The two-camera calculation has four atoms; adding a fourth source gives 166. Report occupied cells, counts and source provenance as well as atoms. The six-tick capture described above is an engineering fixture and is too short to substitute for this repeated-episode study.
+
+The \textbf{fusion predictor is separate}. Feed it the permitted sensor features, quality metadata and availability mask, and train it to predict the reference outcome. Compare all eight subsets of three sources, including the no-sensor baseline, on identical held-out episodes. If PID uses quantized scores but the predictor uses unquantized scores, say so: the PID concerns a coarsening of the predictor's inputs. Compare a predictor on the same categories when a direct correspondence is needed. If a predictor consumes full images or audio embeddings, a scalar-score PID does not characterize all of its available input information.
+
+Three analyses must remain distinct:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Sensor-feature PID:} sources are separate sensor representations and the target is the physical reference. It asks what information those representations retain.
+\item
+  \textbf{Representation PID:} sources are explicitly selected neural layers, branches or bottlenecks, with a declared target. It asks what those internal variables retain. State every input each branch has already consumed; post-fusion branches cannot automatically be interpreted as separate camera or audio sources.
+\item
+  \textbf{Model-use evaluation:} measure predictions, calibration and matched ablations of the fitted fusion model. It asks what the model actually exploits. Neither of the first two information tables alone establishes this use.
+\end{enumerate}
+
+Taking the model's output as the PID target is another valid but different descriptive question: it concerns information about the model's decision, not information about physical truth. A wrong or shortcut-based model can still have a strong decomposition relative to its own output. Keep the reference-target and model-output analyses separately named and never use one as validation of the other.
+
+\par\Needspace{10\baselineskip}
+
+\subsection{Where the offline analysis changes a decision}\label{where-the-offline-analysis-changes-a-decision}
+
+Offline means that the analysis runs on a retained dataset after capture. It can guide the next engineering experiment without running inside a robot's control loop. The current useful output is a report: the row and target contract, subset information, signed MGW atoms, predictor losses, data limitations and measured costs. It is not a trained controller or a sensor-placement command.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2800}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3200}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Development stage
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Useful output and decision
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Evidence needed beyond PID
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+Data preparation & An aligned table identifies rejected joins, stale inputs and missing reference outcomes. Decide whether to repair capture or collect more data. & Clock, unit, calibration, transport and association checks. Atoms do not perform these checks. \\*
+Label engineering & Target lineage and disagreement records identify cases for reference review. Decide whether the outcome definition or annotation needs correction. & Reference measurements or adjudication. Dependence with a label cannot certify that label. \\*
+Feature engineering & Compare a few frozen encodings of the same sensor groups. Decide which representation deserves a matched predictor experiment. & Training-only fitting, common evaluation rows, direct task loss and representation sensitivity. Bins define a different estimand from raw data. \\*
+Fusion-model design & Compare available information with the information a fitted model exploits. Decide which subset or failure regime needs an ablation. & Matched model tests. PID of inputs alone does not show the internal use of those inputs. \\*
+Tuning & Report signed allocation beside validation loss for a declared candidate family. Choose parameters inside the development splits. & A final untouched evaluation and a selection-aware uncertainty design. Maximizing an attractive atom on the test set is tuning on the test set. \\*
+Placement and acquisition & Explain shortlisted portfolios and nominate a new collection experiment. & Candidate-location data or a justified observation model, geometry, costs, failures and held-out task utility. An unobserved camera location has no measured joint law. \\*
+Training and policy creation & Form a specific objective or architecture hypothesis for later testing. & An implemented learner, support and gradient conditions, matched training baselines and closed-loop evaluation for control claims. \\*
+Integrity and monitoring & Inspect whether a predeclared sensor relationship changes across retained operating regimes. & Fault labels, benign-shift controls and calibrated alerts. A changed atom does not distinguish tampering, misalignment, weather or an ordinary distribution change. \\*
+\end{longtable}
+}
+
+The preparation and label outputs are valuable even when PID is omitted. Use MGW only when its allocation answers a stated question beyond the direct scores. For example, the equal-synergy calculation in Section 5 explains why a synergy-only ranking confuses independent noise with useful complementary information. If direct task loss already settles the engineering choice and the allocation has no further explanatory role, stop there.
+
+\par\Needspace{10\baselineskip}
+
+\subsection{Label provenance is not statistical independence}\label{label-provenance-is-not-statistical-independence}
+
+An independent reference means that the label has a separately justified measurement or annotation route. It does \textbf{not} mean that \(Y\) is statistically independent of the sensors: that would remove the predictive relationship under study. For each target retain its instrument or annotator, physical meaning, coordinate frame, timestamp, horizon, ambiguity and adjudication rule. A simulator state can be a reference for a simulation study; this does not establish a real-world measurement model.
+
+PID does not generate ground truth. It can support a request to inspect selected cases, but a large atom can reflect a useful signal, leakage or a coding choice. A small atom can reflect a poor feature, little variation or insufficient data. Confirm label errors with the reference system. Retain unresolved cases and report the selection introduced by excluding them. For multi-object recordings, match each feature and reference to the same physical object under a declared association rule; an association algorithm's prediction must not silently become its own truth label.
+
+\par\Needspace{10\baselineskip}
+
+\subsection{Partial visibility and distorted observations}\label{partial-visibility-and-distorted-observations}
+
+Availability is not a quality scale. Distinguish a missing observation from an available but partial or degraded one. A camera can return a valid frame with most of an object hidden; a microphone can return pressure samples dominated by wind. Preserve both the availability mask \(M\) and a declared quality/context variable \(Q\). Examples of \(Q\) are a specified blur level, clipping fraction, frame age or an annotated occlusion category. Quality measurements and annotations can themselves be uncertain.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2800}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3200}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Condition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Preserve in the data
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Compare on common episodes
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+Partial field of view or occlusion & Sensor pose, region/window, reference visibility category and annotation uncertainty & Single-view and fused prediction in each supported visibility regime \\*
+Blur, low light or noise & Exposure, declared corruption rule and scale, feature identity and target reference & Clean and degraded inputs, calibration and task loss across severity \\*
+Audio clipping or interference & Units, window, gain, clipping fraction and interference conditions & Camera-only, audio-only and fused predictions; retain no-audio controls \\*
+Delay or stale frames & Capture and arrival times, clock uncertainty and causal age rule & Delay-aware baseline and fusion under measured delays; never join future frames \\*
+Calibration or alignment error & Calibration revision, coordinate frame and known perturbation & Physical prediction error and sensor consistency before interpreting atoms \\*
+\end{longtable}
+}
+
+First restrict the comparison to a declared availability stratum with all compared source values observed, or define a separate missing-data estimand. In that fixed row population, for finite \(Q\), an analysis within a quality stratum uses the conditional law \(P(X_1,\ldots,X_n,Y\mid Q=q)\) when \(P(Q=q)>0\). Compute MGW on that specified conditional law and retain its signed atoms. Here each \(X_i\) denotes the actually observed, possibly degraded feature, not an unavailable clean signal. Pooling all qualities answers a different question. Target prevalence and scene difficulty can also differ across strata, so an atom difference between strata is descriptive evidence, not a causal effect of degradation. Small strata can be too sparse to interpret; report counts and abstain where the evidence is insufficient. Keep the feature maps and alphabet fixed across strata when comparing allocation; otherwise report the representation change explicitly.
+
+If \textbf{both predictors observe \(Q\)}, the unrestricted Bayes gain from adding \(X_2\) is \(I(Y;X_2\mid X_1,Q)\). Apply Section 3 within each positive-probability value of \(Q\) and average. For two-source conditional MGW, this is the corresponding average of \(U_2(q)+S(q)\), not synergy alone. This is a handwritten application of the same finite-law identities, not a newly checked formal result. If quality is available only to an offline annotator, this describes an oracle-quality comparison. Evaluate the deployable model with its actual inputs instead. If \(Q\) is computed from the added sensor and cannot be obtained without it, giving \(Q\) to the baseline already supplies part of that sensor's information. The displayed gain then measures residual value after that quality signal, not total acquisition value. For an operational comparison, give each predictor only the quality or metadata it can actually obtain and count the information and cost of any additional quality signal. Estimating quality from the same camera is an explicitly defined feature, not independent evidence of quality.
+
+Controlled corruption and natural degradation need different interpretations. For a declared experiment, apply a frozen corruption mechanism at stated severities, retain the original labels only when the mechanism leaves their physical meaning unchanged, and keep all variants of an episode in one split. Independent random corruption can test a controlled robustness question. Natural occlusion may depend on target location, action or weather; conditioning or dropping those rows changes the law and can introduce selection effects. A complete-data random-dropout formula does not automatically apply. Section 6 gives the relevant mask boundary.
+
+The practical use is to find supported regimes in which a sensor combination retains information but the fitted fusion model fails, or in which the represented inputs contain little additional information at all. These findings nominate different follow-ups: improve the predictor, improve the feature, or collect a better observation. They do not uniquely diagnose the cause. Compare loss, missed detections, false alarms, calibration and latency alongside PID. No conditional-stratum adapter, corruption benchmark or qualified degradation monitor is added by this exposition; those remain implementation and evaluation work.
+
+\par\Needspace{10\baselineskip}
+
+\subsection{A complete preparation-to-decision sequence}\label{a-complete-preparation-to-decision-sequence}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Define the question.} For example, test whether two camera features plus an audio feature predict a later object sector more reliably than one camera. Specify the sector frame, prediction horizon, feature windows, eligible episodes, source groups and useful loss improvement before looking at results. This is a proposed embodied study, not a completed dataset.
+\item
+  \textbf{Build causal rows.} At each declared landmark, use only measurements available by that time. Preserve raw record identities and the exact join tolerance. Report unmatched references, late packets, reused frames and exclusions. Audio samples inside one window are inputs to one feature, not independent PID rows.
+\item
+  \textbf{Separate development from evaluation.} Assign whole episodes, missions, sites or time periods to splits that match the intended transfer claim. Fit encoders, scalers, bins and predictors on training data; choose hyperparameters on validation data. Freeze the selected pipeline before the final test. All variants of one episode stay together.
+\item
+  \textbf{State the row law.} The current row API gives each admitted row equal mass. Long episodes then contribute more mass if they supply more rows. To study equally weighted episodes, use a justified landmark design or a separately implemented weighted-law route; do not claim that the row API performs episode weighting. Exact empirical-table identities do not require IID rows. Population inference does require a justified sampling and dependence model.
+\item
+  \textbf{Check the categorical object.} Retain the frozen alphabet and out-of-range rule, occupied cells, cell counts, target frequencies and missingness by regime. No Gaussian prior or independence between sensor sources is required for the categorical functional. An observed empty cell is not a population zero, and a large row count is not an independent-sample count.
+\item
+  \textbf{Compare direct outcomes first.} Evaluate every relevant subset on common outer rows with the same target. Record proper loss, calibration, relevant task metrics, availability and cost. Keep fixed-model outages separate from retrained subset models. Then report the MGW allocation for a preselected question, retaining negative atoms.
+\item
+  \textbf{Make a bounded decision.} Keep a representation or nominate a collection experiment only when its stated criterion is met. Preserve no-benefit and unstable-encoding results. If a new target, grouping or feature is chosen after inspection, treat it as development and obtain a new confirmation dataset before a confirmatory claim.
+\end{enumerate}
+
+Repeated landmarks within one episode can remain dependent. The episode bound in Section 9 has its own independence and probability-floor premises; it is not granted by executing this sequence. Block resampling also needs a valid dependence model. A deterministic empirical PID evaluation is not automatically an unbiased or calibrated population estimate.
+
+\par\Needspace{10\baselineskip}
+
+\subsection{Recorded measurements: information can increase while prediction gets worse}\label{recorded-measurements-information-can-increase-while-prediction-gets-worse}
+
+A completed, narrower example uses recorded office light in lux, CO₂ in ppm and a same-time binary occupancy label. Its reference provenance, input statistics, raw-row examples and numerical checks are retained in the \href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/real-occupancy-sensors-example-2026-09-08.md}{office-sensor study}. The study cites the UCI provider, which describes photograph-derived occupancy labels. This example is classification of recorded occupancy, not future robot-state prediction.
+
+Four bins for each source were fitted on 8,143 training rows and frozen. The later recording has 9,752 rows. Its nominal source-target alphabet has \(4\times4\times2=32\) cells; 16 are occupied, four occupied cells contain fewer than five rows, and the smallest contains one row. Those are input statistics, not a population-support guarantee. The records are time series from one office; the comparison does not establish independent samples or transfer to other buildings.
+
+Write \(A\) for the light category and \(B\) for the CO₂ category. Each fixed predictor was fitted from training counts: in a source cell with \(n\) rows and \(n_1\) occupied outcomes, it assigns occupancy probability \((n_1+1)/(n+2)\). Thus an unseen training cell predicts \(1/2\). The test recording determines the empirical evaluation law, not the fitted prediction rule.
+
+The retained test values, rounded to nine decimals, are
+
+\[
+\begin{aligned}
+I(Y;B\mid A)&\approx0.001558012,\\
+L(q_A)&\approx0.047443051,\\
+L(q_{AB})&\approx0.050762019.
+\end{aligned}
+\]
+
+All information is in nats; loss is mean nats per row. The positive conditional information says that the Bayes predictor for this empirical test law can gain from \(B\). The fixed training-fitted predictor instead has gain
+
+\[
+L(q_A)-L(q_{AB})\approx-0.003318968.
+\]
+
+Section 3 explains the sign. The \href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10.md}{recorded loss-gap analysis} reports predictive excess losses of approximately \(D_A=0.014359564\) and \(D_{AB}=0.019236545\). Their difference is \(-0.004876981\); adding the positive information gain gives approximately \(-0.003318969\). The last-digit difference comes from the displayed rounding. The augmented model's larger excess loss outweighs the available-information gain. This identity does not identify which part of that excess arises from estimation, approximation or optimization.
+
+The MGW allocation gives another useful warning: its added-source unique atom is approximately \(-0.178691053\) and synergy is \(0.180249065\). Their sum is \(0.001558012\). Keeping synergy alone would hide nearly complete cancellation. The engineering response is to inspect the representation, sparse cells and predictor fit, then test any correction on new data. These recorded results do not show that PID improved the model or caused its failure. Reusing this already inspected recording for a new choice would require a new evaluation boundary.
 
 \par\Needspace{10\baselineskip}
 
@@ -622,6 +835,22 @@ The existing pid-rs finite-prefix gradient work supplies a separate research too
 For action-conditioned world models, do not use a latent computed from a candidate action to claim information about that same action. Cross-fitting does not remove that target injection. Use independently observed future outcomes and an explicit fixed behavior policy first. Adaptive planner candidates from one initial state are not independent physical episodes.
 
 Sensor placement and closed-loop RL change the joint law through geometry, acquisition or policy. If availability weights depend on a parameter, differentiating \(\sum_Aq_A(\theta)I_A(\theta)\) requires both \(\sum_Aq'_A I_A\) and \(\sum_Aq_A I'_A\). Holding the weights fixed omits the first term. Changing actions can also change the target law. The fixed-law derivation is not a placement theorem or a policy-gradient guarantee.
+
+\par\Needspace{10\baselineskip}
+
+\subsection{Training, placement and tuning: concrete follow-up studies}\label{training-placement-and-tuning-concrete-follow-up-studies}
+
+For \textbf{fusion training}, begin with the proper masked loss above. Compare models with and without the proposed diagnostic-guided change, using identical episode splits and tuning budgets. Match capacity where feasible and report any architecture or parameter-count change. A change might be a feature-window choice, a separate modality encoder, or a masking schedule. Measure all subset losses, failure-regime losses and feature-extraction cost. The PID report motivates the change; only the comparison establishes whether it helps. Random modality masking and MAD are relevant external baselines in Section 11. Neither has been compared with a PID-trained model here.
+
+A \textbf{PID regularizer} is a further research route. Specify the exact signed atom contrast, source grouping, target and reason that the contrast should improve a task property not already captured by the loss. Then specify the estimator, support conditions, gradient and update frequency. Ordinary hard category assignment is not a differentiable path through an image encoder. A differentiable finite-PMF functional does not make empirical bin counts differentiable in all upstream parameters. Retain the task loss and test whether the regularizer changes it, robustness or resource use. Maximizing synergy alone is ruled out by Section 5's control. Weakening the baseline representation merely to increase conditional gain is also an invalid success criterion.
+
+For \textbf{robot policy creation}, first test a world model's prediction of a future physical outcome under a fixed behavior policy. A successful offline prediction result can justify a subsequent controlled policy experiment; it does not establish successful manipulation. For a VLA model, language instructions, action inputs and future reference outcomes must have distinct roles. A command-conditioned latent must not be scored as discovering information about the injected command. Closed-loop success, collisions, recovery and missed deadlines require their own evaluation.
+
+For \textbf{drone sensing}, an initial observational study can use two views and an acoustic feature to predict an independently referenced future sector or presence label. Retain lighting, wind, occlusion, range and association uncertainty as declared conditions. Compare false-alarm and missed-detection rates, latency and calibration as well as log loss; these task criteria can rank systems differently. Multiple targets require an association contract before source values can be assigned to a common target. No result here identifies an unseen object, establishes intent, or supplies a response policy.
+
+For \textbf{physical placement}, collect or simulate the shortlisted positions under matched scenarios and a declared sensor model. Start with coverage, field of view, geometry, task utility, power and failure costs. The same sensor at a new pose has a new observation law. Subsets of four fixed sources give at most 16 masks; selecting four sites from a large map is a separate search problem with many more candidates. A PID score has no automatic greedy-optimization guarantee. Use exact small-design comparisons first and retain uncertainty when candidate laws are poorly sampled.
+
+For \textbf{parameter tuning}, put all target-informed choices inside development: encoder weights, audio windows, bin edges, alphabet size, grouping, mask probabilities, regularization and alert thresholds. Test the selected choice once on a held-out unit appropriate to deployment. If PID only supplies a secondary explanation, compute it offline after model selection; it need not run at every training update or control tick. If it enters the optimizer, its repeated estimation and differentiation costs belong in the training budget. Section 13 prices the components separately; no online latency or training advantage is measured here.
 
 \par\Needspace{10\baselineskip}
 
@@ -700,6 +929,8 @@ For dense vectors over \(K_Y=|\mathcal Y|\) target labels, direct validation and
 
 For \(R_b\) resamples or \(P\) null permutations, budget the repeated statistic evaluations and row copies separately. For the existing sequential moving-block bootstrap with \(N\) rows and \(g\) output coordinates, a common per-call statistic bound \(T_{\mathrm{stat}}\) gives \((R_b+1)T_{\mathrm{stat}}\) plus \(O(R_bND+gR_b\log(R_b+1))\) copying/schedule/summary work. Additional storage is \(O(ND+R_bg)\), plus the callback workspace and failure/provenance records; all successful aligned output vectors remain retained. Here \(g=4\) for its PID2 callback. The existing \texttt{experimental::\allowbreak{}pipelines::\allowbreak{}bootstrap\_\allowbreak{}quantized\_\allowbreak{}sxpid2} is a two-source full-pipeline bootstrap that recomputes same-sample quantization on each resample. It does not implement the proposed held-out, fixed-training-transform study. Generic callback resampling retains aligned outcomes but does not provide calibrated PID confidence automatically. A selected fixed-transform callback needs its own implementation and assumptions. Repeating learning for each fold, candidate, resample or seed also repeats its training cost; an estimator timing cannot stand in for that total.
 
+Quality strata and controlled corruption severities repeat these costs. For each supported stratum or severity, budget row selection, feature extraction, categorical evaluation and model inference separately; sum the work across the declared comparisons. Sequential processing can reuse working storage, but retained reports and any cached features still count toward memory. More strata reduce per-stratum sample sizes and increase selection and uncertainty obligations. No timing for this workflow is reported.
+
 The existing \href{https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/benches/estimators.rs}{Criterion definitions} include small categorical averaged cases and quantizer label/report cases. They do not benchmark this sensor workflow, a prefix gradient or a stopped estimator. No new timing is reported here. Any runtime claim must cite an actual retained release measurement with revision, features, hardware, \(N,K,d,n,m\), repetitions, peak memory and failure/cancellation scope.
 
 \par\Needspace{10\baselineskip}
@@ -759,11 +990,11 @@ Limits and cost
 \endhead
 \bottomrule\noalign{}
 \endfoot
-Lean proof checking & For separately formalized results, the kernel checks a proof of the encoded statement under its imports and axioms. This can expose logical gaps in a conditional mathematical argument. & The encoded statement can differ from the intended paper claim. It does not establish Rust refinement or application value. Formalization and pinned replay need maintenance; see the \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md}{formal baseline}. \\*
-Compiled Rust tests and numerical fixtures & Exercise selected inputs and builds to detect implementation and numerical regressions in the available library. & Coverage is finite, and a shared incorrect reference can mislead several tests. Test execution is distinct from a universal proof, estimator calibration and the runtime budget of this sensor workflow. \\*
-Source-specific audit scripts & Check declared record structure, anchor syntax, identities and status boundaries, making some evidence drift repeatably detectable. The custom \href{https://github.com/sepahead/pid-rs/blob/main/scripts/check-primegaps-to-pid-transfer-ledger.py}{PrimeGaps transfer-ledger checker} is one example. & That checker validates bounded records and selected local byte identities, not a PrimeGaps or PID theorem. Its external entries are hash-only observations, not retained source bytes. Custom checks need their own review and maintenance. \\*
-PDF reproduction and page inspection & Compare builds under a declared production profile and inspect rendered equations, figures and text. This helps keep the publication stable and readable. & Byte equality is profile-specific; visual inspection can miss errors. Neither establishes mathematical truth or sensor performance, and both add publication work. \\*
-Held-out episode evaluation & The proposed experiment tests whether the selected sensors and predictors yield a useful improvement against matched baselines. This is the application question the preceding checks cannot answer. & It remains open for this study. It needs valid splits, bounded losses or another justified uncertainty design, adequate episodes, and measured computational cost. \\*
+Lean proof checking & Checks the encoded statement under its listed imports and axioms. & Does not establish paper correspondence, Rust refinement or application value. Formalization and pinned replay need maintenance; see the \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md}{formal baseline}. \\*
+Compiled Rust tests and numerical fixtures & Detect implementation and numerical regressions on selected inputs and builds. & Finite coverage and a shared incorrect reference can miss errors. Tests supply neither universal proof nor estimator calibration. Test cost is separate from sensor-workflow runtime. \\*
+Source-specific audit scripts & Detect declared record, syntax, identity and status drift. The \href{https://github.com/sepahead/pid-rs/blob/main/scripts/check-primegaps-to-pid-transfer-ledger.py}{PrimeGaps transfer-ledger checker} is one example. & Validates bounded records and selected local bytes, not a PrimeGaps or PID theorem. External entries are hash-only observations. Custom checks need review and maintenance. \\*
+PDF reproduction and page inspection & Check stable builds and readable equations, figures and text. & Equality is profile-specific; visual inspection can miss errors. Neither proves mathematics or sensor performance. Both add publication cost. \\*
+Held-out episode evaluation & Tests sensor and predictor benefit against matched baselines. & Still open here. Requires valid splits, adequate episodes, justified uncertainty estimates and measured cost; Section 9 gives one bounded-loss design. \\*
 \end{longtable}
 }
 
@@ -779,11 +1010,7 @@ The useful negative finding is equally important: this entire oracle objective i
 
 The next implementation is a bounded offline feature/label join over the existing two-camera-plus-audio capture, followed by all-subset predictive evaluation. Accept a practical benefit only against matched task-loss, MI/CMI and masking baselines on untouched independent episodes or another justified sampling design. Retain no-benefit results, sparse-cell failures, missingness exclusions and runtime failures.
 
-Only after that result should the work move to learned sensor selection, physical placement, multi-object association or closed-loop robot control. Each changes assumptions that this report keeps fixed. A successful transition must state what changed, which prior result still applies, and what new evidence closes the next step.
+Learned selection, physical placement, multi-object association and closed-loop control each require a new study. State the changed assumptions, the prior results that still apply, and the new evidence. The fixed-law analysis alone cannot justify these transitions.
 
-\par\Needspace{10\baselineskip}
-
-\section{Citation and attribution}\label{citation-and-attribution}
-
-Sepehr Mahmoudian. \emph{Sensor information for embodied agents: categorical shared exclusions, availability and predictive utility}. pid-rs technical report, 2026. Cite the report with its exact repository commit or release, and cite the defining MGW paper separately for the shared-exclusions functional. The repository \href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{citation metadata} identifies the software author and the underlying method sources. The availability exposition is a project application synthesis of classical identities; it makes no scientific-priority claim.
+\textbf{Citation and attribution:} Sepehr Mahmoudian. \emph{Sensor information for embodied agents: categorical shared exclusions, availability and predictive utility}. pid-rs technical report, 2026. Cite the exact repository commit or release and the defining MGW paper. Use the \href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{software citation metadata} for pid-rs. This application synthesis makes no scientific-priority claim.
 \end{document}

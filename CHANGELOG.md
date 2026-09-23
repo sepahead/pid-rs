@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Expand the sensor reports with explicit camera/audio feature inputs, shared-context and weight-provenance assumptions, partial-visibility cases, a worked fusion row, and the recorded information-versus-loss comparison. Redesign the input SVG and rebuild the detailed and overview PDFs.
+
 - Use GitHub-compatible mass notation in the finite-PMF formal source record.
 
 - Add four locally verified finite-PMF foundations for logarithmic prediction loss, with exact
