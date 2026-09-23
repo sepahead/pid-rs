@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Explain the role of three-source categorical MGW allocation in the sensor reports, with
+  camera/audio event examples and explicit separation from subset-information objectives,
+  implemented fusion, and the unfinished certificate program. Rebuild both PDF companions.
+  Clarify that preserved source-map labels do not authenticate a human reviewer.
+
 - Publish the locally checked 13-target classical finite conditional Bayes and log-score
   continuation, with exact proof-source and execution records. Expand the sensor reports' fixed-law
   derivation and add an expected-loss figure. Availability masks, categorical MGW allocation,

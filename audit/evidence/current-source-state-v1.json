@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "3a7d4910bcf4f94ff25dacbc17138b078c2adc9a4bb7a1e6e9c08a7f7576cc8e",
-        "size_bytes": 314012
+        "sha256": "87859b5ec31831ab9bca5c1ec9052ea9288a3e5f9502785598565c932eedd199",
+        "size_bytes": 314365
       },
       {
         "git_mode": "100644",
@@ -13564,8 +13564,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/embodied-sensor-utility/full.expected.tex",
-        "sha256": "3c61c2f1294e0f9e15e47bedf16d0e3d0df0dc6f7e8e7570a98480a6d431e8f6",
-        "size_bytes": 101306
+        "sha256": "0bf23413ed3e6e945dbf975ed88ec336606d1e8b3cfcf5352c77b5044e19432b",
+        "size_bytes": 104545
       },
       {
         "git_mode": "100644",
@@ -13594,14 +13594,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/embodied-sensor-utility/overview.expected.tex",
-        "sha256": "1230f01c7cef8e9498a753c7f13ef943d5f464db21a9801a5f2f83fdef6f18f8",
-        "size_bytes": 14600
+        "sha256": "a39bd959ddc85abf5463194bde05c697abb7654089746694fb92f8c65372c159",
+        "size_bytes": 15512
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/embodied-sensor-utility/publication-inputs-v1.json",
-        "sha256": "a3ff5e6d336ebe54a9eab22276c1dbcc921fe677be6a77134183174b6b19c412",
-        "size_bytes": 33289
+        "sha256": "381d5824dff6864d0796ef2fbf8c71d9920682ab863712a020c16ff521573c1e",
+        "size_bytes": 34263
       },
       {
         "git_mode": "100644",
@@ -25000,20 +25000,20 @@
       {
         "git_mode": "100644",
         "path": "audit/research/embodied-sensor-utility/EXPOSITION.md",
-        "sha256": "62c521f18346e923d2be02cd6885f4e380d8992183e6ac71c25fac21887fddcf",
-        "size_bytes": 85997
+        "sha256": "ac14e9c9c0fac68a3f79f8b8e458c1cbd2f3a55de84e443f73618031b5e3c331",
+        "size_bytes": 89080
       },
       {
         "git_mode": "100644",
         "path": "audit/research/embodied-sensor-utility/OVERVIEW.md",
-        "sha256": "499ed998aa490dd9c0fa527c08025ec39f2c08d32f01f69d06c2efc72eb2a5ed",
-        "size_bytes": 10161
+        "sha256": "661b89a530e1bcc699fd6ba66c2290ac7a1ac90309556fb2a42e36da3d09299a",
+        "size_bytes": 10989
       },
       {
         "git_mode": "100644",
         "path": "audit/research/embodied-sensor-utility/PUBLICATION.md",
-        "sha256": "70629cd9442d4051c921bfe73c23448aae0ebca61f33730a3097353adfa968be",
-        "size_bytes": 12621
+        "sha256": "3fec662141fb6f4356d9c68a5d10fc675f22b08eec43e0c2ca5d9e9c1a3f50f1",
+        "size_bytes": 13617
       },
       {
         "git_mode": "100644",
@@ -25038,6 +25038,12 @@
         "path": "audit/research/embodied-sensor-utility/REPRODUCTION_OFFLINE_SENSOR_USE.json",
         "sha256": "ca4eef1209b309b3604f09efdb594ef5b38dcd9d3649df00ba7a07e9892fc2f4",
         "size_bytes": 8824
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/REPRODUCTION_SXPID3_PURPOSE.json",
+        "sha256": "1011bca3f55d363ad5fb78ffa0faa290a49a3aee8b9aaabf4cd35a80aadf425c",
+        "size_bytes": 5963
       },
       {
         "git_mode": "100644",
@@ -26188,8 +26194,8 @@
       {
         "git_mode": "100644",
         "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md",
-        "sha256": "1ffc5a5f7047ac1774b2089a62015f6101812048f90fdc3e5699b26e292400c4",
-        "size_bytes": 2233
+        "sha256": "20d25cad6e446a9a7bc6efa4ee0612e9742bb572bc2ad9e730427924c7200d8d",
+        "size_bytes": 3656
       },
       {
         "git_mode": "100644",
@@ -27460,14 +27466,14 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/embodied-sensor-overview.pdf",
-        "sha256": "0c4128cfd63fd98e167476a121bb70bffdf563251d87526e4718f8e071fbf470",
-        "size_bytes": 95983
+        "sha256": "e073a9f0b7e9ec6738c7caf9779e7f444caee55047f70121e9a49a307fcba4c5",
+        "size_bytes": 99030
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/embodied-sensor-utility.pdf",
-        "sha256": "af42c656de39b9f43fe1ba0b1ea8a9fcc36a8f96a3aa43e5d6d36e33f6c0ad06",
-        "size_bytes": 391396
+        "sha256": "ee2f064af97fd8ccf0d221c8b3b951d1401f040a523c5040ab0780194832893b",
+        "size_bytes": 396970
       },
       {
         "git_mode": "100644",
@@ -28504,7 +28510,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "7334d29c5505b08018a32b342f5106a1fbd7ed4a4be59ea01fac8f83a90d7cb0",
+        "sha256": "24847f72bb8b3c783005eaf84256a1cdbb79975d9c7ff01e61a3568f71c475e2",
         "size_bytes": 138785
       },
       {
@@ -29444,12 +29450,12 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "5adb92fc0986e7b09b0af4245358f34582337dc9130b3a4b71c0006fdb987cf2",
-    "entry_count": 4883
+    "entries_sha256": "9a4bd7fc58f48df1695c1e532d4ab9b631d492085aa0f54bce23d33f5ce5299f",
+    "entry_count": 4884
   },
   "subprojections": [
     {
-      "entries_sha256": "6cecbcfcc6ba7c93f28fa57a57ca694b99b42c01d9d759bb748d05fb8591fe9c",
+      "entries_sha256": "25512b6e7ba61c56c2ba9d01b3e76e828f2895fb867b88abe910e53ed8b4213f",
       "entry_count": 143,
       "name": "claim_packets",
       "selectors": [
@@ -29457,7 +29463,7 @@
       ]
     },
     {
-      "entries_sha256": "eba100b04999d5b263837d7f030d3a777fa7af19257a46058d6f200098f20c66",
+      "entries_sha256": "abdb82abbab4b7350e53257976e0ecfdf2419f615008e50e47c9611378db6c0e",
       "entry_count": 1919,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -29465,7 +29471,7 @@
       ]
     },
     {
-      "entries_sha256": "534cf3914b79ac942e2d847199f09cb64654e56c1d337b1ae2531d8d1f96c97d",
+      "entries_sha256": "6961091fe2616322d7cda4dee6ae1b8a6c4429400cc84a0a6583c9553cfde648",
       "entry_count": 35,
       "name": "generated_pdf_set",
       "selectors": [
@@ -29473,7 +29479,7 @@
       ]
     },
     {
-      "entries_sha256": "5a24427b9eb74cd6a3dcb44c0a6c03e48b875e072946aa70c5df993262fc3778",
+      "entries_sha256": "daaf7d16a9be0e9742a9bb2512f6cedeb1794432743c95907d5f7a339b876317",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

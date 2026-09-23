@@ -402,6 +402,28 @@ This derivation uses only self-redundancy and lattice reconstruction. Its availa
 
 This is a useful negative conclusion: a PID-based optimizer of $J$ must not claim an intrinsic advantage over an equivalent subset-MI optimizer. Finite estimators can differ in error and cost; such differences require measurement. Other PID questions remain possible, but they must specify what is learned beyond the subset-MI description.
 
+### Why pursue a three-source MGW decomposition?
+
+Three sources mean three declared input groups, not three sensor modalities or three coordinates. In the proposed study, $X_1$ and $X_2$ are fixed categorical features from two cameras, $X_3$ is a fixed audio feature, and $Y$ is a separately measured future outcome. The data-flow figure in Section 8 shows this representation boundary.
+
+The additional question is explanatory: **how does the named MGW measure allocate target information across single sources and source combinations?** For example, it distinguishes a camera pair taken together versus audio from camera 1 versus the combination of camera 2 and audio. Let $E_i$ mean that source $i$ matches its observed value. Two different antichain indices use the events
+
+$$
+\alpha=\{\{1,2\},\{3\}\}:\qquad (E_1\cap E_2)\cup E_3,
+$$
+
+$$
+\beta=\{\{1\},\{2,3\}\}:\qquad E_1\cup(E_2\cap E_3).
+$$
+
+Their Boolean definitions differ: on the hypothetical match pattern where only $E_1$ holds, the first is false and the second is true. That pattern need not occur under a given source law. The events or their probabilities can coincide, for example with constant sources. Section 2 defines their target-dependent log ratios. Full three-source inversion then gives the 18 signed net atoms. An atom is not its cumulative event quantity, a separately computed two-source PID, or a nonnegative physical channel.
+
+A predeclared diagnostic can compare the full-lattice signed atoms $\pi_\alpha$ and $\pi_\beta$, or specified sums of atoms, across visibility regimes and nominate a camera/audio representation or model ablation. Computing only the two cumulative event quantities would not require full PID3. That use still needs adequate stratum data, fixed source definitions, and matched prediction tests. Atom changes alone establish neither the model's use of a sensor nor a causal benefit. Subset MI and CMI can already detect decision-relevant joint dependence; detecting a three-way interaction does not by itself require full PID3.
+
+The current availability-weighted Bayes objective needs only seven nonempty subset MI values for three sources. Thus full MGW is an optional explanatory analysis for that objective. A fusion model, sensor selector or training loop is not required to compute all 18 atoms. Use direct task loss and subset information when they answer the question.
+
+The stable Rust three-source calculation already exists. The unfinished SxPID3 certificate program, indexed in the [results guide](../../../MATHEMATICAL_RESULTS_GUIDE.md), seeks stronger assurance of its declared categorical outputs: source semantics, concrete formal definitions, certified arithmetic, compiled Rust correspondence and adversarial replay. As of 23 September 2026, none of its five complete programs A–E is closed. That assurance work matters when an allocation supports a scientific explanation; it does not establish estimator calibration or sensor benefit. Keep it separate from the practical benchmark, and from research-only continuous PID3, which uses a different functional.
+
 ## 8. From recorded measurements to a valid row
 
 The current ecosystem can record real simulator payloads. A payload record is not yet a target-specific statistical dataset. The proposed offline study needs the following explicit join.

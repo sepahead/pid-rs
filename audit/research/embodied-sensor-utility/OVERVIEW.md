@@ -25,6 +25,10 @@ For independent fair bits $A,B,U$, set the same target $Y=(A,B)$ and baseline $X
 
 There is also a useful limit: the expected Bayes log-loss reduction relative to the no-source predictor, under a fixed law and exogenous availability, depends only on subset mutual information. For two to four sources, that is 3, 7 or 15 values. Full PID's 4, 18 or 166 atoms provide a finer allocation, but no extra decision information for that exact objective. PID must earn additional cost through a useful diagnostic question or a separately justified objective.
 
+### Why three-source MGW still matters
+
+For two cameras and audio, the 18 signed MGW atoms describe the named measure's allocation across three declared input groups and their combinations. This can motivate a specific representation or model ablation; it does not show how a trained model uses the sensors. Seven subset MI values already determine the availability objective above, so full PID3 is an optional explanatory analysis, not a fusion or training requirement. The existing Rust calculation and its unfinished certification program are separate: stronger assurance of the allocation is useful, while calibration and practical benefit still require their own evidence. The detailed report gives two distinct camera/audio event constructions and the current closure boundary. Continuous PID3 is a different functional.
+
 ## What exists and what it supports
 
 | Work | Useful role | Remaining boundary |

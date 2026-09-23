@@ -6,7 +6,13 @@ The two reports connect categorical Makkeh–Gutknecht–Wibral shared exclusion
 
 ## Current references and retained prior observation
 
-The current [input profile](../../formal/latex/embodied-sensor-utility/publication-inputs-v1.json) binds the selected PDF, generated TeX, figures and reader observations. Use the [conditional-Bayes reproduction record](REPRODUCTION_CONDITIONAL_BAYES.json) for this revision's source selection, exact-output checks and rendered-page review. Earlier records do not check the changed pages. The dated [initial reproduction record](REPRODUCTION.json) and the table below describe the earlier report revision, before the finite-PMF proof was added. They are historical evidence. The proof package carries its own formal evidence; a PDF build does not establish a theorem.
+The current [input profile](../../formal/latex/embodied-sensor-utility/publication-inputs-v1.json) binds the selected PDF, generated TeX, figures and reader observations. Use the [SxPID3-purpose reproduction record](REPRODUCTION_SXPID3_PURPOSE.json) for this revision's source selection, exact-output checks and rendered-page review. The [conditional-Bayes reproduction record](REPRODUCTION_CONDITIONAL_BAYES.json) retains the preceding revision's evidence. Earlier records do not check the changed pages. The dated [initial reproduction record](REPRODUCTION.json) and the table below describe the earlier report revision, before the finite-PMF proof was added. They are historical evidence. The proof package carries its own formal evidence; a PDF build does not establish a theorem.
+
+### Three-source purpose clarification
+
+The current report explains the optional role of the full three-source signed MGW allocation with two camera/audio antichain examples. It separates full-lattice atoms from cumulative quantities, subset-MI sensor objectives, model-use tests and the unfinished five-program certificate. The overview states the same practical boundary. All four editable SVG sources remain unchanged.
+
+Review corrected a draft that could imply that two different Boolean event definitions must differ under every source law. The selected text makes the comparison pattern hypothetical and includes constant sources as a case where events coincide. It also names the full-lattice atom comparison: the illustrated cumulatives alone do not require full PID3. This is a clarification of existing definitions and scope, not a new theorem or application result.
 
 ### Previous offline sensor workflow revision
 

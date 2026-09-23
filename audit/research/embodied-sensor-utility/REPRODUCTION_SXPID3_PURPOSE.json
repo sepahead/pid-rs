@@ -1,0 +1,185 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "boundaries": [
+    "No new theorem, formal proof execution, estimator, runtime or sensor benchmark.",
+    "Five-program SxPID3 certificate remains open; the existing empirical Rust calculation is distinct from its proposed assurance.",
+    "Subset MI determines the stated oracle availability objective; no PID-specific application advantage is demonstrated.",
+    "Local source, councils, build tools and custody are shared; no independent external human review or complete dependency closure is claimed.",
+    "Publication byte reproduction does not establish mathematical truth, sampling calibration, Rust refinement, cross-toolchain identity or deployed benefit.",
+    "Hosted and containing-commit checks remain separate evidence."
+  ],
+  "controls": {
+    "actual_outer_returncodes": [
+      0,
+      0
+    ],
+    "normal_cases": 109,
+    "optimized_cases": 109,
+    "scope": "Finite inert source/data controls, not new proof results."
+  },
+  "exact_reproduction": {
+    "full": {
+      "actual_outer_exit": 0,
+      "builds": 2,
+      "commands": 68,
+      "completed_utc": "2026-09-23T20:14:01.909725+00:00",
+      "result": {
+        "bytes": 225365,
+        "sha256": "6dc346d75fcfe3abe5aeeb55556e0733cb8c8ee5755eea358e51a23673f64502"
+      }
+    },
+    "overview": {
+      "actual_outer_exit": 0,
+      "builds": 2,
+      "commands": 62,
+      "completed_utc": "2026-09-23T20:13:54.424117+00:00",
+      "result": {
+        "bytes": 177195,
+        "sha256": "4e958493437aea937a8f64652db5f8b36295e8f46854a05f21930f2cde51563c"
+      }
+    }
+  },
+  "input_profile": "../../formal/latex/embodied-sensor-utility/publication-inputs-v1.json",
+  "input_profile_sha256": "381d5824dff6864d0796ef2fbf8c71d9920682ab863712a020c16ff521573c1e",
+  "observed_utc": "2026-09-23T20:24:18.725486+00:00",
+  "outputs": {
+    "full": {
+      "figure_pdfs": {
+        "figures/availability-weighted-gain.pdf": {
+          "bytes": 47272,
+          "sha256": "5d6f39ed6e691240d8c4b4b3445da6a79ba7d7b6b332e52bfad42878276127cd"
+        },
+        "figures/loss-gap.pdf": {
+          "bytes": 42967,
+          "sha256": "ddafaaddcb542b5b1cef75c53e1aa5b9b9ba0da5083f647d50495fdfc1f65036"
+        },
+        "figures/sensor-data-to-evidence.pdf": {
+          "bytes": 48726,
+          "sha256": "5ceffd86575d9da2e852410899b6132e96ad3000777e6fe0908f8fa3424d9557"
+        },
+        "figures/signed-atoms-and-sensor-value.pdf": {
+          "bytes": 44338,
+          "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+        }
+      },
+      "pages": 29,
+      "pdf": {
+        "bytes": 396970,
+        "sha256": "ee2f064af97fd8ccf0d221c8b3b951d1401f040a523c5040ab0780194832893b"
+      },
+      "tex": {
+        "bytes": 104545,
+        "sha256": "0bf23413ed3e6e945dbf975ed88ec336606d1e8b3cfcf5352c77b5044e19432b"
+      }
+    },
+    "overview": {
+      "figure_pdfs": {
+        "figures/signed-atoms-and-sensor-value.pdf": {
+          "bytes": 44338,
+          "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+        }
+      },
+      "pages": 5,
+      "pdf": {
+        "bytes": 99030,
+        "sha256": "e073a9f0b7e9ec6738c7caf9779e7f444caee55047f70121e9a49a307fcba4c5"
+      },
+      "tex": {
+        "bytes": 15512,
+        "sha256": "a39bd959ddc85abf5463194bde05c697abb7654089746694fb92f8c65372c159"
+      }
+    }
+  },
+  "profile_sequence": "Discovery pinned the preceding PUBLICATION.md. After visual selection, the current publication note was rebound. Exact replay used and matched this final profile. Earlier records retain their original identities.",
+  "purpose": "Explain the optional three-source categorical MGW allocation and its distinct certification objective. No mathematical or runtime change.",
+  "retained_corrections": [
+    {
+      "issue": "A draft could imply distinct Boolean formulas give distinct supported events under every law.",
+      "resolution": "The selected text calls the separating match pattern hypothetical and explains coincidence for constant sources."
+    },
+    {
+      "issue": "The event illustration alone could be mistaken for a need to compute full PID3.",
+      "resolution": "The selected diagnostic names full-lattice atoms and states that the two cumulatives alone do not require full PID3."
+    }
+  ],
+  "schema": "pid-rs/sensor-purpose-publication-observation-v1",
+  "sources": {
+    "audit/research/embodied-sensor-utility/EXPOSITION.md": {
+      "bytes": 89080,
+      "sha256": "ac14e9c9c0fac68a3f79f8b8e458c1cbd2f3a55de84e443f73618031b5e3c331"
+    },
+    "audit/research/embodied-sensor-utility/OVERVIEW.md": {
+      "bytes": 10989,
+      "sha256": "661b89a530e1bcc699fd6ba66c2290ac7a1ac90309556fb2a42e36da3d09299a"
+    },
+    "audit/research/embodied-sensor-utility/PUBLICATION.md": {
+      "bytes": 13617,
+      "sha256": "3fec662141fb6f4356d9c68a5d10fc675f22b08eec43e0c2ca5d9e9c1a3f50f1"
+    }
+  },
+  "visual_review": {
+    "accessibility_audit": false,
+    "all_four_figure_pdf_derivatives_unchanged": true,
+    "all_four_svg_sources_unchanged": true,
+    "full_direct_pages": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "full_exact_prior_raster_joins": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "high_risk": [
+      {
+        "grayscale": false,
+        "kind": "full",
+        "page": 13,
+        "width_pixels": 2400
+      },
+      {
+        "grayscale": true,
+        "kind": "full",
+        "page": 13,
+        "width_pixels": 1800
+      }
+    ],
+    "named_lenses": 20,
+    "overview_direct_pages": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "overview_exact_prior_raster_joins": [
+      1
+    ],
+    "physical_print": false,
+    "total_pages": 34,
+    "verified_physical_display_scale": false
+  }
+}

@@ -57,16 +57,16 @@
       "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
     },
     "audit/research/embodied-sensor-utility/EXPOSITION.md": {
-      "bytes": 85997,
-      "sha256": "62c521f18346e923d2be02cd6885f4e380d8992183e6ac71c25fac21887fddcf"
+      "bytes": 89080,
+      "sha256": "ac14e9c9c0fac68a3f79f8b8e458c1cbd2f3a55de84e443f73618031b5e3c331"
     },
     "audit/research/embodied-sensor-utility/OVERVIEW.md": {
-      "bytes": 10161,
-      "sha256": "499ed998aa490dd9c0fa527c08025ec39f2c08d32f01f69d06c2efc72eb2a5ed"
+      "bytes": 10989,
+      "sha256": "661b89a530e1bcc699fd6ba66c2290ac7a1ac90309556fb2a42e36da3d09299a"
     },
     "audit/research/embodied-sensor-utility/PUBLICATION.md": {
-      "bytes": 12621,
-      "sha256": "70629cd9442d4051c921bfe73c23448aae0ebca61f33730a3097353adfa968be"
+      "bytes": 13617,
+      "sha256": "3fec662141fb6f4356d9c68a5d10fc675f22b08eec43e0c2ca5d9e9c1a3f50f1"
     },
     "audit/research/embodied-sensor-utility/SOURCE_OBSERVATIONS.json": {
       "bytes": 28161,
@@ -116,13 +116,13 @@
       "observation": {
         "first_page_fit": true,
         "font_rows": [
-          "GQMHAX+SourceSansPro-Semibold        CID Type 0C       Identity-H       yes yes yes     18  0",
+          "NEERHR+SourceSansPro-Semibold        CID Type 0C       Identity-H       yes yes yes     18  0",
           "LHINJS+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     19  0",
           "UFOQVA+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     20  0",
-          "JACOML+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     21  0",
+          "KATMDG+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     21  0",
           "VYBYQL+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes     26  0",
           "PAMASM+LMMono10-Regular              CID Type 0C       Identity-H       yes yes yes     29  0",
-          "YRPSFY+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     37  0",
+          "GXXUZH+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     37  0",
           "BZPFCH+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     38  0",
           "RKSFIJ+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     40  0",
           "VPMJCR+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     62  0",
@@ -140,12 +140,16 @@
           "RKKAEK+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes    169  0",
           "BMZABT+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes    170  0",
           "WFGEGQ+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes    171  0",
-          "UOTARH+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes    215  0",
-          "NEJSRB+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes    216  0",
-          "MPMCTI+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes    217  0",
-          "LMFKZZ+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes    218  0"
+          "UOTARH+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes    222  0",
+          "NEJSRB+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes    223  0",
+          "MPMCTI+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes    224  0",
+          "LMFKZZ+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes    225  0"
         ],
         "geometry": [
+          [
+            595.276,
+            841.89
+          ],
           [
             595.276,
             841.89
@@ -265,17 +269,17 @@
           "section*.12",
           "section*.14",
           "section*.16",
-          "section*.17",
-          "section*.28",
+          "section*.18",
+          "section*.29",
           "section*.3",
-          "section*.30",
-          "section*.32",
+          "section*.31",
           "section*.33",
           "section*.34",
-          "section*.37",
+          "section*.35",
+          "section*.38",
           "section*.6",
           "subsection*.15",
-          "subsection*.19",
+          "subsection*.17",
           "subsection*.2",
           "subsection*.20",
           "subsection*.21",
@@ -285,10 +289,11 @@
           "subsection*.25",
           "subsection*.26",
           "subsection*.27",
-          "subsection*.29",
-          "subsection*.31",
-          "subsection*.35",
+          "subsection*.28",
+          "subsection*.30",
+          "subsection*.32",
           "subsection*.36",
+          "subsection*.37",
           "subsection*.4",
           "subsection*.5",
           "subsection*.7",
@@ -400,161 +405,169 @@
             "y": 779.528
           },
           {
-            "level": 0,
-            "name": "section*.17",
+            "level": 1,
+            "name": "subsection*.17",
             "page": 12,
+            "title": "Why pursue a three-source MGW decomposition?",
+            "x": 62.362,
+            "y": 216.538
+          },
+          {
+            "level": 0,
+            "name": "section*.18",
+            "page": 13,
             "title": "8. From recorded measurements to a valid row",
             "x": 62.362,
-            "y": 209.782
+            "y": 344.462
           },
           {
             "level": 1,
-            "name": "subsection*.19",
-            "page": 14,
+            "name": "subsection*.20",
+            "page": 15,
             "title": "Concrete source representation",
             "x": 62.362,
             "y": 779.528
           },
           {
             "level": 1,
-            "name": "subsection*.20",
-            "page": 14,
+            "name": "subsection*.21",
+            "page": 15,
             "title": "Fit, evaluate and preserve the estimand",
             "x": 62.362,
             "y": 210.578
           },
           {
             "level": 1,
-            "name": "subsection*.21",
-            "page": 15,
+            "name": "subsection*.22",
+            "page": 16,
             "title": "Exactly what enters PID for cameras and audio",
             "x": 62.362,
             "y": 679.714
           },
           {
             "level": 1,
-            "name": "subsection*.22",
-            "page": 16,
+            "name": "subsection*.23",
+            "page": 17,
             "title": "An explicit illustrative row and fusion experiment",
             "x": 62.362,
             "y": 779.528
           },
           {
             "level": 1,
-            "name": "subsection*.23",
-            "page": 17,
+            "name": "subsection*.24",
+            "page": 18,
             "title": "Where the offline analysis changes a decision",
             "x": 62.362,
             "y": 648.47
           },
           {
             "level": 1,
-            "name": "subsection*.24",
-            "page": 18,
+            "name": "subsection*.25",
+            "page": 19,
             "title": "Label provenance is not statistical independence",
             "x": 62.362,
             "y": 779.528
           },
           {
             "level": 1,
-            "name": "subsection*.25",
-            "page": 18,
+            "name": "subsection*.26",
+            "page": 19,
             "title": "Partial visibility and distorted observations",
             "x": 62.362,
             "y": 574.386
           },
           {
             "level": 1,
-            "name": "subsection*.26",
-            "page": 19,
+            "name": "subsection*.27",
+            "page": 20,
             "title": "A complete preparation-to-decision sequence",
             "x": 62.362,
             "y": 498.458
           },
           {
             "level": 1,
-            "name": "subsection*.27",
-            "page": 20,
+            "name": "subsection*.28",
+            "page": 21,
             "title": "Recorded measurements: information can increase while prediction gets worse",
             "x": 62.362,
             "y": 673.452
           },
           {
             "level": 0,
-            "name": "section*.28",
-            "page": 21,
+            "name": "section*.29",
+            "page": 22,
             "title": "9. A falsifiable first study and its statistics",
             "x": 62.362,
             "y": 779.528
           },
           {
             "level": 1,
-            "name": "subsection*.29",
-            "page": 21,
+            "name": "subsection*.30",
+            "page": 22,
             "title": "One conservative finite-sample rule",
             "x": 62.362,
             "y": 497.187
           },
           {
             "level": 0,
-            "name": "section*.30",
-            "page": 22,
+            "name": "section*.31",
+            "page": 23,
             "title": "10. Learning, planning and physical intelligence",
             "x": 62.362,
             "y": 651.459
           },
           {
             "level": 1,
-            "name": "subsection*.31",
-            "page": 23,
+            "name": "subsection*.32",
+            "page": 24,
             "title": "Training, placement and tuning: concrete follow-up studies",
             "x": 62.362,
             "y": 779.528
           },
           {
             "level": 0,
-            "name": "section*.32",
-            "page": 24,
+            "name": "section*.33",
+            "page": 25,
             "title": "11. Comparison with established methods",
             "x": 62.362,
             "y": 779.528
           },
           {
             "level": 0,
-            "name": "section*.33",
-            "page": 24,
+            "name": "section*.34",
+            "page": 25,
             "title": "12. Current project functions and the missing connections",
             "x": 62.362,
             "y": 344.461
           },
           {
             "level": 0,
-            "name": "section*.34",
-            "page": 25,
+            "name": "section*.35",
+            "page": 26,
             "title": "13. Rust implementation and computational cost",
             "x": 62.362,
             "y": 459.61
           },
           {
             "level": 1,
-            "name": "subsection*.35",
-            "page": 27,
+            "name": "subsection*.36",
+            "page": 28,
             "title": "Approximation and formal evidence",
             "x": 62.362,
             "y": 612.088
           },
           {
             "level": 1,
-            "name": "subsection*.36",
-            "page": 27,
+            "name": "subsection*.37",
+            "page": 28,
             "title": "How verification supports the study",
             "x": 62.362,
             "y": 204.518
           },
           {
             "level": 0,
-            "name": "section*.37",
-            "page": 28,
+            "name": "section*.38",
+            "page": 29,
             "title": "14. Findings and next acceptance criteria",
             "x": 62.362,
             "y": 433.741
@@ -577,6 +590,7 @@
           "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
           "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
           "https://github.com/sepahead/pid-rs/blob/main/ECOSYSTEM_CAPABILITIES.md",
+          "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
           "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
           "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
           "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
@@ -625,7 +639,7 @@
           "Item.9",
           "figure.caption.11",
           "figure.caption.13",
-          "figure.caption.18",
+          "figure.caption.19",
           "figure.caption.9",
           "none.1",
           "none.2",
@@ -657,6 +671,7 @@
           "page.26",
           "page.27",
           "page.28",
+          "page.29",
           "page.3",
           "page.4",
           "page.5",
@@ -669,17 +684,17 @@
           "section*.12",
           "section*.14",
           "section*.16",
-          "section*.17",
-          "section*.28",
+          "section*.18",
+          "section*.29",
           "section*.3",
-          "section*.30",
-          "section*.32",
+          "section*.31",
           "section*.33",
           "section*.34",
-          "section*.37",
+          "section*.35",
+          "section*.38",
           "section*.6",
           "subsection*.15",
-          "subsection*.19",
+          "subsection*.17",
           "subsection*.2",
           "subsection*.20",
           "subsection*.21",
@@ -689,18 +704,19 @@
           "subsection*.25",
           "subsection*.26",
           "subsection*.27",
-          "subsection*.29",
-          "subsection*.31",
-          "subsection*.35",
+          "subsection*.28",
+          "subsection*.30",
+          "subsection*.32",
           "subsection*.36",
+          "subsection*.37",
           "subsection*.4",
           "subsection*.5",
           "subsection*.7",
           "subsection*.8"
         ],
-        "pages": 28,
-        "poppler_bbox_sha256": "1792eecd3024e46d94d699c327ff1f4863ecd43a3bd2922510e434ff564edada",
-        "poppler_layout_sha256": "634ec167a4d5b3af12f452b4b06538acd4f29966b02bfbba08fd074847dc55c3",
+        "pages": 29,
+        "poppler_bbox_sha256": "d60b57da4bc567499fcf6a509c1114b4378cc5d5d79fbb810ed67f2ad3f3ec65",
+        "poppler_layout_sha256": "b307160650e19b67f2f189462f79ed5a6244fa68762e391af3449ab26520d0a8",
         "pypdf_text_sha256": [
           "a7cedae5a2084ee9656142a6e26ad4922bed101d8e997a7375d12751deb8d343",
           "1f0ae220ad292e4c81ba40edc9e258c5295bd81efcc731077762d77140e4d46e",
@@ -713,23 +729,24 @@
           "114bb48398b3740deb304fbb093dc575d34cd85396b47c219dcc0e9cfe8d876c",
           "3886246ca6aa2367a3c069dcf176719cd479ec5b0992643c3d1eaa2525d61a4c",
           "654b8eca494ab43282752da02272d3c1f9805653d85d26f18e4952205687bdc1",
-          "9bca56ed50136a7c7a449c977f260568baee07f2a7df91b761be526395718bc2",
-          "d651b78e8c543983e8fde9dfe881fbf60db155f1da5c8f1cfb301024ef079471",
-          "f3846e1e7bf7562803821de86e1887de2edfcbdbcccb12b94e3822273c3a2bde",
-          "eee9625e6817e547ad1e6491f30b9ff19b8abf8e10a298db1f816c5fedcab5ab",
-          "6656cf9ff8e14c4301aec10efe654c3311eaed31c8e86a2775c7297048db6cd1",
-          "d6c37de866789a15c783a968c987fbfba380bb2dc67254788d3b3de0913ee2e3",
-          "7a92d4ec58af82948c483f56038e31995fc372ea6e3396fcea8fef916a0c451a",
-          "12b4f7005b932dcaad97ae59b43bbb14c49447eced33284544d50dce461178fd",
-          "d7d622bce6a25cf03977b36d9a1b61ae1fd0d74cc7f6f875fd697fdf61f501c0",
-          "fe3d53c17d75a3221d8438fff63d57f97719bd745ee815dbc858444d591e8aa0",
-          "f838cdeef82b188b2af5665d9d65518607bb8a06bd16c63fa4d98be2b503abcc",
-          "ff6da769ec3fe716366d4dd181122b520944cea423b12098b49499259eb0c94d",
-          "761722fc8c76200ceeb6892b961b847c819afad9644c8af64b115b243d04986f",
-          "c8077a2505818361baaca3c30393f6f20898d5a74f696f3079dc8bf94a79f616",
-          "a3d746ef4af37fcdbd0e2175088dd8685249d98f0b4720b1a665340888d7e0bc",
-          "5bcc7bc80be099e54c908b72e0cf8434351c023d519d8dfc6ad1cd0b21f29111",
-          "69d4792dc756a12af185e3b0bb79d7572f6e00c4210c183edcaada058b4e0ced"
+          "c13a2b59e022dc77ba2138a6b4e3c756aa7f2487fbc87617c36a15c473c499d6",
+          "b8aaab69f8003198475de8aa5fe75c4b132f0d08a221804a56edaacff848587c",
+          "21ca50bc2dee744aa0f3ad1e983d1b841fab52b78647bb54f189b3b41489ef8d",
+          "9df3ac3ce6ae281f1ec96dd541d9a08c247044373518aa1ffd2818a0de42f050",
+          "1a4762bb5c7dc85267446eab73a8f92867db79da6441a89acf74ed512142f825",
+          "1a314ef90a849fbd559d504d68e92c00f740357aa775d51fe39104e3fd9beca5",
+          "e090aa4953d646c3e8b4561b9dc866e2850575c1c9af3996edba62ce579f9580",
+          "c706730cf491587c6c52a7bc880f97dd81103db9fecf3830258aa7ff6711d4cc",
+          "f8ab7a77218fa8ce6710034ea582883af5540e4f60a8580703f07d1ed5e15117",
+          "6b4627466e67b611904ff36ad13f1fd2bc7ec44bff0b6d448ba71e7366c6f97f",
+          "89cba93aad7ae904b94dc7bb5a898d60bde2a47139a2c1cec303b161fb188c8b",
+          "a9e428469e1a8bdf9e550871777c29f8ba96ecc48a6d19aca0c3c81b7eb8a401",
+          "d3714774da1ab9a091b20a6632fd62d746858e4506259566209a364ca2fb5f9b",
+          "23560687830792d58e8f5bab171649ba696807e09b2dbe5571d6606b8f278c06",
+          "62f254dffa527d21c5d6058e0bc033810a041f98c841c8983dfe53c795500b8a",
+          "98d5dbb1e90f535a8f65653bad08aad23ac42bc585fdeebba4b4591fd7127290",
+          "edfce3d28a0d8ad6c434240aeb5e47222ff74e6a54a6d550088958bbb0cfcd4b",
+          "0ccdea0e9ba82063a7840b4da779ea7c7c0985343308b9fab215899629e2bff9"
         ],
         "root_keys": [
           "/Lang",
@@ -743,13 +760,13 @@
         ]
       },
       "pdf": {
-        "bytes": 391396,
-        "sha256": "af42c656de39b9f43fe1ba0b1ea8a9fcc36a8f96a3aa43e5d6d36e33f6c0ad06"
+        "bytes": 396970,
+        "sha256": "ee2f064af97fd8ccf0d221c8b3b951d1401f040a523c5040ab0780194832893b"
       },
       "status": "reviewed-reference",
       "tex": {
-        "bytes": 101306,
-        "sha256": "3c61c2f1294e0f9e15e47bedf16d0e3d0df0dc6f7e8e7570a98480a6d431e8f6"
+        "bytes": 104545,
+        "sha256": "0bf23413ed3e6e945dbf975ed88ec336606d1e8b3cfcf5352c77b5044e19432b"
       }
     },
     "overview": {
@@ -762,20 +779,24 @@
       "observation": {
         "first_page_fit": true,
         "font_rows": [
-          "CYYREO+SourceSansPro-Semibold        CID Type 0C       Identity-H       yes yes yes     18  0",
-          "FMDMVN+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     19  0",
+          "LEARLL+SourceSansPro-Semibold        CID Type 0C       Identity-H       yes yes yes     18  0",
+          "TBMNKA+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     19  0",
           "EYODLN+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     20  0",
           "GFGMOK+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     21  0",
           "UMEWHN+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     23  0",
           "EJTVBC+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     24  0",
           "MSBLHP+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     25  0",
-          "VQHAYL+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes     38  0",
-          "RKKAEK+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes     39  0",
-          "BMZABT+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     40  0",
-          "WFGEGQ+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes     41  0",
-          "OPYHFL+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes     84  0"
+          "VQHAYL+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes     34  0",
+          "RKKAEK+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes     35  0",
+          "BMZABT+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     36  0",
+          "WFGEGQ+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes     37  0",
+          "OPYHFL+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes     88  0"
         ],
         "geometry": [
+          [
+            595.276,
+            841.89
+          ],
           [
             595.276,
             841.89
@@ -795,11 +816,12 @@
         ],
         "gotos": [
           "section*.1",
-          "section*.3",
           "section*.4",
           "section*.5",
           "section*.6",
-          "section*.7"
+          "section*.7",
+          "section*.8",
+          "subsection*.3"
         ],
         "headings": [
           {
@@ -811,44 +833,52 @@
             "y": 489.607
           },
           {
-            "level": 0,
-            "name": "section*.3",
+            "level": 1,
+            "name": "subsection*.3",
             "page": 2,
-            "title": "What exists and what it supports",
+            "title": "Why three-source MGW still matters",
             "x": 62.362,
-            "y": 339.19
+            "y": 342.463
           },
           {
             "level": 0,
             "name": "section*.4",
             "page": 3,
-            "title": "Rust implementation and computational cost",
+            "title": "What exists and what it supports",
             "x": 62.362,
-            "y": 735.874
+            "y": 779.528
           },
           {
             "level": 0,
             "name": "section*.5",
             "page": 3,
-            "title": "The ecosystem connection",
+            "title": "Rust implementation and computational cost",
             "x": 62.362,
-            "y": 543.674
+            "y": 480.198
           },
           {
             "level": 0,
             "name": "section*.6",
             "page": 3,
-            "title": "Where the offline report is useful",
+            "title": "The ecosystem connection",
             "x": 62.362,
-            "y": 351.617
+            "y": 287.998
           },
           {
             "level": 0,
             "name": "section*.7",
             "page": 4,
+            "title": "Where the offline report is useful",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 0,
+            "name": "section*.8",
+            "page": 5,
             "title": "How practical value will be tested",
             "x": 62.362,
-            "y": 329.142
+            "y": 779.528
           }
         ],
         "https_uris": [
@@ -872,21 +902,24 @@
           "page.2",
           "page.3",
           "page.4",
+          "page.5",
           "section*.1",
-          "section*.3",
           "section*.4",
           "section*.5",
           "section*.6",
-          "section*.7"
+          "section*.7",
+          "section*.8",
+          "subsection*.3"
         ],
-        "pages": 4,
-        "poppler_bbox_sha256": "548e0a9d4d9073c8568a2f4d6e5ad59982338a164648cd7462eb0ceadb984ff8",
-        "poppler_layout_sha256": "3274e68c43edc1d4e96466f40deb3e979b0604101888b44dceae58961bd85255",
+        "pages": 5,
+        "poppler_bbox_sha256": "950a3d706b3f02226d2759a03b6a2ec5d398254e2e597c065a623b4ead0e664f",
+        "poppler_layout_sha256": "81bd0c916dcddd7d7213e0f6d18b935b998caa9d4d0193411dce7fb9b2b4eaee",
         "pypdf_text_sha256": [
           "8fed687ce75f09fe3cc4a9120459b9b0cc7d4642f90efd947347577072175f92",
-          "dfbd02999e6094ca5b6b3ecc6c90d94e82bef64864b78fca9dd8d27e0502bf9c",
-          "a4504fa436f9fa6c32f7a1e0ee303820e82b6fffbf635184495dad5e9b4a9870",
-          "7656211072a214bbd504b64d85aa6f23c3332bfb0128f10e9a5877ad0c8bea17"
+          "61f690b3fa775a65ae42cb087b4111fef40286d71c4359be6113c33e49a2015b",
+          "35dbf98fe6a62145901390e3a43235ff47a1f9548b5214a69c040bf65a5c8643",
+          "bd34774fcc1b9174ce2c70832495763197368d6472004c8bc4e94866a98ff192",
+          "e44c88a0e84bb3cc60bb3677ff0dff4164d7faf0bf78f3cc1f253e039f14759c"
         ],
         "root_keys": [
           "/Lang",
@@ -900,13 +933,13 @@
         ]
       },
       "pdf": {
-        "bytes": 95983,
-        "sha256": "0c4128cfd63fd98e167476a121bb70bffdf563251d87526e4718f8e071fbf470"
+        "bytes": 99030,
+        "sha256": "e073a9f0b7e9ec6738c7caf9779e7f444caee55047f70121e9a49a307fcba4c5"
       },
       "status": "reviewed-reference",
       "tex": {
-        "bytes": 14600,
-        "sha256": "1230f01c7cef8e9498a753c7f13ef943d5f464db21a9801a5f2f83fdef6f18f8"
+        "bytes": 15512,
+        "sha256": "a39bd959ddc85abf5463194bde05c697abb7654089746694fb92f8c65372c159"
       }
     }
   },

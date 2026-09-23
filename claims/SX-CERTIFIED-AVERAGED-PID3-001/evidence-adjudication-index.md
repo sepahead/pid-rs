@@ -23,3 +23,21 @@ machine-readable provenance inventory that includes the current record. Its sche
 which numbered decision is current; this evidence-adjudication index is the unambiguous current
 pointer. The catalog and its generated `METHODS.md` view do not upgrade the proposed certificate
 target or substitute for the claim and evidence records linked above.
+
+## Reviewer identity and current evidence scope — 23 September 2026
+
+The retained [matrix](evidence-matrix-v3.md) calls one source-map entry “owner-controlled human
+source correspondence.” That label does **not** establish an identified human reviewer or
+independent human review. The [source map](source-correspondence-v4.md) records an integrator-owned
+council, disclaims reviewer authentication, and leaves H1 open. The current credit is an
+**owner-controlled source-correspondence record plus the stated finite executable checks**.
+The inspected records do not establish the reviewer's identity or mode. This clarification does
+not assert that no human read the source. Wording such as “human transcription” must likewise not
+be used as reviewer-authentication evidence. The historical matrix and decision retain their bytes.
+
+Agents can perform substantive technical review; formal kernels and independently implemented
+checks supply evidence for their exact statements and domains. Shared definitions, code, tools
+and custody remain shared dependencies. The separate H1 requirement in [the route registry](routes.md)
+requires external human custody before claiming independently reproduced public assurance. It is
+an assurance condition, not a mathematical premise or a reason to stop technical work. No human
+review, external reproduction, new theorem or program closure is granted by this clarification.
