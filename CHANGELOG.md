@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Use GitHub-compatible mass notation in the finite-PMF formal source record.
+
 - Add four locally verified finite-PMF foundations for logarithmic prediction loss, with exact
   Lean source snapshots, support assumptions and retained failure evidence. Explain their role
   in the sensor reports; conditional sensor proofs, Rust refinement and hosted replay remain open.

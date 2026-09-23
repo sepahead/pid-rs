@@ -17,7 +17,7 @@ targets listed below remain open.
 ## Exact mathematical scope
 
 Let $Y$ be a finite, nonempty alphabet, and let $r,q$ be normalized PMFs on it. Write
-$r_y=\operatorname{mass}(r,y)$, $q_y=\operatorname{mass}(q,y)$, and
+$r_y=\mathrm{mass}(r,y)$, $q_y=\mathrm{mass}(q,y)$, and
 $S=\{y:r_y>0\}$. The scoring premise is $q_y>0$ for every $y\in S$.
 It allows positive forecast mass outside $S$, as well as zeros outside $S$.
 No sample, independence assumption, fitted model, or asymptotic limit occurs in these statements.

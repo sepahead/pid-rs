@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "0bd68f04f769ffc0937b438b22db88a7603ac2cd249c451fa0e02e64eddd5921",
-        "size_bytes": 313196
+        "sha256": "a35ba8b65433cba0c77e94e0e05346df4c2dcceae1bd97beaa9d2e969b7278a7",
+        "size_bytes": 313275
       },
       {
         "git_mode": "100644",
@@ -14824,8 +14824,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/lean-finite-logscore/PUBLICATION.md",
-        "sha256": "51d3ee1349732175840f822a4f8f7163a3a64f1dd8e957f70d6d2097aa8b6bbc",
-        "size_bytes": 10460
+        "sha256": "dcbdbf8bdea0f91caed37c319bf6ed23245806c023225db4985d6a24f5aa28b5",
+        "size_bytes": 10448
       },
       {
         "git_mode": "100644",
@@ -28426,7 +28426,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "20483d5e5a692e8de236598106371d45d3a061f38a6f20775793f68828c40588",
+        "sha256": "22cbccecf7185549b10e70602f3f1162c7386ab11ff28298a112cec124f29d40",
         "size_bytes": 138785
       },
       {
@@ -29366,7 +29366,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "9f800fca7aab142f5416a67dcc00d150921214713cff51ad220c8baa752defac",
+    "entries_sha256": "41e98631ad6ab83e9d842cac4cb7706c99c9f2751dae03f926c0e7439fbe784c",
     "entry_count": 4870
   },
   "subprojections": [
@@ -29379,7 +29379,7 @@
       ]
     },
     {
-      "entries_sha256": "5e816fe7a112ebe3cd59b9257f03ab0567df39f70eec954844b1b52121e3f575",
+      "entries_sha256": "e27a0aff630d0ac2edd00c00a575f3fadb21f8f8bb4abcdd3beecc4e15dd1a38",
       "entry_count": 1909,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -29395,7 +29395,7 @@
       ]
     },
     {
-      "entries_sha256": "79160d4a3c9e8bd46d97ddd18f1690a0f7044950c597885f06783f9453fb8042",
+      "entries_sha256": "02d265cde3c15f1d58bd4e6a6ee0c8ac87d54af1faec8b65bf0e3c417a9b6f0b",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
