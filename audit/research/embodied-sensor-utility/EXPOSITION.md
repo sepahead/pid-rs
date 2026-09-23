@@ -9,7 +9,7 @@ An embodied agent predicts and acts in a physical environment. A useful sensor s
 
 This report develops an offline starting point: two camera instances and, when useful, one microphone. It explains how categorical shared-exclusions PID can describe their information about a declared outcome. It derives a sensor-availability objective, gives exact examples, and identifies the experiment needed to establish practical value. Robotics and aerial-object observation share parts of this measurement problem. They need separate outcome definitions and task evaluations.
 
-**Status.** The new application derivations below are classical finite-probability calculations and a project synthesis, with explicit handwritten proofs. They are not newly accepted Lean theorems. Existing linked formal results keep their narrower theorem and replay status. The report contains no new sensor benchmark, trained policy, field result, or claim of scientific priority. Its useful contribution is a precise connection between signed MGW atoms, sensor availability, predictive loss, and the current ecosystem interfaces.
+**Status.** Four classical finite-PMF foundations have been checked locally in Lean: probability mass and measure, finite expectation as an integral, supported Gibbs nonnegativity, and log-score decomposition, lower bound and attainment. Section 3 explains their exact scope. The conditional prediction, availability/mask and application arguments remain handwritten; 13 downstream formal targets remain open. Existing linked formal results keep their individual theorem and replay status. The report contains no new sensor benchmark, trained policy, field result, or claim of scientific priority. Its useful contribution is a precise connection between signed MGW atoms, sensor availability, predictive loss, and the current ecosystem interfaces.
 
 ## 1. The question and the named PID
 
@@ -91,6 +91,95 @@ $$
 Synergy alone is not additional Shannon information. A negative unique atom can cancel positive synergy. Section 5 gives an exact example. No atom is clipped to zero.
 
 ## 3. Why predictive log loss gives an information objective
+
+### The locally checked finite-law foundation
+
+First fix a finite, nonempty label alphabet $\mathcal Y$, with every subset measurable, and two normalized probability mass functions $r$ and $q$. Write their real coordinates as $r_y,q_y\geq0$, with
+
+$$
+\sum_{y\in\mathcal Y}r_y=\sum_{y\in\mathcal Y}q_y=1,
+\qquad S=\{y:r_y>0\}.
+$$
+
+The true law is $r$; the forecast is $q$. Require $q_y>0$ for every $y\in S$. Outside $S$, $q_y$ may be zero or positive. Neither full support nor a sampling or independence assumption is required. The [finite log-score formal package](../../formal/lean-finite-logscore/PUBLICATION.md) records the four exact targets, proof sources and local replay scope. They establish this unconditional finite-law foundation, not a conditional sensor theorem or a new PID result.
+
+Define entropy, supported KL divergence and expected log loss by
+
+$$
+H(r)=-\sum_{y\in S}r_y\ln r_y,
+\qquad D(r\Vert q)=\sum_{y\in S}r_y\ln\frac{r_y}{q_y},
+$$
+
+$$
+L_r(q)=\int_{\mathcal Y}[-\ln q_y]\,d\mu_r(y),
+$$
+
+where $\mu_r$ is the probability measure induced by $r$. In this real-valued integral, take $\ln0=0$, as Lean's total real logarithm does. Any finite value at a label with $r_y=0$ would give the same integral. Positivity of $q$ on $S$ ensures that the loss agrees with ordinary log loss wherever the true law has mass. This convention must not be used to assign finite loss to a forecast that excludes a possible true outcome.
+
+The four proof steps are as follows.
+
+**1. From a PMF to real mass and a probability measure.** A native PMF has nonnegative extended-real masses summing to one. Each mass is at most one, hence finite. Passing these finitely many masses to real numbers preserves their sum and order. Thus $0\leq r_y\leq1$, the real masses sum to one, and membership in the support is equivalent to $r_y>0$. On the discrete measurable alphabet, the induced measure satisfies $\mu_r(\{y\})=r_y$ and $\mu_r(\mathcal Y)=1$. These are properties of the PMF's actual induced measure, not a separately assumed expectation formula.
+
+**2. From integration to a finite sum.** Every real-valued function $f$ on a finite discrete alphabet is measurable and bounded, so it is integrable under this probability measure. Expanding it into its singleton indicators gives
+
+$$
+f=\sum_{y\in\mathcal Y}f(y)\mathbf 1_{\{y\}},
+\qquad
+\int f\,d\mu_r=\sum_{y\in\mathcal Y}r_yf(y).
+$$
+
+Here $\mathbf 1_{\{y\}}$ is one at $y$ and zero elsewhere. Linearity of the integral and the singleton masses justify the second equality. In particular, $L_r(q)=\sum_{y\in S}r_y[-\ln q_y]$. Finiteness of the alphabet and supported positivity make this a finite real number for each admitted pair $(r,q)$.
+
+**3. Gibbs nonnegativity with forecast mass outside the true support.** For $u>0$, the function $u-1-\ln u$ has derivative $1-1/u$: negative below one and positive above one. Its minimum is zero at one, so $\ln u\leq u-1$. Taking $u=1/t$ gives $\ln t\geq1-1/t$ for $t>0$. At a supported label use $t=r_y/q_y>0$ and multiply by $r_y$:
+
+$$
+r_y-q_y\leq r_y\ln\frac{r_y}{q_y}.
+$$
+
+At a label outside $S$, $r_y=0$ and $r_y-q_y=-q_y\leq0$, while its supported KL summand is defined as zero. Summing these inequalities over the entire alphabet and using both normalizations proves
+
+$$
+0=\sum_y r_y-\sum_y q_y\leq D(r\Vert q).
+$$
+
+This explains why $q$ may assign mass outside $S$. It also explains why one cannot drop normalization or clip individual KL summands: a supported summand can be negative even though their total is nonnegative.
+
+**4. Decomposition, lower bound and attainment.** On $S$, both logarithm arguments are positive, so the logarithm quotient identity gives
+
+$$
+r_y[-\ln q_y]
+=-r_y\ln r_y+r_y\ln\frac{r_y}{q_y}.
+$$
+
+Sum over $S$ and use the integral identity from step 2 and Gibbs nonnegativity from step 3:
+
+$$
+\boxed{L_r(q)=H(r)+D(r\Vert q)\geq H(r).}
+$$
+
+The forecast $q=r$ is admissible because $r$ is positive on its own support. Each supported ratio is then one, so $D(r\Vert r)=0$ and $L_r(r)=H(r)$. The checked target establishes decomposition, the lower bound and its attainment. Strict uniqueness is not part of that target.
+
+For a concrete three-label example, take
+
+$$
+r=(1/2,1/2,0),\qquad q=(1/4,1/4,1/2).
+$$
+
+Both are normalized, and the forecast is positive on the two true labels. Direct substitution gives
+
+$$
+H(r)=\ln2,\qquad L_r(q)=\ln4,\qquad D(r\Vert q)=\ln2.
+$$
+
+The third label has true probability zero, yet its positive forecast probability is allowed. Allocating half the forecast mass there reduces the probabilities available for the true labels. Choosing $q=r$, including its true zero, attains $\ln2$. These are exact finite-law calculations, not an empirical calibration result.
+
+The support requirement has a concrete failure case. With the same $r$, let $q_{\rm bad}=(1,0,0)$. Ordinary log loss is infinite when the second label occurs. Blindly applying the total real convention $\ln0=0$ instead produces the spurious loss zero, below $H(r)=\ln2$. The theorem excludes this forecast because it violates supported positivity. Likewise, an unnormalized vector $(2,2,0)$ would give the apparent loss $-\ln2$; it is not a PMF and is outside the theorem.
+
+These results concern one exact law and admitted forecasts. They do not provide a uniform loss bound over forecasts approaching zero, nor do observed zero counts establish true zero probabilities. Flooring forecast probabilities and renormalizing changes the allowed forecast family; its optimum need not attain $H(r)$ when the true law has zeros. Floating-point evaluation, estimation from dependent observations and changes of environment each need separate justification.
+
+### Conditional prediction and sensor information
+
+The following conditional argument applies the same classical calculation to each positive-probability observation and averages. Its posterior construction and downstream availability/mask steps are handwritten here; the four checked finite-law targets do not close the 13 remaining conditional sensor/application targets.
 
 A predictor $q(y\mid o)$ assigns a probability to each possible outcome after observing $O=o$. Its loss when $Y=y$ is $-\ln q(y\mid o)$. Assume $q>0$ on every outcome with positive conditional probability. For a finite expected loss,
 
@@ -412,6 +501,8 @@ For real-valued features, fit `EqualWidthQuantizer` on training rows and apply t
 
 For prediction, let $J$ be the total number of evaluated landmarks and $A\leq2^n$ the number of masks. Applying fixed predictors requires $AJ$ prediction evaluations, plus feature extraction and aggregation; it does not require a fresh PID fit at every landmark. Any per-mask training adds the corresponding training costs and model storage. For $E$ optimizer updates with bounded step cost $C_{\mathrm{step}}$, the training component is $O(EC_{\mathrm{step}})$; model parameters, optimizer state, minibatches and any differentiation graph must be counted separately in peak memory. This notation prices a proposed training procedure and does not supply an implemented PID learner. The full availability objective can already be computed from subset MI; choosing full PID for explanation does not eliminate this cheaper baseline. The proposed first workflow remains offline. Online use needs a separately measured budget for extraction, transformation, prediction, diagnostics and missed deadlines.
 
+For dense vectors over $K_Y=|\mathcal Y|$ target labels, direct validation and evaluation of $H(r)$, $D(r\Vert q)$ and $L_r(q)$ require $O(K_Y)$ arithmetic/logarithm operations and $O(1)$ extra working storage beyond the input vectors. Validation must include nonnegative finite coordinates and normalization over the whole alphabet, including forecast mass outside the true support; logarithmic summands skip true zero mass. For $J$ dense forecasts, validation takes $O(JK_Y)$ work, while scoring the realized labels takes $O(J)$ after validation. This excludes model inference and training. It is an algorithmic cost observation, not a new Rust API or measured benchmark. Using $\ln r_y-\ln q_y$ avoids forming a potentially overflowing ratio, but support decisions, underflow, summation error and numerical normalization still require a separate floating-point contract. The Lean proof does not establish that contract.
+
 For $R_b$ resamples or $P$ null permutations, budget the repeated statistic evaluations and row copies separately. For the existing sequential moving-block bootstrap with $N$ rows and $g$ output coordinates, a common per-call statistic bound $T_{\mathrm{stat}}$ gives $(R_b+1)T_{\mathrm{stat}}$ plus $O(R_bND+gR_b\log(R_b+1))$ copying/schedule/summary work. Additional storage is $O(ND+R_bg)$, plus the callback workspace and failure/provenance records; all successful aligned output vectors remain retained. Here $g=4$ for its PID2 callback. The existing `experimental::pipelines::bootstrap_quantized_sxpid2` is a two-source full-pipeline bootstrap that recomputes same-sample quantization on each resample. It does not implement the proposed held-out, fixed-training-transform study. Generic callback resampling retains aligned outcomes but does not provide calibrated PID confidence automatically. A selected fixed-transform callback needs its own implementation and assumptions. Repeating learning for each fold, candidate, resample or seed also repeats its training cost; an estimator timing cannot stand in for that total.
 
 The existing [Criterion definitions](../../../crates/pid-core/benches/estimators.rs) include small categorical averaged cases and quantizer label/report cases. They do not benchmark this sensor workflow, a prefix gradient or a stopped estimator. No new timing is reported here. Any runtime claim must cite an actual retained release measurement with revision, features, hardware, $N,K,d,n,m$, repetitions, peak memory and failure/cancellation scope.
@@ -422,13 +513,14 @@ Direct enumeration is the reference for a small specified PMF. Prefix approximat
 
 | Existing result | Useful intermediate role | Boundary |
 |---|---|---|
+| Finite-PMF mass, integral, Gibbs and log-score foundations | Locally checked classical foundation for exact-law expected predictive loss | Unconditional law only; 13 downstream conditional sensor/application targets remain open |
 | Fixed-world equal-synergy and target-copy results | Negative controls for a sensor-selection score | Not field utility or an estimator confidence theorem |
 | Fixed-alphabet continuity | Convert a justified PMF perturbation radius into an atom sensitivity statement | Does not supply that radius or permit changing bins |
 | Dependency-color concentration | Conditional route from a specified dependence structure to law error | Requires its independence/common-law premises; arbitrary time series do not qualify |
 | Finite-prefix mean and bias | Understand a proposed finite sampling approximation | Expectation/bias does not establish finite-sample accuracy |
 | Finite-prefix gradient | Study a declared finite-law encoder objective | Support, score and target-tangent assumptions; no trained robot implementation |
 
-The [mathematical results guide](../../../MATHEMATICAL_RESULTS_GUIDE.md) and each linked theorem map distinguish compiled local proofs, replay obligations, paper correspondence and open application edges. Sections 3, 4, 6, 7 and 9 of this report have explicit classical derivations, but no new Lean probability-proof credit. Algebraic reconstruction, mathematical validity, estimator calibration and physical usefulness are separate obligations.
+The [mathematical results guide](../../../MATHEMATICAL_RESULTS_GUIDE.md) and each linked theorem map distinguish compiled local proofs, replay obligations, paper correspondence and open application edges. Section 3's four finite-PMF foundations have local Lean checking evidence. Its conditional continuation and the application derivations in Sections 4, 6, 7 and 9 remain handwritten. Algebraic reconstruction, mathematical validity, estimator calibration and physical usefulness are separate obligations.
 
 ### How verification supports the study
 

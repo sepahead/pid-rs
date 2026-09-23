@@ -1,0 +1,583 @@
+{
+  "schema": "pid-rs/finite-logscore-local-publication-receipt-v1",
+  "record_kind": "Descriptive publication projection of retained local execution records; not a new executable verifier or independent attestation.",
+  "author": "Sepehr Mahmoudian",
+  "status": "four_targets_locally_compiled_judged_and_fresh_kernel_replayed",
+  "execution_completed_utc": "2026-09-23T10:27:20.882565+00:00",
+  "scope": "Finite normalized PMF mass, finite discrete measure expectation, supported Gibbs inequality, and logarithmic-score decomposition, lower bound and self-score attainment; nats.",
+  "source_files": {
+    "sources/FiniteSensorBayes/Candidate.lean": {
+      "bytes": 5250,
+      "sha256": "393d6db5bac4a988b567b682692872ea175b0fd38f3fae40648c9fa9d817ad62"
+    },
+    "sources/FiniteSensorBayes/Contract.lean": {
+      "bytes": 7675,
+      "sha256": "3a3ba6aa5c145aa7f14fd6fcc93289ecc5be58c7360bd221ada426e7b171db80"
+    },
+    "sources/FiniteSensorBayes/FiniteLogScoreTarget.lean": {
+      "bytes": 1348,
+      "sha256": "5d45ed52b6d62d2951f304beb5a68a3c9309a9aa0a669443ff4b18a5a01168de"
+    },
+    "sources/FiniteSensorBayes/RawTargets.lean": {
+      "bytes": 9409,
+      "sha256": "4481af5277584bf55fbd2fb7c0ffe67a7b30ce702d8562cbc60c337c652727f6"
+    },
+    "sources/FiniteSensorBayesOwner/CoreJudge.lean": {
+      "bytes": 2831,
+      "sha256": "4f5365d755b05ec3466d78b7f110b706109456a59a38a2f9f19d5da523270fc4"
+    },
+    "sources/FiniteSensorBayesOwner/ExactTypeComponent.lean": {
+      "bytes": 2527,
+      "sha256": "d401c6602a87e5aaff0b4d0aa524c31605ac0501c2a05ff9bc49f13391d05c79"
+    },
+    "sources/FiniteSensorBayesOwner/ImportBaseline.lean": {
+      "bytes": 666,
+      "sha256": "a93494f674e78e0b191dbb054a12c684a05499b73f01ff8502793b2080eda63d"
+    },
+    "sources/FiniteSensorBayesOwner/ModuleInventory.lean": {
+      "bytes": 6694,
+      "sha256": "5c16711d9aeb21fa2d0bb67187b73745641edac1abc6284279141ba1b28dbc6d"
+    }
+  },
+  "raw_public_evidence": {
+    "evidence/import-baseline.stdout": {
+      "bytes": 729540,
+      "sha256": "546fadb41f77f434b5f5518431fb3e31ac361843a06cf8d7db2a26071ed5ed0c"
+    },
+    "evidence/core-judge.stdout": {
+      "bytes": 749986,
+      "sha256": "f3b75910661e21bec2cfe027c119aaca4e1ead5758feb89c3431fe806b063ec4"
+    }
+  },
+  "exports": [
+    {
+      "theorem": "FiniteSensorBayesCandidate.finiteMass",
+      "raw_target": "FiniteSensorBayes.Raw.FiniteMassTarget",
+      "universe_parameters": [
+        "u"
+      ],
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "status": "exact_type_and_axioms_checked"
+    },
+    {
+      "theorem": "FiniteSensorBayesCandidate.finiteExpectation",
+      "raw_target": "FiniteSensorBayes.Raw.FiniteExpectationTarget",
+      "universe_parameters": [
+        "u"
+      ],
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "status": "exact_type_and_axioms_checked"
+    },
+    {
+      "theorem": "FiniteSensorBayesCandidate.gibbs",
+      "raw_target": "FiniteSensorBayes.Raw.GibbsTarget",
+      "universe_parameters": [
+        "u"
+      ],
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "status": "exact_type_and_axioms_checked"
+    },
+    {
+      "theorem": "FiniteSensorBayesCandidate.logScore",
+      "raw_target": "FiniteSensorBayes.LogScoreOwner.FiniteLogScoreTarget",
+      "universe_parameters": [
+        "u"
+      ],
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "status": "exact_type_and_axioms_checked"
+    }
+  ],
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "trust_level": 0,
+  "toolchain": {
+    "tools": {
+      "lean": {
+        "frozen_binary_sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+        "version": "4.33.0"
+      },
+      "leanchecker": {
+        "frozen_binary_sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+        "version": "4.33.0"
+      },
+      "python": {
+        "frozen_binary_sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf",
+        "version": "3.14.6"
+      }
+    },
+    "mathlib_revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+    "mathlib_input_revision": "v4.33.0",
+    "mathlib_repository": "https://github.com/leanprover-community/mathlib4.git",
+    "lake_manifest_sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "dependency_manifest_packages": [
+      {
+        "name": "mathlib",
+        "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+        "repository": "https://github.com/leanprover-community/mathlib4.git"
+      },
+      {
+        "name": "plausible",
+        "revision": "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
+        "repository": "https://github.com/leanprover-community/plausible"
+      },
+      {
+        "name": "LeanSearchClient",
+        "revision": "5f4d51b81cbd3f6b32b156bfad9056621a040404",
+        "repository": "https://github.com/leanprover-community/LeanSearchClient"
+      },
+      {
+        "name": "importGraph",
+        "revision": "16f02aa7642864af59f1ff0e384a015994db9118",
+        "repository": "https://github.com/leanprover-community/import-graph"
+      },
+      {
+        "name": "proofwidgets",
+        "revision": "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
+        "repository": "https://github.com/leanprover-community/ProofWidgets4"
+      },
+      {
+        "name": "aesop",
+        "revision": "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
+        "repository": "https://github.com/leanprover-community/aesop"
+      },
+      {
+        "name": "Qq",
+        "revision": "92c15be17b7caf78c2ad767ec40f89052d908d81",
+        "repository": "https://github.com/leanprover-community/quote4"
+      },
+      {
+        "name": "batteries",
+        "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+        "repository": "https://github.com/leanprover-community/batteries"
+      },
+      {
+        "name": "Cli",
+        "revision": "6130a47896ce867c6a4a55373441e59e565bad0f",
+        "repository": "https://github.com/leanprover/lean4-cli"
+      }
+    ]
+  },
+  "selection": {
+    "rule": "First complete development success, followed by one fresh final replay of identical source bytes.",
+    "selected_development_attempt": 2,
+    "development_attempts_used": 2,
+    "maximum_development_attempts": 3,
+    "final_replays_used": 1,
+    "first_success_record_sha256": "d3f73e3bb0907cbbe28988ba33f7f26900dad9cbc48171bcc60abd80ff723140"
+  },
+  "execution": [
+    {
+      "phase": "development_0002",
+      "source_manifest_sha256": "200b406e532d798cf2cc19f144d1a5ab9430d2c095f82e4518dd89d1dd43692b",
+      "calls": [
+        {
+          "call": "compile-01",
+          "module": "FiniteSensorBayes.Contract",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:18:21.867174+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "3252080301c661974417dd965b5ee712ee81917647d227eb802e76d59d3b7d5d"
+        },
+        {
+          "call": "compile-02",
+          "module": "FiniteSensorBayes.RawTargets",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:18:23.466999+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "7a0a4de46f271f1bff6d279f48bb3cf04d1106fec90eb2080b939709637419fa"
+        },
+        {
+          "call": "compile-03",
+          "module": "FiniteSensorBayes.FiniteLogScoreTarget",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:18:24.954175+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "d6ff105b45cef818fda7c94db7be97ba81b17d6a72574f57b061a767a144068d"
+        },
+        {
+          "call": "compile-04",
+          "module": "FiniteSensorBayesOwner.ModuleInventory",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:18:25.913931+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "84fd04384eaee42c2b15b57ced7de11bff04cfb7155916e6110f8d2bf0bc1534"
+        },
+        {
+          "call": "compile-05",
+          "module": "FiniteSensorBayesOwner.ExactTypeComponent",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:18:26.756017+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "b02f01e135ba4fa76097e1887d0d14528b7a8a1bbec7a43d13cb7bb5ebccef34"
+        },
+        {
+          "call": "compile-06",
+          "module": "FiniteSensorBayesOwner.ImportBaseline",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:18:28.896901+00:00",
+          "stdout": {
+            "bytes": 729540,
+            "sha256": "546fadb41f77f434b5f5518431fb3e31ac361843a06cf8d7db2a26071ed5ed0c"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "4415904170824bb8e62b225aade68ef1a9df9154f19e9793212884c80df9d231"
+        },
+        {
+          "call": "compile-07",
+          "module": "FiniteSensorBayes.Candidate",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:18:30.465334+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "e13a3bb9aca885cbae831705c72f4e87909ed2335040605cbd370068db91945e"
+        },
+        {
+          "call": "compile-08",
+          "module": "FiniteSensorBayesOwner.CoreJudge",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:18:33.015576+00:00",
+          "stdout": {
+            "bytes": 749986,
+            "sha256": "f3b75910661e21bec2cfe027c119aaca4e1ead5758feb89c3431fe806b063ec4"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "c4daa0679921b78fe473af5a4ab72be80a50adde89ee673592f22f0ac3e64a1c"
+        },
+        {
+          "call": "kernel",
+          "module": "FiniteSensorBayes.Candidate",
+          "operation": "leanchecker --fresh",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:21:38.365911+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "91522d8907a8829a1561abf38af7b953e64d36bc4383b15bbbc8bb591ebd5b39"
+        }
+      ],
+      "outer_exit_code": 0,
+      "outer_result_sha256": "223358a24b7907f49101b43c48ce680de0d6641c552757f5fb479ae2396e488d",
+      "adoption_status": "root_adopted_local_development",
+      "adoption_sha256": "72b7d74c969d6b1fbf3b929794451baeeb0270c94db68611de08a01b02a12fe7",
+      "adoption_utc": "2026-09-23T10:21:53.351679+00:00"
+    },
+    {
+      "phase": "fresh_final",
+      "source_manifest_sha256": "200b406e532d798cf2cc19f144d1a5ab9430d2c095f82e4518dd89d1dd43692b",
+      "calls": [
+        {
+          "call": "compile-01",
+          "module": "FiniteSensorBayes.Contract",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:22:45.659537+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "a39e499582ad2c30d01100c018e8712b53772464a370273794921988b2c9fc94"
+        },
+        {
+          "call": "compile-02",
+          "module": "FiniteSensorBayes.RawTargets",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:22:47.117140+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "a94d53c7c06f725025753bca4956437abd9a67e49f22ded220c787570e2573bc"
+        },
+        {
+          "call": "compile-03",
+          "module": "FiniteSensorBayes.FiniteLogScoreTarget",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:22:48.553292+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "766d0e7ca9f1ddce691f2e8b6f2a038a2506df5113ab6fd44440103e5e755ee8"
+        },
+        {
+          "call": "compile-04",
+          "module": "FiniteSensorBayesOwner.ModuleInventory",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:22:49.504083+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "ef26e746b46dbded19f979119dbb550ab5bac155218ff08c506a03cccffa0266"
+        },
+        {
+          "call": "compile-05",
+          "module": "FiniteSensorBayesOwner.ExactTypeComponent",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:22:50.335993+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "b5847b6578f702ed8254166c6019465f1660b6a43a62f511210b28fba12f241f"
+        },
+        {
+          "call": "compile-06",
+          "module": "FiniteSensorBayesOwner.ImportBaseline",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:22:52.042049+00:00",
+          "stdout": {
+            "bytes": 729540,
+            "sha256": "546fadb41f77f434b5f5518431fb3e31ac361843a06cf8d7db2a26071ed5ed0c"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "b8979d83163b462c284f2f037c0bb0e1334516c4ece573c2c5256a17a96fe7e1"
+        },
+        {
+          "call": "compile-07",
+          "module": "FiniteSensorBayes.Candidate",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:22:53.627701+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "c3ebdb8a7ec0868967ae7e7c6a96e4b67f0c25dc52fea661d74a9f3a46f8c2cd"
+        },
+        {
+          "call": "compile-08",
+          "module": "FiniteSensorBayesOwner.CoreJudge",
+          "operation": "lean --trust=0 compilation",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:22:56.145597+00:00",
+          "stdout": {
+            "bytes": 749986,
+            "sha256": "f3b75910661e21bec2cfe027c119aaca4e1ead5758feb89c3431fe806b063ec4"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "a47f25f3ecbcf9695d8eab3b142a618f671da2587c6310b8ccc013b4d4270f59"
+        },
+        {
+          "call": "kernel",
+          "module": "FiniteSensorBayes.Candidate",
+          "operation": "leanchecker --fresh",
+          "returncode": 0,
+          "execution_error": null,
+          "finished_utc": "2026-09-23T10:25:57.532905+00:00",
+          "stdout": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "stderr": {
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "retained_native_result_sha256": "b1293318dbe290f422ca3b0652531671308667e277dcab2109e4abd0c922806e"
+        }
+      ],
+      "outer_exit_code": 0,
+      "outer_result_sha256": "de5bbc401fb144328b52815ff87ae53ecb82c0fe890e77a598fd23bd9385c3a4",
+      "adoption_status": "root_adopted_local_final_replay",
+      "adoption_sha256": "9e07fbacd0dec11e66426d52691376af7f016b1414b5e2e17eba07ced71b01ee",
+      "adoption_utc": "2026-09-23T10:26:19.319783+00:00"
+    }
+  ],
+  "import_observation": {
+    "baseline_closure_rows": 4824,
+    "judge_closure_rows": 4825,
+    "candidate_module_declarations": 8,
+    "candidate_public_theorems": 4,
+    "candidate_private_theorem_helpers": 4,
+    "candidate_extra_routed_or_metadata_names": 0,
+    "closure_relation": "Judge closure equals baseline closure plus the declared candidate effective entry; checked by the retained local outer route."
+  },
+  "dependency_census": {
+    "status": "Retained pre/post observations record unchanged declared module artifacts.",
+    "present_files": 19276,
+    "bytes": 3820751328,
+    "census_sha256": "8dbc35fe06f720086f542e189ec67ec9473af8a41782001a0ff749c37974e702",
+    "limitation": "Not native-loader closure, independent source-to-cache authenticity, or continuous filesystem monitoring."
+  },
+  "failed_attempt_0001": {
+    "status": "warning_as_error_lint_failure_before_judge_or_kernel_acceptance",
+    "candidate_source": {
+      "bytes": 5251,
+      "sha256": "faa7c242ee5a364cc8c17f238d5152b8c1d550eef4673825dd81a0ffa0e7bd0f"
+    },
+    "candidate_compile_returncode": 1,
+    "diagnostic_summary": "At candidate line 121, the style linter preferred let over letI because the goal was a proposition; warningAsError promoted the warning to an error.",
+    "diagnostic_is_summary_not_raw_output": true,
+    "original_diagnostic_sha256": "ecfb700790babfead6938bce053908e915c7eaa7d028632f996ee9b5320efeb5",
+    "only_source_correction": {
+      "before": "letI : MeasurableSpace Y := ⊤",
+      "after": "let : MeasurableSpace Y := ⊤"
+    },
+    "statement_or_owner_changes": false,
+    "negative_evidence_location": "Original source and diagnostic retained in local custody; machine-specific diagnostic is not copied here."
+  },
+  "local_custody_bindings": {
+    "packet_sha256": "b83d32d5e5b8432125c6be3c1493e725fa00cb6461fe7e584772c86bb0827a4a",
+    "terminal_sha256": "b3b7f86c42cae853e53995f6cad48b3d72c57106affd5a57d813935677f048de",
+    "note": "These digests identify retained local records. Their raw machine-specific contents are not distributed in this package and these hashes alone are not public replay evidence."
+  },
+  "open_targets": [
+    "FiniteSensorBayes.Raw.ObservationSemanticsTarget",
+    "FiniteSensorBayes.Raw.PosteriorSemanticsTarget",
+    "FiniteSensorBayes.Raw.NullFallbackRiskTarget",
+    "FiniteSensorBayes.Raw.AdmissibilityOnStatesTarget",
+    "FiniteSensorBayes.Raw.ExpectedLossSumTarget",
+    "FiniteSensorBayes.Raw.PredictiveKLTarget",
+    "FiniteSensorBayes.Raw.LogScoreDecompositionTarget",
+    "FiniteSensorBayes.Raw.BayesAttainmentMinimalityTarget",
+    "FiniteSensorBayes.Raw.NoObservationRiskTarget",
+    "FiniteSensorBayes.Raw.InformationDomainsTarget",
+    "FiniteSensorBayes.Raw.MutualInformationGainTarget",
+    "FiniteSensorBayes.Raw.ConditionalInformationGainTarget",
+    "FiniteSensorBayes.Raw.LearnedLossGapTarget"
+  ],
+  "open_target_count": 13,
+  "not_established": [
+    "Strict uniqueness of the minimizing forecast",
+    "Conditional posterior, conditional Bayes, sensor-availability or MI/CMI-gain targets",
+    "Extended-real scoring of a forecast that is zero at positive true mass",
+    "PID functional correspondence or a new PID theorem",
+    "Rust or finite-precision refinement",
+    "Sampling, estimator calibration, learned-model generalization or deployment benefit",
+    "Portable automated or hosted replay gate for this package",
+    "Scientific novelty"
+  ],
+  "review_and_custody_boundary": "Source and evidence readback shares local custody and tooling dependencies. No human, institutional, independently implemented kernel, adversarial sandbox, or independent attestation claim is made.",
+  "publication_preparation": "Source copying, record projection and byte readback only; no Lean or native replay was performed while assembling this package."
+}

@@ -2,6 +2,7 @@
 local titles = {full = "Sensor information for embodied agents", overview = "Wibral-line PID for physical intelligence"}
 local base = "https://github.com/sepahead/pid-rs/blob/main/"
 local local_links = {
+  ["../../formal/lean-finite-logscore/PUBLICATION.md"] = "audit/formal/lean-finite-logscore/PUBLICATION.md",
   ["../../../audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md"] = "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
   ["../../../scripts/check-primegaps-to-pid-transfer-ledger.py"] = "scripts/check-primegaps-to-pid-transfer-ledger.py",
   ["../../../PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md"] = "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md",

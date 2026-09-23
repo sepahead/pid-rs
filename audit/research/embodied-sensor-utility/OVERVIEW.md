@@ -30,20 +30,23 @@ There is also a useful limit: the expected Bayes log-loss reduction relative to 
 | Work | Useful role | Remaining boundary |
 |---|---|---|
 | Rust categorical MGW for 2–4 sources | Offline signed atom calculation with budgets and cancellation | No completed sensor benchmark follows from library availability |
+| [Four classical finite-PMF foundations](../../formal/lean-finite-logscore/PUBLICATION.md) | Mass/measure, integral, Gibbs and log-score results checked locally in Lean | Unconditional law only; 13 downstream conditional sensor/application targets remain open |
 | Equal-synergy and target-copy formal work | Reject an invalid synergy-only selection rule | Exact theorem premises and replay status remain in the theorem maps |
 | Fixed-alphabet continuity and dependence-aware law bounds | Conditional tools for estimator sensitivity | A valid sampling/dependence model is still required |
 | Finite-prefix mean, bias and gradient work | Mathematical tools for a future bounded encoder experiment | Not an implemented robot-training method |
-| New availability exposition | Complete classical derivation, controls and experiment design | Handwritten application synthesis; no new Lean probability theorem or scientific-priority claim |
+| Availability exposition | Complete classical derivation, controls and experiment design | Conditional prediction and availability/mask arguments remain handwritten; no scientific-priority claim |
 
 The [mathematical results guide](../../../MATHEMATICAL_RESULTS_GUIDE.md) points to standalone proofs and exact formal status. A verified mathematical intermediate step does not establish estimator calibration or physical value.
 
 ## Rust implementation and computational cost
 
-Rust already supplies categorical MGW PID for two to four sources through the [averaged, budgeted API](../../../crates/pid-core/src/lib.rs). The proposed sensor adapter and learning loop are not implemented by this study. With $n$ source groups, $N$ rows, $K$ occupied complete states, $d$ categorical columns and $m\in\{4,18,166\}$ atoms, the per-node event work is quadratic in $K$. Averaged output saves retained pointwise results, while row and PMF storage remain. Feature extraction, quantization, up to $2^n$ masked predictions per landmark, model training and repeated resampling have separate costs. The first application should run offline. No end-to-end latency or learning benefit has been measured here; see the [full implementation and cost discussion](EXPOSITION.md#13-rust-implementation-and-computational-cost).
+Rust supplies budgeted categorical MGW for two to four sources through the [averaged API](../../../crates/pid-core/src/lib.rs). Event calculations are quadratic in the occupied complete states $K$ for each lattice node. Averaged output saves retained pointwise results; row and PMF storage remain. Dense log-score validation and evaluation over $K_Y$ target labels take $O(K_Y)$ work and $O(1)$ extra storage beyond the inputs.
+
+No Rust log-score evaluator or learner is added; floating-point execution is unverified. Feature extraction, masked prediction, training and resampling add costs. Begin offline: latency and learning benefit are unmeasured. See the [full cost discussion](EXPOSITION.md#13-rust-implementation-and-computational-cost).
 
 ## The ecosystem connection
 
-CREBAIN produces observations; NCP transports typed sensor records; Prisoma records and inspects experiments; pid-rs computes the declared information quantities; Galadriel can retain diagnostic evidence. Manwe supplies a separate tracking/measurement setting. Existing consumers and proposed connections are distinguished in the detailed report. No protected checkout was changed.
+CREBAIN produces observations; NCP transports sensor records; Prisoma inspects experiments; pid-rs computes information; Galadriel can retain diagnostic evidence. Manwe supplies a separate tracking setting. The detailed report distinguishes existing consumers from proposals.
 
 The current two-camera-plus-audio example records five images and 800 pressure samples over six 120-Hz body ticks. That proves a capture composition, not independent statistical replication. The missing step is a frozen feature table joined to future reference labels. Use one declared episode/landmark unit, preserve timing and missingness, fit transforms only on training episodes, and evaluate untouched episodes.
 
@@ -53,8 +56,6 @@ Start offline with all eight sensor subsets. Measure predictive loss, availabili
 
 The detailed report derives a conservative paired-episode loss bound and states its independence and bounded-probability assumptions. It also explains why natural occlusion needs conditional laws, why more sensors can defeat finite-data estimation, and why an action-conditioned latent must not be evaluated against its own injected action.
 
-Closed-loop control, sensor placement and re-identification follow only after their target, policy, association and cost contracts are defined. The first acceptance criterion is a useful gain on a realistic task against matched baselines, with negative results retained. The mathematical goal is to explain and enable that gain, not to substitute a new score for evidence.
-
-The detailed report explains how formal proof checking, bounded Rust tests, evidence-record audits and PDF review address different errors. These processes support the mathematical and engineering work; useful sensor performance still requires the proposed held-out episode evaluation.
+Testing control, placement or re-identification requires explicit target, policy, association and cost contracts. Require useful task gains against matched baselines and retain negative results.
 
 **How to cite:** Sepehr Mahmoudian, *Wibral-line PID for physical intelligence*, pid-rs technical report, 2026. Include the exact repository commit or release. Use the [citation metadata](../../../CITATION.cff) for the software and cite the defining method papers separately.

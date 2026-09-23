@@ -1,0 +1,281 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "boundaries": [
+    "Same reviewed local tools and custody; no cross-toolchain or independent-implementation claim.",
+    "No theorem is proved by PDF production.",
+    "No hosted replay of the new formal package, estimator validation or application result is claimed.",
+    "Private execution hashes identify retained local observations; they are not public replay or authenticity guarantees."
+  ],
+  "input_profile": "../../formal/latex/embodied-sensor-utility/publication-inputs-v1.json",
+  "negative_routes": [
+    {
+      "outcome": "successful builds, sparse fourth pages; not selected",
+      "route": "first and second overview layouts"
+    },
+    {
+      "outcome": "never executed; removed unqualified cross-input-size cost comparison before production",
+      "route": "third registration"
+    },
+    {
+      "outcome": "full builds passed; overview failed strict underfull-line check; actual outer exit1; retained, not accepted",
+      "route": "fourth discovery"
+    },
+    {
+      "outcome": "sentence rephrased; unchanged strict check passed; selected",
+      "route": "fifth discovery"
+    }
+  ],
+  "observed_utc": "2026-09-23T10:59:05.967568+00:00",
+  "profile_sha256": "45974d9d8bc845d61db3faf4bc0f26b1a6f2d3c0d13749d19ca42b40836dfb6d",
+  "review": {
+    "accessibility_audit": false,
+    "full_pages": 20,
+    "full_root_direct_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      17
+    ],
+    "full_separate_review_pages": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "full_unchanged_raster_joins": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      20
+    ],
+    "large_full_pages": [
+      4,
+      5
+    ],
+    "new_grayscale_render": false,
+    "overview_direct_pages": [
+      1,
+      2,
+      3
+    ],
+    "overview_pages": 3,
+    "physical_print_test": false,
+    "unchanged_figures_retain_prior_grayscale_review": true
+  },
+  "schema": "pid-rs/embodied-sensor-finite-logscore-publication-observation-v1",
+  "scope": "Local PDF production and review; mathematical evidence is separate in ../../formal/lean-finite-logscore/REPRODUCTION.json.",
+  "stages": [
+    {
+      "calls": [
+        {
+          "actual_outer_returncode": 0,
+          "finite_controls": 109,
+          "kind": "controls-normal",
+          "result_sha256": "ad41ed7da18e91803772dc8c005b01a2f1dc791e0cc3b402388d39504e316785",
+          "status": "finite-inert-controls-passed"
+        },
+        {
+          "actual_outer_returncode": 0,
+          "finite_controls": 109,
+          "kind": "controls-optimized",
+          "result_sha256": "ef89f327fc4d6d15b17327e5cb039522dda166b3b558f4dff19a2fb329954eaf",
+          "status": "finite-inert-controls-passed"
+        },
+        {
+          "actual_outer_returncode": 0,
+          "builds": [
+            {
+              "author": "Sepehr Mahmoudian",
+              "index": 1,
+              "pages": 20,
+              "pdf": {
+                "bytes": 316143,
+                "sha256": "4ee45b7df70c9896cb26d01e688ddd5b2b69c75e4762118bdc17e16f103fff01"
+              },
+              "tex": {
+                "bytes": 67233,
+                "sha256": "6ebd65aa1b8d50928f96c6c1cab09c78cc31735c086553ffe5f90274fc65b279"
+              }
+            },
+            {
+              "author": "Sepehr Mahmoudian",
+              "index": 2,
+              "pages": 20,
+              "pdf": {
+                "bytes": 316143,
+                "sha256": "4ee45b7df70c9896cb26d01e688ddd5b2b69c75e4762118bdc17e16f103fff01"
+              },
+              "tex": {
+                "bytes": 67233,
+                "sha256": "6ebd65aa1b8d50928f96c6c1cab09c78cc31735c086553ffe5f90274fc65b279"
+              }
+            }
+          ],
+          "kind": "full",
+          "primary_commands": 66,
+          "result_sha256": "9842a290201fc441a0406af793732836075e7f6f675cc83dddb1e46985ff77f9",
+          "status": "two-discovery-candidates-produced-no-adoption"
+        },
+        {
+          "actual_outer_returncode": 0,
+          "builds": [
+            {
+              "author": "Sepehr Mahmoudian",
+              "index": 1,
+              "pages": 3,
+              "pdf": {
+                "bytes": 90360,
+                "sha256": "4edb6d915bd1c4e485522449d42c1d17645d95e47e16937050d792ed86535175"
+              },
+              "tex": {
+                "bytes": 10565,
+                "sha256": "114b01b67c8d140cf53452eba19f761f992b9a3be80f11c37c68ce52c5eba32c"
+              }
+            },
+            {
+              "author": "Sepehr Mahmoudian",
+              "index": 2,
+              "pages": 3,
+              "pdf": {
+                "bytes": 90360,
+                "sha256": "4edb6d915bd1c4e485522449d42c1d17645d95e47e16937050d792ed86535175"
+              },
+              "tex": {
+                "bytes": 10565,
+                "sha256": "114b01b67c8d140cf53452eba19f761f992b9a3be80f11c37c68ce52c5eba32c"
+              }
+            }
+          ],
+          "kind": "overview",
+          "primary_commands": 62,
+          "result_sha256": "2cd983bf02b66bb82f0af0dbebd87a3c7a1e49e6ff3a89cc2efb41dfd8a228aa",
+          "status": "two-discovery-candidates-produced-no-adoption"
+        }
+      ],
+      "completed_utc": "2026-09-23T10:55:18.441937+00:00",
+      "mode": "discovery",
+      "new_formal_results": 0,
+      "owner_result_sha256": "3f0b0091ac9f0ed918725add70173c823f577284237ab28e1477d3e5197474ba"
+    },
+    {
+      "calls": [
+        {
+          "actual_outer_returncode": 0,
+          "finite_controls": 109,
+          "kind": "controls-normal",
+          "result_sha256": "9d72ef4aaf966085aba37f44f9ac274f9616a609a071c313c4eef86a7733b1fa",
+          "status": "finite-inert-controls-passed"
+        },
+        {
+          "actual_outer_returncode": 0,
+          "finite_controls": 109,
+          "kind": "controls-optimized",
+          "result_sha256": "4acc92d11e1515ed6b1b1d5f7b95899278695faede52e908e22c1c41da76fa86",
+          "status": "finite-inert-controls-passed"
+        },
+        {
+          "actual_outer_returncode": 0,
+          "builds": [
+            {
+              "author": "Sepehr Mahmoudian",
+              "index": 1,
+              "pages": 20,
+              "pdf": {
+                "bytes": 316143,
+                "sha256": "4ee45b7df70c9896cb26d01e688ddd5b2b69c75e4762118bdc17e16f103fff01"
+              },
+              "tex": {
+                "bytes": 67233,
+                "sha256": "6ebd65aa1b8d50928f96c6c1cab09c78cc31735c086553ffe5f90274fc65b279"
+              }
+            },
+            {
+              "author": "Sepehr Mahmoudian",
+              "index": 2,
+              "pages": 20,
+              "pdf": {
+                "bytes": 316143,
+                "sha256": "4ee45b7df70c9896cb26d01e688ddd5b2b69c75e4762118bdc17e16f103fff01"
+              },
+              "tex": {
+                "bytes": 67233,
+                "sha256": "6ebd65aa1b8d50928f96c6c1cab09c78cc31735c086553ffe5f90274fc65b279"
+              }
+            }
+          ],
+          "kind": "full",
+          "primary_commands": 66,
+          "result_sha256": "922babaac39e42f7b13e7b48d706a05cea6cae1e6e89de9b3f92ebf5ec9fd1bf",
+          "status": "two-exact-reference-builds-reproduced"
+        },
+        {
+          "actual_outer_returncode": 0,
+          "builds": [
+            {
+              "author": "Sepehr Mahmoudian",
+              "index": 1,
+              "pages": 3,
+              "pdf": {
+                "bytes": 90360,
+                "sha256": "4edb6d915bd1c4e485522449d42c1d17645d95e47e16937050d792ed86535175"
+              },
+              "tex": {
+                "bytes": 10565,
+                "sha256": "114b01b67c8d140cf53452eba19f761f992b9a3be80f11c37c68ce52c5eba32c"
+              }
+            },
+            {
+              "author": "Sepehr Mahmoudian",
+              "index": 2,
+              "pages": 3,
+              "pdf": {
+                "bytes": 90360,
+                "sha256": "4edb6d915bd1c4e485522449d42c1d17645d95e47e16937050d792ed86535175"
+              },
+              "tex": {
+                "bytes": 10565,
+                "sha256": "114b01b67c8d140cf53452eba19f761f992b9a3be80f11c37c68ce52c5eba32c"
+              }
+            }
+          ],
+          "kind": "overview",
+          "primary_commands": 62,
+          "result_sha256": "5434ca7f38d09851c0defbd4a1e044f05d043c4a2eed7b331b387b1988a88639",
+          "status": "two-exact-reference-builds-reproduced"
+        }
+      ],
+      "completed_utc": "2026-09-23T10:57:39.701124+00:00",
+      "mode": "exact",
+      "new_formal_results": 0,
+      "owner_result_sha256": "3616a6833946192c0c5bcccef3bc68e0890e7c3b18efb9c63ea0b1a4c7a8ad9b"
+    }
+  ]
+}

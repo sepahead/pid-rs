@@ -2,11 +2,23 @@
 
 Author: **Sepehr Mahmoudian**. Use the [software citation metadata](../../../CITATION.cff) and the paper-specific citation paragraphs in the [full manuscript](EXPOSITION.md) and [overview](OVERVIEW.md). Cite the defining method papers separately.
 
-The two reports connect categorical Makkeh–Gutknecht–Wibral shared exclusions, sensor availability and predictive utility. They state the assumptions, give complete finite examples, and explain the current Rust implementation and computational cost. They report no new timing measurement, implemented learning loop, sensor benchmark or Lean theorem. The availability objective is determined by subset mutual information; a full PID needs a separately tested explanatory benefit.
+The two reports connect categorical Makkeh–Gutknecht–Wibral shared exclusions, sensor availability and predictive utility. They state the assumptions, give complete finite examples, and explain the current Rust implementation and computational cost. Four classical finite-PMF foundations now have local Lean checks and a fresh replay; their [exact scope and source snapshots](../../formal/lean-finite-logscore/PUBLICATION.md) remain separate from the handwritten conditional sensor argument. The reports contain no new timing measurement, implemented learning loop or sensor benchmark. The availability objective is determined by subset mutual information; a full PID needs a separately tested explanatory benefit.
 
-## Selected references
+## Current references and retained prior observation
 
-The reviewed 23 September 2026 profile selects a 17-page [full paper](../../../output/pdf/embodied-sensor-utility.pdf) and a three-page [overview](../../../output/pdf/embodied-sensor-overview.pdf). Two fresh builds of each yielded identical PDF, generated TeX, vector figures and typed reader observations before reference selection. Both visible bylines and all four retained PDF metadata observations name Sepehr Mahmoudian.
+The current [input profile](../../formal/latex/embodied-sensor-utility/publication-inputs-v1.json) binds the selected PDF, generated TeX, figures and reader observations. The dated [initial reproduction record](REPRODUCTION.json) and the table below describe the earlier report revision, before the finite-PMF proof was added. They are historical evidence, not a check of the revised pages. The proof package carries its own formal evidence; a PDF build does not establish a theorem.
+
+### Current finite-PMF revision
+
+The current full paper has 20 pages; the overview has three. Both visible bylines and all four discovery metadata observations name Sepehr Mahmoudian. Two fresh builds per report matched PDF, generated TeX, vector figures and typed reader observations before selection. The current profile carries their exact identities; the [successor production record](REPRODUCTION_FINITE_LOGSCORE.json) separates discovery, review and exact replay.
+
+All 23 current pages have rendered review coverage. Full pages 1–10 were inspected directly; a separate reviewer inspected pages 11–20. After the cost correction, page 17 was inspected again; the other 19 raster pages matched the reviewed version exactly. The final overview's three pages were inspected directly. The added proof and boundary examples on full pages 4–5 received larger renders. The 20 review lenses below apply with the same stated limits. No new physical print or accessibility test is claimed; the unchanged vector figures retain the prior grayscale review.
+
+An unqualified comparison between dense log-score cost and occupied-state PID cost was removed because the input sizes need not match. The report retains each cost separately. Two earlier overview layouts left sparse fourth pages and were not selected. A later wording revision triggered the existing strict underfull-line check; its failed output was retained, then the sentence was rephrased without weakening the check. No mathematical statement changed during these layout corrections.
+
+### Previous reference revision
+
+The previous 23 September 2026 profile selected a 17-page [full paper](../../../output/pdf/embodied-sensor-utility.pdf) and a three-page [overview](../../../output/pdf/embodied-sensor-overview.pdf). Two fresh builds of each yielded identical PDF, generated TeX, vector figures and typed reader observations before reference selection. Both visible bylines and all four retained PDF metadata observations name Sepehr Mahmoudian.
 
 | Reference | Bytes | SHA-256 |
 |---|---:|---|
@@ -25,9 +37,9 @@ The finite Lua and Python maps preserve repository-relative Markdown links and e
 
 The native profile binds the selected tools, format, sixteen font files and reader package. It does not provide complete TeX dependency closure, cross-toolchain identity, atomic source capture, accessibility tagging, live external-link validation or an operating-system hard resource limit. The full and overview calls use 66 and 62 primary commands; sampled process-observer calls are separate. Inert controls exercise source/data predicates and reader-shaped fixtures. They do not establish native-build success or readable layout.
 
-## Page review
+## Previous page review
 
-All 20 final pages have rendered-review coverage. Unchanged pages retain exact image-byte joins to previously inspected pages; changed pages were inspected directly. The full report's equations, statistical bound, cost notation and three figures received targeted larger renders across the reviewed revisions. The final title pages, verification table and citation text were inspected at 2000-pixel width. Full pages 5, 6 and 9 were also checked in grayscale. A later Markdown-portability correction preserved all 25 display bodies; its sole changed PDF page, full page 3, was inspected again at normal and large size. The other 19 rendered pages matched the previously reviewed images exactly.
+All 20 pages of the previous reference revision have rendered-review coverage. Unchanged pages retain exact image-byte joins to previously inspected pages; changed pages were inspected directly. The full report's equations, statistical bound, cost notation and three figures received targeted larger renders across the reviewed revisions. The final title pages, verification table and citation text were inspected at 2000-pixel width. Full pages 5, 6 and 9 were also checked in grayscale. A later Markdown-portability correction preserved all 25 display bodies; its sole changed PDF page, full page 3, was inspected again at normal and large size. The other 19 rendered pages matched the previously reviewed images exactly.
 
 | Review lens | Observation or limit |
 |---|---|
@@ -64,6 +76,6 @@ The reviews share repository sources, tools and custody. Council advice and visu
 | Justified code-heavy body | A long Rust path caused an underfull-line rejection. Ragged-right composition removes stretched spacing. |
 | Ragged right with font expansion | Small overfull lines remained. Font expansion is disabled for these reports; the strict log threshold is unchanged. |
 
-The staged Markdown check also rejected same-line display delimiters and one operator command. Standalone delimiters and upright KL notation corrected that format boundary without changing any display formula. Both reports were rebuilt; the final references above bind the corrected source.
+The staged Markdown check also rejected same-line display delimiters and one operator command. Standalone delimiters and upright KL notation corrected that format boundary without changing any display formula. Both reports were rebuilt; the previous reference identities above bind that corrected source.
 
 These are production failures, not failed mathematical results. Their preimages, logs and original execution bounds remain in the retained attempt records. Passing inert controls did not detect every native dependency or layout failure. Later author, citation and verification-process additions were rebuilt and reviewed under their own source pins.

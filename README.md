@@ -183,8 +183,11 @@ complete-data law; data-dependent missingness needs the stated conditional-law a
 Subset MI already determines this oracle objective. The report gives handwritten derivations,
 exact controls, source-derived Rust costs and a proposed offline two-camera study with optional
 audio. It separates information availability, attained predictive loss and physical control.
-Existing formal results retain their own proof and replay scope. The report adds no Lean probability
-proof, sensor benchmark, implemented learner or completed consumer integration.
+Its [finite-PMF foundation](audit/formal/lean-finite-logscore/PUBLICATION.md) has four locally
+checked Lean targets: probability mass, actual finite expectation, supported Gibbs inequality,
+and log-score decomposition, lower bound and attainment. The conditional sensor derivations
+remain handwritten. There is no new sensor benchmark, implemented learner or completed consumer
+integration; portable and hosted replay of this formal package remain open.
 
 The source-pinned [research blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) and
 its [derived human PDF](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf) document the
