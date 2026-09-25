@@ -1,0 +1,3979 @@
+{
+  "all_checks_passed": true,
+  "author": "Sepehr Mahmoudian",
+  "brier_convention": "Mean binary (P(Y=1)-Y)^2; not the sum over both labels.",
+  "check_count": 244,
+  "checks": [
+    {
+      "name": "union:datatraining.txt:0:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:0:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:0:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:0:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:0:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:0:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:0:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:0:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:1:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:1:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:1:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:1:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:1:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:1:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:1:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:1:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:2:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:2:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:2:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:2:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:2:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:2:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:2:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:2:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:3:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:3:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:3:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:3:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:3:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:3:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:3:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatraining.txt:3:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:0:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:0:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:0:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:0:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:0:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:0:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:0:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:0:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:1:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:1:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:1:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:1:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:1:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:1:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:1:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:1:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:2:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:2:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:2:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:2:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:2:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:2:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:2:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:2:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:3:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:3:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:3:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:3:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:3:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:3:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:3:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest.txt:3:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:0:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:0:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:0:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:0:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:0:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:0:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:0:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:0:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:1:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:1:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:1:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:1:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:1:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:1:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:1:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:1:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:2:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:2:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:2:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:2:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:2:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:2:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:2:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:2:3:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:3:0:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:3:0:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:3:1:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:3:1:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:3:2:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:3:2:1",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:3:3:0",
+      "passed": true
+    },
+    {
+      "name": "union:datatest2.txt:3:3:1",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(0, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(0, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(0, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(0, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(1, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(1, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(1, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(1, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(2, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(2, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(2, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(2, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(3, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(3, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(3, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:constant:(3, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(0, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(0, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(0, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(0, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(1, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(1, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(1, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(1, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(2, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(2, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(2, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(2, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(3, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(3, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(3, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:light:(3, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(0, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(0, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(0, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(0, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(1, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(1, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(1, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(1, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(2, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(2, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(2, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(2, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(3, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(3, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(3, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:co2:(3, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(0, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(0, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(0, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(0, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(1, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(1, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(1, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(1, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(2, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(2, 1)",
+      "passed": true
+    },
+    {
+      "name": "empty_prior:joint:(2, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(2, 2)",
+      "passed": true
+    },
+    {
+      "name": "empty_prior:joint:(2, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(2, 3)",
+      "passed": true
+    },
+    {
+      "name": "empty_prior:joint:(2, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(3, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(3, 1)",
+      "passed": true
+    },
+    {
+      "name": "empty_prior:joint:(3, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(3, 2)",
+      "passed": true
+    },
+    {
+      "name": "empty_prior:joint:(3, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:joint:(3, 3)",
+      "passed": true
+    },
+    {
+      "name": "empty_prior:joint:(3, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(0, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(0, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(0, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(0, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(1, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(1, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(1, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(1, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(2, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(2, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(2, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(2, 3)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(3, 0)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(3, 1)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(3, 2)",
+      "passed": true
+    },
+    {
+      "name": "normalization:or:(3, 3)",
+      "passed": true
+    },
+    {
+      "name": "algebraic_empty_event_prior",
+      "passed": true
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest.txt:light:log_loss_nats",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest.txt:light:brier_score",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest.txt:co2:log_loss_nats",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest.txt:co2:brier_score",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest.txt:joint:log_loss_nats",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest.txt:joint:brier_score",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": -6.938893903907228e-18,
+      "name": "historical:datatest2.txt:light:log_loss_nats",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest2.txt:light:brier_score",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest2.txt:co2:log_loss_nats",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest2.txt:co2:brier_score",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest2.txt:joint:log_loss_nats",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical:datatest2.txt:joint:brier_score",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical_unsmoothed_constant:datatest.txt:log_loss_nats",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical_unsmoothed_constant:datatest.txt:brier_score",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical_unsmoothed_constant:datatest2.txt:log_loss_nats",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "difference": 0.0,
+      "name": "historical_unsmoothed_constant:datatest2.txt:brier_score",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:0:0:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:0:0:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:0:1:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:0:1:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:0:2:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:0:2:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:0:3:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:0:3:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:1:0:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:1:0:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:1:1:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:1:1:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:1:2:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:1:3:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:2:0:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatraining.txt:3:0:0",
+      "passed": true
+    },
+    {
+      "difference": 2.7755575615628914e-16,
+      "name": "empirical_redundancy:datatraining.txt",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "name": "empirical_actual_support:datatest.txt:0:0:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest.txt:0:0:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest.txt:0:1:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest.txt:1:0:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest.txt:1:0:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest.txt:1:1:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest.txt:1:1:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest.txt:1:2:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest.txt:2:1:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest.txt:3:1:1",
+      "passed": true
+    },
+    {
+      "difference": 0.0,
+      "name": "empirical_redundancy:datatest.txt",
+      "passed": true,
+      "tolerance": 1e-12
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:0:0:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:0:0:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:0:1:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:0:1:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:0:2:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:0:2:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:0:3:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:1:0:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:1:0:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:1:1:0",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:1:1:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:1:2:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:1:3:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:2:0:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:2:1:1",
+      "passed": true
+    },
+    {
+      "name": "empirical_actual_support:datatest2.txt:3:1:1",
+      "passed": true
+    },
+    {
+      "difference": -1.1102230246251565e-16,
+      "name": "empirical_redundancy:datatest2.txt",
+      "passed": true,
+      "tolerance": 1e-12
+    }
+  ],
+  "data_sha256": "15798710c848225b45276134fa26ae5c04f9ffb0535f2bea23e33a4e19cd3487",
+  "empirical_law_or_identity": {
+    "datatest.txt": {
+      "difference": 0.0,
+      "entropy_minus_or_loss_nats": 0.44029806193270227,
+      "n": 2665,
+      "note": "Each law fits and scores its own unsmoothed event posterior; not an out-of-sample predictor comparison.",
+      "retained_rust_redundancy_nats": 0.44029806193270227,
+      "target_entropy_nats": 0.6560900721020294,
+      "unsmoothed_same_law_or_log_loss_nats": 0.21579201016932717
+    },
+    "datatest2.txt": {
+      "difference": -1.1102230246251565e-16,
+      "entropy_minus_or_loss_nats": 0.2762384577293374,
+      "n": 9752,
+      "note": "Each law fits and scores its own unsmoothed event posterior; not an out-of-sample predictor comparison.",
+      "retained_rust_redundancy_nats": 0.2762384577293375,
+      "target_entropy_nats": 0.5141033645279653,
+      "unsmoothed_same_law_or_log_loss_nats": 0.23786490679862796
+    },
+    "datatraining.txt": {
+      "difference": 2.7755575615628914e-16,
+      "entropy_minus_or_loss_nats": 0.32700818927433106,
+      "n": 8143,
+      "note": "Each law fits and scores its own unsmoothed event posterior; not an out-of-sample predictor comparison.",
+      "retained_rust_redundancy_nats": 0.3270081892743308,
+      "target_entropy_nats": 0.5170269154705952,
+      "unsmoothed_same_law_or_log_loss_nats": 0.19001872619626414
+    }
+  },
+  "failures": [],
+  "fit": "One pseudocount per target label after event selection; OR union counts each matching row once.",
+  "forecasts": {
+    "co2": [
+      {
+        "exact_probabilities_0_1": [
+          "6154/6669",
+          "515/6669"
+        ],
+        "probabilities_0_1": [
+          0.9227770280401859,
+          0.07722297195981406
+        ],
+        "query": [
+          0,
+          0
+        ],
+        "training_counts_0_1": [
+          6153,
+          514
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "185/1012",
+          "827/1012"
+        ],
+        "probabilities_0_1": [
+          0.18280632411067194,
+          0.817193675889328
+        ],
+        "query": [
+          0,
+          1
+        ],
+        "training_counts_0_1": [
+          184,
+          826
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "15/67",
+          "52/67"
+        ],
+        "probabilities_0_1": [
+          0.22388059701492538,
+          0.7761194029850746
+        ],
+        "query": [
+          0,
+          2
+        ],
+        "training_counts_0_1": [
+          59,
+          207
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "19/202",
+          "183/202"
+        ],
+        "probabilities_0_1": [
+          0.09405940594059406,
+          0.905940594059406
+        ],
+        "query": [
+          0,
+          3
+        ],
+        "training_counts_0_1": [
+          18,
+          182
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6154/6669",
+          "515/6669"
+        ],
+        "probabilities_0_1": [
+          0.9227770280401859,
+          0.07722297195981406
+        ],
+        "query": [
+          1,
+          0
+        ],
+        "training_counts_0_1": [
+          6153,
+          514
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "185/1012",
+          "827/1012"
+        ],
+        "probabilities_0_1": [
+          0.18280632411067194,
+          0.817193675889328
+        ],
+        "query": [
+          1,
+          1
+        ],
+        "training_counts_0_1": [
+          184,
+          826
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "15/67",
+          "52/67"
+        ],
+        "probabilities_0_1": [
+          0.22388059701492538,
+          0.7761194029850746
+        ],
+        "query": [
+          1,
+          2
+        ],
+        "training_counts_0_1": [
+          59,
+          207
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "19/202",
+          "183/202"
+        ],
+        "probabilities_0_1": [
+          0.09405940594059406,
+          0.905940594059406
+        ],
+        "query": [
+          1,
+          3
+        ],
+        "training_counts_0_1": [
+          18,
+          182
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6154/6669",
+          "515/6669"
+        ],
+        "probabilities_0_1": [
+          0.9227770280401859,
+          0.07722297195981406
+        ],
+        "query": [
+          2,
+          0
+        ],
+        "training_counts_0_1": [
+          6153,
+          514
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "185/1012",
+          "827/1012"
+        ],
+        "probabilities_0_1": [
+          0.18280632411067194,
+          0.817193675889328
+        ],
+        "query": [
+          2,
+          1
+        ],
+        "training_counts_0_1": [
+          184,
+          826
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "15/67",
+          "52/67"
+        ],
+        "probabilities_0_1": [
+          0.22388059701492538,
+          0.7761194029850746
+        ],
+        "query": [
+          2,
+          2
+        ],
+        "training_counts_0_1": [
+          59,
+          207
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "19/202",
+          "183/202"
+        ],
+        "probabilities_0_1": [
+          0.09405940594059406,
+          0.905940594059406
+        ],
+        "query": [
+          2,
+          3
+        ],
+        "training_counts_0_1": [
+          18,
+          182
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6154/6669",
+          "515/6669"
+        ],
+        "probabilities_0_1": [
+          0.9227770280401859,
+          0.07722297195981406
+        ],
+        "query": [
+          3,
+          0
+        ],
+        "training_counts_0_1": [
+          6153,
+          514
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "185/1012",
+          "827/1012"
+        ],
+        "probabilities_0_1": [
+          0.18280632411067194,
+          0.817193675889328
+        ],
+        "query": [
+          3,
+          1
+        ],
+        "training_counts_0_1": [
+          184,
+          826
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "15/67",
+          "52/67"
+        ],
+        "probabilities_0_1": [
+          0.22388059701492538,
+          0.7761194029850746
+        ],
+        "query": [
+          3,
+          2
+        ],
+        "training_counts_0_1": [
+          59,
+          207
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "19/202",
+          "183/202"
+        ],
+        "probabilities_0_1": [
+          0.09405940594059406,
+          0.905940594059406
+        ],
+        "query": [
+          3,
+          3
+        ],
+        "training_counts_0_1": [
+          18,
+          182
+        ]
+      }
+    ],
+    "constant": [
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          0,
+          0
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          0,
+          1
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          0,
+          2
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          0,
+          3
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          1,
+          0
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          1,
+          1
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          1,
+          2
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          1,
+          3
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          2,
+          0
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          2,
+          1
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          2,
+          2
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          2,
+          3
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          3,
+          0
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          3,
+          1
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          3,
+          2
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1283/1629",
+          "346/1629"
+        ],
+        "probabilities_0_1": [
+          0.7875997544505832,
+          0.21240024554941683
+        ],
+        "query": [
+          3,
+          3
+        ],
+        "training_counts_0_1": [
+          6414,
+          1729
+        ]
+      }
+    ],
+    "joint": [
+      {
+        "exact_probabilities_0_1": [
+          "6111/6116",
+          "5/6116"
+        ],
+        "probabilities_0_1": [
+          0.999182472204055,
+          0.0008175277959450621
+        ],
+        "query": [
+          0,
+          0
+        ],
+        "training_counts_0_1": [
+          6110,
+          4
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "138/143",
+          "5/143"
+        ],
+        "probabilities_0_1": [
+          0.965034965034965,
+          0.03496503496503497
+        ],
+        "query": [
+          0,
+          1
+        ],
+        "training_counts_0_1": [
+          137,
+          4
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "30/31",
+          "1/31"
+        ],
+        "probabilities_0_1": [
+          0.967741935483871,
+          0.03225806451612903
+        ],
+        "query": [
+          0,
+          2
+        ],
+        "training_counts_0_1": [
+          59,
+          1
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "19/22",
+          "3/22"
+        ],
+        "probabilities_0_1": [
+          0.8636363636363636,
+          0.13636363636363635
+        ],
+        "query": [
+          0,
+          3
+        ],
+        "training_counts_0_1": [
+          18,
+          2
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "41/552",
+          "511/552"
+        ],
+        "probabilities_0_1": [
+          0.07427536231884058,
+          0.9257246376811594
+        ],
+        "query": [
+          1,
+          0
+        ],
+        "training_counts_0_1": [
+          40,
+          510
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "48/871",
+          "823/871"
+        ],
+        "probabilities_0_1": [
+          0.05510907003444317,
+          0.9448909299655568
+        ],
+        "query": [
+          1,
+          1
+        ],
+        "training_counts_0_1": [
+          47,
+          822
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1/208",
+          "207/208"
+        ],
+        "probabilities_0_1": [
+          0.004807692307692308,
+          0.9951923076923077
+        ],
+        "query": [
+          1,
+          2
+        ],
+        "training_counts_0_1": [
+          0,
+          206
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1/182",
+          "181/182"
+        ],
+        "probabilities_0_1": [
+          0.005494505494505495,
+          0.9945054945054945
+        ],
+        "query": [
+          1,
+          3
+        ],
+        "training_counts_0_1": [
+          0,
+          180
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "2/3",
+          "1/3"
+        ],
+        "probabilities_0_1": [
+          0.6666666666666666,
+          0.3333333333333333
+        ],
+        "query": [
+          2,
+          0
+        ],
+        "training_counts_0_1": [
+          1,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1/2",
+          "1/2"
+        ],
+        "probabilities_0_1": [
+          0.5,
+          0.5
+        ],
+        "query": [
+          2,
+          1
+        ],
+        "training_counts_0_1": [
+          0,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1/2",
+          "1/2"
+        ],
+        "probabilities_0_1": [
+          0.5,
+          0.5
+        ],
+        "query": [
+          2,
+          2
+        ],
+        "training_counts_0_1": [
+          0,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1/2",
+          "1/2"
+        ],
+        "probabilities_0_1": [
+          0.5,
+          0.5
+        ],
+        "query": [
+          2,
+          3
+        ],
+        "training_counts_0_1": [
+          0,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "3/4",
+          "1/4"
+        ],
+        "probabilities_0_1": [
+          0.75,
+          0.25
+        ],
+        "query": [
+          3,
+          0
+        ],
+        "training_counts_0_1": [
+          2,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1/2",
+          "1/2"
+        ],
+        "probabilities_0_1": [
+          0.5,
+          0.5
+        ],
+        "query": [
+          3,
+          1
+        ],
+        "training_counts_0_1": [
+          0,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1/2",
+          "1/2"
+        ],
+        "probabilities_0_1": [
+          0.5,
+          0.5
+        ],
+        "query": [
+          3,
+          2
+        ],
+        "training_counts_0_1": [
+          0,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1/2",
+          "1/2"
+        ],
+        "probabilities_0_1": [
+          0.5,
+          0.5
+        ],
+        "query": [
+          3,
+          3
+        ],
+        "training_counts_0_1": [
+          0,
+          0
+        ]
+      }
+    ],
+    "light": [
+      {
+        "exact_probabilities_0_1": [
+          "6325/6337",
+          "12/6337"
+        ],
+        "probabilities_0_1": [
+          0.9981063594760928,
+          0.0018936405239072117
+        ],
+        "query": [
+          0,
+          0
+        ],
+        "training_counts_0_1": [
+          6324,
+          11
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6325/6337",
+          "12/6337"
+        ],
+        "probabilities_0_1": [
+          0.9981063594760928,
+          0.0018936405239072117
+        ],
+        "query": [
+          0,
+          1
+        ],
+        "training_counts_0_1": [
+          6324,
+          11
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6325/6337",
+          "12/6337"
+        ],
+        "probabilities_0_1": [
+          0.9981063594760928,
+          0.0018936405239072117
+        ],
+        "query": [
+          0,
+          2
+        ],
+        "training_counts_0_1": [
+          6324,
+          11
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6325/6337",
+          "12/6337"
+        ],
+        "probabilities_0_1": [
+          0.9981063594760928,
+          0.0018936405239072117
+        ],
+        "query": [
+          0,
+          3
+        ],
+        "training_counts_0_1": [
+          6324,
+          11
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "88/1807",
+          "1719/1807"
+        ],
+        "probabilities_0_1": [
+          0.048699501936912006,
+          0.951300498063088
+        ],
+        "query": [
+          1,
+          0
+        ],
+        "training_counts_0_1": [
+          87,
+          1718
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "88/1807",
+          "1719/1807"
+        ],
+        "probabilities_0_1": [
+          0.048699501936912006,
+          0.951300498063088
+        ],
+        "query": [
+          1,
+          1
+        ],
+        "training_counts_0_1": [
+          87,
+          1718
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "88/1807",
+          "1719/1807"
+        ],
+        "probabilities_0_1": [
+          0.048699501936912006,
+          0.951300498063088
+        ],
+        "query": [
+          1,
+          2
+        ],
+        "training_counts_0_1": [
+          87,
+          1718
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "88/1807",
+          "1719/1807"
+        ],
+        "probabilities_0_1": [
+          0.048699501936912006,
+          0.951300498063088
+        ],
+        "query": [
+          1,
+          3
+        ],
+        "training_counts_0_1": [
+          87,
+          1718
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "2/3",
+          "1/3"
+        ],
+        "probabilities_0_1": [
+          0.6666666666666666,
+          0.3333333333333333
+        ],
+        "query": [
+          2,
+          0
+        ],
+        "training_counts_0_1": [
+          1,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "2/3",
+          "1/3"
+        ],
+        "probabilities_0_1": [
+          0.6666666666666666,
+          0.3333333333333333
+        ],
+        "query": [
+          2,
+          1
+        ],
+        "training_counts_0_1": [
+          1,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "2/3",
+          "1/3"
+        ],
+        "probabilities_0_1": [
+          0.6666666666666666,
+          0.3333333333333333
+        ],
+        "query": [
+          2,
+          2
+        ],
+        "training_counts_0_1": [
+          1,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "2/3",
+          "1/3"
+        ],
+        "probabilities_0_1": [
+          0.6666666666666666,
+          0.3333333333333333
+        ],
+        "query": [
+          2,
+          3
+        ],
+        "training_counts_0_1": [
+          1,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "3/4",
+          "1/4"
+        ],
+        "probabilities_0_1": [
+          0.75,
+          0.25
+        ],
+        "query": [
+          3,
+          0
+        ],
+        "training_counts_0_1": [
+          2,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "3/4",
+          "1/4"
+        ],
+        "probabilities_0_1": [
+          0.75,
+          0.25
+        ],
+        "query": [
+          3,
+          1
+        ],
+        "training_counts_0_1": [
+          2,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "3/4",
+          "1/4"
+        ],
+        "probabilities_0_1": [
+          0.75,
+          0.25
+        ],
+        "query": [
+          3,
+          2
+        ],
+        "training_counts_0_1": [
+          2,
+          0
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "3/4",
+          "1/4"
+        ],
+        "probabilities_0_1": [
+          0.75,
+          0.25
+        ],
+        "query": [
+          3,
+          3
+        ],
+        "training_counts_0_1": [
+          2,
+          0
+        ]
+      }
+    ],
+    "or": [
+      {
+        "exact_probabilities_0_1": [
+          "3184/3445",
+          "261/3445"
+        ],
+        "probabilities_0_1": [
+          0.9242380261248185,
+          0.07576197387518142
+        ],
+        "query": [
+          0,
+          0
+        ],
+        "training_counts_0_1": [
+          6367,
+          521
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "1062/1201",
+          "139/1201"
+        ],
+        "probabilities_0_1": [
+          0.884263114071607,
+          0.115736885928393
+        ],
+        "query": [
+          0,
+          1
+        ],
+        "training_counts_0_1": [
+          6371,
+          833
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6325/6543",
+          "218/6543"
+        ],
+        "probabilities_0_1": [
+          0.9666819501757603,
+          0.033318049824239644
+        ],
+        "query": [
+          0,
+          2
+        ],
+        "training_counts_0_1": [
+          6324,
+          217
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6325/6517",
+          "192/6517"
+        ],
+        "probabilities_0_1": [
+          0.9705385913764002,
+          0.029461408623599816
+        ],
+        "query": [
+          0,
+          3
+        ],
+        "training_counts_0_1": [
+          6324,
+          191
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6201/7924",
+          "1723/7924"
+        ],
+        "probabilities_0_1": [
+          0.7825593134780414,
+          0.2174406865219586
+        ],
+        "query": [
+          1,
+          0
+        ],
+        "training_counts_0_1": [
+          6200,
+          1722
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "225/1948",
+          "1723/1948"
+        ],
+        "probabilities_0_1": [
+          0.11550308008213553,
+          0.8844969199178645
+        ],
+        "query": [
+          1,
+          1
+        ],
+        "training_counts_0_1": [
+          224,
+          1722
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "147/1867",
+          "1720/1867"
+        ],
+        "probabilities_0_1": [
+          0.07873594001071238,
+          0.9212640599892876
+        ],
+        "query": [
+          1,
+          2
+        ],
+        "training_counts_0_1": [
+          146,
+          1719
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "106/1827",
+          "1721/1827"
+        ],
+        "probabilities_0_1": [
+          0.058018609742747675,
+          0.9419813902572524
+        ],
+        "query": [
+          1,
+          3
+        ],
+        "training_counts_0_1": [
+          105,
+          1720
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6154/6669",
+          "515/6669"
+        ],
+        "probabilities_0_1": [
+          0.9227770280401859,
+          0.07722297195981406
+        ],
+        "query": [
+          2,
+          0
+        ],
+        "training_counts_0_1": [
+          6153,
+          514
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "186/1013",
+          "827/1013"
+        ],
+        "probabilities_0_1": [
+          0.18361303060217177,
+          0.8163869693978283
+        ],
+        "query": [
+          2,
+          1
+        ],
+        "training_counts_0_1": [
+          185,
+          826
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "61/269",
+          "208/269"
+        ],
+        "probabilities_0_1": [
+          0.22676579925650558,
+          0.7732342007434945
+        ],
+        "query": [
+          2,
+          2
+        ],
+        "training_counts_0_1": [
+          60,
+          207
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "20/203",
+          "183/203"
+        ],
+        "probabilities_0_1": [
+          0.09852216748768473,
+          0.9014778325123153
+        ],
+        "query": [
+          2,
+          3
+        ],
+        "training_counts_0_1": [
+          19,
+          182
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "6154/6669",
+          "515/6669"
+        ],
+        "probabilities_0_1": [
+          0.9227770280401859,
+          0.07722297195981406
+        ],
+        "query": [
+          3,
+          0
+        ],
+        "training_counts_0_1": [
+          6153,
+          514
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "187/1014",
+          "827/1014"
+        ],
+        "probabilities_0_1": [
+          0.1844181459566075,
+          0.8155818540433925
+        ],
+        "query": [
+          3,
+          1
+        ],
+        "training_counts_0_1": [
+          186,
+          826
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "31/135",
+          "104/135"
+        ],
+        "probabilities_0_1": [
+          0.22962962962962963,
+          0.7703703703703704
+        ],
+        "query": [
+          3,
+          2
+        ],
+        "training_counts_0_1": [
+          61,
+          207
+        ]
+      },
+      {
+        "exact_probabilities_0_1": [
+          "7/68",
+          "61/68"
+        ],
+        "probabilities_0_1": [
+          0.10294117647058823,
+          0.8970588235294118
+        ],
+        "query": [
+          3,
+          3
+        ],
+        "training_counts_0_1": [
+          20,
+          182
+        ]
+      }
+    ]
+  },
+  "historical_calculator_sha256": "72d17b31f3ba82afaded00a3382d85e655b08b854e148f2223c5be0ea7c0cceb",
+  "historical_comparisons": [
+    {
+      "model": "light",
+      "recording": "datatraining.txt",
+      "status": "not_present_in_retained_artifact"
+    },
+    {
+      "model": "co2",
+      "recording": "datatraining.txt",
+      "status": "not_present_in_retained_artifact"
+    },
+    {
+      "model": "joint",
+      "recording": "datatraining.txt",
+      "status": "not_present_in_retained_artifact"
+    },
+    {
+      "actual": 0.0977729357742339,
+      "difference": 0.0,
+      "historical": 0.0977729357742339,
+      "metric": "log_loss_nats",
+      "model": "light",
+      "recording": "datatest.txt"
+    },
+    {
+      "actual": 0.024603060389190846,
+      "difference": 0.0,
+      "historical": 0.024603060389190846,
+      "metric": "brier_score",
+      "model": "light",
+      "recording": "datatest.txt"
+    },
+    {
+      "actual": 0.38953629465758083,
+      "difference": 0.0,
+      "historical": 0.38953629465758083,
+      "metric": "log_loss_nats",
+      "model": "co2",
+      "recording": "datatest.txt"
+    },
+    {
+      "actual": 0.11275264458790704,
+      "difference": 0.0,
+      "historical": 0.11275264458790704,
+      "metric": "brier_score",
+      "model": "co2",
+      "recording": "datatest.txt"
+    },
+    {
+      "actual": 0.08974404392437282,
+      "difference": 0.0,
+      "historical": 0.08974404392437282,
+      "metric": "log_loss_nats",
+      "model": "joint",
+      "recording": "datatest.txt"
+    },
+    {
+      "actual": 0.022241142792912526,
+      "difference": 0.0,
+      "historical": 0.022241142792912526,
+      "metric": "brier_score",
+      "model": "joint",
+      "recording": "datatest.txt"
+    },
+    {
+      "actual": 0.04744305077272907,
+      "difference": -6.938893903907228e-18,
+      "historical": 0.047443050772729076,
+      "metric": "log_loss_nats",
+      "model": "light",
+      "recording": "datatest2.txt"
+    },
+    {
+      "actual": 0.011556000266268865,
+      "difference": 0.0,
+      "historical": 0.011556000266268865,
+      "metric": "brier_score",
+      "model": "light",
+      "recording": "datatest2.txt"
+    },
+    {
+      "actual": 0.5065597371399897,
+      "difference": 0.0,
+      "historical": 0.5065597371399897,
+      "metric": "log_loss_nats",
+      "model": "co2",
+      "recording": "datatest2.txt"
+    },
+    {
+      "actual": 0.16431099649635308,
+      "difference": 0.0,
+      "historical": 0.16431099649635308,
+      "metric": "brier_score",
+      "model": "co2",
+      "recording": "datatest2.txt"
+    },
+    {
+      "actual": 0.05076201919167954,
+      "difference": 0.0,
+      "historical": 0.05076201919167954,
+      "metric": "log_loss_nats",
+      "model": "joint",
+      "recording": "datatest2.txt"
+    },
+    {
+      "actual": 0.011683151859365975,
+      "difference": 0.0,
+      "historical": 0.011683151859365975,
+      "metric": "brier_score",
+      "model": "joint",
+      "recording": "datatest2.txt"
+    }
+  ],
+  "historical_unsmoothed_constant_control": {
+    "datatest.txt": {
+      "brier_score": 0.2549267299167017,
+      "log_loss_nats": 0.7168119880515001,
+      "n": 2665
+    },
+    "datatest2.txt": {
+      "brier_score": 0.16596914406047703,
+      "log_loss_nats": 0.5141181210964696,
+      "n": 9752
+    }
+  },
+  "limits": [
+    "Published count tables were not reconstructed from raw sensor rows.",
+    "Retained Rust redundancy was read, not rerun.",
+    "Training and both test recordings have already been examined; no untouched confirmation.",
+    "Training OR pools are nonempty on all 16 valid queries; empty joint cells and algebraic empty-event fallback are checked.",
+    "The query-selected OR forecast is not asserted to reproduce a published masked-channel operational protocol.",
+    "Smoothed fixed-training forecast losses on other laws are not those laws MGW atoms.",
+    "No production Rust implementation or API was changed."
+  ],
+  "protocol_sha256": "da493d9bdf3e82a7aa5fb88208827ef757fb67701a5d191736dc21b4ca2d5a55",
+  "results": {
+    "datatest.txt": {
+      "co2": {
+        "brier_score": 0.11275264458790704,
+        "log_loss_nats": 0.38953629465758083,
+        "n": 2665
+      },
+      "constant": {
+        "brier_score": 0.25490520489179164,
+        "log_loss_nats": 0.716747644380514,
+        "n": 2665
+      },
+      "joint": {
+        "brier_score": 0.022241142792912526,
+        "log_loss_nats": 0.08974404392437282,
+        "n": 2665
+      },
+      "light": {
+        "brier_score": 0.024603060389190846,
+        "log_loss_nats": 0.0977729357742339,
+        "n": 2665
+      },
+      "or": {
+        "brier_score": 0.061581351034960666,
+        "log_loss_nats": 0.2224311765551816,
+        "n": 2665
+      }
+    },
+    "datatest2.txt": {
+      "co2": {
+        "brier_score": 0.16431099649635308,
+        "log_loss_nats": 0.5065597371399897,
+        "n": 9752
+      },
+      "constant": {
+        "brier_score": 0.16596946251889572,
+        "log_loss_nats": 0.514119073047541,
+        "n": 9752
+      },
+      "joint": {
+        "brier_score": 0.011683151859365975,
+        "log_loss_nats": 0.05076201919167954,
+        "n": 9752
+      },
+      "light": {
+        "brier_score": 0.011556000266268865,
+        "log_loss_nats": 0.04744305077272907,
+        "n": 9752
+      },
+      "or": {
+        "brier_score": 0.06128035888954198,
+        "log_loss_nats": 0.21867695366675108,
+        "n": 9752
+      }
+    },
+    "datatraining.txt": {
+      "co2": {
+        "brier_score": 0.08438539495005636,
+        "log_loss_nats": 0.3059815325178903,
+        "n": 8143
+      },
+      "constant": {
+        "brier_score": 0.16724575070146,
+        "log_loss_nats": 0.5170269303852334,
+        "n": 8143
+      },
+      "joint": {
+        "brier_score": 0.011360925169473101,
+        "log_loss_nats": 0.048245580479750985,
+        "n": 8143
+      },
+      "light": {
+        "brier_score": 0.011546637244820206,
+        "log_loss_nats": 0.052882540010084404,
+        "n": 8143
+      },
+      "or": {
+        "brier_score": 0.050374728754283914,
+        "log_loss_nats": 0.19014818746854573,
+        "n": 8143
+      }
+    }
+  },
+  "runtime_sha256": "5f62b1de0c802fb14cd595a0a2afdfa04c27bb6c8084f0088a7228fb642380eb",
+  "schema": "pid-rs/or-event-development-reproduction-v1",
+  "scope": "Retrospective development counts, fixed training-derived predictors; no tuning, sampling inference, calibration, causal, or PID-specific advantage claim.",
+  "tolerance": 1e-12,
+  "union_checks": [
+    {
+      "direct_union": 6367,
+      "inclusion_exclusion": 6367,
+      "left": 6324,
+      "overlap": 6110,
+      "query": [
+        0,
+        0
+      ],
+      "recording": "datatraining.txt",
+      "right": 6153,
+      "target": 0
+    },
+    {
+      "direct_union": 521,
+      "inclusion_exclusion": 521,
+      "left": 11,
+      "overlap": 4,
+      "query": [
+        0,
+        0
+      ],
+      "recording": "datatraining.txt",
+      "right": 514,
+      "target": 1
+    },
+    {
+      "direct_union": 6371,
+      "inclusion_exclusion": 6371,
+      "left": 6324,
+      "overlap": 137,
+      "query": [
+        0,
+        1
+      ],
+      "recording": "datatraining.txt",
+      "right": 184,
+      "target": 0
+    },
+    {
+      "direct_union": 833,
+      "inclusion_exclusion": 833,
+      "left": 11,
+      "overlap": 4,
+      "query": [
+        0,
+        1
+      ],
+      "recording": "datatraining.txt",
+      "right": 826,
+      "target": 1
+    },
+    {
+      "direct_union": 6324,
+      "inclusion_exclusion": 6324,
+      "left": 6324,
+      "overlap": 59,
+      "query": [
+        0,
+        2
+      ],
+      "recording": "datatraining.txt",
+      "right": 59,
+      "target": 0
+    },
+    {
+      "direct_union": 217,
+      "inclusion_exclusion": 217,
+      "left": 11,
+      "overlap": 1,
+      "query": [
+        0,
+        2
+      ],
+      "recording": "datatraining.txt",
+      "right": 207,
+      "target": 1
+    },
+    {
+      "direct_union": 6324,
+      "inclusion_exclusion": 6324,
+      "left": 6324,
+      "overlap": 18,
+      "query": [
+        0,
+        3
+      ],
+      "recording": "datatraining.txt",
+      "right": 18,
+      "target": 0
+    },
+    {
+      "direct_union": 191,
+      "inclusion_exclusion": 191,
+      "left": 11,
+      "overlap": 2,
+      "query": [
+        0,
+        3
+      ],
+      "recording": "datatraining.txt",
+      "right": 182,
+      "target": 1
+    },
+    {
+      "direct_union": 6200,
+      "inclusion_exclusion": 6200,
+      "left": 87,
+      "overlap": 40,
+      "query": [
+        1,
+        0
+      ],
+      "recording": "datatraining.txt",
+      "right": 6153,
+      "target": 0
+    },
+    {
+      "direct_union": 1722,
+      "inclusion_exclusion": 1722,
+      "left": 1718,
+      "overlap": 510,
+      "query": [
+        1,
+        0
+      ],
+      "recording": "datatraining.txt",
+      "right": 514,
+      "target": 1
+    },
+    {
+      "direct_union": 224,
+      "inclusion_exclusion": 224,
+      "left": 87,
+      "overlap": 47,
+      "query": [
+        1,
+        1
+      ],
+      "recording": "datatraining.txt",
+      "right": 184,
+      "target": 0
+    },
+    {
+      "direct_union": 1722,
+      "inclusion_exclusion": 1722,
+      "left": 1718,
+      "overlap": 822,
+      "query": [
+        1,
+        1
+      ],
+      "recording": "datatraining.txt",
+      "right": 826,
+      "target": 1
+    },
+    {
+      "direct_union": 146,
+      "inclusion_exclusion": 146,
+      "left": 87,
+      "overlap": 0,
+      "query": [
+        1,
+        2
+      ],
+      "recording": "datatraining.txt",
+      "right": 59,
+      "target": 0
+    },
+    {
+      "direct_union": 1719,
+      "inclusion_exclusion": 1719,
+      "left": 1718,
+      "overlap": 206,
+      "query": [
+        1,
+        2
+      ],
+      "recording": "datatraining.txt",
+      "right": 207,
+      "target": 1
+    },
+    {
+      "direct_union": 105,
+      "inclusion_exclusion": 105,
+      "left": 87,
+      "overlap": 0,
+      "query": [
+        1,
+        3
+      ],
+      "recording": "datatraining.txt",
+      "right": 18,
+      "target": 0
+    },
+    {
+      "direct_union": 1720,
+      "inclusion_exclusion": 1720,
+      "left": 1718,
+      "overlap": 180,
+      "query": [
+        1,
+        3
+      ],
+      "recording": "datatraining.txt",
+      "right": 182,
+      "target": 1
+    },
+    {
+      "direct_union": 6153,
+      "inclusion_exclusion": 6153,
+      "left": 1,
+      "overlap": 1,
+      "query": [
+        2,
+        0
+      ],
+      "recording": "datatraining.txt",
+      "right": 6153,
+      "target": 0
+    },
+    {
+      "direct_union": 514,
+      "inclusion_exclusion": 514,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        0
+      ],
+      "recording": "datatraining.txt",
+      "right": 514,
+      "target": 1
+    },
+    {
+      "direct_union": 185,
+      "inclusion_exclusion": 185,
+      "left": 1,
+      "overlap": 0,
+      "query": [
+        2,
+        1
+      ],
+      "recording": "datatraining.txt",
+      "right": 184,
+      "target": 0
+    },
+    {
+      "direct_union": 826,
+      "inclusion_exclusion": 826,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        1
+      ],
+      "recording": "datatraining.txt",
+      "right": 826,
+      "target": 1
+    },
+    {
+      "direct_union": 60,
+      "inclusion_exclusion": 60,
+      "left": 1,
+      "overlap": 0,
+      "query": [
+        2,
+        2
+      ],
+      "recording": "datatraining.txt",
+      "right": 59,
+      "target": 0
+    },
+    {
+      "direct_union": 207,
+      "inclusion_exclusion": 207,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        2
+      ],
+      "recording": "datatraining.txt",
+      "right": 207,
+      "target": 1
+    },
+    {
+      "direct_union": 19,
+      "inclusion_exclusion": 19,
+      "left": 1,
+      "overlap": 0,
+      "query": [
+        2,
+        3
+      ],
+      "recording": "datatraining.txt",
+      "right": 18,
+      "target": 0
+    },
+    {
+      "direct_union": 182,
+      "inclusion_exclusion": 182,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        3
+      ],
+      "recording": "datatraining.txt",
+      "right": 182,
+      "target": 1
+    },
+    {
+      "direct_union": 6153,
+      "inclusion_exclusion": 6153,
+      "left": 2,
+      "overlap": 2,
+      "query": [
+        3,
+        0
+      ],
+      "recording": "datatraining.txt",
+      "right": 6153,
+      "target": 0
+    },
+    {
+      "direct_union": 514,
+      "inclusion_exclusion": 514,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        0
+      ],
+      "recording": "datatraining.txt",
+      "right": 514,
+      "target": 1
+    },
+    {
+      "direct_union": 186,
+      "inclusion_exclusion": 186,
+      "left": 2,
+      "overlap": 0,
+      "query": [
+        3,
+        1
+      ],
+      "recording": "datatraining.txt",
+      "right": 184,
+      "target": 0
+    },
+    {
+      "direct_union": 826,
+      "inclusion_exclusion": 826,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        1
+      ],
+      "recording": "datatraining.txt",
+      "right": 826,
+      "target": 1
+    },
+    {
+      "direct_union": 61,
+      "inclusion_exclusion": 61,
+      "left": 2,
+      "overlap": 0,
+      "query": [
+        3,
+        2
+      ],
+      "recording": "datatraining.txt",
+      "right": 59,
+      "target": 0
+    },
+    {
+      "direct_union": 207,
+      "inclusion_exclusion": 207,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        2
+      ],
+      "recording": "datatraining.txt",
+      "right": 207,
+      "target": 1
+    },
+    {
+      "direct_union": 20,
+      "inclusion_exclusion": 20,
+      "left": 2,
+      "overlap": 0,
+      "query": [
+        3,
+        3
+      ],
+      "recording": "datatraining.txt",
+      "right": 18,
+      "target": 0
+    },
+    {
+      "direct_union": 182,
+      "inclusion_exclusion": 182,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        3
+      ],
+      "recording": "datatraining.txt",
+      "right": 182,
+      "target": 1
+    },
+    {
+      "direct_union": 1671,
+      "inclusion_exclusion": 1671,
+      "left": 1639,
+      "overlap": 1528,
+      "query": [
+        0,
+        0
+      ],
+      "recording": "datatest.txt",
+      "right": 1560,
+      "target": 0
+    },
+    {
+      "direct_union": 204,
+      "inclusion_exclusion": 204,
+      "left": 3,
+      "overlap": 3,
+      "query": [
+        0,
+        0
+      ],
+      "recording": "datatest.txt",
+      "right": 204,
+      "target": 1
+    },
+    {
+      "direct_union": 1661,
+      "inclusion_exclusion": 1661,
+      "left": 1639,
+      "overlap": 111,
+      "query": [
+        0,
+        1
+      ],
+      "recording": "datatest.txt",
+      "right": 133,
+      "target": 0
+    },
+    {
+      "direct_union": 592,
+      "inclusion_exclusion": 592,
+      "left": 3,
+      "overlap": 0,
+      "query": [
+        0,
+        1
+      ],
+      "recording": "datatest.txt",
+      "right": 589,
+      "target": 1
+    },
+    {
+      "direct_union": 1639,
+      "inclusion_exclusion": 1639,
+      "left": 1639,
+      "overlap": 0,
+      "query": [
+        0,
+        2
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 0
+    },
+    {
+      "direct_union": 182,
+      "inclusion_exclusion": 182,
+      "left": 3,
+      "overlap": 0,
+      "query": [
+        0,
+        2
+      ],
+      "recording": "datatest.txt",
+      "right": 179,
+      "target": 1
+    },
+    {
+      "direct_union": 1639,
+      "inclusion_exclusion": 1639,
+      "left": 1639,
+      "overlap": 0,
+      "query": [
+        0,
+        3
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 0
+    },
+    {
+      "direct_union": 3,
+      "inclusion_exclusion": 3,
+      "left": 3,
+      "overlap": 0,
+      "query": [
+        0,
+        3
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 1
+    },
+    {
+      "direct_union": 1582,
+      "inclusion_exclusion": 1582,
+      "left": 54,
+      "overlap": 32,
+      "query": [
+        1,
+        0
+      ],
+      "recording": "datatest.txt",
+      "right": 1560,
+      "target": 0
+    },
+    {
+      "direct_union": 947,
+      "inclusion_exclusion": 947,
+      "left": 944,
+      "overlap": 201,
+      "query": [
+        1,
+        0
+      ],
+      "recording": "datatest.txt",
+      "right": 204,
+      "target": 1
+    },
+    {
+      "direct_union": 165,
+      "inclusion_exclusion": 165,
+      "left": 54,
+      "overlap": 22,
+      "query": [
+        1,
+        1
+      ],
+      "recording": "datatest.txt",
+      "right": 133,
+      "target": 0
+    },
+    {
+      "direct_union": 969,
+      "inclusion_exclusion": 969,
+      "left": 944,
+      "overlap": 564,
+      "query": [
+        1,
+        1
+      ],
+      "recording": "datatest.txt",
+      "right": 589,
+      "target": 1
+    },
+    {
+      "direct_union": 54,
+      "inclusion_exclusion": 54,
+      "left": 54,
+      "overlap": 0,
+      "query": [
+        1,
+        2
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 0
+    },
+    {
+      "direct_union": 944,
+      "inclusion_exclusion": 944,
+      "left": 944,
+      "overlap": 179,
+      "query": [
+        1,
+        2
+      ],
+      "recording": "datatest.txt",
+      "right": 179,
+      "target": 1
+    },
+    {
+      "direct_union": 54,
+      "inclusion_exclusion": 54,
+      "left": 54,
+      "overlap": 0,
+      "query": [
+        1,
+        3
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 0
+    },
+    {
+      "direct_union": 944,
+      "inclusion_exclusion": 944,
+      "left": 944,
+      "overlap": 0,
+      "query": [
+        1,
+        3
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 1
+    },
+    {
+      "direct_union": 1560,
+      "inclusion_exclusion": 1560,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        0
+      ],
+      "recording": "datatest.txt",
+      "right": 1560,
+      "target": 0
+    },
+    {
+      "direct_union": 226,
+      "inclusion_exclusion": 226,
+      "left": 22,
+      "overlap": 0,
+      "query": [
+        2,
+        0
+      ],
+      "recording": "datatest.txt",
+      "right": 204,
+      "target": 1
+    },
+    {
+      "direct_union": 133,
+      "inclusion_exclusion": 133,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        1
+      ],
+      "recording": "datatest.txt",
+      "right": 133,
+      "target": 0
+    },
+    {
+      "direct_union": 589,
+      "inclusion_exclusion": 589,
+      "left": 22,
+      "overlap": 22,
+      "query": [
+        2,
+        1
+      ],
+      "recording": "datatest.txt",
+      "right": 589,
+      "target": 1
+    },
+    {
+      "direct_union": 0,
+      "inclusion_exclusion": 0,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        2
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 0
+    },
+    {
+      "direct_union": 201,
+      "inclusion_exclusion": 201,
+      "left": 22,
+      "overlap": 0,
+      "query": [
+        2,
+        2
+      ],
+      "recording": "datatest.txt",
+      "right": 179,
+      "target": 1
+    },
+    {
+      "direct_union": 0,
+      "inclusion_exclusion": 0,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        3
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 0
+    },
+    {
+      "direct_union": 22,
+      "inclusion_exclusion": 22,
+      "left": 22,
+      "overlap": 0,
+      "query": [
+        2,
+        3
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 1
+    },
+    {
+      "direct_union": 1560,
+      "inclusion_exclusion": 1560,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        0
+      ],
+      "recording": "datatest.txt",
+      "right": 1560,
+      "target": 0
+    },
+    {
+      "direct_union": 207,
+      "inclusion_exclusion": 207,
+      "left": 3,
+      "overlap": 0,
+      "query": [
+        3,
+        0
+      ],
+      "recording": "datatest.txt",
+      "right": 204,
+      "target": 1
+    },
+    {
+      "direct_union": 133,
+      "inclusion_exclusion": 133,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        1
+      ],
+      "recording": "datatest.txt",
+      "right": 133,
+      "target": 0
+    },
+    {
+      "direct_union": 589,
+      "inclusion_exclusion": 589,
+      "left": 3,
+      "overlap": 3,
+      "query": [
+        3,
+        1
+      ],
+      "recording": "datatest.txt",
+      "right": 589,
+      "target": 1
+    },
+    {
+      "direct_union": 0,
+      "inclusion_exclusion": 0,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        2
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 0
+    },
+    {
+      "direct_union": 182,
+      "inclusion_exclusion": 182,
+      "left": 3,
+      "overlap": 0,
+      "query": [
+        3,
+        2
+      ],
+      "recording": "datatest.txt",
+      "right": 179,
+      "target": 1
+    },
+    {
+      "direct_union": 0,
+      "inclusion_exclusion": 0,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        3
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 0
+    },
+    {
+      "direct_union": 3,
+      "inclusion_exclusion": 3,
+      "left": 3,
+      "overlap": 0,
+      "query": [
+        3,
+        3
+      ],
+      "recording": "datatest.txt",
+      "right": 0,
+      "target": 1
+    },
+    {
+      "direct_union": 7687,
+      "inclusion_exclusion": 7687,
+      "left": 7653,
+      "overlap": 6354,
+      "query": [
+        0,
+        0
+      ],
+      "recording": "datatest2.txt",
+      "right": 6388,
+      "target": 0
+    },
+    {
+      "direct_union": 810,
+      "inclusion_exclusion": 810,
+      "left": 12,
+      "overlap": 9,
+      "query": [
+        0,
+        0
+      ],
+      "recording": "datatest2.txt",
+      "right": 807,
+      "target": 1
+    },
+    {
+      "direct_union": 7669,
+      "inclusion_exclusion": 7669,
+      "left": 7653,
+      "overlap": 473,
+      "query": [
+        0,
+        1
+      ],
+      "recording": "datatest2.txt",
+      "right": 489,
+      "target": 0
+    },
+    {
+      "direct_union": 980,
+      "inclusion_exclusion": 980,
+      "left": 12,
+      "overlap": 2,
+      "query": [
+        0,
+        1
+      ],
+      "recording": "datatest2.txt",
+      "right": 970,
+      "target": 1
+    },
+    {
+      "direct_union": 7653,
+      "inclusion_exclusion": 7653,
+      "left": 7653,
+      "overlap": 788,
+      "query": [
+        0,
+        2
+      ],
+      "recording": "datatest2.txt",
+      "right": 788,
+      "target": 0
+    },
+    {
+      "direct_union": 250,
+      "inclusion_exclusion": 250,
+      "left": 12,
+      "overlap": 1,
+      "query": [
+        0,
+        2
+      ],
+      "recording": "datatest2.txt",
+      "right": 239,
+      "target": 1
+    },
+    {
+      "direct_union": 7653,
+      "inclusion_exclusion": 7653,
+      "left": 7653,
+      "overlap": 38,
+      "query": [
+        0,
+        3
+      ],
+      "recording": "datatest2.txt",
+      "right": 38,
+      "target": 0
+    },
+    {
+      "direct_union": 45,
+      "inclusion_exclusion": 45,
+      "left": 12,
+      "overlap": 0,
+      "query": [
+        0,
+        3
+      ],
+      "recording": "datatest2.txt",
+      "right": 33,
+      "target": 1
+    },
+    {
+      "direct_union": 6404,
+      "inclusion_exclusion": 6404,
+      "left": 50,
+      "overlap": 34,
+      "query": [
+        1,
+        0
+      ],
+      "recording": "datatest2.txt",
+      "right": 6388,
+      "target": 0
+    },
+    {
+      "direct_union": 2042,
+      "inclusion_exclusion": 2042,
+      "left": 1923,
+      "overlap": 688,
+      "query": [
+        1,
+        0
+      ],
+      "recording": "datatest2.txt",
+      "right": 807,
+      "target": 1
+    },
+    {
+      "direct_union": 523,
+      "inclusion_exclusion": 523,
+      "left": 50,
+      "overlap": 16,
+      "query": [
+        1,
+        1
+      ],
+      "recording": "datatest2.txt",
+      "right": 489,
+      "target": 0
+    },
+    {
+      "direct_union": 1929,
+      "inclusion_exclusion": 1929,
+      "left": 1923,
+      "overlap": 964,
+      "query": [
+        1,
+        1
+      ],
+      "recording": "datatest2.txt",
+      "right": 970,
+      "target": 1
+    },
+    {
+      "direct_union": 838,
+      "inclusion_exclusion": 838,
+      "left": 50,
+      "overlap": 0,
+      "query": [
+        1,
+        2
+      ],
+      "recording": "datatest2.txt",
+      "right": 788,
+      "target": 0
+    },
+    {
+      "direct_union": 1924,
+      "inclusion_exclusion": 1924,
+      "left": 1923,
+      "overlap": 238,
+      "query": [
+        1,
+        2
+      ],
+      "recording": "datatest2.txt",
+      "right": 239,
+      "target": 1
+    },
+    {
+      "direct_union": 88,
+      "inclusion_exclusion": 88,
+      "left": 50,
+      "overlap": 0,
+      "query": [
+        1,
+        3
+      ],
+      "recording": "datatest2.txt",
+      "right": 38,
+      "target": 0
+    },
+    {
+      "direct_union": 1923,
+      "inclusion_exclusion": 1923,
+      "left": 1923,
+      "overlap": 33,
+      "query": [
+        1,
+        3
+      ],
+      "recording": "datatest2.txt",
+      "right": 33,
+      "target": 1
+    },
+    {
+      "direct_union": 6388,
+      "inclusion_exclusion": 6388,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        0
+      ],
+      "recording": "datatest2.txt",
+      "right": 6388,
+      "target": 0
+    },
+    {
+      "direct_union": 809,
+      "inclusion_exclusion": 809,
+      "left": 112,
+      "overlap": 110,
+      "query": [
+        2,
+        0
+      ],
+      "recording": "datatest2.txt",
+      "right": 807,
+      "target": 1
+    },
+    {
+      "direct_union": 489,
+      "inclusion_exclusion": 489,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        1
+      ],
+      "recording": "datatest2.txt",
+      "right": 489,
+      "target": 0
+    },
+    {
+      "direct_union": 1080,
+      "inclusion_exclusion": 1080,
+      "left": 112,
+      "overlap": 2,
+      "query": [
+        2,
+        1
+      ],
+      "recording": "datatest2.txt",
+      "right": 970,
+      "target": 1
+    },
+    {
+      "direct_union": 788,
+      "inclusion_exclusion": 788,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        2
+      ],
+      "recording": "datatest2.txt",
+      "right": 788,
+      "target": 0
+    },
+    {
+      "direct_union": 351,
+      "inclusion_exclusion": 351,
+      "left": 112,
+      "overlap": 0,
+      "query": [
+        2,
+        2
+      ],
+      "recording": "datatest2.txt",
+      "right": 239,
+      "target": 1
+    },
+    {
+      "direct_union": 38,
+      "inclusion_exclusion": 38,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        2,
+        3
+      ],
+      "recording": "datatest2.txt",
+      "right": 38,
+      "target": 0
+    },
+    {
+      "direct_union": 145,
+      "inclusion_exclusion": 145,
+      "left": 112,
+      "overlap": 0,
+      "query": [
+        2,
+        3
+      ],
+      "recording": "datatest2.txt",
+      "right": 33,
+      "target": 1
+    },
+    {
+      "direct_union": 6388,
+      "inclusion_exclusion": 6388,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        0
+      ],
+      "recording": "datatest2.txt",
+      "right": 6388,
+      "target": 0
+    },
+    {
+      "direct_union": 809,
+      "inclusion_exclusion": 809,
+      "left": 2,
+      "overlap": 0,
+      "query": [
+        3,
+        0
+      ],
+      "recording": "datatest2.txt",
+      "right": 807,
+      "target": 1
+    },
+    {
+      "direct_union": 489,
+      "inclusion_exclusion": 489,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        1
+      ],
+      "recording": "datatest2.txt",
+      "right": 489,
+      "target": 0
+    },
+    {
+      "direct_union": 970,
+      "inclusion_exclusion": 970,
+      "left": 2,
+      "overlap": 2,
+      "query": [
+        3,
+        1
+      ],
+      "recording": "datatest2.txt",
+      "right": 970,
+      "target": 1
+    },
+    {
+      "direct_union": 788,
+      "inclusion_exclusion": 788,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        2
+      ],
+      "recording": "datatest2.txt",
+      "right": 788,
+      "target": 0
+    },
+    {
+      "direct_union": 241,
+      "inclusion_exclusion": 241,
+      "left": 2,
+      "overlap": 0,
+      "query": [
+        3,
+        2
+      ],
+      "recording": "datatest2.txt",
+      "right": 239,
+      "target": 1
+    },
+    {
+      "direct_union": 38,
+      "inclusion_exclusion": 38,
+      "left": 0,
+      "overlap": 0,
+      "query": [
+        3,
+        3
+      ],
+      "recording": "datatest2.txt",
+      "right": 38,
+      "target": 0
+    },
+    {
+      "direct_union": 35,
+      "inclusion_exclusion": 35,
+      "left": 2,
+      "overlap": 0,
+      "query": [
+        3,
+        3
+      ],
+      "recording": "datatest2.txt",
+      "right": 33,
+      "target": 1
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "read_utc": "2026-09-23T21:47:37.064199+00:00",
+  "script_sha256": "0af1180ea4331e4803446153c1a7d924fb2bdec28875b67a377a21436eb4cb7b",
+  "reference_results_sha256": "5a1cfb4e368004d0cb9a5f8d01bfb73678d4dfc8b7c35fbb1a707847fa404bcc",
+  "results": {
+    "datatraining.txt": {
+      "constant": {
+        "log_loss_nats": 0.5170269303852334,
+        "brier_score": 0.16724575070146
+      },
+      "light": {
+        "log_loss_nats": 0.052882540010084404,
+        "brier_score": 0.011546637244820206
+      },
+      "co2": {
+        "log_loss_nats": 0.3059815325178903,
+        "brier_score": 0.08438539495005636
+      },
+      "joint": {
+        "log_loss_nats": 0.048245580479750985,
+        "brier_score": 0.011360925169473101
+      },
+      "or": {
+        "log_loss_nats": 0.19014818746854573,
+        "brier_score": 0.050374728754283914
+      }
+    },
+    "datatest.txt": {
+      "constant": {
+        "log_loss_nats": 0.716747644380514,
+        "brier_score": 0.25490520489179164
+      },
+      "light": {
+        "log_loss_nats": 0.0977729357742339,
+        "brier_score": 0.024603060389190846
+      },
+      "co2": {
+        "log_loss_nats": 0.38953629465758083,
+        "brier_score": 0.11275264458790704
+      },
+      "joint": {
+        "log_loss_nats": 0.08974404392437282,
+        "brier_score": 0.022241142792912526
+      },
+      "or": {
+        "log_loss_nats": 0.2224311765551816,
+        "brier_score": 0.061581351034960666
+      }
+    },
+    "datatest2.txt": {
+      "constant": {
+        "log_loss_nats": 0.514119073047541,
+        "brier_score": 0.16596946251889572
+      },
+      "light": {
+        "log_loss_nats": 0.04744305077272907,
+        "brier_score": 0.011556000266268865
+      },
+      "co2": {
+        "log_loss_nats": 0.5065597371399897,
+        "brier_score": 0.16431099649635308
+      },
+      "joint": {
+        "log_loss_nats": 0.05076201919167954,
+        "brier_score": 0.011683151859365975
+      },
+      "or": {
+        "log_loss_nats": 0.21867695366675108,
+        "brier_score": 0.06128035888954198
+      }
+    }
+  },
+  "max_abs_difference": 0.0,
+  "status": "PASS_ALTERNATE_DENSE_MARGINAL_RECOMPUTATION",
+  "limits": "Same exposed counts, model family and floating-point logarithm implementation; implementation arithmetic differs, no independent data or raw-Rust rerun."
+}

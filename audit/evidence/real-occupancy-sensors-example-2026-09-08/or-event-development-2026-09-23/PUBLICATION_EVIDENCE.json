@@ -1,0 +1,102 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "entries": [
+    {
+      "bytes": 9403,
+      "path": "EVIDENCE.md",
+      "sha256": "d245ddf6dfb53f1da17fc6a9a5975ead894028c21572596c9d5671be6cfaa578"
+    },
+    {
+      "bytes": 1039,
+      "path": "FIVE_RULE_RESULTS.csv",
+      "sha256": "1b8694159cfc523ddb47f36416d1296c7f686907dccdee7ebe917716b374ca31"
+    },
+    {
+      "bytes": 1531,
+      "path": "PROTOCOL.json",
+      "sha256": "da493d9bdf3e82a7aa5fb88208827ef757fb67701a5d191736dc21b4ca2d5a55"
+    },
+    {
+      "bytes": 2319,
+      "path": "ROOT_RECOMPUTATION.json",
+      "sha256": "cbedb5b74a3b268cb7a1882d64f4860262b6ddf01824e87478af7d2cbf633d6b"
+    },
+    {
+      "bytes": 251,
+      "path": "ROOT_RECOMPUTATION_FREEZE.json",
+      "sha256": "44af44acbc63f504a30aea2e60cea482aeb41b8b710aafa4605d43863f511170"
+    },
+    {
+      "bytes": 11148,
+      "path": "calculate.py",
+      "sha256": "c38235806a14528354101a283be0ffcb73b4aecebc8a337791b1080e6dd5a07b"
+    },
+    {
+      "bytes": 1221,
+      "path": "reference/EXECUTION.portable.json",
+      "sha256": "fdc8b8e07e1e127de3df079525fca59b7f185305e9a847941a2fe3c173bc5622"
+    },
+    {
+      "bytes": 484,
+      "path": "reference/FROZEN.json",
+      "sha256": "99c914f4e1250ad7d4143a693611c2028d69737ef7fa9d03451da1979c9b5b24"
+    },
+    {
+      "bytes": 78344,
+      "path": "reference/RESULTS.json",
+      "sha256": "5a1cfb4e368004d0cb9a5f8d01bfb73678d4dfc8b7c35fbb1a707847fa404bcc"
+    },
+    {
+      "bytes": 10761,
+      "path": "reference/calculate.py",
+      "sha256": "72d17b31f3ba82afaded00a3382d85e655b08b854e148f2223c5be0ea7c0cceb"
+    },
+    {
+      "bytes": 0,
+      "path": "reference/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3532,
+      "path": "reference/stdout.txt",
+      "sha256": "3bf91086591bb9bd2cb9bd7ddeebb9c553c1b7df08e73c37cdf9a2439f3a17c1"
+    },
+    {
+      "bytes": 958,
+      "path": "reproduction/EXECUTION.portable.json",
+      "sha256": "7446cb905cdbf3747650ee9bf70e3821be5829ea81e38065c1d2d3461da60c1c"
+    },
+    {
+      "bytes": 78340,
+      "path": "reproduction/RESULTS.json",
+      "sha256": "cce6e56ae4b7275c7bd95b5a5bd49d7416a1014fb28aa84dc3420d24a8bf151c"
+    },
+    {
+      "bytes": 1171,
+      "path": "reproduction/ROOT_READBACK.json",
+      "sha256": "7abaee81acc320698953a0eb6f3afc4f17e8fc6dbfc891b93faa998c8fd43bef"
+    },
+    {
+      "bytes": 2791,
+      "path": "root-recompute.py",
+      "sha256": "0af1180ea4331e4803446153c1a7d924fb2bdec28875b67a377a21436eb4cb7b"
+    }
+  ],
+  "historical_exact_calculator": "reference/calculate.py",
+  "inputs": [
+    {
+      "repository_path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/descriptive-comparisons.json",
+      "sha256": "15798710c848225b45276134fa26ae5c04f9ffb0535f2bea23e33a4e19cd3487"
+    },
+    {
+      "repository_path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/runtime-results.json",
+      "sha256": "5f62b1de0c802fb14cd595a0a2afdfa04c27bb6c8084f0088a7228fb642380eb"
+    }
+  ],
+  "original_science_rerun": false,
+  "portable_successor_executed": true,
+  "schema": "pid-rs/or-event-portable-publication-evidence-v2",
+  "scope": "Previously exposed development recordings and five fixed count forecasts. Reproduction matches retained scientific fields. No demonstrated PID advantage, new data or population inference.",
+  "source_calculator": "calculate.py",
+  "status": "fixed_input_reproduction_reviewed"
+}

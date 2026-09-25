@@ -1,0 +1,32 @@
+{
+  "actual_exit": 0,
+  "author": "Sepehr Mahmoudian",
+  "calculator_sha256": "c38235806a14528354101a283be0ffcb73b4aecebc8a337791b1080e6dd5a07b",
+  "checks": 244,
+  "exact_equal_scientific_fields": [
+    "results",
+    "forecasts",
+    "union_checks",
+    "historical_comparisons",
+    "historical_unsmoothed_constant_control",
+    "empirical_law_or_identity",
+    "checks",
+    "failures",
+    "check_count",
+    "all_checks_passed",
+    "tolerance",
+    "scope",
+    "brier_convention",
+    "fit",
+    "limits"
+  ],
+  "forecast_pairs": 80,
+  "observed_utc": "2026-09-24T03:27:10.838317+00:00",
+  "primary_metric_values": 30,
+  "recording_model_pairs": 15,
+  "reference_sha256": "5a1cfb4e368004d0cb9a5f8d01bfb73678d4dfc8b7c35fbb1a707847fa404bcc",
+  "result_sha256": "cce6e56ae4b7275c7bd95b5a5bd49d7416a1014fb28aa84dc3420d24a8bf151c",
+  "scope": "Exact equality in this interpreter/arithmetic environment to existing exposed development counts. No raw-data reconstruction, generalization, calibration, independent evaluation, Rust runtime or practical PID advantage.",
+  "status": "portable_reference_reproduces_all_retained_scientific_fields",
+  "union_witnesses": 96
+}

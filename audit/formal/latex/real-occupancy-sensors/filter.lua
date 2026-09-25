@@ -9,7 +9,8 @@ function Header(e)
 end
 function Image(e)
   local name = e.src:match("([^/]+)%.svg$")
-  if not name or (name ~= "recording-roles" and name ~= "signed-cancellation") then
+  if not name or (name ~= "recording-roles" and name ~= "signed-cancellation"
+      and name ~= "or-event-pooling") then
     error("unexpected publication image")
   end
   e.src = name .. ".pdf"
@@ -73,7 +74,7 @@ function Table(e)
   if widths then
     for i,c in ipairs(e.colspecs) do e.colspecs[i] = {c[1],widths[i]} end
   end
-  -- These eight source tables have at most eight body rows; review final page fit.
+  -- These source tables have at most eight body rows; review final page fit.
   -- Keep Pandoc's cell/column/caption projection; only forbid inter-row breaks.
   local latex = pandoc.write(pandoc.Pandoc({e}), "latex", PANDOC_WRITER_OPTIONS)
   latex = latex:gsub("\\\\\n", "\\\\*\n")

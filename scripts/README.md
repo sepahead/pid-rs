@@ -3264,10 +3264,10 @@ checks do not replace the external caller's custody or rendered-page review.
 
 The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
-`audit/formal/latex/real-occupancy-sensors/publication-inputs-v2.json`; v1 remains historical. The
-v2 successor changes only the captured `METHODS.md` identity and preserves the admitted output
-references and all other input pins. Profile selection supplies no new execution or visual-review
-credit; any successor execution needs its own retained record. Discovery derives the
+`audit/formal/latex/real-occupancy-sensors/publication-inputs-v5.json`; v1–v4 remain historical.
+The v5 successor includes the negative OR-forecast comparison, its portable reproduction
+evidence and the third figure. Profile selection supplies no execution or visual-review
+credit; each successor execution needs its own retained record. Discovery derives the
 pinned TeX body and retains raw commands/streams; it does not adopt its PDF. Exact mode refuses
 until the profile has an admitted reference, then compares fresh raw PDF bytes with that reference.
 `--check` makes two fresh builds. Supply a canonical TeX Live root explicitly; there is no `HOME`
@@ -3285,7 +3285,7 @@ setup before their result-writing `try` block, so an owned control work director
 `RESULT.json`. Retain actual outer stderr and exit for both programs. A receipt does not substitute
 for the actual exit or its final deadline check.
 
-Two committed figure-PDF derivatives are consumed with their SVG/PDF input pins; SVG regeneration
+Three committed figure-PDF derivatives are consumed with their SVG/PDF input pins; SVG regeneration
 and actual page/font/navigation review remain separate. No dataset download or Rust rerun occurs.
 
 ```text
@@ -3313,12 +3313,14 @@ bind the citation corrections and Sepehr Mahmoudian author header and byline. Se
 hashes bind each figure PDF. Citation controls retain the author header and change only the label
 or URL; separate Markdown controls reject a missing or changed author and unrelated source changes.
 The current input profile is
-`audit/formal/latex/mgw-fixed-world/publication-inputs-v7.json`; v1–v6 remain historical.
-The v7 profile binds the authored paper. Predecessor observations do not establish execution or
-native-input custody under v7. Each successor execution needs its own exact checks and retained
-record. The [publication entry](../audit/formal/lean-mgw-fixed-world/PUBLICATION.md) separates the
+`audit/formal/latex/mgw-fixed-world/publication-inputs-v8.json`; v1–v7 remain historical.
+The v8 profile is a dependency-only successor of v7. It pins the revised recorded-office Markdown,
+which this paper's source map binds, and keeps the v7 authored-paper references unchanged.
+Predecessor observations do not establish execution or native-input custody under v8. Each
+successor execution needs its own exact checks and retained record. The
+[publication entry](../audit/formal/lean-mgw-fixed-world/PUBLICATION.md) separates the
 current reference from the earlier citation-only PDF and records the stale-control failure.
-The current reference is the authored nine-page paper. Its v7 profile records focused authorship
+The current reference is the authored nine-page paper. Its v7 profile recorded focused authorship
 review, not a new all-page review. The publication record keeps that reference separate from the
 historical citation-only paper, its full-page review, exact execution and formal qualification.
 Discovery produces a candidate and retained diagnostics without admitting it. Exact mode refuses

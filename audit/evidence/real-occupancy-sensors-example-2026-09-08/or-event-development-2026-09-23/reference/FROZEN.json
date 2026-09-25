@@ -1,0 +1,8 @@
+{
+  "frozen_before_calculator_execution_utc": "2026-09-23T21:45:28.574759+00:00",
+  "calculator_sha256": "72d17b31f3ba82afaded00a3382d85e655b08b854e148f2223c5be0ea7c0cceb",
+  "protocol_sha256": "da493d9bdf3e82a7aa5fb88208827ef757fb67701a5d191736dc21b4ca2d5a55",
+  "data_sha256": "15798710c848225b45276134fa26ae5c04f9ffb0535f2bea23e33a4e19cd3487",
+  "runtime_sha256": "5f62b1de0c802fb14cd595a0a2afdfa04c27bb6c8084f0088a7228fb642380eb",
+  "execution_status_at_freeze": "not executed"
+}

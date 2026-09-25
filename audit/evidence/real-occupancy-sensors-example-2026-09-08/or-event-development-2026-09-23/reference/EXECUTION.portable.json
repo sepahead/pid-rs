@@ -1,0 +1,19 @@
+{
+  "actual_finished_utc": "2026-09-23T21:45:45.082765+00:00",
+  "actual_started_utc": "2026-09-23T21:45:45.052806+00:00",
+  "author": "Sepehr Mahmoudian",
+  "calculator_sha256_after": "72d17b31f3ba82afaded00a3382d85e655b08b854e148f2223c5be0ea7c0cceb",
+  "elapsed_seconds": 0.029864707961678505,
+  "exit_code": 0,
+  "historical_source": "calculate.py",
+  "original_receipt_sha256": "1e3885dd3e050f475b9f17e3624488117bdd4b5298cf57f68d274c7ee3012e37",
+  "projection": "Host-specific interpreter/script paths and working directory omitted. All other original receipt fields retained. This is not a new execution.",
+  "python_version": "3.14.6 (main, Jun 10 2026, 10:03:53) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "result_sha256": "5a1cfb4e368004d0cb9a5f8d01bfb73678d4dfc8b7c35fbb1a707847fa404bcc",
+  "runtime": "CPython 3.14.6; exact version string retained below; machine installation identity is not published in this projection.",
+  "schema": "pid-rs/historical-execution-portable-projection-v1",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "3bf91086591bb9bd2cb9bd7ddeebb9c553c1b7df08e73c37cdf9a2439f3a17c1",
+  "timed_out": false,
+  "timeout_seconds": 55
+}

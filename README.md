@@ -634,6 +634,10 @@ uses 20,560 UCI measurements. It fits light and CO₂ bins on training data, cal
 MGW atoms, and compares MI, CMI and fixed prediction scores. Its worked count calculation shows
 why signed contributions matter and why positive synergy alone cannot justify another sensor.
 The binary occupancy target produces an explicit refusal from the continuous estimator.
+A reproduced follow-up uses MGW's source-matching union as a forecast. It has worse log loss
+and Brier score than light alone and joint matching on all three inspected recordings.
+The report retains the five-rule comparison and portable calculator; no predictive advantage
+from PID is established.
 
 Download the three files from [UCI Occupancy Detection](https://doi.org/10.24432/C5X01N), then run:
 

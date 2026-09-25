@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="440" viewBox="0 0 1060 440" role="img" aria-labelledby="title desc">
+<title id="title">An OR matching pool uses both source values to select training rows</title>
+<desc id="desc">The query contains observed light and carbon dioxide bins. Select the union of training rows matching either bin. Count rows in the intersection once, then add one pseudocount for each binary target label to compute the forecast. The drawing shows sets, not measured set sizes.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L9 4.5L0 9Z" fill="#1F3F60"/></marker></defs>
+<rect width="1060" height="440" rx="12" fill="#F7F3E9"/>
+<g font-family="DejaVu Sans, sans-serif" fill="#2C3E50">
+<text x="32" y="40" font-size="25" font-weight="bold" fill="#1F3F60">From a complete query to a matching-row forecast</text>
+<rect x="32" y="115" width="192" height="148" rx="10" fill="white" stroke="#1F3F60" stroke-width="2"/>
+<text x="128" y="146" text-anchor="middle" font-size="21" font-weight="bold">Observed query</text>
+<text x="128" y="184" text-anchor="middle" font-size="22">light bin a</text>
+<text x="128" y="220" text-anchor="middle" font-size="22">CO₂ bin b</text>
+<path d="M236 190H280" fill="none" stroke="#1F3F60" stroke-width="2.5" marker-end="url(#arrow)"/>
+<circle cx="410" cy="190" r="112" fill="#D2E0E2" stroke="#1F6968" stroke-width="2.5"/>
+<circle cx="548" cy="190" r="112" fill="#D2E0E2" fill-opacity="0.48" stroke="#916400" stroke-width="2.5"/>
+<text x="374" y="174" text-anchor="middle" font-size="20">matches</text>
+<text x="374" y="203" text-anchor="middle" font-size="20">light a</text>
+<text x="584" y="174" text-anchor="middle" font-size="20">matches</text>
+<text x="584" y="203" text-anchor="middle" font-size="20">CO₂ b</text>
+<text x="479" y="183" text-anchor="middle" font-size="18" font-weight="bold">both:</text>
+<text x="479" y="207" text-anchor="middle" font-size="18">once</text>
+<path d="M674 190H716" fill="none" stroke="#1F3F60" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="730" y="115" width="296" height="148" rx="10" fill="white" stroke="#1F6968" stroke-width="2"/>
+<text x="878" y="147" text-anchor="middle" font-size="21" font-weight="bold">Predict occupancy</text>
+<text x="878" y="187" text-anchor="middle" font-size="20">(occupied pool rows + 1)</text>
+<path d="M751 198H1005" stroke="#2C3E50" stroke-width="1.4"/>
+<text x="878" y="226" text-anchor="middle" font-size="20">(all pool rows + 2)</text>
+<text x="479" y="336" text-anchor="middle" font-size="21">Pool count = light count + CO₂ count − both count</text>
+<text x="32" y="380" font-size="18">Both bins select the event. This is not a missing-sensor protocol.</text>
+<text x="32" y="410" font-size="17">Schematic sets; areas do not represent the observed counts. Author: Sepehr Mahmoudian.</text>
+</g></svg>

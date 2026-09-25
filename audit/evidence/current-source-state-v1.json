@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "ef9cdd395949625f4ad33be6972b9424eb7a76d712cafb69743332ec0715183c",
-        "size_bytes": 315225
+        "sha256": "f5297c6324290ba654d113d5e9ad228e106ce06331f0ceb0dff353e865a17013",
+        "size_bytes": 315540
       },
       {
         "git_mode": "100644",
@@ -496,8 +496,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "31dacd71b341da2eb89313fa08576c3a86f4424b7808d19e34f5d39cfc4cbe89",
-        "size_bytes": 90163
+        "sha256": "7231bede5847a85295d378853006f8d0eae1ada61dcc3ae32686131c1189ff68",
+        "size_bytes": 90461
       },
       {
         "git_mode": "100644",
@@ -13210,8 +13210,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08.md",
-        "sha256": "1cb2072b756cd5d37e9aee1c8e2834d3898eea6acd5f01837f4f2eb93667a72c",
-        "size_bytes": 29524
+        "sha256": "f4a51a7d5b18b38c9c4f331ecbd394956d50b9c7174f71a9fc6cbd6c3fd68be0",
+        "size_bytes": 39262
       },
       {
         "git_mode": "100644",
@@ -13242,6 +13242,108 @@
         "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/humidity-ratio-negative-witnesses.json",
         "sha256": "33fc0cd3de6b4d8a2a26a6f00831c0230206e60c2909d33e328f87d52fda3ad7",
         "size_bytes": 2484
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/EVIDENCE.md",
+        "sha256": "d245ddf6dfb53f1da17fc6a9a5975ead894028c21572596c9d5671be6cfaa578",
+        "size_bytes": 9403
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/FIVE_RULE_RESULTS.csv",
+        "sha256": "1b8694159cfc523ddb47f36416d1296c7f686907dccdee7ebe917716b374ca31",
+        "size_bytes": 1039
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/PROTOCOL.json",
+        "sha256": "da493d9bdf3e82a7aa5fb88208827ef757fb67701a5d191736dc21b4ca2d5a55",
+        "size_bytes": 1531
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/PUBLICATION_EVIDENCE.json",
+        "sha256": "d7d19642be6929ea8641e219d23e8fc25bf1f5162b5a0aeed0db53a12987f2cb",
+        "size_bytes": 3487
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/ROOT_RECOMPUTATION.json",
+        "sha256": "cbedb5b74a3b268cb7a1882d64f4860262b6ddf01824e87478af7d2cbf633d6b",
+        "size_bytes": 2319
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/ROOT_RECOMPUTATION_FREEZE.json",
+        "sha256": "44af44acbc63f504a30aea2e60cea482aeb41b8b710aafa4605d43863f511170",
+        "size_bytes": 251
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/calculate.py",
+        "sha256": "c38235806a14528354101a283be0ffcb73b4aecebc8a337791b1080e6dd5a07b",
+        "size_bytes": 11148
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reference/EXECUTION.portable.json",
+        "sha256": "fdc8b8e07e1e127de3df079525fca59b7f185305e9a847941a2fe3c173bc5622",
+        "size_bytes": 1221
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reference/FROZEN.json",
+        "sha256": "99c914f4e1250ad7d4143a693611c2028d69737ef7fa9d03451da1979c9b5b24",
+        "size_bytes": 484
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reference/RESULTS.json",
+        "sha256": "5a1cfb4e368004d0cb9a5f8d01bfb73678d4dfc8b7c35fbb1a707847fa404bcc",
+        "size_bytes": 78344
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reference/calculate.py",
+        "sha256": "72d17b31f3ba82afaded00a3382d85e655b08b854e148f2223c5be0ea7c0cceb",
+        "size_bytes": 10761
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reference/stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reference/stdout.txt",
+        "sha256": "3bf91086591bb9bd2cb9bd7ddeebb9c553c1b7df08e73c37cdf9a2439f3a17c1",
+        "size_bytes": 3532
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reproduction/EXECUTION.portable.json",
+        "sha256": "7446cb905cdbf3747650ee9bf70e3821be5829ea81e38065c1d2d3461da60c1c",
+        "size_bytes": 958
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reproduction/RESULTS.json",
+        "sha256": "cce6e56ae4b7275c7bd95b5a5bd49d7416a1014fb28aa84dc3420d24a8bf151c",
+        "size_bytes": 78340
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reproduction/ROOT_READBACK.json",
+        "sha256": "7abaee81acc320698953a0eb6f3afc4f17e8fc6dbfc891b93faa998c8fd43bef",
+        "size_bytes": 1171
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/root-recompute.py",
+        "sha256": "0af1180ea4331e4803446153c1a7d924fb2bdec28875b67a377a21436eb4cb7b",
+        "size_bytes": 2791
       },
       {
         "git_mode": "100644",
@@ -13911,6 +14013,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/figures/real-occupancy-sensors/or-event-pooling.pdf",
+        "sha256": "80234db39412ff0d32715f90b70d6cda1216f102810d36e13bb1892a5f9bd7dd",
+        "size_bytes": 55342
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/real-occupancy-sensors/or-event-pooling.svg",
+        "sha256": "279b89d7e8ab551e52a315199a9753191c9c0d3addaabefee2b774c71743fea8",
+        "size_bytes": 2955
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/figures/real-occupancy-sensors/recording-roles.pdf",
         "sha256": "832953f75c7091b10e930c46d2b3de8f05f0d2c82fa10b3aac0002bfc201c693",
         "size_bytes": 56847
@@ -14334,6 +14448,12 @@
         "path": "audit/formal/latex/mgw-fixed-world/publication-inputs-v7.json",
         "sha256": "1b728896506404991c718a88b48006be28a32ff73280c45bef1363e1ce9b9833",
         "size_bytes": 77714
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/publication-inputs-v8.json",
+        "sha256": "9fb4edcf2d9e883787662885ee678a9b6526dce39e43511591684021e9a31572",
+        "size_bytes": 77549
       },
       {
         "git_mode": "100644",
@@ -14776,14 +14896,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/real-occupancy-sensors/body.expected.tex",
-        "sha256": "cb47fa335813e84ca325d79bd52df6babbea60d6936a3eb52cab5e8e805ebdea",
-        "size_bytes": 39090
+        "sha256": "97a2a6404d50ed1b4da4884d3e08b6c87781a4d131990b3a1089711f438e8584",
+        "size_bytes": 50982
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/real-occupancy-sensors/filter.lua",
-        "sha256": "cf31e2b944c32d5d93e8b02b14d600dd373b8d60bd12ae344dd580f7c2a2ee03",
-        "size_bytes": 3213
+        "sha256": "604a279bccd3b2a51b73c9cae27a6c1fa8df0c7b48e1dfda6c22a0674abb45d2",
+        "size_bytes": 3244
       },
       {
         "git_mode": "100644",
@@ -14811,9 +14931,15 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/real-occupancy-sensors/publication-inputs-v5.json",
+        "sha256": "f02f4711bb43e84f19e23ec06c5a61cb22d65caeb7fa099f02a6e5c915a5b806",
+        "size_bytes": 58037
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/real-occupancy-sensors/publication.tex",
-        "sha256": "48f32c5e90dec3ce4851b4f19dc8810af5afa4b6ac0753f582ced6ae26cbb4cd",
-        "size_bytes": 2274
+        "sha256": "df864e716deef894d8fcdfbe8c8dcd3bbf001535b4454b9799c2e50a72061f4c",
+        "size_bytes": 2262
       },
       {
         "git_mode": "100644",
@@ -15040,8 +15166,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/lean-mgw-fixed-world/PUBLICATION.md",
-        "sha256": "5b787a97b31e492d95d0a624b087d4d3695c9ab9d90349fcfc361642fe95a364",
-        "size_bytes": 10387
+        "sha256": "a6a096b2c86183f54ab90ce32b816c9f9a24a36035b7b83299f63ec53e54a203",
+        "size_bytes": 10899
       },
       {
         "git_mode": "100644",
@@ -27652,8 +27778,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/recorded-office-sensors.pdf",
-        "sha256": "22623c82b48954d33c1a50ed37fd9a3beb6adfae927fe63c42e0e89821cebbfa",
-        "size_bytes": 204450
+        "sha256": "54b20e1cea7ce38b7a001674f6fb1854e38db30d3129f5fd4aad1ea7b3c30a8d",
+        "size_bytes": 278311
       },
       {
         "git_mode": "100644",
@@ -27688,8 +27814,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "08287cbc9513842d48448a103c2948c41bae910ed2b8d2b5844dc2d298e3c239",
-        "size_bytes": 301073
+        "sha256": "19ecd311ed4555933090a95fdf1cd5f349326d9e4eada5e2457faa6af090c370",
+        "size_bytes": 301210
       },
       {
         "git_mode": "100755",
@@ -27718,7 +27844,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/build-mgw-fixed-world-pdf.py",
-        "sha256": "bc0037147a47ce551bb1c2c694327533315ca9ed716f612005627b3ba5d97fb8",
+        "sha256": "bb88c87dc5b34afb160a4dabd76e55db21188ad4001d0375e768dd9b2efcc93b",
         "size_bytes": 44037
       },
       {
@@ -27766,8 +27892,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/build-recorded-office-sensors-pdf.py",
-        "sha256": "313eabead65fab8537e3931638df5159d63db8dcb3259dcac22251af963d37d1",
-        "size_bytes": 22659
+        "sha256": "549b5264f8d8e16b8651e7a168f620e36b9a04edac5421833fbd69c7c1885a01",
+        "size_bytes": 23402
       },
       {
         "git_mode": "100755",
@@ -27946,7 +28072,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "fddf9e9715f002c1a563094a49f85620adafcc0174039a095b0a6795e384efad",
+        "sha256": "d08ebaaae9d20f08bfdc05a6c447274a9bed1777f211c6cbd6f2ae79c250e90e",
         "size_bytes": 90915
       },
       {
@@ -28534,7 +28660,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "3ea869b60e55f90757b10498621d96560419f7aaf578606889d9da29ad185f0f",
+        "sha256": "64490294e5aac9af75a7cca64fe3167240539d2ad50ca38830b5af1ff4564929",
         "size_bytes": 138785
       },
       {
@@ -29474,8 +29600,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "f3f8795242446ec146294491067496b9e0c3ce279875f196b2f5ca8408fb460d",
-    "entry_count": 4888
+    "entries_sha256": "356a12f2aac575f92b19f9fa088c837659170f3f6b69313d986ccdab21fe063d",
+    "entry_count": 4909
   },
   "subprojections": [
     {
@@ -29487,15 +29613,15 @@
       ]
     },
     {
-      "entries_sha256": "07ff8347d19de543bc8732c3831dc6bf8a502ef601a49e3513b19bb924f52a03",
-      "entry_count": 1922,
+      "entries_sha256": "72fda60b00c2dec735ac3dff042d0cf3c3e015f18d5b170832f3440bf1550de9",
+      "entry_count": 1926,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "6961091fe2616322d7cda4dee6ae1b8a6c4429400cc84a0a6583c9553cfde648",
+      "entries_sha256": "cf77c0e3b4d4812e4b9a580ba78383302ce26192cee20d6daa7afdb8d181c9a9",
       "entry_count": 35,
       "name": "generated_pdf_set",
       "selectors": [
@@ -29503,7 +29629,7 @@
       ]
     },
     {
-      "entries_sha256": "67b4f8540e101bfb7e7f625ada933e5820635609de6b645131474d8519a4e806",
+      "entries_sha256": "88d2a9fa7a6da4eee42988cd58fbef3b8418c4129907ad8490c38841a39cd650",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

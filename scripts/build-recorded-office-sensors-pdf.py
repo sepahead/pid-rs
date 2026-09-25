@@ -26,10 +26,11 @@ FIGURES = "audit/formal/latex/figures/real-occupancy-sensors/"
 EVIDENCE = "audit/evidence/real-occupancy-sensors-example-2026-09-08/"
 MARKDOWN = EVIDENCE[:-1] + ".md"
 PDF = "output/pdf/recorded-office-sensors.pdf"
-MANIFEST = ASSETS + "publication-inputs-v4.json"
-MANIFEST_SHA = "7b1257ac8fd6b9d776b5d2bb6c65d4490802614a50248b2a224074648c3f8948"
+MANIFEST = ASSETS + "publication-inputs-v5.json"
+MANIFEST_SHA = "f02f4711bb43e84f19e23ec06c5a61cb22d65caeb7fa099f02a6e5c915a5b806"
 RUNTIME = "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py"
 RUNTIME_SHA = "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+OR_EVIDENCE = EVIDENCE + "or-event-development-2026-09-23/"
 SOURCE_FILES = frozenset({
     MARKDOWN, "crates/pid-core/examples/occupancy_sensors.rs", "METHODS.md", RUNTIME,
     "scripts/check-formal-pdf-log.sh",
@@ -39,8 +40,15 @@ SOURCE_FILES = frozenset({
     *(EVIDENCE + name + ".json" for name in (
         "data-facts", "descriptive-comparisons", "humidity-ratio-negative-witnesses",
         "future-co2-alignment", "runtime-results", "definition-check")),
-    *(FIGURES + name + suffix for name in ("recording-roles", "signed-cancellation")
+    *(FIGURES + name + suffix for name in ("recording-roles", "signed-cancellation", "or-event-pooling")
       for suffix in (".svg", ".pdf")),
+    *(OR_EVIDENCE + name for name in (
+        "EVIDENCE.md", "FIVE_RULE_RESULTS.csv", "PROTOCOL.json", "PUBLICATION_EVIDENCE.json",
+        "ROOT_RECOMPUTATION.json", "ROOT_RECOMPUTATION_FREEZE.json", "root-recompute.py",
+        "calculate.py", "reference/calculate.py", "reference/FROZEN.json",
+        "reference/EXECUTION.portable.json", "reference/RESULTS.json",
+        "reference/stdout.txt", "reference/stderr.txt", "reproduction/RESULTS.json",
+        "reproduction/ROOT_READBACK.json", "reproduction/EXECUTION.portable.json")),
 })
 HEX = re.compile(r"[0-9a-f]{64}\Z")
 PRIMARY_SECONDS = 120
@@ -150,7 +158,7 @@ def read_pinned(snapshot: object, path: Path, pin: object, label: str) -> bytes:
 def verify_recorder(build: Path, tex_root: Path, profile: dict, snapshot: object) -> None:
     """Reject undeclared external recorder inputs; owned cache is generated state."""
     allowed_local = {"publication.tex", "body.tex", "recording-roles.pdf",
-                     "signed-cancellation.pdf", "pid-rs-report-tables.sty",
+                     "signed-cancellation.pdf", "or-event-pooling.pdf", "pid-rs-report-tables.sty",
                      "pid-rs-workflow-publication.sty", "recorded-office-sensors.aux",
                      "recorded-office-sensors.out", "recorded-office-sensors.toc"}
     for line in (build / "recorded-office-sensors.fls").read_text().splitlines():
@@ -326,6 +334,7 @@ def main(argv: list[str] | None = None) -> int:
                 (MARKDOWN, "body.md"),
                 (FIGURES + "recording-roles.pdf", "recording-roles.pdf"),
                 (FIGURES + "signed-cancellation.pdf", "signed-cancellation.pdf"),
+                (FIGURES + "or-event-pooling.pdf", "or-event-pooling.pdf"),
                 ("audit/formal/latex/pid-rs-report-tables.sty", "pid-rs-report-tables.sty"),
                 ("audit/formal/latex/pid-rs-workflow-publication.sty", "pid-rs-workflow-publication.sty"),
             ):
@@ -346,7 +355,7 @@ def main(argv: list[str] | None = None) -> int:
             record(build / "ENVIRONMENT.json", environment)
             build_snapshot = runtime.Snapshot()
             for name in ("publication.tex", "filter.lua", "body.md", "recording-roles.pdf",
-                         "signed-cancellation.pdf", "pid-rs-report-tables.sty",
+                         "signed-cancellation.pdf", "or-event-pooling.pdf", "pid-rs-report-tables.sty",
                          "pid-rs-workflow-publication.sty", "fonts.conf"):
                 build_snapshot.read(build / name)
             for name in profile["fonts"]:

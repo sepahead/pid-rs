@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve and explain the negative recorded-office OR-forecast comparison, with its
+  categorical MGW definition, all five fixed baselines, portable reproduction and a new
+  pooling diagram. Keep same-law redundancy separate from prediction on another recording;
+  no fusion or learning advantage is established.
+
 - Bind Sepehr Mahmoudian's authored finite-prefix bias PDF profile to versioned successor control and
   production templates, and label the derivative notes' authored v4 profile correctly.
   Preserve September 12 reproduction records and predecessor templates; fresh controls,

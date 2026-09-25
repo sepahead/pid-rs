@@ -1,0 +1,117 @@
+{
+  "results": {
+    "datatraining.txt": {
+      "constant": {
+        "n": 8143,
+        "log_loss_nats": 0.5170269303852334,
+        "brier_score": 0.16724575070146
+      },
+      "light": {
+        "n": 8143,
+        "log_loss_nats": 0.052882540010084404,
+        "brier_score": 0.011546637244820206
+      },
+      "co2": {
+        "n": 8143,
+        "log_loss_nats": 0.3059815325178903,
+        "brier_score": 0.08438539495005636
+      },
+      "joint": {
+        "n": 8143,
+        "log_loss_nats": 0.048245580479750985,
+        "brier_score": 0.011360925169473101
+      },
+      "or": {
+        "n": 8143,
+        "log_loss_nats": 0.19014818746854573,
+        "brier_score": 0.050374728754283914
+      }
+    },
+    "datatest.txt": {
+      "constant": {
+        "n": 2665,
+        "log_loss_nats": 0.716747644380514,
+        "brier_score": 0.25490520489179164
+      },
+      "light": {
+        "n": 2665,
+        "log_loss_nats": 0.0977729357742339,
+        "brier_score": 0.024603060389190846
+      },
+      "co2": {
+        "n": 2665,
+        "log_loss_nats": 0.38953629465758083,
+        "brier_score": 0.11275264458790704
+      },
+      "joint": {
+        "n": 2665,
+        "log_loss_nats": 0.08974404392437282,
+        "brier_score": 0.022241142792912526
+      },
+      "or": {
+        "n": 2665,
+        "log_loss_nats": 0.2224311765551816,
+        "brier_score": 0.061581351034960666
+      }
+    },
+    "datatest2.txt": {
+      "constant": {
+        "n": 9752,
+        "log_loss_nats": 0.514119073047541,
+        "brier_score": 0.16596946251889572
+      },
+      "light": {
+        "n": 9752,
+        "log_loss_nats": 0.04744305077272907,
+        "brier_score": 0.011556000266268865
+      },
+      "co2": {
+        "n": 9752,
+        "log_loss_nats": 0.5065597371399897,
+        "brier_score": 0.16431099649635308
+      },
+      "joint": {
+        "n": 9752,
+        "log_loss_nats": 0.05076201919167954,
+        "brier_score": 0.011683151859365975
+      },
+      "or": {
+        "n": 9752,
+        "log_loss_nats": 0.21867695366675108,
+        "brier_score": 0.06128035888954198
+      }
+    }
+  },
+  "empirical_law_or_identity": {
+    "datatraining.txt": {
+      "n": 8143,
+      "target_entropy_nats": 0.5170269154705952,
+      "unsmoothed_same_law_or_log_loss_nats": 0.19001872619626414,
+      "entropy_minus_or_loss_nats": 0.32700818927433106,
+      "retained_rust_redundancy_nats": 0.3270081892743308,
+      "difference": 2.7755575615628914e-16,
+      "note": "Each law fits and scores its own unsmoothed event posterior; not an out-of-sample predictor comparison."
+    },
+    "datatest.txt": {
+      "n": 2665,
+      "target_entropy_nats": 0.6560900721020294,
+      "unsmoothed_same_law_or_log_loss_nats": 0.21579201016932717,
+      "entropy_minus_or_loss_nats": 0.44029806193270227,
+      "retained_rust_redundancy_nats": 0.44029806193270227,
+      "difference": 0.0,
+      "note": "Each law fits and scores its own unsmoothed event posterior; not an out-of-sample predictor comparison."
+    },
+    "datatest2.txt": {
+      "n": 9752,
+      "target_entropy_nats": 0.5141033645279653,
+      "unsmoothed_same_law_or_log_loss_nats": 0.23786490679862796,
+      "entropy_minus_or_loss_nats": 0.2762384577293374,
+      "retained_rust_redundancy_nats": 0.2762384577293375,
+      "difference": -1.1102230246251565e-16,
+      "note": "Each law fits and scores its own unsmoothed event posterior; not an out-of-sample predictor comparison."
+    }
+  },
+  "check_count": 244,
+  "failures": [],
+  "all_checks_passed": true
+}

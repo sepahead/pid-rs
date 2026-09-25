@@ -4,9 +4,13 @@ author: "Sepehr Mahmoudian"
 
 # Recorded office sensors: what categorical and continuous shared exclusions can establish
 
+Author: Sepehr Mahmoudian.
+
 **Evidence status:** the Rust example has compiled, passed Clippy, built in release mode and evaluated all three recordings. It produced categorical MGW results and the three expected continuous-support refusals. A separate calculation from integer event counts agrees with all 21 compared MI and net-atom values within 1e-12 nats. These are finite numerical checks, not a formal Rust refinement or population-calibration theorem. PDF layout and reproduction are assessed separately from these numerical checks.
 
 This example uses recorded room measurements and photograph-derived occupancy labels. Four training-fitted bins for light and CO₂ give a small categorical object that the existing shared-exclusions API can evaluate. The same binary target prevents admission to the current continuous Ehrlich/Wibral estimator. Keeping both findings visible is part of the example.
+
+A later comparison used the MGW source-matching union to construct a forecast. It had worse log loss and Brier score than light alone and joint matching on all three previously examined recordings. The follow-up section gives its definition, results and reproducible calculation. This case study demonstrates neither a PID-guided improvement nor an advantage over direct predictive comparisons.
 
 ## Data and roles
 
@@ -106,7 +110,7 @@ In this table L and C abbreviate their fitted categorical labels. CMI is compute
 
 ## From one recorded row to the MGW decomposition
 
-Write $A=Q_L(L)$ and $B=Q_C(C)$ for the fitted source labels. Choose a row uniformly from one recording of $N$ rows. This defines its empirical PMF without an IID assumption about the physical time series. For a supported outcome $(a,b,y)$, let $E_{a,b}$ be the event $A=a$ **or** $B=b$. Let $N_E$, $N_y$ and $N_{E,y}$ count rows in that event, rows with target $y$, and rows satisfying both conditions. The pointwise MGW redundancy is
+Write $A=Q_L(L)$ and $B=Q_C(C)$ for the fitted source labels. Choose a row uniformly from one recording of $N$ rows. This defines its empirical PMF without an IID assumption about the physical time series. For a supported outcome $(a,b,y)$, let $E_{a,b}$ be the event $A=a$ **or** $B=b$. Let $N_E$, $N_y$ and $N_{E,y}$ count rows in that event, rows with target $y$, and rows satisfying both conditions. The pointwise MGW redundancy, expressed with natural logarithms rather than the defining paper's base-2 logarithms, is
 
 $$
 i^{\mathrm{sx}}_\cap(y;a,b)
@@ -182,7 +186,7 @@ These are same-row occupancy classifiers. Accuracy, balanced accuracy and Brier 
 | Later held-out | co2 | 0.782404 | 0.717718 | 0.164311 | 0.506560 |
 | Later held-out | pair | 0.982363 | 0.966984 | 0.011683 | 0.050762 |
 
-Higher accuracy is better; lower Brier score and log loss are better. On the later recording, adding CO₂ to the light-bin predictor corrects four classifications, but slightly worsens both probability scores. The CO₂-only classifier has lower overall accuracy than the constant classifier while having higher balanced accuracy. These comparisons show why a single favorable metric cannot establish a general benefit. No PID-based predictor was evaluated, so none of these differences is attributed to PID.
+Higher accuracy is better; lower Brier score and log loss are better. On the later recording, adding CO₂ to the light-bin predictor corrects four classifications, but slightly worsens both probability scores. The CO₂-only classifier has lower overall accuracy than the constant classifier while having higher balanced accuracy. These comparisons show why a single favorable metric cannot establish a general benefit. No predictor was selected or trained using PID in these original comparisons, so none of these differences is attributed to PID. The subsequent OR-event development comparison below evaluates a separately specified MGW-event-inspired forecast.
 
 | Recording | Predictor | True negative | False positive | False negative | True positive | Rows in unseen training cells |
 |---|---|---:|---:|---:|---:|---:|
@@ -196,6 +200,140 @@ Higher accuracy is better; lower Brier score and log loss are better. On the lat
 | Later held-out | pair | 7653 | 50 | 122 | 1927 | 4 |
 
 The 25 and four unseen pair-bin rows in the earlier and later tests matter: the fixed probability-1/2 and tie rule predicts occupancy for them. Improvements in thresholded classification are therefore not evidence of confident predictions for novel combinations. The exact counts, per-day evaluations and information values are retained in [descriptive comparisons](real-occupancy-sensors-example-2026-09-08/descriptive-comparisons.json).
+
+## Does the shared-exclusion event make a useful forecast?
+
+A follow-up development comparison tested a specific interpretation of categorical
+Makkeh–Gutknecht–Wibral (MGW) redundancy. Its local definition uses the target probability
+within a source-matching **union**. Could that same event provide a useful simple forecast
+for the recorded light and CO₂ pair? This question concerns one predictor. It does not
+assume that maximizing redundancy or synergy improves a task.
+
+### The forecast and its assumptions
+
+Keep the original training-fitted maps: four light bins, four CO₂ bins, and binary occupancy.
+For an observed source query $(a,b)$, select each training row whose light bin equals $a$
+**or** whose CO₂ bin equals $b$. A row that matches both is selected once. Both source
+values are used to specify the query; this is not a rule for an unavailable sensor.
+
+Let $n_{a,y}$ count training rows with light bin $a$ and target $y$, $n_{b,y}$ count rows
+with CO₂ bin $b$ and target $y$, and $n_{ab,y}$ count rows matching both source bins and
+that target. Inclusion–exclusion gives the exact integer count
+
+$$
+n_{\cup,y}(a,b)=n_{a,y}+n_{b,y}-n_{ab,y},\qquad y\in\{0,1\}.
+$$
+
+The subtraction removes the duplicate copy of every row in the intersection. Set
+$n_\cup=n_{\cup,0}+n_{\cup,1}$. Add one pseudocount for each target label **after**
+selecting the event:
+
+$$
+q_\cup(y\mid a,b)=\frac{n_{\cup,y}(a,b)+1}{n_\cup(a,b)+2}.
+$$
+
+The two numerators sum to the denominator, so the probabilities sum to one. Each is
+strictly between zero and one. An empty pool gives $(1/2,1/2)$. Every OR pool in the
+training four-by-four query alphabet was nonempty; the empty-pool case was checked as
+a separate arithmetic control. Six joint-matching training cells were empty.
+
+The comparison uses the same smoothing rule for constant, light-only, CO₂-only, joint
+matching, and OR matching forecasts. The original comparison's constant baseline instead
+used unsmoothed training prevalence. Its values are preserved and separately reproduced;
+the two constant forecasts are not equated. The other three baseline rules are unchanged.
+
+![The complete query selects a union of training rows. Matching both source values does not count a row twice.](../formal/latex/figures/real-occupancy-sensors/or-event-pooling.svg)
+
+### What the connection to MGW does and does not say
+
+For a finite law $P$ of $(A,B,Y)$ and a query $(a,b)$ in its source support, define
+$E_{a,b}=\{A=a\}\cup\{B=b\}$ and $q_P(y\mid a,b)=P(Y=y\mid E_{a,b})$.
+At every supported triple $(a,b,y)$, the event contains that triple, so its probability
+and its target-$y$ probability are positive. Using this report's natural-log (nat) convention instead of the defining paper's
+base-2 logarithms, the local MGW redundancy is
+
+$$
+i^{\mathrm{sx}}_\cap(y;a,b)=\log q_P(y\mid a,b)-\log P(Y=y).
+$$
+
+Taking expectation under the **same** law $P$ gives
+
+$$
+R_P=\mathbb E_P[\log q_P(Y\mid A,B)]
+      -\mathbb E_P[\log P(Y)]
+    =H_P(Y)-L_P(q_P),
+$$
+
+where $L_P(q)=\mathbb E_P[-\log q(Y\mid A,B)]$ is natural-log loss. This is a direct
+rewriting of the MGW definition, not a new redundancy measure or a novelty claim.
+The redundancy can be negative, so this identity alone does not guarantee an
+improvement over the marginal forecast.
+The query-specific events can overlap; selecting them uses the full source query.
+This identity alone supplies no fixed coarsened observation channel or missing-sensor
+protocol. It also does not identify a smoothed training forecast's loss on a different
+recording with that recording's MGW redundancy.
+
+### Results on the previously examined recordings
+
+All forecasts were fitted on the 8,143 training rows. The 2,665-row earlier recording
+predates training; the 9,752-row later recording follows it. All three had already been
+examined before this follow-up was designed. These are development comparisons, not
+untouched confirmation. The calculation reused the published integer count tables;
+it did not parse the raw sensors, refit the quantizers, or rerun Rust.
+
+| Recording | Light log loss | Joint log loss | OR log loss | Light Brier | Joint Brier | OR Brier |
+|---|---:|---:|---:|---:|---:|---:|
+| Training | 0.052883 | 0.048246 | 0.190148 | 0.011547 | 0.011361 | 0.050375 |
+| Earlier | 0.097773 | 0.089744 | 0.222431 | 0.024603 | 0.022241 | 0.061581 |
+| Later | 0.047443 | 0.050762 | 0.218677 | 0.011556 | 0.011683 | 0.061280 |
+
+Lower values are better. Log loss is in nats per row; binary Brier score is the mean
+squared difference between the predicted occupancy probability and the recorded bit.
+OR matching loses to both light alone and joint matching on all three recordings under
+both scores. It beats the CO₂-only and smoothed-constant baselines. Full-precision
+results for all five rules are available as [CSV](real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/FIVE_RULE_RESULTS.csv) and in the [complete calculation record](real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reference/RESULTS.json), including exact forecast fractions, union witnesses and every specified check.
+
+The retained reference run passed 244 specified checks, including exact integer union counts and
+rational probability normalization. Using each recording's own unsmoothed event
+posterior, $H_P(Y)-L_P(q_P)$ matched the retained Rust redundancy within
+$2.78\times10^{-16}$ nats. A separate dense-count computation reproduced all five
+forecasts' metrics. It shared the data, formulas and Python logarithm implementation;
+this was implementation cross-checking, not independent field evidence.
+
+The [portable evidence note](real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/EVIDENCE.md) links the historical protocol and calculator, full results and alternate computation. A portable successor accepts an explicit input directory and verifies the two published input hashes. Its 24 September replay passed all 244 checks and reproduced every retained scientific result field exactly in the recorded arithmetic environment. This repeats fixed counts; it adds no new observations. The historical calculator retains its expired deadline as executed source, not as a current rerun command.
+
+### Implications
+
+This result rejects this OR-matching forecast as an improvement over the stated light
+and joint baselines on these records. Direct task loss already reaches that conclusion.
+The experiment does not test a PID-guided model intervention, and it does not refute
+other uses of MGW. It prevents the event-posterior identity from being treated as an
+automatic fusion advantage. A later positive claim needs a specific mechanism and
+comparison on new independent recording units, with representation and tuning choices
+fixed before evaluation.
+
+### Rust implementation and computational cost
+
+The existing Rust example computes empirical MGW PID2; it does not expose this new
+forecast as a production API. This comparison is a Python publication-reference
+calculation on a $4\times4\times2$ count table. Let $K_A,K_B$ be the source alphabet
+sizes and $K$ the number of occupied training states. The reference scans those $K$
+states for each of $K_AK_B$ source queries, so forecast construction uses
+$O(K_AK_BK)$ count operations for a fixed number of models. It does not reread $N$ raw
+rows. A marginal-table implementation can instead count the rows in $O(N)$ work and
+form all OR counts by inclusion–exclusion in $O(K_AK_B)$ work; dense storage then uses
+$O(K_AK_B)$ entries. Scoring a fixed number of forecasts costs $O(K_e)$ for a recording with $K_e$ occupied states. The separate same-law identity check rescans those states for each supported query, so its present implementation costs $O(K_e^2)$; it is not part of forecast lookup. Either precomputed forecast uses one lookup per query. These are
+arithmetic-operation counts; integer bit costs depend on count size. There is no
+production Rust forecast or comparative runtime benchmark. Feature extraction,
+raw-data parsing and quantizer fitting are separate costs. No Gaussian, continuous-density or hyperbolic
+model is assumed. Temporal dependence does not prevent these empirical sums, but a
+population confidence statement needs a justified sampling model; none is supplied.
+
+The defining source is Makkeh, Gutknecht and Wibral, *Introducing a differentiable measure
+of pointwise shared information*, [arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5).
+The measurements and labels are from [UCI Occupancy Detection](https://doi.org/10.24432/C5X01N).
+This follow-up forecast specification, calculation and scoped negative disposition are
+project work by Sepehr Mahmoudian. Cite this report with its exact repository revision.
 
 ## The continuous Ehrlich/Wibral track
 
@@ -234,3 +372,5 @@ No bootstrap interval, permutation null, significance test or population estimat
 Data and transcribed rows: Luis Candanedo (2016), *Occupancy Detection*, UCI Machine Learning Repository, [DOI 10.24432/C5X01N](https://doi.org/10.24432/C5X01N), made available by UCI under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Transformations here comprise four training-fitted source bins, explicit boundary clamping, empirical summaries and fixed train-only conditional-frequency baselines. The associated paper by Candanedo and Feldheim is *Accurate occupancy detection of an office room from light, temperature, humidity and CO₂ measurements using statistical learning models*, *Energy and Buildings* 112, 28–39, [institutional primary record](https://orbi.umons.ac.be/handle/20.500.12907/17305?locale=fr), DOI 10.1016/j.enbuild.2015.11.071. That record dates online publication to 2 December 2015; UCI's data donation is in 2016. No access-restricted full paper or photographs were retrieved.
 
 The [official ZIP](https://archive.ics.uci.edu/static/public/357/occupancy+detection.zip) is 335,713 bytes with SHA-256 `4ae3f46aa98eedff564a9f6924d1635173e2fd2c816004342a9be93076d3a81a`. Its three members total 1,497,104 uncompressed bytes. Individual hashes are retained in the example and data-facts JSON. Hashes identify the retrieved bytes; they do not certify measurements, labels, license authority or scientific validity.
+
+Suggested citation: Sepehr Mahmoudian (2026), *Recorded office sensors: what categorical and continuous shared exclusions can establish*. Include the exact repository commit or release. For the software, use [CITATION.cff](../../CITATION.cff); the method and dataset citations above identify their separate authorship.
