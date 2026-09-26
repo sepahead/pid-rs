@@ -16024,8 +16024,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/lean-mgw-target-copy/PUBLICATION.md",
-        "sha256": "e47c7937327f0cd7463f667a1a90908697b227042b6f93d18b2f7ad5b5a0a840",
-        "size_bytes": 7529
+        "sha256": "315eb7564479e34d3cfac97d0b9fcb0d17cf1476cb1ed9e319df222cb0e68d6c",
+        "size_bytes": 8165
       },
       {
         "git_mode": "100644",
@@ -29966,7 +29966,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "d141f13ebcc29549ced1de75554d2f01ff1a6d9a0ef4ae8a9964582b480cb6d4",
+    "entries_sha256": "7ddce7c9ab05d9eb455d62cf85acf85f7b9f508b9f02e2ea920078eb038f0e0d",
     "entry_count": 4970
   },
   "subprojections": [
@@ -29979,7 +29979,7 @@
       ]
     },
     {
-      "entries_sha256": "edff520931c72713fbd9ded2a1ab218f1da0fdd7896a7ba1146da02298af865e",
+      "entries_sha256": "a630917e6dd14a1ae18f69600613f6a3611e51125e108aad3d0f1119546e5e71",
       "entry_count": 1932,
       "name": "formal_sources_and_receipts",
       "selectors": [

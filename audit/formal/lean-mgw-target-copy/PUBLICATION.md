@@ -12,8 +12,8 @@ not been established.
 
 | Artifact | Bytes | SHA-256 |
 |---|---:|---|
-| [Markdown](../../evidence/finite-target-copy-mgw-synergy.md) | 33,464 | `63c6adeb1f9078213e323ba895057e0e949315df45bd33d46ae6fb9e69714671` |
-| [13-page A4 PDF](../../../output/pdf/finite-target-copy-mgw-synergy.pdf) | 182,631 | `b22f6b079cdbc28af184d2f88fe9a71a4e689e37804017decc15dd06e46f7a58` |
+| [Markdown](../../evidence/finite-target-copy-mgw-synergy.md) | 33,501 | `caf8746947013ea37ff53f1e1821b8d5564b15c2d1419688d446d3c58cb6b26b` |
+| [13-page A4 PDF](../../../output/pdf/finite-target-copy-mgw-synergy.pdf) | 182,625 | `91015d09176201aa0059c16f535a775382f680a807c1e70fb964edb704955c6b` |
 
 The [SVG](../latex/figures/mgw-target-copy/event-union.svg) is unchanged, with
 SHA-256 `280d19e9b63659ebe9aeaba74e09d11476be729a784c612f0a69679e05d3a22c`.
@@ -43,11 +43,17 @@ Run the public reproduction command with the selected programs on `PATH`:
 python3 -I -S -B scripts/build-finite-target-copy-mgw-pdf.py --check --tex-root <selected-tex-live-2024-root> --work-dir <new-build-directory>
 ```
 
-The [v4 input profile](../latex/mgw-target-copy/publication-inputs-v4.json) binds
+The [v5 input profile](../latex/mgw-target-copy/publication-inputs-v5.json) binds
 six document inputs, six executable files and version strings, 231 selected
 TeX files, sixteen font aliases, the source epoch and the exact reference PDF.
 Its SHA-256 is
-`8cc3f3d71fa218539f21b10a07f0e65c0b42c9ff2a8569f33c2b151b4ecf5f46`.
+`b1a71987523e3df71c138d477d37b10e23818706c15edcbf969971324c87f648`.
+It is the authorship-only successor, dated 23 September 2026, of the
+[v4 profile](../latex/mgw-target-copy/publication-inputs-v4.json) (SHA-256
+`8cc3f3d71fa218539f21b10a07f0e65c0b42c9ff2a8569f33c2b151b4ecf5f46`). It changes
+only the Markdown source, the TeX template and the reference PDF, which add the
+author to the byline and the PDF metadata. The dates, mathematical body, tools
+and TeX files are unchanged.
 The selected tools include Pandoc 3.10.2, LuaHBTeX from TeX Live 2024,
 Poppler 26.06.0 and librsvg 2.62.3. The build retains
 `SOURCE_DATE_EPOCH=1789084800`, disables shell escape, and uses a restricted
@@ -72,7 +78,10 @@ with status 2; no alternate producer profile has been reviewed.
 
 ## Visual review and retained development results
 
-All thirteen pages were inspected at 90 dpi. Pages 5, 6, 9, 10, 12 and 13 were
+This visual review applies to the v4 bytes. For the v5 successor, the
+source-to-TeX correspondence, final TeX log, PDF metadata and first-page
+rendering were inspected; the all-page review does not transfer to its bytes.
+All thirteen v4 pages were inspected at 90 dpi. Pages 5, 6, 9, 10, 12 and 13 were
 also inspected at 300 dpi and in 150 dpi grayscale. The figure's shaded union
 and inner anchor frame remain distinguishable without color. The formal map
 starts with its heading on page 12 and continues with a repeated header on
