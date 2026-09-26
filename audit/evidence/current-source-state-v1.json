@@ -538,8 +538,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "37f11a0bed935824a81a14561106eb92f80bc5b52890c66d30fa32053c5a34cc",
-        "size_bytes": 30057
+        "sha256": "c701501266eb52a84f08c913ead19a89886cb16ce3f2473e9b3701a5e5478766",
+        "size_bytes": 32869
       },
       {
         "git_mode": "100644",
@@ -29966,7 +29966,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "853004f269421229d14e1910ac39ec1344a33af3db66c5439b51ddeba4da4e41",
+    "entries_sha256": "d141f13ebcc29549ced1de75554d2f01ff1a6d9a0ef4ae8a9964582b480cb6d4",
     "entry_count": 4970
   },
   "subprojections": [

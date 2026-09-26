@@ -18,7 +18,11 @@ their dated observations. Verify current Git and hosted state before acting on i
 | `d1f401a` | Negative OR-forecast comparison in the recorded office-sensor report, with v5/v8 profiles |
 | `0e96b2b` | Equal-tail fix for the raw bootstrap percentiles (three new tests) and the corrected Levina–Bickel locator (Section 3, below Equation (8)), with v6/v9 profiles |
 | `67a6785` | [Cross-implementation re-verification report](audit/evidence/cross-implementation-reverification-2026-09-26.md), its PDF, checker and reproducible evidence; its PDF later moved to the shared report design |
-| The commit that adds this checkpoint | [Fault-tolerance research note](audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md), its PDF, Lean file and experiment |
+| `d5ed6f0` | [Fault-tolerance research note](audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md), its PDF, Lean file and experiment |
+| The commit that adds the ecosystem status below | Ecosystem and physical-intelligence status, and the hosted result for `d5ed6f0` |
+
+**Hosted checks.** All 47 jobs of the main CI run for `d5ed6f0` passed, including the formal
+PDF inventory and the four-hour KSG integer-harmonic job; its four specialized workflows passed too.
 
 **Findings to keep.**
 
@@ -44,6 +48,38 @@ numerics N1/N2, and the keyed Rust refinement X3. The re-verification report add
 floating-point agreement of the general and specialized three-source paths; that is not X3 closure.
 For the fault-tolerance note, the open items are new recordings, a worst-case (minimax) forecast,
 the prior-mixture test, the continuous analogue and any production API.
+
+**Ecosystem and physical-intelligence status, observed 26 September 2026.** These are read-only
+observations of the consumers' public main branches. They change no pid-rs claim; every consumer
+integration stays `not_claimed` in the release scope.
+
+- **Galadriel.** Main `a42f066` (19 September) pins pid-core 1.0.0 at pid-rs `1cd2424`, 240
+  commits before `d5ed6f0`. Its PID study code is on the unmerged branch `review/crebain-pid-study`
+  (`4669864`), which pins `bc3aa80`; Section 2.1 of the
+  [placement guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md) describes that tree. Neither pin
+  contains the exact-reducer commit `3262298`, so row 3 of
+  [NUMERICAL_ASSURANCE.md](NUMERICAL_ASSURANCE.md) (update the pin, then requalify the fixture)
+  remains open.
+- **Prisoma.** Main `be1c492` (23 September) records a native simulator study, E1: 112 episodes,
+  each with one drone, two RGB cameras, one pressure sensor and restored future pressure labels. Its
+  forecast did not beat the constant baseline by the declared margin, so its result is null or
+  inconclusive. E1 is the first ecosystem record that pairs multisensor windows with future
+  outcomes, which the three-source study proposed in the
+  [embodied-sensor note](audit/research/embodied-sensor-utility/EXPOSITION.md) needs. Its raw
+  captures are not public. The target is future pressure, so a pressure source must not copy the
+  outcome. Any PID use must start from task loss and conditional mutual information; MGW atoms
+  would be a secondary, descriptive layer. Prisoma's existing screens use Williams–Beer $I_{\min}$,
+  a separate measure family with different axioms.
+- **CREBAIN.** Main `37a786f` (23 September) adds ground-sensor pressure windows over NCP and a
+  city simulation. It still has no pid-rs code dependency, receiver or estimand contract.
+- **Haldir, Manwe, NCP.** No PID-relevant change. Haldir keeps its rule that PID never creates or
+  widens an authorization; NCP only carries sensor records; Manwe remains a simulated tracking
+  baseline. No vision-language-action results exist.
+- **Where Wibral-line PID can add value.** Expected log-loss decisions about adding or losing a
+  sensor reduce to subset mutual information, so they need no PID. The supported niche is an
+  offline, low-arity categorical MGW audit next to task loss and conditional mutual information,
+  and the fault-consistency reading of MGW events in the new fault-tolerance note. Neither yet shows
+  a measured advantage on deployed sensors.
 
 **Process lessons from this session.**
 
