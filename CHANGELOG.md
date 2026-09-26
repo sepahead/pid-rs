@@ -10,16 +10,18 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Strengthen the research SMT and fault-tolerance comparison checkers: reject solver errors and
   extra results, validate positive lattice coefficients, and reject nonfinite or malformed
   categorical inputs before aggregation. Retain causal regression controls and the original
-  finite results; correct the formal-package count and correspondence scope in both reports.
-
+  finite results. Correct the active summaries and PDF: a bounded statement review found no
+  counterexample to the inspected claims; it did not establish a defect-free verification pipeline.
+  Separate synthetic protocol tests, actual solver execution, and toolchain trust assumptions.
+  Preserve spaces in long inline PDF commands and check the complete Cargo command on extraction.
 
 - Add a semantic audit of the formal packages to the cross-implementation re-verification report
-  (Section 14, with PDF). For the 13 Lean packages and two SMT packages, every checked statement
-  matches its prose, no checked premise set is contradictory, and the accepted sources use only the
-  standard axioms. Every SMT file is unsat and its background without the negated goal is sat;
-  the new fail-closed `check_smt_obligations.py` checks this and that the PID3 zeta sums equal the
-  MGW down-sets of all 18 antichains, and `run.sh` now runs it. The target-copy publication record
-  is updated to its current bytes and v5 profile.
+  (Section 14, with PDF). The review covers 14 Lean directories and two SMT packages at the
+  recorded commit. It found no counterexample to the inspected statements or their correspondence
+  with the prose; it did not replay the Lean proofs or establish checker soundness. The nine SMT
+  files return unsat with satisfiable backgrounds. The corrected `check_smt_obligations.py` also
+  checks the positive PID3 down-set sums of all 18 antichains; Section 14.7 records the defects in
+  its first version. The target-copy publication record is updated to its current bytes and v5 profile.
 
 - Render the cross-implementation re-verification PDF in the repository's shared report design
   (`pid-rs-report-tables.sty` and `pid-rs-workflow-publication.sty`), with its builder and checker

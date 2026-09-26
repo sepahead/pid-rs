@@ -27,8 +27,8 @@
   ],
   "files": {
     "REVIEW.md": {
-      "bytes": 15842,
-      "sha256": "e29820ac333a7e01dc2285f52a0900cc82c1789d61e1649afe1ee9b259910093"
+      "bytes": 17613,
+      "sha256": "2d47d9a9336dd2c2e899f0a2d8ae02788dba48091a8a3c8a68d6ae8a75b80289"
     },
     "inputs/continuous_dump.json": {
       "bytes": 167825,
@@ -117,6 +117,10 @@
     "results/checker_self_test.txt": {
       "bytes": 748,
       "sha256": "2451176633af6c48f08263a9135a72db3459dd7f3a32c696feba67538e863466"
+    },
+    "results/claim-scope-clarification-visual-review.json": {
+      "bytes": 3215,
+      "sha256": "966793ce16ae5e1c8becda5f7734996b1ef790cb6dc813dd567325a85da9d19a"
     },
     "results/publication-profile-rebuilds.txt": {
       "bytes": 3194,

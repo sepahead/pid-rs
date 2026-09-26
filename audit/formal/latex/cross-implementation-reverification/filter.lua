@@ -84,6 +84,8 @@ function Code(element)
     return element
   end
   local escaped = latex_escape(text)
+  -- seqsplit drops literal spaces; retain the control spaces used by Pandoc's code spans.
+  escaped = escaped:gsub(" ", "\\ ")
   escaped = escaped:gsub("::", "::\\allowbreak{}")
   escaped = escaped:gsub("\\_", "\\_\\allowbreak{}")
   escaped = escaped:gsub("%-", "-\\allowbreak{}")

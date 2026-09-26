@@ -146,26 +146,29 @@ the three prefix-MGW packages; the author session re-checked the remaining items
 |---|---|---|
 | F1. The target-copy publication record named the Markdown (33,464 bytes) and PDF (182,631 bytes) from before the author credit of 23 September 2026 and the v4 profile; the current files are 33,501 and 182,625 bytes under the v5 profile | Minor | Corrected in commit `e1e0b81`; v4 kept as the historical profile; the all-page visual review is limited to the v4 bytes |
 
-No other finding. Confirmed without change: the MGW event, order and Möbius algebra in the Lean
+The audit then reported no other finding. This historical observation is superseded by the
+checker findings below; it must not be read as a guarantee of a defect-free verification pipeline.
+The inspected mathematical objects were unchanged: the MGW event, order and Möbius algebra in the Lean
 contracts; the fixed-world, target-copy and fixture values; the 19 KSG harmonic theorems and their
 digamma premise; the declaration and target counts quoted in the documents; the negative controls;
 and, for all nine SMT files, an unsat complete file with a satisfiable background.
 
-Gates for the commit that adds this section:
+Historical gates for `b86342c`, which added this section. These results describe its 21-page PDF,
+not the current 22-page revision:
 
 All gates ran on 26 September 2026 on macOS 26.5.1 arm64. Hosted CI is recorded separately
 after the push.
 
 | Gate | Scope | Outcome |
 |---|---|---|
-| Rust gates | This commit changes no Rust source | Not rerun |
-| SMT obligation check on the current tree, then two hostile mutations | This commit | Passed; both mutations rejected |
-| `run.sh` on `e1e0b81` | This commit | Passed; all nine retained outputs matched byte for byte |
-| PDF checker, exact and cross-toolchain modes | This commit | Passed; 21 pages and 43 URI links |
-| Formal-PDF set inventory and self-test | This commit | Passed; 186 typed-inventory controls |
-| Lean toolchain freeze, normal and optimized; certified SxPID2 claim | This commit | Passed after the changed documents were re-pinned |
-| Markdown math; method catalog; review evidence, normal and optimized, with its self-test | This commit | Passed |
-| Publication links, normal and optimized; current source state | This commit, staged | Passed |
+| Rust gates | `b86342c` changes no Rust source | Not rerun |
+| SMT obligation check on the current tree, then two hostile mutations | `b86342c` | Passed; both mutations rejected |
+| `run.sh` on `e1e0b81` | `b86342c` | Passed; all nine retained outputs matched byte for byte |
+| PDF checker, exact and cross-toolchain modes | `b86342c` | Passed; 21 pages and 43 URI links |
+| Formal-PDF set inventory and self-test | `b86342c` | Passed; 186 typed-inventory controls |
+| Lean toolchain freeze, normal and optimized; certified SxPID2 claim | `b86342c` | Passed after the changed documents were re-pinned |
+| Markdown math; method catalog; review evidence, normal and optimized, with its self-test | `b86342c` | Passed |
+| Publication links, normal and optimized; current source state | `b86342c`, staged | Passed |
 
 ## Follow-up rejection review (26 September 2026)
 
@@ -177,3 +180,24 @@ Section 14.7 records the disposition. These are evidence-chain defects. The reta
 files, empirical inputs, estimator values and original dated execution records are unchanged.
 The earlier package count is corrected to 14 directories. New rejection controls supplement the
 original two SMT controls; agreement of reviewers is not proof of complete checker soundness.
+
+## Active-claim clarification (26 September 2026)
+
+A subsequent source review found that the summary still implied a defect-free formal pipeline.
+The summary, handoff and changelog now distinguish the bounded statement review from the later
+checker defects. Section 14 also distinguishes forbidden proof constructs from their names in
+comments, and background satisfiability from correctness of the encoded claim.
+
+The tool-trust review found no production solver mock or weakened SMT statement in `a5ebef7`.
+It identified two limits of the standalone auxiliary route: caller-owned solver/interpreter
+provenance and no complete theorem-body pinning. Section 14.6 gives a source-derived wrong-target
+example and identifies the separate canonical source-pin gates. These observations are model
+review, not a fresh solver run or an authentication claim. Synthetic self-test responses remain
+explicitly separate from actual solver evidence. No theorem source, premise, axiom allowance,
+numerical tolerance or historical execution output changes in this clarification.
+
+The rendered-page review also found that the long inline Cargo command lost its spaces in PDF
+projection. The two report filters now preserve those spaces before TeX line splitting; the
+cross-report PDF check requires the complete spaced command. The Markdown command was correct.
+The review also replaced a split short code token with equivalent prose. These are publication
+repairs, with no change to the scientific execution records.

@@ -9,7 +9,7 @@ HEADER="$ROOT/audit/formal/latex/cross-implementation-reverification/publication
 FILTER="$ROOT/audit/formal/latex/cross-implementation-reverification/filter.lua"
 TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
 CHECK_NAME="Cross-implementation re-verification PDF check"
-EXPECTED_PAGES="21"
+EXPECTED_PAGES="22"
 MODE="${1:---exact}"
 
 if [[ $# -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then
@@ -116,6 +116,7 @@ validate_pdf() {
       'Rust implementation and computational cost' \
       'Routes considered' \
       'Semantic audit of the formal packages' \
+      'cargo test --locked --release -p pid-core --all-features' \
       'Levina and Bickel' \
       'A. Makkeh, A. J. Gutknecht and M. Wibral (2021)'; do
     grep -Fq "$sentinel" "$normalized_text" || {

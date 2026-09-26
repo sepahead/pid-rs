@@ -580,7 +580,7 @@ Each route lists its assumption, the decision and what would change it.
 6. **Single-sensor average.** *Assumption:* one faulty sensor affects one term. *Decision:*
    baseline; it was the most robust non-constant forecast under worst-case faults.
 7. **Fault-aware Bayes forecast.** *Assumption:* the fault model is known. *Decision:* used as an
-   oracle; it is not available in practice.
+   oracle for the injected channel. Deployment would require a justified or estimated fault model.
 8. **Consistency forecast from MGW threshold events.** *Decision:* **selected** as the object of
    study. *Would change if:* it lost to simpler forecasts under random faults on new recordings.
 9. **Minimax forecast for worst-case faults.** *Decision:* not attempted; it needs a different

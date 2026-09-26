@@ -21,7 +21,8 @@ their dated observations. Verify current Git and hosted state before acting on i
 | `d5ed6f0` | [Fault-tolerance research note](audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md), its PDF, Lean file and experiment |
 | `4295d1b` | Ecosystem and physical-intelligence status, and the hosted result for `d5ed6f0` |
 | `e1e0b81` | Target-copy publication record updated to its current bytes and v5 profile |
-| The commit that adds the formal-package audit | [Semantic audit of the 14 Lean directories and two SMT packages](audit/evidence/cross-implementation-reverification-2026-09-26.md#14-semantic-audit-of-the-formal-packages), its SMT background check and the rebuilt PDF |
+| `b86342c` | [Semantic audit of the 14 Lean directories and two SMT packages](audit/evidence/cross-implementation-reverification-2026-09-26.md#14-semantic-audit-of-the-formal-packages), its SMT background check and the rebuilt PDF |
+| `a5ebef7` | Correct solver-output and lattice-coefficient checks, reject malformed threshold-comparison inputs, retain causal controls, and rebuild both affected PDFs |
 
 **Hosted checks.** All 47 jobs of the main CI run for `d5ed6f0` passed, including the formal
 PDF inventory and the four-hour KSG integer-harmonic job; its four specialized workflows passed too.
@@ -39,9 +40,10 @@ PDF inventory and the four-hour KSG integer-harmonic job; its four specialized w
   random and stuck faults on the office recordings; it lost to the constant prior under worst-case
   faults and, with too small a budget, under random faults. The profile $f\mapsto\mathrm{FT}_f$ is
   not monotone in general. These are development results on previously examined recordings.
-- A semantic audit of the 14 Lean directories and two SMT packages found no mathematical or formal defect:
-  statements match their prose, no checked premise set is contradictory, and every SMT background
-  is satisfiable. Only the target-copy publication record was stale; it is corrected.
+- A bounded review of 14 Lean directories and two SMT packages found no counterexample to the
+  inspected statements or their correspondence with the prose. It did not replay the Lean proofs
+  or establish checker soundness. Follow-up tests found real evidence-checker defects, now fixed
+  (Section 14.7 of the report). The target-copy publication record also needed a hash update.
 - New PDFs should use the shared report design (`publication.tex` template with
   `pid-rs-report-tables.sty` and `pid-rs-workflow-publication.sty`), as the two new PDFs do.
 
@@ -50,6 +52,8 @@ checks found solver-output and coefficient-validation gaps in its new SMT checke
 and row-shape gaps in the fault-tolerance down-set checker. The corrections and causal controls
 are described in Section 14.7 of the re-verification report. They do not close SxPID3 or establish
 sensor-fusion superiority. The count is 14 Lean directories, including the root `lean` package.
+Synthetic solver responses in protocol tests are not theorem evidence. Actual solver results
+remain conditional on the solver and host; a version string does not authenticate either.
 
 **Open, unchanged.** SxPID3 Programs A–E closed remains 0 of 5 under
 [decision-v3](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md). The closable next items are

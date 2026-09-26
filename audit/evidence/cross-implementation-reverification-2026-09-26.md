@@ -44,15 +44,17 @@ The main results are:
 6. **One citation correction.** pid-rs attributed its $k-2$ intrinsic-dimension normalization to
    MacKay and Ghahramani (2005). The primary source is Levina and Bickel (2004), Section 3, below
    their Equation (8). The estimator and its outputs do not change (Section 9).
-7. **Formal packages.** A semantic audit of the 14 Lean directories and the two SMT packages found no
-   mathematical or formal defect. Every checked statement matches its prose, no checked premise set
-   is contradictory, and every SMT background is satisfiable. One publication record named stale
-   file hashes; it is corrected (Section 14).
+7. **Formal packages and checker defects.** A bounded review of 14 Lean directories and two SMT
+   packages found no counterexample to the inspected statements or their correspondence with the
+   prose. It did not replay Lean proofs or establish checker soundness. Follow-up tests found
+   solver-output, lattice-coefficient and malformed-input gaps in two evidence checkers; these are
+   fixed without changing the original theorem files or retained estimator outputs (Section 14.7).
+   The target-copy publication record also needed a hash update (Section 14.5).
 
-Apart from the percentile defect, no defect was found in any checked formula, lattice, estimator
-implementation, or proof step. This result is bounded. It does not establish estimator
-calibration, consistency, population validity, or application value. Section 1 states the scope,
-the evidence classes and the limits of independence.
+The bounded implementation comparisons found no other estimator defect. This is not a claim that
+all formulas, proofs or verification tools are error-free. It does not establish estimator
+calibration, consistency, population validity or application value. Section 1 states the scope,
+evidence classes and limits of independence.
 
 ## 1. Scope, objects and evidence
 
@@ -954,8 +956,8 @@ A formal proof shows that a Lean theorem or an SMT obligation follows from its p
 not show that the statement means what the prose says. This section records a separate audit of
 that correspondence for the 14 Lean directories under `audit/formal/lean*` and the two SMT packages
 `audit/formal/z3` and `audit/formal/z3-ksg-harmonic`, on commit `e1e0b81`. The author session performed the audit. Model-review sessions contributed the
-checks that the table attributes to them. The audit did not re-run the Lean replays; hosted CI
-runs them.
+checks that the table attributes to them. The audit did not re-run the Lean replays. Each package's
+own record defines its replay coverage; this report grants no new local or hosted Lean acceptance.
 
 ### 14.1 Questions asked of every package
 
@@ -966,16 +968,19 @@ runs them.
    order is $\beta\preceq\alpha$ when every set in $\alpha$ contains a set in $\beta$. The atoms are
    the Möbius inverse of the cumulative terms.
 3. Can the premises be satisfied? A theorem with contradictory premises is true but empty.
-4. Is the trust base clean? Accepted sources must not contain `sorry`, an axiom declaration,
-   `native_decide`, `implemented_by`, `extern` or `unsafe`, and axiom audits may list only
-   `propext`, `Classical.choice` and `Quot.sound`.
+4. Is the trust base clean? Accepted proofs must not rely on `sorry`, new axiom declarations,
+   `native_decide` or proof-replacing `implemented_by`, `extern` or `unsafe` hooks. Axiom audits
+   of the checked project exports may list only `propext`, `Classical.choice` and `Quot.sound`.
 
 ### 14.2 Mechanical scan
 
-No accepted Lean source contains any of the tokens above. The only `sorry` and axiom declarations
-are in `audit/formal/lean-mgw-fixed-world/negative`. Its nine
+At `e1e0b81`, the source review reported no use of those forbidden proof constructs in accepted
+declarations. Comments and diagnostic strings do contain their names; a literal token-absence
+claim would be false. A lexical scan does not replace a dependency axiom audit or kernel replay.
+The deliberate `sorry` and axiom fixtures are in
+`audit/formal/lean-mgw-fixed-world/negative`. Its nine
 mutation controls change one theorem each: a weakened statement, a redefined target, a renamed or
-re-kinded declaration, a wrapped statement, an injected or imported axiom, and a `sorry`. The judge
+re-kinded declaration, a wrapped statement, an injected or imported axiom, and an unfinished proof. The judge
 must reject each of them. The pinned Lean 4.33.0 contains the fix for Lean issue 14576, a kernel
 soundness bug fixed on 28 July 2026, and the repository retains its upstream regression test.
 
@@ -997,7 +1002,7 @@ soundness bug fixed on 28 July 2026, and the repository retains its upstream reg
 | `lean-prefix-mgw-gradient` | Eleven targets against the local acceptance record | Consistent |
 | `lean-prefix-mgw-mean` | Three targets against the acceptance record | Consistent |
 | `lean-ksg-harmonic` | 19 theorems; the digamma premise $\psi(m)=H_{m-1}-\gamma$, which the true digamma satisfies; the exclusive argument $n+1$; the range rewrite; the sharp bound $\lvert t\rvert\le H_{N-1}-H_{k-1}$; the count ranges, which are explicit premises | Faithful |
-| SMT, nine files | Each complete file is unsat under Z3 4.16.0; each background without its negated goal is sat, so no unsat result is vacuous; the PID3 zeta sums equal the MGW down-sets of all 18 antichains | Faithful |
+| SMT, nine files | Each complete file is unsat under Z3 4.16.0; each background without its negated goal is sat, ruling out an inconsistent background for those queries; the PID3 zeta sums equal the MGW down-sets of all 18 antichains | Faithful |
 
 For the three prefix-MGW packages, model-review sessions checked the contract-to-target match and
 the quoted values and figures; the judges enforce the alias-to-target match.
@@ -1039,6 +1044,22 @@ a line-by-line review of every proof, and it does not re-run the Lean replays. A
 matches its prose does not establish estimator calibration, population validity or a Rust
 refinement; each package states those boundaries itself.
 
+**Tool trust.** The SMT checker invokes `z3` from `PATH` and checks its version response. This is
+not binary authentication. Its conclusions assume a sound solver and an uncompromised execution
+environment, including the Python interpreter and its imports. This report supplies no separately
+checked SMT proof certificate. A satisfiable background excludes contradictory premises in the
+checked encoding, not an incorrectly encoded claim.
+
+This auxiliary checker does not pin every theorem body. For example, replacing the sole PID2
+reconstruction assertion with `(assert (not true))` forces `unsat` while its unchanged declarations
+remain satisfiable. The auxiliary profile and report would still match. This is a source-derived
+wrong-target example, not an alteration of the retained files or a newly executed test. The
+separate repository SMT gates bind the reviewed source hashes and reject that replacement; CI
+also checks the downloaded Z3 archive's hash. Changing a statement and its expected hash together
+requires renewed semantic review. Lean evidence likewise depends on the recorded kernel,
+dependencies and allowed axioms. Statement correspondence and Rust refinement remain separate
+obligations.
+
 ### 14.7 Follow-up: checker rejection gaps
 
 A subsequent independent-first source review and copied-input tests found two defects in the new
@@ -1054,6 +1075,10 @@ controls retain the original failures. The nine original SMT files are unchanged
 concern the evidence checker, not a counterexample to those files. The package table contains 14
 Lean directories: the 13 `lean-*` directories and `lean` itself. The earlier count of 13 omitted
 this distinction.
+
+The protocol self-test uses mocked process responses to test rejection and reporting. It does
+not launch Z3 and provides no theorem evidence. Actual solver runs and semantic mutations are
+separate checks. Passing a finite mutation suite does not prove complete checker soundness.
 
 The companion fault-tolerance down-set check also accepted nonfinite JSON atoms and silently
 truncated unequal row lists. It now validates finite numbers, row shapes, category types and the

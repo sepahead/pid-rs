@@ -1,0 +1,107 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "date": "2026-09-26",
+  "findings_fixed": [
+    "The broad no-defect summary now states the bounded audit and later checker failures.",
+    "Comment mentions are separated from forbidden proof constructs.",
+    "Solver/interpreter trust, exact-source binding and mock/real execution boundaries are explicit.",
+    "The PDF Cargo command retains its spaces; the short split proof-hole token was replaced with prose.",
+    "Fault-aware Bayes is available when a fault model can be justified or estimated."
+  ],
+  "high_resolution_pages": {
+    "cross-implementation-reverification": [
+      18,
+      19,
+      20,
+      21
+    ],
+    "fault-tolerant-shared-exclusions": [
+      12
+    ]
+  },
+  "limits": "Visual review cannot establish mathematics, complete renderer correctness, link safety or deterministic reproduction. The existing exact publication, source and link gates supply their own bounded evidence. Physical print and a separate grayscale render were not reviewed; unchanged design and visible luminance contrast were inspected.",
+  "negative_results_preserved": "Original checker-failure records and solver outputs remain unchanged. The wrong-target example is source-derived, not presented as a fresh solver run.",
+  "normal_page_coverage": {
+    "cross-implementation-reverification": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "fault-tolerant-shared-exclusions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  "pdfs": {
+    "output/pdf/cross-implementation-reverification.pdf": {
+      "bytes": 487094,
+      "pages": 22,
+      "sha256": "db1d4c76a3403fb472d04eeb70043c65ee0162ca6d3f0143b528a6720db35123"
+    },
+    "output/pdf/fault-tolerant-shared-exclusions.pdf": {
+      "bytes": 425613,
+      "pages": 14,
+      "sha256": "126d41df2607b97ac71ebd04d6b1c81fb0835de84a84aa72d86c536d48c5701e"
+    }
+  },
+  "render_dpi": {
+    "high": 160,
+    "normal": 96
+  },
+  "review_class": "Same-system model visual/source review; not human, institutional or mathematical verification.",
+  "schema": "pid-rs.publication-claim-clarification-visual-review.v1",
+  "successor_review": "All36 first-build pages were inspected. Final normal renders changed only cross9/19/20; these were reinspected and all33 other images were byte-identical to those already reviewed. Final high-risk renders were also inspected.",
+  "visual_lenses": [
+    "hierarchy",
+    "typography",
+    "grid",
+    "spacing and rhythm",
+    "narrative order",
+    "motif provenance",
+    "motif coherence",
+    "ornamental restraint",
+    "palette identity",
+    "pattern/data-semantic separation",
+    "color-redundant labels",
+    "grayscale legibility",
+    "searchability and extraction order",
+    "print fidelity",
+    "A4 profile and fonts",
+    "link and action safety",
+    "deterministic reproduction",
+    "source and asset separation",
+    "portable dependencies",
+    "normal and high-resolution inspection"
+  ]
+}
