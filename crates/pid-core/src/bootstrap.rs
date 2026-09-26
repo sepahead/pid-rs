@@ -306,9 +306,11 @@ pub struct ResamplingDistributionSummary {
     /// Sample standard deviation of the resampling distribution. This is a descriptive spread,
     /// not a generic calibrated standard error.
     pub resample_standard_deviation: f64,
-    /// Lower raw empirical percentile at `alpha / 2`.
+    /// Lower raw empirical percentile at `alpha / 2`: the sorted replicate with zero-based index
+    /// `trim = floor((alpha / 2) * n_boot)`, evaluated in binary64.
     pub percentile_lower: f64,
-    /// Upper raw empirical percentile at `1 - alpha / 2`.
+    /// Upper raw empirical percentile at `1 - alpha / 2`: the sorted replicate with zero-based
+    /// index `n_boot - 1 - trim`, so both tails drop the same number of replicates.
     pub percentile_upper: f64,
 }
 
@@ -533,6 +535,24 @@ pub fn block_bootstrap_paired_resource_estimate(
     bootstrap_resource_estimate_impl("block_bootstrap_paired", data_len, cfg, 2, budget, callback)
 }
 
+/// Zero-based order-statistic indices of the equal-tailed raw percentile range.
+///
+/// For `len` sorted values and a two-sided tail mass `alpha` in `(0, 1)`, this computes one tail
+/// count `trim = floor((alpha / 2) * len)` in binary64 and returns `(trim, len - 1 - trim)`. In
+/// exact arithmetic the usual pair `floor(len * alpha / 2)` and `ceil(len * (1 - alpha / 2)) - 1`
+/// also drops `floor(len * alpha / 2)` values from each end, because `ceil(len - x) = len -
+/// floor(x)` for every real `x`. Evaluating the two expressions separately in binary64 can make
+/// them differ by one: `alpha = 0.29` with `len = 200` gave 28 values below and 29 above.
+/// Deriving the upper index from the same count keeps the tails equal by construction. The count
+/// is clamped to `(len - 1) / 2`, which exact arithmetic already implies for `alpha < 1`, so the
+/// range is never inverted by rounding.
+pub(crate) fn equal_tail_percentile_indices(alpha: f64, len: usize) -> (usize, usize) {
+    debug_assert!(len > 0, "percentile indices need at least one value");
+    debug_assert!(alpha > 0.0 && alpha < 1.0, "alpha must lie in (0, 1)");
+    let trim = (((alpha / 2.0) * len as f64).floor() as usize).min((len - 1) / 2);
+    (trim, len - 1 - trim)
+}
+
 fn summarize_bootstrap(
     context: &'static str,
     original_row_count: usize,
@@ -562,10 +582,7 @@ fn summarize_bootstrap(
         values.sort_by(f64::total_cmp);
         let (resample_mean, resample_standard_deviation) =
             finite_mean_std_sample(&values, context)?;
-        let lo_idx = ((cfg.alpha / 2.0) * values.len() as f64).floor() as usize;
-        let hi_idx = (((1.0 - cfg.alpha / 2.0) * values.len() as f64).ceil() as usize)
-            .saturating_sub(1)
-            .min(values.len() - 1);
+        let (lo_idx, hi_idx) = equal_tail_percentile_indices(cfg.alpha, values.len());
         Some(ResamplingDistributionSummary {
             resample_mean,
             resample_standard_deviation,
@@ -924,6 +941,59 @@ mod tests {
                 BootstrapReplicateStatus::Failed { .. } => panic!("unexpected failed replicate"),
             })
             .collect()
+    }
+
+    #[test]
+    fn percentile_indices_drop_equal_tails() {
+        // Separate binary64 evaluation of floor(len * alpha / 2) and
+        // ceil(len * (1 - alpha / 2)) - 1 dropped 28 values below and 29 above here.
+        assert_eq!(equal_tail_percentile_indices(0.29, 200), (28, 171));
+        assert_eq!(equal_tail_percentile_indices(0.018, 3000), (26, 2973));
+        assert_eq!(equal_tail_percentile_indices(0.05, 1000), (25, 974));
+        assert_eq!(equal_tail_percentile_indices(0.05, 2), (0, 1));
+        assert_eq!(equal_tail_percentile_indices(0.999_999, 1), (0, 0));
+        for hundredths in 1..100_u32 {
+            let alpha = f64::from(hundredths) / 100.0;
+            for len in 1..=2_000_usize {
+                let (lower, upper) = equal_tail_percentile_indices(alpha, len);
+                assert!(lower <= upper && upper < len, "alpha={alpha} len={len}");
+                assert_eq!(lower + upper, len - 1, "alpha={alpha} len={len}");
+                // The lower index is the previous floor((alpha / 2) * len) value.
+                let previous_lower = ((alpha / 2.0) * len as f64).floor() as usize;
+                assert_eq!(lower, previous_lower, "alpha={alpha} len={len}");
+            }
+        }
+    }
+
+    #[test]
+    fn percentile_summary_uses_equal_tails() {
+        let data: Vec<f64> = (0..64).map(|i| ((i * 37) % 64) as f64).collect();
+        let cfg = BootstrapConfig {
+            n_boot: 200,
+            block_size: 4,
+            seed: 11,
+            alpha: 0.29,
+            validity: independent_validity(),
+        };
+        // Position weights make distinct resamples give distinct statistics.
+        let result = run_bootstrap(&data, &cfg, |sample| {
+            sample
+                .iter()
+                .enumerate()
+                .map(|(position, value)| value * ((position + 1) as f64).sqrt())
+                .sum::<f64>()
+        })
+        .expect("bootstrap succeeds");
+        let mut values: Vec<f64> = complete_values(&result)
+            .into_iter()
+            .map(f64::from_bits)
+            .collect();
+        values.sort_by(f64::total_cmp);
+        let summary = result.summary.expect("every replicate completes");
+        // The previous separate upper formula selected index 170; the fixture separates the two.
+        assert!(values[170] < values[171]);
+        assert_eq!(summary.percentile_lower.to_bits(), values[28].to_bits());
+        assert_eq!(summary.percentile_upper.to_bits(), values[171].to_bits());
     }
 
     #[test]

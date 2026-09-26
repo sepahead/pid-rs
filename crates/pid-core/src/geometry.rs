@@ -2,10 +2,10 @@
 //!
 //! # Method provenance and availability
 //!
-//! **PAPER-DERIVED.** Intrinsic dimension uses a Levina–Bickel MLE-style estimator with the
-//! MacKay–Ghahramani correction. Default-metric code is available on the stable diagnostics
-//! surface; Lorentz-distance variants require `experimental-hyperbolic`. Reports are diagnostics,
-//! not proofs of estimator validity.
+//! **PAPER-DERIVED.** Intrinsic dimension uses a Levina–Bickel MLE-style estimator with their
+//! `k - 2` normalization and an arithmetic mean of the local estimates. Default-metric code is
+//! available on the stable diagnostics surface; Lorentz-distance variants require
+//! `experimental-hyperbolic`. Reports are diagnostics, not proofs of estimator validity.
 //!
 //! Method catalog: diagnostics.intrinsic-dimension
 //!
@@ -519,7 +519,7 @@ fn validate_distance_concentration_structure(x: MatRef<'_>) -> PidResult<()> {
 pub struct IntrinsicDimConfig {
     /// Number of nearest neighbors to use for the Levina–Bickel MLE-style estimator.
     ///
-    /// Requirements: `k >= 3` (the MacKay–Ghahramani `k-2` normalisation needs it) and `n > k`.
+    /// Requirements: `k >= 3` (the Levina–Bickel `k-2` normalization needs it) and `n > k`.
     pub k: usize,
     pub metric: Metric,
 }
@@ -638,11 +638,14 @@ impl IntrinsicDimConfig {
 ///
 /// and the returned estimate is the mean of `m_i` over all samples.
 ///
-/// The `1/(k-2)` normalisation is the MacKay–Ghahramani bias correction ("Comments on 'Maximum
-/// Likelihood Estimation of Intrinsic Dimension'", 2005): under Levina–Bickel's own Poisson
-/// approximation, `Σ_{j<k} ln(T_k/T_j) ~ Gamma(k-1, m)`, so the original `(k-1)/Σ` pointwise
-/// estimator has mean `m·(k-1)/(k-2)` (+12.5% bias at the default `k = 10`); dividing by `k-2`
-/// makes each `m_i` unbiased. This matches standard implementations (e.g. scikit-dimension).
+/// The `1/(k-2)` normalization is stated by Levina and Bickel (2004, Section 3, below their
+/// Eq. (8)): "One could divide by k − 2 rather than k − 1 to make the estimator asymptotically
+/// unbiased, as we show below." Under their local Poisson-process approximation,
+/// `Σ_{j<k} ln(T_k/T_j) ~ Gamma(k-1, m)` with rate `m`, so the `(k-1)/Σ` pointwise estimator has
+/// mean `m·(k-1)/(k-2)` (+12.5% at the default `k = 10`), and `(k-2)/Σ` has mean `m`. Their
+/// Eq. (9) averages the local estimates arithmetically (and also averages over a range of `k`;
+/// this function uses one `k`). MacKay and Ghahramani (2005) instead recommend averaging the
+/// inverse local estimates; this implementation keeps the arithmetic mean of `m_i`.
 ///
 /// Notes:
 /// - Every positive `k`-th-neighbor shell must be unique: exactly `k - 1` points must be strictly
@@ -885,7 +888,7 @@ fn intrinsic_dimension_report_with_kernel_and_cancellation(
             s += stable_log_ratio(tk, tj);
         }
 
-        // MacKay–Ghahramani correction: normalise by k-2 (= kth-1), not k-1 (see doc comment).
+        // Levina–Bickel k-2 normalization: divide by k-2 (= kth-1), not k-1 (see doc comment).
         let denom = s / ((kth - 1) as f64);
         if denom <= 0.0 || !denom.is_finite() {
             return Err(PidError::NumericalInstability {

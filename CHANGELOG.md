@@ -7,6 +7,29 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Fix unequal percentile tails in the resampling summaries. `block_bootstrap`,
+  `block_bootstrap_paired`, `bootstrap_rows_stats` and `bootstrap_quantized_sxpid2`, with their
+  `_with_budget` and `_with_cancellation` variants, computed the lower and upper order-statistic
+  indices with two separate binary64 expressions. These could drop one more replicate from one
+  tail than from the other: `alpha = 0.29` with `n_boot = 200` dropped 28 below and 29 above, and
+  22 of the 99 two-decimal `alpha` values have such an `n_boot` at or below 20,000. One helper now
+  computes the tail count `floor((alpha / 2) * n_boot)` once, as a rounded binary64 product, and
+  drops it from both ends. In exact arithmetic the old pair also dropped equal counts, because
+  `ceil(B - x) = B - floor(x)`; the new form keeps that property under rounding. Lower percentiles
+  are unchanged, and an upper percentile changes only where the tails were unequal. Apart from the
+  new tests, every repository call site and test uses `alpha = 0.05` or `0.1`, for which both forms
+  agree for every `n_boot` up to 20,000. The three new tests fail on the previous form. The compiled-out `bootstrap_pid3`
+  block uses the same helper. Because the product is rounded, the tail count can be one below the
+  decimal value that a caller writes (28, not 29, for the example above).
+
+- Correct the intrinsic-dimension provenance locator: Levina and Bickel (2004) state the `k - 2`
+  normalization in Section 3, below their Equation (8), not in Section 2, and their Equation (9)
+  averages the local estimates arithmetically. The quoted sentence now ends as in the paper. The
+  catalog, generated method tables, their semantic authority and every dependent hash are
+  regenerated; the estimator is unchanged. This supersedes the MacKay and Ghahramani attribution
+  in the 0.4.0 entry below. The recorded-office v6 and finite-MGW v9 input profiles pin the
+  regenerated `METHODS.md`; their PDF references are unchanged.
+
 - Preserve and explain the negative recorded-office OR-forecast comparison, with its
   categorical MGW definition, all five fixed baselines, portable reproduction and a new
   pooling diagram. Keep same-law redundancy separate from prediction on another recording;

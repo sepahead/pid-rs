@@ -212,8 +212,8 @@ fn intrinsic_dimension_rejects_positive_tie_crossing_kth_shell() {
 
 #[test]
 fn intrinsic_dimension_rejects_k_two_tied_shell_fixture() {
-    // At x=2 the non-self distances are exactly 1,1,2,2. The bias-corrected
-    // Levina--Bickel/MacKay--Ghahramani estimator itself requires k >= 3, so the audit's k=2
+    // At x=2 the non-self distances are exactly 1,1,2,2. The k-2-normalized
+    // Levina--Bickel estimator itself requires k >= 3, so the audit's k=2
     // fixture is rejected at configuration validation; the k=3 test above separately proves that
     // a positive tied boundary is rejected by the shell contract.
     let data = [0.0, 1.0, 2.0, 3.0, 4.0];

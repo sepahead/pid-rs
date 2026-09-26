@@ -79,18 +79,22 @@ This was a citation defect, not a mathematical counterexample or a proof failure
 
 ## Current reference and publication controls
 
-The current [v8 input profile](../latex/mgw-fixed-world/publication-inputs-v8.json)
+The current [v9 input profile](../latex/mgw-fixed-world/publication-inputs-v9.json)
 binds the authored nine-page PDF: 231,810 bytes, SHA-256
 `6fc4cfbe5bb71037515c4ebdd3119b20e6e970ce6f117e1b9659b44a728b565a`.
-The paper names **Sepehr Mahmoudian** as author. Profiles v1–v7 remain historical;
+The paper names **Sepehr Mahmoudian** as author. Profiles v1–v8 remain historical;
 the earlier citation-only PDF and its execution observations below are distinct.
 An input profile identifies reference bytes; it does not prove their reproduction.
-The v8 profile is a dependency-only successor of the
-[v7 input profile](../latex/mgw-fixed-world/publication-inputs-v7.json). It pins the revised
-recorded-office Markdown, which this paper's source map binds, and keeps every PDF, TeX and
-figure reference of v7. On 25 September 2026, one exact `--check` run under v8 made two fresh
+The v9 profile is a dependency-only successor of the
+[v8 input profile](../latex/mgw-fixed-world/publication-inputs-v8.json). It pins the
+regenerated `METHODS.md` after the intrinsic-dimension provenance correction. The v8 profile was
+itself a dependency-only successor of the
+[v7 input profile](../latex/mgw-fixed-world/publication-inputs-v7.json): it pinned the revised
+recorded-office Markdown, which this paper's source map binds. Both successors keep every PDF, TeX
+and figure reference of v7. On 25 September 2026, one exact `--check` run under v8 made two fresh
 builds; both reproduced the reference PDF bytes above. That run is local execution evidence only.
-It is not hosted evidence, a new all-page visual review or a formal-proof check.
+It is not hosted evidence, a new all-page visual review or a formal-proof check. Selecting v9
+grants no execution credit; a v9 run needs its own retained record.
 The v7 profile recorded focused authorship review. Its retained observation note
 still names v6 and concerns predecessor evidence; it grants no v7 execution,
 native-input recheck or new all-page visual review.

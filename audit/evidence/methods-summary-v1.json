@@ -152,7 +152,7 @@
         ]
       },
       "scientific_novelty_claim": "none",
-      "summary": "Levina-Bickel MLE-style intrinsic-dimension diagnostics with the MacKay-Ghahramani correction.",
+      "summary": "Levina-Bickel MLE-style intrinsic-dimension diagnostics with their k minus 2 normalization and an arithmetic mean of local estimates.",
       "title": "Intrinsic-dimension diagnostics",
       "validation": {
         "evidence_path_count": 1,
@@ -2273,6 +2273,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "2a140ed8af44a477cfe1c6961ae4aac87c7d46238fcd34aaa8b788abf4aa6206"
+    "sha256": "baf01802c727938006173f4afee37356c0a0733f9a9a890cad202cc49927c458"
   }
 }

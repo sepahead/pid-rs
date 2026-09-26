@@ -3264,11 +3264,13 @@ checks do not replace the external caller's custody or rendered-page review.
 
 The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
-`audit/formal/latex/real-occupancy-sensors/publication-inputs-v5.json`; v1–v4 remain historical.
-The v5 successor includes the negative OR-forecast comparison, its portable reproduction
-evidence and the third figure. Profile selection supplies no execution or visual-review
-credit; each successor execution needs its own retained record. Discovery derives the
-pinned TeX body and retains raw commands/streams; it does not adopt its PDF. Exact mode refuses
+`audit/formal/latex/real-occupancy-sensors/publication-inputs-v6.json`; v1–v5 remain historical.
+The v5 successor added the negative OR-forecast comparison, its portable reproduction
+evidence and the third figure. The v6 successor only pins the regenerated `METHODS.md` after the
+intrinsic-dimension provenance correction; its PDF reference is unchanged. Profile selection
+supplies no execution or visual-review credit; each successor execution needs its own retained
+record. Discovery derives the pinned TeX body and retains raw commands/streams; it does not adopt
+its PDF. Exact mode refuses
 until the profile has an admitted reference, then compares fresh raw PDF bytes with that reference.
 `--check` makes two fresh builds. Supply a canonical TeX Live root explicitly; there is no `HOME`
 override. The existing Runner provides per-child limits and attempts cleanup while it retains
@@ -3313,10 +3315,11 @@ bind the citation corrections and Sepehr Mahmoudian author header and byline. Se
 hashes bind each figure PDF. Citation controls retain the author header and change only the label
 or URL; separate Markdown controls reject a missing or changed author and unrelated source changes.
 The current input profile is
-`audit/formal/latex/mgw-fixed-world/publication-inputs-v8.json`; v1–v7 remain historical.
-The v8 profile is a dependency-only successor of v7. It pins the revised recorded-office Markdown,
-which this paper's source map binds, and keeps the v7 authored-paper references unchanged.
-Predecessor observations do not establish execution or native-input custody under v8. Each
+`audit/formal/latex/mgw-fixed-world/publication-inputs-v9.json`; v1–v8 remain historical.
+The v8 profile was a dependency-only successor of v7. It pinned the revised recorded-office
+Markdown, which this paper's source map binds, and kept the v7 authored-paper references. The v9
+profile only pins the regenerated `METHODS.md`; every PDF, TeX and figure reference is unchanged.
+Predecessor observations do not establish execution or native-input custody under v9. Each
 successor execution needs its own exact checks and retained record. The
 [publication entry](../audit/formal/lean-mgw-fixed-world/PUBLICATION.md) separates the
 current reference from the earlier citation-only PDF and records the stale-control failure.

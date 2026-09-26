@@ -72,8 +72,8 @@
 use sha2::{Digest, Sha256};
 
 use crate::bootstrap::{
-    BlockResamplingAlgorithmRevision, BlockResamplingProvenance, BootstrapConfig,
-    CancellationToken, StatisticCallbackDeclaration,
+    equal_tail_percentile_indices, BlockResamplingAlgorithmRevision, BlockResamplingProvenance,
+    BootstrapConfig, CancellationToken, StatisticCallbackDeclaration,
 };
 use crate::concat_horiz;
 use crate::discrete_pid::same_sample_quantized_imin_pid3;
@@ -254,9 +254,11 @@ pub struct Pid3BootstrapAtom {
     /// Sample standard deviation of the resampling distribution; not a generally calibrated kNN
     /// standard error.
     pub resample_standard_deviation: f64,
-    /// Lower raw resampling percentile; not a generally calibrated kNN confidence bound.
+    /// Lower raw resampling percentile; not a generally calibrated kNN confidence bound. It is
+    /// the sorted replicate with zero-based index `trim = floor((alpha / 2) * n_boot)`.
     pub percentile_lower: f64,
-    /// Upper raw resampling percentile; not a generally calibrated kNN confidence bound.
+    /// Upper raw resampling percentile; not a generally calibrated kNN confidence bound. It is
+    /// the sorted replicate with zero-based index `n_boot - 1 - trim` (equal tails).
     pub percentile_upper: f64,
 }
 
@@ -472,10 +474,7 @@ pub fn bootstrap_pid3(
             values.sort_by(f64::total_cmp);
             let m = values.len();
             let (mean, se) = finite_mean_std_sample(&values, "bootstrap_pid3 summary")?;
-            let lo_idx = (((alpha / 2.0) * m as f64).floor() as usize).min(m - 1);
-            let hi_idx = (((1.0 - alpha / 2.0) * m as f64).ceil() as usize)
-                .saturating_sub(1)
-                .min(m - 1);
+            let (lo_idx, hi_idx) = equal_tail_percentile_indices(alpha, m);
             Ok(Pid3BootstrapAtom {
                 antichain: atom.antichain,
                 point_estimate: atom.value,
@@ -2141,10 +2140,12 @@ pub struct RowBootstrapStat {
     /// [`RowResampleScheme::Subsample`] this is the spread of the `m`-sample statistic, not a
     /// calibrated standard error for the `n`-row point estimate.
     pub resample_standard_deviation: f64,
-    /// Lower finite-resample percentile. Under [`RowResampleScheme::Subsample`] this is a raw
+    /// Lower finite-resample percentile: the sorted statistic with zero-based index
+    /// `trim = floor((alpha / 2) * n_boot)`. Under [`RowResampleScheme::Subsample`] this is a raw
     /// `m`-sample diagnostic quantile, not a calibrated confidence bound for the `n`-row estimate.
     pub percentile_lower: f64,
-    /// Upper finite-resample percentile. Under [`RowResampleScheme::Subsample`] this is a raw
+    /// Upper finite-resample percentile: the sorted statistic with zero-based index
+    /// `n_boot - 1 - trim` (equal tails). Under [`RowResampleScheme::Subsample`] this is a raw
     /// `m`-sample diagnostic quantile, not a calibrated confidence bound for the `n`-row estimate.
     pub percentile_upper: f64,
     /// Number of resamples attempted.
@@ -2796,10 +2797,7 @@ where
             values.sort_by(f64::total_cmp);
             let (resample_mean, resample_standard_deviation) =
                 finite_mean_std_sample(values, "bootstrap_rows_stats summary")?;
-            let lo_idx = ((cfg.alpha / 2.0) * values.len() as f64).floor() as usize;
-            let hi_idx = (((1.0 - cfg.alpha / 2.0) * values.len() as f64).ceil() as usize)
-                .saturating_sub(1)
-                .min(values.len() - 1);
+            let (lo_idx, hi_idx) = equal_tail_percentile_indices(cfg.alpha, values.len());
             summaries.push(RowBootstrapStat {
                 point_estimate,
                 resample_mean,
@@ -4945,6 +4943,46 @@ mod tests {
         assert!(statistic.percentile_upper >= statistic.percentile_lower);
         assert!(statistic.percentile_lower <= statistic.point_estimate);
         assert!(statistic.percentile_upper >= statistic.point_estimate);
+    }
+
+    #[test]
+    fn bootstrap_rows_stats_percentiles_drop_equal_tails() {
+        // alpha = 0.29 with n_boot = 200: the previous separate upper formula selected index 170.
+        let values: Vec<f64> = (0..64).map(|i| ((i * 37) % 64) as f64).collect();
+        let matrix = MatRef::new(&values, 64, 1).unwrap();
+        let cfg = BootstrapConfig {
+            n_boot: 200,
+            block_size: 4,
+            seed: 11,
+            alpha: 0.29,
+            validity: independent_validity(),
+        };
+        // Position weights make distinct resamples give distinct statistics.
+        let result = bootstrap_rows_stats(
+            &[matrix],
+            &cfg,
+            RowResampleScheme::BlockBootstrapJitter { jitter_rel: 0.0 },
+            |mats: &[MatRef<'_>]| -> PidResult<Vec<f64>> {
+                let column = mats[0];
+                Ok(vec![(0..column.nrows())
+                    .map(|row| column.row(row)[0] * ((row + 1) as f64).sqrt())
+                    .sum()])
+            },
+        )
+        .unwrap();
+        let mut sorted: Vec<f64> = result
+            .replicates
+            .iter()
+            .map(|replicate| match &replicate.status {
+                RowResampleStatus::Complete { statistics } => statistics[0],
+                _ => panic!("unexpected failed replicate"),
+            })
+            .collect();
+        sorted.sort_by(f64::total_cmp);
+        assert!(sorted[170] < sorted[171]);
+        let statistic = &result.stats.as_ref().unwrap()[0];
+        assert_eq!(statistic.percentile_lower.to_bits(), sorted[28].to_bits());
+        assert_eq!(statistic.percentile_upper.to_bits(), sorted[171].to_bits());
     }
 
     #[test]

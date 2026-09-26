@@ -450,14 +450,14 @@
       ],
       "reference_links": [
         {
-          "locator": "maximum-likelihood intrinsic-dimension estimator",
+          "locator": "maximum-likelihood intrinsic-dimension estimator; Section 3 states the k minus 2 normalization below Equation (8) and averages local estimates arithmetically in Equation (9)",
           "reference_id": "levina-bickel-2004",
           "role": "estimator-paper"
         },
         {
-          "locator": "k minus 2 finite-sample correction",
+          "locator": "proposes averaging inverse local estimates; pid-rs averages the k minus 2 local estimates instead",
           "reference_id": "mackay-ghahramani-2005",
-          "role": "implementation-basis"
+          "role": "caveat"
         }
       ],
       "release_scope_families": [
@@ -474,7 +474,7 @@
       "source_marker_files": [
         "crates/pid-core/src/geometry.rs"
       ],
-      "summary": "Levina-Bickel MLE-style intrinsic-dimension diagnostics with the MacKay-Ghahramani correction.",
+      "summary": "Levina-Bickel MLE-style intrinsic-dimension diagnostics with their k minus 2 normalization and an arithmetic mean of local estimates.",
       "title": "Intrinsic-dimension diagnostics",
       "validation": {
         "evidence_paths": [
