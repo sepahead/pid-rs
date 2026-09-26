@@ -5,7 +5,7 @@
 Cite this report as: Sepehr Mahmoudian (2026). *Cross-implementation re-verification of pid-rs
 estimators and mathematical results.* pid-rs repository report. Include the exact repository commit
 or release that you used. The software citation is in [CITATION.cff](../../CITATION.cff). Cite the
-defining method papers separately; Section 14 lists them.
+defining method papers separately; Section 15 lists them.
 
 ## Summary
 
@@ -43,6 +43,10 @@ The main results are:
 6. **One citation correction.** pid-rs attributed its $k-2$ intrinsic-dimension normalization to
    MacKay and Ghahramani (2005). The primary source is Levina and Bickel (2004), Section 3, below
    their Equation (8). The estimator and its outputs do not change (Section 9).
+7. **Formal packages.** A semantic audit of the 13 Lean packages and the two SMT packages found no
+   mathematical or formal defect. Every checked statement matches its prose, no checked premise set
+   is contradictory, and every SMT background is satisfiable. One publication record named stale
+   file hashes; it is corrected (Section 14).
 
 Apart from the percentile defect, no defect was found in any checked formula, lattice, estimator
 implementation, or proof step. This result is bounded. It does not establish estimator
@@ -63,6 +67,7 @@ the evidence classes and the limits of independence.
 | Raw resampling percentiles | Project-defined summaries | `block_bootstrap`, `block_bootstrap_paired`, `bootstrap_rows_stats`, `bootstrap_quantized_sxpid2` | Exact index analysis; defect fixed with tests | No coverage claim |
 | Levina–Bickel intrinsic dimension | Levina and Bickel (2004) | `intrinsic_dimension_report` | Re-derivation; source check | Diagnostic only |
 | Repository bounds and envelopes | Repository documents listed in Section 8 | Documentation | Re-derivation; exact stress test | No new theorem |
+| Formal packages | Package documents under `audit/formal` | 13 Lean and two SMT packages | Statement-to-prose audit; SMT background test | No proof replay |
 
 Section 11 gives the module paths and feature gates of these functions.
 
@@ -74,9 +79,10 @@ This report uses three evidence classes of the repository's
 - **Execution evidence.** A test or checker bounded to exact inputs, toolchain and assumptions.
   It is not a universal theorem or a general validation result.
 - **Model review.** An AI-assisted session read the code, wrote the second implementation and
-  re-derived the formulas. Two further sessions reported on a draft of this report, and a third
-  stopped before it reported. Two more sessions reviewed the revised draft. This is advisory. It
-  is not human, institutional or independent review.
+  re-derived the formulas. Two further sessions reviewed a draft of this report and one reviewed
+  the revised draft; the author session performed the language and layout lenses and the audit of
+  the formal packages in Section 14. This is advisory. It is not human, institutional or
+  independent review.
 - **Documentation.** Source quotations, retrieval records and the correction record.
 
 No formal proof and no human line review are claimed.
@@ -905,8 +911,7 @@ time on an Apple M4 Max with macOS 26.5.1, rustc 1.96.0, Python 3.14.6 and NumPy
 ## 12. Review record
 
 In the first review round, two model-review sessions reported on a draft: one for mathematics
-and statistics, one for provenance and consistency. A third, for language and layout, stopped
-before it reported. The two reports found five main problems:
+and statistics, one for provenance and consistency. The two reports found five main problems:
 
 - the percentile defect;
 - the wrong explanation of the retired binary64 test;
@@ -914,9 +919,9 @@ before it reported. The two reports found five main problems:
 - an existing four-source oracle test that the draft had missed; and
 - the missing independence record.
 
-A second round of two sessions reviewed the revised draft: one for mathematics and code, and one
-for language, layout and consistency. The second stopped before it reported, so the author session
-performed its lenses. [`REVIEW.md`](cross-implementation-reverification-2026-09-26/REVIEW.md)
+A second session reviewed the revised draft for mathematics and code. The author session
+performed the language, layout and consistency lenses and the formal-package audit of Section 14.
+[`REVIEW.md`](cross-implementation-reverification-2026-09-26/REVIEW.md)
 records every lens, finding and disposition. The repository gates that apply to this change are
 listed there with their outcomes.
 
@@ -930,16 +935,108 @@ audit/evidence/cross-implementation-reverification-2026-09-26/run.sh <commit> <f
 
 The work directory must not exist and must lie outside the checkout. The script exports the commit
 with `git archive` and copies the two generators into that export. It runs the generators with a
-private Cargo target directory. It then runs the four Python checks, the checker self-test and the
-archived binary64 diagnostic. Finally, it compares each output with the retained copy and fails
-on any difference.
-After the outputs were retained, a second run on each commit matched all eight retained outputs
-byte for byte;
+private Cargo target directory. It then runs the four Python checks, the checker self-test, the
+SMT obligation check of Section 14 and the archived binary64 diagnostic. The SMT check needs
+Z3 4.16.0 on the path. Finally, it compares each output with the retained copy and fails on any
+difference.
+After the outputs were retained, a second run on each commit matched all eight retained outputs of
+that time byte for byte. After the SMT check was added, a run on commit `e1e0b81` matched all nine;
 [`results/reproduction-confirmation.txt`](cross-implementation-reverification-2026-09-26/results/reproduction-confirmation.txt)
-records it. [`MANIFEST.json`](cross-implementation-reverification-2026-09-26/MANIFEST.json) lists
+records these runs. [`MANIFEST.json`](cross-implementation-reverification-2026-09-26/MANIFEST.json) lists
 every retained file with its size and SHA-256.
 
-## 14. References
+## 14. Semantic audit of the formal packages
+
+A formal proof shows that a Lean theorem or an SMT obligation follows from its premises. It does
+not show that the statement means what the prose says. This section records a separate audit of
+that correspondence for the 13 Lean packages under `audit/formal/lean*` and the two SMT packages
+`audit/formal/z3` and `audit/formal/z3-ksg-harmonic`, on commit `e1e0b81`. The author session performed the audit. Model-review sessions contributed the
+checks that the table attributes to them. The audit did not re-run the Lean replays; hosted CI
+runs them.
+
+### 14.1 Questions asked of every package
+
+1. Does the formal statement say what the prose claims: the same objects, quantifiers, premises,
+   logarithm base and conventions?
+2. Do the definitions match the defining source? For MGW, a source event is a disjunction over the
+   collections of an antichain, each collection contributing the conjunction of its sources. The
+   order is $\beta\preceq\alpha$ when every set in $\alpha$ contains a set in $\beta$. The atoms are
+   the Möbius inverse of the cumulative terms.
+3. Can the premises be satisfied? A theorem with contradictory premises is true but empty.
+4. Is the trust base clean? Accepted sources must not contain `sorry`, an axiom declaration,
+   `native_decide`, `implemented_by`, `extern` or `unsafe`, and axiom audits may list only
+   `propext`, `Classical.choice` and `Quot.sound`.
+
+### 14.2 Mechanical scan
+
+No accepted Lean source contains any of the tokens above. The only `sorry` and axiom declarations
+are in `audit/formal/lean-mgw-fixed-world/negative`. Its nine
+mutation controls change one theorem each: a weakened statement, a redefined target, a renamed or
+re-kinded declaration, a wrapped statement, an injected or imported axiom, and a `sorry`. The judge
+must reject each of them. The pinned Lean 4.33.0 contains the fix for Lean issue 14576, a kernel
+soundness bug fixed on 28 July 2026, and the repository retains its upstream regression test.
+
+### 14.3 Results by package
+
+| Package | What was checked | Result |
+|---|---|---|
+| `lean` (finite convergence) | The MGW event and target restriction in the semantic contract; all 16 entries of the two-source Möbius and zeta matrices; the fixture counts, component arguments and weighted products $8/3$, $2/3$ and $1$, recomputed by hand; the counts of 339 declarations and 246 theorems; the refined diamond bound $1/x_a-1/S$ and its attaining pair; the $\lfloor K^2/4\rfloor$ lemma. The support-change document correctly lists its two-law transfer as proved in prose only | Faithful |
+| `lean-finite-logscore` | Measure integrals of a PMF; supported entropy and KL in nats; the Gibbs premise; the log-score identity; the conditional continuation (13 exports, 37 helpers, recorded hash) | Faithful |
+| `lean-exact-log-product` | Scope statement; the five-term product equals one | Faithful |
+| `lean-foundational-sxpid` | Scope statement: a generic factorization firewall | Faithful |
+| `lean-citation-edge` | Scope statement: a finite exact-sequence countermodel with no PID claim | Faithful |
+| `lean-kernel-regression` | Lean issue 14576 and its upstream fix | Faithful |
+| `lean-mgw-fixed-world` | Synergy $\log(4/3)$ for both added sources and conditional MI $0$ and $\log2$, recomputed by hand and matched with the targets; the negative controls | Faithful |
+| `lean-mgw-target-copy` | The local identity, its bounds and the averaged bound, derived by hand (below); the replay statement against its record. Its publication record was stale (Section 14.5) | Faithful |
+| `lean-sx-dnf-order` | Order, DNF events, event inclusion, antisymmetry and injectivity on antichains over pattern-realizing domains; the accepted source bytes and hash | Faithful |
+| `lean-sxpid3-informative-invariance` | All 16 statements: the informative component depends only on the source marginal; the checker's own axiom audit | Faithful |
+| `lean-prefix-mgw-bias` | Five accepted targets against the exports; references | Consistent |
+| `lean-prefix-mgw-gradient` | Eleven targets against the local acceptance record | Consistent |
+| `lean-prefix-mgw-mean` | Three targets against the acceptance record | Consistent |
+| `lean-ksg-harmonic` | 19 theorems; the digamma premise $\psi(m)=H_{m-1}-\gamma$, which the true digamma satisfies; the exclusive argument $n+1$; the range rewrite; the sharp bound $\lvert t\rvert\le H_{N-1}-H_{k-1}$; the count ranges, which are explicit premises | Faithful |
+| SMT, nine files | Each complete file is unsat under Z3 4.16.0; each background without its negated goal is sat, so no unsat result is vacuous; the PID3 zeta sums equal the MGW down-sets of all 18 antichains | Faithful |
+
+For the three prefix-MGW packages, model-review sessions checked the contract-to-target match and
+the quoted values and figures; the judges enforce the alias-to-target match.
+
+For the target-copy family, the target is $T=(S_1,B)$. Let $a$, $c$ and $j$ be the masses of the
+events $S_1=s_1$, $S_2=s_2$ and $S_1=s_1\wedge S_2=s_2$ at an anchor. Because $T=t$ implies
+$S_1=s_1$, the four local MGW terms are $\log(1/a)$, $\log\frac{r}{c\,p}$, $\log\frac{r}{j\,p}$ and
+$\log\frac{1}{a+c-j}$, where $r$ is the mass of $S_2=s_2\wedge T=t$ and $p$ the mass of $T=t$.
+The masses $r$ and $p$ cancel in the synergy:
+
+$$
+s=\log\frac{ac}{j\,(a+c-j)} .
+$$
+
+Since $j\le\min(a,c)$, $ac-j(a+c-j)=(a-j)(c-j)\ge0$, so $s\ge0$. Since
+$a+c-j\ge\max(a,c)$, $s\le\log\frac{\min(a,c)}{j}$. Averaging the two upper bounds over the
+source law gives $\min\{H(S_1\mid S_2),H(S_2\mid S_1)\}$. These are the Lean targets.
+
+### 14.4 Why the satisfiable-background test matters
+
+An SMT proof shows that the negated claim, together with the background assertions, has no model.
+If the background assertions alone had no model, every claim would be proved. Removing the negated
+goal and finding a model rules this out.
+[`python/check_smt_obligations.py`](cross-implementation-reverification-2026-09-26/python/check_smt_obligations.py)
+performs this test for all nine files and the PID3 order check. It fails when a contradictory
+assertion is added to a background, or when one atom is removed from a PID3 zeta sum.
+
+### 14.5 Correction
+
+The publication record of the target-copy note named the Markdown and PDF bytes and the input
+profile from before the author credit of 23 September 2026. Commit `e1e0b81` updates the record to
+the current bytes and the v5 profile, keeps v4 as the historical profile, and limits its all-page
+visual review to the v4 bytes. No theorem, value or proof changed.
+
+### 14.6 Limits
+
+The audit compares statements with prose and re-derives the central identities by hand. It is not
+a line-by-line review of every proof, and it does not re-run the Lean replays. A statement that
+matches its prose does not establish estimator calibration, population validity or a Rust
+refinement; each package states those boundaries itself.
+
+## 15. References
 
 - A. J. Bell (2003). The co-information lattice. *Proc. 4th Int. Symp. on Independent Component
   Analysis and Blind Signal Separation*, 921–926.

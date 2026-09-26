@@ -130,6 +130,8 @@ function Table(element)
     widths = {0.10, 0.26, 0.24, 0.18, 0.22}
   elseif last_heading == "9. Correction: intrinsic-dimension provenance" then
     widths = {0.32, 0.12, 0.56}
+  elseif last_heading == "14.3 Results by package" then
+    widths = {0.38, 0.49, 0.13}
   end
   if widths then
     return set_widths(element, widths)

@@ -840,7 +840,7 @@ scripts/check-numerical-assurance-pdf.sh --exact  # represented-binary64 assuran
 scripts/check-numerical-assurance-pdf.sh --cross-toolchain
 scripts/check-numerical-assurance-pdf-self-test.sh  # 1 contract + 3 accepted + 44 hostile controls
 scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh --exact  # current/proposed Galadriel placement guide
-scripts/check-cross-implementation-reverification-pdf.sh --exact  # re-verification report, 18 pages
+scripts/check-cross-implementation-reverification-pdf.sh --exact  # re-verification report, 21 pages
 scripts/check-cross-implementation-reverification-pdf.sh --cross-toolchain
 scripts/check-fault-tolerant-shared-exclusions-pdf.sh --exact  # fault-tolerance note, 14 pages
 scripts/check-fault-tolerant-shared-exclusions-pdf.sh --cross-toolchain

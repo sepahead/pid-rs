@@ -7,6 +7,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Add a semantic audit of the formal packages to the cross-implementation re-verification report
+  (Section 14, with PDF). For the 13 Lean packages and two SMT packages, every checked statement
+  matches its prose, no checked premise set is contradictory, and the accepted sources use only the
+  standard axioms. Every SMT file is unsat and its background without the negated goal is sat;
+  the new fail-closed `check_smt_obligations.py` checks this and that the PID3 zeta sums equal the
+  MGW down-sets of all 18 antichains, and `run.sh` now runs it. The target-copy publication record
+  is updated to its current bytes and v5 profile.
+
 - Render the cross-implementation re-verification PDF in the repository's shared report design
   (`pid-rs-report-tables.sty` and `pid-rs-workflow-publication.sty`), with its builder and checker
   updated to bind the template and both style files.

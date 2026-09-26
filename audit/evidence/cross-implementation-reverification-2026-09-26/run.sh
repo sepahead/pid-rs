@@ -5,8 +5,8 @@
 #
 # The script exports <commit> with `git archive` into <fresh-work-dir>/src, copies the two
 # evidence generators into that export only, and runs them with a private Cargo target
-# directory. It then runs the Python checks, the checker self-test and the archived binary64
-# diagnostic. <fresh-work-dir> must not exist and must lie outside the repository checkout; the
+# directory. It then runs the Python checks, the checker self-test, the SMT obligation check
+# (which needs Z3 4.16.0 on PATH) and the archived binary64 diagnostic. <fresh-work-dir> must not exist and must lie outside the repository checkout; the
 # script writes nothing inside the checkout. Outputs go to <fresh-work-dir>/out. Each output is
 # compared byte for byte with the retained copy in this evidence directory; a difference is
 # reported and makes the exit status nonzero.
@@ -79,6 +79,9 @@ python3 "$here/python/checker_self_test.py" "$work/out/discrete_dump.json" \
   "$work/out/continuous_dump.json" >"$work/out/checker_self_test.txt"
 stamp "checker_self_test" "$step"
 step="$(date +%s)"
+python3 "$here/python/check_smt_obligations.py" "$work/src" >"$work/out/check_smt_obligations.txt"
+stamp "check_smt_obligations" "$step"
+step="$(date +%s)"
 python3 "$here/python/archive/diagnose_one_lambda_binary64_v1.py" \
   >"$work/out/diagnose_one_lambda_binary64_v1.txt"
 stamp "diagnose_one_lambda_binary64_v1" "$step"
@@ -112,7 +115,7 @@ compare() {
 compare "$work/out/discrete_dump.json" "$here/inputs/discrete_dump.json"
 compare "$work/out/continuous_dump.json" "$here/inputs/continuous_dump.json"
 for name in check_discrete check_continuous check_one_lambda check_percentile_index \
-    checker_self_test; do
+    checker_self_test check_smt_obligations; do
   compare "$work/out/$name.txt" "$here/results/$name.txt"
 done
 compare "$work/out/diagnose_one_lambda_binary64_v1.txt" \

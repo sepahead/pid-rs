@@ -3,7 +3,8 @@
   "author": "Sepehr Mahmoudian",
   "checked_commits": {
     "before_fixes": "d1f401a1eccec7fe2476f4bcf16538991f52a33f",
-    "with_fixes": "0e96b2be33ae627675f682433815807dc93ac13b"
+    "with_fixes": "0e96b2be33ae627675f682433815807dc93ac13b",
+    "formal_package_audit": "e1e0b810a29541946967e3337aa99224b9c456b4"
   },
   "command": "audit/evidence/cross-implementation-reverification-2026-09-26/run.sh <commit> <fresh-work-dir> --with-test-suite",
   "date": "2026-09-26",
@@ -21,8 +22,8 @@
   ],
   "files": {
     "REVIEW.md": {
-      "bytes": 12912,
-      "sha256": "e684dcd348587ab2a9f90733b55c941601e89230ec737b35e88007a366896d18"
+      "bytes": 15037,
+      "sha256": "d144009310366b152edde189f113edfce5eeae12520a597607b976214055ab00"
     },
     "inputs/continuous_dump.json": {
       "bytes": 167825,
@@ -56,6 +57,10 @@
       "bytes": 5099,
       "sha256": "7f2d056ac506d56e187e48901a59ac334587de7bbcf55242d51ffabcbc8f2b6a"
     },
+    "python/check_smt_obligations.py": {
+      "bytes": 6150,
+      "sha256": "cb4f40aa9aff939188ea6e8c7c067597998370f0f4f2b4b4342747d3efee11ab"
+    },
     "python/checker_self_test.py": {
       "bytes": 3875,
       "sha256": "cd3a9efc2436aa83ce26fe5b75ca8b9732038033d763131d39ddb7d8f0ac76c8"
@@ -84,6 +89,10 @@
       "bytes": 1996,
       "sha256": "27915e7efcfe4b909dcf22bb25967ac8f44d4bd8dd54d01eddc07cbfa91774c3"
     },
+    "results/check_smt_obligations.txt": {
+      "bytes": 820,
+      "sha256": "7d64da747f8d65a1c9835e431c419a0a382f6a43944a78f9086b7c91fefa144f"
+    },
     "results/checker_self_test.txt": {
       "bytes": 748,
       "sha256": "2451176633af6c48f08263a9135a72db3459dd7f3a32c696feba67538e863466"
@@ -93,8 +102,8 @@
       "sha256": "d3de2a45948f2dbae7bb708b4db630bc083d4c4834c16a4b84bb34d6991bc32f"
     },
     "results/reproduction-confirmation.txt": {
-      "bytes": 948,
-      "sha256": "e9d559281ff6f14d4f3c91564b3655c10bfb285e85c7c0fe9ac12fc1dfa10e0b"
+      "bytes": 1540,
+      "sha256": "9df6d5ef346995c016a0a698a4b9d8bf773b881291b6fc054bc7a7a9e8d64465"
     },
     "results/test_suite_0e96b2b.log": {
       "bytes": 65574,
@@ -120,9 +129,13 @@
       "bytes": 248,
       "sha256": "6ffa499285a7e788ed11a8c5d640ba8bbce1156e71e74a2450580edf971161fc"
     },
+    "results/timing_e1e0b81.txt": {
+      "bytes": 260,
+      "sha256": "85b54d2781ba20bb4f5f5c1d115c187006ff51ebdd1471c434a7ac9693c2acba"
+    },
     "run.sh": {
-      "bytes": 4914,
-      "sha256": "1538b4588034cfcbf0b53065a9694936c8b8dc19c55c104e10ae6a542ee90dca"
+      "bytes": 5150,
+      "sha256": "fe1422e83e0fe839adb92a8902df4a9da63e307ce6774d5e680d47fa4d6aa409"
     },
     "rust/audit_dump_continuous.rs": {
       "bytes": 4045,

@@ -9,7 +9,7 @@ HEADER="$ROOT/audit/formal/latex/cross-implementation-reverification/publication
 FILTER="$ROOT/audit/formal/latex/cross-implementation-reverification/filter.lua"
 TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
 CHECK_NAME="Cross-implementation re-verification PDF check"
-EXPECTED_PAGES="18"
+EXPECTED_PAGES="21"
 MODE="${1:---exact}"
 
 if [[ $# -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then
@@ -115,6 +115,7 @@ validate_pdf() {
       'Correction: intrinsic-dimension provenance' \
       'Rust implementation and computational cost' \
       'Routes considered' \
+      'Semantic audit of the formal packages' \
       'Levina and Bickel' \
       'A. Makkeh, A. J. Gutknecht and M. Wibral (2021)'; do
     grep -Fq "$sentinel" "$normalized_text" || {
@@ -214,6 +215,7 @@ expected_repository_uris = {
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_discrete.py",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_one_lambda.py",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_percentile_index.py",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_smt_obligations.py",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/checker_self_test.py",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/check_continuous.txt",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/check_discrete.txt",

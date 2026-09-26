@@ -23,3 +23,18 @@ same: check_percentile_index.txt
 same: checker_self_test.txt
 same: diagnose_one_lambda_binary64_v1.txt
 exit 0
+
+The SMT obligation check was added later. Its output was retained from the current tree, and
+run.sh was then run on the commit of the formal-package audit, with all nine outputs compared.
+
+$ audit/evidence/cross-implementation-reverification-2026-09-26/run.sh e1e0b810a29541946967e3337aa99224b9c456b4 <fresh-work-dir>
+same: discrete_dump.json
+same: continuous_dump.json
+same: check_discrete.txt
+same: check_continuous.txt
+same: check_one_lambda.txt
+same: check_percentile_index.txt
+same: checker_self_test.txt
+same: check_smt_obligations.txt
+same: diagnose_one_lambda_binary64_v1.txt
+exit 0

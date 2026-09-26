@@ -668,8 +668,8 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ksg-m1a-composite-v12.yml": (
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
-    "AGENTS.md": "20f8fa12b93e501a4cfcc7836d70d7a9decf40e120208aeda41fee82f8102f15",
-    "CHANGELOG.md": "fe5d153054e8c73d2f6232aaa2177aa5aa498d58ff23513aa644287e03c53285",
+    "AGENTS.md": "18e792e2617eed31874b5ef9cef31cf53119f042a7d76adca48d16b5523f1b2e",
+    "CHANGELOG.md": "241d00fc7263aac18668c0ab87a26e1bad14589970afcc5d5aaaffa4788b7980",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
@@ -699,12 +699,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
         "5295ee5ba871894e7a5c03f8f3a78651cc897e8ca58c950eb5130239c49f8a66"
     ),
-    "scripts/README.md": "5b7021b7139979fb8ab93ac5d33ea0bc86fb5da5669184503a688b3504365460",
+    "scripts/README.md": "85dd8c4d1241906323d829d30407465fa056294783c6bddaa594028257fbf66b",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "3e609ffbab17101399bf301cfc40880d40d7e16ba242b1ff75895e301d9a7b6d"
+        "7f962bd1e94f977003aec3294f5770d83e42da506ec2af53394db2ab1d90a3d4"
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"

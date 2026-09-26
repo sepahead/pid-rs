@@ -1,0 +1,13 @@
+solver: Z3 version 4.16.0 - 64 bit
+file | complete file | background without negated goal | assertions
+audit/formal/z3/pid2-reconstruction.smt2 | unsat | sat | 1
+audit/formal/z3/pid2-self-redundancy-mobius.smt2 | unsat | sat | 1
+audit/formal/z3/pid2-source-swap.smt2 | unsat | sat | 1
+audit/formal/z3/pid3-mobius-reconstruction.smt2 | unsat | sat | 1
+audit/formal/z3/pid3-source-permutation.smt2 | unsat | sat | 1
+audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2 | unsat | sat | 12
+audit/formal/z3-ksg-harmonic/ksg-index-maps.smt2 | unsat | sat | 12
+audit/formal/z3-ksg-harmonic/ksg-local-bound-v4.smt2 | unsat | sat | 11
+audit/formal/z3-ksg-harmonic/ksg-symmetric-range.smt2 | unsat | sat | 8
+pid3 zeta sums: all 18 match the MGW down-sets
+PASS: 9 files unsat with satisfiable backgrounds; PID3 order checked

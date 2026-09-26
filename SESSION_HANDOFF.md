@@ -19,7 +19,9 @@ their dated observations. Verify current Git and hosted state before acting on i
 | `0e96b2b` | Equal-tail fix for the raw bootstrap percentiles (three new tests) and the corrected Levina–Bickel locator (Section 3, below Equation (8)), with v6/v9 profiles |
 | `67a6785` | [Cross-implementation re-verification report](audit/evidence/cross-implementation-reverification-2026-09-26.md), its PDF, checker and reproducible evidence; its PDF later moved to the shared report design |
 | `d5ed6f0` | [Fault-tolerance research note](audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md), its PDF, Lean file and experiment |
-| The commit that adds the ecosystem status below | Ecosystem and physical-intelligence status, and the hosted result for `d5ed6f0` |
+| `4295d1b` | Ecosystem and physical-intelligence status, and the hosted result for `d5ed6f0` |
+| `e1e0b81` | Target-copy publication record updated to its current bytes and v5 profile |
+| The commit that adds the formal-package audit | [Semantic audit of the 13 Lean and two SMT packages](audit/evidence/cross-implementation-reverification-2026-09-26.md#14-semantic-audit-of-the-formal-packages), its SMT background check and the rebuilt PDF |
 
 **Hosted checks.** All 47 jobs of the main CI run for `d5ed6f0` passed, including the formal
 PDF inventory and the four-hour KSG integer-harmonic job; its four specialized workflows passed too.
@@ -37,6 +39,9 @@ PDF inventory and the four-hour KSG integer-harmonic job; its four specialized w
   random and stuck faults on the office recordings; it lost to the constant prior under worst-case
   faults and, with too small a budget, under random faults. The profile $f\mapsto\mathrm{FT}_f$ is
   not monotone in general. These are development results on previously examined recordings.
+- A semantic audit of the 13 Lean and two SMT packages found no mathematical or formal defect:
+  statements match their prose, no checked premise set is contradictory, and every SMT background
+  is satisfiable. Only the target-copy publication record was stale; it is corrected.
 - New PDFs should use the shared report design (`publication.tex` template with
   `pid-rs-report-tables.sty` and `pid-rs-workflow-publication.sty`), as the two new PDFs do.
 
@@ -89,8 +94,8 @@ integration stays `not_claimed` in the release scope.
   the project's library is not built yet.
 - The exact formal-PDF set needs sealed external registration records for some papers; the
   cross-toolchain mode needs a trusted `python3` with `pypdf==6.16.1` on the admitted path.
-- Rate limits stopped two language-review sessions; the author session then performed their
-  lenses and recorded that substitution.
+- Service limits are low: run review lenses sequentially in the author session, save interim
+  notes to disk after each package, and push finished work to main promptly.
 
 ## Resumed recovery checkpoint
 
