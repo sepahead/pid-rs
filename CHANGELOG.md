@@ -7,6 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Strengthen the research SMT and fault-tolerance comparison checkers: reject solver errors and
+  extra results, validate positive lattice coefficients, and reject nonfinite or malformed
+  categorical inputs before aggregation. Retain causal regression controls and the original
+  finite results; correct the formal-package count and correspondence scope in both reports.
+
+
 - Add a semantic audit of the formal packages to the cross-implementation re-verification report
   (Section 14, with PDF). For the 13 Lean packages and two SMT packages, every checked statement
   matches its prose, no checked premise set is contradictory, and the accepted sources use only the

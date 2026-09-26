@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "241d00fc7263aac18668c0ab87a26e1bad14589970afcc5d5aaaffa4788b7980",
-        "size_bytes": 320089
+        "sha256": "d2d89593d14c1f34f1438a23b66d94306e3107beccd224c942714300a58ec5c5",
+        "size_bytes": 320463
       },
       {
         "git_mode": "100644",
@@ -538,8 +538,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "ed27ee570815bd58908a1efbcd8078e972dfea4983191a2b6e5cb04af5f44323",
-        "size_bytes": 33496
+        "sha256": "7959981ab33179c30921ae7e6f7d19dd39de318f7f3e806b4df86809e713cfde",
+        "size_bytes": 34007
       },
       {
         "git_mode": "100644",
@@ -1960,20 +1960,20 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/cross-implementation-reverification-2026-09-26.md",
-        "sha256": "8ec995d5b56750e36ce7c92bb75e87e46ba8e1a6f562f2e5d8eafe0abfc295af",
-        "size_bytes": 64429
+        "sha256": "cb7f0505ff192c4b858a73041e480ae099c0a3a72ae6610fb66422678e56c506",
+        "size_bytes": 66436
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/cross-implementation-reverification-2026-09-26/MANIFEST.json",
-        "sha256": "8b5e580ae3beb0b7c81ff9870c929d55f88614aeaf496f1157f4309ee0a21b9a",
-        "size_bytes": 6264
+        "sha256": "8cfd40a898336f84ea387d91622ec9528338a4ee13e340909387a530bcb75f1a",
+        "size_bytes": 7208
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/cross-implementation-reverification-2026-09-26/REVIEW.md",
-        "sha256": "d144009310366b152edde189f113edfce5eeae12520a597607b976214055ab00",
-        "size_bytes": 15037
+        "sha256": "e29820ac333a7e01dc2285f52a0900cc82c1789d61e1649afe1ee9b259910093",
+        "size_bytes": 15842
       },
       {
         "git_mode": "100644",
@@ -2026,8 +2026,14 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/cross-implementation-reverification-2026-09-26/python/check_smt_obligations.py",
-        "sha256": "cb4f40aa9aff939188ea6e8c7c067597998370f0f4f2b4b4342747d3efee11ab",
-        "size_bytes": 6150
+        "sha256": "2f043bf751989a541717a14e0ba73fd62d184766d07fe0acdbc72f60e76c0569",
+        "size_bytes": 13785
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/cross-implementation-reverification-2026-09-26/python/check_smt_obligations_self_test.py",
+        "sha256": "af32e5ff1a3d1cd660d6dda64952daad4fce377986178f91516b75d347ce7405",
+        "size_bytes": 12483
       },
       {
         "git_mode": "100644",
@@ -2076,6 +2082,24 @@
         "path": "audit/evidence/cross-implementation-reverification-2026-09-26/results/check_smt_obligations.txt",
         "sha256": "7d64da747f8d65a1c9835e431c419a0a382f6a43944a78f9086b7c91fefa144f",
         "size_bytes": 820
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/cross-implementation-reverification-2026-09-26/results/check_smt_obligations_self_test.txt",
+        "sha256": "4d4f6715b22b2d44dc12ceb56c86d9abbc91d5c9e8a02d1bac5c44411d91ea6e",
+        "size_bytes": 82
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/cross-implementation-reverification-2026-09-26/results/checker-correction-visual-review.json",
+        "sha256": "89a29822f2db05c36fe69bcd229258f8e4a8a3475fb4078e4a169fd1edb63f62",
+        "size_bytes": 4339
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/cross-implementation-reverification-2026-09-26/results/checker-rejection-correction.json",
+        "sha256": "69a0f9f89a7d6aab71654d0566dabb6f001cd004e32962e51cf9b9717d59f188",
+        "size_bytes": 3935
       },
       {
         "git_mode": "100644",
@@ -2140,8 +2164,8 @@
       {
         "git_mode": "100755",
         "path": "audit/evidence/cross-implementation-reverification-2026-09-26/run.sh",
-        "sha256": "fe1422e83e0fe839adb92a8902df4a9da63e307ce6774d5e680d47fa4d6aa409",
-        "size_bytes": 5150
+        "sha256": "02044498ae9b50e016b84d26f04af355c52b35115879783986f755e4e59a8780",
+        "size_bytes": 5636
       },
       {
         "git_mode": "100644",
@@ -13834,8 +13858,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/cross-implementation-reverification/publication.tex",
-        "sha256": "e70fcca689160a7c582b301ac2acbba74ebb9f3e98e3dfbaaf9d06d064d753b6",
-        "size_bytes": 2277
+        "sha256": "376a684b3bdd7ffa70efab0eaa681f56d669b7eaa96529893a15d7265dd1523f",
+        "size_bytes": 2289
       },
       {
         "git_mode": "100644",
@@ -25462,14 +25486,14 @@
       {
         "git_mode": "100644",
         "path": "audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md",
-        "sha256": "3e39950cca0771a156d294523790c6b76ac8b3a2968d5b6f5ddfac52c9a0ba83",
-        "size_bytes": 46910
+        "sha256": "bf430bab1f5d7a4ecefc32e81eccc47dca9e541f68f454caf64054586b1efae1",
+        "size_bytes": 47408
       },
       {
         "git_mode": "100644",
         "path": "audit/research/fault-tolerant-shared-exclusions/MANIFEST.json",
-        "sha256": "b72a394c64bbcbc9d07b9368a5cfd606f474430c3db61e254d544e3266640afb",
-        "size_bytes": 3963
+        "sha256": "be262a237edc2194fe46b8b75a228801bcca3ebbfd9ab9f73880573531395041",
+        "size_bytes": 4585
       },
       {
         "git_mode": "100644",
@@ -25498,8 +25522,14 @@
       {
         "git_mode": "100644",
         "path": "audit/research/fault-tolerant-shared-exclusions/python/check_threshold_down_sets.py",
-        "sha256": "2159326e5c614c79a65b1f1d4e9292e5e4007ef70bce304b2e7e0e6f330b20d9",
-        "size_bytes": 3764
+        "sha256": "ca12ab60f14cde9267022e52de6c95f0705f79b47b2ee1e3d8b22a6d2ec2b379",
+        "size_bytes": 6393
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/fault-tolerant-shared-exclusions/python/check_threshold_down_sets_self_test.py",
+        "sha256": "b5292e45b94e4c46f36acd94ca786df3fc6bdc602e83b86634a09ba719dd1e02",
+        "size_bytes": 4012
       },
       {
         "git_mode": "100644",
@@ -25530,6 +25560,12 @@
         "path": "audit/research/fault-tolerant-shared-exclusions/results/check_threshold_down_sets.txt",
         "sha256": "4a621e9739c2d5578b010548c31bb6ebe59542f0a7abe3ed914642ae99a924be",
         "size_bytes": 778
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/fault-tolerant-shared-exclusions/results/check_threshold_down_sets_self_test.txt",
+        "sha256": "2ce7458c66d3c917ad1072d5eaffbc1b7f221970531988583bf5572a6b7488a3",
+        "size_bytes": 54
       },
       {
         "git_mode": "100644",
@@ -25570,8 +25606,8 @@
       {
         "git_mode": "100755",
         "path": "audit/research/fault-tolerant-shared-exclusions/run.sh",
-        "sha256": "5fb77e1678894fa69e2daa27b8a66d41cd914f64406c897c68becde71d85da13",
-        "size_bytes": 2716
+        "sha256": "e11dea878d48c9be81105ecbc537c7997daa07c5e5ee96876867f44b1c30d605",
+        "size_bytes": 3143
       },
       {
         "git_mode": "100644",
@@ -27952,8 +27988,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/cross-implementation-reverification.pdf",
-        "sha256": "f7e9ddd7bf87539894996ec51db5b2aa03105099eeb018aa753ab7f5571084e2",
-        "size_bytes": 473682
+        "sha256": "1ec6aed2c0eeba2bf6452caa045e421ca701089cd3e461b34acbfdf44bbe70e1",
+        "size_bytes": 480597
       },
       {
         "git_mode": "100644",
@@ -27988,8 +28024,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/fault-tolerant-shared-exclusions.pdf",
-        "sha256": "6c37b046084a947e48bac0ca62790232560a0dcc91ef95a3bd07b2caadbcd16b",
-        "size_bytes": 422726
+        "sha256": "cfda341a897a51c8ac7732c39d0e9c873f96d37c34609501f4fa5514449c5e3e",
+        "size_bytes": 425394
       },
       {
         "git_mode": "100644",
@@ -28474,8 +28510,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-cross-implementation-reverification-pdf.sh",
-        "sha256": "aa268e9a71e9b2085a4de52675f0443408ef57e3a2e66cfa2db1d2064c4c8c02",
-        "size_bytes": 15336
+        "sha256": "0c2cf8295212dacd9d82a5ed19e622e09da66f183713b7735f4ef13e2af28075",
+        "size_bytes": 15492
       },
       {
         "git_mode": "100755",
@@ -28540,8 +28576,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-fault-tolerant-shared-exclusions-pdf.sh",
-        "sha256": "e88d444f2679adede0238c860b2d9b2edebdd458abee42661932a31fac35184f",
-        "size_bytes": 14262
+        "sha256": "eafbd4128d8ddcc633dedae2e2ebd39b8480fb3d02956b751bbf2214c82471b6",
+        "size_bytes": 14408
       },
       {
         "git_mode": "100755",
@@ -29044,7 +29080,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "cf07132268560d1720bb4a1a6f46246f10c869dae6f5a0301bfce5628b808407",
+        "sha256": "620a0886a689724188f5301a5f851a61c62003ffaee37e63833722dce380291a",
         "size_bytes": 138785
       },
       {
@@ -29984,8 +30020,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "b7b617097af3ffd6f7bc70bea244485c5b74605daa791f3d6e5cf1f0ca0b811e",
-    "entry_count": 4973
+    "entries_sha256": "1c81a118155d2433ff9efd83c552679fd9a961793b7e44500ef8d275f8cab022",
+    "entry_count": 4979
   },
   "subprojections": [
     {
@@ -29997,7 +30033,7 @@
       ]
     },
     {
-      "entries_sha256": "f3fc276e2d5553eb76476d51ee8fb8b4ed7943be421e8443ae9a904603576335",
+      "entries_sha256": "49eee468e150e75e820e4c349f01cf71482ef2ee1144af9921a442400b674b60",
       "entry_count": 1932,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -30005,7 +30041,7 @@
       ]
     },
     {
-      "entries_sha256": "656704f5b0bb5bc6af979c0822db79efa294d992ad27472acea5f2697c6c8289",
+      "entries_sha256": "4d47a0caed3ead029910b56fd655de952be4fd38b3095ad2002fed8c48c02863",
       "entry_count": 37,
       "name": "generated_pdf_set",
       "selectors": [
@@ -30013,7 +30049,7 @@
       ]
     },
     {
-      "entries_sha256": "bfe2f9594e805f7b2659526b08845f575d883577b8aa4e4a667bf20db6ec07a3",
+      "entries_sha256": "c2babb4a6c712370dff9138b9ebd868d4e92f1ac070889c105ef74aa3a4f795b",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

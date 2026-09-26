@@ -1,0 +1,75 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "date": "2026-09-26",
+  "findings": {
+    "smt_coefficients": "Negated atom_001 definition with negated reconstruction uses remained UNSAT and passed the old atom-name check. Both modes.",
+    "smt_solver_protocol": "Before-exit unknown symbol produced Z3 exit 1 after unsat; historical checker returned 0. Extra query also returned 0. Both Python modes.",
+    "threshold_nonfinite": "Replacing net atoms by JSON NaN produced PASS with zero maximum errors. Both modes.",
+    "threshold_shapes": "Historical checker accepted extra row/source, Boolean/repeated/comparable masks, and altered arity census. Seven of 26 controls fail historically."
+  },
+  "historical_checkers": {
+    "smt": "cb4f40aa9aff939188ea6e8c7c067597998370f0f4f2b4b4342747d3efee11ab",
+    "threshold": "2159326e5c614c79a65b1f1d4e9292e5e4007ef70bce304b2e7e0e6f330b20d9"
+  },
+  "historical_commit": "b86342c030f11d3035c594605af62d60afa18f9b",
+  "limitations": [
+    "Source review and fixed-input execution are not proof of complete checker correctness.",
+    "Self-tests distinguish synthetic protocol controls from actual solver runs.",
+    "The failed append-after-exit probe was ineffective because the solver had already exited; it provides no bug evidence.",
+    "First contradictory-background probe did not alter multiline source; its corrected successor checks one replacement and rejects the actual contradictory background."
+  ],
+  "schema": "pid-rs.checker-rejection-correction.v1",
+  "scope": "Research evidence-checker rejection rules; original SMT sources and valid empirical dump unchanged. No new mathematical theorem or application qualification.",
+  "verification": {
+    "full_reimplementation_replay": {
+      "checker_source": "Repaired checker and initial new self-test at execution. Later self-test expected-output lookup correction was separately checked against current and e1e0b81 source-only inputs in both Python modes; numerical checkers and runtime did not change.",
+      "completed_utc": "2026-09-26T18:53:07.738641+00:00",
+      "failed": 0,
+      "ignored": 6,
+      "passed": 728,
+      "retained_outputs_identical": 10,
+      "returncode": 0,
+      "runtime_commit": "b86342c030f11d3035c594605af62d60afa18f9b",
+      "scope": "Release all-feature pid-core tests and complete report reproduction. No fresh Lean proof replay or application confirmation.",
+      "test_log_sha256": "9855ad894ffb1bcfecca66a0c54c610a96b106451ab33da2a3e99dcc2275ff4c"
+    },
+    "historical_source_selftest": {
+      "after": "Current and older source-only roots both pass in normal and optimized Python; output unchanged.",
+      "before": "New self-test failed because its reporting oracle was sought inside the older source export. Both Python modes.",
+      "repair": "Read the expected report adjacent to the current checker package; read proof sources from the requested export.",
+      "runtime_source_commit": "e1e0b810a29541946967e3337aa99224b9c456b4",
+      "scope": "Development regression caught before publication; not a mathematical defect."
+    },
+    "rust_percentile_tests": {
+      "command": "cargo test --locked -p pid-core --lib --all-features percentile",
+      "failed": 0,
+      "passed": 4
+    },
+    "smt_native_baseline": "All nine complete files UNSAT and backgrounds SAT, normal and optimized Python; retained output byte-identical.",
+    "smt_native_mutated_inputs": {
+      "modes": [
+        "normal",
+        "optimized"
+      ],
+      "rejected_per_mode": 5
+    },
+    "smt_synthetic_controls": {
+      "accepted": 20,
+      "modes": [
+        "normal",
+        "optimized"
+      ],
+      "rejected": 56,
+      "solver_execution": false
+    },
+    "threshold_controls": {
+      "accepted": 1,
+      "modes": [
+        "normal",
+        "optimized"
+      ],
+      "rejected": 25
+    },
+    "threshold_valid_baseline": "Retained 60-system output byte-identical in both modes."
+  }
+}

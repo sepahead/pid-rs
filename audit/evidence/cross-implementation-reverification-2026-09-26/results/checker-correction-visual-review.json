@@ -1,0 +1,128 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "boundaries": [
+    "Unchanged pages have raster identity; that is not new visual-review credit.",
+    "No physical print test or screen-reader audit.",
+    "Deterministic exact rebuild and full publication gates are separate execution obligations."
+  ],
+  "date": "2026-09-26",
+  "exact_pdf_checks": {
+    "cross-implementation-reverification": {
+      "pages": 21,
+      "returncode": 0,
+      "uri_actions": 44
+    },
+    "date": "2026-09-26",
+    "fault-tolerant-shared-exclusions": {
+      "pages": 14,
+      "returncode": 0,
+      "uri_actions": 32
+    },
+    "scope": "Complete --exact check for each report: candidate matches rebuilt bytes, metadata, fonts, text and action inventory. Full formal-PDF-set gate is separate."
+  },
+  "high_resolution_and_grayscale_review": {
+    "cross-implementation-reverification": [
+      1,
+      18,
+      20
+    ],
+    "fault-tolerant-shared-exclusions": [
+      14
+    ]
+  },
+  "lenses": {
+    "A4/PDF profile and embedded fonts": "Both complete exact gates passed A4/PDF profile and embedded-font checks.",
+    "color-redundant labels": "Headings and explicit labels distinguish content without color.",
+    "deterministic reproduction": "Both complete exact gates rebuilt matching PDF bytes.",
+    "grayscale legibility": "Selected four pages inspected in grayscale.",
+    "grid": "Text and running matter align with retained grid.",
+    "hierarchy": "Section and correction labels remain clear.",
+    "link/action safety": "Object inspection found44 and32 URI actions; exact inventories updated by one legitimate link each.",
+    "motif coherence": "Cover and corner geometry match retained pages.",
+    "motif provenance": "Retained repository-local publication package.",
+    "narrative order": "Follow-up defects follow original audit scope and limits.",
+    "normal-size plus high-resolution rendered inspection": "All changed pages reviewed at85dpi; declared high-risk subset at170dpi.",
+    "ornamental restraint": "Decoration stays outside evidence text.",
+    "palette identity": "Retained lapis/turquoise/ivory publication palette.",
+    "pattern/data-semantic separation": "Patterns encode no result or theorem status.",
+    "portable repository-local dependencies": "Existing repository assets retained; no new external asset.",
+    "print fidelity": "A4 screen rendering only; physical print untested.",
+    "real-text searchability and logical extraction order": "Text extraction inspected; full exact checker remains separate.",
+    "source/derived-asset separation": "Markdown and TeX remain sources; output PDFs are derived.",
+    "spacing/rhythm": "Removed orphan bibliography entry; no overlap seen.",
+    "typography": "No clipped characters or unresolved math seen on inspected pages."
+  },
+  "negative_result": "First revised fault report had one bibliography entry alone on page15. Tighter correction prose restored14pages; rejected PDF retained locally.",
+  "normal_size_color_review": {
+    "cross-implementation-reverification": [
+      1,
+      2,
+      3,
+      18,
+      20,
+      21
+    ],
+    "fault-tolerant-shared-exclusions": [
+      1,
+      14
+    ]
+  },
+  "pdf_sha256": {
+    "cross-implementation-reverification": "1ec6aed2c0eeba2bf6452caa045e421ca701089cd3e461b34acbfdf44bbe70e1",
+    "fault-tolerant-shared-exclusions": "cfda341a897a51c8ac7732c39d0e9c873f96d37c34609501f4fa5514449c5e3e"
+  },
+  "render_resolution_dpi": {
+    "high": 170,
+    "normal": 85
+  },
+  "scope": "Changed pages of the two evidence-checker correction publications; advisory model visual review, not accessibility certification.",
+  "v2_to_v1_pixel_identity": {
+    "cross-implementation-reverification": {
+      "changed_from_v1_pages": [
+        1,
+        18,
+        20
+      ],
+      "same_as_reviewed_v1_pages": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        21
+      ]
+    },
+    "fault-tolerant-shared-exclusions": {
+      "changed_from_v1_pages": [
+        14
+      ],
+      "same_as_reviewed_v1_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    }
+  }
+}

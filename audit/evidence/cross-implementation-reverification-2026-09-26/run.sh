@@ -82,6 +82,13 @@ step="$(date +%s)"
 python3 "$here/python/check_smt_obligations.py" "$work/src" >"$work/out/check_smt_obligations.txt"
 stamp "check_smt_obligations" "$step"
 step="$(date +%s)"
+python3 -I -S -B "$here/python/check_smt_obligations_self_test.py" "$work/src" \
+  >"$work/out/check_smt_obligations_self_test.txt"
+python3 -O -I -S -B "$here/python/check_smt_obligations_self_test.py" "$work/src" \
+  >"$work/out/check_smt_obligations_self_test.optimized.txt"
+cmp "$work/out/check_smt_obligations_self_test.txt" "$work/out/check_smt_obligations_self_test.optimized.txt"
+stamp "check_smt_obligations_self_test" "$step"
+step="$(date +%s)"
 python3 "$here/python/archive/diagnose_one_lambda_binary64_v1.py" \
   >"$work/out/diagnose_one_lambda_binary64_v1.txt"
 stamp "diagnose_one_lambda_binary64_v1" "$step"
@@ -115,7 +122,7 @@ compare() {
 compare "$work/out/discrete_dump.json" "$here/inputs/discrete_dump.json"
 compare "$work/out/continuous_dump.json" "$here/inputs/continuous_dump.json"
 for name in check_discrete check_continuous check_one_lambda check_percentile_index \
-    checker_self_test check_smt_obligations; do
+    checker_self_test check_smt_obligations check_smt_obligations_self_test; do
   compare "$work/out/$name.txt" "$here/results/$name.txt"
 done
 compare "$work/out/diagnose_one_lambda_binary64_v1.txt" \

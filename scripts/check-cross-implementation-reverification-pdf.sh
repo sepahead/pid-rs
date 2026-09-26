@@ -228,6 +228,7 @@ expected_repository_uris = {
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/rust/audit_dump_continuous.rs",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/rust/audit_dump_discrete.rs",
     "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs",
+    'https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/checker-rejection-correction.json',
 }
 observed_repository_uris = set()
 form_xobjects = set()
@@ -273,7 +274,7 @@ if len(form_xobjects) != 1:
     fail(f"form XObject inventory changed: {len(form_xobjects)}")
 if observed_repository_uris != expected_repository_uris:
     fail(f"repository-navigation URI inventory changed: {sorted(observed_repository_uris)}")
-expected_action_counts = {"/GoTo": 0, "/GoToR": 0, "/URI": 43}
+expected_action_counts = {"/GoTo": 0, "/GoToR": 0, "/URI": 44}
 if action_counts != expected_action_counts:
     fail(f"navigation inventory changed: {action_counts}")
 print(

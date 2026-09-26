@@ -135,7 +135,7 @@ of a table cell. This pass is advisory model review, not independent language re
 
 ## 6. Formal-package audit
 
-The audit in Section 14 of the report read the 13 Lean packages and the two SMT packages on commit
+The audit in Section 14 of the report read the 14 Lean directories and the two SMT packages on commit
 `e1e0b81`, with the four lenses of Section 14.1: statement against prose, definitions against the
 defining source, satisfiability of premises, and trust base. The author session performed every
 check that the report attributes to it, including the hand derivations and the SMT runs.
@@ -166,3 +166,14 @@ after the push.
 | Lean toolchain freeze, normal and optimized; certified SxPID2 claim | This commit | Passed after the changed documents were re-pinned |
 | Markdown math; method catalog; review evidence, normal and optimized, with its self-test | This commit | Passed |
 | Publication links, normal and optimized; current source state | This commit, staged | Passed |
+
+## Follow-up rejection review (26 September 2026)
+
+Independent-first source reviews found solver-output and lattice-coefficient rejection gaps in
+the new SMT checker. The root reviewer reproduced them on copied inputs in both Python modes.
+An independent application review found a NaN rejection gap in the threshold down-set checker;
+root reproduction also exposed silent row truncation and malformed antichain acceptance.
+Section 14.7 records the disposition. These are evidence-chain defects. The retained theorem
+files, empirical inputs, estimator values and original dated execution records are unchanged.
+The earlier package count is corrected to 14 directories. New rejection controls supplement the
+original two SMT controls; agreement of reviewers is not proof of complete checker soundness.

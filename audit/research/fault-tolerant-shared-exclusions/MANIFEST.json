@@ -1,5 +1,10 @@
 {
   "author": "Sepehr Mahmoudian",
+  "checker_correction": {
+    "date": "2026-09-26",
+    "historical_commit": "b86342c030f11d3035c594605af62d60afa18f9b",
+    "status": "Focused normal/optimized correction checks passed; original scientific outputs unchanged. Full reproduction/publication checks recorded separately."
+  },
   "command": "audit/research/fault-tolerant-shared-exclusions/run.sh <uci-data-dir> <fresh-work-dir> --with-lean",
   "date": "2026-09-26",
   "environment": {
@@ -24,8 +29,8 @@
   },
   "files": {
     "EXPOSITION.md": {
-      "bytes": 46910,
-      "sha256": "3e39950cca0771a156d294523790c6b76ac8b3a2968d5b6f5ddfac52c9a0ba83"
+      "bytes": 47408,
+      "sha256": "bf430bab1f5d7a4ecefc32e81eccc47dca9e541f68f454caf64054586b1efae1"
     },
     "REVIEW.md": {
       "bytes": 7921,
@@ -44,8 +49,12 @@
       "sha256": "0eec7f33b6bba984a0a832bc667e508cde7ac1cac930a55826b944aeb8ffe092"
     },
     "python/check_threshold_down_sets.py": {
-      "bytes": 3764,
-      "sha256": "2159326e5c614c79a65b1f1d4e9292e5e4007ef70bce304b2e7e0e6f330b20d9"
+      "bytes": 6393,
+      "sha256": "ca12ab60f14cde9267022e52de6c95f0705f79b47b2ee1e3d8b22a6d2ec2b379"
+    },
+    "python/check_threshold_down_sets_self_test.py": {
+      "bytes": 4012,
+      "sha256": "b5292e45b94e4c46f36acd94ca786df3fc6bdc602e83b86634a09ba719dd1e02"
     },
     "python/fault_tolerant_experiment_v1.py": {
       "bytes": 11786,
@@ -66,6 +75,10 @@
     "results/check_threshold_down_sets.txt": {
       "bytes": 778,
       "sha256": "4a621e9739c2d5578b010548c31bb6ebe59542f0a7abe3ed914642ae99a924be"
+    },
+    "results/check_threshold_down_sets_self_test.txt": {
+      "bytes": 54,
+      "sha256": "2ce7458c66d3c917ad1072d5eaffbc1b7f221970531988583bf5572a6b7488a3"
     },
     "results/experiment-v1.json": {
       "bytes": 37765,
@@ -92,8 +105,8 @@
       "sha256": "d86a4261ae82d0675b519f07dd5d3e2e9a65415cdc4c105382eb52b2ed24b466"
     },
     "run.sh": {
-      "bytes": 2716,
-      "sha256": "5fb77e1678894fa69e2daa27b8a66d41cd914f64406c897c68becde71d85da13"
+      "bytes": 3143,
+      "sha256": "e11dea878d48c9be81105ecbc537c7997daa07c5e5ee96876867f44b1c30d605"
     }
   },
   "note": "audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md",

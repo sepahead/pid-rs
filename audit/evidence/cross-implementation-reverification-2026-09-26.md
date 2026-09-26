@@ -13,7 +13,8 @@ This report records a second implementation of the main pid-rs estimators, writt
 published definitions, and compares it with pid-rs. It also re-derives several repository results,
 tests one repository bound in exact arithmetic, and records one defect and one citation error that
 the review found. The checks ran on commit `d1f401a` and again on commit `0e96b2b`, which
-contains the two fixes below.
+contains the two fixes below. Section 14.7 records later defects found in two evidence checkers;
+those defects do not change the retained estimator outputs.
 
 The main results are:
 
@@ -43,7 +44,7 @@ The main results are:
 6. **One citation correction.** pid-rs attributed its $k-2$ intrinsic-dimension normalization to
    MacKay and Ghahramani (2005). The primary source is Levina and Bickel (2004), Section 3, below
    their Equation (8). The estimator and its outputs do not change (Section 9).
-7. **Formal packages.** A semantic audit of the 13 Lean packages and the two SMT packages found no
+7. **Formal packages.** A semantic audit of the 14 Lean directories and the two SMT packages found no
    mathematical or formal defect. Every checked statement matches its prose, no checked premise set
    is contradictory, and every SMT background is satisfiable. One publication record named stale
    file hashes; it is corrected (Section 14).
@@ -67,7 +68,7 @@ the evidence classes and the limits of independence.
 | Raw resampling percentiles | Project-defined summaries | `block_bootstrap`, `block_bootstrap_paired`, `bootstrap_rows_stats`, `bootstrap_quantized_sxpid2` | Exact index analysis; defect fixed with tests | No coverage claim |
 | Levina–Bickel intrinsic dimension | Levina and Bickel (2004) | `intrinsic_dimension_report` | Re-derivation; source check | Diagnostic only |
 | Repository bounds and envelopes | Repository documents listed in Section 8 | Documentation | Re-derivation; exact stress test | No new theorem |
-| Formal packages | Package documents under `audit/formal` | 13 Lean and two SMT packages | Statement-to-prose audit; SMT background test | No proof replay |
+| Formal packages | Package documents under `audit/formal` | 14 Lean directories and two SMT packages | Statement-to-prose audit; SMT background test | No proof replay |
 
 Section 11 gives the module paths and feature gates of these functions.
 
@@ -107,7 +108,8 @@ The repository separates five correspondence edges. This report touches them as 
 
 1. **Source to repository specification.** The formulas of Sections 2 and 4 were re-derived from
    the primary sources, and the Levina–Bickel locator was corrected. Model review only.
-2. **Repository specification to formal model.** Not examined.
+2. **Repository specification to formal model.** Section 14 reviews selected statements and
+   definitions against their prose. It does not establish every correspondence edge or replay proofs.
 3. **Formal model to executable algorithm.** Not examined.
 4. **Executable algorithm to numeric execution.** The second implementation agrees to rounding on
    the stated inputs (execution evidence). Sections 4 and 7 add lemmas about the binary64 behavior
@@ -936,7 +938,8 @@ audit/evidence/cross-implementation-reverification-2026-09-26/run.sh <commit> <f
 The work directory must not exist and must lie outside the checkout. The script exports the commit
 with `git archive` and copies the two generators into that export. It runs the generators with a
 private Cargo target directory. It then runs the four Python checks, the checker self-test, the
-SMT obligation check of Section 14 and the archived binary64 diagnostic. The SMT check needs
+SMT obligation check and its normal/optimized protocol controls (Section 14), and the archived
+binary64 diagnostic. The SMT check needs
 Z3 4.16.0 on the path. Finally, it compares each output with the retained copy and fails on any
 difference.
 After the outputs were retained, a second run on each commit matched all eight retained outputs of
@@ -949,7 +952,7 @@ every retained file with its size and SHA-256.
 
 A formal proof shows that a Lean theorem or an SMT obligation follows from its premises. It does
 not show that the statement means what the prose says. This section records a separate audit of
-that correspondence for the 13 Lean packages under `audit/formal/lean*` and the two SMT packages
+that correspondence for the 14 Lean directories under `audit/formal/lean*` and the two SMT packages
 `audit/formal/z3` and `audit/formal/z3-ksg-harmonic`, on commit `e1e0b81`. The author session performed the audit. Model-review sessions contributed the
 checks that the table attributes to them. The audit did not re-run the Lean replays; hosted CI
 runs them.
@@ -1035,6 +1038,30 @@ The audit compares statements with prose and re-derives the central identities b
 a line-by-line review of every proof, and it does not re-run the Lean replays. A statement that
 matches its prose does not establish estimator calibration, population validity or a Rust
 refinement; each package states those boundaries itself.
+
+### 14.7 Follow-up: checker rejection gaps
+
+A subsequent independent-first source review and copied-input tests found two defects in the new
+SMT checker. It read only the first word from Z3 and ignored the process status and remaining
+output. Thus `unsat` followed by a solver error still passed. Its lattice comparison extracted atom
+names but ignored their coefficients. Negating one atom definition and every reconstruction use
+left the solver identities true and passed the name check, although those reconstruction terms no
+longer had the claimed coefficient $+1$.
+
+The corrected checker requires a clean process and one exact result, checks the single-query
+command profile, and parses each reconstruction as the exact positive down-set sum. Its causal
+controls retain the original failures. The nine original SMT files are unchanged; these findings
+concern the evidence checker, not a counterexample to those files. The package table contains 14
+Lean directories: the 13 `lean-*` directories and `lean` itself. The earlier count of 13 omitted
+this distinction.
+
+The companion fault-tolerance down-set check also accepted nonfinite JSON atoms and silently
+truncated unequal row lists. It now validates finite numbers, row shapes, category types and the
+complete antichain carrier before comparison, and rejects nonfinite arithmetic before updating
+an error maximum. Its 26 causal controls pass in normal and optimized Python; the historical
+checker fails seven of them. The retained 60-system output is unchanged. The
+[correction record](cross-implementation-reverification-2026-09-26/results/checker-rejection-correction.json)
+binds these checks; no scientific claim is upgraded.
 
 ## 15. References
 

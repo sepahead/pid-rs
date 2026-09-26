@@ -5,7 +5,7 @@
 Cite this report as: Sepehr Mahmoudian (2026). *Shared-exclusion redundancy as fault tolerance for
 multisensor systems.* pid-rs repository research note. Include the exact repository commit that
 you used. The software citation is in [CITATION.cff](../../../CITATION.cff). Cite the defining
-method papers separately; Section 13 lists them.
+method papers separately; the References section lists them.
 
 ## Summary
 
@@ -663,6 +663,13 @@ The directory holds:
 - [`run.sh`](run.sh), which reproduces every output, and [`MANIFEST.json`](MANIFEST.json). A
   confirmation run matched every retained output byte for byte;
   [`results/reproduction-confirmation.txt`](results/reproduction-confirmation.txt) records it.
+
+**Checker correction.** The original checker could hide JSON `NaN` in its error maximum and drop
+extra rows through `zip`. It now rejects nonfinite values, unequal columns and invalid categorical
+or antichain inputs before comparison. Its
+[26 subprocess controls](python/check_threshold_down_sets_self_test.py) pass in normal and
+optimized Python; the historical checker fails seven. The valid 60-system output is byte-identical.
+No theorem, forecast, experiment or tolerance changed.
 
 The UCI files are not retained; `run.sh` takes their directory and checks their SHA-256 values.
 The review record is [`REVIEW.md`](REVIEW.md). Evidence classes: formal proof (Lean, bounded to the

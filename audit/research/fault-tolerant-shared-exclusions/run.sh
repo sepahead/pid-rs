@@ -40,10 +40,15 @@ mkdir -p "$work"
 dump="$repo/audit/evidence/cross-implementation-reverification-2026-09-26/inputs/discrete_dump.json"
 python3 "$here/python/theory_checks.py" >"$work/theory_checks.txt"
 python3 "$here/python/check_threshold_down_sets.py" "$dump" >"$work/check_threshold_down_sets.txt"
+python3 -I -S -B "$here/python/check_threshold_down_sets_self_test.py" "$dump" \
+  >"$work/check_threshold_down_sets_self_test.txt"
+python3 -O -I -S -B "$here/python/check_threshold_down_sets_self_test.py" "$dump" \
+  >"$work/check_threshold_down_sets_self_test.optimized.txt"
+cmp "$work/check_threshold_down_sets_self_test.txt" "$work/check_threshold_down_sets_self_test.optimized.txt"
 python3 "$here/python/fault_tolerant_experiment_v2.py" "$data" >"$work/experiment-v2.json"
 python3 "$here/python/fault_tolerant_experiment_v1.py" "$data" >"$work/experiment-v1.json"
 python3 "$here/python/fault_tolerant_experiment_v3.py" "$data" >"$work/experiment-v3.json"
-names=(theory_checks.txt check_threshold_down_sets.txt experiment-v1.json experiment-v2.json
+names=(theory_checks.txt check_threshold_down_sets.txt check_threshold_down_sets_self_test.txt experiment-v1.json experiment-v2.json
   experiment-v3.json)
 if [[ "$with_lean" == "--with-lean" ]]; then
   python3 "$here/python/check_lean.py" "$repo" >"$work/lean-axioms.txt"
