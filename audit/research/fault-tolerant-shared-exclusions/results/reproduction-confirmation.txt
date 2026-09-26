@@ -1,0 +1,12 @@
+Reproduction confirmation, 26 September 2026. Retained by Sepehr Mahmoudian.
+Machine-specific paths are omitted. The UCI files were verified by SHA-256 by the scripts.
+
+$ audit/research/fault-tolerant-shared-exclusions/run.sh <uci-data-dir> <fresh-work-dir> --with-lean
+same: theory_checks.txt
+same: check_threshold_down_sets.txt
+same: experiment-v1.json
+same: experiment-v2.json
+same: experiment-v3.json
+same: lean-axioms.txt
+exit 0
+wall time about 256 s on one core (macOS 26.5.1 arm64, Python 3.14.6, Lean 4.33.0)

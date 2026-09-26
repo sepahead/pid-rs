@@ -1,0 +1,14 @@
+Lean toolchain: leanprover/lean4:v4.33.0; source compiles without messages
+FaultTolerantInformation.mgwEvent_iff_tolerates: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.disagree_comm: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.tolerates_powersetCard_iff: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.mgwEvent_powersetCard_iff: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.mgwEvent_mono: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.tolerates_mono: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.eventMass_le_one: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.forecast_ge_true_mass: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.forecast_valid_under_tolerated_faults: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.parity_ball_one: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.parity_ball_two: Classical.choice, Quot.sound, propext
+FaultTolerantInformation.parity_class_size: Classical.choice, Quot.sound, propext
+PASS: 12 theorems use only propext, Classical.choice and Quot.sound

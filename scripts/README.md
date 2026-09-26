@@ -1918,14 +1918,16 @@ evidence.
 
 `build-cross-implementation-reverification-pdf.sh` renders
 `audit/evidence/cross-implementation-reverification-2026-09-26.md` through Pandoc and LuaLaTeX. The
-Markdown is canonical, and the projection has no figures. A source-derived duplicated trailer ID
-binds the Markdown, header, Lua filter and tagpdf compatibility source. Fixed time, timezone and
+Markdown is canonical, and the projection has no figures. It uses the shared report design of
+`pid-rs-report-tables.sty` and `pid-rs-workflow-publication.sty` through its `publication.tex`
+template. A source-derived duplicated trailer ID binds the Markdown, the template, the Lua filter,
+both style files and the tagpdf compatibility source. Fixed time, timezone and
 locale, three LuaLaTeX passes, warning and glyph checks, embedded-font checks and atomic
 publication give same-toolchain reproducibility. The builder accepts only an absolute PDF
 destination in an existing nonsymbolic directory.
 
 `check-cross-implementation-reverification-pdf.sh` validates the Markdown math, rebuilds the PDF
-and checks all 16 A4 pages. Its pinned pypdf object gate requires the source-derived trailer ID,
+and checks all 18 A4 pages. Its pinned pypdf object gate requires the source-derived trailer ID,
 `en-US` language, a marked structure tree, a bounded first-page `GoTo`, HTTPS-only external links,
 Link-only annotations and the exact inventory of repository-navigation URIs. It rejects
 JavaScript, attachments, forms, collection state, permissions and unknown actions, and it checks
@@ -1935,6 +1937,14 @@ evidence directory is reproduced separately by its `run.sh`, which exports a com
 Rust generators and the Python checks, and compares every output with the retained copy. These
 checks establish publication hygiene and output reproduction, not mathematical correctness,
 estimator calibration or independent review.
+
+`build-fault-tolerant-shared-exclusions-pdf.sh` and `check-fault-tolerant-shared-exclusions-pdf.sh`
+follow the same pattern for `audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md`, with
+14 A4 pages and their own sentinels and link inventory. The note's `run.sh` takes the UCI data
+directory, reruns the theory checks, the pid-rs down-set cross-check, all three experiment versions
+and, with `--with-lean`, the Lean compile and axiom receipt, and compares every output with the
+retained copy. The Lean file compiles against the pinned project in `audit/formal/lean` without
+adding files to it.
 
 `build-pid-sensor-placement-and-galadriel-guide-pdf.sh` renders
 `PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md` through Pandoc and LuaLaTeX. The canonical Markdown is

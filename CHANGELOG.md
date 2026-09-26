@@ -7,6 +7,20 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Render the cross-implementation re-verification PDF in the repository's shared report design
+  (`pid-rs-report-tables.sty` and `pid-rs-workflow-publication.sty`), with its builder and checker
+  updated to bind the template and both style files.
+
+- Add the research note on shared-exclusion redundancy as fault tolerance, with its PDF,
+  checker, Lean file and experiments. MGW source events are fault-consistency sets, threshold
+  antichains give Hamming balls, and the consistency forecast gives the true target at least its
+  joint probability under tolerated faults (Lean-checked, standard axioms only). The fault-tolerant
+  value need not decrease with the budget (three-bit parity gives log 2, -log 2, log 8/7). On the
+  UCI office recordings, with the correct fault budget, the forecast was close to a fault-aware
+  Bayes forecast under random and stuck faults; it lost to the constant prior under worst-case
+  faults and, with too small a budget, under random faults. This is development evidence, with
+  credit to MGW's operational interpretation and to Milzman (2024) for the erasure analogue.
+
 - Add the cross-implementation re-verification report with its PDF, checker and evidence. A
   second implementation written from the published definitions reproduced the categorical MGW
   and Williams-Beer atoms (60 seeded systems, 2-4 sources) and the continuous KSG1, Ehrlich,

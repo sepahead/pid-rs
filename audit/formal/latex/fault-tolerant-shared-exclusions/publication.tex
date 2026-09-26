@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmathfont{latinmodern-math.otf}
+\AtBeginDocument{\providecommand{\square}{\mdlgwhtsquare}}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox}
+\usepackage{newunicodechar,float,fvextra}
+\RecustomVerbatimEnvironment{verbatim}{Verbatim}{breaklines,breakanywhere,fontsize=\small,frame=single,framesep=4pt,rulecolor=\color{PidCvMineral}}
+\usepackage{pid-rs-report-tables}
+\usepackage{pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\input{tagpdf-openaction-compat.tex}
+\pdfvariable minorversion=7
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,citecolor=PidSecondary,pdftitle={Shared-exclusion redundancy as fault tolerance for multisensor systems},pdfauthor={Sepehr Mahmoudian},pdfsubject={MGW shared-exclusion events as fault-consistency sets, a validity bound and a fault-injection test},pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Shared exclusions as fault tolerance}{Categorical MGW shared exclusions}
+\PidWorkflowConfigureSections
+\newunicodechar{≈}{\ensuremath{\approx}}
+\floatplacement{figure}{H}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em plus 0.10em minus 0.06em}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTpre}{0.5em}
+\setlength{\LTpost}{0.5em}
+\setlist{itemsep=0.2em,topsep=0.3em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\passthrough}[1]{#1}
+\setkeys{Gin}{width=\linewidth,keepaspectratio}
+\newcounter{none}
+\let\PidSavedTexttt\texttt
+\renewcommand{\texttt}[1]{\PidSavedTexttt{\seqsplit{#1}}}
+\AtBeginEnvironment{longtable}{\footnotesize\RaggedRight\setlength{\tabcolsep}{3pt}}
+\title{\PidReportTitle{Shared-exclusion redundancy\\as fault tolerance}{Multisensor consistency, forecasts and injected faults}}
+\author{Sepehr Mahmoudian}
+\date{26 September 2026}
+\begin{document}
+\PidMakeTitle
+\input{body.tex}
+\end{document}

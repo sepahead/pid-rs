@@ -1,0 +1,10 @@
+m=2, f=0: max |down-set sum of pid-rs atoms - Hamming log-score gain| = 4.441e-16
+m=2, f=1: max |down-set sum of pid-rs atoms - Hamming log-score gain| = 3.331e-16
+m=3, f=0: max |down-set sum of pid-rs atoms - Hamming log-score gain| = 4.025e-16
+m=3, f=1: max |down-set sum of pid-rs atoms - Hamming log-score gain| = 2.637e-16
+m=3, f=2: max |down-set sum of pid-rs atoms - Hamming log-score gain| = 2.776e-16
+m=4, f=0: max |down-set sum of pid-rs atoms - Hamming log-score gain| = 2.220e-16
+m=4, f=1: max |down-set sum of pid-rs atoms - Hamming log-score gain| = 3.886e-16
+m=4, f=2: max |down-set sum of pid-rs atoms - Hamming log-score gain| = 3.539e-16
+m=4, f=3: max |down-set sum of pid-rs atoms - Hamming log-score gain| = 4.996e-16
+systems: 60; tolerance 1e-12 nats: PASS

@@ -130,7 +130,8 @@ after the push.
 
 **Author language and layout pass.** Because sessions C and E stopped, the author session read the
 report against the house style (short sentences, defined terms, consistent notation) and inspected
-all 16 rendered PDF pages. The pass split long sentences, defined $y_T$ and $y_a$, separated the
+all 16 rendered PDF pages of the first design. The PDF was then moved to the repository's shared
+report design; all 18 pages of that version were inspected at page-grid resolution. The pass split long sentences, defined $y_T$ and $y_a$, separated the
 three uses of $\alpha$ (antichain, tail mass, failure probability), let long code spans break,
 replaced straight quotes, fixed a stretched bullet and a directory link, and moved one sentinel out
 of a table cell. This pass is advisory model review, not independent language review.

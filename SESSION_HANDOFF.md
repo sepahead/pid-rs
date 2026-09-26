@@ -1,10 +1,60 @@
-# Session handoff — 5 September 2026
+# Session handoff — updated 26 September 2026
 
 This is the entry point for continuing the pid-rs scientific and engineering program without the
 previous conversation. It is a dated coordination record. Current source, claim decisions, and
 fresh Git/hosted observations take precedence over its observations. Machine-specific locations
 and recovery instructions are in the ignored `.local/SESSION_HANDOFF.md` supplied with the local
 handoff. No local path is required by the public mathematical documents.
+
+## Checkpoint of 26 September 2026
+
+This section records the state after the 25–26 September session; the older sections below keep
+their dated observations. Verify current Git and hosted state before acting on it.
+
+**Landed on main, in order.** Each commit is unsigned and carries no AI attribution.
+
+| Commit | Content |
+|---|---|
+| `d1f401a` | Negative OR-forecast comparison in the recorded office-sensor report, with v5/v8 profiles |
+| `0e96b2b` | Equal-tail fix for the raw bootstrap percentiles (three new tests) and the corrected Levina–Bickel locator (Section 3, below Equation (8)), with v6/v9 profiles |
+| `67a6785` | [Cross-implementation re-verification report](audit/evidence/cross-implementation-reverification-2026-09-26.md), its PDF, checker and reproducible evidence; its PDF later moved to the shared report design |
+| The commit that adds this checkpoint | [Fault-tolerance research note](audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md), its PDF, Lean file and experiment |
+
+**Findings to keep.**
+
+- The raw percentile summaries could drop unequal tails in binary64 (22 of 99 two-decimal
+  $\alpha$ values have an affected $B\le20000$). The fix derives both indices from one tail count;
+  lower percentiles are unchanged.
+- The retired binary64 one-$\Lambda$ stress test broke the total-mass premise; the exact-rational
+  successor finds the bound attained exactly and never exceeded. Keep the archived test and its
+  diagnostic as negative evidence.
+- MGW events are fault-consistency sets; threshold antichains give Hamming balls. With the
+  correct fault budget, the consistency forecast was close to a fault-aware Bayes forecast under
+  random and stuck faults on the office recordings; it lost to the constant prior under worst-case
+  faults and, with too small a budget, under random faults. The profile $f\mapsto\mathrm{FT}_f$ is
+  not monotone in general. These are development results on previously examined recordings.
+- New PDFs should use the shared report design (`publication.tex` template with
+  `pid-rs-report-tables.sty` and `pid-rs-workflow-publication.sty`), as the two new PDFs do.
+
+**Open, unchanged.** SxPID3 Programs A–E closed remains 0 of 5 under
+[decision-v3](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md). The closable next items are
+the concrete Lean carrier and order/zeta/Möbius obligations (L1, L2 toward F1, coordinated with the
+existing `audit/formal/lean-sx-dnf-order` lane), the canonical decoder D1, the exact and interval
+numerics N1/N2, and the keyed Rust refinement X3. The re-verification report adds bounded
+floating-point agreement of the general and specialized three-source paths; that is not X3 closure.
+For the fault-tolerance note, the open items are new recordings, a worst-case (minimax) forecast,
+the prior-mixture test, the continuous analogue and any production API.
+
+**Process lessons from this session.**
+
+- Do not commit, amend or switch branches while a KSG preservation self-test runs: its exact-tree
+  replay compares Git facts before and after and fails when they change.
+- Run a Lean project's build before its self-test; a self-test ordered first can fail only because
+  the project's library is not built yet.
+- The exact formal-PDF set needs sealed external registration records for some papers; the
+  cross-toolchain mode needs a trusted `python3` with `pypdf==6.16.1` on the admitted path.
+- Rate limits stopped two language-review sessions; the author session then performed their
+  lenses and recorded that substitution.
 
 ## Resumed recovery checkpoint
 

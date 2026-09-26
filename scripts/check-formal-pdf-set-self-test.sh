@@ -69,6 +69,7 @@ MARKDOWN_SOURCES=(
   audit/research/embodied-sensor-utility/EXPOSITION.md
   audit/research/embodied-sensor-utility/OVERVIEW.md
   audit/evidence/cross-implementation-reverification-2026-09-26.md
+  audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md
   MATHEMATICAL_RESULTS_GUIDE.md
   audit/evidence/finite-target-copy-mgw-synergy.md
   audit/research/finite-prefix-mgw-gradient/EXPOSITION.md
@@ -88,6 +89,7 @@ STANDALONE=(
   embodied-sensor-utility
   embodied-sensor-overview
   cross-implementation-reverification
+  fault-tolerant-shared-exclusions
   certified-sxpid2-executable-assurance
   dependency-colored-sxpid-concentration
   ecosystem-compatibility-audit

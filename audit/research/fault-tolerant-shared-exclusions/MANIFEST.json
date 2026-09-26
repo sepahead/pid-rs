@@ -1,0 +1,102 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "command": "audit/research/fault-tolerant-shared-exclusions/run.sh <uci-data-dir> <fresh-work-dir> --with-lean",
+  "date": "2026-09-26",
+  "environment": {
+    "lean": "leanprover/lean4:v4.33.0 with the pinned Mathlib of audit/formal/lean",
+    "numpy": "2.4.6",
+    "os": "macOS 26.5.1 arm64 (Apple M4 Max)",
+    "python": "3.14.6"
+  },
+  "evidence_classes": [
+    "formal proof bounded to the encoded Lean statements",
+    "execution evidence bounded to the listed inputs",
+    "model review"
+  ],
+  "external_inputs": {
+    "pid_rs_discrete_dump": "audit/evidence/cross-implementation-reverification-2026-09-26/inputs/discrete_dump.json",
+    "uci_occupancy_detection": {
+      "datatest.txt": "1b92c7c1b2838963464fa891a610cf3c5db4becb7189189b29b330107a584c7f",
+      "datatest2.txt": "d026d1bd5aeccd4aff4f3b3710d48e40613bd5fc370db7e61bbdcaa50d985095",
+      "datatraining.txt": "b2c4d0ce2b9e4e453c476f7125ef31aeec2d1f5c7f5572d0e80de3df6521ab56",
+      "doi": "10.24432/C5X01N"
+    }
+  },
+  "files": {
+    "EXPOSITION.md": {
+      "bytes": 46910,
+      "sha256": "3e39950cca0771a156d294523790c6b76ac8b3a2968d5b6f5ddfac52c9a0ba83"
+    },
+    "REVIEW.md": {
+      "bytes": 7921,
+      "sha256": "77cff20400a5eab07524f426ac3993390076955bd94f429d36da00752fff01dd"
+    },
+    "lean/AxiomReceipt.lean": {
+      "bytes": 842,
+      "sha256": "1f94572cf95e0cb001023ce5ea4470007296cf46ab94c544a994e4ee2d8a228b"
+    },
+    "lean/FaultTolerantInformation.lean": {
+      "bytes": 9733,
+      "sha256": "ade4c1a8d4f87ec5320db1749dbb5faf2baca7847c8f921d6948d00c72338a25"
+    },
+    "python/check_lean.py": {
+      "bytes": 3263,
+      "sha256": "0eec7f33b6bba984a0a832bc667e508cde7ac1cac930a55826b944aeb8ffe092"
+    },
+    "python/check_threshold_down_sets.py": {
+      "bytes": 3764,
+      "sha256": "2159326e5c614c79a65b1f1d4e9292e5e4007ef70bce304b2e7e0e6f330b20d9"
+    },
+    "python/fault_tolerant_experiment_v1.py": {
+      "bytes": 11786,
+      "sha256": "649caae76e25673b6b3d6ea028a92e5d8ac0c7d2258e941f63a9196872cd342f"
+    },
+    "python/fault_tolerant_experiment_v2.py": {
+      "bytes": 14583,
+      "sha256": "1937483880f7ed5c4d2b7ba60fd59bd0c6965cc57233ce3c23fa187378c0890b"
+    },
+    "python/fault_tolerant_experiment_v3.py": {
+      "bytes": 20149,
+      "sha256": "26f0e022ffc50972a7eacfaad3a054d2bdd2477e3b176b2f923a65606f46f464"
+    },
+    "python/theory_checks.py": {
+      "bytes": 7912,
+      "sha256": "08a1415ff3132bfd84ce6d4392d789ba7518f7d420fee18f5941f023114bea7a"
+    },
+    "results/check_threshold_down_sets.txt": {
+      "bytes": 778,
+      "sha256": "4a621e9739c2d5578b010548c31bb6ebe59542f0a7abe3ed914642ae99a924be"
+    },
+    "results/experiment-v1.json": {
+      "bytes": 37765,
+      "sha256": "651b0688d855a393fbd8fe492aab1a48eef9067baf747e5261c2dde26fe92cb7"
+    },
+    "results/experiment-v2.json": {
+      "bytes": 48204,
+      "sha256": "ebbc83706ed2ee3b1dc07b8754a1b7d6d4a435d18caa7d394163b43b3e6fe4fb"
+    },
+    "results/experiment-v3.json": {
+      "bytes": 219515,
+      "sha256": "7e8ea2ff025bd85dd955f777d81dd77d6deeb71bd31982e15fc91445081022be"
+    },
+    "results/lean-axioms.txt": {
+      "bytes": 1157,
+      "sha256": "0acf7a5714ca528cad28b239954f0abeb979ef1459644e083ee4164a23f7386d"
+    },
+    "results/reproduction-confirmation.txt": {
+      "bytes": 517,
+      "sha256": "d0f17fd99ece80a26501d8b74ff26559278900ea8937e999449d3e7071406b8d"
+    },
+    "results/theory_checks.txt": {
+      "bytes": 646,
+      "sha256": "d86a4261ae82d0675b519f07dd5d3e2e9a65415cdc4c105382eb52b2ed24b466"
+    },
+    "run.sh": {
+      "bytes": 2716,
+      "sha256": "5fb77e1678894fa69e2daa27b8a66d41cd914f64406c897c68becde71d85da13"
+    }
+  },
+  "note": "audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md",
+  "schema": "pid-rs.fault-tolerant-shared-exclusions-manifest.v1",
+  "status": "development evidence on previously examined recordings; no confirmation, deployment or novelty claim"
+}

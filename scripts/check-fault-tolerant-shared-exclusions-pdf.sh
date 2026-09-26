@@ -2,14 +2,14 @@
 set -euo pipefail
 
 ROOT="$(CDPATH='' cd -- "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
-SOURCE="$ROOT/audit/evidence/cross-implementation-reverification-2026-09-26.md"
-PDF="$ROOT/output/pdf/cross-implementation-reverification.pdf"
-BUILDER="$ROOT/scripts/build-cross-implementation-reverification-pdf.sh"
-HEADER="$ROOT/audit/formal/latex/cross-implementation-reverification/publication.tex"
-FILTER="$ROOT/audit/formal/latex/cross-implementation-reverification/filter.lua"
+SOURCE="$ROOT/audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md"
+PDF="$ROOT/output/pdf/fault-tolerant-shared-exclusions.pdf"
+BUILDER="$ROOT/scripts/build-fault-tolerant-shared-exclusions-pdf.sh"
+HEADER="$ROOT/audit/formal/latex/fault-tolerant-shared-exclusions/publication.tex"
+FILTER="$ROOT/audit/formal/latex/fault-tolerant-shared-exclusions/filter.lua"
 TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
-CHECK_NAME="Cross-implementation re-verification PDF check"
-EXPECTED_PAGES="18"
+CHECK_NAME="Fault-tolerance research note PDF check"
+EXPECTED_PAGES="14"
 MODE="${1:---exact}"
 
 if [[ $# -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then
@@ -39,7 +39,7 @@ for required in "${required_inputs[@]}"; do
   }
 done
 
-tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-cross-implementation-reverification-check.XXXXXX")"
+tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-fault-tolerant-shared-exclusions-check.XXXXXX")"
 cleanup() {
   rm -rf -- "$tmp_root"
 }
@@ -51,9 +51,9 @@ source_digest_record="$tmp_root/source-digests.txt"
 (
   cd "$ROOT"
   shasum -a 256 \
-    "audit/evidence/cross-implementation-reverification-2026-09-26.md" \
-    "audit/formal/latex/cross-implementation-reverification/publication.tex" \
-    "audit/formal/latex/cross-implementation-reverification/filter.lua" \
+    "audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md" \
+    "audit/formal/latex/fault-tolerant-shared-exclusions/publication.tex" \
+    "audit/formal/latex/fault-tolerant-shared-exclusions/filter.lua" \
     "audit/formal/latex/pid-rs-report-tables.sty" \
     "audit/formal/latex/pid-rs-workflow-publication.sty" \
     "audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
@@ -110,12 +110,11 @@ validate_pdf() {
   LC_ALL=C tr '\f\n\r\t' '    ' <"$text" | LC_ALL=C tr -s ' ' >"$normalized_text"
   for sentinel in \
       'PID-RS TECHNICAL REPORT SERIES' \
-      'Percentile indices: defect and fix' \
-      'Why the retired binary64 test reported ratios above one' \
-      'Correction: intrinsic-dimension provenance' \
+      'The MGW event is a fault-consistency set' \
+      'Validity under tolerated faults' \
+      'Negative results and their reasons' \
       'Rust implementation and computational cost' \
       'Routes considered' \
-      'Levina and Bickel' \
       'A. Makkeh, A. J. Gutknecht and M. Wibral (2021)'; do
     grep -Fq "$sentinel" "$normalized_text" || {
       echo "$CHECK_NAME failed: $label omitted reviewed text: $sentinel" >&2
@@ -143,7 +142,7 @@ def dereference(value):
     return value.get_object() if isinstance(value, IndirectObject) else value
 
 def fail(message):
-    raise SystemExit(f"cross-implementation re-verification PDF object check failed: {message}")
+    raise SystemExit(f"fault-tolerance research note PDF object check failed: {message}")
 
 if pypdf.__version__ != "6.16.1":
     fail(f"unaudited pypdf version: {pypdf.__version__}")
@@ -203,29 +202,25 @@ allowed_action_kinds = {"/GoTo", "/GoToR", "/URI"}
 action_counts = {kind: 0 for kind in allowed_action_kinds}
 expected_repository_uris = {
     "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
-    "https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
-    "https://github.com/sepahead/pid-rs/blob/main/PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
-    "https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/MANIFEST.json",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/REVIEW.md",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/archive/check_one_lambda_binary64_v1.py",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/archive/diagnose_one_lambda_binary64_v1.py",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_continuous.py",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_discrete.py",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_one_lambda.py",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_percentile_index.py",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/checker_self_test.py",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/check_continuous.txt",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/check_discrete.txt",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/check_one_lambda.txt",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/publication-profile-rebuilds.txt",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/reproduction-confirmation.txt",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/test_suite_0e96b2b.log",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/test_suite_d1f401a.log",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/timing_0e96b2b.txt",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/rust/audit_dump_continuous.rs",
-    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/rust/audit_dump_discrete.rs",
-    "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs",
+    "https://github.com/sepahead/pid-rs/blob/main/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/real-occupancy-sensors-example-2026-09-08.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/MANIFEST.json",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/REVIEW.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/lean/AxiomReceipt.lean",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/lean/FaultTolerantInformation.lean",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/python/check_threshold_down_sets.py",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/python/fault_tolerant_experiment_v1.py",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/python/fault_tolerant_experiment_v2.py",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/python/fault_tolerant_experiment_v3.py",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/python/theory_checks.py",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/results/experiment-v1.json",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/results/experiment-v2.json",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/results/experiment-v3.json",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/results/lean-axioms.txt",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/results/reproduction-confirmation.txt",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/results/theory_checks.txt",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/run.sh",
 }
 observed_repository_uris = set()
 form_xobjects = set()
@@ -271,7 +266,7 @@ if len(form_xobjects) != 1:
     fail(f"form XObject inventory changed: {len(form_xobjects)}")
 if observed_repository_uris != expected_repository_uris:
     fail(f"repository-navigation URI inventory changed: {sorted(observed_repository_uris)}")
-expected_action_counts = {"/GoTo": 0, "/GoToR": 0, "/URI": 43}
+expected_action_counts = {"/GoTo": 0, "/GoToR": 0, "/URI": 31}
 if action_counts != expected_action_counts:
     fail(f"navigation inventory changed: {action_counts}")
 print(
@@ -313,5 +308,5 @@ else
   }
 fi
 
-printf 'OK: cross-implementation re-verification PDF mode=%s pages=%s sha256=%s\n' \
+printf 'OK: fault-tolerance research note PDF mode=%s pages=%s sha256=%s\n' \
   "$MODE" "$EXPECTED_PAGES" "$(shasum -a 256 "$PDF" | awk '{print $1}')"

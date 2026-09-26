@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmathfont{latinmodern-math.otf}
+\AtBeginDocument{\providecommand{\square}{\mdlgwhtsquare}}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox}
+\usepackage{newunicodechar,float,fvextra}
+\RecustomVerbatimEnvironment{verbatim}{Verbatim}{breaklines,breakanywhere,fontsize=\small,frame=single,framesep=4pt,rulecolor=\color{PidCvMineral}}
+\usepackage{pid-rs-report-tables}
+\usepackage{pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\input{tagpdf-openaction-compat.tex}
+\pdfvariable minorversion=7
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,citecolor=PidSecondary,pdftitle={Cross-implementation re-verification of pid-rs estimators and mathematical results},pdfauthor={Sepehr Mahmoudian},pdfsubject={A second from-definition implementation, exact tests, one fixed percentile defect and one provenance correction},pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Cross-implementation re-verification}{Estimators and mathematical results}
+\PidWorkflowConfigureSections
+\newunicodechar{≈}{\ensuremath{\approx}}
+\floatplacement{figure}{H}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em plus 0.10em minus 0.06em}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTpre}{0.5em}
+\setlength{\LTpost}{0.5em}
+\setlist{itemsep=0.2em,topsep=0.3em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\passthrough}[1]{#1}
+\setkeys{Gin}{width=\linewidth,keepaspectratio}
+\newcounter{none}
+\let\PidSavedTexttt\texttt
+\renewcommand{\texttt}[1]{\PidSavedTexttt{\seqsplit{#1}}}
+\AtBeginEnvironment{longtable}{\footnotesize\RaggedRight\setlength{\tabcolsep}{3pt}}
+\title{\PidReportTitle{Cross-implementation re-verification}{pid-rs estimators, lattices and mathematical results: a second implementation, exact tests, one fix and one correction}}
+\author{Sepehr Mahmoudian}
+\date{26 September 2026}
+\begin{document}
+\PidMakeTitle
+\input{body.tex}
+\end{document}

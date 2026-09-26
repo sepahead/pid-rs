@@ -1,0 +1,1388 @@
+{
+  "bins": 4,
+  "fault_injection_all_sensors": {
+    "test/budget=1/adversarial": {
+      "consistency": {
+        "brier": 0.5727072652952117,
+        "log_loss": 1.0140001506927365
+      },
+      "oblivious": {
+        "brier": 1.4215847505934391,
+        "log_loss": 2.3010818654888117
+      },
+      "prior": {
+        "brier": 0.5098104097835585,
+        "log_loss": 0.7167476443804923
+      },
+      "single_average": {
+        "brier": 0.5122570321656154,
+        "log_loss": 0.7299235790789157
+      },
+      "subset_ensemble": {
+        "brier": 1.0908327565096518,
+        "log_loss": 1.5113262175269584
+      }
+    },
+    "test/budget=1/none": {
+      "consistency": {
+        "brier": 0.11970949755622076,
+        "log_loss": 0.18242244940877173
+      },
+      "oblivious": {
+        "brier": 0.09062001415677247,
+        "log_loss": 0.15113419949186047
+      },
+      "prior": {
+        "brier": 0.5098104097835585,
+        "log_loss": 0.7167476443804923
+      },
+      "single_average": {
+        "brier": 0.23264629324492733,
+        "log_loss": 0.37294002928650344
+      },
+      "subset_ensemble": {
+        "brier": 0.06858103792670582,
+        "log_loss": 0.13826498947407967
+      }
+    },
+    "test/budget=1/random": {
+      "consistency": {
+        "brier": 0.1381714873433376,
+        "log_loss": 0.24264916971801842
+      },
+      "oblivious": {
+        "brier": 0.44485498379067545,
+        "log_loss": 0.6515513690166884
+      },
+      "oracle": {
+        "brier": 0.14635480936691508,
+        "log_loss": 0.260886885039656
+      },
+      "prior": {
+        "brier": 0.5098104097835585,
+        "log_loss": 0.7167476443804923
+      },
+      "single_average": {
+        "brier": 0.28808173324760067,
+        "log_loss": 0.452298674018098
+      },
+      "subset_ensemble": {
+        "brier": 0.2895219917255142,
+        "log_loss": 0.460616725805133
+      }
+    },
+    "test/budget=1/stuck_max": {
+      "consistency": {
+        "brier": 0.09627619465094481,
+        "log_loss": 0.17075741881514753
+      },
+      "oblivious": {
+        "brier": 0.4393836332798565,
+        "log_loss": 0.6161774213236444
+      },
+      "oracle": {
+        "brier": 0.09762168977563711,
+        "log_loss": 0.1804315553902603
+      },
+      "prior": {
+        "brier": 0.5098104097835585,
+        "log_loss": 0.7167476443804923
+      },
+      "single_average": {
+        "brier": 0.2612901262530183,
+        "log_loss": 0.4306402392493619
+      },
+      "subset_ensemble": {
+        "brier": 0.2785541819867381,
+        "log_loss": 0.450515971409812
+      }
+    },
+    "test/budget=2/adversarial": {
+      "consistency": {
+        "brier": 1.2614617516997153,
+        "log_loss": 2.2689971586952487
+      },
+      "oblivious": {
+        "brier": 1.7852274284942118,
+        "log_loss": 3.34529633380394
+      },
+      "prior": {
+        "brier": 0.5098104097835585,
+        "log_loss": 0.7167476443804923
+      },
+      "single_average": {
+        "brier": 0.8097308877062315,
+        "log_loss": 1.0891158052566567
+      },
+      "subset_ensemble": {
+        "brier": 1.3328972120567169,
+        "log_loss": 1.9035371273498938
+      }
+    },
+    "test/budget=2/none": {
+      "consistency": {
+        "brier": 0.12307685567944346,
+        "log_loss": 0.20563225973632826
+      },
+      "oblivious": {
+        "brier": 0.09062001415677247,
+        "log_loss": 0.15113419949186047
+      },
+      "prior": {
+        "brier": 0.5098104097835585,
+        "log_loss": 0.7167476443804923
+      },
+      "single_average": {
+        "brier": 0.23264629324492733,
+        "log_loss": 0.37294002928650344
+      },
+      "subset_ensemble": {
+        "brier": 0.07602637710223621,
+        "log_loss": 0.155437090385091
+      }
+    },
+    "test/budget=2/random": {
+      "consistency": {
+        "brier": 0.2618267296837837,
+        "log_loss": 0.43051383188151815
+      },
+      "oblivious": {
+        "brier": 0.493659794692563,
+        "log_loss": 0.7064716845376166
+      },
+      "oracle": {
+        "brier": 0.26515614606213045,
+        "log_loss": 0.42156797887408554
+      },
+      "prior": {
+        "brier": 0.5098104097835585,
+        "log_loss": 0.7167476443804923
+      },
+      "single_average": {
+        "brier": 0.35033837173940946,
+        "log_loss": 0.5290961571472618
+      },
+      "subset_ensemble": {
+        "brier": 0.32817327819403586,
+        "log_loss": 0.510525003489403
+      }
+    },
+    "test/budget=2/stuck_max": {
+      "consistency": {
+        "brier": 0.1364190395930414,
+        "log_loss": 0.24485880305994764
+      },
+      "oblivious": {
+        "brier": 0.4962372316030853,
+        "log_loss": 0.6890063992227096
+      },
+      "oracle": {
+        "brier": 0.1274299229407774,
+        "log_loss": 0.22943787104103627
+      },
+      "prior": {
+        "brier": 0.5098104097835585,
+        "log_loss": 0.7167476443804923
+      },
+      "single_average": {
+        "brier": 0.3148433036390291,
+        "log_loss": 0.49884892113041907
+      },
+      "subset_ensemble": {
+        "brier": 0.3015265044975854,
+        "log_loss": 0.4857125921960294
+      }
+    },
+    "test2/budget=1/adversarial": {
+      "consistency": {
+        "brier": 1.082718164297283,
+        "log_loss": 1.99523126397483
+      },
+      "oblivious": {
+        "brier": 1.1752480108735213,
+        "log_loss": 1.8688551839191083
+      },
+      "prior": {
+        "brier": 0.33193892503779177,
+        "log_loss": 0.5141190730476168
+      },
+      "single_average": {
+        "brier": 0.4243830246062895,
+        "log_loss": 0.624732258737191
+      },
+      "subset_ensemble": {
+        "brier": 1.0745829417537427,
+        "log_loss": 1.4311469944390331
+      }
+    },
+    "test2/budget=1/none": {
+      "consistency": {
+        "brier": 0.05767298242226201,
+        "log_loss": 0.09807539455374563
+      },
+      "oblivious": {
+        "brier": 0.21839194741947593,
+        "log_loss": 0.31653270054475807
+      },
+      "prior": {
+        "brier": 0.33193892503779177,
+        "log_loss": 0.5141190730476168
+      },
+      "single_average": {
+        "brier": 0.171317380234188,
+        "log_loss": 0.3104135514466102
+      },
+      "subset_ensemble": {
+        "brier": 0.131250340099596,
+        "log_loss": 0.23830268372400473
+      }
+    },
+    "test2/budget=1/random": {
+      "consistency": {
+        "brier": 0.1813927655321831,
+        "log_loss": 0.30701647711189967
+      },
+      "oblivious": {
+        "brier": 0.45071158886893004,
+        "log_loss": 0.6481251929963061
+      },
+      "oracle": {
+        "brier": 0.1923571585276502,
+        "log_loss": 0.30924489696019974
+      },
+      "prior": {
+        "brier": 0.33193892503779177,
+        "log_loss": 0.5141190730476168
+      },
+      "single_average": {
+        "brier": 0.2253733823988801,
+        "log_loss": 0.3840646433764967
+      },
+      "subset_ensemble": {
+        "brier": 0.31019945147900013,
+        "log_loss": 0.4826415012306933
+      }
+    },
+    "test2/budget=1/stuck_max": {
+      "consistency": {
+        "brier": 0.14642775630830787,
+        "log_loss": 0.22962429947618315
+      },
+      "oblivious": {
+        "brier": 0.4466437642635173,
+        "log_loss": 0.6237754638492113
+      },
+      "oracle": {
+        "brier": 0.18599385373910432,
+        "log_loss": 0.2865764621436828
+      },
+      "prior": {
+        "brier": 0.33193892503779177,
+        "log_loss": 0.5141190730476168
+      },
+      "single_average": {
+        "brier": 0.22255146013693172,
+        "log_loss": 0.3904783144009829
+      },
+      "subset_ensemble": {
+        "brier": 0.3080076161037501,
+        "log_loss": 0.48360792463349045
+      }
+    },
+    "test2/budget=2/adversarial": {
+      "consistency": {
+        "brier": 1.5126850336616628,
+        "log_loss": 3.073691196964312
+      },
+      "oblivious": {
+        "brier": 1.856682449568246,
+        "log_loss": 3.6694333274853985
+      },
+      "prior": {
+        "brier": 0.33193892503779177,
+        "log_loss": 0.5141190730476168
+      },
+      "single_average": {
+        "brier": 0.7172895980582574,
+        "log_loss": 0.9672810490662742
+      },
+      "subset_ensemble": {
+        "brier": 1.4940039816021191,
+        "log_loss": 2.1843242186805245
+      }
+    },
+    "test2/budget=2/none": {
+      "consistency": {
+        "brier": 0.09280342721217273,
+        "log_loss": 0.15355543938825003
+      },
+      "oblivious": {
+        "brier": 0.21839194741947593,
+        "log_loss": 0.31653270054475807
+      },
+      "prior": {
+        "brier": 0.33193892503779177,
+        "log_loss": 0.5141190730476168
+      },
+      "single_average": {
+        "brier": 0.171317380234188,
+        "log_loss": 0.3104135514466102
+      },
+      "subset_ensemble": {
+        "brier": 0.08916309618987743,
+        "log_loss": 0.1953747954087688
+      }
+    },
+    "test2/budget=2/random": {
+      "consistency": {
+        "brier": 0.2571396934259862,
+        "log_loss": 0.42602229368829386
+      },
+      "oblivious": {
+        "brier": 0.49667739025900054,
+        "log_loss": 0.7143138920740708
+      },
+      "oracle": {
+        "brier": 0.2517755455520776,
+        "log_loss": 0.3988755701545774
+      },
+      "prior": {
+        "brier": 0.33193892503779177,
+        "log_loss": 0.5141190730476168
+      },
+      "single_average": {
+        "brier": 0.2902326176054607,
+        "log_loss": 0.4648286588636136
+      },
+      "subset_ensemble": {
+        "brier": 0.35055358250711405,
+        "log_loss": 0.5351225687772303
+      }
+    },
+    "test2/budget=2/stuck_max": {
+      "consistency": {
+        "brier": 0.18807607194674267,
+        "log_loss": 0.29655818915019005
+      },
+      "oblivious": {
+        "brier": 0.48543286662320634,
+        "log_loss": 0.6755501241218598
+      },
+      "oracle": {
+        "brier": 0.16632255696934928,
+        "log_loss": 0.265855135203447
+      },
+      "prior": {
+        "brier": 0.33193892503779177,
+        "log_loss": 0.5141190730476168
+      },
+      "single_average": {
+        "brier": 0.29506877532291637,
+        "log_loss": 0.4785596588313339
+      },
+      "subset_ensemble": {
+        "brier": 0.33108883111731935,
+        "log_loss": 0.5145762491201159
+      }
+    }
+  },
+  "mi_training_all_sensors": 0.4806494378705179,
+  "profile_training_all_sensors": {
+    "0": 0.480649437870518,
+    "1": 0.4042608120799077,
+    "2": 0.31382902844064986,
+    "3": 0.26045012562364334,
+    "4": 0.15898554188063996
+  },
+  "schema": "pid-rs.fault-tolerant-information-experiment.v1",
+  "seed": 20260926,
+  "sensors": [
+    "Temperature",
+    "Humidity",
+    "Light",
+    "CO2",
+    "HumidityRatio"
+  ],
+  "three_sensor_subsets": [
+    {
+      "ft1_training": 0.41150319144748304,
+      "ft2_training": 0.24296241308837951,
+      "mi_training": 0.4759695606420933,
+      "sensors": [
+        "Temperature",
+        "Humidity",
+        "Light"
+      ],
+      "test2_adversarial_budget1": {
+        "consistency": {
+          "brier": 1.124967222026121,
+          "log_loss": 1.9987241384522287
+        },
+        "oblivious": {
+          "brier": 1.61716370346108,
+          "log_loss": 2.8663159028648573
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.5917960601428227,
+          "log_loss": 0.8079207671483879
+        },
+        "subset_ensemble": {
+          "brier": 1.0960669210744933,
+          "log_loss": 1.4387569711146602
+        }
+      },
+      "test2_clean_budget1": {
+        "consistency": {
+          "brier": 0.02776204886943076,
+          "log_loss": 0.06998737042304679
+        },
+        "oblivious": {
+          "brier": 0.09479172543162757,
+          "log_loss": 0.15205641843730813
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.1332580254584486,
+          "log_loss": 0.2597618697211753
+        },
+        "subset_ensemble": {
+          "brier": 0.05164481796943348,
+          "log_loss": 0.13269776633338562
+        }
+      },
+      "test_adversarial_budget1": {
+        "consistency": {
+          "brier": 1.1187412625982438,
+          "log_loss": 1.8203463635355916
+        },
+        "oblivious": {
+          "brier": 1.5853565512858727,
+          "log_loss": 2.7513815067648046
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.7248702199159963,
+          "log_loss": 0.9775243522783161
+        },
+        "subset_ensemble": {
+          "brier": 1.0452910939924656,
+          "log_loss": 1.424970805357478
+        }
+      },
+      "test_clean_budget1": {
+        "consistency": {
+          "brier": 0.067915796912433,
+          "log_loss": 0.13555632971024748
+        },
+        "oblivious": {
+          "brier": 0.049316634206114485,
+          "log_loss": 0.0959819364318447
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.20715252351228056,
+          "log_loss": 0.3426846700212991
+        },
+        "subset_ensemble": {
+          "brier": 0.0690043283684452,
+          "log_loss": 0.14473554187844576
+        }
+      }
+    },
+    {
+      "ft1_training": 0.22109230879053532,
+      "ft2_training": 0.11976963695229875,
+      "mi_training": 0.29663347436562454,
+      "sensors": [
+        "Temperature",
+        "Humidity",
+        "CO2"
+      ],
+      "test2_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.9934293439257432,
+          "log_loss": 1.5550594540143943
+        },
+        "oblivious": {
+          "brier": 1.3119144434847938,
+          "log_loss": 2.155776519914535
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.622125427606277,
+          "log_loss": 0.8731243811366983
+        },
+        "subset_ensemble": {
+          "brier": 0.9131818942753168,
+          "log_loss": 1.3183027062388366
+        }
+      },
+      "test2_clean_budget1": {
+        "consistency": {
+          "brier": 0.20651505708867127,
+          "log_loss": 0.3392858340397689
+        },
+        "oblivious": {
+          "brier": 0.33619085980018654,
+          "log_loss": 0.4939460215810779
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.24263389631377014,
+          "log_loss": 0.39579315471422555
+        },
+        "subset_ensemble": {
+          "brier": 0.23381765351142889,
+          "log_loss": 0.3759363188797688
+        }
+      },
+      "test_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.9002814104311225,
+          "log_loss": 1.3804970189170784
+        },
+        "oblivious": {
+          "brier": 0.9083621423206172,
+          "log_loss": 1.5027685854753947
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.7034579224132865,
+          "log_loss": 0.9590122719656116
+        },
+        "subset_ensemble": {
+          "brier": 0.7956617444861073,
+          "log_loss": 1.152469832356354
+        }
+      },
+      "test_clean_budget1": {
+        "consistency": {
+          "brier": 0.23824674918402516,
+          "log_loss": 0.4137543427013418
+        },
+        "oblivious": {
+          "brier": 0.24370196301275268,
+          "log_loss": 0.41483333963122665
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.308950734556563,
+          "log_loss": 0.4755784616467501
+        },
+        "subset_ensemble": {
+          "brier": 0.2302717503606496,
+          "log_loss": 0.399241390189414
+        }
+      }
+    },
+    {
+      "ft1_training": 0.07362208233681028,
+      "ft2_training": 0.07953121749944175,
+      "mi_training": 0.20893578331117565,
+      "sensors": [
+        "Temperature",
+        "Humidity",
+        "HumidityRatio"
+      ],
+      "test2_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.7491784884266438,
+          "log_loss": 1.0841715683648492
+        },
+        "oblivious": {
+          "brier": 1.3699791553541265,
+          "log_loss": 2.5497645148492465
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.5596454936244382,
+          "log_loss": 0.8052779897793352
+        },
+        "subset_ensemble": {
+          "brier": 0.9174215782114099,
+          "log_loss": 1.2194357669388267
+        }
+      },
+      "test2_clean_budget1": {
+        "consistency": {
+          "brier": 0.3070019316163243,
+          "log_loss": 0.47034974175095207
+        },
+        "oblivious": {
+          "brier": 0.3564817233783869,
+          "log_loss": 0.5613555898729111
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.2762142787724617,
+          "log_loss": 0.4368172062893947
+        },
+        "subset_ensemble": {
+          "brier": 0.2748595037937468,
+          "log_loss": 0.42586001968469667
+        }
+      },
+      "test_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.7716909795900602,
+          "log_loss": 1.17148227746037
+        },
+        "oblivious": {
+          "brier": 1.091165029716586,
+          "log_loss": 1.8161890532172311
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.7318272940709311,
+          "log_loss": 1.0371508008475614
+        },
+        "subset_ensemble": {
+          "brier": 0.8492994930884616,
+          "log_loss": 1.2245897867029307
+        }
+      },
+      "test_clean_budget1": {
+        "consistency": {
+          "brier": 0.41796293962784103,
+          "log_loss": 0.6004785829988385
+        },
+        "oblivious": {
+          "brier": 0.26502019248442454,
+          "log_loss": 0.44110120391846813
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.4245977292757794,
+          "log_loss": 0.6022959078841
+        },
+        "subset_ensemble": {
+          "brier": 0.2812260283328134,
+          "log_loss": 0.445478280904193
+        }
+      }
+    },
+    {
+      "ft1_training": 0.4061027755159482,
+      "ft2_training": 0.26616792151675894,
+      "mi_training": 0.47503077075847305,
+      "sensors": [
+        "Temperature",
+        "Light",
+        "CO2"
+      ],
+      "test2_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.6809997301726707,
+          "log_loss": 1.1777879164944038
+        },
+        "oblivious": {
+          "brier": 1.6794978643958118,
+          "log_loss": 2.8813745262882677
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.5160421861861796,
+          "log_loss": 0.725751910248793
+        },
+        "subset_ensemble": {
+          "brier": 1.0190483386755314,
+          "log_loss": 1.358104243841044
+        }
+      },
+      "test2_clean_budget1": {
+        "consistency": {
+          "brier": 0.05206155406516708,
+          "log_loss": 0.10628257329948759
+        },
+        "oblivious": {
+          "brier": 0.03139624220852416,
+          "log_loss": 0.06281849479075431
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.10717029725369404,
+          "log_loss": 0.2114041142682526
+        },
+        "subset_ensemble": {
+          "brier": 0.05065250550859441,
+          "log_loss": 0.11422907917011946
+        }
+      },
+      "test_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.665476593961591,
+          "log_loss": 1.1673716023898704
+        },
+        "oblivious": {
+          "brier": 1.6534936931797173,
+          "log_loss": 2.8583513297640577
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.5670430893642785,
+          "log_loss": 0.8136594592767527
+        },
+        "subset_ensemble": {
+          "brier": 1.056249341749652,
+          "log_loss": 1.4344042435845568
+        }
+      },
+      "test_clean_budget1": {
+        "consistency": {
+          "brier": 0.11146292088069733,
+          "log_loss": 0.19026358238777452
+        },
+        "oblivious": {
+          "brier": 0.07841220707071608,
+          "log_loss": 0.13766742005028154
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.13303328127946398,
+          "log_loss": 0.24750358810460543
+        },
+        "subset_ensemble": {
+          "brier": 0.06630216210550961,
+          "log_loss": 0.1446550621824057
+        }
+      }
+    },
+    {
+      "ft1_training": 0.40554121206000737,
+      "ft2_training": 0.23563643733146777,
+      "mi_training": 0.4754825775699247,
+      "sensors": [
+        "Temperature",
+        "Light",
+        "HumidityRatio"
+      ],
+      "test2_adversarial_budget1": {
+        "consistency": {
+          "brier": 1.1606846416496266,
+          "log_loss": 1.8404094490455238
+        },
+        "oblivious": {
+          "brier": 1.628265740628015,
+          "log_loss": 3.1341913767434244
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.5548223469483324,
+          "log_loss": 0.7654788209728132
+        },
+        "subset_ensemble": {
+          "brier": 1.0813495833517561,
+          "log_loss": 1.4173811163394896
+        }
+      },
+      "test2_clean_budget1": {
+        "consistency": {
+          "brier": 0.028488310809086335,
+          "log_loss": 0.07406917145600711
+        },
+        "oblivious": {
+          "brier": 0.0910429258727709,
+          "log_loss": 0.1465661237385599
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.11665281342727267,
+          "log_loss": 0.2368812776983159
+        },
+        "subset_ensemble": {
+          "brier": 0.05077725201473889,
+          "log_loss": 0.1322539235628886
+        }
+      },
+      "test_adversarial_budget1": {
+        "consistency": {
+          "brier": 1.0673397501231725,
+          "log_loss": 1.6455759154896576
+        },
+        "oblivious": {
+          "brier": 1.8159070145979677,
+          "log_loss": 3.4296801814533917
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.7011547137294488,
+          "log_loss": 0.9491832203433554
+        },
+        "subset_ensemble": {
+          "brier": 1.0943973698113585,
+          "log_loss": 1.451079228940621
+        }
+      },
+      "test_clean_budget1": {
+        "consistency": {
+          "brier": 0.06575185226174082,
+          "log_loss": 0.13871023192100984
+        },
+        "oblivious": {
+          "brier": 0.04455516868521061,
+          "log_loss": 0.09088395410237392
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.19268045684709956,
+          "log_loss": 0.3262378890174749
+        },
+        "subset_ensemble": {
+          "brier": 0.07054290850874921,
+          "log_loss": 0.15698189103592122
+        }
+      }
+    },
+    {
+      "ft1_training": 0.22392215009432753,
+      "ft2_training": 0.11929700172231789,
+      "mi_training": 0.28199011804288193,
+      "sensors": [
+        "Temperature",
+        "CO2",
+        "HumidityRatio"
+      ],
+      "test2_adversarial_budget1": {
+        "consistency": {
+          "brier": 1.0215149055082584,
+          "log_loss": 1.5567797332022861
+        },
+        "oblivious": {
+          "brier": 1.4146821439604371,
+          "log_loss": 2.1824537245526807
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.5973964912598576,
+          "log_loss": 0.8332202366644402
+        },
+        "subset_ensemble": {
+          "brier": 0.869921362136807,
+          "log_loss": 1.192945673734719
+        }
+      },
+      "test2_clean_budget1": {
+        "consistency": {
+          "brier": 0.2098917343408706,
+          "log_loss": 0.3374170602442764
+        },
+        "oblivious": {
+          "brier": 0.3400539802255456,
+          "log_loss": 0.510001462839781
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.2208835015486176,
+          "log_loss": 0.36729508238298614
+        },
+        "subset_ensemble": {
+          "brier": 0.22053466531736032,
+          "log_loss": 0.36033054525546127
+        }
+      },
+      "test_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.8487008153996359,
+          "log_loss": 1.2495505118466859
+        },
+        "oblivious": {
+          "brier": 1.4827955179596928,
+          "log_loss": 2.2842866110702538
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.6825830796691654,
+          "log_loss": 0.9373981431876759
+        },
+        "subset_ensemble": {
+          "brier": 0.8384933586721652,
+          "log_loss": 1.1834289194177714
+        }
+      },
+      "test_clean_budget1": {
+        "consistency": {
+          "brier": 0.23706102269542456,
+          "log_loss": 0.4086789110767959
+        },
+        "oblivious": {
+          "brier": 0.24781419171298594,
+          "log_loss": 0.4119776593860224
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.2945426538245571,
+          "log_loss": 0.46176039323215023
+        },
+        "subset_ensemble": {
+          "brier": 0.23391734946806111,
+          "log_loss": 0.3992058695986215
+        }
+      }
+    },
+    {
+      "ft1_training": 0.38541234778576794,
+      "ft2_training": 0.21860185299332396,
+      "mi_training": 0.4752931399790896,
+      "sensors": [
+        "Humidity",
+        "Light",
+        "CO2"
+      ],
+      "test2_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.9442576558622195,
+          "log_loss": 1.5609195444484067
+        },
+        "oblivious": {
+          "brier": 1.6698738432577453,
+          "log_loss": 3.08486288910447
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.6211092956146659,
+          "log_loss": 0.8698221677205693
+        },
+        "subset_ensemble": {
+          "brier": 1.1018002591750018,
+          "log_loss": 1.579849712244367
+        }
+      },
+      "test2_clean_budget1": {
+        "consistency": {
+          "brier": 0.10264342937042492,
+          "log_loss": 0.1615402086612176
+        },
+        "oblivious": {
+          "brier": 0.048736696298418807,
+          "log_loss": 0.09142680381482889
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.1542583774283297,
+          "log_loss": 0.2815007161946493
+        },
+        "subset_ensemble": {
+          "brier": 0.06513030168508921,
+          "log_loss": 0.1410849508826377
+        }
+      },
+      "test_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.8026126241182421,
+          "log_loss": 1.3164405573394262
+        },
+        "oblivious": {
+          "brier": 1.5629233388469645,
+          "log_loss": 2.550138242477405
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.6369178941611848,
+          "log_loss": 0.8823894026640472
+        },
+        "subset_ensemble": {
+          "brier": 0.9860991457355239,
+          "log_loss": 1.383778576491565
+        }
+      },
+      "test_clean_budget1": {
+        "consistency": {
+          "brier": 0.10146087472471094,
+          "log_loss": 0.16483219898052956
+        },
+        "oblivious": {
+          "brier": 0.04492150940939642,
+          "log_loss": 0.08973021772801579
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.1616401704908877,
+          "log_loss": 0.28652736441882576
+        },
+        "subset_ensemble": {
+          "brier": 0.06141371984648838,
+          "log_loss": 0.1255862487152497
+        }
+      }
+    },
+    {
+      "ft1_training": 0.16592465631490533,
+      "ft2_training": 0.26375331542591024,
+      "mi_training": 0.47110955989433617,
+      "sensors": [
+        "Humidity",
+        "Light",
+        "HumidityRatio"
+      ],
+      "test2_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.736829331390134,
+          "log_loss": 1.0982295167698715
+        },
+        "oblivious": {
+          "brier": 1.8406528878961355,
+          "log_loss": 3.955749818981938
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.6730963078659729,
+          "log_loss": 0.9253303855112449
+        },
+        "subset_ensemble": {
+          "brier": 1.142416449612301,
+          "log_loss": 1.5243674032845862
+        }
+      },
+      "test2_clean_budget1": {
+        "consistency": {
+          "brier": 0.17260632326859726,
+          "log_loss": 0.2805734176366263
+        },
+        "oblivious": {
+          "brier": 0.019027089993366258,
+          "log_loss": 0.04399014702682406
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.17733362219313673,
+          "log_loss": 0.3126501884617814
+        },
+        "subset_ensemble": {
+          "brier": 0.058416897544507594,
+          "log_loss": 0.14783226821996448
+        }
+      },
+      "test_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.8967922066496907,
+          "log_loss": 1.3737203379917102
+        },
+        "oblivious": {
+          "brier": 1.7131286519177886,
+          "log_loss": 3.4577073608001268
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.7948898628707585,
+          "log_loss": 1.1076114820476557
+        },
+        "subset_ensemble": {
+          "brier": 1.1683684484036923,
+          "log_loss": 1.6254826209611264
+        }
+      },
+      "test_clean_budget1": {
+        "consistency": {
+          "brier": 0.3228049192980878,
+          "log_loss": 0.45569892628415093
+        },
+        "oblivious": {
+          "brier": 0.0442856718713621,
+          "log_loss": 0.08661842372285537
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.2504700852295254,
+          "log_loss": 0.3862373802175599
+        },
+        "subset_ensemble": {
+          "brier": 0.09231776331144886,
+          "log_loss": 0.18929268519361953
+        }
+      }
+    },
+    {
+      "ft1_training": 0.07721839275148279,
+      "ft2_training": 0.08797536135095507,
+      "mi_training": 0.2590051721894326,
+      "sensors": [
+        "Humidity",
+        "CO2",
+        "HumidityRatio"
+      ],
+      "test2_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.7901619848428071,
+          "log_loss": 1.205951645665569
+        },
+        "oblivious": {
+          "brier": 1.6477581897117943,
+          "log_loss": 2.6934798541230625
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.6833382180666668,
+          "log_loss": 0.9302379017060736
+        },
+        "subset_ensemble": {
+          "brier": 1.031473687843883,
+          "log_loss": 1.3970922165145165
+        }
+      },
+      "test2_clean_budget1": {
+        "consistency": {
+          "brier": 0.28668119904161143,
+          "log_loss": 0.4488553267730634
+        },
+        "oblivious": {
+          "brier": 0.36614851077385585,
+          "log_loss": 0.6317585278387841
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.2983601584708635,
+          "log_loss": 0.46980972132888943
+        },
+        "subset_ensemble": {
+          "brier": 0.29340326159636,
+          "log_loss": 0.4580352182035762
+        }
+      },
+      "test_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.8657636596360466,
+          "log_loss": 1.2892691729612165
+        },
+        "oblivious": {
+          "brier": 1.4395896266930297,
+          "log_loss": 2.557581239598786
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.75724377706485,
+          "log_loss": 1.0403131915988677
+        },
+        "subset_ensemble": {
+          "brier": 1.1218848838860533,
+          "log_loss": 1.53373484332442
+        }
+      },
+      "test_clean_budget1": {
+        "consistency": {
+          "brier": 0.41667848947674263,
+          "log_loss": 0.6012192709057821
+        },
+        "oblivious": {
+          "brier": 0.22662349832786916,
+          "log_loss": 0.4071542909267906
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.3545136849517082,
+          "log_loss": 0.5243722311447363
+        },
+        "subset_ensemble": {
+          "brier": 0.24819507333931387,
+          "log_loss": 0.4146526155595388
+        }
+      }
+    },
+    {
+      "ft1_training": 0.36991916831038046,
+      "ft2_training": 0.2172063270700611,
+      "mi_training": 0.47342423271753753,
+      "sensors": [
+        "Light",
+        "CO2",
+        "HumidityRatio"
+      ],
+      "test2_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.78233148628433,
+          "log_loss": 1.3009803830764533
+        },
+        "oblivious": {
+          "brier": 1.6571367297305502,
+          "log_loss": 3.0173860759712725
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.5807029778315099,
+          "log_loss": 0.8145596007932837
+        },
+        "subset_ensemble": {
+          "brier": 1.0550525578411925,
+          "log_loss": 1.4895926527597827
+        }
+      },
+      "test2_clean_budget1": {
+        "consistency": {
+          "brier": 0.08374518008457695,
+          "log_loss": 0.14609986805100675
+        },
+        "oblivious": {
+          "brier": 0.05437845348049226,
+          "log_loss": 0.09680249502029499
+        },
+        "prior": {
+          "brier": 0.33193892503779177,
+          "log_loss": 0.5141190730476168
+        },
+        "single_average": {
+          "brier": 0.13428969130311544,
+          "log_loss": 0.25629951673374085
+        },
+        "subset_ensemble": {
+          "brier": 0.059708314210165835,
+          "log_loss": 0.12762937325140455
+        }
+      },
+      "test_adversarial_budget1": {
+        "consistency": {
+          "brier": 0.7366190902146567,
+          "log_loss": 1.1730144485023457
+        },
+        "oblivious": {
+          "brier": 1.6775549474824536,
+          "log_loss": 2.925476454530557
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.6158187570620995,
+          "log_loss": 0.8645360270355633
+        },
+        "subset_ensemble": {
+          "brier": 1.0299345277213352,
+          "log_loss": 1.4319467965735007
+        }
+      },
+      "test_clean_budget1": {
+        "consistency": {
+          "brier": 0.11388671680073027,
+          "log_loss": 0.19121228209843086
+        },
+        "oblivious": {
+          "brier": 0.0443494532304475,
+          "log_loss": 0.0881120914493398
+        },
+        "prior": {
+          "brier": 0.5098104097835585,
+          "log_loss": 0.7167476443804923
+        },
+        "single_average": {
+          "brier": 0.1515369951172205,
+          "log_loss": 0.2728952936253607
+        },
+        "subset_ensemble": {
+          "brier": 0.06346813247241227,
+          "log_loss": 0.13412703362336847
+        }
+      }
+    }
+  ]
+}

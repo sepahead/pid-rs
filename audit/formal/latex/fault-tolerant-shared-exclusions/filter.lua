@@ -1,12 +1,13 @@
--- PDF-only projection for audit/evidence/cross-implementation-reverification-2026-09-26.md.
+-- PDF-only projection for audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md.
 -- The Markdown file is canonical. This filter changes layout and link form, not claims.
 
 local dropped_title = false
 local dropped_byline = false
 local last_heading = ""
+local table_index = 0
 local repository_blob_root = "https://github.com/sepahead/pid-rs/blob/main/"
-local source_directory = "audit/evidence/"
-local report_title = "Cross-implementation re-verification of pid-rs estimators and mathematical results"
+local source_directory = "audit/research/fault-tolerant-shared-exclusions/"
+local report_title = "Shared-exclusion redundancy as fault tolerance for multisensor systems"
 
 local function set_widths(element, widths)
   if #element.colspecs ~= #widths then
@@ -44,6 +45,7 @@ function Header(element)
     element.level = element.level - 1
   end
   last_heading = title
+  table_index = 0
   if element.level == 1 then
     return {pandoc.RawBlock("latex", "\\par\\Needspace{14\\baselineskip}"), element}
   end
@@ -91,7 +93,7 @@ function Code(element)
 end
 
 function Image(element)
-  error("unexpected image in the cross-implementation re-verification report: " .. element.src)
+  error("unexpected image in the fault-tolerance research note: " .. element.src)
 end
 
 function Link(element)
@@ -114,22 +116,21 @@ function Table(element)
   end
   local widths = nil
   local count = #element.colspecs
-  if last_heading == "1.1 Checked objects" then
-    widths = {0.16, 0.22, 0.24, 0.20, 0.18}
-  elseif last_heading == "1.2 Evidence classes and independence" then
-    widths = {0.16, 0.12, 0.72}
-  elseif last_heading == "3.2 Results" and count == 4 then
-    widths = {0.34, 0.22, 0.22, 0.22}
-  elseif last_heading == "3.2 Results" or last_heading == "4.4 Method and results" then
-    widths = {0.72, 0.28}
-  elseif last_heading == "5. Complete test suite" then
-    widths = {0.40, 0.20, 0.20, 0.20}
-  elseif last_heading == "6.2 Exact-rational method and results" then
-    widths = {0.55, 0.45}
-  elseif last_heading == "6.3 Why the retired binary64 test reported ratios above one" then
-    widths = {0.10, 0.26, 0.24, 0.18, 0.22}
-  elseif last_heading == "9. Correction: intrinsic-dimension provenance" then
-    widths = {0.32, 0.12, 0.56}
+  table_index = table_index + 1
+  if last_heading == "6. Computation and checks" then
+    widths = {0.40, 0.30, 0.30}
+  elseif last_heading == "7.2 Results with the four physical sensors and the correct budget" then
+    if table_index == 1 and count == 7 then
+      widths = {0.25, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125}
+    elseif table_index == 2 and count == 5 then
+      widths = {0.20, 0.20, 0.20, 0.20, 0.20}
+    elseif table_index == 3 and count == 5 then
+      widths = {0.22, 0.13, 0.13, 0.26, 0.26}
+    end
+  elseif last_heading == "7.4 Wrong budgets and partial fault rates" and count == 5 then
+    widths = {0.25, 0.12, 0.21, 0.21, 0.21}
+  elseif last_heading == "7.6 Choosing three sensors" and count == 9 then
+    widths = {0.08, 0.08, 0.08, 0.08, 0.13, 0.13, 0.14, 0.14, 0.14}
   end
   if widths then
     return set_widths(element, widths)

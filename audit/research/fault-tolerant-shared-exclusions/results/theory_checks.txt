@@ -1,0 +1,7 @@
+C1 max |Hamming gain - cumulative|, |Hamming gain - down-set atom sum| = 1.110e-15
+C2 max |I(S;T) direct - top-node cumulative| = 6.661e-16; max |(I(S;T) - cumulative) - sum of atoms not below alpha_f| = 1.776e-15
+C3 exact validity checks: 613270; violations: 0
+C4 informative-component increases with f: 0
+C5 three-bit parity T = S1 xor S2 xor S3: f=0: sum of mass x log(2) = +0.693147; f=1: sum of mass x log(1/2) = -0.693147; f=2: sum of mass x log(8/7) = +0.133531
+C5 copy T = S1 with duplicated noise S2 = S3: f=0: sum of mass x log(2) = +0.693147; f=1: sum of mass x log(1) = +0.000000; f=2: sum of mass x log(4/3) = +0.287682
+result: PASS
