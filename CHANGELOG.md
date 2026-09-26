@@ -7,6 +7,16 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Add the cross-implementation re-verification report with its PDF, checker and evidence. A
+  second implementation written from the published definitions reproduced the categorical MGW
+  and Williams-Beer atoms (60 seeded systems, 2-4 sources) and the continuous KSG1, Ehrlich,
+  PID2 and PID3 values (6 systems) within 8.9e-16 nats on commits `d1f401a` and `0e96b2b`. An
+  exact-rational test found no violation of the one-Lambda bound in 634,112 evaluations; an
+  archived binary64 version and an exact diagnostic show that its apparent violations came from
+  a construction that broke the total-mass premise. The report records the independence limits,
+  both review rounds, eleven routes and the fixes above. `run.sh` reproduces every retained
+  output byte for byte; the checkers fail closed on 17 hostile inputs.
+
 - Fix unequal percentile tails in the resampling summaries. `block_bootstrap`,
   `block_bootstrap_paired`, `bootstrap_rows_stats` and `bootstrap_quantized_sxpid2`, with their
   `_with_budget` and `_with_cancellation` variants, computed the lower and upper order-statistic

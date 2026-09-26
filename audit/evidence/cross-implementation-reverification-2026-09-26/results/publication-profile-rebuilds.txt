@@ -1,0 +1,38 @@
+Publication-profile rebuild record, 26 September 2026 (UTC times below).
+Retained by Sepehr Mahmoudian. Machine-specific paths are replaced by <tex-root> and <work>;
+the complete RESULT.json files remain in an ignored local record.
+
+Source state: the working tree that became commit 0e96b2b, with these input profiles:
+  audit/formal/latex/real-occupancy-sensors/publication-inputs-v6.json  sha256 ac26f116633125f80308c356b809f32a149c9fa6a60dea6ac9b72771cdd486a0
+  audit/formal/latex/mgw-fixed-world/publication-inputs-v9.json          sha256 6baa580c856ff620fd03c1448715c0607da9e4e0756bbd234a02019bbb06f639
+Canonical TeX root: TeX Live 2024 (<tex-root>).
+
+1. python3 -I -S -B scripts/build-recorded-office-sensors-pdf.py --exact --check --tex-root <tex-root> --work-dir <work>/office-exact-v6
+   exit 0; stdout: OK: recorded sensors exact_reference_reproduced; builds=2
+   RESULT.json: mode=exact status=exact_reference_reproduced builds=2 pdf_bytes=278311
+   pdf_sha256=54b20e1cea7ce38b7a001674f6fb1854e38db30d3129f5fd4aad1ea7b3c30a8d
+   started 2026-09-26T02:42:46Z completed 2026-09-26T02:43:00Z; RESULT.json sha256 472bfc1122b5033bdefa876dafd9fba37782c97d4e92b8f48ff15c170a043c06
+
+2. python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root <tex-root> --work-dir <work>/mgw-exact-v9
+   exit 0; stdout: OK: finite MGW exact_reference_reproduced; builds=2
+   RESULT.json: mode=exact status=exact_reference_reproduced builds=2 pdf_bytes=231810
+   pdf_sha256=6fc4cfbe5bb71037515c4ebdd3119b20e6e970ce6f117e1b9659b44a728b565a matches_expected_finite_pdf=true
+   started 2026-09-26T02:43:00Z completed 2026-09-26T02:43:14Z; RESULT.json sha256 042aec9f0dbb1e6e7a3e250c77224129b73af96286445afb084e644d891cafce
+
+3. python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --cross-toolchain
+   exit 2 (required refusal); stderr: Finite MGW: no reviewed cross-toolchain relation; status 2 refusal.
+
+4. python3 -I -S -B scripts/check-recorded-office-sensors-pdf-self-test.py --work-dir <work>/office-controls-normal
+   exit 0; OK: 23 recorded-sensor publication controls; no native document reproduction
+   python3 -O -I -S -B scripts/check-recorded-office-sensors-pdf-self-test.py --work-dir <work>/office-controls-optimized
+   exit 0; OK: 23 recorded-sensor publication controls; no native document reproduction
+
+5. python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir <work>/mgw-controls-normal
+   exit 0; OK: 72 finite MGW publication controls and 8 direct Markdown citation controls, 5 direct SVG citation controls; no native document reproduction
+   python3 -O -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir <work>/mgw-controls-optimized
+   exit 0; OK: 72 finite MGW publication controls and 8 direct Markdown citation controls, 5 direct SVG citation controls; no native document reproduction
+
+Scope: local execution evidence on one macOS arm64 machine. Both exact runs made two fresh builds
+that reproduced the referenced PDF bytes. This is not hosted evidence, a visual review, or a
+formal-proof check. Predecessor runs under the earlier v9 draft (25 September 2026) pinned other
+METHODS.md bytes and are superseded by these runs.

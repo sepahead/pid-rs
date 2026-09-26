@@ -1,0 +1,1 @@
+passed=728 failed=0 ignored=6

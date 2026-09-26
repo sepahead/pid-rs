@@ -1,0 +1,10 @@
+commit d1f401a1eccec7fe2476f4bcf16538991f52a33f
+build-and-generate 24 s
+check_discrete 8 s
+check_continuous 1 s
+check_one_lambda 8 s
+check_percentile_index 7 s
+checker_self_test 30 s
+diagnose_one_lambda_binary64_v1 22 s
+test-suite 56 s
+total 157 s

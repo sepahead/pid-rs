@@ -1,0 +1,154 @@
+{
+  "acceptance": "retrospective regression tolerance: 1e-12 nats for implementation agreement and 1e-60 for the exact one-Lambda ratios; not a sealed acceptance rule",
+  "author": "Sepehr Mahmoudian",
+  "checked_commits": {
+    "before_fixes": "d1f401a1eccec7fe2476f4bcf16538991f52a33f",
+    "with_fixes": "0e96b2be33ae627675f682433815807dc93ac13b"
+  },
+  "command": "audit/evidence/cross-implementation-reverification-2026-09-26/run.sh <commit> <fresh-work-dir> --with-test-suite",
+  "date": "2026-09-26",
+  "environment": {
+    "cargo": "1.96.0 (30a34c682 2026-05-25)",
+    "numpy": "2.4.6",
+    "os": "macOS 26.5.1 arm64 (Apple M4 Max)",
+    "python": "3.14.6",
+    "rustc": "1.96.0 (ac68faa20 2026-05-25)"
+  },
+  "evidence_classes": [
+    "execution evidence bounded to the listed inputs",
+    "model review",
+    "documentation"
+  ],
+  "files": {
+    "REVIEW.md": {
+      "bytes": 12758,
+      "sha256": "416155b63bb9880004c8a87443ba0e3e5703068a024cc55246364fff96c2f777"
+    },
+    "inputs/continuous_dump.json": {
+      "bytes": 167825,
+      "sha256": "16ff3f79b60ca027f60400b8146bb7676948327785cf114e94afe6d346a54ef5"
+    },
+    "inputs/discrete_dump.json": {
+      "bytes": 495004,
+      "sha256": "54d3836d7ea65418bf622fbf9a589f9ff0d54d1aadde7ad38b32370cc22316d6"
+    },
+    "python/archive/check_one_lambda_binary64_v1.py": {
+      "bytes": 3491,
+      "sha256": "3314cd6f24eed68a32c857bc25727e37dd87824266d2a4ec0ef3901fa28a130b"
+    },
+    "python/archive/diagnose_one_lambda_binary64_v1.py": {
+      "bytes": 7082,
+      "sha256": "9bcda336c4d80c14593332ee5482260e9a6ac29a1d125aa8c31fa905afd59f8f"
+    },
+    "python/check_continuous.py": {
+      "bytes": 6170,
+      "sha256": "cbc4a7fd28d3352c32d8d4d12bd02a1ab6a188d000c8b9e110e540268d218915"
+    },
+    "python/check_discrete.py": {
+      "bytes": 8940,
+      "sha256": "9fe06254d169948b3915b86b785439a4155e0f250be7ca1ce4561cc87001d0f9"
+    },
+    "python/check_one_lambda.py": {
+      "bytes": 6797,
+      "sha256": "9567d9c221fcf44dfb7ac2468c2b591517c30a28efb8a7fa528b62dd1a2a9fa8"
+    },
+    "python/check_percentile_index.py": {
+      "bytes": 5099,
+      "sha256": "7f2d056ac506d56e187e48901a59ac334587de7bbcf55242d51ffabcbc8f2b6a"
+    },
+    "python/checker_self_test.py": {
+      "bytes": 3875,
+      "sha256": "cd3a9efc2436aa83ce26fe5b75ca8b9732038033d763131d39ddb7d8f0ac76c8"
+    },
+    "results/archive/check_one_lambda_binary64_v1.txt": {
+      "bytes": 404,
+      "sha256": "5de21dc8f78d759555a301d8d5871ca89083d766a32d61cde3bbcdca6010b0f7"
+    },
+    "results/archive/diagnose_one_lambda_binary64_v1.txt": {
+      "bytes": 1243,
+      "sha256": "09a8403e5835e2ca2c8c0f1eee16007f8b40b2d03f8141a17189286ed2412108"
+    },
+    "results/check_continuous.txt": {
+      "bytes": 1185,
+      "sha256": "e009833bfa1f408f7029f620eedbfdd35351d6a4436ef07fdef56dbc3017cac5"
+    },
+    "results/check_discrete.txt": {
+      "bytes": 1259,
+      "sha256": "e342e7572b26a6e90a2c2f807a686fc151c122def71bf076b978565ced4e8ffe"
+    },
+    "results/check_one_lambda.txt": {
+      "bytes": 981,
+      "sha256": "929a6178ee7dcc155d4ce79a181a7c9ebee5d73a15bcce0d29459172371e7a5a"
+    },
+    "results/check_percentile_index.txt": {
+      "bytes": 1996,
+      "sha256": "27915e7efcfe4b909dcf22bb25967ac8f44d4bd8dd54d01eddc07cbfa91774c3"
+    },
+    "results/checker_self_test.txt": {
+      "bytes": 748,
+      "sha256": "2451176633af6c48f08263a9135a72db3459dd7f3a32c696feba67538e863466"
+    },
+    "results/publication-profile-rebuilds.txt": {
+      "bytes": 3194,
+      "sha256": "d3de2a45948f2dbae7bb708b4db630bc083d4c4834c16a4b84bb34d6991bc32f"
+    },
+    "results/reproduction-confirmation.txt": {
+      "bytes": 948,
+      "sha256": "e9d559281ff6f14d4f3c91564b3655c10bfb285e85c7c0fe9ac12fc1dfa10e0b"
+    },
+    "results/test_suite_0e96b2b.log": {
+      "bytes": 65574,
+      "sha256": "6d5f977c33ddbe9479b8d3a8403f9273040961ac7c7d99d971589dc5d2f843aa"
+    },
+    "results/test_suite_d1f401a.log": {
+      "bytes": 65363,
+      "sha256": "897109aaa0daf7369bd152e5eaa2ac54d6c9f08ff95d46b95af1c3df9f93617b"
+    },
+    "results/test_suite_summary_0e96b2b.txt": {
+      "bytes": 30,
+      "sha256": "0c788647daa68745a2f6a64da31386d9d31fbc869b9b1151dc440aeeea1dcae9"
+    },
+    "results/test_suite_summary_d1f401a.txt": {
+      "bytes": 30,
+      "sha256": "b0f6bc2c66d683c954f9d8b43c41b919bf1b63d7050b45a7bc3d497832b1371c"
+    },
+    "results/timing_0e96b2b.txt": {
+      "bytes": 248,
+      "sha256": "dd2ab5534cdb3d26096f2fdbdc3bfe7b3fb5068501eeff1c09eb1b12897adf9e"
+    },
+    "results/timing_d1f401a.txt": {
+      "bytes": 248,
+      "sha256": "6ffa499285a7e788ed11a8c5d640ba8bbce1156e71e74a2450580edf971161fc"
+    },
+    "run.sh": {
+      "bytes": 4914,
+      "sha256": "1538b4588034cfcbf0b53065a9694936c8b8dc19c55c104e10ae6a542ee90dca"
+    },
+    "rust/audit_dump_continuous.rs": {
+      "bytes": 4045,
+      "sha256": "1d2c5d0882a344ffc17ed09566dbf648be3378bc03f7c4c7a642bdcc93e78e0e"
+    },
+    "rust/audit_dump_discrete.rs": {
+      "bytes": 4390,
+      "sha256": "579a8b3479e539c8045cd360940fcc2a2d07e55b037d551685f3d5a75d547684"
+    }
+  },
+  "independence": {
+    "custody": "none",
+    "data": "none",
+    "implementation": "partial",
+    "institutional": "none",
+    "semantic": "partial"
+  },
+  "nonclaims": "no estimator calibration, consistency, population validity, application value, formal proof or human review",
+  "report": "audit/evidence/cross-implementation-reverification-2026-09-26.md",
+  "schema": "pid-rs.cross-implementation-reverification-manifest.v1",
+  "test_suite": {
+    "0e96b2b": "passed=728 failed=0 ignored=6",
+    "d1f401a": "passed=725 failed=0 ignored=6"
+  },
+  "wall_time_seconds_with_test_suite": {
+    "0e96b2b": 160,
+    "d1f401a": 157
+  }
+}

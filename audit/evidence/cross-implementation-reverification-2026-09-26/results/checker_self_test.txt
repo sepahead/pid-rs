@@ -1,0 +1,18 @@
+rejected: discrete: empty list
+rejected: discrete: four-source cases removed
+rejected: discrete: imin2 emptied
+rejected: discrete: imin2 truncated
+rejected: discrete: JSON false for a zero atom
+rejected: discrete: atom perturbed by 1e-9
+rejected: discrete: duplicate antichain
+rejected: discrete: string value
+rejected: discrete: subset MI perturbed by 1e-9
+rejected: discrete: duplicate JSON key
+rejected: continuous: empty list
+rejected: continuous: incomplete PID3 emptied
+rejected: continuous: incomplete PID3 all abstaining
+rejected: continuous: 18 copies of one full-PID3 antichain
+rejected: continuous: full PID3 absent
+rejected: continuous: redundancy perturbed by 1e-9
+rejected: continuous: PID2 shortened
+17 of 17 hostile inputs rejected

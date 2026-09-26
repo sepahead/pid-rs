@@ -1,0 +1,13 @@
+trials used: 3999 of 4000 (seed 1); small-delta trials drawn: 994
+(realization, antichain) evaluations: 634112; every ratio computed with 80 digits
+smallest tested delta/(2 p_min): 1.000e-12
+informative c+: max |dc|/Lambda = 1.0000000000000000000000000000000000000000
+  evaluations with ratio equal to 1 within 1e-60: 39
+  argmax (trial, alphabet, antichain, realization, delta/(2 p_min)) = (16, [2, 2, 2], [[0, 1]], (1, 1, 0), '9.748e-02')
+misinformative c-: max |dc|/Lambda = 1.0000000000000000000000000000000000000000
+  evaluations with ratio equal to 1 within 1e-60: 51
+  argmax (trial, alphabet, antichain, realization, delta/(2 p_min)) = (16, [2, 2, 2], [[0, 1]], (1, 1, 0), '9.748e-02')
+net c_sx: max |dc|/Lambda = 0.9999996544072924614558041251529096014445
+  evaluations with ratio equal to 1 within 1e-60: 0
+  argmax (trial, alphabet, antichain, realization, delta/(2 p_min)) = (776, [2, 3, 2, 3], [[0, 1, 2]], (1, 0, 0, 2), '1.720e-01')
+violations of Equation (11): none

@@ -1,0 +1,13 @@
+trial | donor and receiver sets | changed-cell masses / p_min | sum(q)-sum(p) exact | delta exact | gap/delta | Lambda binary64 | Lambda exact | max |dc| exact | exact ratio | binary64 ratio
+197 | same 1 cell | 2.55 | -1.110e-16 | 1.110e-16 | -1.000e+00 | 2.220e-16 | 1.973e-16 | 1.545e-16 | 0.7829 | 0.7500
+660 | same 1 cell | 1.00 | 3.469e-18 | 3.469e-18 | 1.000e+00 | 2.220e-16 | 6.328e-17 | 1.117e-16 | 1.7653 | 2.0000
+2098 | same 1 cell | 1.00 | -5.421e-20 | 5.421e-20 | -1.000e+00 | 2.220e-16 | 7.003e-17 | 1.399e-16 | 1.9973 | 4.0000
+2264 | same 2 cells | 5.75/35.06 | -7.589e-19 | 6.827e-08 | -1.112e-11 | 2.698e-04 | 2.698e-04 | 4.689e-05 | 0.1738 | 0.1738
+2980 | same 1 cell | 1.00 | -2.168e-19 | 2.168e-19 | -1.000e+00 | 2.220e-16 | 1.062e-16 | 2.124e-16 | 2.0000 | 0.0000
+3958 | same 1 cell | 1.00 | -2.711e-20 | 2.711e-20 | -1.000e+00 | 2.220e-16 | 6.183e-17 | 1.236e-16 | 1.9989 | 0.0000
+6 trials with 0 < binary64 delta < 1e-7
+
+largest binary64 ratio with delta >= 1e-7: 1.000000000000407 (trial 1009, component 0)
+  exact mass removed minus mass added: 2.385e-17
+  exact ratio to Lambda(delta = ||q - p||_1): 1.000000000000411373454096239102
+  exact ratio to log(p_min/(p_min - removed mass)): 1.000000000000000000000000000000

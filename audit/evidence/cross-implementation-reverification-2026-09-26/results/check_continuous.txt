@@ -1,0 +1,8 @@
+n=  60 d=1 k=1  I0=+0.7401 red=+0.5141   ksg_s0_t=0.0e+00  ksg_s1_t=-5.6e-17  ksg_s0s1_t=0.0e+00  ksg_local=2.2e-16  isx=-1.1e-16  pid2=1.1e-16  inc_pid3=2.2e-16  full_pid3=2.2e-16
+n=  60 d=1 k=3  I0=+0.5856 red=+0.4340   ksg_s0_t=0.0e+00  ksg_s1_t=0.0e+00  ksg_s0s1_t=0.0e+00  ksg_local=2.2e-16  isx=0.0e+00  pid2=0.0e+00  inc_pid3=5.6e-17  full_pid3=5.6e-17
+n= 150 d=2 k=3  I0=+0.6373 red=+0.6399   ksg_s0_t=0.0e+00  ksg_s1_t=-1.1e-16  ksg_s0s1_t=0.0e+00  ksg_local=4.4e-16  isx=0.0e+00  pid2=1.1e-16  inc_pid3=1.1e-16  full_pid3=1.1e-16
+n= 300 d=1 k=5  I0=+0.5612 red=+0.4843   ksg_s0_t=-4.4e-16  ksg_s1_t=-4.4e-16  ksg_s0s1_t=-5.6e-16  ksg_local=8.9e-16  isx=-5.0e-16  pid2=5.0e-16  inc_pid3=6.7e-16  full_pid3=6.7e-16
+n= 400 d=2 k=4  I0=+0.6264 red=+0.5907   ksg_s0_t=1.1e-16  ksg_s1_t=2.2e-16  ksg_s0s1_t=3.3e-16  ksg_local=8.9e-16  isx=2.2e-16  pid2=2.2e-16  inc_pid3=4.4e-16  full_pid3=4.4e-16
+n= 200 d=1 k=2  I0=+0.6447 red=+0.5922   ksg_s0_t=0.0e+00  ksg_s1_t=0.0e+00  ksg_s0s1_t=0.0e+00  ksg_local=4.4e-16  isx=0.0e+00  pid2=0.0e+00  inc_pid3=1.1e-16  full_pid3=1.1e-16
+cases: 6; abstaining incomplete-PID3 entries: 18
+largest difference 8.9e-16; tolerance 1e-12 nats: PASS

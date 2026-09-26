@@ -1,0 +1,25 @@
+Reproduction confirmation, 26 September 2026. Retained by Sepehr Mahmoudian.
+After the outputs of the first runs were retained, run.sh was run again on each commit.
+Machine-specific work paths are omitted.
+
+$ audit/evidence/cross-implementation-reverification-2026-09-26/run.sh 0e96b2be33ae627675f682433815807dc93ac13b <fresh-work-dir>
+same: discrete_dump.json
+same: continuous_dump.json
+same: check_discrete.txt
+same: check_continuous.txt
+same: check_one_lambda.txt
+same: check_percentile_index.txt
+same: checker_self_test.txt
+same: diagnose_one_lambda_binary64_v1.txt
+exit 0
+
+$ audit/evidence/cross-implementation-reverification-2026-09-26/run.sh d1f401a1eccec7fe2476f4bcf16538991f52a33f <fresh-work-dir>
+same: discrete_dump.json
+same: continuous_dump.json
+same: check_discrete.txt
+same: check_continuous.txt
+same: check_one_lambda.txt
+same: check_percentile_index.txt
+same: checker_self_test.txt
+same: diagnose_one_lambda_binary64_v1.txt
+exit 0

@@ -840,6 +840,8 @@ scripts/check-numerical-assurance-pdf.sh --exact  # represented-binary64 assuran
 scripts/check-numerical-assurance-pdf.sh --cross-toolchain
 scripts/check-numerical-assurance-pdf-self-test.sh  # 1 contract + 3 accepted + 44 hostile controls
 scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh --exact  # current/proposed Galadriel placement guide
+scripts/check-cross-implementation-reverification-pdf.sh --exact  # re-verification report, 16 pages
+scripts/check-cross-implementation-reverification-pdf.sh --cross-toolchain
 scripts/check-sxpid3-source-marginal-audit-pdf.sh --exact  # canonical MD/PDF SxPID3 audit coherence
 python3 scripts/generate-ksg-local-arithmetic-oracle.py  # no-write replay of all 8,198 rows
 python3 -O scripts/generate-ksg-local-arithmetic-oracle.py

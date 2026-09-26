@@ -68,6 +68,7 @@ LATEX_STANDALONE=(
 MARKDOWN_SOURCES=(
   audit/research/embodied-sensor-utility/EXPOSITION.md
   audit/research/embodied-sensor-utility/OVERVIEW.md
+  audit/evidence/cross-implementation-reverification-2026-09-26.md
   MATHEMATICAL_RESULTS_GUIDE.md
   audit/evidence/finite-target-copy-mgw-synergy.md
   audit/research/finite-prefix-mgw-gradient/EXPOSITION.md
@@ -86,6 +87,7 @@ MARKDOWN_SOURCES=(
 STANDALONE=(
   embodied-sensor-utility
   embodied-sensor-overview
+  cross-implementation-reverification
   certified-sxpid2-executable-assurance
   dependency-colored-sxpid-concentration
   ecosystem-compatibility-audit

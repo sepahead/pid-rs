@@ -47,6 +47,7 @@ STANDALONE_LATEX_PAPERS=(
 STANDALONE_MARKDOWN_PAPERS=(
   "embodied-sensor-utility"
   "embodied-sensor-overview"
+  "cross-implementation-reverification"
   "mathematical-results-guide"
   "finite-target-copy-mgw-synergy"
   "finite-prefix-mgw-gradient"
@@ -66,6 +67,7 @@ STANDALONE_MARKDOWN_PAPERS=(
 STANDALONE_MARKDOWN_SOURCES=(
   "audit/research/embodied-sensor-utility/EXPOSITION.md"
   "audit/research/embodied-sensor-utility/OVERVIEW.md"
+  "audit/evidence/cross-implementation-reverification-2026-09-26.md"
   "MATHEMATICAL_RESULTS_GUIDE.md"
   "audit/evidence/finite-target-copy-mgw-synergy.md"
   "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md"
@@ -396,6 +398,7 @@ scripts/check-numerical-assurance-pdf.sh "$MODE"
 scripts/check-numerical-assurance-pdf-self-test.sh
 scripts/check-pid2-represented-coordinate-assurance-pdf.sh "$MODE"
 scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh "$MODE"
+scripts/check-cross-implementation-reverification-pdf.sh "$MODE"
 scripts/check-sxpid3-source-marginal-audit-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 

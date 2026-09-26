@@ -1,0 +1,997 @@
+   Compiling pid-core v0.9.0 (<work>/src/crates/pid-core)
+    Finished `release` profile [optimized] target(s) in 40.30s
+     Running unittests src/lib.rs (<work>/target/release/deps/pid_core-04a597a289988a09)
+
+running 307 tests
+test bootstrap::tests::block_bootstrap_rejects_unallocatable_resample_count_without_panicking ... ok
+test bootstrap::tests::block_bootstrap_paired_rejects_unallocatable_resample_count_without_panicking ... ok
+test bootstrap::tests::bootstrap_rejects_out_of_range_alpha ... ok
+test bootstrap::tests::bootstrap_rejects_full_sample_block_that_would_make_every_draw_identical ... ok
+test bootstrap::tests::bootstrap_rejects_nonfinite_point_estimate ... ok
+test bootstrap::tests::bootstrap_paired_rejects_mismatched_lengths ... ok
+test bootstrap::tests::bootstrap_requires_two_resamples_for_a_sample_spread ... ok
+test bootstrap::tests::budget_rejection_precedes_user_statistic_execution ... ok
+test bootstrap::tests::bootstrap_rejects_oversized_block ... ok
+test bootstrap::tests::bootstrap_rejects_zero_block_size ... ok
+test bootstrap::tests::callback_resources_are_charged_before_execution ... ok
+test bootstrap::tests::cancellation_precedes_point_statistic_execution ... ok
+test bootstrap::tests::default_config_requires_an_explicit_validity_declaration ... ok
+test discrete_pid::tests::discrete_mi_exact_independence_uses_integer_products_beyond_f64_integer_precision ... ok
+test discrete_pid::tests::discrete_entropy_uniform ... ok
+test discrete_pid::tests::discrete_mi_copy ... ok
+test bootstrap::tests::bootstrap_rejects_when_any_resample_is_nonfinite ... ok
+test bootstrap::tests::bootstrap_paired_preserves_length ... ok
+test bootstrap::tests::callback_failures_are_retained_for_every_replicate ... ok
+test bootstrap::tests::bootstrap_mean_of_uniform_has_narrow_raw_percentile_range ... ok
+test discrete_pid::tests::discrete_mi_only_clamps_roundoff_scale_negativity ... ok
+test discrete_pid::tests::discrete_mi_independent ... ok
+test discrete_pid::tests::discrete_mi_rejects_empty_empirical_distribution ... ok
+test discrete_pid::tests::discrete_mi_rejects_ragged_inputs_that_would_alias_joint_states ... ok
+test discrete_pid::tests::discrete_mobius_inversion_compensates_mixed_sign_lower_atoms ... ok
+test discrete_pid::tests::discrete_pid3_rejects_mismatched_rows ... ok
+test discrete_pid::tests::imin_pid2_with_cancellation_honors_a_pre_cancelled_token ... ok
+test discrete_pid::tests::quantize_distinguishes_adjacent_subnormal_values ... ok
+test discrete_pid::tests::quantize_handles_finite_range_whose_subtraction_overflows ... ok
+test bootstrap::tests::bootstrap_different_seeds_give_different_resamples ... ok
+test discrete_pid::tests::quantize_rejects_bad_bins ... ok
+test discrete_pid::tests::quantize_preserves_resolvable_variation_at_large_offsets ... ok
+test discrete_pid::tests::discrete_pid2_xor_is_pure_synergy ... ok
+test discrete_pid::tests::discrete_pid2_and_matches_williams_beer ... ok
+test discrete_pid::tests::quantize_scales_bin_counts_above_f64_integer_precision_exactly ... ok
+test discrete_pid::tests::same_sample_quantization_has_exact_binary64_boundary_semantics ... ok
+test discrete_pid::tests::same_sample_quantization_relabels_existing_value_when_outlier_is_appended ... ok
+test discrete_pid::tests::specific_information_table_fails_closed_when_target_is_missing ... ok
+test discrete_pid::tests::specific_information_table_fails_closed_when_value_is_missing ... ok
+test discrete_pid::tests::specific_information_table_fails_closed_when_value_is_non_finite ... ok
+test bootstrap::tests::bootstrap_is_bit_identical_across_thread_budgets ... ok
+test discrete_pid::tests::specific_information_table_returns_a_present_finite_value_bit_exactly ... ok
+test discrete_pid::tests::uncancelled_imin_pid2_matches_compatibility_entry_point_bit_exactly ... ok
+test distance_matrix::tests::actual_distance_path_rejects_triangular_bytes_before_allocation ... ok
+test distance_matrix::tests::dimension_work_is_included_in_preflight ... ok
+test distance_matrix::tests::oversized_zero_column_matrix_returns_error_instead_of_capacity_panic ... ok
+test distance_matrix::tests::triangular_matrix_copy_requires_an_explicit_sufficient_budget ... ok
+test exact_binary64::tests::rejected_additions_leave_the_accumulator_unchanged ... ok
+test exact_binary64::tests::generator_snapshot_matches_workspace_source_when_available ... ok
+test geometry::tests::distinct_sampler_preserves_historical_seeded_quadruple ... ok
+test geometry::tests::quantile_interpolation_does_not_overflow_opposite_extremes ... ok
+test geometry::tests::sampled_four_point_delta_prevalidates_hyperbolic_rows_that_sampling_would_omit ... ok
+test geometry::tests::sampled_four_point_delta_rejects_unallocatable_sample_count ... ok
+test discrete_pid::tests::discrete_pid3_produces_18_atoms ... ok
+test geometry::tests::sampled_four_point_delta_rejects_zero_column_input ... ok
+test geometry::tests::sampled_four_point_delta_rescales_before_halving_a_subnormal_normalized_delta ... ok
+test bootstrap::tests::bootstrap_is_deterministic_with_same_seed ... ok
+test discrete_pid::tests::discrete_pid2_redundant_copy ... ok
+test geometry::tests::stable_log_ratio_retains_adjacent_large_floats ... ok
+test geometry::tests::standard_error_clamps_tiny_negative_roundoff_for_multiple_samples ... ok
+test geometry::tests::standard_error_is_none_for_exactly_one_sample ... ok
+test geometry::tests::standard_error_rejects_materially_negative_variance ... ok
+test hyperbolic::tests::adjacent_far_radii_use_a_stable_rapidity_difference ... ok
+test hyperbolic::tests::adjacent_unit_ball_boundary_values_fail_closed_by_reason ... ok
+test hyperbolic::tests::coincident_far_from_origin_point_has_zero_distance_not_nan ... ok
+test hyperbolic::tests::conversion_estimate_rejects_dimension_overflow_without_allocating ... ok
+test hyperbolic::tests::conversion_resource_estimate_and_budget_cover_the_owned_output ... ok
+test hyperbolic::tests::curvature_accessors_preserve_the_declared_estimand ... ok
+test hyperbolic::tests::distinct_rows_below_ball_precision_retain_radial_distance ... ok
+test hyperbolic::tests::high_rapidity_distance_matches_100_digit_decimal_analytic_oracle ... ok
+test hyperbolic::tests::invalid_dimensions_return_errors_without_panicking ... ok
+test hyperbolic::tests::lorentz_distance_matches_known_geodesic_in_h1 ... ok
+test hyperbolic::tests::lorentz_dot_recovers_exact_cancellation_after_product_overflow ... ok
+test hyperbolic::tests::lorentz_dot_retains_small_terms_after_overflow_scale_cancellation ... ok
+test hyperbolic::tests::lorentz_dot_returns_structured_error_for_an_uncancelled_overflow ... ok
+test hyperbolic::tests::lorentz_dot_rounds_exact_subnormal_product_sums_once ... ok
+test hyperbolic::tests::lorentz_superaccumulator_rounds_representative_single_products_like_binary64 ... ok
+test hyperbolic::tests::nearby_far_points_do_not_collapse_to_zero_distance ... ok
+test hyperbolic::tests::nearby_far_points_retain_radial_distance_below_ball_precision ... ok
+test hyperbolic::tests::off_hyperboloid_points_return_nan ... ok
+test hyperbolic::tests::opposite_subnormal_directions_retain_representable_distance ... ok
+test hyperbolic::tests::origin_to_subnormal_radius_retains_the_final_distance ... ok
+test hyperbolic::tests::orthogonal_subnormal_directions_round_only_after_the_final_distance ... ok
+test hyperbolic::tests::overflowing_validity_scale_or_difference_returns_nan ... ok
+test hyperbolic::tests::per_point_gate_rejects_null_rows_before_the_offset_rounds_away ... ok
+test hyperbolic::tests::per_point_gate_rejects_rows_many_ulps_from_the_unit_hyperboloid ... ok
+test discrete_pid::tests::discrete_pid3_redundant_sources_dominant ... ok
+test hyperbolic::tests::per_point_gate_rejects_small_but_material_norm_error ... ok
+test hyperbolic::tests::poincare_converter_rejects_unverifiable_near_boundary_output ... ok
+test hyperbolic::tests::poincare_lorentz_round_trip_covers_subnormal_plane_and_high_rapidity_points ... ok
+test hyperbolic::tests::poincare_to_lorentz_produces_valid_hyperboloid_points ... ok
+test hyperbolic::tests::public_distance_returns_structured_errors_instead_of_nan ... ok
+test identity::tests::every_format_one_enum_spelling_matches_its_accessor ... ok
+test identity::tests::every_source_envelope_tag_has_its_format_one_spelling ... ok
+test identity::tests::feature_names_are_sorted_and_unique ... ok
+test identity::tests::identity_has_pre_one_epoch_and_no_attestation ... ok
+test invariants::tests::aggregate_invariant_checks_total_operation_budget ... ok
+test invariants::tests::aggregate_invariant_rejects_tiny_budget_before_allocating ... ok
+test invariants::tests::entropy_rejects_tiny_budget_before_allocating ... ok
+test invariants::tests::giant_joint_shape_produces_structured_resource_error ... ok
+test kdtree::tests::applicability_gate ... ok
+test kdtree::tests::build_rejects_coordinate_span_that_overflows_distance ... ok
+test kdtree::tests::identical_points_remain_in_one_leaf ... ok
+test kdtree::tests::identical_points_stay_a_leaf_and_answer_exactly ... ok
+test ksg::kdtree_parity_tests::kdtree_speedup_smoke ... ignored, manual benchmark: cargo test -p pid-core --release kdtree_speedup -- --ignored --nocapture
+test kdtree::tests::concatenated_blocks_match_single_block_tree ... ok
+test kdtree::tests::proven_node_reservation_covers_threshold_boundary_trees ... ok
+test ksg::report_block_preflight_tests::source_blocks_match_explicit_concatenation_report_preflight ... ok
+test kdtree::tests::count_within_is_exactly_brute_force ... ok
+test ksg::tests::diagnostic_quantiles_select_rounded_positions_without_interpolation ... ok
+test ksg::kdtree_parity_tests::positive_left_shell_tie_errors_identically_on_both_backends ... ok
+test ksg::kdtree_parity_tests::overflowing_coordinate_span_returns_numerical_instability_on_both_backends ... ok
+test isx::tests::ehrlich_all_unique_rows_attain_the_structural_zero_count_endpoint ... ok
+test isx::tests::ehrlich_inclusive_counts_reach_the_exact_integer_harmonic_local_term ... ok
+test kdtree::tests::kth_neighbor_shell_counts_are_exactly_brute_force ... ok
+test ksg::kdtree_parity_tests::positive_outer_shell_tie_errors_identically_on_both_backends ... ok
+test ksg::tests::ksg_ordered_count_witness_reaches_production_diagnostics ... ok
+test logistic::tests::constant_extreme_feature_reduces_to_the_exact_intercept_only_model ... ok
+test ksg::kdtree_parity_tests::duplicate_rows_error_identically_on_both_backends ... ok
+test logistic::tests::convergence_is_invariant_to_feature_rescaling ... ok
+test logistic::tests::fit_honors_a_pre_cancelled_token ... ok
+test logistic::tests::fit_rejects_tiny_budget_before_dense_solver_allocation ... ok
+test ksg::tests::concat_xy_matches_explicit_concatenation_for_chebyshev ... ok
+test exact_binary64::tests::fraction_oracle_matches_array_and_streaming_reductions_across_declared_orders ... ok
+test logistic::tests::iteration_exhaustion_returns_error ... ok
+test logistic::tests::predict_rejects_invalid_probability_threshold ... ok
+test logistic::tests::is_deterministic ... ok
+test logistic::tests::rejects_mismatched_labels_and_bad_config ... ok
+test logistic::tests::proba_in_unit_interval_and_threshold_consistent ... ok
+test logistic::tests::rejects_one_class_labels_with_unpenalized_intercept ... ok
+test logistic::tests::separable_data_stays_finite_with_ridge ... ok
+test ksg::kdtree_parity_tests::xblocks_positive_shell_tie_errors_identically_on_both_backends ... ok
+test matrix::tests::borrowed_matrix_rejects_every_non_finite_value ... ok
+test ksg::tests::ksg_strict_radius_predecessor_preserves_swapped_ordered_counts ... ok
+test ksg::tests::ksg_strict_radius_predecessor_reaches_both_backends ... ok
+test ksg::tests::xblocks_strict_radius_predecessor_preserves_selected_bits_when_marginals_swap ... ok
+test matrix::tests::categorical_owned_matrix_copy_is_fallible_and_budgeted ... ok
+test ksg::tests::xblocks_strict_radius_predecessor_reaches_both_backends ... ok
+test matrix::tests::concatenating_zero_area_matrices_is_constant_size_even_with_many_logical_rows ... ok
+test matrix::tests::matrix_size_overflow_is_rejected ... ok
+test kdtree::tests::kth_distance_is_bit_identical_to_brute_force ... ok
+test matrix::tests::owned_matrix_copy_is_fallible_and_budgeted ... ok
+test matrix::tests::owned_matrix_rejects_every_non_finite_value ... ok
+test metric::tests::public_chebyshev_distance_rejects_nonfinite_coordinates ... ok
+test metric::tests::public_distance_rejects_mismatched_dimensions_without_panicking ... ok
+test nn::tests::kth_neighbor_shell_accepts_one_boundary_point_at_rank_k ... ok
+test matrix::tests::zero_column_discrete_matrix_still_checks_row_bounds - should panic ... ok
+test nn::tests::kth_neighbor_shell_rejects_a_tie_crossing_rank_k ... ok
+test nn::tests::strict_radius_handles_degenerate_and_non_finite_inputs ... ok
+test nn::tests::strict_radius_is_the_immediate_predecessor_across_positive_finite_boundaries ... ok
+test nn::tests::strict_radius_maps_the_smallest_positive_subnormal_to_positive_zero ... ok
+test logistic::tests::recovers_known_coefficients_sign_and_order ... ok
+test par::tests::slice_map_rejects_a_tiny_aggregate_budget_before_execution ... ok
+test pid2::tests::candidate_synergy_distinguishes_exact_reduction_from_neumaier_reduction ... ok
+test pid2::tests::checked_constructor_rejects_both_finite_identity_erasure_directions ... ok
+test pid2::tests::checked_constructor_rejects_exact_candidate_synergy_overflow ... ok
+test pid2::tests::conditioning_rejects_nonfinite_absolute_constituent_sum ... ok
+test pid2::tests::conditioning_reports_all_terms_zero ... ok
+test pid2::tests::conditioning_reports_exact_cancellation ... ok
+test pid2::tests::conditioning_reports_finite_amplification ... ok
+test pid2::tests::conditioning_reports_amplification_beyond_binary64_range ... ok
+test pid2::tests::exact_candidate_rejects_the_historical_direct_compensation_witness ... ok
+test pid2::tests::exact_guard_accepts_a_witness_rejected_by_left_association ... ok
+test pid2::tests::exact_guard_accepts_a_witness_rejected_by_neumaier_overflow ... ok
+test pid2::tests::exact_reconstruction_limb_visits_are_fully_charged ... ok
+test pid2::tests::identity_guard_rejects_false_sixteen_times_joint_scale_bound_witness ... ok
+test pid2::tests::k_scale_four_is_the_named_exact_times_sixteen_case ... ok
+test pid2::tests::ordinary_scale_guard_accepts_exact_distance_32 ... ok
+test pid2::tests::ordinary_scale_guard_rejects_exact_distance_33 ... ok
+test par::tests::map_index_ordered_returns_the_lowest_index_error ... ok
+test pipeline::tests::bootstrap_rows_stats_rejects_bad_config ... ok
+test pipeline::tests::bootstrap_jitter_scale_is_stable_and_skipped_when_unused ... ok
+test pipeline::tests::bootstrap_rows_stats_rejects_unallocatable_moving_block_indices_without_panicking ... ok
+test pipeline::tests::bootstrap_rows_stats_rejects_unallocatable_resample_count_without_panicking ... ok
+test pipeline::tests::bootstrap_rows_stats_rejects_nonfinite_point_estimate ... ok
+test pipeline::tests::bootstrap_rows_stats_reports_rounded_subsample_length ... ok
+test pipeline::tests::bootstrap_rows_stats_retains_post_jitter_overflow_reasons ... ok
+test pipeline::tests::permutation_budget_rejection_precedes_statistic_execution ... ok
+test pipeline::tests::permutation_pid3_rejects_bad_source_idx ... ok
+test pipeline::tests::permutation_pid3_rejects_unallocatable_permutation_count_without_panicking ... ok
+test pipeline::tests::permutation_pid3_rejects_failed_and_nonfinite_transforms ... ok
+test pid2::tests::every_scale_family_member_accepts_then_exact_scaling_reaches_one_rejected_endpoint ... ok
+test pipeline::tests::permutation_rows_retains_every_nonfinite_null_transform ... ok
+test pipeline::tests::permutation_rows_retains_the_former_selective_16_of_40_failures_without_scoring ... ok
+test pipeline::tests::pls_cv_honors_a_pre_cancelled_token ... ok
+test pipeline::tests::permutation_rows_rejects_unallocatable_logical_rows_without_panicking ... ok
+test pipeline::tests::bootstrap_rows_stats_is_deterministic_and_brackets_point ... ok
+test pipeline::tests::permutation_rows_pvalue_is_deterministic_and_validates_input ... ok
+test pipeline::tests::pls_project_then_discrete_pid3_requires_same_sample_acknowledgement ... ok
+test pipeline::tests::pls_project_then_pid3_rejects_mismatched_rows ... ok
+test pipeline::tests::pipeline_row_mismatch_reports_the_first_operand_that_actually_differs ... ok
+test pipeline::tests::pls_cv_rejects_tiny_budget_before_fold_allocation ... ok
+test pipeline::tests::pls_cv_retains_every_failed_fold_without_negative_infinity_sentinels ... ok
+test pipeline::tests::pls_project_then_pid3_requires_exploratory_same_sample_acknowledgement ... ok
+test pipeline::tests::pls_cv_q2_is_invariant_to_uniform_extreme_target_scaling ... ok
+test ksg::kdtree_parity_tests::xblocks_tree_is_bit_identical_to_brute ... ok
+test pipeline::tests::quantized_bootstrap_inherits_unallocatable_resample_rejection_without_panicking ... ok
+test pipeline::tests::row_bootstrap_perturbation_stream_is_isolated_per_input_matrix_position ... ok
+test pipeline::tests::row_permutation_honors_a_pre_cancelled_token ... ok
+test pipeline::tests::row_bootstrap_v2_schedule_digest_matches_revision_vector ... ok
+test pipeline::tests::row_bootstrap_schedule_is_invariant_to_perturbation_scale_and_matrix_width ... ok
+test pipeline::tests::row_resampling_budget_rejection_precedes_statistic_execution ... ok
+test pipeline::tests::row_resampling_honors_a_pre_cancelled_token ... ok
+test pipeline::tests::screen_pid2_pair_order_is_total_and_tie_stable ... ok
+test pipeline::tests::screen_pid2_pairs_propagates_invalid_config ... ok
+test pipeline::tests::sxpid_bootstrap_summary_status_rejects_wrong_statistic_width ... ok
+test pipeline::tests::pls_project_then_discrete_pid3_runs ... ok
+test pipeline::tests::sxpid_bootstrap_summary_status_retains_failed_replicate_state ... ok
+test pls::tests::fit_honors_a_pre_cancelled_token ... ok
+test pls::tests::fit_rejects_tiny_budget_before_allocating_model_state ... ok
+test pls::tests::fitted_pls_hashes_training_rows_and_every_parameter_deterministically ... ok
+test pls::tests::pls_handles_opposite_extreme_finite_values_without_overflow ... ok
+test pls::tests::pls_ignores_huge_constant_offset_without_erasing_tiny_signal ... ok
+test pls::tests::pls_initialization_uses_informative_target_regardless_of_column_order ... ok
+test pls::tests::pls_is_invariant_to_tiny_uniform_x_and_y_scaling ... ok
+test pls::tests::pls_iteration_exhaustion_returns_error ... ok
+test pls::tests::pls_predict_at_fitted_x_mean_returns_stored_y_mean_exactly ... ok
+test pls::tests::pls_predict_combines_intercept_before_rejecting_an_overflowing_centered_term ... ok
+test pls::tests::pls_deterministic ... ok
+test pls::tests::pls_predict_keeps_unrepresentable_coefficient_factored ... ok
+test pls::tests::pls_predict_preserves_intercept_when_a_nonzero_linear_term_rounds_away ... ok
+test pls::tests::pls_outperforms_pca_on_signal_in_noise ... ok
+test pls::tests::pls_rejects_bad_shapes ... ok
+test pls::tests::pls_rejects_finite_input_when_centering_or_norms_overflow ... ok
+test pls::tests::pls_rejects_unrepresentable_cross_feature_dynamic_range ... ok
+test pls::tests::pls_transform_exact_cancellation_is_invariant_to_feature_order ... ok
+test pls::tests::pls_transform_handles_held_out_scale_far_beyond_training_scale ... ok
+test pls::tests::pls_recovers_signal_direction ... ok
+test pls::tests::pls_transform_ignores_a_harmless_term_below_the_dominant_binary_scale ... ok
+test preprocess::hash_projector_tests::oversized_input_dimension_returns_error_instead_of_panicking ... ok
+test preprocess::rng_revision_tests::splitmix64_integer_stream_matches_revision_vector ... ok
+test preprocess::standardizer_tests::constant_max_column_has_finite_parameters_and_zero_scores ... ok
+test preprocess::rng_revision_tests::splitmix64_substream_derivation_matches_revision_vector ... ok
+test preprocess::standardizer_tests::asymmetric_opposite_extremes_do_not_overflow_centering ... ok
+test pls::tests::transformed_scores_times_y_weights_match_multicomponent_prediction ... ok
+test pls::tests::transform_matches_explicit_deflation_scores_multicomponent ... ok
+test preprocess::standardizer_tests::extreme_column_with_overflowing_raw_variance_standardizes_exactly ... ok
+test preprocess::standardizer_tests::subnormal_standard_deviation_still_produces_unit_scores ... ok
+test preprocess::standardizer_tests::tiny_scaled_column_retains_unit_standardized_geometry ... ok
+test quantizer::tests::adjacent_binary64_endpoints_keep_order_range_and_endpoint_labels ... ok
+test quantizer::tests::categorical_output_hash_commits_to_matrix_shape ... ok
+test quantizer::tests::difference_first_interpolation_repairs_legacy_edge_below_training_minimum ... ok
+test quantizer::tests::fit_with_cancellation_honors_a_pre_cancelled_token ... ok
+test quantizer::tests::disabling_training_hash_does_not_disable_transform_provenance ... ok
+test quantizer::tests::fitted_quantizer_clone_preflight_tracks_edges_and_utf8_scaling_work_exactly ... ok
+test quantizer::tests::fitted_state_and_report_copy_only_through_fallible_budgeted_paths ... ok
+test quantizer::tests::held_out_outlier_obeys_explicit_error_policy ... ok
+test quantizer::tests::giant_bin_count_is_rejected_before_edge_allocation ... ok
+test quantizer::tests::held_out_transform_reuses_training_edges_exactly ... ok
+test quantizer::tests::input_and_categorical_output_hashes_have_distinct_semantics ... ok
+test quantizer::tests::internal_partition_fails_closed_on_nonfinite_values ... ok
+test quantizer::tests::labels_only_and_report_paths_match_out_of_range_policies ... ok
+test quantizer::tests::labels_only_transform_matches_report_matrix_across_binary64_edge_cases ... ok
+test quantizer::tests::labels_only_transform_with_cancellation_honors_a_pre_cancelled_token ... ok
+test quantizer::tests::opposite_extreme_endpoints_use_a_finite_monotone_convex_fallback ... ok
+test quantizer::tests::labels_only_transform_preserves_report_sized_budget_admission ... ok
+test quantizer::tests::provenance_hash_domains_match_fixed_vectors ... ok
+test quantizer::tests::report_clone_preflight_tracks_actual_heap_and_copy_work_exactly ... ok
+test quantizer::tests::report_cardinality_none_means_only_u128_product_overflow ... ok
+test quantizer::tests::report_reachable_label_count_handles_noncontiguous_preimage ... ok
+test quantizer::tests::report_separates_nominal_reachable_and_observed_labels ... ok
+test quantizer::tests::report_serializes_exact_fitted_edges_and_occupancy ... ok
+test quantizer::tests::signed_zero_fit_preserves_total_order_endpoints_for_both_row_orders ... ok
+test quantizer::tests::transform_checks_labels_sort_order_and_report_copy_as_one_budget ... ok
+test quantizer::tests::transform_preflight_tracks_large_bin_report_copy_work_exactly ... ok
+test pipeline::tests::pls_cv_selects_at_least_one_component ... ok
+test quantizer::tests::transform_with_cancellation_honors_a_pre_cancelled_token ... ok
+test quantizer::tests::uncancelled_quantizer_path_matches_compatibility_entry_points_exactly ... ok
+test resource::tests::budget_rejects_oversized_distance_work_before_allocation ... ok
+test resource::tests::fallible_capacity_obeys_budget ... ok
+test resource::tests::triangular_estimate_is_exact_for_four_f64_matrices ... ok
+test stats::tests::cargo_package_context_rejects_duplicate_path_bindings ... ok
+test stats::tests::digamma_matches_known_integer_values ... ok
+test stats::tests::digamma_recurrence_holds ... ok
+test stats::tests::ksg_shifted_harmonic_indices_cover_off_by_one_boundaries ... ok
+test stats::tests::scaled_moments_keep_representable_extreme_results_finite ... ok
+test stats::tests::scaled_moments_reject_empty_or_nonfinite_input ... ok
+test stats::tests::packaged_ksg_generator_snapshot_matches_workspace_source_when_available ... ok
+test support::tests::a_discrete_coordinate_is_rejected_even_when_rows_are_unique ... ok
+test support::tests::continuous_diagnostics_cancellation_is_preemptive_and_preserves_parity ... ok
+test support::tests::coordinate_spacing_reports_an_unrepresentable_extreme_gap_without_nan ... ok
+test support::tests::regular_full_dimensional_contract_has_no_incoherent_single_dimension_claim ... ok
+test support::tests::signed_zero_is_one_exact_value ... ok
+test sxpid::tests::empirical_event_probability_sums_counts_before_division ... ok
+test sxpid::tests::general_mobius_inversion_compensates_mixed_sign_lower_atoms ... ok
+test sxpid::tests::neumaier_accumulator_retains_small_signed_pointwise_term ... ok
+test sxpid::tests::categorical_labels_are_invariant_under_bijections ... ok
+test sxpid::tests::and_averaged_red_matches_idtxl ... ok
+test sxpid::tests::sxpid2_averaged_with_cancellation_honors_a_pre_cancelled_token ... ok
+test sxpid::tests::sxpid3_averaged_with_cancellation_honors_a_pre_cancelled_token ... ok
+test sxpid::tests::self_redundancy_and_reconstruction ... ok
+test sxpid::tests::sxpid_n_averaged_with_cancellation_honors_a_pre_cancelled_token ... ok
+test sxpid::tests::target_chain_rule_holds_pointwise_for_every_two_source_node ... ok
+test sxpid::tests::symmetry_under_source_swap ... ok
+test sxpid::tests::uncancelled_sxpid2_matches_compatibility_entry_point_bit_exactly ... ok
+test sxpid::tests::tri_rnd_3source ... ok
+test sxpid::tests::xor_pointwise_matches_reference ... ok
+test pipeline::tests::pls_project_then_pid3_runs_and_returns_18_atoms ... ok
+test pipeline::tests::permutation_pid3_retains_a_failed_transform_end_to_end ... ok
+test ksg::kdtree_parity_tests::local_mi_terms_tree_is_bit_identical_to_brute ... ok
+test stats::tests::ksg_integer_harmonic_range_matches_decimal_oracle ... ok
+test pipeline::tests::screen_pid2_pairs_returns_all_pairs ... ok
+test discrete_pid::tests::discrete_mi_is_zero_for_an_exact_large_independent_cartesian_distribution ... ok
+test pipeline::tests::bootstrap_jitter_changes_a_rejected_ksg_resample_distribution ... ok
+test pipeline::tests::bootstrap_rows_stats_subsample_is_duplicate_free_for_ksg ... ok
+test pipeline::tests::permutation_pid3_produces_complete_tail_fractions ... ok
+test pipeline::tests::permutation_rows_pvalue_detects_signal_and_respects_null ... ok
+
+test result: ok. 306 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running unittests src/bin/exp0.rs (<work>/target/release/deps/exp0-291e0db03c78c965)
+
+running 34 tests
+test tests::coherent_resampling_failure_counts_as_a_gate_instability ... ok
+test tests::geometry_warning_is_reported_as_non_gating_pivot ... ok
+test tests::gaussian_mi_truth_matches_closed_form ... ok
+test tests::high_dimensional_mi_monotonicity_failure_is_no_go ... ok
+test tests::abstained_csv_outcomes_have_reason_and_no_numeric_placeholder ... ok
+test tests::atom_estimator_instability_is_typed_and_non_gating ... ok
+test tests::abstained_uncertainty_json_omits_numeric_value_fields ... ok
+test tests::non_finite_produced_diagnostic_is_rejected ... ok
+test tests::optional_ambiguous_shell_is_a_typed_abstention ... ok
+test tests::optional_synergy_uses_checked_exact_pid2_arithmetic ... ok
+test tests::permutation_only_uncertainty_csv_has_fixed_width ... ok
+test tests::pid2_synergy_classification_propagates_unexpected_errors ... ok
+test tests::positive_independent_additive_shared_exclusions_redundancy_cannot_fail_mi_gate ... ok
+test tests::seed_schedule_capacity_overflow_returns_config_error_without_panicking ... ok
+test tests::artifact_paths_reject_exact_and_normalized_aliases_before_writing ... ok
+test tests::produced_uncertainty_runlog_retains_points_and_valid_counts ... ok
+test tests::support_incompatible_projection_is_typed_abstention ... ok
+test tests::uncertainty_violations_block_go_but_not_when_clean ... ok
+test tests::artifact_paths_reject_missing_destinations_through_symlinked_parents ... ok
+test tests::undefined_normalized_invariants_are_explicit_and_gate_by_resolution ... ok
+test tests::artifact_paths_reject_dangling_symbolic_link_aliases ... ok
+test tests::exp0_runlog_records_non_go_status_as_recoverable_error ... ok
+test tests::uncertainty_callback_and_statistic_are_mi_only ... ok
+test tests::artifact_paths_reject_missing_case_only_aliases_on_case_insensitive_filesystems ... ok
+test tests::artifact_paths_reject_symbolic_link_aliases ... ok
+test tests::artifact_paths_reject_hard_link_aliases ... ok
+test tests::permutation_only_uncertainty_ignores_bootstrap_block_constraints ... ok
+test tests::runlog_config_hash_commits_to_uncertainty_parameters ... ok
+test tests::curated_scope_serializers_omit_high_dimensional_counter_placeholders ... ok
+test tests::strict_gate_failure_is_recorded_in_summary_and_runlog ... ok
+test tests::exp0_runlog_export_is_valid_and_summarizable ... ok
+test tests::strict_band_gate_is_go_in_analytically_checked_regime ... ok
+test tests::uncertainty_runlog_is_valid_and_keeps_gate_metric_family_separate ... ok
+test tests::uncertainty_recovers_marginal_truth_table ... ok
+
+test result: ok. 34 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.58s
+
+     Running tests/continuous_reports.rs (<work>/target/release/deps/continuous_reports-e28f084737265e34)
+
+running 3 tests
+test pid2_report_embeds_complete_reports_and_propagated_local_covariance ... ok
+test cross_fit_reports_keep_fold_coordinates_separate ... ok
+test co_information_reports_retain_every_constituent_and_serialize ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/continuous_resource_contracts.rs (<work>/target/release/deps/continuous_resource_contracts-67ad7de8c371ec8f)
+
+running 7 tests
+test incomplete_pid3_budget_aggregates_all_four_distance_matrices ... ok
+test giant_zero_column_pid3_shape_has_structured_preflight_failure ... ok
+test hierarchy_rejects_pair_enumeration_under_tiny_budget ... ok
+test pid2_tiny_budget_rejects_before_estimation ... ok
+test pairwise_co_information_checks_aggregate_work_budget ... ok
+test heuristic_isx_inherits_default_resource_preflight ... ok
+test pid2_report_budget_covers_the_constituent_report_routes ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/cross_validation.rs (<work>/target/release/deps/cross_validation-f8365aa89aa67290)
+
+running 3 tests
+test discrete_pid2_atoms_sum_to_joint_mi ... ok
+test discrete_pid2_recovers_known_gate_structure ... ok
+test discrete_pid2_matches_independent_reference ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/dependency_colored_sxpid_oracle.rs (<work>/target/release/deps/dependency_colored_sxpid_oracle-9c2afb457a78cd93)
+
+running 10 tests
+test conditioned_diamond_extremal_regimes_cover_all_nine_pairs ... ok
+test binary64_stability_challenges_reconstruct_high_precision_references ... ok
+test fixture_binds_fraction_and_decimal_challenges_and_provenance ... ok
+test conditioned_diamond_negative_lift_cases_are_reconstructed_exactly ... ok
+test conditioned_diamond_gradient_cases_cover_all_pairs_exactly ... ok
+test fixed_window_population_sxpid_matches_independent_decimal_oracle ... ok
+test fixed_window_estimate_is_bit_identical_after_row_reversal ... ok
+test non_synergy_atoms_reject_the_synergy_only_modulus ... ok
+test local_sxpid2_modulus_cases_match_oracle_and_rederived_bounds ... ok
+test local_modulus_laws_are_bit_identical_after_row_reversal ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/discrete_pid_properties.rs (<work>/target/release/deps/discrete_pid_properties-91eb7cd8d4d4d473)
+
+running 3 tests
+test high_bin_counts_flow_through_quantized_pid_and_sxpid_apis_without_rounding_the_count ... ok
+test randomized_discrete_pid2_invariants ... ok
+test skewed_random_discrete_pid3_and_pid4_obey_lattice_invariants ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+
+     Running tests/discrete_resource_contracts.rs (<work>/target/release/deps/discrete_resource_contracts-d84c12ff8798bb00)
+
+running 3 tests
+test sxpid_preflight_accounts_for_retained_pointwise_output ... ok
+test sxpid_tiny_budget_fails_before_pointwise_or_averaged_allocation ... ok
+test imin_preflight_includes_repeated_histograms_and_rejects_tiny_budget ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/distance_matrix.rs (<work>/target/release/deps/distance_matrix-1784b32e1566e0d4)
+
+running 3 tests
+test symmetric_distance_matrix_get_matches_metric ... ok
+test symmetric_distance_matrix_rejects_equal_out_of_bounds_indices - should panic ... ok
+test symmetric_distance_cancellation_preserves_parity_and_stops_mid_work ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/finite_alphabet_plugin_oracle.rs (<work>/target/release/deps/finite_alphabet_plugin_oracle-4f047a4a9ae8b112)
+
+running 5 tests
+test separately_fitted_quantizer_wrappers_equal_direct_categorical_evaluation ... ok
+test pointwise_atoms_use_realization_keys_and_exclude_an_absent_fixed_face_realization ... ok
+test imin_two_and_three_sources_match_decimal_specific_information_oracle ... ok
+test imin_minimum_switches_sides_through_an_exact_tie ... ok
+test sxpid_two_through_four_sources_match_decimal_event_probability_oracle ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/fitted_quantized_sxpid.rs (<work>/target/release/deps/fitted_quantized_sxpid-cadf03c6750234f9)
+
+running 4 tests
+test fitted_quantized_sxpid_resource_estimates_track_mutated_report_payloads_exactly ... ok
+test composed_quantized_sxpid_serializes_edges_hashes_and_occupancy_with_pid ... ok
+test fitted_quantized_sxpid3_matches_categorical_labels_and_retains_report_order ... ok
+test fitted_quantized_sxpid_n_matches_four_source_categorical_lattice_and_budget ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/gaussian_pid_atoms.rs (<work>/target/release/deps/gaussian_pid_atoms-969618e47b7d188b)
+
+running 5 tests
+test diagnostic_identical_sources_under_false_continuous_support_assumption ... ignored, out-of-domain diagnostic: S2 == S1 is singular and violates regular full-dimensional support
+test diagnostic_independent_redundancy_at_selected_sample_sizes ... ignored, diagnostic: compares two selected sample sizes; not convergence evidence
+test barrett2015_gaussian_mmi_redundancy_reference_labelled_mmi_not_isx ... ok
+test seeded_independent_additive_atoms_are_synergy_dominant ... ok
+test seeded_independent_additive_redundancy_is_positive_and_below_single_source_mi ... ok
+
+test result: ok. 3 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/geometry.rs (<work>/target/release/deps/geometry-a33574cf4efce5b3)
+
+running 20 tests
+test distance_concentration_handles_finite_extreme_distances ... ok
+test distance_concentration_keeps_subnormal_dimensionless_summaries ... ok
+test distance_concentration_errors_on_fully_degenerate_data ... ok
+test distance_concentration_is_invariant_to_extreme_uniform_scaling ... ok
+test distance_concentration_matches_hand_computed_example ... ok
+test intrinsic_dimension_rejects_k_two_tied_shell_fixture ... ok
+test intrinsic_dimension_errors_on_duplicate_points ... ok
+test intrinsic_dimension_rejects_positive_tie_crossing_kth_shell ... ok
+test intrinsic_dimension_unique_shell_matches_independent_hand_oracle ... ok
+test intrinsic_dimension_uses_stable_log_ratios_across_extreme_scales ... ok
+test sampled_four_point_delta_draws_one_distinct_quadruple_when_n_is_four ... ok
+test sampled_four_point_delta_preserves_a_genuine_delta_below_epsilon_band ... ok
+test sampled_four_point_delta_rejects_zero_requested_samples ... ok
+test sampled_four_point_delta_reports_the_exact_represented_near_max_delta ... ok
+test sampled_four_point_summary_marks_zero_diameter_normalization_undefined ... ok
+test sampled_four_point_summary_reports_deterministic_distribution_and_normalization ... ok
+test sampled_four_point_delta_normalizes_pair_sums_before_cancellation ... ok
+test intrinsic_dimension_increases_with_embedding_dimension ... ok
+test distance_concentration_cancellation_preserves_parity_and_stops_mid_work ... ok
+test sampled_four_point_cancellation_preserves_parity_and_stops_mid_work ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/hierarchy.rs (<work>/target/release/deps/hierarchy-fa708df7341cd86e)
+
+running 6 tests
+test hierarchical_pairwise_rejects_nonfinite_ci_thresholds ... ok
+test hierarchical_pairwise_allows_mixed_dimensions_only_for_level_one ... ok
+test hierarchical_pairwise_screening_returns_all_pairs ... ok
+test hierarchical_pairwise_topk_selects_exactly_k_pairs ... ok
+test hierarchical_triplet_ci_matches_direct_computation ... ok
+test hierarchical_triplet_ci_matches_direct_in_negative_mi_regime ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/hyperbolic_diagnostics.rs (<work>/target/release/deps/hyperbolic_diagnostics-d149f68838d7dc5c)
+
+running 11 tests
+test distance_concentration_shape_error_precedes_lorentz_width_validation ... ok
+test four_point_shape_error_precedes_lorentz_width_validation ... ok
+test joint_shell_row_error_precedes_lorentz_width_validation ... ok
+test support_k_error_precedes_lorentz_width_validation ... ok
+test intrinsic_multi_k_rejects_every_k_before_aggregate_resource_preflight ... ok
+test intrinsic_k_error_precedes_lorentz_width_validation ... ok
+test typed_cancellation_reports_one_monotone_public_work_total ... ok
+test one_row_symmetric_distance_still_validates_the_lorentz_point ... ok
+test lorentz_width_errors_precede_resource_preflight ... ok
+test typed_resource_estimates_account_for_lorentz_coordinate_work ... ok
+test typed_diagnostics_run_and_intrinsic_reports_retain_the_lorentz_metric ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/hyperbolic_mi.rs (<work>/target/release/deps/hyperbolic_mi-3e3cf10332591214)
+
+running 2 tests
+test ksg_mi_rejects_invalid_hyperbolic_distances ... ok
+test hyperbolic_report_preserves_explicit_negative_handling ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/imin.rs (<work>/target/release/deps/imin-0a7492611f1fdb52)
+
+running 7 tests
+test categorical_imin_records_empirical_pmf_metadata ... ok
+test categorical_imin_pid2_pinned_synergy_is_bit_equivariant_under_source_swap ... ok
+test fitted_quantized_imin_resource_estimate_tracks_mutated_report_payloads_exactly ... ok
+test fitted_quantized_imin_serializes_every_fixed_transform_report ... ok
+test fitted_quantized_imin_pid3_retains_four_reports_and_resource_preflight ... ok
+test categorical_imin_pid3_reconstructs_each_lattice_node_and_joint_information ... ok
+test categorical_imin_pid3_is_equivariant_under_source_swap ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/imin_numerical_boundary.rs (<work>/target/release/deps/imin_numerical_boundary-9e2ac18759e7a764)
+
+running 4 tests
+test genuine_small_positive_synergy_is_not_clamped_to_zero ... ok
+test ce_003_retains_the_exact_tie_and_public_no_argmin_boundary ... ok
+test minimal_source_swap_witness_uses_exact_represented_sum_without_clamping ... ok
+test bounded_binary_tables_freeze_exact_tie_events_and_source_swap_equivariance ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests/invariants.rs (<work>/target/release/deps/invariants-1f94647975c61a55)
+
+running 16 tests
+test average_degrees_avoid_representable_intermediate_overflow ... ok
+test average_degree_denominator_policy_is_explicit_and_configurable ... ok
+test average_vulnerability_retains_each_next_down_conditional_difference ... ok
+test average_degrees_return_typed_undefined_states ... ok
+test discrete_multivariate_invariants_reject_malformed_variable_lengths ... ok
+test categorical_entropy_rejects_empty_or_mismatched_observations ... ok
+test degrees_error_on_zero_joint_entropy ... ok
+test categorical_entropy_matches_exact_uniform_and_joint_laws ... ok
+test o_information_signs_match_intuition ... ok
+test red_vul_degrees_independent_bits ... ok
+test discrete_multivariate_invariants_are_symmetric_under_variable_permutation ... ok
+test red_vul_degrees_perfect_redundancy ... ok
+test pairwise_co_information_discrete_matches_xor ... ok
+test red_vul_degrees_xor_triplet ... ok
+test discrete_red_and_vulnerability_degrees_respect_shannon_bounds_on_skewed_laws ... ok
+test exact_independent_cartesian_invariants_do_not_accumulate_state_count_drift ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/isx.rs (<work>/target/release/deps/isx-cf69e7ce89b63b64)
+
+running 14 tests
+test isx_rejects_unequal_ambient_source_dimensions ... ok
+test isx_rejects_every_nonzero_or_nonfinite_tie_epsilon ... ok
+test public_isx_api_cannot_bypass_support_preflight ... ok
+test ehrlich_public_redundancy_accepts_the_all_unique_structural_zero_endpoint ... ok
+test ehrlich_public_redundancy_propagates_the_inclusive_count_witness ... ok
+test every_continuous_isx_method_rejects_an_ambiguous_positive_shell ... ok
+test exp0_isx_redundancy_heuristic_sketch_smoke ... ok
+test isx_report_records_integer_harmonic_estimator_revision ... ok
+test ehrlich_ksg_matches_pinned_csxpid_on_committed_fixture ... ok
+test exp0_isx_redundancy_smoke ... ok
+test exp0_isx_redundancy_disjunction_smoke ... ok
+test exp0_pid2_isx_smoke ... ok
+test local_min_heuristic_matches_its_named_formula_and_is_source_symmetric ... ok
+test every_heuristic_scalar_baseline_is_source_symmetric_on_a_regular_fixture ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/known_failures.rs (<work>/target/release/deps/known_failures-a710c6bc76290519)
+
+running 12 tests
+test atom_continuous_mixture_is_rejected_instead_of_treated_as_regular_ksg ... ok
+test mixed_dimensional_small_ball_union_is_minimum_exponent_dominated ... ok
+test invalid_block_permutation_null_is_rejected ... ok
+test nested_regular_marginal_branch_masses_do_not_force_a_union_coefficient ... ok
+test singular_deterministic_map_is_rejected_by_declared_support ... ok
+test local_dimension_heterogeneity_survives_the_global_mean ... ok
+test high_dimensional_chebyshev_distances_concentrate ... ok
+test positive_kth_shell_tie_is_a_known_invalid_local_estimate ... ok
+test same_sample_pls_can_fit_independent_noise_but_not_held_out_noise ... ok
+test hyperbolic_nonlocal_radii_remain_research_only ... ok
+test leading_order_branch_overlap_remains_an_explicit_unproved_assumption ... ok
+test full_row_shuffle_is_anti_conservative_for_independent_autocorrelated_series ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/ksg.rs (<work>/target/release/deps/ksg-ef49af9df7fe24d6)
+
+running 18 tests
+test ksg_default_preserves_signed_finite_sample_estimates ... ok
+test ksg_default_fails_closed_without_a_support_assertion ... ok
+test ksg_handles_heavily_quantized_data_cleanly ... ok
+test ksg_rejects_every_declared_incompatible_support_type ... ok
+test ksg_rejects_every_nonzero_or_nonfinite_tie_epsilon ... ok
+test ksg_rejects_zero_column_inputs ... ok
+test ksg_accepts_a_smallest_subnormal_positive_radius ... ok
+test ksg_rejects_a_positive_ambiguous_kth_neighbor_shell ... ok
+test ksg_exclusive_counts_reach_the_exact_integer_harmonic_local_term ... ok
+test marginal_atoms_are_rejected_even_when_joint_rows_and_shells_are_unique ... ok
+test ksg_errors_on_duplicate_points ... ok
+test public_local_and_concat_apis_cannot_bypass_support_preflight ... ok
+test ksg_mi_is_larger_for_noisy_copy ... ok
+test ksg_mi_matches_gaussian_correlation_approximately ... ok
+test ksg_mi_is_small_for_independent_uniforms ... ok
+test exp0_co_information_smoke ... ok
+test exp0_strong_dependence_gaussian_channel_sweep_smoke ... ok
+test co_information_matches_gaussian_sum_channel_approximately ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/ksg_report.rs (<work>/target/release/deps/ksg_report-7aa6abfa02de88f1)
+
+running 17 tests
+test hyperbolic_k_trajectory_validates_every_k_before_resource_preflight ... ok
+test hyperbolic_k_trajectory_validates_provenance_before_resource_preflight ... ok
+test hyperbolic_report_rejects_row_width_below_two_as_configuration ... ok
+test hyperbolic_report_requires_embedding_training_provenance ... ok
+test hyperbolic_sample_trajectory_validates_config_before_resource_preflight ... ok
+test hyperbolic_sample_trajectory_validates_provenance_before_resource_preflight ... ok
+test provenance_rejects_empty_descriptions ... ok
+test report_validates_shape_before_hyperbolic_provenance_gate ... ok
+test giant_thread_ceiling_is_capped_to_available_query_work ... ok
+test hyperbolic_report_preflight_accounts_for_the_typed_wrapper ... ok
+test euclidean_report_preserves_metadata_and_radius_diagnostics ... ok
+test hyperbolic_report_records_model_curvature_dimensions_and_status ... ok
+test report_retains_signed_estimate_under_presentation_clamping ... ok
+test hyperbolic_trajectory_preflights_sum_typed_report_estimates ... ok
+test report_is_deterministic ... ok
+test report_cancellation_is_preemptive_and_preserves_uncancelled_bits ... ok
+test report_records_the_selected_backend_without_claiming_a_fallback ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/observation_noise.rs (<work>/target/release/deps/observation_noise-989af740fd8a23ff)
+
+running 15 tests
+test declaration_rejects_a_binding_for_the_wrong_scale_reference ... ok
+test application_obeys_resource_budget_and_cancellation ... ok
+test application_fails_when_positive_scale_has_no_representable_effect ... ok
+test finite_input_binding_is_not_part_of_population_model_identity ... ok
+test effective_seed_derivation_matches_revision_vector ... ok
+test finite_input_values_do_not_enter_effective_seed_derivation ... ok
+test generated_report_is_bound_to_input_output_and_context ... ok
+test model_declaration_and_application_identities_separate_domains ... ok
+test paired_scale_probe_reuses_standard_normal_pseudodraws ... ok
+test preprocessing_scale_reference_must_bind_the_exact_input_matrix ... ok
+test purpose_changes_declaration_not_population_kernel_identity ... ok
+test separate_scale_probe_uses_different_pseudodraws ... ok
+test specification_rejects_degenerate_or_nonfinite_scale ... ok
+test stream_identity_separates_logical_matrices_and_resample_contexts ... ok
+test report_serialization_uses_revisioned_typed_vocabulary ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/parallel_bit_identity.rs (<work>/target/release/deps/parallel_bit_identity-3e96d2df98a4eeb1)
+
+running 12 tests
+test block_bootstrap_matches_serial_reference ... ok
+test red_degree_discrete_is_bit_identical_across_repeated_calls ... ok
+test vul_degree_discrete_is_bit_identical_across_repeated_calls ... ok
+test bootstrap_is_identical_for_thread_budgets_one_two_three_four_and_available_maximum ... ok
+test ksg_report_is_identical_for_thread_budgets_one_two_three_four_and_available_maximum ... ok
+test ksg_local_mi_terms_match_serial_reference ... ok
+test isx_redundancy_matches_serial_reference ... ok
+test discrete_pid2_is_bit_identical_across_repeated_calls ... ok
+test pid2_atoms_match_serial_reference ... ok
+test pid2_is_identical_for_thread_budgets_one_two_three_four_and_available_maximum ... ok
+test pid3_atoms_match_serial_reference ... ok
+test pid3_is_identical_for_thread_budgets_one_two_three_four_and_available_maximum ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/permutation_and_fdr.rs (<work>/target/release/deps/permutation_and_fdr-6c9fc91ddeb866ad)
+
+running 21 tests
+test benjamini_hochberg_matches_hand_computed_qvalues ... ok
+test benjamini_hochberg_clamps_monotone_and_rejects_missing_values ... ok
+test benjamini_yekutieli_rejects_missing_and_invalid_input ... ok
+test benjamini_yekutieli_applies_arbitrary_dependence_correction ... ok
+test block_shuffle_rejects_non_group_configurations ... ok
+test block_shuffle_accepts_equal_sized_multiple_blocks ... ok
+test permutation_rows_rejects_zero_row_matrices ... ok
+test circular_shift_detects_true_alignment_on_autocorrelated_data ... ok
+test circular_shift_produces_bounded_rotations ... ok
+test circular_shift_rejects_degenerate_configs ... ok
+test block_shuffle_is_deterministic_at_a_fixed_seed ... ok
+test block_shuffle_preserves_blocks_and_within_block_order ... ok
+test coherent_row_nulls_preserve_metadata_and_seeded_results ... ok
+test pid3_permutation_rejects_inconsistent_null_metadata_before_budget_and_estimation ... ok
+test row_permutation_rejects_inconsistent_null_metadata_before_budget_and_callback ... ok
+test full_shuffle_wrapper_is_bit_identical_for_rows_pvalue ... ok
+test row_permutation_rejects_changed_scheme_before_statistic ... ok
+test unit_block_fixture_matches_full_shuffle_numerically_and_reports_scheme ... ok
+test lower_tail_of_t_is_bit_identical_to_upper_tail_of_negated_t ... ok
+test full_shuffle_wrapper_is_bit_identical_for_pid3 ... ok
+test coherent_pid3_nulls_preserve_metadata_and_seeded_results ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/pid2.rs (<work>/target/release/deps/pid2-8a283c1158f42558)
+
+running 18 tests
+test pid2_checked_constructor_accepts_inclusive_32_position_near_zero_boundary ... ok
+test pid2_checked_constructor_exact_synergy_is_source_order_independent ... ok
+test pid2_checked_constructor_obeys_all_field_local_signed_zero_rules ... ok
+test pid2_checked_constructor_recovers_tiny_synergy_after_finite_cancellation ... ok
+test pid2_checked_constructor_kills_represented_coordinate_source_order_residual ... ok
+test pid2_checked_constructor_recovers_representable_synergy_after_intermediate_overflow ... ok
+test pid2_checked_constructor_accepts_negative_31_position_near_zero_boundary ... ok
+test pid2_checked_constructor_rejects_33_position_near_zero_boundary ... ok
+test pid2_checked_constructor_rejects_negative_32_position_near_zero_boundary ... ok
+test pid2_rejects_all_row_mismatches_before_estimating_any_term ... ok
+test pid2_checked_constructor_rejects_tiny_identity_erased_by_exact_atom_reconstruction ... ok
+test pid2_checked_constructor_rejects_nonfinite_inputs_and_atom_overflow ... ok
+test pid2_provenance_rejects_empty_descriptions ... ok
+test pid2_rejects_unequal_source_dimensions_before_estimating_mi_terms ... ok
+test pid2_rejects_incoherent_estimator_configs ... ok
+test pid2_report_keeps_restricted_status_configuration_and_provenance_attached ... ok
+test pid2_estimator_composition_matches_exact_real_identities_within_tolerance ... ok
+test configured_heuristic_pid2_scalar_route_succeeds_while_report_route_rejects ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/pid3.rs (<work>/target/release/deps/pid3-94d641f71001bf4f)
+
+running 7 tests
+test antichain3_rejects_invalid_inputs ... ok
+test full_pid3_still_requires_a_support_contract_after_the_research_opt_in ... ok
+test pid3_validates_k_before_the_mixed_dimension_gate ... ok
+test pid3_rejects_every_nonzero_or_nonfinite_tie_epsilon ... ok
+test pid3_requires_explicit_mixed_dimension_lattice_opt_in ... ok
+test pid3_rejects_an_ambiguous_positive_neighbor_shell ... ok
+test pid3_isx_matches_pinned_csxpid_atoms_on_committed_fixture ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/pid3_partial.rs (<work>/target/release/deps/pid3_partial-1b9a16c50d019021)
+
+running 3 tests
+test partial_pid3_fails_closed_without_a_support_contract ... ok
+test partial_pid3_checks_observed_support_for_every_input ... ok
+test partial_pid3_reports_exact_dimension_and_mobius_availability ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/preprocess.rs (<work>/target/release/deps/preprocess-d3a100e2632f7862)
+
+running 21 tests
+test hash_projector_reports_unrepresentable_output_allocation ... ok
+test hash_projector_preserves_a_representable_sum_after_extreme_cancellation ... ok
+test hash_projector_shapes_and_finite ... ok
+test jitter_is_deterministic_given_seed ... ok
+test jitter_std_zero_is_identity ... ok
+test hash_projector_is_deterministic ... ok
+test pca_fit_accepts_a_caller_budget_at_its_reported_resource_boundary ... ok
+test fitted_preprocessors_expose_deterministic_training_and_parameter_hashes ... ok
+test pca_fits_opposite_extremes_without_centering_overflow ... ok
+test pca_ignores_a_huge_constant_offset_without_erasing_tiny_variation ... ok
+test pca_is_invariant_to_tiny_uniform_scaling ... ok
+test pca_rejects_component_in_numerical_null_space ... ok
+test pca_rejects_too_many_components ... ok
+test pca_rejects_truncation_through_a_tied_eigenspace ... ok
+test pca_rejects_unrepresentable_centered_dynamic_range ... ok
+test preprocess_rejects_invalid_configs ... ok
+test standardizer_constant_column_policies_are_distinct_on_held_out_rows ... ok
+test standardizer_fit_transform_checks_simultaneous_state_and_output_peak ... ok
+test pca_projector_shapes_and_direction_sanity ... ok
+test pca_matches_svd_subspace_on_fixed_data ... ok
+test hash_projector_norm_is_unbiased_for_even_out_dim ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/software_identity.rs (<work>/target/release/deps/software_identity-9810fceb0f513740)
+
+running 5 tests
+test compiled_source_identity_matches_the_declared_build_context ... ok
+test enabled_features_match_compile_time_configuration_exactly ... ok
+test software_identity_separates_api_signatures_source_build_and_attestation ... ok
+test forensic_artifacts_are_typed_and_never_attest_validity ... ok
+test serialized_identity_has_stable_machine_spellings_and_no_host_path_or_timestamp ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/software_identity_build.rs (<work>/target/release/deps/software_identity_build-03e4deb359cd7b68)
+
+running 51 tests
+test build_support::tests::cargo_rerun_paths_reject_line_delimiters ... ok
+test build_support::tests::sha1_validation_is_exact_and_lowercase ... ok
+test build_support::tests::legacy_ref_format_fallback_is_closed_over_known_backends ... ok
+test build_support::tests::git_record_terminator_preserves_path_characters ... ok
+test build_support::tests::symbolic_ref_classification_distinguishes_detached_from_failures ... ok
+test build_support::tests::working_tree_probe_combination_is_a_fail_closed_lattice ... ok
+test build_support::tests::git_version_gate_is_explicit_and_future_compatible ... ok
+test build_support::tests::git_command_isolates_routing_replacements_config_and_attributes ... ok
+test current_build_resolves_to_its_declared_source_context ... ok
+test generated_build_identity_is_not_rewritten_when_unchanged ... ok
+test explicit_true_cargo_dirty_flag_is_dirty ... ok
+test explicit_false_cargo_dirty_flag_is_clean ... ok
+test cargo_metadata_ignores_future_fields_but_preserves_known_semantics ... ok
+test absent_cargo_dirty_flag_is_unknown ... ok
+test git_launch_failure_has_a_distinct_typed_root_state ... ok
+test dangling_git_entry_never_falls_through_to_package_metadata ... ok
+test layout_matched_git_failure_never_falls_through_to_package_metadata ... ok
+test layout_matched_git_noncanonical_root_never_uses_package_metadata ... ok
+test layout_matched_git_existing_wrong_root_never_uses_package_metadata ... ok
+test malformed_package_metadata_never_falls_through_to_ambient_git ... ok
+test non_utf8_watch_paths_require_conservative_recovery ... ok
+test candidate_workspace_watches_missing_markers_and_git_route ... ok
+test occupied_rerun_sentinel_cannot_disable_fail_closed_invalidation ... ok
+test literal_unspecified_filter_value_cannot_execute_a_driver ... ok
+test final_status_reread_observes_a_post_status_worktree_change ... ok
+test layout_matched_workspace_git_precedes_untracked_package_metadata ... ok
+test ref_storage_payload_forces_conservative_reruns ... ok
+test git_older_than_the_identity_contract_cannot_claim_cleanliness ... ok
+test source_archive_layout_without_git_or_package_metadata_is_unavailable ... ok
+test detached_head_watch_plan_needs_no_ref_namespace ... ok
+test symlinked_member_escaping_the_workspace_is_not_recognized ... ok
+test symlinked_package_metadata_is_rejected_without_git_fallback ... ok
+test sha256_layout_matched_repository_is_typed_as_an_invalid_format_one_commit ... ok
+test config_includes_are_watched_and_force_conservative_reruns ... ok
+test unrelated_git_repository_without_package_metadata_is_not_recognized ... ok
+test unborn_layout_matched_repository_is_git_unavailable ... ok
+test working_tree_command_failure_is_unknown ... ok
+test packed_current_ref_watches_packed_refs_and_loose_ref_namespace ... ok
+test multi_hop_symbolic_ref_chain_is_watched_completely ... ok
+test linked_worktree_watch_plan_covers_private_and_common_metadata ... ok
+test replacement_objects_cannot_change_source_identity_or_cleanliness ... ok
+test tracked_symlink_is_unknown_even_when_its_index_entry_is_clean ... ok
+test reftable_linked_worktree_watches_private_and_common_tables ... ok
+test repository_attribute_tree_is_typed_unknown_until_removed ... ok
+test split_index_shared_file_is_part_of_the_watch_plan ... ok
+test git_route_corruption_forces_reruns_until_config_recovers ... ok
+test head_change_during_probe_cannot_create_a_mixed_clean_identity ... ok
+test git_index_visibility_masks_are_conservatively_dirty ... ok
+test missing_head_object_forces_reruns_until_the_object_recovers ... ok
+test external_clean_filter_is_typed_unknown_without_execution ... ok
+test healthy_git_watch_plan_tracks_exact_identity_inputs ... ok
+
+test result: ok. 51 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.05s
+
+     Running tests/support_change_tolerant_sxpid_oracle.rs (<work>/target/release/deps/support_change_tolerant_sxpid_oracle-8e416f5c63ab6d16)
+
+running 4 tests
+test fixture_identity_scope_and_tested_domain_are_bound ... ok
+test exact_mobius_rows_and_norms_match_two_through_four_source_fixture ... ok
+test retained_exact_sharpness_falsifier_and_support_boundary_cases_replay ... ok
+test every_realizable_table_matches_public_sxpid_and_every_bound_holds ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running tests/sxpid_axioms.rs (<work>/target/release/deps/sxpid_axioms-9f10c630b5b693d2)
+
+running 8 tests
+test identity_axiom_imin_overattributes_vs_sxpid ... ok
+test symmetry_under_source_swap ... ok
+test net_equals_informative_minus_misinformative ... ok
+test negative_atoms_are_real ... ok
+test reconstruction_and_self_redundancy ... ok
+test sxpid3_reconstruction_and_symmetry ... ok
+test mgw_theorem_iv2_cumulative_parts_monotone_on_lattice ... ok
+test mgw_theorem_iv3_pointwise_plus_minus_parts_nonnegative ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/sxpid_bootstrap.rs (<work>/target/release/deps/sxpid_bootstrap-20e09b24ef374efd)
+
+running 1 test
+test bootstrap_sxpid2_point_estimate_and_raw_percentiles ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/sxpid_exhaustive_oracle.rs (<work>/target/release/deps/sxpid_exhaustive_oracle-640ab297e31f3110)
+
+running 1 test
+test all_binary_count_tables_through_four_samples_match_standalone_decimal_oracle ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/sxpid_gaussian_oracle.rs (<work>/target/release/deps/sxpid_gaussian_oracle-d538fc9fb54dca67)
+
+running 3 tests
+test discrete_isx_moves_toward_reference_over_bounded_bins ... ignored, diagnostic: discrete i^sx moves toward the fixed-sample reference over a bounded bin range
+test multi_sigma_ksg_vs_fixed_sample_reference ... ignored, diagnostic: KSG estimator vs fixed-sample paired Gaussian references across several sigma
+test ksg_isx_redundancy_matches_fixed_sample_reference_additive ... ok
+
+test result: ok. 1 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/sxpid_informative_invariance.rs (<work>/target/release/deps/sxpid_informative_invariance-c3308e458799dcd3)
+
+running 1 test
+test averaged_informative_coordinates_depend_only_on_the_complete_source_marginal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/sxpid_interpretation.rs (<work>/target/release/deps/sxpid_interpretation-4213c306d2f8456b)
+
+running 6 tests
+test paper_defined_informative_component_depends_only_on_the_source_state ... ok
+test identical_tuple_atoms_remain_distribution_context_dependent ... ok
+test empirical_pmf_results_are_bitwise_invariant_to_row_permutation ... ok
+test two_source_records_are_distinct_states_with_auditable_pmf_weights ... ok
+test enum_and_interpretation_wire_spellings_are_exact ... ok
+test interpretation_and_numeric_invariants_hold_for_three_and_general_source_paths ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/sxpid_nsource.rs (<work>/target/release/deps/sxpid_nsource-45edbd0d88f952d4)
+
+running 9 tests
+test three_source_atom_lookup_returns_none_after_caller_shortens_atoms ... ok
+test general_atom_lookup_returns_none_after_caller_shortens_atoms ... ok
+test pinned_two_source_average_is_bit_equivariant_after_source_swap ... ok
+test pinned_three_source_average_components_are_bit_equivariant_after_source_swap ... ok
+test nsource_lattice_has_166_antichains_for_4_sources ... ok
+test nsource_4source_symmetry_and_reconstruction ... ok
+test all_494_binary_two_source_count_tables_match_general_path_and_source_swap ... ok
+test pinned_four_source_average_components_are_bit_equivariant_after_source_swap ... ok
+test all_968_binary_three_source_count_tables_through_three_samples_match_general_path ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/sxpid_properties.rs (<work>/target/release/deps/sxpid_properties-75ea376b9c39e2ed)
+
+running 8 tests
+test discrete_paths_reject_empty_input ... ok
+test mixed_invalid_same_sample_calls_pin_bin_count_precedence ... ok
+test exact_and_quantized_paths_validate_shapes_and_configuration ... ok
+test resource_estimates_bind_asymmetric_source_and_target_coordinate_totals ... ok
+test same_sample_sxpid_aggregate_gate_matches_direct_first_rejection_boundaries ... ok
+test same_sample_imin_aggregate_gate_matches_direct_first_rejection_boundaries ... ok
+test sxpid2_identities_hold_for_random_systems ... ok
+test sxpid3_reconstruction_holds_for_random_systems ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/sxpid_reference.rs (<work>/target/release/deps/sxpid_reference-2bbbc013fccbdb41)
+
+running 11 tests
+test pwunq_pointwise ... ok
+test rdn_pointwise ... ok
+test and_pointwise ... ok
+test copy_pointwise ... ok
+test and_pointwise_keyed_assignment ... ok
+test rnderr_pointwise_nonuniform ... ok
+test sum_pointwise ... ok
+test unq_pointwise ... ok
+test multidim_source_equivalent_to_scalar ... ok
+test xor_pointwise ... ok
+test hash_3source_averaged_matches_idtxl ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/sxpid_relation_witness.rs (<work>/target/release/deps/sxpid_relation_witness-b33e2f03897fb2fc)
+
+running 2 tests
+test stipulated_recoverability_descriptor_mutation_is_rejected_as_sxpid ... ok
+test lcr_recoverability_witnesses_have_distinct_sxpid_atoms_and_exact_reconstruction ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests pid_core
+
+running 10 tests
+test crates/pid-core/src/lib.rs - (line 36) ... ignored
+test crates/pid-core/src/ksg.rs - ksg::ksg_mi (line 2166) - compile ... ok
+test crates/pid-core/src/lib.rs - (line 405) - compile fail ... ok
+test crates/pid-core/src/lib.rs - (line 400) - compile fail ... ok
+test crates/pid-core/src/sxpid.rs - sxpid::SxAveragedAtom (line 581) - compile fail ... ok
+test crates/pid-core/src/lib.rs - (line 91) ... ok
+test crates/pid-core/src/lib.rs - (line 336) ... ok
+test crates/pid-core/src/pid2.rs - pid2::pid2_isx (line 568) ... ok
+test crates/pid-core/src/sxpid.rs - sxpid::discrete_sxpid2 (line 1661) ... ok
+test crates/pid-core/src/bootstrap.rs - bootstrap (line 38) ... ok
+
+test result: ok. 9 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 1.97s
+

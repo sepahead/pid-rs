@@ -1916,6 +1916,26 @@ and alternatives. Ten application cards state physical inputs, alphabets, output
 and reasons to prefer a simpler method. These review counts are process coverage, not theorem
 evidence.
 
+`build-cross-implementation-reverification-pdf.sh` renders
+`audit/evidence/cross-implementation-reverification-2026-09-26.md` through Pandoc and LuaLaTeX. The
+Markdown is canonical, and the projection has no figures. A source-derived duplicated trailer ID
+binds the Markdown, header, Lua filter and tagpdf compatibility source. Fixed time, timezone and
+locale, three LuaLaTeX passes, warning and glyph checks, embedded-font checks and atomic
+publication give same-toolchain reproducibility. The builder accepts only an absolute PDF
+destination in an existing nonsymbolic directory.
+
+`check-cross-implementation-reverification-pdf.sh` validates the Markdown math, rebuilds the PDF
+and checks all 16 A4 pages. Its pinned pypdf object gate requires the source-derived trailer ID,
+`en-US` language, a marked structure tree, a bounded first-page `GoTo`, HTTPS-only external links,
+Link-only annotations and the exact inventory of repository-navigation URIs. It rejects
+JavaScript, attachments, forms, collection state, permissions and unknown actions, and it checks
+reviewed text sentinels, embedded fonts and a nonempty raster for every page. Exact mode requires
+byte identity; cross-toolchain mode requires identical layout text and page geometry. The report's
+evidence directory is reproduced separately by its `run.sh`, which exports a commit, reruns the
+Rust generators and the Python checks, and compares every output with the retained copy. These
+checks establish publication hygiene and output reproduction, not mathematical correctness,
+estimator calibration or independent review.
+
 `build-pid-sensor-placement-and-galadriel-guide-pdf.sh` renders
 `PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md` through Pandoc and LuaLaTeX. The canonical Markdown is
 the claim source. `figure-assets.json` binds three original handcrafted SVG/PDF pairs and separately

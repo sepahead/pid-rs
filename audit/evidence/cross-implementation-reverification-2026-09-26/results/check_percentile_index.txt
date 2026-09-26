@@ -1,0 +1,33 @@
+Grid 1: the 12 alpha values of the first probe, B = 2..20000
+  previous form, unequal tails: 0
+  lower index differs from the exact binary64-alpha floor: 1000; alpha values [0.3]; all B multiples of 20: True
+  lower index differs from the exact decimal-alpha floor: 0
+Grid 2: every two-decimal alpha 0.01..0.99, B = 1..20000
+  previous form: 22 of 99 alpha values have some B with unequal tails; 2898 (alpha, B) pairs in total
+  first unequal B per alpha (alpha: B, dropped below, dropped above):
+    0.13: B=8600, 559 below, 558 above
+    0.29: B=200, 28 below, 29 above
+    0.35: B=360, 62 below, 63 above
+    0.36: B=150, 27 below, 26 above
+    0.38: B=300, 57 below, 56 above
+    0.41: B=600, 122 below, 123 above
+    0.47: B=8600, 2020 below, 2021 above
+    0.57: B=1000, 285 below, 284 above
+    0.58: B=100, 28 below, 29 above
+    0.59: B=600, 177 below, 176 above
+    0.61: B=600, 183 below, 182 above
+    0.63: B=600, 189 below, 188 above
+    0.65: B=360, 117 below, 116 above
+    0.69: B=600, 206 below, 207 above
+    0.7: B=180, 62 below, 63 above
+    0.82: B=100, 41 below, 40 above
+    0.84: B=50, 21 below, 20 above
+    0.86: B=100, 43 below, 42 above
+    0.88: B=25, 11 below, 10 above
+    0.9: B=100, 45 below, 44 above
+    0.92: B=450, 207 below, 206 above
+    0.94: B=4300, 2020 below, 2021 above
+  corrected form: unequal tails 0; lower index unchanged in every pair
+  corrected trim is one below the decimal floor in 450 pairs (decimal alpha*B/2 is an integer that binary64 rounds below); examples (alpha, B, trim, decimal floor): [(0.29, 200, 28, 29), (0.29, 400, 57, 58), (0.29, 800, 115, 116), (0.29, 1600, 231, 232), (0.29, 3000, 434, 435), (0.29, 3200, 463, 464)]
+  corrected trim is one above the exact floor for the binary64 alpha in 13950 pairs (the rounded product reaches an integer); examples (alpha, B, trim, binary64-alpha floor): [(0.03, 200, 3, 2), (0.03, 400, 6, 5), (0.03, 600, 9, 8), (0.03, 800, 12, 11)]
+  pairs in which the clamp to (B-1)//2 was active: 0
