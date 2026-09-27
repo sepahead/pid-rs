@@ -1,0 +1,97 @@
+Recorded UTC: 2026-09-19T23:38:33.165636+00:00
+
+# Candidate support-size second-moment bound
+
+Status: retrospective exploratory handwritten derivation by root. No compiler, probability formalization, execution, paper-source re-adjudication, acceptance or scientific-priority credit. It was developed while an independent reviewer was examining the same question; no conclusion from that reviewer has been read. Shared native specification and same model/system remain correlated.
+
+## Question and context
+
+The current coarse stopped-gradient moment bound uses inverse cell masses. Does the actual causal statistic need those factors? A useful bound should separate variance from the unbounded stopping time. It would help select finite categorical encoders and minibatch sizes; it would not validate an MGW learning objective or continuous raw sensors.
+
+Use the finite fixed common-support normalized differentiable IID PMF path, fixed source/target maps, fixed native node and score s with E s=0 and |s|<=L. Let K be the number of positive complete image keys. First use s equal to the complete-key marginal score; latent-score transfer remains separate. Define the actual native causal statistic G=sum_{h<tau}(A_h-D_h)S_h, with S_h including the anchor and tau the first complete-key repeat. A_h is the raw positive arrival indicator divided by h; D_h is the retained-target arrival indicator divided by its retained rank. All joins are fixed parameter-independent predicates. The prior handwritten identity gives E G=J'_alpha but is not formalized. The calculation below proves a candidate bound on G itself without using its mean identity.
+
+Split G=Gplus-Gminus. The indicators need not be independent of scores: they will be discarded in a pointwise absolute upper bound. This avoids an invalid covariance cancellation.
+
+## A random-walk harmonic envelope
+
+For fixed n, let U_j=a+sum_{r=1}^j W_r, where the W_r are IID real variables with mean m and variance sigma^2. Let |a|<=L. For arbitrary possibly data-dependent indicators I_j in {0,1},
+
+    |sum_{j=1}^n I_j U_j/j| <= sum_{j=1}^n |U_j|/j.
+
+Minkowski in L2 and sqrt(x+y)<=sqrt(x)+sqrt(y) give
+
+    ||sum I_j U_j/j||_2
+      <= |a| H_n + |m| n + sigma sum_{j=1}^n 1/sqrt(j)
+      <= |a| H_n + |m| n + 2 sigma sqrt(n).
+
+The bound sum 1/sqrt(j)<=2sqrt(n) follows by integrating x^(-1/2) on [j-1,j]. Thus
+
+    E[(sum I_j U_j/j)^2]
+      <= 3 a^2 H_n^2 + 3 m^2 n^2 + 12 sigma^2 n.
+
+H_0=0. Cauchy–Schwarz gives H_n^2 <= n sum_{j=1}^n 1/j^2 <= 2n: for j>=2, 1/j^2<=1/[j(j-1)], whose sum is <=1. Every bound includes n=0.
+
+Let Q have geometric-failure law P(Q=n)=q(1-q)^n, 0<q<1; conditional on Q=n the W_1,...,W_n retain the specified IID failure-cycle law. Put r=1-q. Then E Q=r/q and E Q^2=r(2-q)/q^2. Suppose a success-cycle mean b and failure-cycle mean m obey rm+qb=0 and both |m|,|b|<=M. Consequently
+
+    m^2 <= M^2 min(1,q^2/r^2),
+    q m^2 E Q^2
+      <= M^2 (2-q) min(r/q,q/r) <= (3/2) M^2.
+
+For q<=1/2, q(2-q)/(1-q)=1/(1-q)-(1-q) increases to 3/2. For q>=1/2, (1-q)(2-q)/q=2/q-3+q decreases from 3/2. At q=1, Q=0 directly and no division by r is used.
+
+## Positive stream
+
+Condition on the anchor z, with q=p_z. Before its first repeat, the rows conditional on Q=n=tau-1 are IID from p conditioned not equal to z. Their scores are bounded by L, mean m, variance sigma^2. The success score is b=s(z), and rm+qb=E s=0. Both means have absolute value <=L. Also r sigma^2<=E s^2<=L^2.
+
+Discard the native raw-join indicator to apply the preceding harmonic envelope. Multiply by anchor mass q and average over Q:
+
+    q E[Gplus^2 | anchor z]
+      <= 3 L^2 q E H_Q^2 + 3 q m^2 E Q^2 + 12 q sigma^2 E Q
+      <= 6 L^2 + (9/2) L^2 + 12 L^2
+      = (45/2) L^2.
+
+This is per supported anchor, so E Gplus^2 <= (45/2) K L^2. For q=1 the stream is zero.
+
+## Negative retained-target stream
+
+Fix anchor z with target y, v=P(Y=y)>0, and q=p_z/v. Group future complete rows into cycles ending at each occurrence of target y. Write W for the sum of scores in one complete cycle, including its target row. Successive cycles are IID. Their terminal keys are distributed as p conditioned on Y=y. A successful cycle ends at z. Let Q be the number of failure cycles before that success; Q is geometric-failure(q). Conditional on Q=n, the first n cycles are IID conditional on terminal key !=z. The negative native score at retained rank j is exactly
+
+    S_(target-arrival-j) = s(z)+sum_{r=1}^j W_r.
+
+There are no further negative contributions after the success cycle, because that target row has empty source mismatch. The native negative indicator can again be discarded pointwise, leaving the harmonic envelope at ranks 1,...,Q. No replacement of the retained rank by raw time is made.
+
+We require exact cycle moments. Let a=E[s(Z)|Y=y]. For v<1, a non-target score has mean -v a/(1-v). The number M of non-target rows before the terminal target is geometric-failure(v), independent of their IID conditional scores and of the terminal conditional-target score. Thus the mean non-target sum is -a. It follows that E W=0, and for each terminal-key group,
+
+    E[W | terminal group] = E[s(Z)|terminal group]-a.
+
+In particular success/failure cycle means b,m have magnitude <=2L and rm+qb=0. For the second moment, independence and the geometric mean/variance give
+
+    Var(W)
+      = E M Var(s | Y!=y) + Var(M) (E[s | Y!=y])^2
+          + Var(s | Y=y)
+      = ((1-v)/v) E[s^2 | Y!=y] + E[s^2 | Y=y]
+      = E s^2/v <= L^2/v.
+
+Since E W=0, this is E W^2. When v=1, W is one ordinary score with mean zero and the same formula holds directly; do not condition on the empty non-target event. If sigma^2 is the variance of W conditional on failure, r sigma^2 <= E W^2 <= L^2/v. If q=1, Q=0 and the negative stream is zero.
+
+For 0<q<1 multiply the harmonic bound by the actual anchor probability p_z=vq:
+
+    p_z E[Gminus^2 | anchor z]
+      <= 3 L^2 vq E H_Q^2 + 3 vq m^2 E Q^2
+          +12 vq sigma^2 E Q
+      <= 6v L^2 + 18v L^2 + 12 L^2
+      <= 36 L^2.
+
+Therefore E Gminus^2 <=36 K L^2. A rare target increases cycle variance, but its anchor probability cancels that factor. This cancellation uses IID complete rows and the mean-zero score; it does not apply to arbitrary attached weights or time-series scores.
+
+## Combined candidate bound and limits
+
+Pointwise (x-y)^2<=2x^2+2y^2 now gives
+
+    E G^2 <= 117 K L^2.
+
+The constant is deliberately coarse, with no optimality claim. The bound uses K and L but no population minimum-mass floor. If the handwritten unbiasedness theorem is established, then Var(G)<=117 K L^2 and R fresh independent complete blocks would give mean-square error <=117 K L^2/R for their average. Independence cannot be replaced by sharing one anchor or overlapping unanalysed streams.
+
+This does not bound the runtime deterministically: E tau=K and E tau^2 can diverge at fixed K. Nor does it imply a uniform fourth moment: the separate ternary copy example shows a divergence for G. The whole-output terminal-score estimator is different and has no such uniform second-moment bound in that example. A hard stop changes the estimand unless a bias/tail correction is supplied. Fixed finite support, exact categorical equality and bounded scores remain essential premises of this argument; no Ehrlich continuous or hyperbolic transfer, application advantage, or scientific-priority claim is made.
+
+Open checks: independent adversarial proof review; exact native path-to-cycle correspondence; rigorous finite/infinite experiment construction; Lean probability formalization with inventoried axioms and no assumed target conclusion; symbolic examples and later Rust implementation only under separately frozen packets; literature comparison of causal likelihood-ratio and inverse-binomial estimators.

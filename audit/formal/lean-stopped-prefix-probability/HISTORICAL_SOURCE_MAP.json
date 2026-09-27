@@ -1,0 +1,230 @@
+{
+  "status": "exact_historical_source_successor_map_not_retroactive_acceptance",
+  "closures": [
+    {
+      "historical_closure": "historical_f4_v4",
+      "members": [
+        {
+          "module": "PidFiniteConvergence.Deterministic",
+          "historical_sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/Deterministic.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/Deterministic.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidFiniteConvergence.SxEventBridge",
+          "historical_sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/SxEventBridge.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/SxEventBridge.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "MgwBridgeDepsV1.SxDnf.Contract",
+          "historical_sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "MgwBridgeDepsV1.JoinLog.Contract",
+          "historical_sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidMgwBridge.Contract",
+          "historical_sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Contract.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Contract.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidPrefixProbability.Contract",
+          "historical_sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Contract.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Contract.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "MgwBridgeDepsV1.SxDnf.JudgeCore",
+          "historical_sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixStageA.Contract",
+          "historical_sha256": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/Contract.lean",
+          "successor_public_path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/Contract.lean.txt",
+          "action": "preserve_exact_historical_target_inert_once"
+        },
+        {
+          "module": "PidStoppedPrefixStageA.RawTargets",
+          "historical_sha256": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/RawTargets.lean",
+          "successor_public_path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/RawTargets.lean.txt",
+          "action": "preserve_exact_historical_target_inert_once"
+        },
+        {
+          "module": "PidStoppedPrefixStageA.AliasTargets",
+          "historical_sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/AliasTargets.lean",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/AliasTargets.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixF4.HostileTargets",
+          "historical_sha256": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixF4/HostileTargets.lean",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/HostileTargets.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixF4.ReviewerControls",
+          "historical_sha256": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixF4/ReviewerControls.lean",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/ReviewerControls.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixF4.Candidate",
+          "historical_sha256": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixF4/Candidate.lean",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/Candidate.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixF4.SemanticJudge",
+          "historical_sha256": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixF4/SemanticJudge.lean",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/SemanticJudge.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "F4CandidateRoot",
+          "historical_sha256": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/F4CandidateRoot.lean",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/F4CandidateRoot.lean",
+          "action": "reuse_identical_public_successor_source"
+        }
+      ]
+    },
+    {
+      "historical_closure": "failed_f1f2_v3",
+      "members": [
+        {
+          "module": "F1F2CandidateRoot",
+          "historical_sha256": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7",
+          "original_proposed_path": "audit/archive/stopped-prefix-f1f2-v3/sources/F1F2CandidateRoot.lean.txt",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/F1F2CandidateRoot.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "MgwBridgeDepsV1.JoinLog.Contract",
+          "historical_sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "MgwBridgeDepsV1.SxDnf.Contract",
+          "historical_sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "MgwBridgeDepsV1.SxDnf.JudgeCore",
+          "historical_sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidFiniteConvergence.Deterministic",
+          "historical_sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/Deterministic.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/Deterministic.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidFiniteConvergence.SxEventBridge",
+          "historical_sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/SxEventBridge.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/SxEventBridge.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidMgwBridge.Contract",
+          "historical_sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Contract.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Contract.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidPrefixProbability.Contract",
+          "historical_sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a",
+          "original_proposed_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Contract.lean",
+          "successor_public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Contract.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixF1F2.Candidate",
+          "historical_sha256": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243",
+          "original_proposed_path": "audit/archive/stopped-prefix-f1f2-v3/sources/PidStoppedPrefixF1F2/Candidate.lean.txt",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/Candidate.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixF1F2.HostileTargets",
+          "historical_sha256": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d",
+          "original_proposed_path": "audit/archive/stopped-prefix-f1f2-v3/sources/PidStoppedPrefixF1F2/HostileTargets.lean.txt",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/HostileTargets.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixF1F2.ReviewerControls",
+          "historical_sha256": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5",
+          "original_proposed_path": "audit/archive/stopped-prefix-f1f2-v3/sources/PidStoppedPrefixF1F2/ReviewerControls.lean.txt",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/ReviewerControls.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixF1F2.SemanticJudge",
+          "historical_sha256": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363",
+          "original_proposed_path": "audit/archive/stopped-prefix-f1f2-v3/sources/PidStoppedPrefixF1F2/SemanticJudge.lean.txt",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/SemanticJudge.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixStageA.AliasTargets",
+          "historical_sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/AliasTargets.lean",
+          "successor_public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/AliasTargets.lean",
+          "action": "reuse_identical_public_successor_source"
+        },
+        {
+          "module": "PidStoppedPrefixStageA.Contract",
+          "historical_sha256": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/Contract.lean",
+          "successor_public_path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/Contract.lean.txt",
+          "action": "preserve_exact_historical_target_inert_once"
+        },
+        {
+          "module": "PidStoppedPrefixStageA.RawTargets",
+          "historical_sha256": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035",
+          "original_proposed_path": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/RawTargets.lean",
+          "successor_public_path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/RawTargets.lean.txt",
+          "action": "preserve_exact_historical_target_inert_once"
+        }
+      ]
+    }
+  ],
+  "root_reported_fresh_acceptance": {
+    "sha256": "40f7e1001f85849fb6e76b1527ede16cc1974fa6c9efc71ce2c77a005da6f15f",
+    "closure_reported_utc": "2026-09-26T21:28:05+00:00",
+    "basis": "Original root acceptance read and hash-joined during this private source assembly."
+  }
+}

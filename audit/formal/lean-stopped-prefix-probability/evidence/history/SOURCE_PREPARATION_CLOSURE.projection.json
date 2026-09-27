@@ -1,0 +1,26 @@
+{
+  "status": "closed_incomplete_source_preparation_no_admission_or_native_run",
+  "started_utc": "2026-09-26T20:53:35Z",
+  "original_deadline_utc": "2026-09-26T21:08:35Z",
+  "closure_recorded_at_utc": "2026-09-26 21:12:11 UTC",
+  "administrative_closure_after_deadline": true,
+  "reason": "Original source window expired before the root admission writer and final helper seal were prepared. Root directed stop and administrative closure only.",
+  "changes": "Exact successor preparation/execution path references and associated pins; readback PREP and PACKET_SHA literals only. Mathematics, runtime, supervisor, native driver, outer, inventory outer and execution limits preserved.",
+  "packet_sha256": "a6efef42d0f2111765488bcc6749a2ede695cca2389e28413b39a4b696381bce",
+  "readback_sha256": "78f39e137a1d6e77bf47ef32e31d1b51b3cd5e747902ce5cf6ac7c32e19f4183",
+  "unfinished": [
+    "Root-invoked admission writer",
+    "Final helper seal",
+    "Exact ready invocation document"
+  ],
+  "admission_granted_by_this_agent": false,
+  "execution_directory_created_by_this_agent": false,
+  "inventory_or_native_run_by_this_agent": false,
+  "predecessor_failure_class": "Operational inventory-age rejection before admission; not a mathematical or toolchain failure.",
+  "next_owner": "Root will prepare the missing admission writer separately. This source attempt is closed.",
+  "projection": "Selected original factual fields only; private predecessor locator and retained-path inventory omitted. No current status rewritten.",
+  "original_record": {
+    "bytes": 1913,
+    "sha256": "836370aa61fc640d3cb97bbcc4541bdd1ec978ad333e685adc5bf9fb56ddb9c6"
+  }
+}

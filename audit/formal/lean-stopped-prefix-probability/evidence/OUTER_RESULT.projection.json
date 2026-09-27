@@ -1,0 +1,24 @@
+{
+  "cleanup_reserve_seconds": 45.0,
+  "command": [
+    "${PYTHON_INSTALLATION_ROOT}/bin/python3.14",
+    "-I",
+    "-S",
+    "-B",
+    "${PREPARATION_ROOT}/run_reviewer.py",
+    "${EXECUTION_ROOT}/ADMISSION.json",
+    "485d1868d4e75996142a880309d38dda23fcfc8839400e1146967f31d87761ea"
+  ],
+  "completed_utc": "2026-09-26T21:24:55.950335+00:00",
+  "cwd": "${PREPARATION_ROOT}",
+  "deadline_is_hard_real_time": false,
+  "deadline_utc": "2026-09-26T22:09:04.585507+00:00",
+  "f1f2_f4_expected_terminal_observed": true,
+  "failure": null,
+  "observations_are_atomic": false,
+  "observed_survivors": [],
+  "registered_utc": "2026-09-26T21:20:03.682659+00:00",
+  "returncode": 0,
+  "root_adoption": "pending",
+  "status": "observed_wrapper_completion_pending_receipt_review"
+}

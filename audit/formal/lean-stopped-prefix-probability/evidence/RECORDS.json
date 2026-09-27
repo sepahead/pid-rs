@@ -1,0 +1,276 @@
+{
+  "status": "parsed_original_record_values_unchanged",
+  "records": {
+    "PidStoppedPrefixCausal.AxiomControls": [
+      {
+        "id": "forbidden_axiom_rejected",
+        "layer": "DNF_JUDGE_AXIOM",
+        "status": "expected_control_observed"
+      }
+    ],
+    "PidStoppedPrefixCausal.Controls": [
+      {
+        "expected": false,
+        "id": "legacy_complement_unequal",
+        "left": "PidStoppedPrefixCausalControls.legacyViaMask",
+        "observed": false,
+        "right": "PidStoppedPrefixCausalControls.legacyExpanded",
+        "status": "expected_comparison_observed"
+      },
+      {
+        "expected": true,
+        "id": "canonical_complement_equal",
+        "left": "PidStoppedPrefixCausalControls.canonicalViaMask",
+        "observed": true,
+        "right": "PidStoppedPrefixCausalControls.canonicalExpanded",
+        "status": "expected_comparison_observed"
+      },
+      {
+        "expected": false,
+        "id": "legacy_f1_unequal",
+        "left": "PidStoppedPrefixLegacyStageARawTargets.first_hit_factorization",
+        "observed": false,
+        "right": "PidStoppedPrefixLegacyStageAContract.first_hit_factorization_target",
+        "status": "expected_comparison_observed"
+      },
+      {
+        "expected": true,
+        "id": "canonical_f1_equal",
+        "left": "PidStoppedPrefixStageARawTargets.first_hit_factorization",
+        "observed": true,
+        "right": "PidStoppedPrefixStageAAliasTargets.first_hit_factorization",
+        "status": "expected_comparison_observed"
+      },
+      {
+        "expected": true,
+        "id": "legacy_f2_equal",
+        "left": "PidStoppedPrefixLegacyStageARawTargets.first_hit_mass",
+        "observed": true,
+        "right": "PidStoppedPrefixLegacyStageAContract.first_hit_mass_target",
+        "status": "expected_comparison_observed"
+      },
+      {
+        "expected": true,
+        "id": "canonical_f2_equal",
+        "left": "PidStoppedPrefixStageARawTargets.first_hit_mass",
+        "observed": true,
+        "right": "PidStoppedPrefixStageAAliasTargets.first_hit_mass",
+        "status": "expected_comparison_observed"
+      }
+    ],
+    "PidStoppedPrefixF1F2.ReviewerControls": [
+      {
+        "id": "miniature_positive",
+        "layer": "exact_theorem_type_and_axioms",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "definition_kind",
+        "layer": "DNF_JUDGE_DECLARATION_KIND",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "explicit_receiver",
+        "layer": "DNF_JUDGE_TARGET_TYPE",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "implicit_receiver",
+        "layer": "DNF_JUDGE_TARGET_TYPE",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "wrong_theorem",
+        "layer": "DNF_JUDGE_TARGET_TYPE",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "alias_mismatch",
+        "layer": "DNF_JUDGE_CONTRACT_VIEW",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "universe_specialization",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "factorization_final_hit_only",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "factorization_unmasked_prefix",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "factorization_wrong_final_mask",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "factorization_normalized_masks",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "mass_shifted_exponent",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "mass_swapped_probabilities",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "mass_positive_event_only",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "mass_nonempty_prefix_only",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "factorization_explicit_receiver",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "factorization_implicit_receiver",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "mass_explicit_receiver",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "mass_implicit_receiver",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      }
+    ],
+    "PidStoppedPrefixF1F2.SemanticJudge": [
+      {
+        "alias_target": "PidStoppedPrefixStageAAliasTargets.first_hit_factorization",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "PidStoppedPrefixStageAContract.first_hit_factorization_target.{u, v, w}",
+        "raw_target": "PidStoppedPrefixStageARawTargets.first_hit_factorization",
+        "status": "accepted",
+        "theorem": "PidStoppedPrefixF1F2Candidate.first_hit_factorization",
+        "universes": [
+          "u",
+          "v",
+          "w"
+        ]
+      },
+      {
+        "alias_target": "PidStoppedPrefixStageAAliasTargets.first_hit_mass",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "PidStoppedPrefixStageAContract.first_hit_mass_target.{u, v, w}",
+        "raw_target": "PidStoppedPrefixStageARawTargets.first_hit_mass",
+        "status": "accepted",
+        "theorem": "PidStoppedPrefixF1F2Candidate.first_hit_mass",
+        "universes": [
+          "u",
+          "v",
+          "w"
+        ]
+      }
+    ],
+    "PidStoppedPrefixF4.ReviewerControls": [
+      {
+        "id": "miniature_positive",
+        "layer": "exact_theorem_type_and_axioms",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "definition_kind",
+        "layer": "DNF_JUDGE_DECLARATION_KIND",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "explicit_receiver",
+        "layer": "DNF_JUDGE_TARGET_TYPE",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "implicit_receiver",
+        "layer": "DNF_JUDGE_TARGET_TYPE",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "wrong_theorem",
+        "layer": "DNF_JUDGE_TARGET_TYPE",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "alias_mismatch",
+        "layer": "DNF_JUDGE_CONTRACT_VIEW",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "universe_specialization",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "target_only",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "source_only",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "last_only",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "stage_explicit_receiver",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      },
+      {
+        "id": "stage_implicit_receiver",
+        "layer": "complete_type",
+        "status": "expected_control_observed"
+      }
+    ],
+    "PidStoppedPrefixF4.SemanticJudge": [
+      {
+        "alias_target": "PidStoppedPrefixStageAAliasTargets.native_return_kills",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "∀ (I : Type u) (X : I → Type v) (T : Type w) [inst : Fintype.{u} I] [Nonempty.{u + 1} I] [(i : I) → Fintype.{v} (X i)]\n  [Fintype.{w} T] [inst_4 : DecidableEq.{u + 1} I] [inst_5 : (i : I) → DecidableEq.{v + 1} (X i)]\n  [inst_6 : DecidableEq.{w + 1} T] (z : PidMgwBridgeContract.Key.{u, v, w} I X T)\n  (alpha : PidMgwBridgeContract.Node.{u} I) (rows : List.{max (max w v) u} (PidMgwBridgeContract.Key.{u, v, w} I X T))\n  (hz :\n    @Membership.mem.{max (max u v) w, max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n      (List.{max (max w v) u} (PidMgwBridgeContract.Key.{u, v, w} I X T))\n      (@List.instMembership.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)) rows z),\n  And\n    (@Eq.{1} Real (@PidPrefixProbabilityContract.positiveOnPrefix.{u, v, w} I X T inst inst_4 inst_5 z alpha rows)\n      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))\n    (@Eq.{1} Real\n      (@PidPrefixProbabilityContract.negativeOnPrefix.{u, v, w} I X T inst inst_4 inst_5 inst_6 z alpha rows)\n      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))",
+        "raw_target": "PidStoppedPrefixStageARawTargets.native_return_kills",
+        "status": "accepted",
+        "theorem": "PidStoppedPrefixF4Candidate.native_return_kills",
+        "universes": [
+          "u",
+          "v",
+          "w"
+        ]
+      }
+    ]
+  }
+}

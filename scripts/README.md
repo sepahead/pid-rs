@@ -3214,6 +3214,18 @@ or prover. Exact aggregate runs require the `PID_RS_DERIVATIVE_*` inputs listed 
 contract; inventory-only and cross mode require none of them. All new registration-bound work
 runs before the older long PDF gates. No PDF check proves a mathematical or application claim.
 
+The [finite first-hit publication](../audit/formal/lean-stopped-prefix-probability/PUBLICATION.md)
+uses `build-stopped-prefix-probability-pdf.sh` and `check-stopped-prefix-probability-pdf.sh`.
+The canonical Markdown and repository SVG produce one eight-page PDF. The checker binds both
+sources, the exact figure-font manifest and shared templates to the trailer ID. It compares one
+fresh rebuild, verifies author, page and navigation inventories, and rejects additional or chained
+PDF actions. The SVG renderer uses four hash-checked open fonts in private Fontconfig directories;
+figure and report font checks reject undeclared fallback fonts. Its Python self-test has two
+positive cases and 18 specific rejection cases. Most use a copied PDF and substitute builder;
+two exercise the production builder's font preflight without rendering. Normal and optimized
+controls and the exact PDF check are included in the aggregate. The source package retains local
+formal acceptance; rendering checks do not establish portable native theorem replay.
+
 The separate [categorical MGW mean package](../audit/formal/lean-prefix-mgw-mean/PUBLICATION.md)
 contains three locally accepted formal results for a project-defined finite-prefix statistic.
 It adds no Rust/Python estimator or statistical coverage guarantee. Its [current replay guide](../audit/formal/lean-prefix-mgw-mean/REPLAY.current.md)

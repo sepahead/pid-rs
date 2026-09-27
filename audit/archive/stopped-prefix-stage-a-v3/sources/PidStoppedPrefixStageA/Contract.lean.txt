@@ -1,0 +1,77 @@
+import PidPrefixProbability.Contract
+
+/- INERT SOURCE PROPOSAL. Do not rename to .lean or elaborate before target/judge freeze.
+   Definitions and complete F1/F2/F4 proposition targets only; no candidate proof.
+   F3 and normalized-cycle definitions are outside this module and export roster.
+   Intended future module: PidStoppedPrefixStageA.Contract. -/
+set_option autoImplicit false
+set_option warningAsError true
+open scoped BigOperators ENNReal
+open MeasureTheory
+open PidMgwBridgeContract (Key Node Law total)
+open PidPrefixProbabilityContract
+universe u v w
+
+namespace PidStoppedPrefixStageAContract
+
+noncomputable local instance propositionDecidable (P : Prop) : Decidable P :=
+  Classical.propDecidable P
+
+local instance keySpace {I : Type u} {X : I → Type v} {T : Type w} :
+    MeasurableSpace (Key I X T) := ⊤
+
+section Definitions
+variable {I : Type u} {X : I → Type v} {T : Type w}
+variable [Fintype I] [∀ i, Fintype (X i)] [Fintype T]
+variable [DecidableEq I] [∀ i, DecidableEq (X i)] [DecidableEq T]
+
+noncomputable def maskedMass (p : Key I X T → ℝ) (A : Set (Key I X T))
+    (x : Key I X T) : ℝ := if x ∈ A then p x else 0
+
+noncomputable def eventMass (p : Key I X T → ℝ) (A : Set (Key I X T)) : ℝ :=
+  total (maskedMass p A)
+
+def firstHitWord (A : Set (Key I X T)) (n : ℕ) :
+    Set (Fin (n + 1) → Key I X T) :=
+  {word | (∀ i : Fin n, word i.castSucc ∉ A) ∧ word (Fin.last n) ∈ A}
+
+def splitLast (n : ℕ) (word : Fin (n + 1) → Key I X T) :
+    (Fin n → Key I X T) × Key I X T :=
+  ((fun i => word i.castSucc), word (Fin.last n))
+end Definitions
+
+/-- F1: actual restricted finite-product law, not an assumed cycle distribution. -/
+abbrev first_hit_factorization_target : Prop :=
+  ∀ (I : Type u) (X : I → Type v) (T : Type w)
+      [Fintype I] [Nonempty I] [∀ i, Fintype (X i)] [Fintype T]
+      [DecidableEq I] [∀ i, DecidableEq (X i)] [DecidableEq T]
+      (p : Key I X T → ℝ) (A : Set (Key I X T)) (n : ℕ),
+    Law p →
+      @Measure.map _ _
+        (inferInstance : MeasurableSpace (Fin (n + 1) → Key I X T))
+        (@Prod.instMeasurableSpace (Fin n → Key I X T) (Key I X T)
+          inferInstance inferInstance)
+        (splitLast n) ((rowLaw p (n + 1)).restrict (firstHitWord A n)) =
+        (rowLaw (maskedMass p Aᶜ) n).prod (keyMeasure (maskedMass p A))
+
+/-- F2: first-hit mass, including n=0 and event masses 0 and 1. -/
+abbrev first_hit_mass_target : Prop :=
+  ∀ (I : Type u) (X : I → Type v) (T : Type w)
+      [Fintype I] [Nonempty I] [∀ i, Fintype (X i)] [Fintype T]
+      [DecidableEq I] [∀ i, DecidableEq (X i)] [DecidableEq T]
+      (p : Key I X T → ℝ) (A : Set (Key I X T)) (n : ℕ),
+    Law p →
+      0 ≤ eventMass p A ∧ eventMass p A ≤ 1 ∧
+      rowLaw p (n + 1) (firstHitWord A n) =
+        ENNReal.ofReal ((1 - eventMass p A) ^ n * eventMass p A)
+
+/-- F4: a complete-key return anywhere in the comparison list kills both native terms. -/
+abbrev native_return_kills_target : Prop :=
+  ∀ (I : Type u) (X : I → Type v) (T : Type w)
+      [Fintype I] [Nonempty I] [∀ i, Fintype (X i)] [Fintype T]
+      [DecidableEq I] [∀ i, DecidableEq (X i)] [DecidableEq T]
+      (z : Key I X T) (alpha : Node I) (rows : List (Key I X T)),
+    z ∈ rows →
+      positiveOnPrefix z alpha rows = 0 ∧ negativeOnPrefix z alpha rows = 0
+
+end PidStoppedPrefixStageAContract

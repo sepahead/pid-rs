@@ -1,0 +1,1 @@
+{"status": "observed_matching_sequential_readback_not_root_adopted", "phase": "POST", "receipt": "${EXECUTION_ROOT}/boundary/INSTALLED_POST.json", "receipt_sha256": "36bd0aa2fbc0b9e27eee05f9352d2d64a877a029de5fff232ebb990372ce8676"}

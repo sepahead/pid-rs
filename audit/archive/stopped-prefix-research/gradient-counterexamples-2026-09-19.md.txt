@@ -1,0 +1,238 @@
+# Independent stopped-prefix MGW gradient review
+
+Status: private exploratory handwritten derivation and counterexamples. This is advisory model review, not an accepted theorem, formal verification, implementation, novelty claim, benchmark, or sensor-performance result. The parent and another reviewer are independently checking sufficiency. Their mathematical conclusions were not read before this report.
+
+## Object and evidence boundary
+
+The object is the actual native signed finite-prefix block in `audit/research/finite-prefix-mgw-gradient/EXPOSITION.md`, Section 2, at one fixed node of the complete native redundancy poset. That local exposition is the exact project specification reviewed here; its bytes and the theorem map are bound in `INITIAL.json`. The defining categorical information functional is attributed there to Makkeh–Gutknecht–Wibral, arXiv:2002.03356v5 / DOI 10.1103/PhysRevE.103.032149. This review did not independently retrieve or reinterpret the paper. The stopped extension is a project candidate, with no priority assertion.
+
+Rows are IID complete categorical rows with a finite, fixed positive joint support S, along a normalized PMF path differentiable at t0. Put p(z)=p_t0(z), d(z)=p'_t0(z), s(z)=d(z)/p(z), and |s(z)| <= L. Off-support derivatives vanish. Source events use OR between collections and AND within each collection. The atom uses the whole fixed inverse row c_alpha, not an arbitrary truncated lattice. All values are in nats, derivatives in nats per unit of the scalar parameter. The results below concern a population PMF or a precisely declared conditional empirical-law experiment, never an unspecified population inferred from one table.
+
+The prefix statistic is parameter independent; only the law changes. Write Delta_j = A_j - D_j for j >= 1, B_h = sum_{j=1}^h Delta_j, and B_0=Delta_0=0. Here the negative D_j is the exposition's retained-target-rank increment; below the gradient estimator is called C to avoid that overloaded letter. Define
+
+    tau = min{j >= 1 : Z_j = Z_0},
+    S_h = sum_{r=0}^h s(Z_r),
+    C = sum_{1 <= j < tau} Delta_j S_j,
+    T = B_{tau-1} S_tau,
+    N = B_{tau-1} S_{tau-1}.
+
+These correspond to the question's causal D, corrected stopped-path statistic, and naive statistic.
+
+## 1. No counterexample to C under the exact finite IID premises
+
+At j=tau, the source mismatch set is empty and the target matches the anchor. Every subsequent raw prefix therefore contains an empty mismatch set; every subsequent retained-target prefix does too. The definition makes both F predicates false forever. Consequently Delta_j=0 for all j>=tau, B_infinity=B_{tau-1}, and the displayed causal sum equals sum_{j>=1} Delta_j S_j pathwise. The strict inequality j<tau is correct. Full-row equality is a sufficient stopping criterion; equality of just a target or one source coordinate does not give this argument.
+
+There are two separate steps to unbiasedness: an integrable random sum and identification of its mean with the actual atom derivative. Neither is supplied by merely observing that a path eventually stops.
+
+For K=|S| and p_min=min_S p>0, conditional on Z_0=z, tau is geometric on {1,2,...} with success p(z). Also |Delta_j|<=1 and |S_j|<=L(j+1). Thus
+
+    sum_{j>=1} E|Delta_j S_j|
+      <= L sum_{j>=1} (j+1) P(tau>j)
+       = L (sum_{z in S} 1/p(z) - 1) < infinity.
+
+The equality uses P(tau>j)=sum_z p(z)(1-p(z))^j and the finite geometric-series identities. This permits expectation through the random sum. It is a sufficient absolute bound, not a sharp variance bound.
+
+For a fixed j, the finite-product score identity gives E[Delta_j S_j] = (E_t Delta_j)' at t0, including the anchor score. To identify the infinite sum, use the exact native cumulative increment formula from the exposition, rather than differentiating an inequality or assuming differentiation commutes with an infinite expectation.
+
+For an anchor z and cumulative node beta, put a=P(E_beta(z)), q=P(E_beta(z) intersect V(z)), and v=P(V(z)). Then
+
+    E Delta_j(alpha)
+      = sum_beta c_alpha(beta) sum_z p(z)
+          [(1-a)^j - (1-q)^j + (1-v)^j] / j.
+
+Its finite derivative is
+
+    sum_beta c_alpha(beta) sum_z {
+      d(z)[(1-a)^j-(1-q)^j+(1-v)^j]/j
+      + p(z)[-a'(1-a)^(j-1) + q'(1-q)^(j-1)
+              - v'(1-v)^(j-1)] }.
+
+All a,q,v at supported anchors are at least p_min. The derivative terms are absolutely summable in j: geometric powers or geometric powers divided by j, with only finitely many anchors and inverse-row coefficients. Summing the elementary series gives exactly
+
+    sum_beta c_alpha(beta) sum_z {
+      d(z)[-log a + log q - log v]
+      + p(z)[-a'/a + q'/q - v'/v] } = J'_alpha(p).
+
+The last equality is ordinary differentiation of a fixed finite supported logarithmic expression. It is not a differentiation of a value-error bound. Cell differentiability at t0 and common support suffice for this argument; no derivative bound on an entire neighborhood was inserted. Continuity already keeps the finitely many supported event masses positive locally.
+
+Therefore the handwritten argument supports E C = J'_alpha under the exact premises. A formal stopped-gradient theorem and implementation correspondence remain open.
+
+**Zero target tangent is unnecessary for this identity.** Both v-dependent derivative terms were retained. This does not settle whether the exposition's sharper finite-horizon constant 2L remains valid without zero target tangent. An infinite-sum identity and that particular finite-horizon bound are different claims.
+
+## 2. Terminal score and anchor score are different required contributions
+
+At the stopping row, s(Z_tau)=s(Z_0). The path probability includes the anchor probability and the terminal repeat probability as separate factors. Their observed values agree, but their two score contributions do not collapse to one.
+
+Discrete product summation, with B_tau=B_{tau-1}, gives
+
+    T = C + sum_{j=1}^tau B_{j-1} s(Z_j).
+
+The second sum has mean zero. For each j, 1{tau>=j} B_{j-1} is measurable before row j and E[s(Z_j) | Z_0,...,Z_{j-1}]=0. The distinction between tau>=j and tau>j matters: the latter looks at the current row and would discard the very terminal term needed for this cancellation. Absolute summability follows, for example, from |B_{j-1}|<=H_{j-1}, bounded scores, and the geometric tail. This is a direct sum of conditional mean-zero terms, not an unqualified optional-stopping invocation. Hence E T=E C=J'_alpha.
+
+In contrast,
+
+    N = T - B_infinity s(Z_0),
+    E N = J'_alpha - sum_z d(z) b_alpha(z;p),
+    b_alpha(z;p) = E[B_infinity | Z_0=z].
+
+The conditional mean b_alpha is the actual local MGW atom, by the native conditional mean series. Omitting the anchor from C gives C_minus_anchor = C-s(Z_0)B_infinity, with exactly the same mean bias. Omitting the anchor from T while retaining the terminal row gives N pathwise, because the terminal score equals the anchor score.
+
+C and T have equal means, not pathwise equality. This review proves no universal variance ordering between them.
+
+The equality s(Z_tau)=s(Z_0) is about the complete-row marginal score. If a proposed implementation instead uses an accessible latent encoder score, two latent samples with the same image need not have equal latent scores. That transfer needs its own explicit conditional-score proof; do not copy this pathwise equality to latent variables.
+
+## 3. Exact four-cell counterexample with zero target tangent
+
+Take one binary source X and binary target Y, on all four cells, with
+
+    p_theta(00)=p_theta(11)=theta/2,
+    p_theta(01)=p_theta(10)=(1-theta)/2,
+    0<theta<1.
+
+Both marginals are fair throughout the path, so target tangent is zero. For one source the unique MGW signed atom is MI:
+
+    J(theta)=log 2 + theta log theta + (1-theta) log(1-theta),
+    J'(theta)=log(theta/(1-theta)).
+
+The diagonal score is 1/theta and the off-diagonal score is -1/(1-theta). Conditional stopped-block means are log(2theta) and log(2(1-theta)), respectively. Therefore
+
+    E[B_infinity s(Z_0)]
+      = log(2theta)-log(2(1-theta)) = J'(theta).
+
+At theta=3/4, L=4 is valid, all hypotheses hold, and
+
+    E C = E T = log 3,
+    E N = E C_minus_anchor = 0.
+
+This is an exact counterexample to both proposed omissions, even when the additional target-tangent premise of the earlier finite-horizon bias theorem holds. In fact, for any one-source MI path with common finite support, its entire derivative is the anchor-weighted local MI score term, so the naive stopped-path and anchor-omitted causal means vanish. This follows by summing the derivatives of the normalized joint and two marginal laws in the remaining conditional-local derivative term.
+
+For this same law at raw horizon h=1,
+
+    B_1 = 1{X_1 != X_0 and Y_1 != Y_0},
+    E B_1 = [theta^2+(1-theta)^2]/2,
+    E[Delta_1 S_1] = 2theta-1 = 1/2 at theta=3/4.
+
+Thus hard truncation at one comparison produces 1/2 instead of log 3. Generally C_H=sum_{j=1}^{min(H,tau-1)} Delta_j S_j equals the first H terms and estimates mu'_H, not the full derivative. A hard latency cap needs a declared bias bound or a separately justified randomized correction; it cannot inherit exact unbiasedness.
+
+## 4. Simple nonzero-target-tangent example
+
+Let X=Y take two values with p_theta(00)=theta and p_theta(11)=1-theta, on the fixed two-cell support. The target varies. Write Q=tau-1. Conditional on an anchor of probability r, Q has geometric-failure distribution and E H_Q=-log r. Every pre-repeat row is the opposite category, so the negative stream is zero and B_infinity=H_Q.
+
+For anchor 00,
+
+    C = H_Q/theta - Q/(1-theta),
+    E[C | 00] = -(log theta+1)/theta.
+
+For anchor 11,
+
+    E[C | 11] = (log(1-theta)+1)/(1-theta).
+
+Averaging gives log((1-theta)/theta), the derivative of binary entropy. At theta=1/4 this is log 3, although target tangent is nonzero. Both naive and anchor-omitted causal means are again zero. This gives a completely explicit stopped-path check, not just a finite-prefix limiting argument.
+
+## 5. Shared anchors preserve means but not independent replication
+
+Suppose R comparison streams are independent conditional on one common random anchor Z_0, and every estimator includes its anchor score. Let m(z)=E[C | Z_0=z] and v(z)=Var(C | Z_0=z). Then
+
+    E[(1/R) sum_r C_r] = J',
+    Var((1/R) sum_r C_r) = E[v(Z_0)]/R + Var(m(Z_0)).
+
+The second term is an irreducible shared-anchor component. It does not divide by R. Replacing the random anchor by a fixed cell estimates m(z), generally not the global derivative.
+
+In the four-cell theta=3/4 example,
+
+    m_diagonal = (4/3)[1+log(3/2)],
+    m_off_diagonal = -4[1+log(1/2)].
+
+The shared-anchor variance term is exactly
+
+    (3/16) [m_diagonal-m_off_diagonal]^2 > 0.
+
+Shared comparison rows or overlapping blocks likewise invalidate a bare Var(C)/R claim unless their covariances are handled. Conditional IID sampling with replacement from a fixed table is valid for that table law; it does not validate independence of the original data collection.
+
+## 6. Exact cost and moment boundaries
+
+Let K be the number of positive complete-row cells. The return time to the random anchor satisfies
+
+    P(tau>h)=sum_z p(z)(1-p(z))^h,
+    E[tau | Z_0=z]=1/p(z),
+    E tau = K,
+    E tau^2 = 2 sum_z 1/p(z) - K.
+
+There are tau+1 observed rows if both the initial anchor and the terminal repeat are counted, with expectation K+1. There are tau-1 potentially nonzero raw increments, with expectation K-1. This is a return to the chosen anchor, not a birthday-collision stopping rule.
+
+For fixed K, a rare positive cell need not increase the expected row count, but it makes conditional workloads arbitrarily long and the second cost moment arbitrarily large. For approximately uniform K-cell support, the mean itself is K+1; a product alphabet can make K exponential in the number of coded coordinates. This says nothing about the additional per-row lattice/update cost. High-dimensional continuous raw features do not satisfy a finite categorical complete-repeat model without a specified encoder.
+
+Every fixed finite positive law has exponential tau tails and all polynomial moments. Let H_0=0. The positive and negative increment sums each lie in [0,H_{tau-1}], so
+
+    |C| <= 2 L tau H_{tau-1},
+    |T| <= L(tau+1) H_{tau-1},
+    |N| <= L tau H_{tau-1}.
+
+These suffice for finite moments of every order for each fixed law. They are not distribution-uniform bounds independent of rare-cell probabilities. Nor may one infer actual variance divergence solely from divergence of these upper bounds.
+
+### A three-cell family with genuinely bad stopped-path variance
+
+Take one source and target with X=Y in {0,1,2}. For 0<epsilon<=1/4 and |t|<1, set
+
+    p_t(00)=epsilon,
+    p_t(11)=(1-epsilon)(1+t)/2,
+    p_t(22)=(1-epsilon)(1-t)/2.
+
+At t0=0, K=3 and the scores are 0, +1, -1, so L=1 independent of epsilon. The derivative of MI=entropy is zero. Common positive support holds for every fixed epsilon.
+
+Conditional on rare anchor 00, let Q=tau-1. Then P(Q=n)=epsilon(1-epsilon)^n. The pre-repeat scores are independent fair signs conditional on Q, B_infinity=H_Q, and terminal/anchor scores are zero. Thus
+
+    E[T^2 ; Z_0=00] = epsilon E[Q H_Q^2].
+
+Put m=ceil(1/(2epsilon)). Since m<=1/epsilon, (1-epsilon)^m >= 1/4 for epsilon<=1/4. Therefore
+
+    E[T^2] >= epsilon m P(Q>=m) H_m^2
+            >= (1/8) H_m^2 -> infinity as epsilon -> 0.
+
+The elementary bound (1-epsilon)^(1/epsilon)>=1/4 holds for 0<epsilon<=1/2; its logarithm is decreasing in epsilon. Since E T=0, this is actual variance divergence with K=3 and L=1, while expected cost remains E tau=3. The same rare-anchor contribution appears for N.
+
+For the causal estimator, condition on Q=n and expand the prefix scores:
+
+    C = sum_{k=1}^n s(Z_k) [H_n-H_{k-1}],
+    E[C^2 | Q=n,Z_0=00]
+      = sum_{k=1}^n [H_n-H_{k-1}]^2 = 2n-H_n.
+
+The last identity follows by expanding the square as sum_{i,j<=n} min(i,j)/(ij). Hence its rare-anchor second-moment contribution is exactly
+
+    E[C^2 ; Z_0=00] = 2(1-epsilon) + epsilon log epsilon <= 2.
+
+The other two anchor probabilities are at least 3/8; the preceding pathwise bound then gives a uniform second-moment bound for their contributions. Thus C has uniformly bounded variance in this particular family while T does not. This is an example, not a universal variance ordering.
+
+Even C lacks a uniform fourth-moment bound in this family. Conditional Jensen and 2n-H_n>=n give
+
+    E[C^4 ; Z_0=00] >= epsilon E[Q^2]
+      = (1-epsilon)(2-epsilon)/epsilon -> infinity.
+
+Finite moments for each fixed PMF therefore do not imply a practical uniform tail, a stable variance estimate, a confidence interval, or a deployment guarantee.
+
+## 7. Dropping the main premises
+
+**Non-IID rows.** In the four-cell theta family, set Z_j=Z_0 for every j>=1. Every marginal is still p_theta; common support, normalized path, bounded marginal scores, and zero target tangent remain. But tau=1 and C=0, while J'=log 3 at theta=3/4. Only the IID complete-row premise was removed. Marginal scores are not the score of this dependent path law. A dependent-data method would need a different joint-law derivative and sampling argument.
+
+**Moving support.** The retained support-change MI cusp dossier uses new off-diagonal mass epsilon(t)=|t|/log(1/|t|) with a fixed fair target. Every cell tangent and score at zero is zero, yet MI has right derivative -1 and left derivative +1. C=0 at the base law cannot supply a nonexistent two-sided derivative. This refutes dropping common support without replacement hypotheses, not the present candidate and not every possible support-changing path. The earlier epsilon=t^2 attempt has derivative zero and is not a counterexample.
+
+**Parameter-dependent statistic or stopping rule.** The current equality test, lattice, alphabets, groupings and encoder image map are fixed. If those depend on t, differentiating only the row law misses their derivative or discontinuity. This report supplies no repair for such a change.
+
+**Terminal row discarded.** One may omit the terminal row from the causal increment computation because its increment is zero. One may not omit its likelihood score from the stopped-path product T. These are different identities.
+
+## 8. Attempts that did not refute the candidate
+
+1. Constant sources with changing target give a=1 and q=v; the actual signed statistic and atom are zero. This cannot prove zero target tangent necessary.
+2. The all-equal dependent coupling refutes only the proposed IID-free extension; it satisfies neither the IID premise nor the finite-product score identity used here.
+3. Rare cells do not refute fixed-law integrability: finite positive support still gives a geometric tail. The legitimate limitation is lack of useful uniform resource/tail control.
+4. A two-cell entropy/logit path is too restrictive to establish a bounded-score variance explosion: its non-anchor scores shrink with the rare mass. The three-cell fair-sign family above supplies a genuine stopped-path variance obstruction.
+5. A hard cap gives the finite-prefix derivative exactly. It is not a counterexample to the uncapped causal estimator and cannot be advertised as its unbiased implementation.
+6. Omitting an anchor score is a counterexample to a modified estimator, not to the proposed full S_j.
+7. The invalid path p_t=(1+t)p is normalized at one point only. Its constant score does not satisfy mean-zero score under a neighborhood of laws.
+8. No general claim that Var(C)<=Var(T) was derived; the mean-zero difference alone does not imply that ordering.
+
+All routes remain exploratory. The report selects no candidate for publication or formal acceptance. A separate frozen theorem packet, independent semantic adjudication, suitable probability formalization, causal implementation checks, and a concrete cost/error comparison would be needed for promotion.
+
+## Operational disclosure
+
+The initial integration state observation included one ordinary `git status --short` at approximately 23:20 UTC, before the detailed freeze note had been read. Git can refresh index stat metadata. No index mutation was established, and unchanged raw index bytes were not claimed. The parent was told promptly and is comparing any bound index-byte predicate. All deliberate writes in this lane are under the fresh private directory; no further Git commands, compiler, PDF producer, public-source write, ref write, or theorem checker was used. Python was used only for private record/hash writing. The packet makes no pristine-index or producer-execution claim.

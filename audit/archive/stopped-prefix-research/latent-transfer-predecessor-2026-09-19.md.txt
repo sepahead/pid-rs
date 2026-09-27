@@ -1,0 +1,55 @@
+# Candidate finite-encoder transfer and practical decision
+
+Status: exploratory handwritten extension. It is not part of the current accepted guide, not formally verified, and not an implemented training method or empirical benefit claim. Recorded UTC: 2026-09-19T23:47:17.191647+00:00.
+
+## The practical missing score
+
+The complete-key score s(z)=p'_theta(z)/p_theta(z) may be unavailable when a simulator or encoder can sample categorical outputs but cannot enumerate their marginal law. Requiring that marginal score would make the preceding stopped-gradient result less useful. A latent-score transfer can address this gap under explicit assumptions; it does not estimate a score from the same data without analysis.
+
+Let X have a finite law w(x) independent of theta, and let C be drawn from a differentiable conditional PMF q_theta(c|x) with a fixed positive support. Let the complete key Z=f(X,C) be a fixed finite categorical map. The target Y is one fixed component of f. The latent law is P_theta(x,c)=w(x)q_theta(c|x), and its accessible scalar score is
+
+    ell(x,c) = partial_theta log q_theta(c|x).
+
+On its fixed positive support, normalization gives E ell=0. Suppose |ell|<=L. The image mass is p_theta(z)=sum_{f(x,c)=z}P_theta(x,c), with a fixed positive support. Its marginal score obeys
+
+    p'_theta(z)/p_theta(z)=E[ell(X,C)|Z=z].
+
+This is a finite conditional-mean identity, derived by differentiating that finite sum. It is not the claim ell(X,C)=s(Z) pointwise.
+
+Draw IID latent rows (X_i,C_i), compute native increments only from image keys Z_i, and stop at the first repeated image key Z_tau=Z_0. Use the complete latent prefix score sum in each causal term. Each finite prefix expectation differentiates with its latent product score. The killing argument is unchanged because the native increments depend only on image keys. Either finite-latent dominated differentiation or the explicit image conditional-score identity should identify the stopped expectation with the image MGW atom derivative. These are proof obligations, not accepted transfer credit.
+
+The prospective support-size variance proof can also use the latent score. Conditional on an anchor image z, the initial score is now random but bounded by L and independent of future rows. Its L2 term is still <=L H_n. Future raw failure rows and target cycles remain IID with the required conditional score means. The success-cycle mean is the conditional mean score for image z, not the realized anchor score. The same mean-zero and second-moment calculations therefore appear to give 117 K L^2, where K counts image keys rather than latent states. This needs an explicit reviewed theorem before use. In particular, two latent rows with equal image keys can have different scores; never replace the terminal latent score by the anchor latent score pathwise.
+
+## A concrete empirical training experiment
+
+Take fixed two-camera recordings from a robot task, with synchronized features x=(x_1,x_2) and an externally specified categorical outcome Y. Example targets are a held-out task state or a separately defined action label. The latter is offline action prediction, not successful closed-loop control. Let each camera encoder produce one binary code C_i using a positive logistic conditional distribution. Conditional independent encoder draws are a model choice; they do not assert that camera observations are physically independent. The MGW source variables are C_1 and C_2, and the target is Y.
+
+For a finite training table sampled uniformly with replacement, w is the exact empirical row law. A positive stochastic encoder and a fixed observed target support give K=4|supp(Y)| complete code/target keys. For a binary target K=8, so the proposed stopping experiment draws nine latent rows on average, counting anchor and terminal repeat. With three binary sources and a binary target K=16; with four sources K=32. The lattice/update cost and score evaluation are additional costs. These expected counts do not bound latency or memory in an actual implementation.
+
+For one logistic encoder with fixed bounded feature vector phi(x), its vector score is (C-q_theta(1|x))phi(x). Thus its norm is at most ||phi(x)||. A scalar coordinate has a corresponding coordinate bound. The current proved-in-prose bound is scalar; a Hilbert-space extension looks compatible with the same norm inequalities but requires its own statement. Deep-network parameter scores need their own justified bound. Clipping a score changes the derivative estimator and cannot be used silently to satisfy L.
+
+Fixed features can come from images, audio, thermal measurements or geometric embeddings. The result concerns the specified categorical code law after that transform. It does not become an Ehrlich continuous or hyperbolic PID theorem. A high-dimensional feature input does not itself enlarge K, but it can affect encoder cost, score bounds, approximation quality and the meaning of the coding. Increasing code alphabet sizes grows K multiplicatively; the result does not remove that support-size cost.
+
+IID resampling from a fixed recorded table is valid for this empirical objective. It does not prove that physical frames are IID, that unseen contexts are represented, that population gradients are estimated without error, or that a model generalizes. Training, validation and test splits must respect episodes and leakage. Estimating an additional unknown environmental law introduces a separate statistical problem.
+
+## Why not optimize an arbitrary PID atom
+
+A correct gradient does not make its objective useful. The fixed-world equal-synergy counterexample remains a reason not to treat synergy as a universal loss-robustness score. For two sources and independent availability masks with weights w_0,w_1,w_2,w_12, the Bayes log-loss identity is
+
+    expected Bayes loss = H(Y)
+      - w_1 I(C_1;Y) - w_2 I(C_2;Y) - w_12 I(C_1,C_2;Y).
+
+The mask probabilities sum to one and the empty mask supplies no source information. The identity assumes the mask is independent of the complete data law and predictors attain the conditional Bayes distribution under log loss. Informative missingness, finite trained models or another task loss require a different analysis.
+
+For any consistent two-source decomposition with atoms R,U_1,U_2,S, the information term is exactly
+
+    (w_1+w_2+w_12)R + (w_1+w_12)U_1
+      + (w_2+w_12)U_2 + w_12 S.
+
+This is a rewriting of weighted mutual information, not a PID-specific optimization advantage. Signed MGW atoms are retained; no nonnegativity is assumed. Use direct task loss, weighted MI, masked-model training and ablation as primary comparators. A standalone PID objective needs a separate justified scientific question about the allocation of information, and a benchmark showing what that constraint or diagnostic adds.
+
+The candidate estimator could be useful when such an MGW-specific question is already justified and marginal image probabilities are expensive to enumerate, while conditional encoder scores are available. Direct differentiation of the explicitly summed image PMF is the simplest exact comparator when feasible. Common-random-number finite differences, the existing bounded-horizon score estimator with its actual bias bound, and the whole-output stopped estimator are other comparators. No speed, variance dominance across all laws, learning benefit, or robotics value is claimed without experiments and formal correspondence.
+
+## Next decision
+
+First finish and publish the current accepted documentation milestone. Then prioritize a complete probability formalization of the stopped identity, variance bound and counterexamples, followed by this latent-to-image transfer. Freeze a small Rust implementation and comparison packet only after the mathematical object is accepted. A practical benchmark should use a fixed two-source task and compare exact PMF gradients, causal stopped gradients, finite-prefix gradients and task-based baselines under several support/score regimes. Preserve aborts, bias, runtime tails and negative utility results. Do not expand to live robotics or defense systems on the strength of this theorem candidate alone.

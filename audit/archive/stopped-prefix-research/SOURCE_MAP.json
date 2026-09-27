@@ -1,0 +1,53 @@
+{
+  "schema": "pid-rs/stopped-prefix-research-archive-v1",
+  "status": "inert_research_archive_no_new_theorem_credit",
+  "members": [
+    {
+      "path": "derivation-2026-09-19.md.txt",
+      "bytes": 9165,
+      "sha256": "c4a94a0ee5ab671f1e2cdfb346c0f4334caed2d793484c4655b5f52b3ca30054",
+      "status": "historical_handwritten_research_not_formally_accepted",
+      "projection": "identity"
+    },
+    {
+      "path": "second-moment-candidate-2026-09-19.md.txt",
+      "bytes": 7772,
+      "sha256": "df5aef785ddebab0432f60bfc2dda24813d7e326496b7fefb614ce594e43c65c",
+      "status": "historical_handwritten_research_not_formally_accepted",
+      "projection": "identity"
+    },
+    {
+      "path": "latent-transfer-predecessor-2026-09-19.md.txt",
+      "bytes": 8182,
+      "sha256": "ae4c79059590720224158da68839a4f5d4da4b84c42564f71d2472241143c69e",
+      "status": "historical_handwritten_research_not_formally_accepted",
+      "projection": "identity"
+    },
+    {
+      "path": "latent-transfer-corrected-2026-09-19.md.txt",
+      "bytes": 10833,
+      "sha256": "11fe0ee5b62acedfde89d5dbc803ac6c5b78e145c1ab46603bebe600fcc6585e",
+      "status": "historical_handwritten_research_not_formally_accepted",
+      "projection": "identity"
+    },
+    {
+      "path": "gradient-counterexamples-2026-09-19.md.txt",
+      "bytes": 18551,
+      "sha256": "e0c6b0195e6f6e7a361b49b24d7057cebf390e1dadab3e6f934cb236a7504214",
+      "status": "historical_handwritten_research_not_formally_accepted",
+      "projection": "identity"
+    },
+    {
+      "path": "latent-transfer-critique-2026-09-20.md.txt",
+      "bytes": 18429,
+      "sha256": "6550918cdbff732ad7e19a09c1815ba324b9b04ec60af3d264ae19bd5334f8d3",
+      "status": "historical_handwritten_research_not_formally_accepted",
+      "projection": "identity"
+    }
+  ],
+  "nonclaims": [
+    "No stopped-gradient unbiasedness or second-moment theorem is accepted by F4.",
+    "The proposed117K L^2 bound and latent transfer remain handwritten.",
+    "The predecessor and correction are retained together; do not adopt the uncentered whole-cycle mean."
+  ]
+}

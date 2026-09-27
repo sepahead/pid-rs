@@ -1,0 +1,109 @@
+# Stopped native MGW prefix gradients: exploratory derivation
+
+Status: handwritten candidate, not a verified theorem, accepted estimator, implementation, or scientific-priority claim. This record preserves the route for independent critique and possible formalization. It does not change the running publication milestone.
+
+## Problem and provenance
+
+The existing finite-prefix score estimator has a controlled truncation bias but a growing second-moment envelope. A finite generative categorical model with evaluable row scores may permit an alternative that removes the horizon. This matters only if that categorical MGW atom is itself useful; it does not establish useful training, continuous PID estimation, or sensor performance.
+
+Stopping on a simulated match is classical inverse binomial sampling: van Opheusden, Acerbi and Ma (2020), https://doi.org/10.1371/journal.pcbi.1008483. Likelihood-ratio differentiation for stopped simulations and additive costs is classical: Glynn (1987), https://web.stanford.edu/~glynn/papers/1987/G87c.pdf, and Glynn (1990), https://web.stanford.edu/~glynn/papers/1990/G90a.html. These papers do not by themselves establish the native MGW construction below. The potential repository contribution is its exact composition with the existing full-lattice MGW row statistic and verified mean bridge. Search is preliminary; no novelty priority is claimed.
+
+## Objects and proposed estimator
+
+Use exactly the complete finite row alphabet, full redundancy lattice, signed native arrival statistic B_h, and local law path p_t of the existing gradient exposition. Let t0 be interior. All coordinates are differentiable at t0, the positive complete-key support S is common on a neighborhood, and every p_t is normalized. Put p=p_t0, d_z=p'_z(t0), and s(z)=d_z/p_z on S. Then E_p s=0. Finite S implies some finite L with |s|<=L; the recorded L can instead be a supplied bound. No independence within a complete row is assumed.
+
+Draw Z0,Z1,... IID complete rows from p. Set
+
+  τ = min{j>=1 : Zj=Z0},
+  S_h = sum_{r=0}^h s(Zr),
+  ΔB_h = B_h−B_{h−1},
+  D = sum_{h=1}^{τ−1} ΔB_h S_h.
+
+Z0 is a fresh random anchor. The terminal repeat is a complete-key equality, not a source-only, target-only, geometric-nearness, or Boolean-label comparison.
+
+## Native stopping property
+
+If a complete anchor repeat occurs at raw index j, the positive mismatch prefix contains an empty mismatch set. Every later positive increment is zero. That same row has the anchor target, so the retained negative prefix also contains an empty source mismatch set; every later negative increment is zero. Therefore ΔB_h=0 for all h>=τ. At every h, positive and negative increments lie in [0,1], so |ΔB_h|<=1. This deliberately loose bound avoids claiming that the negative retained-rank denominator equals h.
+
+Conditional on Z0=z, τ is geometric on {1,2,...} with success p_z. Thus
+
+  P(τ>h)=sum_z p_z(1−p_z)^h,
+  Eτ=sum_z p_z/p_z=|S|.
+
+The total row count includes the initial anchor: E(τ+1)=|S|+1. Expected row count is not worst-case runtime, number of join operations, or a guarantee for continuous data.
+
+## Fixed-horizon score cancellation
+
+For deterministic h, existing finite-product differentiation gives
+
+  μ'_h=E[B_h S_h].
+
+Since B_{h−1} depends only on Z0,...,Z_{h−1}, independence and E s=0 give E[B_{h−1}s(Zh)]=0. Consequently
+
+  μ'_h−μ'_{h−1}=E[ΔB_h S_h].
+
+Summing from 1 to m gives E[D_m]=μ'_m, where D_m=sum_{h<=m} ΔB_h S_h. B0=0. The random variables B_h and S_h are not assumed independent.
+
+The accepted atom derivative-bias theorem implies μ'_m -> θ'_α under its full common-support, zero-target-tangent and inverse-row assumptions. Integrability below then proves E D=θ'_α under those sufficient premises, subject to formalization of the stopping/probability bridge.
+
+## Absolute summability and finite second moment
+
+For h>=1,
+
+  |ΔB_h S_h| <= L(h+1) 1{τ>h}.
+
+The expected sum of these bounds is
+
+  L sum_z p_z sum_{h>=1}(h+1)(1−p_z)^h
+  = L (sum_z 1/p_z − 1) < infinity.
+
+This permits exchanging expectation and the sum at this fixed law. Pathwise,
+
+  |D| <= L (τ−1)(τ+2)/2 <= L τ².
+
+A geometric variable of parameter p has fourth moment at most 24/p⁴: use k⁴<=k(k+1)(k+2)(k+3) and the generating series for binomial coefficients. Hence
+
+  E[D²] <= 24 L² sum_z p_z^(−3) < infinity.
+
+This is a coarse law-dependent bound. It does not establish a sharp rate or prove actual variance diverges when a probability tends to zero. No distribution-uniform variance claim follows from this bound.
+
+## Stronger route: target marginal need not be fixed
+
+This paragraph is a separate conjectured extension, not borrowed credit from the existing 2L/(h+1) bound.
+
+Let f_h(t)=E_{p_t}[ΔB_h]. The native stopping property and existing mean bridge imply θ_α(p_t)=sum_{h>=1}f_h(t) for each nearby law. To differentiate this series directly, choose M>0 and a sufficiently small δ so that coordinate differentiability and finite common support give
+
+  |p_t(z)−p(z)| <= M |t−t0| p(z),
+  p_t(z) <= (1+Mδ)p(z)
+
+for every z and |t−t0|<=δ. Write η=min_{z in S}p_z>0. Shrink δ so ρ=(1+Mδ)(1−η)<1. For a word of h+1 rows, the product telescoping identity bounds its probability difference quotient by M(h+1)(1+Mδ)^h times its base probability. Since ΔB_h vanishes on τ<=h, summing only supported words gives
+
+  |[f_h(t)−f_h(t0)]/(t−t0)| <= M(h+1)ρ^h.
+
+The right side is summable. Dominated convergence on counting measure would give
+
+  θ'_α(p_t0)=sum_{h>=1} f'_h(t0)=E D.
+
+This uses a neighborhood law and common support. It uses no zero-target-tangent premise. It neither removes that premise from the old finite-horizon derivative-bias bound nor claims that zero cell tangents at changing support suffice. Need independent checks of the exact mean correspondence and every exchange before formalization.
+
+## Terminal-score trap and illustrative counterexample
+
+The naive estimator B_{τ−1} S_{τ−1} omits the terminal repeat's score. Stopped-path likelihood-ratio differentiation instead suggests B_{τ−1} S_τ. Its difference from D is a stopped predictable-score sum; expectation-zero needs proof, not an unqualified optional-stopping invocation. No universal variance comparison is claimed between these two correct candidates.
+
+A direct one-source check uses T=S~Bernoulli(θ), 0<θ<1. The MGW atom is entropy H(θ). Conditional on anchor z with probability p_z, every failure is the other bit, negative arrivals vanish, and B_{τ−1}=H_{τ−1}. Let N=τ−1, so
+
+  E[H_N|z]=−log p_z,
+  E[N|z]=(1−p_z)/p_z,
+  E[N H_N|z]=(1−p_z)(1−log p_z)/p_z.
+
+The conditional other-bit score is −p_z s(z)/(1−p_z). Substitution gives E[B_N S_N|z]=−s(z), hence unconditional naive mean zero. The true derivative is log((1−θ)/θ), nonzero unless θ=1/2. D has the correct derivative by direct substitution. This example changes the target marginal and therefore tests the stronger direct-series route, not the original zero-target-tangent theorem. A fixed-target counterexample remains for independent derivation.
+
+## Practical boundaries and paths considered
+
+The model must generate IID complete categorical rows and evaluable row or properly justified latent scores. Finite quantization changes the estimand. Fixed empirical records sampled with replacement define a conditional empirical-law experiment, not independent population trajectories. Exact repeats of non-atomic continuous rows have probability zero, so this algorithm cannot be exported to Ehrlich continuous PID or hyperbolic coordinates.
+
+Support size can grow exponentially with source alphabet sizes. Finite expected cost can still be prohibitive; each step also has native join bookkeeping. A hard runtime cap changes the algorithm. Reporting only replicas that finish before the cap creates completion selection; it is not the unconditional unbiased estimator. A bounded prefix route with its stated bias remains a useful alternative. Fixed R independent completed replicas differ from a wall-clock stopping rule. Adaptive horizon/source/encoder selection and reuse need separate analysis.
+
+Ten routes considered: fixed deterministic prefix (retain); direct PMF differentiation (baseline); naive terminal-truncated score (reject by counterexample); terminal-inclusive stopped score (classical candidate); additive increment-score estimator (selected candidate); random-horizon roulette on G_h (noise increments need not decay, not justified); roulette on centered native increments (possible but stopping already occurs naturally); conditional target-match-only stopping (insufficient to kill positive increments); source-only stopping (insufficient to kill negative increments); exact complete-anchor stopping (kills both). Negative routes remain recorded. No runtime API or accepted paper change occurs here.
+
+Next: independent mathematical critiques; prior-art assessment; exact frozen formal statements and Lean probability/source correspondence; meaningful known-PMF and encoder comparisons; only then an accepted Markdown/PDF publication update. The current guide update must finish first.

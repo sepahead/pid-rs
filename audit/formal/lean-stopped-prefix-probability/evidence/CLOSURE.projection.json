@@ -1,0 +1,9 @@
+{
+  "status": "closed_successful_local_mathematical_acceptance",
+  "closed_utc": "2026-09-26T21:28:05.558998+00:00",
+  "closed_monotonic_ns": 2586599840249083,
+  "original_deadline_utc": "2026-09-26T22:19:04.585507+00:00",
+  "root_acceptance_sha256": "40f7e1001f85849fb6e76b1527ede16cc1974fa6c9efc71ce2c77a005da6f15f",
+  "no_live_native_handle": true,
+  "public_or_hosted_acceptance": false
+}

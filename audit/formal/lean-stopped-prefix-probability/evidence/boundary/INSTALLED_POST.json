@@ -1,0 +1,14 @@
+{
+  "files": 139949,
+  "monotonic_ns": 2586409878937541,
+  "original_clock_sha256": "6fb2ff0305b1b099393b190b882208852fffee5e50b8c29be4b3988b1976dfc5",
+  "phase": "POST",
+  "scope": "Full sequential installed bytes plus exact lookup membership and selected native/helper bytes. Not atomic, authenticated, sandboxed or an actual loader trace.",
+  "status": "observed_matching_sequential_readback_not_root_adopted",
+  "tables": {
+    "EXTERNAL_INPUT_PINS.json": "183c6ef6448ddefca75dbe69b35b59639379d22b94726ca850c00d5021685d54",
+    "INSTALLED_BYTE_PINS.json": "bfb616da0626b7cfdcce7986f69583842eb4a2fee436e0c0491e2d977d73ad15",
+    "LOOKUP_NAMESPACES.json": "fbe1dfc40d6a33d1e84e46dec9310b4c3b38ebe42f1d8604860e370ade522196"
+  },
+  "utc": "2026-09-26T21:24:55.598742+00:00"
+}

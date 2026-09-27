@@ -1,0 +1,873 @@
+{
+  "schema": 1,
+  "author": "Sepehr Mahmoudian",
+  "date": "2026-09-27",
+  "scope": "Combined selected source/evidence, dated failure archives and publication files. Self-excluding inventory; no new formal acceptance or portable replay claim.",
+  "files": [
+    {
+      "path": "audit/archive/stopped-prefix-f1f2-v3/DISPOSITION.md",
+      "bytes": 2108,
+      "sha256": "1b568c6fb1f18c11d20f705af242a964f7add06bfb69575aa790ee47687bc0cb"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-f1f2-v3/SEMANTIC_FAILURE.txt",
+      "bytes": 489,
+      "sha256": "efe71cd27ea75b21e0203654d834d710322333b5d75a38430622ab0f429d3ef2"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-f1f2-v3/SOURCE_MAP.json",
+      "bytes": 8191,
+      "sha256": "4cb8c0a13ca110eb5264d1209ffa9b2160fead938c6bd92771beb30032cbd0cf"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-research/DISPOSITION.md",
+      "bytes": 2205,
+      "sha256": "701014c5296b131f7508f7577a79d692c69e233d647b658be99b5b4ca0e34f37"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-research/SOURCE_MAP.json",
+      "bytes": 2109,
+      "sha256": "34082d44a0d2a04da63b2b4a16b978b300ca0f56dfc10dfc2495fdabdd220990"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-research/derivation-2026-09-19.md.txt",
+      "bytes": 9165,
+      "sha256": "c4a94a0ee5ab671f1e2cdfb346c0f4334caed2d793484c4655b5f52b3ca30054"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-research/gradient-counterexamples-2026-09-19.md.txt",
+      "bytes": 18551,
+      "sha256": "e0c6b0195e6f6e7a361b49b24d7057cebf390e1dadab3e6f934cb236a7504214"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-research/latent-transfer-corrected-2026-09-19.md.txt",
+      "bytes": 10833,
+      "sha256": "11fe0ee5b62acedfde89d5dbc803ac6c5b78e145c1ab46603bebe600fcc6585e"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-research/latent-transfer-critique-2026-09-20.md.txt",
+      "bytes": 18429,
+      "sha256": "6550918cdbff732ad7e19a09c1815ba324b9b04ec60af3d264ae19bd5334f8d3"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-research/latent-transfer-predecessor-2026-09-19.md.txt",
+      "bytes": 8182,
+      "sha256": "ae4c79059590720224158da68839a4f5d4da4b84c42564f71d2472241143c69e"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-research/second-moment-candidate-2026-09-19.md.txt",
+      "bytes": 7772,
+      "sha256": "df5aef785ddebab0432f60bfc2dda24813d7e326496b7fefb614ce594e43c65c"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-stage-a-v3/DISPOSITION.md",
+      "bytes": 1159,
+      "sha256": "22e4bef78b9e501cc291ee3a2d5f6f04169b3f69e526628a86204fa7e74f4fe9"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/Contract.lean.txt",
+      "bytes": 3389,
+      "sha256": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44"
+    },
+    {
+      "path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/RawTargets.lean.txt",
+      "bytes": 2680,
+      "sha256": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035"
+    },
+    {
+      "path": "audit/formal/latex/stopped-prefix-probability/figure-fonts.json",
+      "bytes": 998,
+      "sha256": "a801cbafe3ce1832dd1418a5c99256cb3efb873ebaea6837f0cf5a0e18aa69c9"
+    },
+    {
+      "path": "audit/formal/latex/stopped-prefix-probability/filter.lua",
+      "bytes": 4549,
+      "sha256": "12023f3d5b4f9fdcdfc046b63a7315ab23c644d18be27cece7fd555b9e608f6a"
+    },
+    {
+      "path": "audit/formal/latex/stopped-prefix-probability/profile.json",
+      "bytes": 6794,
+      "sha256": "e5700f3f065d12e0c29b313f0ebb000b0f6b36eca7d5e214136465960a15db5b"
+    },
+    {
+      "path": "audit/formal/latex/stopped-prefix-probability/publication.tex",
+      "bytes": 2104,
+      "sha256": "0df9b0b9aec9cc7a736fc000b724903c244f99d16b4af367ff31c62595c88763"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/COMMAND_ORDER.json",
+      "bytes": 2851,
+      "sha256": "dff50288b0eee872fd6e2a90408bf09cd8e8edf1662fc16fe949d505f068e296"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/CONTROL_ROSTER.json",
+      "bytes": 8428,
+      "sha256": "fd25c7ba2958fc00d1b8e7ef21e43ec0e6f447d3b9e83bc8e4cb346fe26e2ee9"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/EXPOSITION.md",
+      "bytes": 21221,
+      "sha256": "6dd8c5e225d43c275a80c4f9598042d59538fb222a028b00c8790219d72a446f"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/HISTORICAL_SOURCE_MAP.json",
+      "bytes": 15030,
+      "sha256": "08072f45a8e7cb23e084212d470716eb96f79aa3563263bd9cd586565283abe2"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/HISTORY.md",
+      "bytes": 4313,
+      "sha256": "6e977803ee7aafe0ede5e6eeaae35c92ad4e778318182f1fad6931f61a7828a3"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/LOCAL_FORMAL_ACCEPTANCE.json",
+      "bytes": 10260,
+      "sha256": "a91a8f2241ae53b7b5bc2f60be3a29fca1f94365a583936321209a8d5f698d21"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/PUBLICATION.md",
+      "bytes": 4586,
+      "sha256": "848a126c7d7a1a8007245105f5e5a44aa79bbe8a9b72934225beb5a5b61fb161"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/REPLAY.md",
+      "bytes": 6733,
+      "sha256": "2df00a96a0fbfcc0dc5cebae2b1d3d8b86aca4b39e8e74ae2fad98f0d8cf76ed"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/SOURCE_MAP.json",
+      "bytes": 15515,
+      "sha256": "3ba42794ab4547c118f3259369ab8ffa9fdeabbb03b42c759eef191f079c2d15"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/THEOREM_MAP.md",
+      "bytes": 6125,
+      "sha256": "b3fd2907b0b9360124ba09c08b433137de632362d68fa462d7e229e40d03e1a5"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/THEOREM_STATEMENTS.md",
+      "bytes": 2879,
+      "sha256": "f6d6c9722238d7fd0382f7652e4285f0f5b03a8084d950c016bf4cff163fe3f1"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/ADMISSION.projection.json",
+      "bytes": 1314,
+      "sha256": "577234661d2b5f274633c3d66dc073763b313971397748c5694d78552730a222"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/CLOSURE.projection.json",
+      "bytes": 393,
+      "sha256": "5ec03cec41819efbe2952cd93102b449632098cb8322194ad77c110b53c171fb"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/COMMANDS.json",
+      "bytes": 62690,
+      "sha256": "66da40bbe0eefa1e89c7fa9d721e99bcae9eb7dcf6b3162095d149f9b9a9accc"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/EXPORTED_TYPES.json",
+      "bytes": 2911,
+      "sha256": "44c3e800b4855a0609cc04b4d09183744159de815f7ef9750779b877faad5598"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/INVENTORY_OUTER_RESULT.projection.json",
+      "bytes": 958,
+      "sha256": "78f3d19a41589b919631e203160033ae35feac3f5632002f8e68d72694130323"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/NATIVE_RESULT.projection.json",
+      "bytes": 108669,
+      "sha256": "9cb3ff4774c1272cf1d0bbcf168ea89890417e87b04524fb4f0f59142aeede54"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/ORIGINAL_CLOCK.projection.json",
+      "bytes": 1184,
+      "sha256": "6fb2ff0305b1b099393b190b882208852fffee5e50b8c29be4b3988b1976dfc5"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/OUTER_RESULT.projection.json",
+      "bytes": 772,
+      "sha256": "00ddaf4e5238a1373836495f6916367393a7c6bea802f2789c5518dd00cdf393"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/PACKET.projection.json",
+      "bytes": 37372,
+      "sha256": "e603f543a7fe3cdf8f60f98e782c410e71fef6a25e3d093ff2a3014feb798b8e"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/PROJECTIONS.json",
+      "bytes": 40888,
+      "sha256": "056edba0653221e230264f904ae9e9820e2a27da6870254630a63f1e7e9fd3cd"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/PUBLIC_METADATA_PROJECTIONS.json",
+      "bytes": 71830,
+      "sha256": "b83c2ea3fa08fa4ac991bb9e7234d1fe1cc0f3329582d08d7edadbd43600c5b8"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/RECORDS.json",
+      "bytes": 9410,
+      "sha256": "f3efbfd372f8f551fbf80d511982c6113de0b0fb8f9a3907b847e709c6dc2b5e"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/ROOT_ACCEPTANCE.projection.json",
+      "bytes": 4485,
+      "sha256": "51cf56aa39f53a3c318413768fe5993a7c698f5b3a9b4a7fd837190098d43a85"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/ROOT_READBACK_RESULT.projection.json",
+      "bytes": 137028,
+      "sha256": "f1640df23079543a52afbbf0732540cd6a3a92089a571a6c62240b13439de9c0"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/boundary/INSTALLED_ADMISSION.json",
+      "bytes": 781,
+      "sha256": "d68c34c6bac0d6c51de88a81edcbdf7f57cc3b73471c13bc1511db1ca4005a61"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/boundary/INSTALLED_POST.json",
+      "bytes": 776,
+      "sha256": "36bd0aa2fbc0b9e27eee05f9352d2d64a877a029de5fff232ebb990372ce8676"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/boundary/INSTALLED_PRE.json",
+      "bytes": 775,
+      "sha256": "10f4ab37f402fbf5b70fb5c1436b265d1a40d01f09ee7c5d19a2e069e83a3a26"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/DISPOSITION.md",
+      "bytes": 1679,
+      "sha256": "e121e13a757f14cbfaccaa6e6818dcbaf6e20d388d728ae048e2e9a9b38fcb6e"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/LOCAL_FORMAL_ACCEPTANCE.historical-projection.json",
+      "bytes": 4111,
+      "sha256": "e2e2bb07da6a49167597a8cf45a2946599248ea9e58232f1713079221ddce6d0"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/SOURCE_MAP.json",
+      "bytes": 10326,
+      "sha256": "3f2c4fdfc7bab6f59c13b3713a8d291e1db3d8d84d223e7fc51576acc464bfe5"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/SOURCE_MAP.original.json",
+      "bytes": 8374,
+      "sha256": "95e74e1510ca0a02c816e355953a02dbb70af1bb0971b18649eac31e1cbe03d2"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/COMMANDS.json",
+      "bytes": 23041,
+      "sha256": "4e045f312d94dde3e55f3bc3e7e46ad7a69b4f14b0852c64700b313d18314350"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/00-boundary-PRE/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/00-boundary-PRE/stdout.log",
+      "bytes": 215,
+      "sha256": "5f145b0baa5628707dd89934d058ff1cac99d69b3f7a8fe1303c77aa92d43680"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/01-tool-version/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/01-tool-version/stdout.log",
+      "bytes": 106,
+      "sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/02-compile-PidFiniteConvergence-Deterministic/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/02-compile-PidFiniteConvergence-Deterministic/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/03-compile-PidFiniteConvergence-SxEventBridge/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/03-compile-PidFiniteConvergence-SxEventBridge/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/06-compile-PidMgwBridge-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/06-compile-PidMgwBridge-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/07-compile-PidPrefixProbability-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/07-compile-PidPrefixProbability-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/09-compile-PidStoppedPrefixStageA-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/09-compile-PidStoppedPrefixStageA-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/10-compile-PidStoppedPrefixStageA-RawTargets/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/10-compile-PidStoppedPrefixStageA-RawTargets/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/11-compile-PidStoppedPrefixStageA-AliasTargets/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/11-compile-PidStoppedPrefixStageA-AliasTargets/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/12-compile-PidStoppedPrefixF4-HostileTargets/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/12-compile-PidStoppedPrefixF4-HostileTargets/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/13-compile-PidStoppedPrefixF4-ReviewerControls/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/13-compile-PidStoppedPrefixF4-ReviewerControls/stdout.log",
+      "bytes": 1565,
+      "sha256": "98626a4cc50560a57ad26f1efdce0810915869cb664c37e2a3790e8c29004dc3"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/14-compile-PidStoppedPrefixF4-Candidate/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/14-compile-PidStoppedPrefixF4-Candidate/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/15-compile-PidStoppedPrefixF4-SemanticJudge/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/15-compile-PidStoppedPrefixF4-SemanticJudge/stdout.log",
+      "bytes": 1490,
+      "sha256": "a4e670f895429fddf65617d8c86b4bff938465f27abc40d08004d3cfdbc81574"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/16-compile-F4CandidateRoot/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/16-compile-F4CandidateRoot/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/17-fresh-kernel/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/17-fresh-kernel/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/18-boundary-POST/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/18-boundary-POST/stdout.log",
+      "bytes": 217,
+      "sha256": "93a09d69c657f6135597df9a0f1abd0e421a604a962a33f0e3478370bc51da39"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/history/OPERATIONAL_REFUSAL.projection.json",
+      "bytes": 1922,
+      "sha256": "456fcda480dff966ce2c89ed876c11c60e2a92567bf3b63612e4fe5f5356aeb5"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/history/PROVENANCE.json",
+      "bytes": 1087,
+      "sha256": "0035b08008e918542353e85b4c252763f0b9ebf06651c3a852ca0827636abf6a"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/history/SOURCE_PREPARATION_CLOSURE.projection.json",
+      "bytes": 1651,
+      "sha256": "8e2b478089d336e75e90c5d742be19fb81be7cc721332950294de68681a87888"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/00-boundary-PRE/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/00-boundary-PRE/stdout.log",
+      "bytes": 231,
+      "sha256": "65d2b143693b62baf3f7dd16221e434fc4cf8746bb3b7e836cf8680185a5737d"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/01-tool-version/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/01-tool-version/stdout.log",
+      "bytes": 106,
+      "sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/02-compile-PidFiniteConvergence-Deterministic/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/02-compile-PidFiniteConvergence-Deterministic/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/03-compile-PidFiniteConvergence-SxEventBridge/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/03-compile-PidFiniteConvergence-SxEventBridge/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/06-compile-PidMgwBridge-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/06-compile-PidMgwBridge-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/07-compile-PidPrefixProbability-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/07-compile-PidPrefixProbability-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/09-compile-PidStoppedPrefixStageA-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/09-compile-PidStoppedPrefixStageA-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/10-compile-PidStoppedPrefixStageA-RawTargets/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/10-compile-PidStoppedPrefixStageA-RawTargets/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/11-compile-PidStoppedPrefixStageA-AliasTargets/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/11-compile-PidStoppedPrefixStageA-AliasTargets/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/12-compile-PidStoppedPrefixLegacyStageA-Contract/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/12-compile-PidStoppedPrefixLegacyStageA-Contract/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/13-compile-PidStoppedPrefixLegacyStageA-RawTargets/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/13-compile-PidStoppedPrefixLegacyStageA-RawTargets/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/14-compile-PidStoppedPrefixCausal-Controls/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/14-compile-PidStoppedPrefixCausal-Controls/stdout.log",
+      "bytes": 1549,
+      "sha256": "c653855a14a52739ea8b78a6bcdbcbf4629eda794f4c4df77a001cf6058dcfb0"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/15-compile-PidStoppedPrefixCausal-AxiomControls/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/15-compile-PidStoppedPrefixCausal-AxiomControls/stdout.log",
+      "bytes": 133,
+      "sha256": "7b2e3bf85f40ab1b45bfd253e5711f58e498739a4d88f102b826c97aea988488"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/16-compile-PidStoppedPrefixF1F2-HostileTargets/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/16-compile-PidStoppedPrefixF1F2-HostileTargets/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/17-compile-PidStoppedPrefixF1F2-ReviewerControls/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/17-compile-PidStoppedPrefixF1F2-ReviewerControls/stdout.log",
+      "bytes": 2513,
+      "sha256": "b87e8ca43b08b5437218ca0944d4d8e6a43331b28a4d011d922a871ef5c981a8"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/18-compile-PidStoppedPrefixF1F2-Candidate/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/18-compile-PidStoppedPrefixF1F2-Candidate/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/19-compile-PidStoppedPrefixF1F2-SemanticJudge/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/19-compile-PidStoppedPrefixF1F2-SemanticJudge/stdout.log",
+      "bytes": 854,
+      "sha256": "76c465253ce5d88efe4d82a04dfb945c292f5b1aede92135679d92e5a7cde302"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/20-compile-F1F2CandidateRoot/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/20-compile-F1F2CandidateRoot/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/21-compile-PidStoppedPrefixF4-HostileTargets/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/21-compile-PidStoppedPrefixF4-HostileTargets/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/22-compile-PidStoppedPrefixF4-ReviewerControls/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/22-compile-PidStoppedPrefixF4-ReviewerControls/stdout.log",
+      "bytes": 1565,
+      "sha256": "98626a4cc50560a57ad26f1efdce0810915869cb664c37e2a3790e8c29004dc3"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/23-compile-PidStoppedPrefixF4-Candidate/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/23-compile-PidStoppedPrefixF4-Candidate/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/24-compile-PidStoppedPrefixF4-SemanticJudge/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/24-compile-PidStoppedPrefixF4-SemanticJudge/stdout.log",
+      "bytes": 1490,
+      "sha256": "a4e670f895429fddf65617d8c86b4bff938465f27abc40d08004d3cfdbc81574"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/25-compile-F4CandidateRoot/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/25-compile-F4CandidateRoot/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/26-compile-StoppedPrefixProbabilityRoot/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/26-compile-StoppedPrefixProbabilityRoot/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/27-fresh-kernel/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/27-fresh-kernel/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/28-boundary-POST/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/28-boundary-POST/stdout.log",
+      "bytes": 233,
+      "sha256": "81b978d76b407f4e83bb983ddd3e26895f8f47363fa537f82a9fb4bc6d1cb022"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/figures/first-hit-and-prefix-return.svg",
+      "bytes": 7016,
+      "sha256": "aa3aa8c70685429523522b7b74b01186dd4437ab3c0718b6a6533f82c65b2f3d"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/F1F2CandidateRoot.lean",
+      "bytes": 251,
+      "sha256": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/F4CandidateRoot.lean",
+      "bytes": 142,
+      "sha256": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixCausal/AxiomControls.lean",
+      "bytes": 1191,
+      "sha256": "5d405fc1415b9181108b19dcf4bfd8da4b8cde55632dcda31ec7fbddec5890ca"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixCausal/Controls.lean",
+      "bytes": 3122,
+      "sha256": "bb7b74be06fca1befa2214239a82ea5f9e7fb385d36631612e1e93977e646bcd"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/Candidate.lean",
+      "bytes": 9394,
+      "sha256": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/HostileTargets.lean",
+      "bytes": 5931,
+      "sha256": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/ReviewerControls.lean",
+      "bytes": 4752,
+      "sha256": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/SemanticJudge.lean",
+      "bytes": 2120,
+      "sha256": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/Candidate.lean",
+      "bytes": 1528,
+      "sha256": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/HostileTargets.lean",
+      "bytes": 2487,
+      "sha256": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/ReviewerControls.lean",
+      "bytes": 3543,
+      "sha256": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/SemanticJudge.lean",
+      "bytes": 1245,
+      "sha256": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixLegacyStageA/Contract.lean",
+      "bytes": 3407,
+      "sha256": "d318979b90db6e3824d15313019f2ae33836d51dc467cebe0e2f98ba36d26b90"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixLegacyStageA/RawTargets.lean",
+      "bytes": 2704,
+      "sha256": "bf052ec70632502bf0f9fbb470b2e2e6cafd8ce67014cd0c2386757aaecbb55c"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/AliasTargets.lean",
+      "bytes": 570,
+      "sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/Contract.lean",
+      "bytes": 3588,
+      "sha256": "6da98be9ca07314046042b99aca09bb35e17c1112ec8aea528424cbaeb034511"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/RawTargets.lean",
+      "bytes": 3060,
+      "sha256": "af47707c71b7fc8bcb522fd18413990d6798216a055c55272f04f8fd52a2dcb1"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/sources/StoppedPrefixProbabilityRoot.lean",
+      "bytes": 159,
+      "sha256": "5e0e2d39d492ab2b060fdb4cbab098b266283d8053a382b59bb45484d41744d5"
+    },
+    {
+      "path": "output/pdf/stopped-prefix-probability.pdf",
+      "bytes": 266969,
+      "sha256": "97b0e6bd4a221d27439d68a30dfce25fa09372e6f975aa21c7f588855a7be35f"
+    },
+    {
+      "path": "scripts/build-stopped-prefix-probability-pdf.sh",
+      "bytes": 15349,
+      "sha256": "8682a7b61caf6d6fa1c527e84340c872b5b32ee77ef820a816789b97576a1f5a"
+    },
+    {
+      "path": "scripts/check-stopped-prefix-probability-pdf-self-test.py",
+      "bytes": 9627,
+      "sha256": "4a0b80ea97a2457a6b90e54ac485de33fabcb63787e3d4c6c51500e6514f036a"
+    },
+    {
+      "path": "scripts/check-stopped-prefix-probability-pdf.sh",
+      "bytes": 17657,
+      "sha256": "0e7489e6addc30c6b4d34fe3cc7be0e6677856278744dc4aa62343fc6158ffef"
+    }
+  ]
+}

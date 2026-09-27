@@ -1,0 +1,230 @@
+{
+  "assembly": "Copy listed exact bytes into a fresh temporary source root preserving module-relative paths; no shared public source overwrite or duplicate module.",
+  "assembly_repository_base_commit": "b86342c030f11d3035c594605af62d60afa18f9b",
+  "base_commit_boundary": "Reviewed base context only; this unpublished candidate does not exist at that commit.",
+  "lean_version": "4.33.0",
+  "mathlib_commit": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "members": [
+    {
+      "bytes": 9093,
+      "imports": [
+        "Mathlib.Analysis.SpecialFunctions.Log.NegMulLog"
+      ],
+      "module": "PidFiniteConvergence.Deterministic",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/Deterministic.lean",
+      "role": "reuse_exact_public_dependency",
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/Deterministic.lean"
+    },
+    {
+      "bytes": 27203,
+      "imports": [
+        "PidFiniteConvergence.Deterministic",
+        "Mathlib.Data.Fintype.Pi"
+      ],
+      "module": "PidFiniteConvergence.SxEventBridge",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/SxEventBridge.lean",
+      "role": "reuse_exact_public_dependency",
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/SxEventBridge.lean"
+    },
+    {
+      "bytes": 12861,
+      "imports": [
+        "PidFiniteConvergence.SxEventBridge"
+      ],
+      "module": "MgwBridgeDepsV1.SxDnf.Contract",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+      "role": "reuse_exact_public_dependency",
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Contract.lean"
+    },
+    {
+      "bytes": 3873,
+      "imports": [
+        "Mathlib.Analysis.SpecialFunctions.Log.Deriv",
+        "Mathlib.Data.Finset.Lattice.Fold"
+      ],
+      "module": "MgwBridgeDepsV1.JoinLog.Contract",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+      "role": "reuse_exact_public_dependency",
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Contract.lean"
+    },
+    {
+      "bytes": 11737,
+      "imports": [
+        "MgwBridgeDepsV1.SxDnf.Contract",
+        "MgwBridgeDepsV1.JoinLog.Contract",
+        "Mathlib.Data.Fintype.Powerset"
+      ],
+      "module": "PidMgwBridge.Contract",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Contract.lean",
+      "role": "reuse_exact_public_dependency",
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Contract.lean"
+    },
+    {
+      "bytes": 7101,
+      "imports": [
+        "PidMgwBridge.Contract",
+        "Mathlib.MeasureTheory.Constructions.Pi",
+        "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+        "Mathlib.Probability.Independence.Basic"
+      ],
+      "module": "PidPrefixProbability.Contract",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Contract.lean",
+      "role": "reuse_exact_public_dependency",
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Contract.lean"
+    },
+    {
+      "bytes": 3492,
+      "imports": [
+        "Lean",
+        "Lean.Util.CollectAxioms",
+        "Mathlib.Data.List.Defs"
+      ],
+      "module": "MgwBridgeDepsV1.SxDnf.JudgeCore",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+      "role": "reuse_exact_public_dependency",
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean"
+    },
+    {
+      "bytes": 3389,
+      "imports": [
+        "PidPrefixProbability.Contract"
+      ],
+      "module": "PidStoppedPrefixStageA.Contract",
+      "public_path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/Contract.lean.txt",
+      "role": "preserve_missing_exact_source",
+      "sha256": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/Contract.lean"
+    },
+    {
+      "bytes": 2680,
+      "imports": [
+        "PidStoppedPrefixStageA.Contract"
+      ],
+      "module": "PidStoppedPrefixStageA.RawTargets",
+      "public_path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/RawTargets.lean.txt",
+      "role": "preserve_missing_exact_source",
+      "sha256": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/RawTargets.lean"
+    },
+    {
+      "bytes": 570,
+      "imports": [
+        "PidStoppedPrefixStageA.Contract"
+      ],
+      "module": "PidStoppedPrefixStageA.AliasTargets",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/AliasTargets.lean",
+      "role": "preserve_missing_exact_source",
+      "sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/AliasTargets.lean"
+    },
+    {
+      "bytes": 2487,
+      "imports": [
+        "PidStoppedPrefixStageA.Contract"
+      ],
+      "module": "PidStoppedPrefixF4.HostileTargets",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/HostileTargets.lean",
+      "role": "preserve_missing_exact_source",
+      "sha256": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixF4/HostileTargets.lean"
+    },
+    {
+      "bytes": 3543,
+      "imports": [
+        "PidStoppedPrefixStageA.RawTargets",
+        "PidStoppedPrefixStageA.AliasTargets",
+        "PidStoppedPrefixF4.HostileTargets",
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "module": "PidStoppedPrefixF4.ReviewerControls",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/ReviewerControls.lean",
+      "role": "preserve_missing_exact_source",
+      "sha256": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixF4/ReviewerControls.lean"
+    },
+    {
+      "bytes": 1528,
+      "imports": [
+        "PidStoppedPrefixStageA.Contract"
+      ],
+      "module": "PidStoppedPrefixF4.Candidate",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/Candidate.lean",
+      "role": "preserve_missing_exact_source",
+      "sha256": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixF4/Candidate.lean"
+    },
+    {
+      "bytes": 1245,
+      "imports": [
+        "PidStoppedPrefixF4.Candidate",
+        "PidStoppedPrefixStageA.RawTargets",
+        "PidStoppedPrefixStageA.AliasTargets",
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "module": "PidStoppedPrefixF4.SemanticJudge",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/SemanticJudge.lean",
+      "role": "preserve_missing_exact_source",
+      "sha256": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixF4/SemanticJudge.lean"
+    },
+    {
+      "bytes": 142,
+      "imports": [
+        "PidStoppedPrefixF4.SemanticJudge",
+        "PidStoppedPrefixF4.ReviewerControls"
+      ],
+      "module": "F4CandidateRoot",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/F4CandidateRoot.lean",
+      "role": "preserve_missing_exact_source",
+      "sha256": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/F4CandidateRoot.lean"
+    }
+  ],
+  "module_count": 15,
+  "module_order": [
+    "PidFiniteConvergence.Deterministic",
+    "PidFiniteConvergence.SxEventBridge",
+    "MgwBridgeDepsV1.SxDnf.Contract",
+    "MgwBridgeDepsV1.JoinLog.Contract",
+    "PidMgwBridge.Contract",
+    "PidPrefixProbability.Contract",
+    "MgwBridgeDepsV1.SxDnf.JudgeCore",
+    "PidStoppedPrefixStageA.Contract",
+    "PidStoppedPrefixStageA.RawTargets",
+    "PidStoppedPrefixStageA.AliasTargets",
+    "PidStoppedPrefixF4.HostileTargets",
+    "PidStoppedPrefixF4.ReviewerControls",
+    "PidStoppedPrefixF4.Candidate",
+    "PidStoppedPrefixF4.SemanticJudge",
+    "F4CandidateRoot"
+  ],
+  "new_files": 8,
+  "reused_files": 7,
+  "root_module": "F4CandidateRoot",
+  "schema": "pid-rs/stopped-prefix-f4-source-map-v1",
+  "status": "historical_F4_closure_relocated_by_exact_hash_not_new_execution",
+  "toolchain_sources": [
+    {
+      "bytes": 25,
+      "public_path": "audit/formal/lean/lean-toolchain",
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    {
+      "bytes": 243,
+      "public_path": "audit/formal/lean/lakefile.toml",
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    {
+      "bytes": 3144,
+      "public_path": "audit/formal/lean/lake-manifest.json",
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    }
+  ]
+}

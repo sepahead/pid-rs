@@ -1,0 +1,28 @@
+{
+  "records": [
+    {
+      "path": "OPERATIONAL_REFUSAL.projection.json",
+      "transformation": "Omit only inventory_terminal_chunk and root_admission_terminal_chunk; preserve all original outcome and failure fields.",
+      "bytes": 1922,
+      "sha256": "456fcda480dff966ce2c89ed876c11c60e2a92567bf3b63612e4fe5f5356aeb5",
+      "original": {
+        "bytes": 2007,
+        "sha256": "0a72e9aabf07a73d5f27f02e616eda0fa4ee915c32b083c27d4bf9f55d840a99"
+      },
+      "v1_input": {
+        "bytes": 2007,
+        "sha256": "0a72e9aabf07a73d5f27f02e616eda0fa4ee915c32b083c27d4bf9f55d840a99"
+      }
+    },
+    {
+      "path": "SOURCE_PREPARATION_CLOSURE.projection.json",
+      "transformation": "Selected original factual fields only; private predecessor locator and retained-path inventory omitted. No current status rewritten.",
+      "original": {
+        "bytes": 1913,
+        "sha256": "836370aa61fc640d3cb97bbcc4541bdd1ec978ad333e685adc5bf9fb56ddb9c6"
+      },
+      "bytes": 1651,
+      "sha256": "8e2b478089d336e75e90c5d742be19fb81be7cc721332950294de68681a87888"
+    }
+  ]
+}

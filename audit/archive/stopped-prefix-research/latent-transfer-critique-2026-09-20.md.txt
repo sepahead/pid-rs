@@ -1,0 +1,173 @@
+# Finite latent-score transfer and practical-use critique
+
+Verdict: the latent-to-image transfer and the same candidate bound E[G_latent^2]<=117 K_image L^2 are supported by the corrected finite conditional-law argument below. **One sentence needs a mathematical correction for the general target-changing case:** the whole target-cycle success mean is s(z)-E[ell|Y=y], not s(z). A three-cell witness below refutes the literal uncentered sentence; correcting it preserves the bound. The practical example also needs an explicit complete-record base variable and joint encoder support to make its mapping and exact support count unambiguous. The mask/Bayes-log-loss formula is correct under its stated independence and Bayes assumptions, but it is weighted mutual information and supplies no PID-specific optimization advantage.
+
+This is a disclosed-root-proof critique, not independent-first discovery, accepted mathematics, formal verification, implementation, novelty, benchmark, or application credit. No other reviewer's conclusions were consulted. The exact candidate, SHA-256 `ae4c79059590720224158da68839a4f5d4da4b84c42564f71d2472241143c69e`, is retained verbatim as `SOURCE_CANDIDATE.md`. `INITIAL.json` binds the original twelve-minute interval. Earlier stopped-identity and moment proofs remain handwritten dependencies, not accepted theorems.
+
+## 1. Explicit finite-law assumptions
+
+Use a finite base alphabet U with fixed normalized weights b(u), a finite code alphabet C, and normalized conditional PMFs q_t(c|u). Each positive conditional support is constant on a common open neighborhood of t0, with every cell differentiable at t0. Since U is finite, per-u neighborhoods can be intersected. Values with b(u)=0 need no logarithmic score; set scores to zero off the positive latent support.
+
+Let latent W=(U,C), with rho_t(u,c)=b(u)q_t(c|u). The map f:U x C -> Z is fixed and Z contains every declared source code and target. The positive latent support and positive image support are finite and common on that neighborhood. Let K be the number of positive image keys, not the number of latent states or empirical table records. Let
+
+    ell(u,c) = q'_t0(c|u)/q_t0(c|u),
+    |ell|<=L on positive latent support.
+
+The base weights must be parameter independent for this score formula. If they vary, their score contribution must also be included. Fixed features are sufficient for the proposed linear-logistic score; a learned feature map requires the full derivative through that map inside q_t.
+
+Normalization gives E_rho ell=0. Every latent row, including the random anchor, is sampled independently from rho. All native increments are evaluated on its image, and stopping uses the first complete **image** repeat. No estimated marginal score, independence among source coordinates within a row, or target-tangent assumption is needed for the transfer below.
+
+## 2. Image score and finite-prefix score identity
+
+For each positive image key z,
+
+    p_t(z)=sum_{f(w)=z} rho_t(w),
+    p'_t0(z)=sum_{f(w)=z} rho(w)ell(w),
+    s(z)=p'(z)/p(z)=E[ell(W)|f(W)=z].
+
+Consequently E_p s=0 and |s(z)|<=L. This is conditional averaging, not pointwise equality of the latent and image scores. A fixed finite map sends common latent support to common image support.
+
+For any supported finite image block z_0,...,z_h, its conditional latent law factorizes as
+
+    P(W_0=w_0,...,W_h=w_h | Z_0=z_0,...,Z_h=z_h)
+      = product_{r=0}^h [rho(w_r)/p(z_r)],
+
+when f(w_r)=z_r for every r, and is zero otherwise. Thus
+
+    E[sum_{r=0}^h ell(W_r) | Z_0,...,Z_h]
+      = sum_{r=0}^h s(Z_r).
+
+For a native increment Delta_h measurable from that image prefix, multiply and average:
+
+    E[Delta_h sum_{r=0}^h ell(W_r)]
+      = E[Delta_h sum_{r=0}^h s(Z_r)].
+
+Every row factor is differentiated in the alternative finite-product proof, including the anchor. Fixed empirical weights give the sampled base-record index zero score; they do not give its independently sampled anchor code zero score.
+
+## 3. Stopping on image equality is sufficient
+
+Let tau=min{h>=1:Z_h=Z_0}. At the repeat, the native source mismatch is empty and the target matches. Both increment streams vanish forever. Hence Delta_h=0 for h>=tau, regardless of whether W_tau equals W_0.
+
+Bounded latent scores provide the same absolute-sum domination as marginal scores:
+
+    sum_{h>=1} E|Delta_h sum_{r=0}^h ell(W_r)|
+      <= L sum_{h>=1}(h+1)P(tau>h)
+       = L (sum_{z:p(z)>0} 1/p(z)-1) < infinity.
+
+This uses |Delta_h|<=1 and P(tau>h)=sum_z p(z)(1-p(z))^h. Therefore the finite-prefix conditional identities can be summed through expectation. The stopped latent causal mean equals the stopped image causal mean. If the earlier handwritten image-unbiasedness result is established, both equal the derivative of the specified image MGW atom.
+
+The stopping time uses image probabilities: E tau=K and the observed row count, including anchor and terminal repeat, has expectation K+1. Replacing K by latent support size is unnecessary. Conversely, stopping on an arbitrary partial image match need not kill both streams.
+
+Two latent scores at equal image keys need not agree. For example, let latent states a,b have masses (1+t)/2,(1-t)/2 and map both to one image key. At t=0 their scores are +1,-1. Image stopping gives tau=1, but the anchor and terminal latent scores differ with probability 1/2. The actual native statistic is zero in this example; it illustrates the false score-equality shortcut, not a failure of transfer.
+
+The full stopped-path likelihood score must still include the terminal latent row. Its contribution cannot be replaced pathwise by the anchor's latent score. The causal statistic can omit the terminal increment because that increment is zero; that is a different statement.
+
+## 4. Transfer of 117 K_image L^2
+
+The root's proposed moment proof survives with latent scores after disintegrating on the anchor **image** z. Let A=ell(W_0) be the now-random anchor score. Conditional on Z_0=z, it is independent of all future latent rows, including their failure count, and |A|<=L. Apply the previous fixed-anchor harmonic envelope conditional on W_0, then average A. Equivalently its anchor L2 term is bounded by L H_n. No realized-anchor score is substituted for a success-group mean.
+
+For the positive stream, put q=p(z). Conditional on the number n of raw image failures, future latent rows are IID with law rho conditioned on f(W)!=z. Their score mean m and variance sigma^2 satisfy
+
+    (1-q)m+q b=0,       b=E[ell(W)|f(W)=z],
+    |m|,|b|<=L,         (1-q)sigma^2<=E ell^2<=L^2.
+
+The success mean b is the image marginal score s(z), not A. The random anchor contributes the same <=6L^2 term after multiplication by image-anchor probability q. The drift and noise terms remain <=9L^2/2 and <=12L^2. Thus each supported anchor image contributes at most 45L^2/2 to the weighted positive second moment.
+
+For the negative stream, fix y=Y(z), v=P(Y=y), and q=p(z)/v. Form cycles of **latent** rows ending whenever their image target is y. Success means that the terminal **image** is z, allowing many different terminal latent states. IID finite-word factorization gives IID cycles and, conditional on n failures before success, IID failure-conditioned cycles. As in the previous review, conditioning on n target cycles must not be replaced by conditioning on their total raw duration.
+
+Let V be the sum of all latent scores in one target cycle. The same geometric calculation, using E ell=0, gives
+
+    E V=0,             E V^2=E ell^2/v<=L^2/v.
+
+Let a_y=E[ell|Y=y]. A conditional terminal image-group mean obeys
+
+    E[V | terminal group] = E[ell | terminal group]-a_y.
+
+Success/failure cycle means therefore have absolute value at most 2L, satisfy the mean-zero mixture relation, and the failure variance obeys
+
+    (1-q) Var(V|failure) <= E V^2 <= L^2/v.
+
+At target arrival rank j, the actual causal score is A plus the scores of the first j complete cycles. Native indicators remain possibly correlated with every score and length; they are discarded pointwise, not factored probabilistically. Multiplication by the actual image-anchor probability p(z)=vq yields the same terms <=6vL^2, <=18vL^2 and <=12L^2, totaling <=36L^2.
+
+Summing over K image keys and using (x-y)^2<=2x^2+2y^2 therefore gives the same candidate
+
+    E[G_latent^2] <= 2(45/2+36) K L^2 = 117 K L^2.
+
+Endpoint handling is unchanged: v>0 and q>0 for a supported image anchor; at q=1 the relevant failure count is zero; at v=1 a target cycle is one latent row and no empty non-target conditional law is used. All needed cycle moments are finite since a bounded score times geometric cycle length has finite moments.
+
+This is a handwritten transfer proof using the earlier handwritten envelope, not formal acceptance. It does not assert the latent score is as efficient as the unavailable marginal score. In fact, the finite conditional-projection identity identifies the image score as conditional averaging of the latent noise. A variance comparison requires stating the common coupling and L2 passage; no general cross-estimator or runtime dominance follows merely from the uniform bound.
+
+### Required correction to the disclosed candidate's cycle-mean sentence
+
+The candidate says: “The success-cycle mean is the conditional mean score for image z, not the realized anchor score.” For a raw success row the group mean is indeed s(z). For a **whole target cycle**, the correct mean is
+
+    b_cycle = s(z)-a_y,       a_y=E[ell|Y=y].
+
+The failure-cycle mean likewise subtracts a_y. The subtraction is necessary when the target marginal changes; target tangent was not assumed zero in the general latent transfer.
+
+For an exact counterexample to the literal uncentered sentence, use one fixed base state of weight one and a three-valued code mapped to complete keys A=(0,0), B=(1,0), C=(0,1). Give the conditional code law, and hence the image law, masses
+
+    p_t(A)=p_t(B)=(1+t)/4,     p_t(C)=(1-t)/2,
+    |t|<1,                   t0=0.
+
+The scores are (1,1,-1), with L=1. For anchor A and target y=0, v=1/2, q=p(A)/v=1/2, and s(A)=a_y=1. A target cycle consists of M copies of C followed by A or B, where M is geometric-failure(1/2). Its score sum is 1-M, so both the success-cycle and failure-cycle means are zero. The claimed uncentered success mean would instead be 1 and would break the mean-zero mixture equation.
+
+The original marginal-score moment proof already contained the correct subtraction. Carry that subtraction into the latent transfer explicitly. The practical encoder with a fixed external target law has a_y=0, so its special case is unaffected. This is a correction of one proof sentence, not a counterexample to the repaired transfer or to 117 K_image L^2.
+
+## 5. Corrected complete-record logistic example
+
+Use a finite table indexed by u=1,...,N, with fixed positive weights b_u summing to one, per-camera feature records x_1(u), x_2(u), and a fixed externally defined label y(u). Let fixed feature maps phi_i use only the declared inputs available to camera encoder i. Draw
+
+    U ~ b,
+    C_1 | U=u ~ Bernoulli(pi_1(u)),
+    C_2 | U=u ~ Bernoulli(pi_2(u)),
+    pi_i(u)=sigmoid(theta_i dot phi_i(x_i(u))),
+
+with independent code draws conditional on U. The latent state is (U,C_1,C_2), and the complete image is (C_1,C_2,y(U)). The table index is not a PID source and is not part of the repeat key. It lets two records have identical features and different labels without making Y an impossible deterministic function of the feature tuple. The encoder conditional laws see their permitted features, not the target label merely because it is present in the complete latent record.
+
+This is the main missing explicit construction in the prose example. If X is defined as the complete record or its index, the candidate's abstract f(X,C) already covers it. If X is literally only (x_1,x_2), an external label need not be recoverable by a fixed deterministic f; two equal-feature records with opposite labels provide the minimal obstruction.
+
+At finite logits and finite features, 0<pi_i(u)<1 mathematically. Conditional independence gives positive mass to all four joint code words for every supported record. If m target labels have positive table weight, the complete image support is then exactly K=4m. For two positive target labels, K=8 and E(tau+1)=9. Three and four independent binary encoders give K=16 and K=32, respectively, for a binary target.
+
+The exact K count requires full **joint** conditional code support. Positive logistic marginals alone do not imply it: taking C_2=C_1 with a shared Bernoulli draw leaves only two joint code words. Explicitly writing the conditional product law resolves this ambiguity. Without it, 4m is still an alphabet-size upper bound but need not equal the support size or determine the exact expected row count.
+
+For one linear-logit encoder, the vector score is (C_i-pi_i)phi_i. A scalar coordinate affecting only encoder i is bounded by max_u |phi_i(u)_k|. If one scalar parameter affects several encoders, the total latent score is the **sum** of their log-probability derivatives, and L must bound that sum, not just one summand. Disjoint vector parameter blocks have a concatenated score; the scalar 117KL^2 statement is not silently a dimension-free vector-gradient theorem. Deep-network scores require their actual chain-rule expression and an independently justified bound. Score clipping generally changes the derivative estimator.
+
+Expected nine draws is a per-block cost, not a precision guarantee. Conditional on the preceding identities and bound, a fixed number R of fresh independent blocks in the K=8 example has mean-square error bounded by 936L^2/R for one scalar derivative, with expected 9R latent row draws. These deliberately coarse bounds do not show an advantage over summing the exact eight-cell image PMF and its derivatives over the finite table. Lattice updates, feature extraction, score evaluation, vector dimension, and long latency tails remain additional considerations.
+
+Finite table resampling is IID for the declared empirical law. It does not turn the physical video process into IID population data. Episode-aware splits, input/target leakage, finite predictor capacity, environmental shift, and meaningful label definition remain separate empirical obligations. No finite-table categorical result transfers to a continuous Ehrlich, hyperbolic or general population encoder theorem.
+
+## 6. Availability masks and Bayes log loss
+
+Let M take values empty, {1}, {2}, {1,2}, with nonnegative probabilities w_0,w_1,w_2,w_12 summing to one. The entire mask is independent of (Y,C_1,C_2), and the predictor observes which mask occurred. Independence between the two availability indicators themselves is unnecessary; an arbitrary mask law independent of the data suffices.
+
+Under natural-log loss, the Bayes predictor for the observed source subset has expected loss H(Y|C_M,M). Therefore
+
+    L_Bayes = sum_m w_m H(Y|C_m)
+            = H(Y)-w_1 I(C_1;Y)-w_2 I(C_2;Y)
+                    -w_12 I(C_1,C_2;Y).
+
+The empty subset's mutual information is zero. This is an ideal unrestricted/retrained conditional-Bayes identity, not the error of a particular trained classifier, a fixed-model ablation, or closed-loop robot control. For optimization equivalence with maximizing weighted MI, the target law and mask weights must also be fixed with respect to the encoder parameter. The corrected table construction guarantees a fixed target law. An arbitrary abstract image map f(U,C) whose target depends on a parameter-dependent code need not do so.
+
+If masks are informative, the general Bayes quantity is H(Y|M,C_M), and the displayed independent-mask reduction fails. A concrete boundary check: let Y be a fair bit and both codes be constant, but choose M=empty when Y=0 and M={1} when Y=1. The observed mask reveals Y, so Bayes loss is zero; the independent-mask formula would incorrectly give log 2. The candidate explicitly excludes this case.
+
+For any consistent two-source decomposition,
+
+    I_1=R+U_1,   I_2=R+U_2,   I_12=R+U_1+U_2+S.
+
+Substitution gives exactly the proposed coefficients
+
+    (w_1+w_2+w_12)R+(w_1+w_12)U_1
+      +(w_2+w_12)U_2+w_12 S.
+
+The identity uses no atom nonnegativity and is invariant under the choice of PID whenever these reconstruction equations hold. It cannot supply a preference for MGW over another consistent PID, or an advantage over directly optimizing weighted MI or task log loss. Moreover, a positive synergy coefficient w_12 necessarily comes with positive coefficients on R,U_1,U_2, so this mask model does not single out a pure synergy objective.
+
+A PID-specific use therefore still requires a separately justified question about information allocation, an appropriate functional, and evidence that the resulting constraint or diagnostic adds something beyond task loss, MI/CMI, masked training and ablation. A correct gradient estimator alone supplies none of those facts. The candidate appropriately does not force a PID advantage.
+
+## 7. Scope and disposition
+
+Supported as handwritten conditional derivations: finite fiber-score identity; full latent-prefix scoring including the anchor; image-repeat stopping; the same image-K second-moment bound with a random latent anchor score; the corrected finite-table linear-logistic construction; and the independent-mask Bayes-log-loss identity.
+
+Required correction and clarifications before any later proposition or example is frozen: replace the uncentered target-cycle success mean by s(z)-a_y (and use the analogous failure mean); represent a complete table record or index in the latent base; declare the joint code law and feature-access maps; use the full scalar score if parameters are shared; distinguish fixed-map target from fixed target marginal; and separate per-block expected cost from required gradient precision.
+
+No obstruction to the corrected abstract transfer or its constant was found. The literal cycle-mean error and exact witness remain part of this review. All probability formalization, native-specification correspondence, score implementation, finite precision, runtime comparison, held-out statistical evaluation, optimizer behavior and application value remain open. No Git commands or public/index/ref writes, proof producers, compilers, experiments or simulations were used in this review; all deliberate writes are in this new ignored lane.

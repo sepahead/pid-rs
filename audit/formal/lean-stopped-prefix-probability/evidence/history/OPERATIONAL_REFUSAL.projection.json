@@ -1,0 +1,31 @@
+{
+  "status": "closed_pre_admission_refusal_no_lean_execution",
+  "closed_utc": "2026-09-26T20:52:59.977294+00:00",
+  "closed_monotonic_ns": 2584536380466083,
+  "original_owner": {
+    "schema": "pid-rs/stopped-prefix-probability-original-clock-v1",
+    "registered_utc": "2026-09-26T20:44:12.290202+00:00",
+    "deadline_utc": "2026-09-26T21:44:12.290202+00:00",
+    "registered_monotonic_ns": 2584022963472375,
+    "deadline_monotonic_ns": 2587622963472375,
+    "scope": "One fresh finite F1/F2 and historical F4 closure verification attempt; no full Stage-A, scientific novelty, estimator or application acceptance.",
+    "native_seconds": 3000,
+    "root_readback_reserve_seconds": 600,
+    "packet_sha256": "c2819c6c454531198d80298105968c4c5bc367fb3f7353d3d4336696a4e79e78",
+    "readback_source_sha256": "7b457cef37e2ebe61f59cacb002362dcaaa59c072e1177c4f8a53cee5e0b40f1",
+    "readback_seal_sha256": "5d6995f187e5d5bf10eac9c4e6d11ef69633be5b3a0403ac1f65bb6614d40f33",
+    "correction_main_commit": "a5ebef7ea0924caec91df481834956e3f81f1e86",
+    "main_hosted_ci": "pending; not a mathematical prerequisite or accepted green result"
+  },
+  "inventory_exit": 0,
+  "root_admission_exit": 1,
+  "root_admission_error": "inventory stale",
+  "cause": "Root spent longer than the unchanged 300-second freshness budget on source/readback preparation after inventory completion. This is an execution-planning failure, not a mathematical counterexample.",
+  "inventory_observed_utc": "2026-09-26T20:45:29.404396+00:00",
+  "age_at_closure_seconds": 450.572898,
+  "admission_exists": false,
+  "native_directory_exists": false,
+  "supervision_directory_exists": false,
+  "no_owner_clock_renewal": true,
+  "next_route": "Prepare and independently review exact admission/readback commands before any new owner; preserve this directory and use separately justified successor paths with unchanged time/freshness and proof targets."
+}

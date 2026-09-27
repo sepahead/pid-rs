@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "4b11b479efad2b514aa713309b95e6c15902e2b1a6e6c4988e55243bb9cede70",
-        "size_bytes": 321767
+        "sha256": "94e90fed7911818f25774f2dadc21aca41714988b0644d9de9ad660f4a557d15",
+        "size_bytes": 322248
       },
       {
         "git_mode": "100644",
@@ -496,8 +496,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "ed6fc78fc6c09966879f301a673d03160e9e10c894720daa1a66a7599d633236",
-        "size_bytes": 91231
+        "sha256": "ba200f69c3b4be85979328577fb4189d428d7b481936ada8ab371d93a2a12f96",
+        "size_bytes": 92232
       },
       {
         "git_mode": "100644",
@@ -538,8 +538,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "959240a94d4d9b01de7325a15f5e3c4c1db46a1888bd7942e11c0dfe01d1adc6",
-        "size_bytes": 36373
+        "sha256": "93e960da80d10506bd717f0ec96bbba02e4a06ef645b76bf6a249a448a369244",
+        "size_bytes": 37203
       },
       {
         "git_mode": "100644",
@@ -1644,6 +1644,90 @@
         "path": "audit/archive/python-verifier-custody-m0-recovery-20260919/e16a6915262e8bf2fac1752ff959d9d3733c7a7d.bundle",
         "sha256": "d9bf6f964ed404554ad227583e6b4ea6027b7028cee239e5892f40ccabeaebb6",
         "size_bytes": 895902
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-f1f2-v3/DISPOSITION.md",
+        "sha256": "1b568c6fb1f18c11d20f705af242a964f7add06bfb69575aa790ee47687bc0cb",
+        "size_bytes": 2108
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-f1f2-v3/SEMANTIC_FAILURE.txt",
+        "sha256": "efe71cd27ea75b21e0203654d834d710322333b5d75a38430622ab0f429d3ef2",
+        "size_bytes": 489
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-f1f2-v3/SOURCE_MAP.json",
+        "sha256": "4cb8c0a13ca110eb5264d1209ffa9b2160fead938c6bd92771beb30032cbd0cf",
+        "size_bytes": 8191
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-research/DISPOSITION.md",
+        "sha256": "701014c5296b131f7508f7577a79d692c69e233d647b658be99b5b4ca0e34f37",
+        "size_bytes": 2205
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-research/SOURCE_MAP.json",
+        "sha256": "34082d44a0d2a04da63b2b4a16b978b300ca0f56dfc10dfc2495fdabdd220990",
+        "size_bytes": 2109
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-research/derivation-2026-09-19.md.txt",
+        "sha256": "c4a94a0ee5ab671f1e2cdfb346c0f4334caed2d793484c4655b5f52b3ca30054",
+        "size_bytes": 9165
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-research/gradient-counterexamples-2026-09-19.md.txt",
+        "sha256": "e0c6b0195e6f6e7a361b49b24d7057cebf390e1dadab3e6f934cb236a7504214",
+        "size_bytes": 18551
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-research/latent-transfer-corrected-2026-09-19.md.txt",
+        "sha256": "11fe0ee5b62acedfde89d5dbc803ac6c5b78e145c1ab46603bebe600fcc6585e",
+        "size_bytes": 10833
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-research/latent-transfer-critique-2026-09-20.md.txt",
+        "sha256": "6550918cdbff732ad7e19a09c1815ba324b9b04ec60af3d264ae19bd5334f8d3",
+        "size_bytes": 18429
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-research/latent-transfer-predecessor-2026-09-19.md.txt",
+        "sha256": "ae4c79059590720224158da68839a4f5d4da4b84c42564f71d2472241143c69e",
+        "size_bytes": 8182
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-research/second-moment-candidate-2026-09-19.md.txt",
+        "sha256": "df5aef785ddebab0432f60bfc2dda24813d7e326496b7fefb614ce594e43c65c",
+        "size_bytes": 7772
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-stage-a-v3/DISPOSITION.md",
+        "sha256": "22e4bef78b9e501cc291ee3a2d5f6f04169b3f69e526628a86204fa7e74f4fe9",
+        "size_bytes": 1159
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/Contract.lean.txt",
+        "sha256": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44",
+        "size_bytes": 3389
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/RawTargets.lean.txt",
+        "sha256": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035",
+        "size_bytes": 2680
       },
       {
         "git_mode": "100644",
@@ -15225,6 +15309,30 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/stopped-prefix-probability/figure-fonts.json",
+        "sha256": "a801cbafe3ce1832dd1418a5c99256cb3efb873ebaea6837f0cf5a0e18aa69c9",
+        "size_bytes": 998
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/stopped-prefix-probability/filter.lua",
+        "sha256": "12023f3d5b4f9fdcdfc046b63a7315ab23c644d18be27cece7fd555b9e608f6a",
+        "size_bytes": 4549
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/stopped-prefix-probability/profile.json",
+        "sha256": "e5700f3f065d12e0c29b313f0ebb000b0f6b36eca7d5e214136465960a15db5b",
+        "size_bytes": 6794
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/stopped-prefix-probability/publication.tex",
+        "sha256": "0df9b0b9aec9cc7a736fc000b724903c244f99d16b4af367ff31c62595c88763",
+        "size_bytes": 2104
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/support-change-tolerant-averaged-sxpid-continuity.tex",
         "sha256": "cc6ec516257a4fd79f9688093899f57d6b0b056e08496a1852db9762312cf864",
         "size_bytes": 33575
@@ -25101,6 +25209,918 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/COMMAND_ORDER.json",
+        "sha256": "dff50288b0eee872fd6e2a90408bf09cd8e8edf1662fc16fe949d505f068e296",
+        "size_bytes": 2851
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/CONTROL_ROSTER.json",
+        "sha256": "fd25c7ba2958fc00d1b8e7ef21e43ec0e6f447d3b9e83bc8e4cb346fe26e2ee9",
+        "size_bytes": 8428
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/EXPOSITION.md",
+        "sha256": "6dd8c5e225d43c275a80c4f9598042d59538fb222a028b00c8790219d72a446f",
+        "size_bytes": 21221
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/HISTORICAL_SOURCE_MAP.json",
+        "sha256": "08072f45a8e7cb23e084212d470716eb96f79aa3563263bd9cd586565283abe2",
+        "size_bytes": 15030
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/HISTORY.md",
+        "sha256": "6e977803ee7aafe0ede5e6eeaae35c92ad4e778318182f1fad6931f61a7828a3",
+        "size_bytes": 4313
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/LOCAL_FORMAL_ACCEPTANCE.json",
+        "sha256": "a91a8f2241ae53b7b5bc2f60be3a29fca1f94365a583936321209a8d5f698d21",
+        "size_bytes": 10260
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/PUBLICATION.md",
+        "sha256": "848a126c7d7a1a8007245105f5e5a44aa79bbe8a9b72934225beb5a5b61fb161",
+        "size_bytes": 4586
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/PUBLICATION_FILES.json",
+        "sha256": "720733d356a06688e3f75138b45570116ceee02671959c1a4f2ef4ba0c9f25b9",
+        "size_bytes": 40844
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/REPLAY.md",
+        "sha256": "2df00a96a0fbfcc0dc5cebae2b1d3d8b86aca4b39e8e74ae2fad98f0d8cf76ed",
+        "size_bytes": 6733
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/SOURCE_MAP.json",
+        "sha256": "3ba42794ab4547c118f3259369ab8ffa9fdeabbb03b42c759eef191f079c2d15",
+        "size_bytes": 15515
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/THEOREM_MAP.md",
+        "sha256": "b3fd2907b0b9360124ba09c08b433137de632362d68fa462d7e229e40d03e1a5",
+        "size_bytes": 6125
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/THEOREM_STATEMENTS.md",
+        "sha256": "f6d6c9722238d7fd0382f7652e4285f0f5b03a8084d950c016bf4cff163fe3f1",
+        "size_bytes": 2879
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/ADMISSION.projection.json",
+        "sha256": "577234661d2b5f274633c3d66dc073763b313971397748c5694d78552730a222",
+        "size_bytes": 1314
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/CLOSURE.projection.json",
+        "sha256": "5ec03cec41819efbe2952cd93102b449632098cb8322194ad77c110b53c171fb",
+        "size_bytes": 393
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/COMMANDS.json",
+        "sha256": "66da40bbe0eefa1e89c7fa9d721e99bcae9eb7dcf6b3162095d149f9b9a9accc",
+        "size_bytes": 62690
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/EXPORTED_TYPES.json",
+        "sha256": "44c3e800b4855a0609cc04b4d09183744159de815f7ef9750779b877faad5598",
+        "size_bytes": 2911
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/INVENTORY_OUTER_RESULT.projection.json",
+        "sha256": "78f3d19a41589b919631e203160033ae35feac3f5632002f8e68d72694130323",
+        "size_bytes": 958
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/NATIVE_RESULT.projection.json",
+        "sha256": "9cb3ff4774c1272cf1d0bbcf168ea89890417e87b04524fb4f0f59142aeede54",
+        "size_bytes": 108669
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/ORIGINAL_CLOCK.projection.json",
+        "sha256": "6fb2ff0305b1b099393b190b882208852fffee5e50b8c29be4b3988b1976dfc5",
+        "size_bytes": 1184
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/OUTER_RESULT.projection.json",
+        "sha256": "00ddaf4e5238a1373836495f6916367393a7c6bea802f2789c5518dd00cdf393",
+        "size_bytes": 772
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/PACKET.projection.json",
+        "sha256": "e603f543a7fe3cdf8f60f98e782c410e71fef6a25e3d093ff2a3014feb798b8e",
+        "size_bytes": 37372
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/PROJECTIONS.json",
+        "sha256": "056edba0653221e230264f904ae9e9820e2a27da6870254630a63f1e7e9fd3cd",
+        "size_bytes": 40888
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/PUBLIC_METADATA_PROJECTIONS.json",
+        "sha256": "b83c2ea3fa08fa4ac991bb9e7234d1fe1cc0f3329582d08d7edadbd43600c5b8",
+        "size_bytes": 71830
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/RECORDS.json",
+        "sha256": "f3efbfd372f8f551fbf80d511982c6113de0b0fb8f9a3907b847e709c6dc2b5e",
+        "size_bytes": 9410
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/ROOT_ACCEPTANCE.projection.json",
+        "sha256": "51cf56aa39f53a3c318413768fe5993a7c698f5b3a9b4a7fd837190098d43a85",
+        "size_bytes": 4485
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/ROOT_READBACK_RESULT.projection.json",
+        "sha256": "f1640df23079543a52afbbf0732540cd6a3a92089a571a6c62240b13439de9c0",
+        "size_bytes": 137028
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/boundary/INSTALLED_ADMISSION.json",
+        "sha256": "d68c34c6bac0d6c51de88a81edcbdf7f57cc3b73471c13bc1511db1ca4005a61",
+        "size_bytes": 781
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/boundary/INSTALLED_POST.json",
+        "sha256": "36bd0aa2fbc0b9e27eee05f9352d2d64a877a029de5fff232ebb990372ce8676",
+        "size_bytes": 776
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/boundary/INSTALLED_PRE.json",
+        "sha256": "10f4ab37f402fbf5b70fb5c1436b265d1a40d01f09ee7c5d19a2e069e83a3a26",
+        "size_bytes": 775
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/DISPOSITION.md",
+        "sha256": "e121e13a757f14cbfaccaa6e6818dcbaf6e20d388d728ae048e2e9a9b38fcb6e",
+        "size_bytes": 1679
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/LOCAL_FORMAL_ACCEPTANCE.historical-projection.json",
+        "sha256": "e2e2bb07da6a49167597a8cf45a2946599248ea9e58232f1713079221ddce6d0",
+        "size_bytes": 4111
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/SOURCE_MAP.json",
+        "sha256": "3f2c4fdfc7bab6f59c13b3713a8d291e1db3d8d84d223e7fc51576acc464bfe5",
+        "size_bytes": 10326
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/SOURCE_MAP.original.json",
+        "sha256": "95e74e1510ca0a02c816e355953a02dbb70af1bb0971b18649eac31e1cbe03d2",
+        "size_bytes": 8374
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/COMMANDS.json",
+        "sha256": "4e045f312d94dde3e55f3bc3e7e46ad7a69b4f14b0852c64700b313d18314350",
+        "size_bytes": 23041
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/00-boundary-PRE/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/00-boundary-PRE/stdout.log",
+        "sha256": "5f145b0baa5628707dd89934d058ff1cac99d69b3f7a8fe1303c77aa92d43680",
+        "size_bytes": 215
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/01-tool-version/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/01-tool-version/stdout.log",
+        "sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db",
+        "size_bytes": 106
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/02-compile-PidFiniteConvergence-Deterministic/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/02-compile-PidFiniteConvergence-Deterministic/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/03-compile-PidFiniteConvergence-SxEventBridge/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/03-compile-PidFiniteConvergence-SxEventBridge/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/06-compile-PidMgwBridge-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/06-compile-PidMgwBridge-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/07-compile-PidPrefixProbability-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/07-compile-PidPrefixProbability-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/09-compile-PidStoppedPrefixStageA-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/09-compile-PidStoppedPrefixStageA-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/10-compile-PidStoppedPrefixStageA-RawTargets/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/10-compile-PidStoppedPrefixStageA-RawTargets/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/11-compile-PidStoppedPrefixStageA-AliasTargets/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/11-compile-PidStoppedPrefixStageA-AliasTargets/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/12-compile-PidStoppedPrefixF4-HostileTargets/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/12-compile-PidStoppedPrefixF4-HostileTargets/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/13-compile-PidStoppedPrefixF4-ReviewerControls/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/13-compile-PidStoppedPrefixF4-ReviewerControls/stdout.log",
+        "sha256": "98626a4cc50560a57ad26f1efdce0810915869cb664c37e2a3790e8c29004dc3",
+        "size_bytes": 1565
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/14-compile-PidStoppedPrefixF4-Candidate/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/14-compile-PidStoppedPrefixF4-Candidate/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/15-compile-PidStoppedPrefixF4-SemanticJudge/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/15-compile-PidStoppedPrefixF4-SemanticJudge/stdout.log",
+        "sha256": "a4e670f895429fddf65617d8c86b4bff938465f27abc40d08004d3cfdbc81574",
+        "size_bytes": 1490
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/16-compile-F4CandidateRoot/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/16-compile-F4CandidateRoot/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/17-fresh-kernel/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/17-fresh-kernel/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/18-boundary-POST/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/historical-f4-v4/evidence/streams/18-boundary-POST/stdout.log",
+        "sha256": "93a09d69c657f6135597df9a0f1abd0e421a604a962a33f0e3478370bc51da39",
+        "size_bytes": 217
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/history/OPERATIONAL_REFUSAL.projection.json",
+        "sha256": "456fcda480dff966ce2c89ed876c11c60e2a92567bf3b63612e4fe5f5356aeb5",
+        "size_bytes": 1922
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/history/PROVENANCE.json",
+        "sha256": "0035b08008e918542353e85b4c252763f0b9ebf06651c3a852ca0827636abf6a",
+        "size_bytes": 1087
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/history/SOURCE_PREPARATION_CLOSURE.projection.json",
+        "sha256": "8e2b478089d336e75e90c5d742be19fb81be7cc721332950294de68681a87888",
+        "size_bytes": 1651
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/00-boundary-PRE/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/00-boundary-PRE/stdout.log",
+        "sha256": "65d2b143693b62baf3f7dd16221e434fc4cf8746bb3b7e836cf8680185a5737d",
+        "size_bytes": 231
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/01-tool-version/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/01-tool-version/stdout.log",
+        "sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db",
+        "size_bytes": 106
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/02-compile-PidFiniteConvergence-Deterministic/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/02-compile-PidFiniteConvergence-Deterministic/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/03-compile-PidFiniteConvergence-SxEventBridge/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/03-compile-PidFiniteConvergence-SxEventBridge/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/06-compile-PidMgwBridge-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/06-compile-PidMgwBridge-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/07-compile-PidPrefixProbability-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/07-compile-PidPrefixProbability-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/09-compile-PidStoppedPrefixStageA-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/09-compile-PidStoppedPrefixStageA-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/10-compile-PidStoppedPrefixStageA-RawTargets/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/10-compile-PidStoppedPrefixStageA-RawTargets/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/11-compile-PidStoppedPrefixStageA-AliasTargets/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/11-compile-PidStoppedPrefixStageA-AliasTargets/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/12-compile-PidStoppedPrefixLegacyStageA-Contract/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/12-compile-PidStoppedPrefixLegacyStageA-Contract/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/13-compile-PidStoppedPrefixLegacyStageA-RawTargets/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/13-compile-PidStoppedPrefixLegacyStageA-RawTargets/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/14-compile-PidStoppedPrefixCausal-Controls/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/14-compile-PidStoppedPrefixCausal-Controls/stdout.log",
+        "sha256": "c653855a14a52739ea8b78a6bcdbcbf4629eda794f4c4df77a001cf6058dcfb0",
+        "size_bytes": 1549
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/15-compile-PidStoppedPrefixCausal-AxiomControls/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/15-compile-PidStoppedPrefixCausal-AxiomControls/stdout.log",
+        "sha256": "7b2e3bf85f40ab1b45bfd253e5711f58e498739a4d88f102b826c97aea988488",
+        "size_bytes": 133
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/16-compile-PidStoppedPrefixF1F2-HostileTargets/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/16-compile-PidStoppedPrefixF1F2-HostileTargets/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/17-compile-PidStoppedPrefixF1F2-ReviewerControls/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/17-compile-PidStoppedPrefixF1F2-ReviewerControls/stdout.log",
+        "sha256": "b87e8ca43b08b5437218ca0944d4d8e6a43331b28a4d011d922a871ef5c981a8",
+        "size_bytes": 2513
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/18-compile-PidStoppedPrefixF1F2-Candidate/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/18-compile-PidStoppedPrefixF1F2-Candidate/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/19-compile-PidStoppedPrefixF1F2-SemanticJudge/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/19-compile-PidStoppedPrefixF1F2-SemanticJudge/stdout.log",
+        "sha256": "76c465253ce5d88efe4d82a04dfb945c292f5b1aede92135679d92e5a7cde302",
+        "size_bytes": 854
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/20-compile-F1F2CandidateRoot/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/20-compile-F1F2CandidateRoot/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/21-compile-PidStoppedPrefixF4-HostileTargets/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/21-compile-PidStoppedPrefixF4-HostileTargets/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/22-compile-PidStoppedPrefixF4-ReviewerControls/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/22-compile-PidStoppedPrefixF4-ReviewerControls/stdout.log",
+        "sha256": "98626a4cc50560a57ad26f1efdce0810915869cb664c37e2a3790e8c29004dc3",
+        "size_bytes": 1565
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/23-compile-PidStoppedPrefixF4-Candidate/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/23-compile-PidStoppedPrefixF4-Candidate/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/24-compile-PidStoppedPrefixF4-SemanticJudge/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/24-compile-PidStoppedPrefixF4-SemanticJudge/stdout.log",
+        "sha256": "a4e670f895429fddf65617d8c86b4bff938465f27abc40d08004d3cfdbc81574",
+        "size_bytes": 1490
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/25-compile-F4CandidateRoot/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/25-compile-F4CandidateRoot/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/26-compile-StoppedPrefixProbabilityRoot/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/26-compile-StoppedPrefixProbabilityRoot/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/27-fresh-kernel/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/27-fresh-kernel/stdout.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/28-boundary-POST/stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/evidence/streams/28-boundary-POST/stdout.log",
+        "sha256": "81b978d76b407f4e83bb983ddd3e26895f8f47363fa537f82a9fb4bc6d1cb022",
+        "size_bytes": 233
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/figures/first-hit-and-prefix-return.svg",
+        "sha256": "aa3aa8c70685429523522b7b74b01186dd4437ab3c0718b6a6533f82c65b2f3d",
+        "size_bytes": 7016
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/F1F2CandidateRoot.lean",
+        "sha256": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7",
+        "size_bytes": 251
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/F4CandidateRoot.lean",
+        "sha256": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49",
+        "size_bytes": 142
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixCausal/AxiomControls.lean",
+        "sha256": "5d405fc1415b9181108b19dcf4bfd8da4b8cde55632dcda31ec7fbddec5890ca",
+        "size_bytes": 1191
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixCausal/Controls.lean",
+        "sha256": "bb7b74be06fca1befa2214239a82ea5f9e7fb385d36631612e1e93977e646bcd",
+        "size_bytes": 3122
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/Candidate.lean",
+        "sha256": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243",
+        "size_bytes": 9394
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/HostileTargets.lean",
+        "sha256": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d",
+        "size_bytes": 5931
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/ReviewerControls.lean",
+        "sha256": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5",
+        "size_bytes": 4752
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/SemanticJudge.lean",
+        "sha256": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363",
+        "size_bytes": 2120
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/Candidate.lean",
+        "sha256": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519",
+        "size_bytes": 1528
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/HostileTargets.lean",
+        "sha256": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2",
+        "size_bytes": 2487
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/ReviewerControls.lean",
+        "sha256": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a",
+        "size_bytes": 3543
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/SemanticJudge.lean",
+        "sha256": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8",
+        "size_bytes": 1245
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixLegacyStageA/Contract.lean",
+        "sha256": "d318979b90db6e3824d15313019f2ae33836d51dc467cebe0e2f98ba36d26b90",
+        "size_bytes": 3407
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixLegacyStageA/RawTargets.lean",
+        "sha256": "bf052ec70632502bf0f9fbb470b2e2e6cafd8ce67014cd0c2386757aaecbb55c",
+        "size_bytes": 2704
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/AliasTargets.lean",
+        "sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba",
+        "size_bytes": 570
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/Contract.lean",
+        "sha256": "6da98be9ca07314046042b99aca09bb35e17c1112ec8aea528424cbaeb034511",
+        "size_bytes": 3588
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/RawTargets.lean",
+        "sha256": "af47707c71b7fc8bcb522fd18413990d6798216a055c55272f04f8fd52a2dcb1",
+        "size_bytes": 3060
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-stopped-prefix-probability/sources/StoppedPrefixProbabilityRoot.lean",
+        "sha256": "5e0e2d39d492ab2b060fdb4cbab098b266283d8053a382b59bb45484d41744d5",
+        "size_bytes": 159
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/lean-sx-dnf-order/Candidate.lean",
         "sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
         "size_bytes": 10272
@@ -28203,6 +29223,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/stopped-prefix-probability.pdf",
+        "sha256": "97b0e6bd4a221d27439d68a30dfce25fa09372e6f975aa21c7f588855a7be35f",
+        "size_bytes": 266969
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/support-change-mi-cusp.pdf",
         "sha256": "8d6870fac3f1e070b6b10bd2f975ba318203cc0209b6b35edf5471c40226079a",
         "size_bytes": 67794
@@ -28234,8 +29260,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "5c231e57b8660427514748298978cb8f81870cebf343b67da26883195bf6e638",
-        "size_bytes": 303984
+        "sha256": "4461a37311b877737c9f853b379b34d6bd0ef541bbd83145310f1ee134192fac",
+        "size_bytes": 305027
       },
       {
         "git_mode": "100755",
@@ -28326,6 +29352,12 @@
         "path": "scripts/build-recorded-office-sensors-pdf.py",
         "sha256": "88d567c8ad5b9b04453f951fbc24924e86d6ce65f564e43507c35496a82dd5d2",
         "size_bytes": 23402
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/build-stopped-prefix-probability-pdf.sh",
+        "sha256": "8682a7b61caf6d6fa1c527e84340c872b5b32ee77ef820a816789b97576a1f5a",
+        "size_bytes": 15349
       },
       {
         "git_mode": "100755",
@@ -28504,7 +29536,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "0cece56d2e6958a3efe01674c9b014b7ebede414245318632fe7ef32b028ebd3",
+        "sha256": "90c7e5be1bbbceca161ebd29d28bdd5f355a2db513212a82e4b5eecdf6bc25b5",
         "size_bytes": 90915
       },
       {
@@ -28642,14 +29674,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "28ce118b99c3fd36a6d5ec0c51106205d720e0e8522b5fbe02e6a724e9929023",
-        "size_bytes": 81388
+        "sha256": "ee11b10fea084e7eab73e420c76b47bb01aa59d97ef5944b897dca9392ef8d19",
+        "size_bytes": 81478
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "8d78ddbcc5ea383dbec6186da888cd63df84adaedf1016f2a21a095ee321bf53",
-        "size_bytes": 30892
+        "sha256": "8ef97d6b294fb38394a465c6b6d2a836d9859fe20419a1c290a78447570f0223",
+        "size_bytes": 31189
       },
       {
         "git_mode": "100755",
@@ -29104,7 +30136,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "79dba1ba1bf41d62002dd277a6a1bf4b4d8a53a07eb646401a0955666ef12f76",
+        "sha256": "cd76ca32dae34ef07b6d96134c40d201663c3efbd0146361c91e70f9f322bd74",
         "size_bytes": 138785
       },
       {
@@ -29702,6 +30734,18 @@
         "size_bytes": 35695
       },
       {
+        "git_mode": "100644",
+        "path": "scripts/check-stopped-prefix-probability-pdf-self-test.py",
+        "sha256": "4a0b80ea97a2457a6b90e54ac485de33fabcb63787e3d4c6c51500e6514f036a",
+        "size_bytes": 9627
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-stopped-prefix-probability-pdf.sh",
+        "sha256": "0e7489e6addc30c6b4d34fe3cc7be0e6677856278744dc4aa62343fc6158ffef",
+        "size_bytes": 17657
+      },
+      {
         "git_mode": "100755",
         "path": "scripts/check-support-change-tolerant-sxpid-pdf.sh",
         "sha256": "f816b4faa6a93034ae61d1d7df4d727ffc55973ef8d3e5c5db024ee0dd365cae",
@@ -30044,8 +31088,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "10388907e0a6040d847fa301e07fdc7c0eca01aac4f205cf8941536c74e94b8b",
-    "entry_count": 4983
+    "entries_sha256": "adf8b637ab5e183495c4670901829039b277391573baa92f0cd57782be1818cb",
+    "entry_count": 5157
   },
   "subprojections": [
     {
@@ -30057,23 +31101,23 @@
       ]
     },
     {
-      "entries_sha256": "ae268eca45c04431ddd7c8a42d4e65485663c8148d80d4ea38a7e52b565a4b04",
-      "entry_count": 1932,
+      "entries_sha256": "776566d536e0c291ff4e389f92e20a9a1e81142f6dca95dcd3adc9af91595673",
+      "entry_count": 2088,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "943bb04c1e378a430299d6c6a583e2db7c8a5f6cb51617e8e191d18145d405c7",
-      "entry_count": 37,
+      "entries_sha256": "4ccf7b43d430446a23713e61531f05d0fd56013517c5edfd1785fae020f29e1a",
+      "entry_count": 38,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "b5bb9c2d1094ab850a2971af585041c225be1cb80383a1c4b0742e3c05a5e0a8",
+      "entries_sha256": "0a2d7909c85a55ca96c59e4a3ffbe803435b1e2482706f5623e7a90ea412123d",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

@@ -1,0 +1,43 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmathfont{latinmodern-math.otf}
+\AtBeginDocument{\providecommand{\square}{\mdlgwhtsquare}}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox}
+\usepackage{newunicodechar,float,fvextra}
+\RecustomVerbatimEnvironment{verbatim}{Verbatim}{breaklines,breakanywhere,fontsize=\small,frame=single,framesep=4pt,rulecolor=\color{PidCvMineral}}
+\usepackage{pid-rs-report-tables}
+\usepackage{pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\input{tagpdf-openaction-compat.tex}
+\pdfvariable minorversion=7
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,citecolor=PidSecondary,pdftitle={Finite first-hit laws and exact MGW prefix cancellation},pdfauthor={Sepehr Mahmoudian},pdfsubject={Finite iid first-hit measures and deterministic complete-anchor prefix cancellation, with exact local formal evidence},pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Finite first-hit laws}{Exact MGW prefix cancellation}
+\PidWorkflowConfigureSections
+\newunicodechar{≈}{\ensuremath{\approx}}
+\floatplacement{figure}{H}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em plus 0.10em minus 0.06em}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTpre}{0.5em}
+\setlength{\LTpost}{0.5em}
+\setlist{itemsep=0.2em,topsep=0.3em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\passthrough}[1]{#1}
+\setkeys{Gin}{width=\linewidth,keepaspectratio}
+\newcounter{none}
+\AtBeginEnvironment{longtable}{\footnotesize\RaggedRight\setlength{\tabcolsep}{3pt}}
+\title{\PidReportTitle{Finite first-hit laws}{Exact MGW prefix cancellation: probability measures, boundary cases and formal evidence}}
+\author{Sepehr Mahmoudian}
+\date{27 September 2026}
+\begin{document}
+\PidMakeTitle
+\input{body.tex}
+\end{document}

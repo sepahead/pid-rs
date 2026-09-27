@@ -1,0 +1,65 @@
+{
+  "actual_native_completed_utc": "2026-09-24T03:40:35.826970+00:00",
+  "actual_outer_completed_utc": "2026-09-24T03:40:35.869739+00:00",
+  "assumptions": "Exact formal Key, Node and prefix definitions; finite type/decidable equality assumptions and nonempty source index as in the full theorem. Complete key includes all sources and target.",
+  "candidate_sha256": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519",
+  "commands_joined": 19,
+  "controls_checked": 12,
+  "current_public_assembly_replay": "not_run",
+  "exact_theorem": {
+    "alias_target": "PidStoppedPrefixStageAAliasTargets.native_return_kills",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "full_elaborated_type": "\u2200 (I : Type u) (X : I \u2192 Type v) (T : Type w) [inst : Fintype.{u} I] [Nonempty.{u + 1} I] [(i : I) \u2192 Fintype.{v} (X i)]\n  [Fintype.{w} T] [inst_4 : DecidableEq.{u + 1} I] [inst_5 : (i : I) \u2192 DecidableEq.{v + 1} (X i)]\n  [inst_6 : DecidableEq.{w + 1} T] (z : PidMgwBridgeContract.Key.{u, v, w} I X T)\n  (alpha : PidMgwBridgeContract.Node.{u} I) (rows : List.{max (max w v) u} (PidMgwBridgeContract.Key.{u, v, w} I X T))\n  (hz :\n    @Membership.mem.{max (max u v) w, max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n      (List.{max (max w v) u} (PidMgwBridgeContract.Key.{u, v, w} I X T))\n      (@List.instMembership.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)) rows z),\n  And\n    (@Eq.{1} Real (@PidPrefixProbabilityContract.positiveOnPrefix.{u, v, w} I X T inst inst_4 inst_5 z alpha rows)\n      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))\n    (@Eq.{1} Real\n      (@PidPrefixProbabilityContract.negativeOnPrefix.{u, v, w} I X T inst inst_4 inst_5 inst_6 z alpha rows)\n      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))",
+    "raw_target": "PidStoppedPrefixStageARawTargets.native_return_kills",
+    "status": "accepted",
+    "theorem": "PidStoppedPrefixF4Candidate.native_return_kills",
+    "universes": [
+      "u",
+      "v",
+      "w"
+    ]
+  },
+  "fresh_kernel_exit": 0,
+  "fresh_kernel_seconds": 202.16841599997133,
+  "historical_nonclaims": [
+    "No F1/F2 or full Stage A closure.",
+    "No stopped-gradient unbiasedness or variance bound.",
+    "No Rust refinement, runtime speedup, population estimator calibration, or application improvement.",
+    "No hosted proof replay or public integration yet.",
+    "No scientific-priority claim."
+  ],
+  "historical_records": {
+    "OUTER_RESULT.json": {
+      "bytes": 57397,
+      "sha256": "60e797f0096397db410b97d6d407747619bab4cd4c0558db87dbcf2cff32f55f"
+    },
+    "ROOT_READBACK.json": {
+      "bytes": 15574,
+      "sha256": "1f96e39d90d7a96fa5eedead0476054490c0626922ac209bddef59f23b431b2c"
+    },
+    "ROOT_TERMINAL.json": {
+      "bytes": 328,
+      "sha256": "86465c06d91be0d9829352edf6f5a883a68af863891319fd6d9aa7c588c041a5"
+    },
+    "native/RESULT.json": {
+      "bytes": 83352,
+      "sha256": "2007e2b3dc902ddd3ffc428fd98f37715f726533a09e1c44aeeef1a51e666d1c"
+    }
+  },
+  "hosted_replay": "not_run",
+  "observed_utc": "2026-09-24T08:20:00.228811+00:00",
+  "original_clock_was_not_renewed": true,
+  "projection": "Selected factual fields from closed historical records; full original records remain in private custody. Scope wording and candidate status are explicit publication metadata.",
+  "schema": "pid-rs/stopped-prefix-f4-historical-local-acceptance-v1",
+  "scope": "Only deterministic F4; no F1/F2, stopped-gradient or application acceptance.",
+  "shared_public_dependencies_checked": 7,
+  "source_closure_checked_in_this_source_review": 15,
+  "source_review_utc": "2026-09-26T19:18:56.749584+00:00",
+  "statement": "For finite source and target carriers, a complete query key occurring anywhere in the comparison list makes both native positive and target-filtered negative MGW prefix increments zero. No probability-law premise is required.",
+  "status": "one_historical_local_F4_theorem_publication_candidate",
+  "streams_checked_in_this_source_review": 38
+}

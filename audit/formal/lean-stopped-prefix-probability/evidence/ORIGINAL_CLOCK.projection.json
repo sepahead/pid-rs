@@ -1,0 +1,16 @@
+{
+  "schema": "pid-rs/stopped-prefix-probability-original-clock-v1",
+  "registered_utc": "2026-09-26T21:19:04.585507+00:00",
+  "deadline_utc": "2026-09-26T22:19:04.585507+00:00",
+  "registered_monotonic_ns": 2586058864042458,
+  "deadline_monotonic_ns": 2589658864042458,
+  "packet_sha256": "a6efef42d0f2111765488bcc6749a2ede695cca2389e28413b39a4b696381bce",
+  "admission_writer_sha256": "35a7a80a0f5a24315866bb91cc48d2ee11d3e700b952db48c9ea9a4d47925e8d",
+  "main_promotion_sha256": "79d6b56ad08e514184b7402f6107ca849566ef79223230935ab602a5fc8c3808",
+  "readback_sha256": "78f39e137a1d6e77bf47ef32e31d1b51b3cd5e747902ce5cf6ac7c32e19f4183",
+  "source_readiness_seal_sha256": "c6fd68e96534b00b24bdd17b7b458437b4ea69a677d7d6067a39627f6f055987",
+  "scope": "One fresh revised operational closure, unchanged F1/F2/F4 mathematical targets; no full StageA, infinite stopping, gradient or application acceptance.",
+  "root_readback_reserve_seconds": 600,
+  "main_full_hosted_ci": "pending, separate engineering acceptance",
+  "reason": "Previous owner closed before admission; exact root admission/readback prepared and independently reviewed before this fresh owner. No old clock amended."
+}

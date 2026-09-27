@@ -1,0 +1,146 @@
+{
+  "fresh_kernel_run": false,
+  "members": [
+    {
+      "bytes": 251,
+      "module": "F1F2CandidateRoot",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/F1F2CandidateRoot.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7",
+      "historical_publication_locator": "audit/archive/stopped-prefix-f1f2-v3/sources/F1F2CandidateRoot.lean.txt"
+    },
+    {
+      "bytes": 3873,
+      "module": "MgwBridgeDepsV1.JoinLog.Contract",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Contract.lean"
+    },
+    {
+      "bytes": 12861,
+      "module": "MgwBridgeDepsV1.SxDnf.Contract",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Contract.lean"
+    },
+    {
+      "bytes": 3492,
+      "module": "MgwBridgeDepsV1.SxDnf.JudgeCore",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean"
+    },
+    {
+      "bytes": 9093,
+      "module": "PidFiniteConvergence.Deterministic",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/Deterministic.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/Deterministic.lean"
+    },
+    {
+      "bytes": 27203,
+      "module": "PidFiniteConvergence.SxEventBridge",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/SxEventBridge.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/SxEventBridge.lean"
+    },
+    {
+      "bytes": 11737,
+      "module": "PidMgwBridge.Contract",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Contract.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Contract.lean"
+    },
+    {
+      "bytes": 7101,
+      "module": "PidPrefixProbability.Contract",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Contract.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a",
+      "historical_publication_locator": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Contract.lean"
+    },
+    {
+      "bytes": 9394,
+      "module": "PidStoppedPrefixF1F2.Candidate",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/Candidate.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243",
+      "historical_publication_locator": "audit/archive/stopped-prefix-f1f2-v3/sources/PidStoppedPrefixF1F2/Candidate.lean.txt"
+    },
+    {
+      "bytes": 5931,
+      "module": "PidStoppedPrefixF1F2.HostileTargets",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/HostileTargets.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d",
+      "historical_publication_locator": "audit/archive/stopped-prefix-f1f2-v3/sources/PidStoppedPrefixF1F2/HostileTargets.lean.txt"
+    },
+    {
+      "bytes": 4752,
+      "module": "PidStoppedPrefixF1F2.ReviewerControls",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/ReviewerControls.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5",
+      "historical_publication_locator": "audit/archive/stopped-prefix-f1f2-v3/sources/PidStoppedPrefixF1F2/ReviewerControls.lean.txt"
+    },
+    {
+      "bytes": 2120,
+      "module": "PidStoppedPrefixF1F2.SemanticJudge",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/SemanticJudge.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363",
+      "historical_publication_locator": "audit/archive/stopped-prefix-f1f2-v3/sources/PidStoppedPrefixF1F2/SemanticJudge.lean.txt"
+    },
+    {
+      "bytes": 570,
+      "module": "PidStoppedPrefixStageA.AliasTargets",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/AliasTargets.lean",
+      "role": "reuse_identical_public_successor_source",
+      "sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/AliasTargets.lean"
+    },
+    {
+      "bytes": 3389,
+      "module": "PidStoppedPrefixStageA.Contract",
+      "public_path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/Contract.lean.txt",
+      "role": "preserve_exact_historical_target_inert_once",
+      "sha256": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/Contract.lean"
+    },
+    {
+      "bytes": 2680,
+      "module": "PidStoppedPrefixStageA.RawTargets",
+      "public_path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/RawTargets.lean.txt",
+      "role": "preserve_exact_historical_target_inert_once",
+      "sha256": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035",
+      "historical_publication_locator": "audit/formal/lean-stopped-prefix-f4/sources/PidStoppedPrefixStageA/RawTargets.lean"
+    }
+  ],
+  "native_result": {
+    "bytes": 77639,
+    "sha256": "88628a851948178619862ca5e405d5a3dfcfa2beae7d6047750b4994edc94e86"
+  },
+  "nonclaim": "No mathematical counterexample to the intended first-hit equations was established by this type-view failure.",
+  "root_terminal": {
+    "bytes": 11311,
+    "sha256": "0c0e6284be25b086bbdbd35427d1ae6749906a1ed2e429319594e05daadced56"
+  },
+  "schema": "pid-rs/stopped-prefix-f1f2-failed-source-map-v1",
+  "semantic_failure": {
+    "bytes": 489,
+    "original_bytes": 781,
+    "original_sha256": "e9a0aa31e992991cd9505408c95d5ff06e28a9d976d8bf4f3b0812caa10af75d",
+    "projection": "Remove only the exact private execution src-directory prefix from diagnostic file locators; all error text and line numbers unchanged.",
+    "public_path": "SEMANTIC_FAILURE.txt",
+    "sha256": "efe71cd27ea75b21e0203654d834d710322333b5d75a38430622ab0f429d3ef2"
+  },
+  "status": "failed_semantic_correspondence_inert_archive",
+  "theorems_accepted": 0,
+  "relocation_note": "Five unchanged former candidate/control/judge/root files are selected by hash from the joint package; the two old StageA definitions remain inert archived bytes. Select this historical map as one closure."
+}

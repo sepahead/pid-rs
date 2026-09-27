@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "pango_backend": "fc",
+  "fontconfig_template": "<?xml version=\"1.0\"?>\n<fontconfig>\n  <reset-dirs/>\n  <dir>{font_directory}</dir>\n  <cachedir>{cache_directory}</cachedir>\n</fontconfig>\n",
+  "fonts": [
+    {
+      "filename": "SourceSansPro-Regular.otf",
+      "sha256": "7134d229b15cdd0827376d8a24f6f531f616eb1b3fecd16e1cf8a86d0bf6bc51",
+      "postscript_name": "SourceSansPro-Regular"
+    },
+    {
+      "filename": "SourceSansPro-Semibold.otf",
+      "sha256": "aa53ed4fc17334a0c2ee8412c1e4e728bfb732a96b119164f7354343dad8f2f2",
+      "postscript_name": "SourceSansPro-Semibold"
+    },
+    {
+      "filename": "SourceSansPro-Bold.otf",
+      "sha256": "daccddbe3dd60fe10f6e8a785eda187925da6b611141024dffa43626998dfc7c",
+      "postscript_name": "SourceSansPro-Bold"
+    },
+    {
+      "filename": "latinmodern-math.otf",
+      "sha256": "6075562b771f8b82f0c179e363389684f2dd09de30038269e2628e504bd7be0f",
+      "postscript_name": "LatinModernMath-Regular"
+    }
+  ]
+}

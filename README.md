@@ -76,6 +76,7 @@ you interpret an estimate.
 | Study finite-prefix MGW means | [Standalone mean bridge](audit/formal/lean-prefix-mgw-mean/PUBLICATION.md), [PDF](output/pdf/prefix-mgw-mean.pdf) | Three separately verified formal results for a project-defined categorical statistic; no new estimator API or finite-sample coverage claim |
 | Bound finite-prefix MGW approximation error | [Bias overview](audit/formal/lean-prefix-mgw-bias/SUMMARY.md), [summary PDF](output/pdf/prefix-mgw-bias-summary.pdf), [full proof guide](audit/formal/lean-prefix-mgw-bias/EXPOSITION.md) | Five locally verified bias/support result families for finite categorical laws and IID complete rows; sampling uncertainty remains separate |
 | Differentiate finite-prefix MGW means | [Gradient overview](audit/formal/lean-prefix-mgw-gradient/PUBLICATION.md), [complete paper](audit/research/finite-prefix-mgw-gradient/EXPOSITION.md), [PDF](output/pdf/finite-prefix-mgw-gradient.pdf) | Eleven locally verified families for the full-row score, derivative bias, finite encoders and IID second moments; useful training remains to test |
+| Study finite first-hit laws and prefix cancellation | [Overview](audit/formal/lean-stopped-prefix-probability/PUBLICATION.md), [complete proof guide](audit/formal/lean-stopped-prefix-probability/EXPOSITION.md), [PDF](output/pdf/stopped-prefix-probability.pdf) | Three locally accepted finite results; a complete-anchor return makes both defined prefix terms zero. Stopped-gradient and implementation results remain open |
 | Check a derivative argument at changing support | [MI cusp derivation](audit/research/support-change-mi-cusp/EXPOSITION.md), [PDF](output/pdf/support-change-mi-cusp.pdf) | A handwritten counterexample: zero cell tangents do not imply a zero information derivative; explicit-path formal verification remains open |
 | Study finite MGW comparisons | [Finite comparison and derivation](audit/formal/lean-mgw-fixed-world/PUBLICATION.md), [PDF](output/pdf/mgw-fixed-world-added-information.pdf) | Equal synergy with different added information under a fixed target and baseline; corrected citation and preserved 21-target evidence, with public replay qualification open |
 | Understand target-copy models | [Standalone note](audit/evidence/finite-target-copy-mgw-synergy.md), [PDF](output/pdf/finite-target-copy-mgw-synergy.pdf) | Exact categorical MGW identities, named-PID comparisons and signed cancellation; eleven local Lean targets, with complete replay qualification open |
@@ -144,6 +145,13 @@ atom derivative and a sampled prefix derivative. Its [eleven-target proof map](a
 separates the full-row score identity, derivative-bias bound, finite encoder mapping and IID second
 moments. The intended use is a finite stochastic encoder with an evaluable score; practical value
 still needs comparison with direct differentiation and task-based evaluation.
+
+The [first-hit and cancellation companion](audit/formal/lean-stopped-prefix-probability/PUBLICATION.md)
+proves finite first-hit measure factorization and mass, including zero-probability endpoints.
+Its deterministic complete-anchor return rule makes both defined prefix contributions zero.
+The [eight-page PDF](output/pdf/stopped-prefix-probability.pdf) explains all three results and
+why zero future increments alone do not prove a stopped-gradient method. Exact local proof
+sources and failed approaches are retained; portable theorem replay and a Rust sampler remain open.
 
 The separate [support-change note](audit/research/support-change-mi-cusp/EXPOSITION.md) and
 [PDF](output/pdf/support-change-mi-cusp.pdf) explain a negative result: every cell probability can

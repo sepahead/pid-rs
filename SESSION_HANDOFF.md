@@ -6,6 +6,17 @@ fresh Git/hosted observations take precedence over its observations. Machine-spe
 and recovery instructions are in the ignored `.local/SESSION_HANDOFF.md` supplied with the local
 handoff. No local path is required by the public mathematical documents.
 
+## Finite first-hit publication checkpoint of 27 September 2026
+
+The [stopped-prefix probability package](audit/formal/lean-stopped-prefix-probability/PUBLICATION.md)
+and its [PDF](output/pdf/stopped-prefix-probability.pdf) expose the locally accepted F1/F2 finite
+first-hit laws and the rechecked F4 complete-key cancellation rule. The exact 26 September joint
+run has three theorem exports, 25 modules, 29 commands and 41 typed theorem/control records.
+The paper explains the probability law, endpoints, deterministic cancellation proof, counterexamples
+and proposed Rust cost. No stopped-gradient, variance, implementation or application result follows.
+The [replay boundary](audit/formal/lean-stopped-prefix-probability/REPLAY.md) keeps portable and
+hosted theorem replay open. All five SxPID3 research programs remain open.
+
 ## Continuous diagnostic checkpoint of 27 September 2026
 
 [Section 4.5 of the re-verification report](audit/evidence/cross-implementation-reverification-2026-09-26.md#45-paired-gaussian-reference-diagnostic)

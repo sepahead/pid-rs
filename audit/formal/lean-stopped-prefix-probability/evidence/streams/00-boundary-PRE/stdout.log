@@ -1,0 +1,1 @@
+{"status": "observed_matching_sequential_readback_not_root_adopted", "phase": "PRE", "receipt": "${EXECUTION_ROOT}/boundary/INSTALLED_PRE.json", "receipt_sha256": "10f4ab37f402fbf5b70fb5c1436b265d1a40d01f09ee7c5d19a2e069e83a3a26"}

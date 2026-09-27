@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xml:lang="en" width="160mm" height="132mm" viewBox="0 0 1600 1320" role="img" aria-labelledby="first-hit-title first-hit-desc">
+  <title id="first-hit-title">Finite first-hit factorization and complete-key prefix cancellation</title>
+  <desc id="first-hit-desc">Explanatory diagram by Sepehr Mahmoudian for the finite first-hit laws and exact MGW prefix cancellation report. Panel one depicts two misses followed by a hit as an illustration of the general n-miss finite iid event. Splitting the restricted word law gives n unnormalized miss measures and one unnormalized hit measure. Its mass is (1-a)^n a. With a=0.6 and n=2 this is 0.096. Panel two shows that a complete source-plus-target key z in a comparison list also survives filtering to its target. Its source mismatch with itself is empty, making both raw and target-retained prefix predicates false and both contributions zero. This is a sufficient condition, with no earliest-stopping claim. The diagram summarizes the mathematical statements; the report and formal source give their assumptions and proof evidence.</desc>
+  <metadata>
+    <rdf:RDF>
+      <rdf:Description rdf:about="">
+        <dc:title>Finite first-hit factorization and complete-key prefix cancellation</dc:title>
+        <dc:creator>Sepehr Mahmoudian</dc:creator>
+        <dc:date>2026-09-27</dc:date>
+        <dc:description>Explanatory source SVG. The associated report distinguishes the accepted formal statements from unfinished stopped-gradient work.</dc:description>
+      </rdf:Description>
+    </rdf:RDF>
+  </metadata>
+  <defs>
+    <style>
+      .title{font-family:'Source Sans Pro',sans-serif;font-size:42px;font-weight:700;fill:#1F3F60}
+      .label{font-family:'Source Sans Pro',sans-serif;font-size:36px;font-weight:600;fill:#1F6968}
+      .body{font-family:'Source Sans Pro',sans-serif;font-size:32px;fill:#2C3E50}
+      .math{font-family:'Source Sans Pro',sans-serif;font-size:36px;fill:#1F3F60}
+      .note{font-family:'Source Sans Pro',sans-serif;font-size:29px;fill:#2C3E50}
+      .small{font-family:'Source Sans Pro',sans-serif;font-size:26px;fill:#2C3E50}
+      .center{text-anchor:middle}
+      .flow{fill:none;stroke:#2C3E50;stroke-width:3}
+    </style>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0 0 L9 4.5 L0 9 Z" fill="#2C3E50"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="1320" fill="#F7F3E9"/>
+  <path d="M60 48 H1540" stroke="#D2E0E2" stroke-width="2"/>
+  <path d="M60 48 H350" stroke="#B28218" stroke-width="6"/>
+  <text x="60" y="105" class="title">First-hit probabilities and exact prefix cancellation</text>
+  <text x="60" y="151" class="body">The probability law is auxiliary IID sampling; the cancellation is deterministic.</text>
+
+  <rect x="60" y="185" width="1480" height="430" rx="16" fill="#FFFFFF" stroke="#D2E0E2" stroke-width="2"/>
+  <text x="90" y="237" class="label">F1–F2 · n misses, then one hit</text>
+  <text x="1490" y="237" class="note" text-anchor="end">Drawing: n = 2</text>
+  <rect x="100" y="270" width="300" height="112" rx="12" fill="#F7F3E9" stroke="#1F3F60" stroke-width="2"/>
+  <text x="250" y="315" class="body center">First miss</text>
+  <text x="250" y="362" class="math center">x₁ ∉ A</text>
+  <path d="M416 326 H484" class="flow" marker-end="url(#arrow)"/>
+  <rect x="500" y="270" width="300" height="112" rx="12" fill="#F7F3E9" stroke="#1F3F60" stroke-width="2"/>
+  <text x="650" y="315" class="body center">Second miss</text>
+  <text x="650" y="362" class="math center">x₂ ∉ A</text>
+  <path d="M816 326 H984" class="flow" marker-end="url(#arrow)"/>
+  <rect x="1000" y="270" width="450" height="112" rx="12" fill="#D2E0E2" stroke="#1F6968" stroke-width="2"/>
+  <text x="1225" y="315" class="body center">First hit</text>
+  <text x="1225" y="362" class="math center">x₃ ∈ A</text>
+  <text x="800" y="439" class="math center">Split the restricted word law: μ<tspan baseline-shift="sub" font-size="75%">miss</tspan><tspan baseline-shift="super" font-size="75%">⊗n</tspan> ⊗ μ<tspan baseline-shift="sub" font-size="75%">hit</tspan></text>
+  <text x="800" y="487" class="note center">μ<tspan baseline-shift="sub" font-size="75%">miss</tspan> = μ restricted to Aᶜ; μ<tspan baseline-shift="sub" font-size="75%">hit</tspan> = μ restricted to A. No normalization.</text>
+  <text x="800" y="535" class="math center">Total mass = (1 − a)<tspan baseline-shift="super" font-size="75%">n</tspan> a, where a = P(A)</text>
+  <text x="800" y="583" class="body center">Example: a = 0.6, n = 2 gives 0.4² × 0.6 = 0.096.</text>
+
+  <rect x="60" y="645" width="1480" height="580" rx="16" fill="#FFFFFF" stroke="#D2E0E2" stroke-width="2"/>
+  <text x="90" y="698" class="label">F4 · the complete key z occurs in the comparison list</text>
+  <text x="90" y="741" class="note">z includes every source coordinate and the target y<tspan baseline-shift="sub" font-size="75%">z</tspan>.</text>
+  <rect x="100" y="785" width="510" height="110" rx="12" fill="#D2E0E2" stroke="#1F3F60" stroke-width="2"/>
+  <text x="355" y="828" class="body center">Raw list L contains z</text>
+  <text x="355" y="875" class="math center">M<tspan baseline-shift="sub" font-size="75%">z</tspan>(z) = ∅</text>
+  <path d="M634 846 H956" class="flow" marker-end="url(#arrow)"/>
+  <text x="795" y="801" class="note center">Filter: y = y<tspan baseline-shift="sub" font-size="75%">z</tspan></text>
+  <rect x="980" y="785" width="520" height="110" rx="12" fill="#D2E0E2" stroke="#1F6968" stroke-width="2"/>
+  <text x="1240" y="828" class="note center">Retained list R<tspan baseline-shift="sub" font-size="75%">z</tspan>(L) contains z</text>
+  <text x="1240" y="875" class="math center">M<tspan baseline-shift="sub" font-size="75%">z</tspan>(z) = ∅</text>
+  <path d="M355 911 V949" class="flow" marker-end="url(#arrow)"/>
+  <path d="M1240 911 V949" class="flow" marker-end="url(#arrow)"/>
+  <rect x="100" y="968" width="510" height="117" rx="12" fill="#F7F3E9" stroke="#1F6968" stroke-width="2"/>
+  <text x="355" y="1015" class="math center">Positive contribution P = 0</text>
+  <text x="355" y="1058" class="note center">Raw prefix predicate is false.</text>
+  <rect x="980" y="968" width="520" height="117" rx="12" fill="#F7F3E9" stroke="#1F6968" stroke-width="2"/>
+  <text x="1240" y="1015" class="math center">Negative contribution N = 0</text>
+  <text x="1240" y="1058" class="note center">Retained prefix predicate is false.</text>
+  <text x="800" y="1140" class="body center">Every later prefix retains this complete-key occurrence.</text>
+  <text x="800" y="1187" class="note center">Sufficient condition; no earliest-stopping claim.</text>
+  <text x="60" y="1275" class="small">Sepehr Mahmoudian · Finite laws and deterministic cancellation · 27 September 2026</text>
+</svg>

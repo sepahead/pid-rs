@@ -1,0 +1,369 @@
+{
+  "schema": "pid-rs/stopped-prefix-probability-source-map-v1",
+  "status": "private_publication_candidate_exact_locally_accepted_project_sources_no_portable_replay",
+  "assembly": "Select exact listed bytes into one fresh source tree at module_relative_path; never place multiple historical versions on the same module search path. Use fresh project objects.",
+  "lean_version": "4.33.0",
+  "lean_source_commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+  "mathlib_commit": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "root_module": "StoppedPrefixProbabilityRoot",
+  "fresh_kernel_excluded_modules": [
+    "PidStoppedPrefixCausal.AxiomControls"
+  ],
+  "module_count": 25,
+  "new_files": 18,
+  "reused_files": 7,
+  "module_order": [
+    "PidFiniteConvergence.Deterministic",
+    "PidFiniteConvergence.SxEventBridge",
+    "MgwBridgeDepsV1.SxDnf.Contract",
+    "MgwBridgeDepsV1.JoinLog.Contract",
+    "PidMgwBridge.Contract",
+    "PidPrefixProbability.Contract",
+    "MgwBridgeDepsV1.SxDnf.JudgeCore",
+    "PidStoppedPrefixStageA.Contract",
+    "PidStoppedPrefixStageA.RawTargets",
+    "PidStoppedPrefixStageA.AliasTargets",
+    "PidStoppedPrefixLegacyStageA.Contract",
+    "PidStoppedPrefixLegacyStageA.RawTargets",
+    "PidStoppedPrefixCausal.Controls",
+    "PidStoppedPrefixCausal.AxiomControls",
+    "PidStoppedPrefixF1F2.HostileTargets",
+    "PidStoppedPrefixF1F2.ReviewerControls",
+    "PidStoppedPrefixF1F2.Candidate",
+    "PidStoppedPrefixF1F2.SemanticJudge",
+    "F1F2CandidateRoot",
+    "PidStoppedPrefixF4.HostileTargets",
+    "PidStoppedPrefixF4.ReviewerControls",
+    "PidStoppedPrefixF4.Candidate",
+    "PidStoppedPrefixF4.SemanticJudge",
+    "F4CandidateRoot",
+    "StoppedPrefixProbabilityRoot"
+  ],
+  "members": [
+    {
+      "module": "PidFiniteConvergence.Deterministic",
+      "module_relative_path": "PidFiniteConvergence/Deterministic.lean",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/Deterministic.lean",
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "imports": [
+        "Mathlib.Analysis.SpecialFunctions.Log.NegMulLog"
+      ],
+      "role": "reuse_exact_public_dependency"
+    },
+    {
+      "module": "PidFiniteConvergence.SxEventBridge",
+      "module_relative_path": "PidFiniteConvergence/SxEventBridge.lean",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/SxEventBridge.lean",
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "imports": [
+        "PidFiniteConvergence.Deterministic",
+        "Mathlib.Data.Fintype.Pi"
+      ],
+      "role": "reuse_exact_public_dependency"
+    },
+    {
+      "module": "MgwBridgeDepsV1.SxDnf.Contract",
+      "module_relative_path": "MgwBridgeDepsV1/SxDnf/Contract.lean",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "imports": [
+        "PidFiniteConvergence.SxEventBridge"
+      ],
+      "role": "reuse_exact_public_dependency"
+    },
+    {
+      "module": "MgwBridgeDepsV1.JoinLog.Contract",
+      "module_relative_path": "MgwBridgeDepsV1/JoinLog/Contract.lean",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383",
+      "imports": [
+        "Mathlib.Analysis.SpecialFunctions.Log.Deriv",
+        "Mathlib.Data.Finset.Lattice.Fold"
+      ],
+      "role": "reuse_exact_public_dependency"
+    },
+    {
+      "module": "PidMgwBridge.Contract",
+      "module_relative_path": "PidMgwBridge/Contract.lean",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Contract.lean",
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642",
+      "imports": [
+        "MgwBridgeDepsV1.SxDnf.Contract",
+        "MgwBridgeDepsV1.JoinLog.Contract",
+        "Mathlib.Data.Fintype.Powerset"
+      ],
+      "role": "reuse_exact_public_dependency"
+    },
+    {
+      "module": "PidPrefixProbability.Contract",
+      "module_relative_path": "PidPrefixProbability/Contract.lean",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Contract.lean",
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a",
+      "imports": [
+        "PidMgwBridge.Contract",
+        "Mathlib.MeasureTheory.Constructions.Pi",
+        "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+        "Mathlib.Probability.Independence.Basic"
+      ],
+      "role": "reuse_exact_public_dependency"
+    },
+    {
+      "module": "MgwBridgeDepsV1.SxDnf.JudgeCore",
+      "module_relative_path": "MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+      "public_path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "imports": [
+        "Lean",
+        "Lean.Util.CollectAxioms",
+        "Mathlib.Data.List.Defs"
+      ],
+      "role": "reuse_exact_public_dependency"
+    },
+    {
+      "module": "PidStoppedPrefixStageA.Contract",
+      "module_relative_path": "PidStoppedPrefixStageA/Contract.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/Contract.lean",
+      "bytes": 3588,
+      "sha256": "6da98be9ca07314046042b99aca09bb35e17c1112ec8aea528424cbaeb034511",
+      "imports": [
+        "PidPrefixProbability.Contract"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixStageA.RawTargets",
+      "module_relative_path": "PidStoppedPrefixStageA/RawTargets.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/RawTargets.lean",
+      "bytes": 3060,
+      "sha256": "af47707c71b7fc8bcb522fd18413990d6798216a055c55272f04f8fd52a2dcb1",
+      "imports": [
+        "PidStoppedPrefixStageA.Contract"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixStageA.AliasTargets",
+      "module_relative_path": "PidStoppedPrefixStageA/AliasTargets.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixStageA/AliasTargets.lean",
+      "bytes": 570,
+      "sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba",
+      "imports": [
+        "PidStoppedPrefixStageA.Contract"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixLegacyStageA.Contract",
+      "module_relative_path": "PidStoppedPrefixLegacyStageA/Contract.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixLegacyStageA/Contract.lean",
+      "bytes": 3407,
+      "sha256": "d318979b90db6e3824d15313019f2ae33836d51dc467cebe0e2f98ba36d26b90",
+      "imports": [
+        "PidPrefixProbability.Contract"
+      ],
+      "role": "new_exact_source",
+      "scope": "Exact renamed predecessor views used only for causal comparison; not adopted F1/F2 targets."
+    },
+    {
+      "module": "PidStoppedPrefixLegacyStageA.RawTargets",
+      "module_relative_path": "PidStoppedPrefixLegacyStageA/RawTargets.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixLegacyStageA/RawTargets.lean",
+      "bytes": 2704,
+      "sha256": "bf052ec70632502bf0f9fbb470b2e2e6cafd8ce67014cd0c2386757aaecbb55c",
+      "imports": [
+        "PidStoppedPrefixLegacyStageA.Contract"
+      ],
+      "role": "new_exact_source",
+      "scope": "Exact renamed predecessor views used only for causal comparison; not adopted F1/F2 targets."
+    },
+    {
+      "module": "PidStoppedPrefixCausal.Controls",
+      "module_relative_path": "PidStoppedPrefixCausal/Controls.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixCausal/Controls.lean",
+      "bytes": 3122,
+      "sha256": "bb7b74be06fca1befa2214239a82ea5f9e7fb385d36631612e1e93977e646bcd",
+      "imports": [
+        "PidStoppedPrefixStageA.RawTargets",
+        "PidStoppedPrefixStageA.AliasTargets",
+        "PidStoppedPrefixLegacyStageA.RawTargets",
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixCausal.AxiomControls",
+      "module_relative_path": "PidStoppedPrefixCausal/AxiomControls.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixCausal/AxiomControls.lean",
+      "bytes": 1191,
+      "sha256": "5d405fc1415b9181108b19dcf4bfd8da4b8cde55632dcda31ec7fbddec5890ca",
+      "imports": [
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "role": "new_exact_source",
+      "scope": "Negative forbidden-axiom fixture; compiled for its rejection record, excluded from fresh-kernel root."
+    },
+    {
+      "module": "PidStoppedPrefixF1F2.HostileTargets",
+      "module_relative_path": "PidStoppedPrefixF1F2/HostileTargets.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/HostileTargets.lean",
+      "bytes": 5931,
+      "sha256": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d",
+      "imports": [
+        "PidStoppedPrefixStageA.Contract"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixF1F2.ReviewerControls",
+      "module_relative_path": "PidStoppedPrefixF1F2/ReviewerControls.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/ReviewerControls.lean",
+      "bytes": 4752,
+      "sha256": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5",
+      "imports": [
+        "PidStoppedPrefixStageA.RawTargets",
+        "PidStoppedPrefixStageA.AliasTargets",
+        "PidStoppedPrefixF1F2.HostileTargets",
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixF1F2.Candidate",
+      "module_relative_path": "PidStoppedPrefixF1F2/Candidate.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/Candidate.lean",
+      "bytes": 9394,
+      "sha256": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243",
+      "imports": [
+        "PidStoppedPrefixStageA.Contract"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixF1F2.SemanticJudge",
+      "module_relative_path": "PidStoppedPrefixF1F2/SemanticJudge.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF1F2/SemanticJudge.lean",
+      "bytes": 2120,
+      "sha256": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363",
+      "imports": [
+        "PidStoppedPrefixF1F2.Candidate",
+        "PidStoppedPrefixStageA.RawTargets",
+        "PidStoppedPrefixStageA.AliasTargets",
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "F1F2CandidateRoot",
+      "module_relative_path": "F1F2CandidateRoot.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/F1F2CandidateRoot.lean",
+      "bytes": 251,
+      "sha256": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7",
+      "imports": [
+        "PidStoppedPrefixF1F2.SemanticJudge",
+        "PidStoppedPrefixF1F2.ReviewerControls"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixF4.HostileTargets",
+      "module_relative_path": "PidStoppedPrefixF4/HostileTargets.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/HostileTargets.lean",
+      "bytes": 2487,
+      "sha256": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2",
+      "imports": [
+        "PidStoppedPrefixStageA.Contract"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixF4.ReviewerControls",
+      "module_relative_path": "PidStoppedPrefixF4/ReviewerControls.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/ReviewerControls.lean",
+      "bytes": 3543,
+      "sha256": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a",
+      "imports": [
+        "PidStoppedPrefixStageA.RawTargets",
+        "PidStoppedPrefixStageA.AliasTargets",
+        "PidStoppedPrefixF4.HostileTargets",
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixF4.Candidate",
+      "module_relative_path": "PidStoppedPrefixF4/Candidate.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/Candidate.lean",
+      "bytes": 1528,
+      "sha256": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519",
+      "imports": [
+        "PidStoppedPrefixStageA.Contract"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "PidStoppedPrefixF4.SemanticJudge",
+      "module_relative_path": "PidStoppedPrefixF4/SemanticJudge.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/PidStoppedPrefixF4/SemanticJudge.lean",
+      "bytes": 1245,
+      "sha256": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8",
+      "imports": [
+        "PidStoppedPrefixF4.Candidate",
+        "PidStoppedPrefixStageA.RawTargets",
+        "PidStoppedPrefixStageA.AliasTargets",
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "F4CandidateRoot",
+      "module_relative_path": "F4CandidateRoot.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/F4CandidateRoot.lean",
+      "bytes": 142,
+      "sha256": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49",
+      "imports": [
+        "PidStoppedPrefixF4.SemanticJudge",
+        "PidStoppedPrefixF4.ReviewerControls"
+      ],
+      "role": "new_exact_source"
+    },
+    {
+      "module": "StoppedPrefixProbabilityRoot",
+      "module_relative_path": "StoppedPrefixProbabilityRoot.lean",
+      "public_path": "audit/formal/lean-stopped-prefix-probability/sources/StoppedPrefixProbabilityRoot.lean",
+      "bytes": 159,
+      "sha256": "5e0e2d39d492ab2b060fdb4cbab098b266283d8053a382b59bb45484d41744d5",
+      "imports": [
+        "F1F2CandidateRoot",
+        "F4CandidateRoot",
+        "PidStoppedPrefixCausal.Controls"
+      ],
+      "role": "new_exact_source"
+    }
+  ],
+  "toolchain_sources": [
+    {
+      "public_path": "audit/formal/lean/lean-toolchain",
+      "bytes": 25,
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    {
+      "public_path": "audit/formal/lean/lakefile.toml",
+      "bytes": 243,
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    {
+      "public_path": "audit/formal/lean/lake-manifest.json",
+      "bytes": 3144,
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    }
+  ],
+  "installed_dependency_replay_status": "New public portable replay not established; toolchain source pins alone are not installed/native byte identity.",
+  "local_acceptance": "LOCAL_FORMAL_ACCEPTANCE.json"
+}

@@ -1,0 +1,1845 @@
+{
+  "schema": "pid-rs/stopped-prefix-public-metadata-projections-v2",
+  "status": "source_only_publication_projection_not_native_execution_or_acceptance",
+  "paths_relative_to": "package_root",
+  "json_pointer_convention": "RFC6901; locator-bearing pointer components use projected role roots. Exact original strings and omitted values remain in private preparation custody.",
+  "original_native_record_domain": "Unmodified original private native receipt bytes, when the entry states this domain.",
+  "v1_input_domain": "Exact retained first-publication-candidate metadata bytes; these are not generally original native receipts.",
+  "projected_domain": "Current public-candidate file bytes after the listed transformations.",
+  "role_placeholders": {
+    "${EXECUTION_ROOT}": "Closed joint local execution root; not a portable replay destination.",
+    "${PREPARATION_ROOT}": "Pinned joint local source preparation root.",
+    "${REPOSITORY_ROOT}": "Repository containing the original bounded execution.",
+    "${LEAN_INSTALLATION_ROOT}": "Observed Lean 4.33.0 installation root; source and binary hashes retain their original domains.",
+    "${PYTHON_INSTALLATION_ROOT}": "Observed Python 3.14.6 installation root.",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}": "Earlier F1/F2 source closure used for comparison and preservation.",
+    "${HISTORICAL_F4_PREPARATION_ROOT}": "Earlier accepted F4 source closure used for comparison and preservation.",
+    "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}": "Retained installed-boundary table preparation.",
+    "${HISTORICAL_DEPENDENCY_ROOT}": "Retained checkout supplying historical dependency inputs."
+  },
+  "files": [
+    {
+      "path": "LOCAL_FORMAL_ACCEPTANCE.json",
+      "input_kind": "v1_publication_candidate_metadata",
+      "v1_input_path": "LOCAL_FORMAL_ACCEPTANCE.json",
+      "v1_input": {
+        "bytes": 10013,
+        "sha256": "974bb7dce21a083f94bbec41a589427abb329ce46c871ae057a844b7b2ff2f32"
+      },
+      "projected": {
+        "bytes": 10260,
+        "sha256": "a91a8f2241ae53b7b5bc2f60be3a29fca1f94365a583936321209a8d5f698d21"
+      },
+      "operations": [
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/inventory/session"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/inventory/terminal_chunk"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/root_admission_writer/terminal_chunk"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/native_outer/session"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/native_outer/terminal_chunk"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/root_readback/terminal_chunk"
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/kernel/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "relabel_projection_schema_and_original_hash_join_domain",
+          "json_pointers": [
+            "/schema",
+            "/original_native_hash_joins"
+          ]
+        },
+        {
+          "operation": "replace_original_receipt_link_with_explicit_projection_and_dual_hashes",
+          "json_pointer": "/root_acceptance_projection"
+        },
+        {
+          "operation": "clarify_projection_and_stream_limits",
+          "json_pointer": "/projection_limits"
+        }
+      ]
+    },
+    {
+      "path": "evidence/ROOT_ACCEPTANCE.projection.json",
+      "input_kind": "v1_publication_candidate_metadata",
+      "v1_input_path": "evidence/ROOT_ACCEPTANCE.original.json",
+      "v1_input": {
+        "bytes": 4669,
+        "sha256": "40f7e1001f85849fb6e76b1527ede16cc1974fa6c9efc71ce2c77a005da6f15f"
+      },
+      "projected": {
+        "bytes": 4485,
+        "sha256": "51cf56aa39f53a3c318413768fe5993a7c698f5b3a9b4a7fd837190098d43a85"
+      },
+      "operations": [
+        {
+          "operation": "rename_projection_to_avoid_original_byte_claim",
+          "old_path": "evidence/ROOT_ACCEPTANCE.original.json",
+          "new_path": "evidence/ROOT_ACCEPTANCE.projection.json"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/inventory/session"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/inventory/terminal_chunk"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/root_admission_writer/terminal_chunk"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/native_outer/session"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/native_outer/terminal_chunk"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/actual_tool_results/root_readback/terminal_chunk"
+        }
+      ],
+      "original_native_record": {
+        "bytes": 4669,
+        "sha256": "40f7e1001f85849fb6e76b1527ede16cc1974fa6c9efc71ce2c77a005da6f15f"
+      },
+      "prior_transformation": "identity"
+    },
+    {
+      "path": "evidence/ADMISSION.projection.json",
+      "input_kind": "v1_publication_candidate_metadata",
+      "v1_input_path": "evidence/ADMISSION.original.json",
+      "v1_input": {
+        "bytes": 1365,
+        "sha256": "485d1868d4e75996142a880309d38dda23fcfc8839400e1146967f31d87761ea"
+      },
+      "projected": {
+        "bytes": 1314,
+        "sha256": "577234661d2b5f274633c3d66dc073763b313971397748c5694d78552730a222"
+      },
+      "operations": [
+        {
+          "operation": "rename_projection_to_avoid_original_byte_claim",
+          "old_path": "evidence/ADMISSION.original.json",
+          "new_path": "evidence/ADMISSION.projection.json"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/root_inventory_terminal/session_id"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/root_inventory_terminal/chunk_id"
+        }
+      ],
+      "original_native_record": {
+        "bytes": 1365,
+        "sha256": "485d1868d4e75996142a880309d38dda23fcfc8839400e1146967f31d87761ea"
+      },
+      "prior_transformation": "identity"
+    },
+    {
+      "path": "evidence/COMMANDS.json",
+      "input_kind": "v1_publication_candidate_metadata",
+      "v1_input_path": "evidence/COMMANDS.json",
+      "v1_input": {
+        "bytes": 64050,
+        "sha256": "ddaccaee66de40b445ea5e385a7337f88d153ad7bd59a262a460d8bb44357424"
+      },
+      "projected": {
+        "bytes": 62690,
+        "sha256": "66da40bbe0eefa1e89c7fa9d721e99bcae9eb7dcf6b3162095d149f9b9a9accc"
+      },
+      "operations": [
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/0/command/0",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/1/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/2/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/3/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/4/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/5/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/6/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/7/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/8/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/9/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/10/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/11/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/12/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/13/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/14/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/15/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/16/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/17/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/18/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/19/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/20/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/21/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/22/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/23/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/24/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/25/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/26/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/27/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/28/command/0",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "evidence/INVENTORY_OUTER_RESULT.projection.json",
+      "input_kind": "v1_publication_candidate_metadata",
+      "v1_input_path": "evidence/INVENTORY_OUTER_RESULT.projection.json",
+      "v1_input": {
+        "bytes": 1115,
+        "sha256": "cf01756c76d6512253c46987722e9872cfe3cc3a787daeccc5c4831fed64511b"
+      },
+      "projected": {
+        "bytes": 958,
+        "sha256": "78f3d19a41589b919631e203160033ae35feac3f5632002f8e68d72694130323"
+      },
+      "operations": [
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/command/0",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/known_processes"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/owned_wrapper_pid"
+        }
+      ],
+      "original_native_record": {
+        "bytes": 1482,
+        "sha256": "395cb1f50db3f3e36701875e5aee4c8ad983f30bb6ac5f3d4c9e937c7368b3d5"
+      },
+      "prior_transformation": "declared literal locator substitutions only"
+    },
+    {
+      "path": "evidence/OUTER_RESULT.projection.json",
+      "input_kind": "v1_publication_candidate_metadata",
+      "v1_input_path": "evidence/OUTER_RESULT.projection.json",
+      "v1_input": {
+        "bytes": 65750,
+        "sha256": "ca203f3fe02358cda682304c6adc0380b268adec8807ee13232d9822deaa7816"
+      },
+      "projected": {
+        "bytes": 772,
+        "sha256": "00ddaf4e5238a1373836495f6916367393a7c6bea802f2789c5518dd00cdf393"
+      },
+      "operations": [
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/command/0",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/known_processes"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/owned_wrapper_pid"
+        }
+      ],
+      "original_native_record": {
+        "bytes": 66117,
+        "sha256": "9dd12e1ad394e54eed06e829a3e6151aea75c1b5f24f795491f5882ce7a331fb"
+      },
+      "prior_transformation": "declared literal locator substitutions only"
+    },
+    {
+      "path": "evidence/NATIVE_RESULT.projection.json",
+      "input_kind": "v1_publication_candidate_metadata",
+      "v1_input_path": "evidence/NATIVE_RESULT.projection.json",
+      "v1_input": {
+        "bytes": 113114,
+        "sha256": "27f7119dbe3dd77355d0c46c5f67d46d793818988ee88df02cc555cb253b257f"
+      },
+      "projected": {
+        "bytes": 108669,
+        "sha256": "9cb3ff4774c1272cf1d0bbcf168ea89890417e87b04524fb4f0f59142aeede54"
+      },
+      "operations": [
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/0/argv/0",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/1/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/2/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/3/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/4/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/5/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/6/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/7/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/8/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/9/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/10/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/11/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/12/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/13/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/14/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/15/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/16/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/17/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/18/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/19/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/20/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/21/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/22/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/23/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/24/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/25/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/26/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/27/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/children/28/argv/0",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/0/command/0",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/1/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/2/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/3/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/4/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/5/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/6/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/7/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/8/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/9/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/10/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/11/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/12/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/13/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/14/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/15/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/16/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/17/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/18/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/19/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/20/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/21/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/22/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/23/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/24/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/25/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/26/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/27/command/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/28/command/0",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${LEAN_INSTALLATION_ROOT}~1bin~1lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${LEAN_INSTALLATION_ROOT}~1bin~1leanchecker"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${LEAN_INSTALLATION_ROOT}~1lib~1lean~1libleanshared.dylib"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${LEAN_INSTALLATION_ROOT}~1src~1lean~1Init~1Classical.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${LEAN_INSTALLATION_ROOT}~1src~1lean~1Lean~1Elab~1Tactic~1Classical.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean-prefix-mgw-mean~1replay-support~1runtime.py"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean~1lake-manifest.json"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean~1lakefile.toml"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean~1lean-toolchain"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_DEPENDENCY_ROOT}~1scripts~1check-lean-finite-convergence.py"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_DEPENDENCY_ROOT}~1scripts~1check-lean-sxpid3-informative-invariance.py"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1F1F2CandidateRoot.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1JoinLog~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1JudgeCore.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1Deterministic.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1SxEventBridge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidMgwBridge~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidPrefixProbability~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1Candidate.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1HostileTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1ReviewerControls.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1SemanticJudge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1AliasTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1RawTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1F4CandidateRoot.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1JoinLog~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1JudgeCore.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1Deterministic.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1SxEventBridge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidMgwBridge~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidPrefixProbability~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1Candidate.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1HostileTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1ReviewerControls.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1SemanticJudge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1AliasTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1RawTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${PYTHON_INSTALLATION_ROOT}~1Python"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/inputs/${PYTHON_INSTALLATION_ROOT}~1bin~1python3.14"
+        }
+      ],
+      "original_native_record": {
+        "bytes": 147257,
+        "sha256": "d912f16fa11d73353aa1c7f931f336e4eab27e63d661ea673bd4d535af470678"
+      },
+      "prior_transformation": "declared literal locator substitutions only"
+    },
+    {
+      "path": "evidence/PACKET.projection.json",
+      "input_kind": "v1_publication_candidate_metadata",
+      "v1_input_path": "evidence/PACKET.projection.json",
+      "v1_input": {
+        "bytes": 41495,
+        "sha256": "66a5ca3e38f1658bef18612369d7e5e0a26f90fc356c5d0697f293a7f8fb2a19"
+      },
+      "projected": {
+        "bytes": 37372,
+        "sha256": "e603f543a7fe3cdf8f60f98e782c410e71fef6a25e3d093ff2a3014feb798b8e"
+      },
+      "operations": [
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/0/argv/0",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/1/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/2/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/3/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/4/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/5/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/6/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/7/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/8/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/9/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/10/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/11/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/12/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/13/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/14/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/15/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/16/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/17/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/18/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/19/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/20/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/21/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/22/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/23/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/24/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/25/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/26/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/27/argv/0",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/commands/28/argv/0",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/environment/PATH",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${LEAN_INSTALLATION_ROOT}~1bin~1lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${LEAN_INSTALLATION_ROOT}~1bin~1leanchecker"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${LEAN_INSTALLATION_ROOT}~1lib~1lean~1libleanshared.dylib"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${LEAN_INSTALLATION_ROOT}~1src~1lean~1Init~1Classical.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${LEAN_INSTALLATION_ROOT}~1src~1lean~1Lean~1Elab~1Tactic~1Classical.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_BOUNDARY_PREPARATION_ROOT}~1BOUNDARY_EXTERNAL_INPUT_PINS.json"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_BOUNDARY_PREPARATION_ROOT}~1inputs~1view-successor~1INSTALLED_BYTE_PINS.json"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_BOUNDARY_PREPARATION_ROOT}~1inputs~1view-successor~1LOOKUP_NAMESPACES.json"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean-prefix-mgw-mean~1replay-support~1runtime.py"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean~1lake-manifest.json"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean~1lakefile.toml"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean~1lean-toolchain"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_DEPENDENCY_ROOT}~1scripts~1check-lean-finite-convergence.py"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_DEPENDENCY_ROOT}~1scripts~1check-lean-sxpid3-informative-invariance.py"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1F1F2CandidateRoot.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1JoinLog~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1JudgeCore.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1Deterministic.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1SxEventBridge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidMgwBridge~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidPrefixProbability~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1Candidate.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1HostileTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1ReviewerControls.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1SemanticJudge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1AliasTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1RawTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1F4CandidateRoot.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1JoinLog~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1JudgeCore.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1Deterministic.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1SxEventBridge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidMgwBridge~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidPrefixProbability~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1Candidate.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1HostileTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1ReviewerControls.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1SemanticJudge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1AliasTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1RawTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${PYTHON_INSTALLATION_ROOT}~1Python"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/input_pins/${PYTHON_INSTALLATION_ROOT}~1bin~1python3.14"
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/installed_tables/0",
+          "role_placeholders": [
+            "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/installed_tables/1",
+          "role_placeholders": [
+            "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/installed_tables/2",
+          "role_placeholders": [
+            "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean_path_tail/0",
+          "role_placeholders": [
+            "${HISTORICAL_DEPENDENCY_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean_path_tail/1",
+          "role_placeholders": [
+            "${HISTORICAL_DEPENDENCY_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean_path_tail/2",
+          "role_placeholders": [
+            "${HISTORICAL_DEPENDENCY_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean_path_tail/3",
+          "role_placeholders": [
+            "${HISTORICAL_DEPENDENCY_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean_path_tail/4",
+          "role_placeholders": [
+            "${HISTORICAL_DEPENDENCY_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean_path_tail/5",
+          "role_placeholders": [
+            "${HISTORICAL_DEPENDENCY_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean_path_tail/6",
+          "role_placeholders": [
+            "${HISTORICAL_DEPENDENCY_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean_path_tail/7",
+          "role_placeholders": [
+            "${HISTORICAL_DEPENDENCY_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean_path_tail/8",
+          "role_placeholders": [
+            "${HISTORICAL_DEPENDENCY_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/lean_path_tail/9",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/leanchecker",
+          "role_placeholders": [
+            "${LEAN_INSTALLATION_ROOT}"
+          ]
+        },
+        {
+          "operation": "replace_complete_private_root_in_value",
+          "json_pointer": "/python",
+          "role_placeholders": [
+            "${PYTHON_INSTALLATION_ROOT}"
+          ]
+        }
+      ],
+      "original_native_record": {
+        "bytes": 58367,
+        "sha256": "a6efef42d0f2111765488bcc6749a2ede695cca2389e28413b39a4b696381bce"
+      },
+      "prior_transformation": "declared literal locator substitutions only"
+    },
+    {
+      "path": "evidence/ROOT_READBACK_RESULT.projection.json",
+      "input_kind": "v1_publication_candidate_metadata",
+      "v1_input_path": "evidence/ROOT_READBACK_RESULT.projection.json",
+      "v1_input": {
+        "bytes": 103803,
+        "sha256": "5e2ea9391d3ac7071fc34bef95f8db07caa8fae4de4583805c6c37b6de471baf"
+      },
+      "projected": {
+        "bytes": 137028,
+        "sha256": "f1640df23079543a52afbbf0732540cd6a3a92089a571a6c62240b13439de9c0"
+      },
+      "operations": [
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${LEAN_INSTALLATION_ROOT}~1bin~1lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${LEAN_INSTALLATION_ROOT}~1bin~1leanchecker"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${LEAN_INSTALLATION_ROOT}~1lib~1lean~1libleanshared.dylib"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${LEAN_INSTALLATION_ROOT}~1src~1lean~1Init~1Classical.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${LEAN_INSTALLATION_ROOT}~1src~1lean~1Lean~1Elab~1Tactic~1Classical.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_BOUNDARY_PREPARATION_ROOT}~1BOUNDARY_EXTERNAL_INPUT_PINS.json"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_BOUNDARY_PREPARATION_ROOT}~1inputs~1view-successor~1INSTALLED_BYTE_PINS.json"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_BOUNDARY_PREPARATION_ROOT}~1inputs~1view-successor~1LOOKUP_NAMESPACES.json"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean-prefix-mgw-mean~1replay-support~1runtime.py"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean~1lake-manifest.json"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean~1lakefile.toml"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_DEPENDENCY_ROOT}~1audit~1formal~1lean~1lean-toolchain"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_DEPENDENCY_ROOT}~1scripts~1check-lean-finite-convergence.py"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_DEPENDENCY_ROOT}~1scripts~1check-lean-sxpid3-informative-invariance.py"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1F1F2CandidateRoot.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1JoinLog~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1JudgeCore.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1Deterministic.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1SxEventBridge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidMgwBridge~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidPrefixProbability~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1Candidate.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1HostileTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1ReviewerControls.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF1F2~1SemanticJudge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1AliasTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F1F2_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1RawTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1F4CandidateRoot.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1JoinLog~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1MgwBridgeDepsV1~1SxDnf~1JudgeCore.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1Deterministic.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidFiniteConvergence~1SxEventBridge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidMgwBridge~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidPrefixProbability~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1Candidate.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1HostileTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1ReviewerControls.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixF4~1SemanticJudge.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1AliasTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1Contract.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${HISTORICAL_F4_PREPARATION_ROOT}~1sources~1PidStoppedPrefixStageA~1RawTargets.lean"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${PYTHON_INSTALLATION_ROOT}~1Python"
+        },
+        {
+          "operation": "replace_complete_private_root_in_key",
+          "projected_json_pointer": "/files/${PYTHON_INSTALLATION_ROOT}~1bin~1python3.14"
+        }
+      ],
+      "original_native_record": {
+        "bytes": 146887,
+        "sha256": "baaca965389ebf74be81076d74ba157aa7d5ba39a6e54c4d523017e40b63cbdb"
+      },
+      "prior_transformation": "declared literal locator substitutions only"
+    },
+    {
+      "path": "evidence/history/OPERATIONAL_REFUSAL.projection.json",
+      "input_kind": "v1_publication_candidate_metadata",
+      "v1_input_path": "evidence/history/OPERATIONAL_REFUSAL.original.json",
+      "v1_input": {
+        "bytes": 2007,
+        "sha256": "0a72e9aabf07a73d5f27f02e616eda0fa4ee915c32b083c27d4bf9f55d840a99"
+      },
+      "projected": {
+        "bytes": 1922,
+        "sha256": "456fcda480dff966ce2c89ed876c11c60e2a92567bf3b63612e4fe5f5356aeb5"
+      },
+      "operations": [
+        {
+          "operation": "rename_projection_to_avoid_original_byte_claim",
+          "old_path": "evidence/history/OPERATIONAL_REFUSAL.original.json",
+          "new_path": "evidence/history/OPERATIONAL_REFUSAL.projection.json"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/inventory_terminal_chunk"
+        },
+        {
+          "operation": "omit_private_handle_field",
+          "json_pointer": "/root_admission_terminal_chunk"
+        }
+      ],
+      "original_native_record": {
+        "bytes": 2007,
+        "sha256": "0a72e9aabf07a73d5f27f02e616eda0fa4ee915c32b083c27d4bf9f55d840a99"
+      }
+    },
+    {
+      "path": "evidence/historical-f4-v4/LOCAL_FORMAL_ACCEPTANCE.historical-projection.json",
+      "input_kind": "unchanged_historical_public_metadata_projection_not_raw_native_receipt",
+      "v1_input_path": "evidence/historical-f4-v4/LOCAL_FORMAL_ACCEPTANCE.original.json",
+      "v1_input": {
+        "bytes": 4111,
+        "sha256": "e2e2bb07da6a49167597a8cf45a2946599248ea9e58232f1713079221ddce6d0"
+      },
+      "projected": {
+        "bytes": 4111,
+        "sha256": "e2e2bb07da6a49167597a8cf45a2946599248ea9e58232f1713079221ddce6d0"
+      },
+      "operations": [
+        {
+          "operation": "rename_projection_to_avoid_original_byte_claim",
+          "old_path": "evidence/historical-f4-v4/LOCAL_FORMAL_ACCEPTANCE.original.json",
+          "new_path": "evidence/historical-f4-v4/LOCAL_FORMAL_ACCEPTANCE.historical-projection.json"
+        }
+      ]
+    }
+  ],
+  "unchanged_payloads": [
+    "25 accepted Lean modules",
+    "41 actual theorem/control record values",
+    "58 v1 main stream files",
+    "38 v1 historical F4 stream files"
+  ],
+  "main_stream_split": {
+    "exact_original_native_streams": 56,
+    "already_projected_boundary_stdout_streams": 2,
+    "additional_v2_stream_changes": 0
+  },
+  "private_preimage_retention": "Original native receipts and complete v1 candidate retained privately without modification; hashes do not themselves supply public retrieval or portable replay."
+}

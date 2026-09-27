@@ -1,0 +1,81 @@
+{
+  "status": "locally_accepted_exact_f1_f2_and_rechecked_f4",
+  "accepted_utc": "2026-09-26T21:28:05.363056+00:00",
+  "accepted_monotonic_ns": 2586599644375583,
+  "original_deadline_utc": "2026-09-26T22:19:04.585507+00:00",
+  "original_clock_sha256": "6fb2ff0305b1b099393b190b882208852fffee5e50b8c29be4b3988b1976dfc5",
+  "packet_sha256": "a6efef42d0f2111765488bcc6749a2ede695cca2389e28413b39a4b696381bce",
+  "admission_sha256": "485d1868d4e75996142a880309d38dda23fcfc8839400e1146967f31d87761ea",
+  "source_readiness_seal_sha256": "c6fd68e96534b00b24bdd17b7b458437b4ea69a677d7d6067a39627f6f055987",
+  "root_readback_sha256": "baaca965389ebf74be81076d74ba157aa7d5ba39a6e54c4d523017e40b63cbdb",
+  "native_result_sha256": "d912f16fa11d73353aa1c7f931f336e4eab27e63d661ea673bd4d535af470678",
+  "outer_result_sha256": "9dd12e1ad394e54eed06e829a3e6151aea75c1b5f24f795491f5882ce7a331fb",
+  "actual_tool_results": {
+    "inventory": {
+      "exit_code": 0
+    },
+    "root_admission_writer": {
+      "exit_code": 0
+    },
+    "native_outer": {
+      "exit_code": 0
+    },
+    "root_readback": {
+      "exit_code": 0,
+      "stderr_bytes": 0
+    }
+  },
+  "checked": {
+    "commands": 29,
+    "streams": 58,
+    "records": 41,
+    "source_modules": 25,
+    "input_snapshots": 137,
+    "root_readback_files": 382,
+    "readback_bytes": 1118194504,
+    "installed_files_at_each_boundary": 139949,
+    "fresh_kernel_seconds": 206.89100983412936,
+    "actual_successful_exports": 3,
+    "newly_accepted_F1_F2_exports": 2,
+    "historical_F4_export_rechecked": 1
+  },
+  "statements": {
+    "F1": "For every finite nonempty source-index set, finite coordinate/target alphabets, equality instances, normalized nonnegative finite law p, arbitrary event A and natural n: splitting the iid (n+1)-row measure restricted to n misses followed by a hit yields the product of the unnormalized complement-masked n-row law and hit-masked final-row law.",
+    "F2": "Under the same premises, event mass a lies in [0,1] and the first-hit word has measure ENNReal.ofReal((1-a)^n*a), including n=0 and a=0 or1.",
+    "F4": "For every declared finite source/target setting, anchor z, node alpha and comparison list containing the complete source-plus-target key z, both native positive and target-filtered negative prefix contributions equal zero. No law or independence premise is used."
+  },
+  "semantic_review": {
+    "actual_product_measure": true,
+    "normalized_nonnegative_law_definition_read": true,
+    "no_assumed_cycle_law_or_normalized_mask_premise": true,
+    "root_read_candidate_contract_raw_alias_and_judge_sources": true,
+    "all_41_raw_records_read": true,
+    "allowed_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "axiom_fixture_rejected_and_excluded_from_fresh_root": true,
+    "F1_F2_printed_type_note": "Pretty-printed theorem types name the complete target abbreviations. Root separately read their source expansions and raw propositions; native semantic judges compare full types definitionally and compile exact raw/alias assignments. The printed strings alone are not expanded-statement evidence.",
+    "frozen_metadata_note": "Source proposal comments and packet.scope planning labels remain immutable pre-execution metadata. This acceptance and actual terminal receipts carry the new runtime disposition; they are not retroactively edited."
+  },
+  "statistical_scope": "Ideal iid auxiliary rows from a fixed finite law; if the law is a fitted table, the result is conditional on that frozen table. No inference of iid raw sensor rows or population calibration. F4 is deterministic.",
+  "novelty": "F1/F2 are classical finite probability formalized in the project framework; F4 is an invariant of the project prefix definition, rechecked here. No scientific-priority or breakthrough claim.",
+  "remaining": [
+    "Public portable source/evidence assembly and hosted replay",
+    "Standalone MD/PDF publication and figure checks",
+    "F3/infinite stopping/gradient interchange and variance obligations",
+    "Rust sampler/implementation refinement and application evidence",
+    "SxPID3 Programs A-E remain0of5 closed"
+  ],
+  "not_claimed": [
+    "FullStageA",
+    "stopped-gradient unbiasedness",
+    "expected-runtime theorem",
+    "cost-note formalization",
+    "continuous/shared-exclusions or another PID transfer",
+    "application or deployment readiness",
+    "atomicity or authenticated toolchain",
+    "full main hostedCI acceptance"
+  ]
+}

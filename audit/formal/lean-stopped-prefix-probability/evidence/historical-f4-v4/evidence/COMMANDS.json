@@ -1,0 +1,600 @@
+{
+  "commands": [
+    {
+      "elapsed_seconds": 38.423312874976546,
+      "execution_error": null,
+      "failure": null,
+      "label": "boundary-PRE",
+      "ordinal": 0,
+      "original_record": {
+        "bytes": 1476,
+        "sha256": "e4546167599579cfae026e0c31d9bc1946657a335d4e2d5ad495c0a5f1e2536a"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 215,
+          "original_bytes": 346,
+          "original_sha256": "81c49a61c0a71876ea17c1d73e12f48e68d499034dcf7667a608fe03b1407a4d",
+          "path": "evidence/streams/00-boundary-PRE/stdout.log",
+          "projection": "JSON receipt locator replaced by documented private-custody identifier; original hash retained",
+          "sha256": "5f145b0baa5628707dd89934d058ff1cac99d69b3f7a8fe1303c77aa92d43680"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/00-boundary-PRE/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 0.13210112508386374,
+      "execution_error": null,
+      "failure": null,
+      "label": "tool-version",
+      "ordinal": 1,
+      "original_record": {
+        "bytes": 1012,
+        "sha256": "be18ae0f9bef6c904848260310ea818be3c218cb5fa515d09816cdba660ef2cd"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 106,
+          "original_bytes": 106,
+          "original_sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db",
+          "path": "evidence/streams/01-tool-version/stdout.log",
+          "projection": "identity",
+          "sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/01-tool-version/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.8763355826959014,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidFiniteConvergence-Deterministic",
+      "ordinal": 2,
+      "original_record": {
+        "bytes": 1465,
+        "sha256": "25bb55a24ed1baa1a9952c98243950cc737df7eb61ad2d96c0d4b6f629dd5b7f"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/02-compile-PidFiniteConvergence-Deterministic/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/02-compile-PidFiniteConvergence-Deterministic/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.611939167138189,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidFiniteConvergence-SxEventBridge",
+      "ordinal": 3,
+      "original_record": {
+        "bytes": 1464,
+        "sha256": "a32a1ca2f26fa8bb3d78aba999813ed5871fcbd56e91073528d1ab2b267f60ca"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/03-compile-PidFiniteConvergence-SxEventBridge/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/03-compile-PidFiniteConvergence-SxEventBridge/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.4137919996865094,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-SxDnf-Contract",
+      "ordinal": 4,
+      "original_record": {
+        "bytes": 1453,
+        "sha256": "a45317809047e9dc852c5e9fe13e977ebd22cc3ab7fd264b927d1d9726d3fc3d"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.3396549168974161,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-JoinLog-Contract",
+      "ordinal": 5,
+      "original_record": {
+        "bytes": 1459,
+        "sha256": "20e5d65563f6cdf292d032aeb3821f43a581c9881cbf1f56fb34d3a4de7dabaf"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.4774976666085422,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-Contract",
+      "ordinal": 6,
+      "original_record": {
+        "bytes": 1426,
+        "sha256": "5064fbcfbc4872406d6b89ba711d72851987cc4beefe7c39e475a090b81d9d04"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/06-compile-PidMgwBridge-Contract/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/06-compile-PidMgwBridge-Contract/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.7339183329604566,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-Contract",
+      "ordinal": 7,
+      "original_record": {
+        "bytes": 1450,
+        "sha256": "5a6b939a94bd07b226a89c4d650d02b5dd00de9663ee27ff285959e5f8b34b2d"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/07-compile-PidPrefixProbability-Contract/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/07-compile-PidPrefixProbability-Contract/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 0.8589516673237085,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-SxDnf-JudgeCore",
+      "ordinal": 8,
+      "original_record": {
+        "bytes": 1456,
+        "sha256": "c7ed5333401e1d9975180c2621d34b331acc5b664030d0d0fdd04b361e3566c1"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.4589404161088169,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidStoppedPrefixStageA-Contract",
+      "ordinal": 9,
+      "original_record": {
+        "bytes": 1456,
+        "sha256": "bd2dd6fe1c4e895ef486be86e6a3a5f07aea62ad9937df6ea93042618202d5c4"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/09-compile-PidStoppedPrefixStageA-Contract/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/09-compile-PidStoppedPrefixStageA-Contract/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.4515327913686633,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidStoppedPrefixStageA-RawTargets",
+      "ordinal": 10,
+      "original_record": {
+        "bytes": 1462,
+        "sha256": "c949f7bbf79162b0c09dd91b2c528831a3d8e27a95f339f803a6878de07194c5"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/10-compile-PidStoppedPrefixStageA-RawTargets/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/10-compile-PidStoppedPrefixStageA-RawTargets/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.4206914170645177,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidStoppedPrefixStageA-AliasTargets",
+      "ordinal": 11,
+      "original_record": {
+        "bytes": 1468,
+        "sha256": "732fb548161d6102b0d1f881cb442ee87ba8f59436ed821eeba3cc2988a98829"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/11-compile-PidStoppedPrefixStageA-AliasTargets/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/11-compile-PidStoppedPrefixStageA-AliasTargets/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.4387286673299968,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidStoppedPrefixF4-HostileTargets",
+      "ordinal": 12,
+      "original_record": {
+        "bytes": 1462,
+        "sha256": "54c412643705291e2d348fbef4326bcb833230381869d287c40ecde740a74ed4"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/12-compile-PidStoppedPrefixF4-HostileTargets/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/12-compile-PidStoppedPrefixF4-HostileTargets/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.730021083727479,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidStoppedPrefixF4-ReviewerControls",
+      "ordinal": 13,
+      "original_record": {
+        "bytes": 1470,
+        "sha256": "cef2325292812dbcf45b26dee3fcc2b934fab71f774ed8e57f0234eef2ec2070"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 1565,
+          "original_bytes": 1565,
+          "original_sha256": "98626a4cc50560a57ad26f1efdce0810915869cb664c37e2a3790e8c29004dc3",
+          "path": "evidence/streams/13-compile-PidStoppedPrefixF4-ReviewerControls/stdout.log",
+          "projection": "identity",
+          "sha256": "98626a4cc50560a57ad26f1efdce0810915869cb664c37e2a3790e8c29004dc3"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/13-compile-PidStoppedPrefixF4-ReviewerControls/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.4754082090221345,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidStoppedPrefixF4-Candidate",
+      "ordinal": 14,
+      "original_record": {
+        "bytes": 1447,
+        "sha256": "220a585032cefe54c4ab1faec0d9bf4c16270ced5f0f8a19141e137e46c2ed00"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/14-compile-PidStoppedPrefixF4-Candidate/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/14-compile-PidStoppedPrefixF4-Candidate/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.952130707912147,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidStoppedPrefixF4-SemanticJudge",
+      "ordinal": 15,
+      "original_record": {
+        "bytes": 1461,
+        "sha256": "9266e9231579de5ff1b1509aa9950dc415c4ee94355867e26f243bb522e33f05"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 1490,
+          "original_bytes": 1490,
+          "original_sha256": "a4e670f895429fddf65617d8c86b4bff938465f27abc40d08004d3cfdbc81574",
+          "path": "evidence/streams/15-compile-PidStoppedPrefixF4-SemanticJudge/stdout.log",
+          "projection": "identity",
+          "sha256": "a4e670f895429fddf65617d8c86b4bff938465f27abc40d08004d3cfdbc81574"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/15-compile-PidStoppedPrefixF4-SemanticJudge/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.6335167912766337,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-F4CandidateRoot",
+      "ordinal": 16,
+      "original_record": {
+        "bytes": 1408,
+        "sha256": "f1d7cf04b39b6544ee0cdacbcbbfde9b821a5b2105d847ccfd3511e2ae5be878"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/16-compile-F4CandidateRoot/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/16-compile-F4CandidateRoot/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "argv_projection": [
+        "leanchecker",
+        "--fresh",
+        "F4CandidateRoot"
+      ],
+      "elapsed_seconds": 202.16841599997133,
+      "execution_error": null,
+      "failure": null,
+      "label": "fresh-kernel",
+      "ordinal": 17,
+      "original_record": {
+        "bytes": 1042,
+        "sha256": "01c208baa7ee767b881085593aac9eccd5ad22c4d1ca9e02fe259f8b44059ec9"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/17-fresh-kernel/stdout.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/17-fresh-kernel/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 24.08002404216677,
+      "execution_error": null,
+      "failure": null,
+      "label": "boundary-POST",
+      "ordinal": 18,
+      "original_record": {
+        "bytes": 1477,
+        "sha256": "53d76b0cabbe080c0348261ad0831ad4c5fbeb7d4c60ac35c12d8479d6a476ec"
+      },
+      "remaining_live_group_processes": [],
+      "returncode": 0,
+      "streams": [
+        {
+          "bytes": 217,
+          "original_bytes": 348,
+          "original_sha256": "e5248b14794b29b45b0748fe3bc3f414b782014c8446760fe069f6c1f8242bf7",
+          "path": "evidence/streams/18-boundary-POST/stdout.log",
+          "projection": "JSON receipt locator replaced by documented private-custody identifier; original hash retained",
+          "sha256": "93a09d69c657f6135597df9a0f1abd0e421a604a962a33f0e3478370bc51da39"
+        },
+        {
+          "bytes": 0,
+          "original_bytes": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "path": "evidence/streams/18-boundary-POST/stderr.log",
+          "projection": "identity",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "projection": "Only named result fields are copied; original command-record digests bind private full records. Machine-specific argv, cwd and tool locators omitted; kernel argv retains only tool role and exact arguments.",
+  "status": "historical_receipt_projection_not_new_execution"
+}

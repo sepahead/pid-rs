@@ -1,0 +1,7 @@
+PidStoppedPrefixF1F2/SemanticJudge.lean:14:2: error: Type mismatch
+  PidStoppedPrefixF1F2Candidate.first_hit_factorization
+has type
+  PidStoppedPrefixStageAContract.first_hit_factorization_target
+but is expected to have type
+  PidStoppedPrefixStageARawTargets.first_hit_factorization
+PidStoppedPrefixF1F2/SemanticJudge.lean:25:0: error: DNF_JUDGE_CONTRACT_VIEW: PidStoppedPrefixStageARawTargets.first_hit_factorization and PidStoppedPrefixStageAAliasTargets.first_hit_factorization differ

@@ -1,0 +1,4986 @@
+{
+  "admission_sha256": "485d1868d4e75996142a880309d38dda23fcfc8839400e1146967f31d87761ea",
+  "bytes_hashed": 1118194504,
+  "commands": 29,
+  "completed_monotonic_ns": 2586498406275583,
+  "completed_utc": "2026-09-26T21:26:24.125618+00:00",
+  "exports_checked": 3,
+  "files": {
+    "${LEAN_INSTALLATION_ROOT}/bin/lean": {
+      "bytes": 49968,
+      "identity": [
+        16777231,
+        858824670,
+        33261,
+        1,
+        49968,
+        1786337446000000000,
+        1787517629783998060
+      ],
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "${LEAN_INSTALLATION_ROOT}/bin/leanchecker": {
+      "bytes": 78128,
+      "identity": [
+        16777231,
+        858824673,
+        33261,
+        1,
+        78128,
+        1786337447000000000,
+        1787517629786607579
+      ],
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "${LEAN_INSTALLATION_ROOT}/lib/lean/libleanshared.dylib": {
+      "bytes": 173473536,
+      "identity": [
+        16777231,
+        858840006,
+        33188,
+        1,
+        173473536,
+        1786337446000000000,
+        1787517633505594618
+      ],
+      "sha256": "2fc79202bfe36e7db7e2db0f3b8d3b9ede110d279cc9cf37d22327160c166ddf"
+    },
+    "${LEAN_INSTALLATION_ROOT}/src/lean/Init/Classical.lean": {
+      "bytes": 9069,
+      "identity": [
+        16777231,
+        858840136,
+        33188,
+        1,
+        9069,
+        1786336878000000000,
+        1787517633950940903
+      ],
+      "sha256": "4e3bb021681d948c72dd3ab90d849e67999776dcabca4de55e8da14593474815"
+    },
+    "${LEAN_INSTALLATION_ROOT}/src/lean/Lean/Elab/Tactic/Classical.lean": {
+      "bytes": 947,
+      "identity": [
+        16777231,
+        858841554,
+        33188,
+        1,
+        947,
+        1786336878000000000,
+        1787517634091642499
+      ],
+      "sha256": "4f8349eeb64c77347235883eda610324eeb76d40acac524b0500c4fde775db5a"
+    },
+    "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}/BOUNDARY_EXTERNAL_INPUT_PINS.json": {
+      "bytes": 5616,
+      "identity": [
+        16777231,
+        948968580,
+        33188,
+        1,
+        5616,
+        1789334362628780866,
+        1789334362628780866
+      ],
+      "sha256": "183c6ef6448ddefca75dbe69b35b59639379d22b94726ca850c00d5021685d54"
+    },
+    "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}/inputs/view-successor/INSTALLED_BYTE_PINS.json": {
+      "bytes": 79465844,
+      "identity": [
+        16777231,
+        948967161,
+        33188,
+        1,
+        79465844,
+        1789333838526763493,
+        1789333838526763493
+      ],
+      "sha256": "bfb616da0626b7cfdcce7986f69583842eb4a2fee436e0c0491e2d977d73ad15"
+    },
+    "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}/inputs/view-successor/LOOKUP_NAMESPACES.json": {
+      "bytes": 17521487,
+      "identity": [
+        16777231,
+        948967162,
+        33188,
+        1,
+        17521487,
+        1789333838568860486,
+        1789333838568860486
+      ],
+      "sha256": "fbe1dfc40d6a33d1e84e46dec9310b4c3b38ebe42f1d8604860e370ade522196"
+    },
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py": {
+      "bytes": 27277,
+      "identity": [
+        16777231,
+        932322219,
+        33188,
+        1,
+        27277,
+        1788863443127284144,
+        1788865565433617174
+      ],
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/lake-manifest.json": {
+      "bytes": 3144,
+      "identity": [
+        16777231,
+        924801089,
+        33188,
+        1,
+        3144,
+        1788495973000000000,
+        1788578758439315095
+      ],
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/lakefile.toml": {
+      "bytes": 243,
+      "identity": [
+        16777231,
+        924801090,
+        33188,
+        1,
+        243,
+        1788495973000000000,
+        1788578758439502136
+      ],
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/lean-toolchain": {
+      "bytes": 25,
+      "identity": [
+        16777231,
+        924801091,
+        33188,
+        1,
+        25,
+        1788495973000000000,
+        1788578758439828177
+      ],
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "${HISTORICAL_DEPENDENCY_ROOT}/scripts/check-lean-finite-convergence.py": {
+      "bytes": 58665,
+      "identity": [
+        16777231,
+        924801637,
+        33188,
+        1,
+        58665,
+        1788495973000000000,
+        1788578758673032477
+      ],
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "${HISTORICAL_DEPENDENCY_ROOT}/scripts/check-lean-sxpid3-informative-invariance.py": {
+      "bytes": 17039,
+      "identity": [
+        16777231,
+        924801644,
+        33261,
+        1,
+        17039,
+        1788495973000000000,
+        1788578758675481635
+      ],
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/F1F2CandidateRoot.lean": {
+      "bytes": 251,
+      "identity": [
+        16777231,
+        962453535,
+        33188,
+        1,
+        251,
+        1790239377436068837,
+        1790287307086912713
+      ],
+      "sha256": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        962453531,
+        33188,
+        1,
+        3873,
+        1790239377433573733,
+        1790287307086227009
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        962453528,
+        33188,
+        1,
+        12861,
+        1790239377433720649,
+        1790287307085813720
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        962453529,
+        33188,
+        1,
+        3492,
+        1790239377433812231,
+        1790287307086022635
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        962453534,
+        33188,
+        1,
+        9093,
+        1790239377434063271,
+        1790287307086651881
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        962453533,
+        33188,
+        1,
+        27203,
+        1790239377434168812,
+        1790287307086481882
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        962453544,
+        33188,
+        1,
+        11737,
+        1790239377434419143,
+        1790287307088477327
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        962453537,
+        33188,
+        1,
+        7101,
+        1790239377434570766,
+        1790287307087201252
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/Candidate.lean": {
+      "bytes": 9394,
+      "identity": [
+        16777231,
+        962453542,
+        33188,
+        1,
+        9394,
+        1790287307091031475,
+        1790287307091031475
+      ],
+      "sha256": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/HostileTargets.lean": {
+      "bytes": 5931,
+      "identity": [
+        16777231,
+        962453539,
+        33188,
+        1,
+        5931,
+        1790239377436232627,
+        1790287307087642207
+      ],
+      "sha256": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/ReviewerControls.lean": {
+      "bytes": 4752,
+      "identity": [
+        16777231,
+        962453541,
+        33188,
+        1,
+        4752,
+        1790239377436386334,
+        1790287307087987205
+      ],
+      "sha256": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/SemanticJudge.lean": {
+      "bytes": 2120,
+      "identity": [
+        16777231,
+        962453540,
+        33188,
+        1,
+        2120,
+        1790239377434880264,
+        1790287307087856748
+      ],
+      "sha256": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/AliasTargets.lean": {
+      "bytes": 570,
+      "identity": [
+        16777231,
+        962453523,
+        33188,
+        1,
+        570,
+        1790239377434991721,
+        1790287307084726478
+      ],
+      "sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/Contract.lean": {
+      "bytes": 3389,
+      "identity": [
+        16777231,
+        962453524,
+        33188,
+        1,
+        3389,
+        1790239377435069762,
+        1790287307085003726
+      ],
+      "sha256": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44"
+    },
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/RawTargets.lean": {
+      "bytes": 2680,
+      "identity": [
+        16777231,
+        962453525,
+        33188,
+        1,
+        2680,
+        1790239377435147595,
+        1790287307085253557
+      ],
+      "sha256": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/F4CandidateRoot.lean": {
+      "bytes": 142,
+      "identity": [
+        16777231,
+        962154326,
+        33188,
+        1,
+        142,
+        1790220933890422378,
+        1790220933890422378
+      ],
+      "sha256": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        962154348,
+        33188,
+        1,
+        3873,
+        1790220933893461595,
+        1790220933893461595
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        962154345,
+        33188,
+        1,
+        12861,
+        1790220933893193094,
+        1790220933893193094
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        962154346,
+        33188,
+        1,
+        3492,
+        1790220933893314553,
+        1790220933893314553
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        962154338,
+        33188,
+        1,
+        9093,
+        1790220933892243633,
+        1790220933892243633
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        962154337,
+        33188,
+        1,
+        27203,
+        1790220933892005883,
+        1790220933892005883
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        962154342,
+        33188,
+        1,
+        11737,
+        1790220933892854635,
+        1790220933892854635
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        962154340,
+        33188,
+        1,
+        7101,
+        1790220933892594968,
+        1790220933892594968
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixF4/Candidate.lean": {
+      "bytes": 1528,
+      "identity": [
+        16777231,
+        962154331,
+        33188,
+        1,
+        1528,
+        1790220933891014713,
+        1790220933891014713
+      ],
+      "sha256": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixF4/HostileTargets.lean": {
+      "bytes": 2487,
+      "identity": [
+        16777231,
+        962154328,
+        33188,
+        1,
+        2487,
+        1790220933890607712,
+        1790220933890607712
+      ],
+      "sha256": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixF4/ReviewerControls.lean": {
+      "bytes": 3543,
+      "identity": [
+        16777231,
+        962154330,
+        33188,
+        1,
+        3543,
+        1790220933890852088,
+        1790220933890852088
+      ],
+      "sha256": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixF4/SemanticJudge.lean": {
+      "bytes": 1245,
+      "identity": [
+        16777231,
+        962154329,
+        33188,
+        1,
+        1245,
+        1790220933890730088,
+        1790220933890730088
+      ],
+      "sha256": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/AliasTargets.lean": {
+      "bytes": 570,
+      "identity": [
+        16777231,
+        962154333,
+        33188,
+        1,
+        570,
+        1790220933891237047,
+        1790220933891237047
+      ],
+      "sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/Contract.lean": {
+      "bytes": 3389,
+      "identity": [
+        16777231,
+        962154334,
+        33188,
+        1,
+        3389,
+        1790220933891347673,
+        1790220933891347673
+      ],
+      "sha256": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44"
+    },
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/RawTargets.lean": {
+      "bytes": 2680,
+      "identity": [
+        16777231,
+        962154335,
+        33188,
+        1,
+        2680,
+        1790220933891464173,
+        1790220933891464173
+      ],
+      "sha256": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035"
+    },
+    "${EXECUTION_ROOT}/ADMISSION.json": {
+      "bytes": 1365,
+      "identity": [
+        16777231,
+        966064288,
+        33188,
+        1,
+        1365,
+        1790457603465394427,
+        1790457603465394427
+      ],
+      "sha256": "485d1868d4e75996142a880309d38dda23fcfc8839400e1146967f31d87761ea"
+    },
+    "${EXECUTION_ROOT}/INVENTORY_OUTER_RESULT.json": {
+      "bytes": 1482,
+      "identity": [
+        16777231,
+        966064163,
+        33188,
+        1,
+        1482,
+        1790457580112040669,
+        1790457580112040669
+      ],
+      "sha256": "395cb1f50db3f3e36701875e5aee4c8ad983f30bb6ac5f3d4c9e937c7368b3d5"
+    },
+    "${EXECUTION_ROOT}/ORIGINAL_CLOCK.json": {
+      "bytes": 1184,
+      "identity": [
+        16777231,
+        966058844,
+        33188,
+        1,
+        1184,
+        1790457544586937697,
+        1790457544586937697
+      ],
+      "sha256": "6fb2ff0305b1b099393b190b882208852fffee5e50b8c29be4b3988b1976dfc5"
+    },
+    "${EXECUTION_ROOT}/OUTER_RESULT.json": {
+      "bytes": 66117,
+      "identity": [
+        16777231,
+        966079454,
+        33188,
+        1,
+        66117,
+        1790457896070763790,
+        1790457896070763790
+      ],
+      "sha256": "9dd12e1ad394e54eed06e829a3e6151aea75c1b5f24f795491f5882ce7a331fb"
+    },
+    "${EXECUTION_ROOT}/boundary/INSTALLED_ADMISSION.json": {
+      "bytes": 781,
+      "identity": [
+        16777231,
+        966064158,
+        33188,
+        1,
+        781,
+        1790457579878218098,
+        1790457579878218098
+      ],
+      "sha256": "d68c34c6bac0d6c51de88a81edcbdf7f57cc3b73471c13bc1511db1ca4005a61"
+    },
+    "${EXECUTION_ROOT}/boundary/INSTALLED_POST.json": {
+      "bytes": 776,
+      "identity": [
+        16777231,
+        966079364,
+        33188,
+        1,
+        776,
+        1790457895630866003,
+        1790457895630866003
+      ],
+      "sha256": "36bd0aa2fbc0b9e27eee05f9352d2d64a877a029de5fff232ebb990372ce8676"
+    },
+    "${EXECUTION_ROOT}/boundary/INSTALLED_PRE.json": {
+      "bytes": 775,
+      "identity": [
+        16777231,
+        966064482,
+        33188,
+        1,
+        775,
+        1790457624730843127,
+        1790457624730843127
+      ],
+      "sha256": "10f4ab37f402fbf5b70fb5c1436b265d1a40d01f09ee7c5d19a2e069e83a3a26"
+    },
+    "${EXECUTION_ROOT}/inventory-supervision/PID.json": {
+      "bytes": 155,
+      "identity": [
+        16777231,
+        966058855,
+        33188,
+        1,
+        155,
+        1790457544807245672,
+        1790457544807245672
+      ],
+      "sha256": "5cf7bf0ef5f0790ea4844581ccab02f9baa9cbe2a7286034631aa278a6450ae9"
+    },
+    "${EXECUTION_ROOT}/inventory-supervision/PROCESS_OBSERVATIONS.json": {
+      "bytes": 30979,
+      "identity": [
+        16777231,
+        966064161,
+        33188,
+        1,
+        30979,
+        1790457579979066863,
+        1790457579979066863
+      ],
+      "sha256": "88584ddcac9bacd5b5276c4312b99e5067f19acf290033b42240f0ebcdb1bef4"
+    },
+    "${EXECUTION_ROOT}/inventory-supervision/REGISTERED.json": {
+      "bytes": 1040,
+      "identity": [
+        16777231,
+        966058854,
+        33188,
+        1,
+        1040,
+        1790457544805357307,
+        1790457544805357307
+      ],
+      "sha256": "8084a9675340dfb064365fe2a2d26b9d90fb56196307319257b6926a1ba48ca2"
+    },
+    "${EXECUTION_ROOT}/inventory-supervision/RESULT.json": {
+      "bytes": 1278,
+      "identity": [
+        16777231,
+        966064162,
+        33188,
+        1,
+        1278,
+        1790457579979154071,
+        1790457579979154071
+      ],
+      "sha256": "3fe9d8679c307c9fed505fa52cbae9587a5b605a591708298fda039f7227f9af"
+    },
+    "${EXECUTION_ROOT}/inventory-supervision/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064160,
+        33188,
+        1,
+        0,
+        1790457579978795990,
+        1790457579978815448
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/inventory-supervision/stdout.log": {
+      "bytes": 367,
+      "identity": [
+        16777231,
+        966064159,
+        33188,
+        1,
+        367,
+        1790457579978716157,
+        1790457579978716157
+      ],
+      "sha256": "3c13205cf1ca75dab7c122fed95afdcec47df8e15814d83ab49f0cb65f030db0"
+    },
+    "${EXECUTION_ROOT}/native/00-boundary-PRE/command.json": {
+      "bytes": 1503,
+      "identity": [
+        16777231,
+        966064485,
+        33188,
+        1,
+        1503,
+        1790457624849543466,
+        1790457624849543466
+      ],
+      "sha256": "2538a4c91a0f6433cc4f2387a010c8a9069df1febbfa2542390f6fdd3f03a67d"
+    },
+    "${EXECUTION_ROOT}/native/00-boundary-PRE/registered.json": {
+      "bytes": 3863,
+      "identity": [
+        16777231,
+        966064341,
+        33188,
+        1,
+        3863,
+        1790457603883147954,
+        1790457603883147954
+      ],
+      "sha256": "1a024c96e570b7e6f7c094caf0a827d3b35e2a039a1a0bf28e502e0d9dc7353a"
+    },
+    "${EXECUTION_ROOT}/native/00-boundary-PRE/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064484,
+        33188,
+        1,
+        0,
+        1790457624849368509,
+        1790457624849390925
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/00-boundary-PRE/stdout.log": {
+      "bytes": 355,
+      "identity": [
+        16777231,
+        966064483,
+        33188,
+        1,
+        355,
+        1790457624849276634,
+        1790457624849276634
+      ],
+      "sha256": "8635be1348e4e5639b51798e40a059eb25fa3947f617346030e2975b52660fed"
+    },
+    "${EXECUTION_ROOT}/native/01-tool-version/command.json": {
+      "bytes": 1023,
+      "identity": [
+        16777231,
+        966064533,
+        33188,
+        1,
+        1023,
+        1790457625916918186,
+        1790457625916918186
+      ],
+      "sha256": "12894b07b7b78deac79bedec89a29559b69370397b916b79be8bf7f56ab9ec1e"
+    },
+    "${EXECUTION_ROOT}/native/01-tool-version/registered.json": {
+      "bytes": 3384,
+      "identity": [
+        16777231,
+        966064493,
+        33188,
+        1,
+        3384,
+        1790457624877511487,
+        1790457624877511487
+      ],
+      "sha256": "164b6bbca09dc4875a60ea6f744f5d7e5c5caf3da49ec6d89cac82c125799154"
+    },
+    "${EXECUTION_ROOT}/native/01-tool-version/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064532,
+        33188,
+        1,
+        0,
+        1790457625916785186,
+        1790457625916801853
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/01-tool-version/stdout.log": {
+      "bytes": 106,
+      "identity": [
+        16777231,
+        966064531,
+        33188,
+        1,
+        106,
+        1790457625916736853,
+        1790457625916736853
+      ],
+      "sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db"
+    },
+    "${EXECUTION_ROOT}/native/02-compile-PidFiniteConvergence-Deterministic/command.json": {
+      "bytes": 1492,
+      "identity": [
+        16777231,
+        966064566,
+        33188,
+        1,
+        1492,
+        1790457627368918814,
+        1790457627368918814
+      ],
+      "sha256": "4d722c5b1db51269c1e0486d7ce2ebed5edabe82563e8ed4e371df21520a78f6"
+    },
+    "${EXECUTION_ROOT}/native/02-compile-PidFiniteConvergence-Deterministic/registered.json": {
+      "bytes": 3853,
+      "identity": [
+        16777231,
+        966064537,
+        33188,
+        1,
+        3853,
+        1790457625946986862,
+        1790457625946986862
+      ],
+      "sha256": "c772b5a279f47e7d767a88c9230458e21d230b673166e347f03664e638d92ba5"
+    },
+    "${EXECUTION_ROOT}/native/02-compile-PidFiniteConvergence-Deterministic/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064565,
+        33188,
+        1,
+        0,
+        1790457627368761065,
+        1790457627368781065
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/02-compile-PidFiniteConvergence-Deterministic/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064564,
+        33188,
+        1,
+        0,
+        1790457627368679482,
+        1790457627368706107
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/03-compile-PidFiniteConvergence-SxEventBridge/command.json": {
+      "bytes": 1490,
+      "identity": [
+        16777231,
+        966064601,
+        33188,
+        1,
+        1490,
+        1790457628989585688,
+        1790457628989585688
+      ],
+      "sha256": "60c8bb93a2fb6d07f9081c59894d98536475d0e1c46a86bd00252bff20589128"
+    },
+    "${EXECUTION_ROOT}/native/03-compile-PidFiniteConvergence-SxEventBridge/registered.json": {
+      "bytes": 3853,
+      "identity": [
+        16777231,
+        966064569,
+        33188,
+        1,
+        3853,
+        1790457627398714159,
+        1790457627398714159
+      ],
+      "sha256": "0d75eb33b54042772d0493743c6ff10c317b00e759b3ddcb352737c0ee769c05"
+    },
+    "${EXECUTION_ROOT}/native/03-compile-PidFiniteConvergence-SxEventBridge/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064600,
+        33188,
+        1,
+        0,
+        1790457628989415730,
+        1790457628989431480
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/03-compile-PidFiniteConvergence-SxEventBridge/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064599,
+        33188,
+        1,
+        0,
+        1790457628989338314,
+        1790457628989366897
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/04-compile-MgwBridgeDepsV1-SxDnf-Contract/command.json": {
+      "bytes": 1479,
+      "identity": [
+        16777231,
+        966064619,
+        33188,
+        1,
+        1479,
+        1790457630481901439,
+        1790457630481901439
+      ],
+      "sha256": "7691d660739a31410244e6b5a43d9f48c2811858ffd7e2227492cca3ada4939e"
+    },
+    "${EXECUTION_ROOT}/native/04-compile-MgwBridgeDepsV1-SxDnf-Contract/registered.json": {
+      "bytes": 3841,
+      "identity": [
+        16777231,
+        966064606,
+        33188,
+        1,
+        3841,
+        1790457629018844285,
+        1790457629018844285
+      ],
+      "sha256": "886424faa1ef33a7130e07aef6eb42517a38e52f1d54f1845276a84528f01298"
+    },
+    "${EXECUTION_ROOT}/native/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064618,
+        33188,
+        1,
+        0,
+        1790457630481738356,
+        1790457630481752773
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/04-compile-MgwBridgeDepsV1-SxDnf-Contract/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064617,
+        33188,
+        1,
+        0,
+        1790457630481664732,
+        1790457630481690565
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/05-compile-MgwBridgeDepsV1-JoinLog-Contract/command.json": {
+      "bytes": 1486,
+      "identity": [
+        16777231,
+        966064648,
+        33188,
+        1,
+        1486,
+        1790457631907892954,
+        1790457631907892954
+      ],
+      "sha256": "6be8d1b676faefc1cee419b9853335f373a6c460778b6a3bb5723c369d4cb86f"
+    },
+    "${EXECUTION_ROOT}/native/05-compile-MgwBridgeDepsV1-JoinLog-Contract/registered.json": {
+      "bytes": 3847,
+      "identity": [
+        16777231,
+        966064623,
+        33188,
+        1,
+        3847,
+        1790457630512775903,
+        1790457630512775903
+      ],
+      "sha256": "99bb3737c6b5bd29d523a1d48ae0c9175b419d231d95b36dca18a0fd62101327"
+    },
+    "${EXECUTION_ROOT}/native/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064647,
+        33188,
+        1,
+        0,
+        1790457631907731913,
+        1790457631907746371
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/05-compile-MgwBridgeDepsV1-JoinLog-Contract/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064646,
+        33188,
+        1,
+        0,
+        1790457631907656996,
+        1790457631907687621
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/06-compile-PidMgwBridge-Contract/command.json": {
+      "bytes": 1453,
+      "identity": [
+        16777231,
+        966064678,
+        33188,
+        1,
+        1453,
+        1790457633417801613,
+        1790457633417801613
+      ],
+      "sha256": "c04a05f1c194ae5f8dca2e9e57367985bb6495d748ec47afabe6266930f34cf2"
+    },
+    "${EXECUTION_ROOT}/native/06-compile-PidMgwBridge-Contract/registered.json": {
+      "bytes": 3814,
+      "identity": [
+        16777231,
+        966064652,
+        33188,
+        1,
+        3814,
+        1790457631938266712,
+        1790457631938266712
+      ],
+      "sha256": "24bbdeb8ec4c2c5c03b91700aa405836450e8ee078d0d02b06bdd00053da7aa7"
+    },
+    "${EXECUTION_ROOT}/native/06-compile-PidMgwBridge-Contract/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064677,
+        33188,
+        1,
+        0,
+        1790457633417633073,
+        1790457633417647948
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/06-compile-PidMgwBridge-Contract/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064676,
+        33188,
+        1,
+        0,
+        1790457633417556865,
+        1790457633417583031
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/07-compile-PidPrefixProbability-Contract/command.json": {
+      "bytes": 1477,
+      "identity": [
+        16777231,
+        966064698,
+        33188,
+        1,
+        1477,
+        1790457635100138707,
+        1790457635100138707
+      ],
+      "sha256": "c581579112ae72b1a65f4a73ec6366c7a02e3b67bf9d2f33faf0717905e12410"
+    },
+    "${EXECUTION_ROOT}/native/07-compile-PidPrefixProbability-Contract/registered.json": {
+      "bytes": 3838,
+      "identity": [
+        16777231,
+        966064682,
+        33188,
+        1,
+        3838,
+        1790457633450519901,
+        1790457633450519901
+      ],
+      "sha256": "4b6d4322ab2dfb2c030561e3692ee0cc8d32d2956464a1fb2d8e9ede110ace61"
+    },
+    "${EXECUTION_ROOT}/native/07-compile-PidPrefixProbability-Contract/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064697,
+        33188,
+        1,
+        0,
+        1790457635099966207,
+        1790457635099985332
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/07-compile-PidPrefixProbability-Contract/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064696,
+        33188,
+        1,
+        0,
+        1790457635099890083,
+        1790457635099916458
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/command.json": {
+      "bytes": 1483,
+      "identity": [
+        16777231,
+        966064793,
+        33188,
+        1,
+        1483,
+        1790457636042328163,
+        1790457636042328163
+      ],
+      "sha256": "1a81a1cbb4876af087c7d72cbe23efaf5916db6997432822a0896223c06da674"
+    },
+    "${EXECUTION_ROOT}/native/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/registered.json": {
+      "bytes": 3844,
+      "identity": [
+        16777231,
+        966064701,
+        33188,
+        1,
+        3844,
+        1790457635130250591,
+        1790457635130250591
+      ],
+      "sha256": "252dc08f15839a495418837646d07289d208a09f30f513e7e288f28a15178561"
+    },
+    "${EXECUTION_ROOT}/native/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064792,
+        33188,
+        1,
+        0,
+        1790457636042154705,
+        1790457636042174830
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/08-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966064791,
+        33188,
+        1,
+        0,
+        1790457636042076081,
+        1790457636042101789
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/09-compile-PidStoppedPrefixStageA-Contract/command.json": {
+      "bytes": 1483,
+      "identity": [
+        16777231,
+        966066769,
+        33188,
+        1,
+        1483,
+        1790457637593919605,
+        1790457637593919605
+      ],
+      "sha256": "98654c32515a368c0f18a1ce68d31806bb09029906cb3c29d42488acddc67ff7"
+    },
+    "${EXECUTION_ROOT}/native/09-compile-PidStoppedPrefixStageA-Contract/registered.json": {
+      "bytes": 3844,
+      "identity": [
+        16777231,
+        966064799,
+        33188,
+        1,
+        3844,
+        1790457636071625093,
+        1790457636071625093
+      ],
+      "sha256": "cb4fc06aa1a6dd44eab35037557ad60b994d40653492ce28dfdef892a3fb96e2"
+    },
+    "${EXECUTION_ROOT}/native/09-compile-PidStoppedPrefixStageA-Contract/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966066768,
+        33188,
+        1,
+        0,
+        1790457637593767981,
+        1790457637593783148
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/09-compile-PidStoppedPrefixStageA-Contract/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966066767,
+        33188,
+        1,
+        0,
+        1790457637593692981,
+        1790457637593718690
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/10-compile-PidStoppedPrefixStageA-RawTargets/command.json": {
+      "bytes": 1489,
+      "identity": [
+        16777231,
+        966066995,
+        33188,
+        1,
+        1489,
+        1790457639157880316,
+        1790457639157880316
+      ],
+      "sha256": "15944220a476f842e3ce46005df6487f24ce0e8bbf0095137d956ab5aa103b77"
+    },
+    "${EXECUTION_ROOT}/native/10-compile-PidStoppedPrefixStageA-RawTargets/registered.json": {
+      "bytes": 3850,
+      "identity": [
+        16777231,
+        966066819,
+        33188,
+        1,
+        3850,
+        1790457637625949188,
+        1790457637625949188
+      ],
+      "sha256": "14fd05f6838f8884c21d112aa95179d5ab7bdb11a9d46f74ed4e7c0861d9927f"
+    },
+    "${EXECUTION_ROOT}/native/10-compile-PidStoppedPrefixStageA-RawTargets/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966066994,
+        33188,
+        1,
+        0,
+        1790457639157662734,
+        1790457639157695317
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/10-compile-PidStoppedPrefixStageA-RawTargets/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966066993,
+        33188,
+        1,
+        0,
+        1790457639157560193,
+        1790457639157606776
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/11-compile-PidStoppedPrefixStageA-AliasTargets/command.json": {
+      "bytes": 1495,
+      "identity": [
+        16777231,
+        966067019,
+        33188,
+        1,
+        1495,
+        1790457640719542498,
+        1790457640719542498
+      ],
+      "sha256": "5b0c8ec797293ac7238c9b30c254b92a9306d7eef1eedd71415ac7d13aea1122"
+    },
+    "${EXECUTION_ROOT}/native/11-compile-PidStoppedPrefixStageA-AliasTargets/registered.json": {
+      "bytes": 3856,
+      "identity": [
+        16777231,
+        966066998,
+        33188,
+        1,
+        3856,
+        1790457639189510776,
+        1790457639189510776
+      ],
+      "sha256": "0a411dd49aa301bf3d1079ead68fa91de5b4b63fc5c23c1d3ed9f02c547ec365"
+    },
+    "${EXECUTION_ROOT}/native/11-compile-PidStoppedPrefixStageA-AliasTargets/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067018,
+        33188,
+        1,
+        0,
+        1790457640719345749,
+        1790457640719366624
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/11-compile-PidStoppedPrefixStageA-AliasTargets/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067017,
+        33188,
+        1,
+        0,
+        1790457640719253916,
+        1790457640719291416
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/12-compile-PidStoppedPrefixLegacyStageA-Contract/command.json": {
+      "bytes": 1501,
+      "identity": [
+        16777231,
+        966067123,
+        33188,
+        1,
+        1501,
+        1790457642239739937,
+        1790457642239739937
+      ],
+      "sha256": "fa81ac021bc94756b38ef5607c35a45901956cc47ca348a957c1af5777480025"
+    },
+    "${EXECUTION_ROOT}/native/12-compile-PidStoppedPrefixLegacyStageA-Contract/registered.json": {
+      "bytes": 3862,
+      "identity": [
+        16777231,
+        966067026,
+        33188,
+        1,
+        3862,
+        1790457640752098370,
+        1790457640752098370
+      ],
+      "sha256": "72e172edc79ef3f06721b603892bfe5318d5cb7b4ca3174631473cb6e9f1910c"
+    },
+    "${EXECUTION_ROOT}/native/12-compile-PidStoppedPrefixLegacyStageA-Contract/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067122,
+        33188,
+        1,
+        0,
+        1790457642239578938,
+        1790457642239598355
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/12-compile-PidStoppedPrefixLegacyStageA-Contract/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067121,
+        33188,
+        1,
+        0,
+        1790457642239493814,
+        1790457642239527730
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/13-compile-PidStoppedPrefixLegacyStageA-RawTargets/command.json": {
+      "bytes": 1507,
+      "identity": [
+        16777231,
+        966067146,
+        33188,
+        1,
+        1507,
+        1790457643748536771,
+        1790457643748536771
+      ],
+      "sha256": "405875cea44a8cf3ca6649c28b606b6563844e2d34d9c94d8e0dbb6f28bd1bb5"
+    },
+    "${EXECUTION_ROOT}/native/13-compile-PidStoppedPrefixLegacyStageA-RawTargets/registered.json": {
+      "bytes": 3868,
+      "identity": [
+        16777231,
+        966067126,
+        33188,
+        1,
+        3868,
+        1790457642270663609,
+        1790457642270663609
+      ],
+      "sha256": "c79a6704582f3e451782e2ba099738c0857a906ff16aaff44bd092c11f4aaed9"
+    },
+    "${EXECUTION_ROOT}/native/13-compile-PidStoppedPrefixLegacyStageA-RawTargets/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067145,
+        33188,
+        1,
+        0,
+        1790457643748340480,
+        1790457643748354730
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/13-compile-PidStoppedPrefixLegacyStageA-RawTargets/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067144,
+        33188,
+        1,
+        0,
+        1790457643748256106,
+        1790457643748285397
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/14-compile-PidStoppedPrefixCausal-Controls/command.json": {
+      "bytes": 1486,
+      "identity": [
+        16777231,
+        966067158,
+        33188,
+        1,
+        1486,
+        1790457645505790680,
+        1790457645505790680
+      ],
+      "sha256": "edad928615a767dfbc76912e3d0b83af9c8fe68acf6a9cd1c7620107835f48e1"
+    },
+    "${EXECUTION_ROOT}/native/14-compile-PidStoppedPrefixCausal-Controls/registered.json": {
+      "bytes": 3844,
+      "identity": [
+        16777231,
+        966067150,
+        33188,
+        1,
+        3844,
+        1790457643778332032,
+        1790457643778332032
+      ],
+      "sha256": "f6bd0ae766f5d31684bd148bd8a8d41be18d642e2c329f7f28bdeaee54177b6b"
+    },
+    "${EXECUTION_ROOT}/native/14-compile-PidStoppedPrefixCausal-Controls/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067157,
+        33188,
+        1,
+        0,
+        1790457645505636140,
+        1790457645505651223
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/14-compile-PidStoppedPrefixCausal-Controls/stdout.log": {
+      "bytes": 1549,
+      "identity": [
+        16777231,
+        966067156,
+        33188,
+        1,
+        1549,
+        1790457645505561973,
+        1790457645505561973
+      ],
+      "sha256": "c653855a14a52739ea8b78a6bcdbcbf4629eda794f4c4df77a001cf6058dcfb0"
+    },
+    "${EXECUTION_ROOT}/native/15-compile-PidStoppedPrefixCausal-AxiomControls/command.json": {
+      "bytes": 1500,
+      "identity": [
+        16777231,
+        966067174,
+        33188,
+        1,
+        1500,
+        1790457646345299714,
+        1790457646345299714
+      ],
+      "sha256": "5fa37bdbcc35872663f03bb4a171dfbc97d6a353205a0983cad3ad05562d5c5e"
+    },
+    "${EXECUTION_ROOT}/native/15-compile-PidStoppedPrefixCausal-AxiomControls/registered.json": {
+      "bytes": 3859,
+      "identity": [
+        16777231,
+        966067162,
+        33188,
+        1,
+        3859,
+        1790457645536909685,
+        1790457645536909685
+      ],
+      "sha256": "447926db36375425f0e275c219dc6197701d62c706c3efdfb805cd362ac9fa6e"
+    },
+    "${EXECUTION_ROOT}/native/15-compile-PidStoppedPrefixCausal-AxiomControls/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067173,
+        33188,
+        1,
+        0,
+        1790457646345153132,
+        1790457646345173173
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/15-compile-PidStoppedPrefixCausal-AxiomControls/stdout.log": {
+      "bytes": 133,
+      "identity": [
+        16777231,
+        966067172,
+        33188,
+        1,
+        133,
+        1790457646345074965,
+        1790457646345074965
+      ],
+      "sha256": "7b2e3bf85f40ab1b45bfd253e5711f58e498739a4d88f102b826c97aea988488"
+    },
+    "${EXECUTION_ROOT}/native/16-compile-PidStoppedPrefixF1F2-HostileTargets/command.json": {
+      "bytes": 1495,
+      "identity": [
+        16777231,
+        966067187,
+        33188,
+        1,
+        1495,
+        1790457647846920876,
+        1790457647846920876
+      ],
+      "sha256": "b7daa6e6384542bd2e6e6431edc4ebf5d1cbefa2a6bc3c619f52a89a6599756f"
+    },
+    "${EXECUTION_ROOT}/native/16-compile-PidStoppedPrefixF1F2-HostileTargets/registered.json": {
+      "bytes": 3856,
+      "identity": [
+        16777231,
+        966067178,
+        33188,
+        1,
+        3856,
+        1790457646375288558,
+        1790457646375288558
+      ],
+      "sha256": "f66d39846c07d53d98964a4ac7a5e407864063c8f939f40ed68cd766b54c47b5"
+    },
+    "${EXECUTION_ROOT}/native/16-compile-PidStoppedPrefixF1F2-HostileTargets/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067186,
+        33188,
+        1,
+        0,
+        1790457647846761877,
+        1790457647846777377
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/16-compile-PidStoppedPrefixF1F2-HostileTargets/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067185,
+        33188,
+        1,
+        0,
+        1790457647846682127,
+        1790457647846713460
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/17-compile-PidStoppedPrefixF1F2-ReviewerControls/command.json": {
+      "bytes": 1504,
+      "identity": [
+        16777231,
+        966067212,
+        33188,
+        1,
+        1504,
+        1790457649665723090,
+        1790457649665723090
+      ],
+      "sha256": "2384928b0beec6c1fabf88cf0ec7cbe2fed14f0b2b1dcf2f9f31b4a00ea9c681"
+    },
+    "${EXECUTION_ROOT}/native/17-compile-PidStoppedPrefixF1F2-ReviewerControls/registered.json": {
+      "bytes": 3862,
+      "identity": [
+        16777231,
+        966067190,
+        33188,
+        1,
+        3862,
+        1790457647877038135,
+        1790457647877038135
+      ],
+      "sha256": "50a46d14ee0a0ac5f326d0b5e12947bd67b57e5d67889d505df491b87a627748"
+    },
+    "${EXECUTION_ROOT}/native/17-compile-PidStoppedPrefixF1F2-ReviewerControls/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067211,
+        33188,
+        1,
+        0,
+        1790457649665577757,
+        1790457649665591632
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/17-compile-PidStoppedPrefixF1F2-ReviewerControls/stdout.log": {
+      "bytes": 2513,
+      "identity": [
+        16777231,
+        966067210,
+        33188,
+        1,
+        2513,
+        1790457649665509966,
+        1790457649665509966
+      ],
+      "sha256": "b87e8ca43b08b5437218ca0944d4d8e6a43331b28a4d011d922a871ef5c981a8"
+    },
+    "${EXECUTION_ROOT}/native/18-compile-PidStoppedPrefixF1F2-Candidate/command.json": {
+      "bytes": 1479,
+      "identity": [
+        16777231,
+        966067241,
+        33188,
+        1,
+        1479,
+        1790457651299269687,
+        1790457651299269687
+      ],
+      "sha256": "8458f3a583bd7ec79489ad3730eec785a09d1bde64aafbf1648fc001b3fb5c85"
+    },
+    "${EXECUTION_ROOT}/native/18-compile-PidStoppedPrefixF1F2-Candidate/registered.json": {
+      "bytes": 3841,
+      "identity": [
+        16777231,
+        966067218,
+        33188,
+        1,
+        3841,
+        1790457649697237550,
+        1790457649697237550
+      ],
+      "sha256": "0ffa3021ba14062805f07d1bf5b660cc2043fb482b1707f8341a6f1f7a2d2dc7"
+    },
+    "${EXECUTION_ROOT}/native/18-compile-PidStoppedPrefixF1F2-Candidate/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067240,
+        33188,
+        1,
+        0,
+        1790457651299107813,
+        1790457651299122646
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/18-compile-PidStoppedPrefixF1F2-Candidate/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067239,
+        33188,
+        1,
+        0,
+        1790457651299025688,
+        1790457651299053771
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/19-compile-PidStoppedPrefixF1F2-SemanticJudge/command.json": {
+      "bytes": 1493,
+      "identity": [
+        16777231,
+        966067258,
+        33188,
+        1,
+        1493,
+        1790457653331876243,
+        1790457653331876243
+      ],
+      "sha256": "95985bd84026abc8a120c1666ae7adcf0eeda256b313662574a9ef61c2507036"
+    },
+    "${EXECUTION_ROOT}/native/19-compile-PidStoppedPrefixF1F2-SemanticJudge/registered.json": {
+      "bytes": 3853,
+      "identity": [
+        16777231,
+        966067244,
+        33188,
+        1,
+        3853,
+        1790457651329680028,
+        1790457651329680028
+      ],
+      "sha256": "1c5a6b9027a09856174556777264e6d64876b28dfbdb4468ecd0c9ceb20a97d3"
+    },
+    "${EXECUTION_ROOT}/native/19-compile-PidStoppedPrefixF1F2-SemanticJudge/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067257,
+        33188,
+        1,
+        0,
+        1790457653331743369,
+        1790457653331757244
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/19-compile-PidStoppedPrefixF1F2-SemanticJudge/stdout.log": {
+      "bytes": 854,
+      "identity": [
+        16777231,
+        966067256,
+        33188,
+        1,
+        854,
+        1790457653331675161,
+        1790457653331675161
+      ],
+      "sha256": "76c465253ce5d88efe4d82a04dfb945c292f5b1aede92135679d92e5a7cde302"
+    },
+    "${EXECUTION_ROOT}/native/20-compile-F1F2CandidateRoot/command.json": {
+      "bytes": 1441,
+      "identity": [
+        16777231,
+        966067275,
+        33188,
+        1,
+        1441,
+        1790457654963507559,
+        1790457654963507559
+      ],
+      "sha256": "7da6f641a93a618a04463e0d94450b249d9dff4c7cfefdff8508457dc6bd071e"
+    },
+    "${EXECUTION_ROOT}/native/20-compile-F1F2CandidateRoot/registered.json": {
+      "bytes": 3802,
+      "identity": [
+        16777231,
+        966067261,
+        33188,
+        1,
+        3802,
+        1790457653361595296,
+        1790457653361595296
+      ],
+      "sha256": "3d44061a6d93ead2410a32fb4c6223c5433e6a9a7633a5d42e31d6ce61a38ba3"
+    },
+    "${EXECUTION_ROOT}/native/20-compile-F1F2CandidateRoot/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067274,
+        33188,
+        1,
+        0,
+        1790457654963340518,
+        1790457654963359018
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/20-compile-F1F2CandidateRoot/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067273,
+        33188,
+        1,
+        0,
+        1790457654963268019,
+        1790457654963293519
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/21-compile-PidStoppedPrefixF4-HostileTargets/command.json": {
+      "bytes": 1489,
+      "identity": [
+        16777231,
+        966067295,
+        33188,
+        1,
+        1489,
+        1790457656406422111,
+        1790457656406422111
+      ],
+      "sha256": "f87940ece754aa8b618bf6d88eb0a2f9a66a485af6f3910d1a1172cab2d5c8e6"
+    },
+    "${EXECUTION_ROOT}/native/21-compile-PidStoppedPrefixF4-HostileTargets/registered.json": {
+      "bytes": 3850,
+      "identity": [
+        16777231,
+        966067279,
+        33188,
+        1,
+        3850,
+        1790457654993597110,
+        1790457654993597110
+      ],
+      "sha256": "f62060efb32592e0c3be36f1b8267b406d26f8d7affba835974687657dd534ac"
+    },
+    "${EXECUTION_ROOT}/native/21-compile-PidStoppedPrefixF4-HostileTargets/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067294,
+        33188,
+        1,
+        0,
+        1790457656406274403,
+        1790457656406288611
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/21-compile-PidStoppedPrefixF4-HostileTargets/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067293,
+        33188,
+        1,
+        0,
+        1790457656406200695,
+        1790457656406227403
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/22-compile-PidStoppedPrefixF4-ReviewerControls/command.json": {
+      "bytes": 1496,
+      "identity": [
+        16777231,
+        966067309,
+        33188,
+        1,
+        1496,
+        1790457658134528714,
+        1790457658134528714
+      ],
+      "sha256": "6dd1afd8996836c9ce6d2246c7cfa33ae530a949c7ee38cb877e591f65b89c73"
+    },
+    "${EXECUTION_ROOT}/native/22-compile-PidStoppedPrefixF4-ReviewerControls/registered.json": {
+      "bytes": 3856,
+      "identity": [
+        16777231,
+        966067298,
+        33188,
+        1,
+        3856,
+        1790457656434897420,
+        1790457656434897420
+      ],
+      "sha256": "dc8f21fe10426d3adf75c8ed005b2e16e15f21cb2b0f0d5ae4861735bff17843"
+    },
+    "${EXECUTION_ROOT}/native/22-compile-PidStoppedPrefixF4-ReviewerControls/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067308,
+        33188,
+        1,
+        0,
+        1790457658134355507,
+        1790457658134370465
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/22-compile-PidStoppedPrefixF4-ReviewerControls/stdout.log": {
+      "bytes": 1565,
+      "identity": [
+        16777231,
+        966067307,
+        33188,
+        1,
+        1565,
+        1790457658134287174,
+        1790457658134287174
+      ],
+      "sha256": "98626a4cc50560a57ad26f1efdce0810915869cb664c37e2a3790e8c29004dc3"
+    },
+    "${EXECUTION_ROOT}/native/23-compile-PidStoppedPrefixF4-Candidate/command.json": {
+      "bytes": 1472,
+      "identity": [
+        16777231,
+        966067320,
+        33188,
+        1,
+        1472,
+        1790457659642381177,
+        1790457659642381177
+      ],
+      "sha256": "3b674869059cfb950a1fd192edb5d795e5a4c4b5fbdf067cf6f58f1f5d46079f"
+    },
+    "${EXECUTION_ROOT}/native/23-compile-PidStoppedPrefixF4-Candidate/registered.json": {
+      "bytes": 3835,
+      "identity": [
+        16777231,
+        966067312,
+        33188,
+        1,
+        3835,
+        1790457658165919592,
+        1790457658165919592
+      ],
+      "sha256": "8aa8cb03330c4bd8945c403201593196a675eacfac1fe3dfda8451bc79dcbd28"
+    },
+    "${EXECUTION_ROOT}/native/23-compile-PidStoppedPrefixF4-Candidate/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067319,
+        33188,
+        1,
+        0,
+        1790457659642206303,
+        1790457659642221845
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/23-compile-PidStoppedPrefixF4-Candidate/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067318,
+        33188,
+        1,
+        0,
+        1790457659642137345,
+        1790457659642160053
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/24-compile-PidStoppedPrefixF4-SemanticJudge/command.json": {
+      "bytes": 1488,
+      "identity": [
+        16777231,
+        966067339,
+        33188,
+        1,
+        1488,
+        1790457661864326995,
+        1790457661864326995
+      ],
+      "sha256": "5c43eae32155cfd01c53d1ac4863ff8c116bcb2ec2d919f59b757835105198b4"
+    },
+    "${EXECUTION_ROOT}/native/24-compile-PidStoppedPrefixF4-SemanticJudge/registered.json": {
+      "bytes": 3847,
+      "identity": [
+        16777231,
+        966067323,
+        33188,
+        1,
+        3847,
+        1790457659676971413,
+        1790457659676971413
+      ],
+      "sha256": "927ff1cd94ccc43e23caa9e13da82e3155d0830e831829db63fbc03200fe5f6f"
+    },
+    "${EXECUTION_ROOT}/native/24-compile-PidStoppedPrefixF4-SemanticJudge/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067338,
+        33188,
+        1,
+        0,
+        1790457661864173496,
+        1790457661864188621
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/24-compile-PidStoppedPrefixF4-SemanticJudge/stdout.log": {
+      "bytes": 1490,
+      "identity": [
+        16777231,
+        966067337,
+        33188,
+        1,
+        1490,
+        1790457661864122954,
+        1790457661864122954
+      ],
+      "sha256": "a4e670f895429fddf65617d8c86b4bff938465f27abc40d08004d3cfdbc81574"
+    },
+    "${EXECUTION_ROOT}/native/25-compile-F4CandidateRoot/command.json": {
+      "bytes": 1434,
+      "identity": [
+        16777231,
+        966067355,
+        33188,
+        1,
+        1434,
+        1790457663764451327,
+        1790457663764451327
+      ],
+      "sha256": "ff2b6abcf1a898ddd3ad23a10fb776864f5da964f4f67c5acf202568d8ff8497"
+    },
+    "${EXECUTION_ROOT}/native/25-compile-F4CandidateRoot/registered.json": {
+      "bytes": 3796,
+      "identity": [
+        16777231,
+        966067342,
+        33188,
+        1,
+        3796,
+        1790457661898206068,
+        1790457661898206068
+      ],
+      "sha256": "759309c5966cf8d7d94c984d8a649c0e160b8c5f29e8f6c203adac4765bf4869"
+    },
+    "${EXECUTION_ROOT}/native/25-compile-F4CandidateRoot/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067354,
+        33188,
+        1,
+        0,
+        1790457663764277911,
+        1790457663764300120
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/25-compile-F4CandidateRoot/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067353,
+        33188,
+        1,
+        0,
+        1790457663764211787,
+        1790457663764231703
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/26-compile-StoppedPrefixProbabilityRoot/command.json": {
+      "bytes": 1474,
+      "identity": [
+        16777231,
+        966067369,
+        33188,
+        1,
+        1474,
+        1790457665619568768,
+        1790457665619568768
+      ],
+      "sha256": "10741fe63a092b35b5a949ab50ad37f95d6360780ee665542343e9c116280b4b"
+    },
+    "${EXECUTION_ROOT}/native/26-compile-StoppedPrefixProbabilityRoot/registered.json": {
+      "bytes": 3835,
+      "identity": [
+        16777231,
+        966067358,
+        33188,
+        1,
+        3835,
+        1790457663797711612,
+        1790457663797711612
+      ],
+      "sha256": "a46033623fbb812a0ec6986e9a0610c5d75889d0211641ec63530beb73f7642f"
+    },
+    "${EXECUTION_ROOT}/native/26-compile-StoppedPrefixProbabilityRoot/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067368,
+        33188,
+        1,
+        0,
+        1790457665619409061,
+        1790457665619424227
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/26-compile-StoppedPrefixProbabilityRoot/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966067367,
+        33188,
+        1,
+        0,
+        1790457665619327603,
+        1790457665619360394
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/27-fresh-kernel/command.json": {
+      "bytes": 1064,
+      "identity": [
+        16777231,
+        966079321,
+        33188,
+        1,
+        1064,
+        1790457872540182986,
+        1790457872540182986
+      ],
+      "sha256": "2dfca5a3ad40532b4b5404e8b474d41e571efad3a0a8faf584b307c555fef3af"
+    },
+    "${EXECUTION_ROOT}/native/27-fresh-kernel/registered.json": {
+      "bytes": 3425,
+      "identity": [
+        16777231,
+        966067372,
+        33188,
+        1,
+        3425,
+        1790457665650118359,
+        1790457665650118359
+      ],
+      "sha256": "0af795fe4ab79738ec10c532d9426b1bc245437103ed6e05cba84187cc2f4f9b"
+    },
+    "${EXECUTION_ROOT}/native/27-fresh-kernel/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966079320,
+        33188,
+        1,
+        0,
+        1790457872540032279,
+        1790457872540047070
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/27-fresh-kernel/stdout.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966079319,
+        33188,
+        1,
+        0,
+        1790457872539942487,
+        1790457872539978154
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/28-boundary-POST/command.json": {
+      "bytes": 1504,
+      "identity": [
+        16777231,
+        966079367,
+        33188,
+        1,
+        1504,
+        1790457895742572003,
+        1790457895742572003
+      ],
+      "sha256": "657ae04ec9bf31378dd4952c461189a62edad62ec7660cbd562e2613882d87fe"
+    },
+    "${EXECUTION_ROOT}/native/28-boundary-POST/registered.json": {
+      "bytes": 3865,
+      "identity": [
+        16777231,
+        966079324,
+        33188,
+        1,
+        3865,
+        1790457872569371375,
+        1790457872569371375
+      ],
+      "sha256": "101416a550430696e39e2f5936a1339b056fe183fc0445dc95f07c26dc828e39"
+    },
+    "${EXECUTION_ROOT}/native/28-boundary-POST/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966079366,
+        33188,
+        1,
+        0,
+        1790457895742435129,
+        1790457895742450171
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/native/28-boundary-POST/stdout.log": {
+      "bytes": 357,
+      "identity": [
+        16777231,
+        966079365,
+        33188,
+        1,
+        357,
+        1790457895742367338,
+        1790457895742367338
+      ],
+      "sha256": "82ccdee35d8118f046763ada8c15f6fec8139311a2ac17b2ddf465f812b79f9d"
+    },
+    "${EXECUTION_ROOT}/native/RESULT.json": {
+      "bytes": 147257,
+      "identity": [
+        16777231,
+        966079449,
+        33188,
+        1,
+        147257,
+        1790457895924800010,
+        1790457895924800010
+      ],
+      "sha256": "d912f16fa11d73353aa1c7f931f336e4eab27e63d661ea673bd4d535af470678"
+    },
+    "${EXECUTION_ROOT}/native/child-01.json": {
+      "bytes": 919,
+      "identity": [
+        16777231,
+        966064339,
+        33188,
+        1,
+        919,
+        1790457603881897919,
+        1790457603881897919
+      ],
+      "sha256": "92c2fa0ced4b64311f0ba5f464cfe9690417a656ca6970e25326ceb264c0a457"
+    },
+    "${EXECUTION_ROOT}/native/child-02.json": {
+      "bytes": 440,
+      "identity": [
+        16777231,
+        966064491,
+        33188,
+        1,
+        440,
+        1790457624876024619,
+        1790457624876024619
+      ],
+      "sha256": "230300cda1a274a2ca29e83f28fa3a0efafb387eac2716af55e37a244de9dcb3"
+    },
+    "${EXECUTION_ROOT}/native/child-03.json": {
+      "bytes": 909,
+      "identity": [
+        16777231,
+        966064535,
+        33188,
+        1,
+        909,
+        1790457625945716952,
+        1790457625945716952
+      ],
+      "sha256": "98785b71a362315f18002ee0c8481ef72c4ddda4b7cce687db76672a5da7a78b"
+    },
+    "${EXECUTION_ROOT}/native/child-04.json": {
+      "bytes": 909,
+      "identity": [
+        16777231,
+        966064567,
+        33188,
+        1,
+        909,
+        1790457627397570456,
+        1790457627397570456
+      ],
+      "sha256": "644d93a7dd12041b89bfd2bb407801a99b4bd497eaa62c7e4707acf7edede9cf"
+    },
+    "${EXECUTION_ROOT}/native/child-05.json": {
+      "bytes": 897,
+      "identity": [
+        16777231,
+        966064604,
+        33188,
+        1,
+        897,
+        1790457629017668458,
+        1790457629017668458
+      ],
+      "sha256": "b674855ca089b651eecbc3d991c1999f5be7d018c1a4495d6171c1d9877c0843"
+    },
+    "${EXECUTION_ROOT}/native/child-06.json": {
+      "bytes": 903,
+      "identity": [
+        16777231,
+        966064621,
+        33188,
+        1,
+        903,
+        1790457630511516201,
+        1790457630511516201
+      ],
+      "sha256": "442d5d3838408b76ffed1c41da7ba0e6bc5e44e3e3ba7aee5099321abc3a1a07"
+    },
+    "${EXECUTION_ROOT}/native/child-07.json": {
+      "bytes": 870,
+      "identity": [
+        16777231,
+        966064650,
+        33188,
+        1,
+        870,
+        1790457631937048676,
+        1790457631937048676
+      ],
+      "sha256": "7c8790dcaed3deb526dfdd9ccd64417e3d1cf1eafa1837d77b17f497fd10e4db"
+    },
+    "${EXECUTION_ROOT}/native/child-08.json": {
+      "bytes": 894,
+      "identity": [
+        16777231,
+        966064680,
+        33188,
+        1,
+        894,
+        1790457633449080992,
+        1790457633449080992
+      ],
+      "sha256": "143cbf2ada96fadae9b66d244195176afe1584bf35cc07436d5cfde24a9fde88"
+    },
+    "${EXECUTION_ROOT}/native/child-09.json": {
+      "bytes": 900,
+      "identity": [
+        16777231,
+        966064699,
+        33188,
+        1,
+        900,
+        1790457635128930598,
+        1790457635128930598
+      ],
+      "sha256": "70386334eade2eb09970548fb97fdf47a99e89cd9a86b217d9cdc5bef0cb4ffa"
+    },
+    "${EXECUTION_ROOT}/native/child-10.json": {
+      "bytes": 901,
+      "identity": [
+        16777231,
+        966064797,
+        33188,
+        1,
+        901,
+        1790457636070401558,
+        1790457636070401558
+      ],
+      "sha256": "ff8d8eb38a69e66f156d58451a1cedf3f925b80d298a8fe2f4373061a5e786ae"
+    },
+    "${EXECUTION_ROOT}/native/child-11.json": {
+      "bytes": 907,
+      "identity": [
+        16777231,
+        966066814,
+        33188,
+        1,
+        907,
+        1790457637624325196,
+        1790457637624325196
+      ],
+      "sha256": "70c0e037102a0701f8bf7d2f12c22cda8ffa29962d737a1964c524af3c14070d"
+    },
+    "${EXECUTION_ROOT}/native/child-12.json": {
+      "bytes": 913,
+      "identity": [
+        16777231,
+        966066996,
+        33188,
+        1,
+        913,
+        1790457639188158575,
+        1790457639188158575
+      ],
+      "sha256": "2b4d15c42d5ef96d09cc35ae162e4e0ba11cf88c462dcba3d67c5fb507296c71"
+    },
+    "${EXECUTION_ROOT}/native/child-13.json": {
+      "bytes": 919,
+      "identity": [
+        16777231,
+        966067024,
+        33188,
+        1,
+        919,
+        1790457640750732752,
+        1790457640750732752
+      ],
+      "sha256": "b1833ddb2ddea24067e09a01058ea06656364853311cdb5dfca34b039a049b8d"
+    },
+    "${EXECUTION_ROOT}/native/child-14.json": {
+      "bytes": 925,
+      "identity": [
+        16777231,
+        966067124,
+        33188,
+        1,
+        925,
+        1790457642269381783,
+        1790457642269381783
+      ],
+      "sha256": "8ce98673048b2943708561dcac77e3622ab808ac3bff9281642ce63131eea49a"
+    },
+    "${EXECUTION_ROOT}/native/child-15.json": {
+      "bytes": 901,
+      "identity": [
+        16777231,
+        966067148,
+        33188,
+        1,
+        901,
+        1790457643777116247,
+        1790457643777116247
+      ],
+      "sha256": "d614a8c0daa09e83c9b75126860f465b0efe09f8cdf942bf5f20862abebc85a5"
+    },
+    "${EXECUTION_ROOT}/native/child-16.json": {
+      "bytes": 916,
+      "identity": [
+        16777231,
+        966067160,
+        33188,
+        1,
+        916,
+        1790457645535564358,
+        1790457645535564358
+      ],
+      "sha256": "deb76a70ff640e9083db16ee51fa5c7ada04f8f6418f8424a40acbb5fd43f9c1"
+    },
+    "${EXECUTION_ROOT}/native/child-17.json": {
+      "bytes": 913,
+      "identity": [
+        16777231,
+        966067176,
+        33188,
+        1,
+        913,
+        1790457646374091689,
+        1790457646374091689
+      ],
+      "sha256": "d1b441e338a10d01cb71d4bd9c37d994eabb383e5e747fb65b9a96e6e1073f7c"
+    },
+    "${EXECUTION_ROOT}/native/child-18.json": {
+      "bytes": 919,
+      "identity": [
+        16777231,
+        966067188,
+        33188,
+        1,
+        919,
+        1790457647875795183,
+        1790457647875795183
+      ],
+      "sha256": "965147c10785175b9faeb2fe8885c3492bda37d74969d9f3b8dd42ecc5615163"
+    },
+    "${EXECUTION_ROOT}/native/child-19.json": {
+      "bytes": 898,
+      "identity": [
+        16777231,
+        966067216,
+        33188,
+        1,
+        898,
+        1790457649695992765,
+        1790457649695992765
+      ],
+      "sha256": "9465d9de925708aaf942255b35eeae77134fde097c30abe4d4308ec33c2a10a9"
+    },
+    "${EXECUTION_ROOT}/native/child-20.json": {
+      "bytes": 910,
+      "identity": [
+        16777231,
+        966067242,
+        33188,
+        1,
+        910,
+        1790457651328421285,
+        1790457651328421285
+      ],
+      "sha256": "f5c5d70659c45cbc0a5e63bd3c1e171129b644eff6bec8275258f87c3743656d"
+    },
+    "${EXECUTION_ROOT}/native/child-21.json": {
+      "bytes": 859,
+      "identity": [
+        16777231,
+        966067259,
+        33188,
+        1,
+        859,
+        1790457653360444344,
+        1790457653360444344
+      ],
+      "sha256": "925268bda197005eab655ea64b9a5e3336882d006c5a366ef437ae3d4cf95041"
+    },
+    "${EXECUTION_ROOT}/native/child-22.json": {
+      "bytes": 907,
+      "identity": [
+        16777231,
+        966067277,
+        33188,
+        1,
+        907,
+        1790457654992417283,
+        1790457654992417283
+      ],
+      "sha256": "9521452746f67e9c37c7b3f8442777988dd1128667f3c56b4592ebf8d8c4b90d"
+    },
+    "${EXECUTION_ROOT}/native/child-23.json": {
+      "bytes": 913,
+      "identity": [
+        16777231,
+        966067296,
+        33188,
+        1,
+        913,
+        1790457656433714677,
+        1790457656433714677
+      ],
+      "sha256": "e9f377a3e67413549980dc596408363c49c1fbad2ca4f32b1f52e87a69eb4bbc"
+    },
+    "${EXECUTION_ROOT}/native/child-24.json": {
+      "bytes": 892,
+      "identity": [
+        16777231,
+        966067310,
+        33188,
+        1,
+        892,
+        1790457658164659057,
+        1790457658164659057
+      ],
+      "sha256": "5d904c2fe1df6f5fc19727202977ede8dbde71b21cca9795e1b508561520999f"
+    },
+    "${EXECUTION_ROOT}/native/child-25.json": {
+      "bytes": 904,
+      "identity": [
+        16777231,
+        966067321,
+        33188,
+        1,
+        904,
+        1790457659675082257,
+        1790457659675082257
+      ],
+      "sha256": "3d2cb0aba90582bc461ee44d48aa1402f7385a92b747863c920a760f914d6867"
+    },
+    "${EXECUTION_ROOT}/native/child-26.json": {
+      "bytes": 853,
+      "identity": [
+        16777231,
+        966067340,
+        33188,
+        1,
+        853,
+        1790457661896219245,
+        1790457661896219245
+      ],
+      "sha256": "7355aa9865eb765e4a8fd89c806a0e0e64bf83a7ef0d058a9121cd6e05938a25"
+    },
+    "${EXECUTION_ROOT}/native/child-27.json": {
+      "bytes": 892,
+      "identity": [
+        16777231,
+        966067356,
+        33188,
+        1,
+        892,
+        1790457663795991954,
+        1790457663795991954
+      ],
+      "sha256": "a33c0696a4870016ca59201ce414319d54d505ffff20895630de0b1b333c4a0c"
+    },
+    "${EXECUTION_ROOT}/native/child-28.json": {
+      "bytes": 482,
+      "identity": [
+        16777231,
+        966067370,
+        33188,
+        1,
+        482,
+        1790457665648927948,
+        1790457665648927948
+      ],
+      "sha256": "370223aaf0e24b453880e1b105a9b1a3238a776c8834521adabb2d3daaf6f402"
+    },
+    "${EXECUTION_ROOT}/native/child-29.json": {
+      "bytes": 922,
+      "identity": [
+        16777231,
+        966079322,
+        33188,
+        1,
+        922,
+        1790457872567734384,
+        1790457872567734384
+      ],
+      "sha256": "53cb2851081e5bb6531398316552cb7dadb24d94c82bb2635032a3338f38aab8"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/0448c4bbcd62562aef267510ab4a90ebd62b878c2e1676a2541998926bcfbf8e": {
+      "bytes": 137680,
+      "identity": [
+        16777231,
+        966079439,
+        33188,
+        1,
+        137680,
+        1790457895860362513,
+        1790457895860362513
+      ],
+      "sha256": "0448c4bbcd62562aef267510ab4a90ebd62b878c2e1676a2541998926bcfbf8e"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/08020e586d471d0810cf3a11074fa7daa7c915f755fc8a4b5de511daeebe8b03": {
+      "bytes": 55640,
+      "identity": [
+        16777231,
+        966079431,
+        33188,
+        1,
+        55640,
+        1790457895859644392,
+        1790457895859644392
+      ],
+      "sha256": "08020e586d471d0810cf3a11074fa7daa7c915f755fc8a4b5de511daeebe8b03"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035": {
+      "bytes": 2680,
+      "identity": [
+        16777231,
+        966079394,
+        33188,
+        1,
+        2680,
+        1790457895849109530,
+        1790457895849109530
+      ],
+      "sha256": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        966079381,
+        33188,
+        1,
+        3873,
+        1790457895848225785,
+        1790457895848225785
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554": {
+      "bytes": 49968,
+      "identity": [
+        16777231,
+        966079369,
+        33188,
+        1,
+        49968,
+        1790457895770049110,
+        1790457895770049110
+      ],
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/238a8c9fc0fa6d94aabc07ec690314352d5210ba29cf097232412f4abfa3ac20": {
+      "bytes": 5240,
+      "identity": [
+        16777231,
+        966079433,
+        33188,
+        1,
+        5240,
+        1790457895859817141,
+        1790457895859817141
+      ],
+      "sha256": "238a8c9fc0fa6d94aabc07ec690314352d5210ba29cf097232412f4abfa3ac20"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8": {
+      "bytes": 126464,
+      "identity": [
+        16777231,
+        966079428,
+        33188,
+        1,
+        126464,
+        1790457895855921953,
+        1790457895855921953
+      ],
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/2533ef645aae198f731bbe163e6dd9558d479566206f945dc0ec775201e68b19": {
+      "bytes": 24513,
+      "identity": [
+        16777231,
+        966079400,
+        33188,
+        1,
+        24513,
+        1790457895849718444,
+        1790457895849718444
+      ],
+      "sha256": "2533ef645aae198f731bbe163e6dd9558d479566206f945dc0ec775201e68b19"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880": {
+      "bytes": 78128,
+      "identity": [
+        16777231,
+        966079370,
+        33188,
+        1,
+        78128,
+        1790457895770359108,
+        1790457895770359108
+      ],
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9": {
+      "bytes": 122808,
+      "identity": [
+        16777231,
+        966079429,
+        33188,
+        1,
+        122808,
+        1790457895856031703,
+        1790457895856031703
+      ],
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363": {
+      "bytes": 2120,
+      "identity": [
+        16777231,
+        966079391,
+        33188,
+        1,
+        2120,
+        1790457895848949115,
+        1790457895848949115
+      ],
+      "sha256": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc": {
+      "bytes": 17039,
+      "identity": [
+        16777231,
+        966079379,
+        33188,
+        1,
+        17039,
+        1790457895848061952,
+        1790457895848061952
+      ],
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/2ad625b67aa8434ea267e18836bd9e2b7e002b7b6e2c8303eff36ee29760f468": {
+      "bytes": 2776,
+      "identity": [
+        16777231,
+        966079446,
+        33188,
+        1,
+        2776,
+        1790457895862065171,
+        1790457895862065171
+      ],
+      "sha256": "2ad625b67aa8434ea267e18836bd9e2b7e002b7b6e2c8303eff36ee29760f468"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2": {
+      "bytes": 2487,
+      "identity": [
+        16777231,
+        966079397,
+        33188,
+        1,
+        2487,
+        1790457895849474737,
+        1790457895849474737
+      ],
+      "sha256": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/2e3983ddaf0cd5ff167d2da0b47ed46315dea9cb61d393d8cf96dda63853bd9f": {
+      "bytes": 10543,
+      "identity": [
+        16777231,
+        966079402,
+        33188,
+        1,
+        10543,
+        1790457895849847235,
+        1790457895849847235
+      ],
+      "sha256": "2e3983ddaf0cd5ff167d2da0b47ed46315dea9cb61d393d8cf96dda63853bd9f"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/2e79854b257fa27c6da1fd3b48a224c9497a9424cdbf3c984c266fb04d370e7d": {
+      "bytes": 5552,
+      "identity": [
+        16777231,
+        966079404,
+        33188,
+        1,
+        5552,
+        1790457895850017109,
+        1790457895850017109
+      ],
+      "sha256": "2e79854b257fa27c6da1fd3b48a224c9497a9424cdbf3c984c266fb04d370e7d"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/2fc79202bfe36e7db7e2db0f3b8d3b9ede110d279cc9cf37d22327160c166ddf": {
+      "bytes": 173473536,
+      "identity": [
+        16777231,
+        966079371,
+        33188,
+        1,
+        173473536,
+        1790457895843776517,
+        1790457895843776517
+      ],
+      "sha256": "2fc79202bfe36e7db7e2db0f3b8d3b9ede110d279cc9cf37d22327160c166ddf"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1": {
+      "bytes": 292592,
+      "identity": [
+        16777231,
+        966079425,
+        33188,
+        1,
+        292592,
+        1790457895855557747,
+        1790457895855557747
+      ],
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b": {
+      "bytes": 25,
+      "identity": [
+        16777231,
+        966079377,
+        33188,
+        1,
+        25,
+        1790457895844558012,
+        1790457895844558012
+      ],
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/30a57f1252978d89baec3f3131e2a6d0eb1036e3b9b752db064ecb76bd4321ac": {
+      "bytes": 8149,
+      "identity": [
+        16777231,
+        966079406,
+        33188,
+        1,
+        8149,
+        1790457895850137192,
+        1790457895850137192
+      ],
+      "sha256": "30a57f1252978d89baec3f3131e2a6d0eb1036e3b9b752db064ecb76bd4321ac"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9": {
+      "bytes": 98304,
+      "identity": [
+        16777231,
+        966079424,
+        33188,
+        1,
+        98304,
+        1790457895855368581,
+        1790457895855368581
+      ],
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/395cb1f50db3f3e36701875e5aee4c8ad983f30bb6ac5f3d4c9e937c7368b3d5": {
+      "bytes": 1482,
+      "identity": [
+        16777231,
+        966079423,
+        33188,
+        1,
+        1482,
+        1790457895854776751,
+        1790457895854776751
+      ],
+      "sha256": "395cb1f50db3f3e36701875e5aee4c8ad983f30bb6ac5f3d4c9e937c7368b3d5"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        966079386,
+        33188,
+        1,
+        11737,
+        1790457895848591741,
+        1790457895848591741
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0": {
+      "bytes": 58665,
+      "identity": [
+        16777231,
+        966079378,
+        33188,
+        1,
+        58665,
+        1790457895844647637,
+        1790457895844647637
+      ],
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/404532b6b91ea4f3b1ac8c7aebcc75f28e9a5c3112864acb07a18e30d3fa444a": {
+      "bytes": 15546,
+      "identity": [
+        16777231,
+        966079407,
+        33188,
+        1,
+        15546,
+        1790457895850203858,
+        1790457895850203858
+      ],
+      "sha256": "404532b6b91ea4f3b1ac8c7aebcc75f28e9a5c3112864acb07a18e30d3fa444a"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb": {
+      "bytes": 199552,
+      "identity": [
+        16777231,
+        966079426,
+        33188,
+        1,
+        199552,
+        1790457895855711663,
+        1790457895855711663
+      ],
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243": {
+      "bytes": 9394,
+      "identity": [
+        16777231,
+        966079388,
+        33188,
+        1,
+        9394,
+        1790457895848748241,
+        1790457895848748241
+      ],
+      "sha256": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/472992c470606d28f577590decfecd7f4a20f832fd92c671bebc6d44790b5d02": {
+      "bytes": 170816,
+      "identity": [
+        16777231,
+        966079415,
+        33188,
+        1,
+        170816,
+        1790457895851143645,
+        1790457895851143645
+      ],
+      "sha256": "472992c470606d28f577590decfecd7f4a20f832fd92c671bebc6d44790b5d02"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/485d1868d4e75996142a880309d38dda23fcfc8839400e1146967f31d87761ea": {
+      "bytes": 1365,
+      "identity": [
+        16777231,
+        966079420,
+        33188,
+        1,
+        1365,
+        1790457895854611918,
+        1790457895854611918
+      ],
+      "sha256": "485d1868d4e75996142a880309d38dda23fcfc8839400e1146967f31d87761ea"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/4af9d56240d334783d8fcbd1240e59e544c431f0db014f492274a10ddd3c8169": {
+      "bytes": 7257,
+      "identity": [
+        16777231,
+        966079405,
+        33188,
+        1,
+        7257,
+        1790457895850077692,
+        1790457895850077692
+      ],
+      "sha256": "4af9d56240d334783d8fcbd1240e59e544c431f0db014f492274a10ddd3c8169"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/4e3bb021681d948c72dd3ab90d849e67999776dcabca4de55e8da14593474815": {
+      "bytes": 9069,
+      "identity": [
+        16777231,
+        966079372,
+        33188,
+        1,
+        9069,
+        1790457895844174723,
+        1790457895844174723
+      ],
+      "sha256": "4e3bb021681d948c72dd3ab90d849e67999776dcabca4de55e8da14593474815"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/4f8349eeb64c77347235883eda610324eeb76d40acac524b0500c4fde775db5a": {
+      "bytes": 947,
+      "identity": [
+        16777231,
+        966079373,
+        33188,
+        1,
+        947,
+        1790457895844267472,
+        1790457895844267472
+      ],
+      "sha256": "4f8349eeb64c77347235883eda610324eeb76d40acac524b0500c4fde775db5a"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/515e4dab6e7f20a87fa6cee031c6b8cdb1fa79f517398a21fe35be0e25285525": {
+      "bytes": 55688,
+      "identity": [
+        16777231,
+        966079434,
+        33188,
+        1,
+        55688,
+        1790457895859903682,
+        1790457895859903682
+      ],
+      "sha256": "515e4dab6e7f20a87fa6cee031c6b8cdb1fa79f517398a21fe35be0e25285525"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        966079382,
+        33188,
+        1,
+        12861,
+        1790457895848320868,
+        1790457895848320868
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/5d405fc1415b9181108b19dcf4bfd8da4b8cde55632dcda31ec7fbddec5890ca": {
+      "bytes": 1191,
+      "identity": [
+        16777231,
+        966079408,
+        33188,
+        1,
+        1191,
+        1790457895850449607,
+        1790457895850449607
+      ],
+      "sha256": "5d405fc1415b9181108b19dcf4bfd8da4b8cde55632dcda31ec7fbddec5890ca"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/5e0e2d39d492ab2b060fdb4cbab098b266283d8053a382b59bb45484d41744d5": {
+      "bytes": 159,
+      "identity": [
+        16777231,
+        966079414,
+        33188,
+        1,
+        159,
+        1790457895850965354,
+        1790457895850965354
+      ],
+      "sha256": "5e0e2d39d492ab2b060fdb4cbab098b266283d8053a382b59bb45484d41744d5"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/6030cb02d67214fb23c8e95f996c5af99becc11215c5674b25bc8b525a628789": {
+      "bytes": 82904,
+      "identity": [
+        16777231,
+        966079445,
+        33188,
+        1,
+        82904,
+        1790457895862004130,
+        1790457895862004130
+      ],
+      "sha256": "6030cb02d67214fb23c8e95f996c5af99becc11215c5674b25bc8b525a628789"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af": {
+      "bytes": 3144,
+      "identity": [
+        16777231,
+        966079375,
+        33188,
+        1,
+        3144,
+        1790457895844426305,
+        1790457895844426305
+      ],
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/6796286230af5a65102b9d43ad5ae11a12d950a238479e42068e0dfbebc6436c": {
+      "bytes": 42728,
+      "identity": [
+        16777231,
+        966079435,
+        33188,
+        1,
+        42728,
+        1790457895859998599,
+        1790457895859998599
+      ],
+      "sha256": "6796286230af5a65102b9d43ad5ae11a12d950a238479e42068e0dfbebc6436c"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/696ffa2cf9562522c387f7c2b3a990ef67e574df2d921822fe310ea35587cce0": {
+      "bytes": 5454512,
+      "identity": [
+        16777231,
+        966079416,
+        33188,
+        1,
+        5454512,
+        1790457895853293925,
+        1790457895853293925
+      ],
+      "sha256": "696ffa2cf9562522c387f7c2b3a990ef67e574df2d921822fe310ea35587cce0"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/6da98be9ca07314046042b99aca09bb35e17c1112ec8aea528424cbaeb034511": {
+      "bytes": 3588,
+      "identity": [
+        16777231,
+        966079412,
+        33188,
+        1,
+        3588,
+        1790457895850852063,
+        1790457895850852063
+      ],
+      "sha256": "6da98be9ca07314046042b99aca09bb35e17c1112ec8aea528424cbaeb034511"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/6fb2ff0305b1b099393b190b882208852fffee5e50b8c29be4b3988b1976dfc5": {
+      "bytes": 1184,
+      "identity": [
+        16777231,
+        966079421,
+        33188,
+        1,
+        1184,
+        1790457895854666418,
+        1790457895854666418
+      ],
+      "sha256": "6fb2ff0305b1b099393b190b882208852fffee5e50b8c29be4b3988b1976dfc5"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/80d8943e882f81d2b9aed35e3689be36878d34a8af5289c564856147d11a368e": {
+      "bytes": 2374000,
+      "identity": [
+        16777231,
+        966079418,
+        33188,
+        1,
+        2374000,
+        1790457895854431544,
+        1790457895854431544
+      ],
+      "sha256": "80d8943e882f81d2b9aed35e3689be36878d34a8af5289c564856147d11a368e"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/85783906d985e5ce06256a4b1620fcc3be2f3e4898390b69876594425346a092": {
+      "bytes": 297280,
+      "identity": [
+        16777231,
+        966079440,
+        33188,
+        1,
+        297280,
+        1790457895860538596,
+        1790457895860538596
+      ],
+      "sha256": "85783906d985e5ce06256a4b1620fcc3be2f3e4898390b69876594425346a092"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/8f45ffec461043b336b83c33a76b249195986b73bbc570009739072abb1599b5": {
+      "bytes": 5496,
+      "identity": [
+        16777231,
+        966079437,
+        33188,
+        1,
+        5496,
+        1790457895860179306,
+        1790457895860179306
+      ],
+      "sha256": "8f45ffec461043b336b83c33a76b249195986b73bbc570009739072abb1599b5"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        966079387,
+        33188,
+        1,
+        7101,
+        1790457895848682324,
+        1790457895848682324
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d": {
+      "bytes": 5931,
+      "identity": [
+        16777231,
+        966079389,
+        33188,
+        1,
+        5931,
+        1790457895848814782,
+        1790457895848814782
+      ],
+      "sha256": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a": {
+      "bytes": 3543,
+      "identity": [
+        16777231,
+        966079398,
+        33188,
+        1,
+        3543,
+        1790457895849530195,
+        1790457895849530195
+      ],
+      "sha256": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/a0262196605f15c20ec7559171bab0dcbfb7ca4e9b087d35ef6024e625a71b50": {
+      "bytes": 42320,
+      "identity": [
+        16777231,
+        966079432,
+        33188,
+        1,
+        42320,
+        1790457895859738600,
+        1790457895859738600
+      ],
+      "sha256": "a0262196605f15c20ec7559171bab0dcbfb7ca4e9b087d35ef6024e625a71b50"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/a0fd0a8c7c616c09689d35e8da1731c486d3f648850c6c733d8dd125391d7a90": {
+      "bytes": 1608,
+      "identity": [
+        16777231,
+        966079442,
+        33188,
+        1,
+        1608,
+        1790457895861698631,
+        1790457895861698631
+      ],
+      "sha256": "a0fd0a8c7c616c09689d35e8da1731c486d3f648850c6c733d8dd125391d7a90"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49": {
+      "bytes": 142,
+      "identity": [
+        16777231,
+        966079395,
+        33188,
+        1,
+        142,
+        1790457895849162238,
+        1790457895849162238
+      ],
+      "sha256": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/a6efef42d0f2111765488bcc6749a2ede695cca2389e28413b39a4b696381bce": {
+      "bytes": 58367,
+      "identity": [
+        16777231,
+        966079419,
+        33188,
+        1,
+        58367,
+        1790457895854551794,
+        1790457895854551794
+      ],
+      "sha256": "a6efef42d0f2111765488bcc6749a2ede695cca2389e28413b39a4b696381bce"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/abdeb3fb819978c0b55a513ffcd4af1c632c254c5664513ee79f13700c47795e": {
+      "bytes": 116568,
+      "identity": [
+        16777231,
+        966079436,
+        33188,
+        1,
+        116568,
+        1790457895860109765,
+        1790457895860109765
+      ],
+      "sha256": "abdeb3fb819978c0b55a513ffcd4af1c632c254c5664513ee79f13700c47795e"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5": {
+      "bytes": 4752,
+      "identity": [
+        16777231,
+        966079390,
+        33188,
+        1,
+        4752,
+        1790457895848882865,
+        1790457895848882865
+      ],
+      "sha256": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/af47707c71b7fc8bcb522fd18413990d6798216a055c55272f04f8fd52a2dcb1": {
+      "bytes": 3060,
+      "identity": [
+        16777231,
+        966079413,
+        33188,
+        1,
+        3060,
+        1790457895850908938,
+        1790457895850908938
+      ],
+      "sha256": "af47707c71b7fc8bcb522fd18413990d6798216a055c55272f04f8fd52a2dcb1"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/b0c74c02d661dd4ed810164b29ebd0f3b33b02232f6a11756642a74ff205bd33": {
+      "bytes": 137680,
+      "identity": [
+        16777231,
+        966079444,
+        33188,
+        1,
+        137680,
+        1790457895861889380,
+        1790457895861889380
+      ],
+      "sha256": "b0c74c02d661dd4ed810164b29ebd0f3b33b02232f6a11756642a74ff205bd33"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519": {
+      "bytes": 1528,
+      "identity": [
+        16777231,
+        966079396,
+        33188,
+        1,
+        1528,
+        1790457895849416821,
+        1790457895849416821
+      ],
+      "sha256": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf": {
+      "bytes": 52448,
+      "identity": [
+        16777231,
+        966079417,
+        33188,
+        1,
+        52448,
+        1790457895853465133,
+        1790457895853465133
+      ],
+      "sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/b52b959e973e18d30f31b8eafd2f917959f4fd6a923230ea16df0cfe7f0da1fd": {
+      "bytes": 1608,
+      "identity": [
+        16777231,
+        966079447,
+        33188,
+        1,
+        1608,
+        1790457895862122837,
+        1790457895862122837
+      ],
+      "sha256": "b52b959e973e18d30f31b8eafd2f917959f4fd6a923230ea16df0cfe7f0da1fd"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/bb7b74be06fca1befa2214239a82ea5f9e7fb385d36631612e1e93977e646bcd": {
+      "bytes": 3122,
+      "identity": [
+        16777231,
+        966079409,
+        33188,
+        1,
+        3122,
+        1790457895850515940,
+        1790457895850515940
+      ],
+      "sha256": "bb7b74be06fca1befa2214239a82ea5f9e7fb385d36631612e1e93977e646bcd"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d": {
+      "bytes": 27277,
+      "identity": [
+        16777231,
+        966079374,
+        33188,
+        1,
+        27277,
+        1790457895844361013,
+        1790457895844361013
+      ],
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/bf052ec70632502bf0f9fbb470b2e2e6cafd8ce67014cd0c2386757aaecbb55c": {
+      "bytes": 2704,
+      "identity": [
+        16777231,
+        966079411,
+        33188,
+        1,
+        2704,
+        1790457895850781147,
+        1790457895850781147
+      ],
+      "sha256": "bf052ec70632502bf0f9fbb470b2e2e6cafd8ce67014cd0c2386757aaecbb55c"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/c569dd1d9c1dfae425123634ef8e07c3a3d77c2b24c26ae07ff8fcffd6797ba6": {
+      "bytes": 55984,
+      "identity": [
+        16777231,
+        966079438,
+        33188,
+        1,
+        55984,
+        1790457895860259722,
+        1790457895860259722
+      ],
+      "sha256": "c569dd1d9c1dfae425123634ef8e07c3a3d77c2b24c26ae07ff8fcffd6797ba6"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba": {
+      "bytes": 570,
+      "identity": [
+        16777231,
+        966079392,
+        33188,
+        1,
+        570,
+        1790457895849003781,
+        1790457895849003781
+      ],
+      "sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        966079383,
+        33188,
+        1,
+        3492,
+        1790457895848381201,
+        1790457895848381201
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/cd8d7164df17dff1a55a835f946d866aeaba95cef190dfddcae843c208e8f7dd": {
+      "bytes": 2776,
+      "identity": [
+        16777231,
+        966079441,
+        33188,
+        1,
+        2776,
+        1790457895861621840,
+        1790457895861621840
+      ],
+      "sha256": "cd8d7164df17dff1a55a835f946d866aeaba95cef190dfddcae843c208e8f7dd"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        966079385,
+        33188,
+        1,
+        27203,
+        1790457895848526783,
+        1790457895848526783
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/d0f03bcf7f540762a6e3298dd9e40abcb043a8448533219723db360292bb6cb7": {
+      "bytes": 29024,
+      "identity": [
+        16777231,
+        966079443,
+        33188,
+        1,
+        29024,
+        1790457895861778631,
+        1790457895861778631
+      ],
+      "sha256": "d0f03bcf7f540762a6e3298dd9e40abcb043a8448533219723db360292bb6cb7"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/d174fa421268cde49a4baf7fce0486798d0a8ebaaf0b57f753cdc907a6d01bd3": {
+      "bytes": 17453,
+      "identity": [
+        16777231,
+        966079403,
+        33188,
+        1,
+        17453,
+        1790457895849920734,
+        1790457895849920734
+      ],
+      "sha256": "d174fa421268cde49a4baf7fce0486798d0a8ebaaf0b57f753cdc907a6d01bd3"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/d318979b90db6e3824d15313019f2ae33836d51dc467cebe0e2f98ba36d26b90": {
+      "bytes": 3407,
+      "identity": [
+        16777231,
+        966079410,
+        33188,
+        1,
+        3407,
+        1790457895850729064,
+        1790457895850729064
+      ],
+      "sha256": "d318979b90db6e3824d15313019f2ae33836d51dc467cebe0e2f98ba36d26b90"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/d68c34c6bac0d6c51de88a81edcbdf7f57cc3b73471c13bc1511db1ca4005a61": {
+      "bytes": 781,
+      "identity": [
+        16777231,
+        966079422,
+        33188,
+        1,
+        781,
+        1790457895854721668,
+        1790457895854721668
+      ],
+      "sha256": "d68c34c6bac0d6c51de88a81edcbdf7f57cc3b73471c13bc1511db1ca4005a61"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd": {
+      "bytes": 60008,
+      "identity": [
+        16777231,
+        966079427,
+        33188,
+        1,
+        60008,
+        1790457895855809412,
+        1790457895855809412
+      ],
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/dbeb9c47db0f1fd26ce3c173148da0b0e42d5bc2a3b6b9e319421c8286dd23de": {
+      "bytes": 7844,
+      "identity": [
+        16777231,
+        966079401,
+        33188,
+        1,
+        7844,
+        1790457895849785194,
+        1790457895849785194
+      ],
+      "sha256": "dbeb9c47db0f1fd26ce3c173148da0b0e42d5bc2a3b6b9e319421c8286dd23de"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/e3c90f2d2c7ec532d3cd291031cc737bed9e2547c1bc21b3e1802d9c1d37ccbd": {
+      "bytes": 1720,
+      "identity": [
+        16777231,
+        966079448,
+        33188,
+        1,
+        1720,
+        1790457895862180504,
+        1790457895862180504
+      ],
+      "sha256": "e3c90f2d2c7ec532d3cd291031cc737bed9e2547c1bc21b3e1802d9c1d37ccbd"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        966079384,
+        33188,
+        1,
+        9093,
+        1790457895848445076,
+        1790457895848445076
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533": {
+      "bytes": 420976,
+      "identity": [
+        16777231,
+        966079430,
+        33188,
+        1,
+        420976,
+        1790457895856243327,
+        1790457895856243327
+      ],
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0": {
+      "bytes": 243,
+      "identity": [
+        16777231,
+        966079376,
+        33188,
+        1,
+        243,
+        1790457895844494346,
+        1790457895844494346
+      ],
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44": {
+      "bytes": 3389,
+      "identity": [
+        16777231,
+        966079393,
+        33188,
+        1,
+        3389,
+        1790457895849056239,
+        1790457895849056239
+      ],
+      "sha256": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8": {
+      "bytes": 1245,
+      "identity": [
+        16777231,
+        966079399,
+        33188,
+        1,
+        1245,
+        1790457895849583153,
+        1790457895849583153
+      ],
+      "sha256": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8"
+    },
+    "${EXECUTION_ROOT}/native/input-bytes/fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7": {
+      "bytes": 251,
+      "identity": [
+        16777231,
+        966079380,
+        33188,
+        1,
+        251,
+        1790457895848163577,
+        1790457895848163577
+      ],
+      "sha256": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7"
+    },
+    "${EXECUTION_ROOT}/native/objects/F1F2CandidateRoot.olean": {
+      "bytes": 1608,
+      "identity": [
+        16777231,
+        966067272,
+        33188,
+        1,
+        1608,
+        1790457654867410769,
+        1790457654867516144
+      ],
+      "sha256": "a0fd0a8c7c616c09689d35e8da1731c486d3f648850c6c733d8dd125391d7a90"
+    },
+    "${EXECUTION_ROOT}/native/objects/F4CandidateRoot.olean": {
+      "bytes": 1608,
+      "identity": [
+        16777231,
+        966067352,
+        33188,
+        1,
+        1608,
+        1790457663658883545,
+        1790457663658958170
+      ],
+      "sha256": "b52b959e973e18d30f31b8eafd2f917959f4fd6a923230ea16df0cfe7f0da1fd"
+    },
+    "${EXECUTION_ROOT}/native/objects/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "identity": [
+        16777231,
+        966064645,
+        33188,
+        1,
+        60008,
+        1790457631807821018,
+        1790457631807951350
+      ],
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "${EXECUTION_ROOT}/native/objects/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "identity": [
+        16777231,
+        966064616,
+        33188,
+        1,
+        199552,
+        1790457630392570030,
+        1790457630393443484
+      ],
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "${EXECUTION_ROOT}/native/objects/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "identity": [
+        16777231,
+        966064789,
+        33188,
+        1,
+        420976,
+        1790457635953529001,
+        1790457635953678542
+      ],
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "identity": [
+        16777231,
+        966064563,
+        33188,
+        1,
+        98304,
+        1790457627282548390,
+        1790457627282692515
+      ],
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "identity": [
+        16777231,
+        966064598,
+        33188,
+        1,
+        292592,
+        1790457628900736277,
+        1790457628900884734
+      ],
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "identity": [
+        16777231,
+        966064675,
+        33188,
+        1,
+        126464,
+        1790457633325621219,
+        1790457633325976717
+      ],
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "identity": [
+        16777231,
+        966064695,
+        33188,
+        1,
+        122808,
+        1790457635001186140,
+        1790457635002273259
+      ],
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixCausal/AxiomControls.olean": {
+      "bytes": 5496,
+      "identity": [
+        16777231,
+        966067171,
+        33188,
+        1,
+        5496,
+        1790457646279594641,
+        1790457646279724765
+      ],
+      "sha256": "8f45ffec461043b336b83c33a76b249195986b73bbc570009739072abb1599b5"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixCausal/Controls.olean": {
+      "bytes": 116568,
+      "identity": [
+        16777231,
+        966067155,
+        33188,
+        1,
+        116568,
+        1790457645409165560,
+        1790457645409316976
+      ],
+      "sha256": "abdeb3fb819978c0b55a513ffcd4af1c632c254c5664513ee79f13700c47795e"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF1F2/Candidate.olean": {
+      "bytes": 297280,
+      "identity": [
+        16777231,
+        966067238,
+        33188,
+        1,
+        297280,
+        1790457651203125980,
+        1790457651204403974
+      ],
+      "sha256": "85783906d985e5ce06256a4b1620fcc3be2f3e4898390b69876594425346a092"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF1F2/HostileTargets.olean": {
+      "bytes": 55984,
+      "identity": [
+        16777231,
+        966067184,
+        33188,
+        1,
+        55984,
+        1790457647753793862,
+        1790457647753934278
+      ],
+      "sha256": "c569dd1d9c1dfae425123634ef8e07c3a3d77c2b24c26ae07ff8fcffd6797ba6"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF1F2/ReviewerControls.olean": {
+      "bytes": 137680,
+      "identity": [
+        16777231,
+        966067208,
+        33188,
+        1,
+        137680,
+        1790457649560457348,
+        1790457649560809388
+      ],
+      "sha256": "0448c4bbcd62562aef267510ab4a90ebd62b878c2e1676a2541998926bcfbf8e"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF1F2/SemanticJudge.olean": {
+      "bytes": 2776,
+      "identity": [
+        16777231,
+        966067250,
+        33188,
+        1,
+        2776,
+        1790457653227450580,
+        1790457653227544746
+      ],
+      "sha256": "cd8d7164df17dff1a55a835f946d866aeaba95cef190dfddcae843c208e8f7dd"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF4/Candidate.olean": {
+      "bytes": 82904,
+      "identity": [
+        16777231,
+        966067314,
+        33188,
+        1,
+        82904,
+        1790457659549772327,
+        1790457659549913993
+      ],
+      "sha256": "6030cb02d67214fb23c8e95f996c5af99becc11215c5674b25bc8b525a628789"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF4/HostileTargets.olean": {
+      "bytes": 29024,
+      "identity": [
+        16777231,
+        966067292,
+        33188,
+        1,
+        29024,
+        1790457656317469908,
+        1790457656317618866
+      ],
+      "sha256": "d0f03bcf7f540762a6e3298dd9e40abcb043a8448533219723db360292bb6cb7"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF4/ReviewerControls.olean": {
+      "bytes": 137680,
+      "identity": [
+        16777231,
+        966067301,
+        33188,
+        1,
+        137680,
+        1790457658029632845,
+        1790457658029766219
+      ],
+      "sha256": "b0c74c02d661dd4ed810164b29ebd0f3b33b02232f6a11756642a74ff205bd33"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF4/SemanticJudge.olean": {
+      "bytes": 2776,
+      "identity": [
+        16777231,
+        966067335,
+        33188,
+        1,
+        2776,
+        1790457661756657307,
+        1790457661756734848
+      ],
+      "sha256": "2ad625b67aa8434ea267e18836bd9e2b7e002b7b6e2c8303eff36ee29760f468"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixLegacyStageA/Contract.olean": {
+      "bytes": 55688,
+      "identity": [
+        16777231,
+        966067113,
+        33188,
+        1,
+        55688,
+        1790457642145178806,
+        1790457642145315389
+      ],
+      "sha256": "515e4dab6e7f20a87fa6cee031c6b8cdb1fa79f517398a21fe35be0e25285525"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixLegacyStageA/RawTargets.olean": {
+      "bytes": 42728,
+      "identity": [
+        16777231,
+        966067143,
+        33188,
+        1,
+        42728,
+        1790457643649530746,
+        1790457643649665579
+      ],
+      "sha256": "6796286230af5a65102b9d43ad5ae11a12d950a238479e42068e0dfbebc6436c"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixStageA/AliasTargets.olean": {
+      "bytes": 5240,
+      "identity": [
+        16777231,
+        966067015,
+        33188,
+        1,
+        5240,
+        1790457640608931742,
+        1790457640609048616
+      ],
+      "sha256": "238a8c9fc0fa6d94aabc07ec690314352d5210ba29cf097232412f4abfa3ac20"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixStageA/Contract.olean": {
+      "bytes": 55640,
+      "identity": [
+        16777231,
+        966066668,
+        33188,
+        1,
+        55640,
+        1790457637481549525,
+        1790457637481811399
+      ],
+      "sha256": "08020e586d471d0810cf3a11074fa7daa7c915f755fc8a4b5de511daeebe8b03"
+    },
+    "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixStageA/RawTargets.olean": {
+      "bytes": 42320,
+      "identity": [
+        16777231,
+        966066992,
+        33188,
+        1,
+        42320,
+        1790457639046613981,
+        1790457639046731230
+      ],
+      "sha256": "a0262196605f15c20ec7559171bab0dcbfb7ca4e9b087d35ef6024e625a71b50"
+    },
+    "${EXECUTION_ROOT}/native/objects/StoppedPrefixProbabilityRoot.olean": {
+      "bytes": 1720,
+      "identity": [
+        16777231,
+        966067365,
+        33188,
+        1,
+        1720,
+        1790457665515676269,
+        1790457665515775435
+      ],
+      "sha256": "e3c90f2d2c7ec532d3cd291031cc737bed9e2547c1bc21b3e1802d9c1d37ccbd"
+    },
+    "${EXECUTION_ROOT}/native/src/F1F2CandidateRoot.lean": {
+      "bytes": 251,
+      "identity": [
+        16777231,
+        966064325,
+        33188,
+        1,
+        251,
+        1790457603854764644,
+        1790457603854764644
+      ],
+      "sha256": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7"
+    },
+    "${EXECUTION_ROOT}/native/src/F4CandidateRoot.lean": {
+      "bytes": 142,
+      "identity": [
+        16777231,
+        966064331,
+        33188,
+        1,
+        142,
+        1790457603855443224,
+        1790457603855443224
+      ],
+      "sha256": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49"
+    },
+    "${EXECUTION_ROOT}/native/src/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        966064304,
+        33188,
+        1,
+        3873,
+        1790457603852550864,
+        1790457603852550864
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "${EXECUTION_ROOT}/native/src/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        966064302,
+        33188,
+        1,
+        12861,
+        1790457603852366782,
+        1790457603852366782
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "${EXECUTION_ROOT}/native/src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        966064309,
+        33188,
+        1,
+        3492,
+        1790457603853026778,
+        1790457603853026778
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "${EXECUTION_ROOT}/native/src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        966064298,
+        33188,
+        1,
+        9093,
+        1790457603851897867,
+        1790457603851897867
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "${EXECUTION_ROOT}/native/src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        966064299,
+        33188,
+        1,
+        27203,
+        1790457603852129325,
+        1790457603852129325
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "${EXECUTION_ROOT}/native/src/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        966064306,
+        33188,
+        1,
+        11737,
+        1790457603852716446,
+        1790457603852716446
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "${EXECUTION_ROOT}/native/src/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        966064308,
+        33188,
+        1,
+        7101,
+        1790457603852887612,
+        1790457603852887612
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixCausal/AxiomControls.lean": {
+      "bytes": 1191,
+      "identity": [
+        16777231,
+        966064319,
+        33188,
+        1,
+        1191,
+        1790457603854067856,
+        1790457603854067856
+      ],
+      "sha256": "5d405fc1415b9181108b19dcf4bfd8da4b8cde55632dcda31ec7fbddec5890ca"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixCausal/Controls.lean": {
+      "bytes": 3122,
+      "identity": [
+        16777231,
+        966064318,
+        33188,
+        1,
+        3122,
+        1790457603853938482,
+        1790457603853938482
+      ],
+      "sha256": "bb7b74be06fca1befa2214239a82ea5f9e7fb385d36631612e1e93977e646bcd"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF1F2/Candidate.lean": {
+      "bytes": 9394,
+      "identity": [
+        16777231,
+        966064323,
+        33188,
+        1,
+        9394,
+        1790457603854501354,
+        1790457603854501354
+      ],
+      "sha256": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF1F2/HostileTargets.lean": {
+      "bytes": 5931,
+      "identity": [
+        16777231,
+        966064321,
+        33188,
+        1,
+        5931,
+        1790457603854239397,
+        1790457603854239397
+      ],
+      "sha256": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF1F2/ReviewerControls.lean": {
+      "bytes": 4752,
+      "identity": [
+        16777231,
+        966064322,
+        33188,
+        1,
+        4752,
+        1790457603854372146,
+        1790457603854372146
+      ],
+      "sha256": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF1F2/SemanticJudge.lean": {
+      "bytes": 2120,
+      "identity": [
+        16777231,
+        966064324,
+        33188,
+        1,
+        2120,
+        1790457603854631270,
+        1790457603854631270
+      ],
+      "sha256": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF4/Candidate.lean": {
+      "bytes": 1528,
+      "identity": [
+        16777231,
+        966064329,
+        33188,
+        1,
+        1528,
+        1790457603855187308,
+        1790457603855187308
+      ],
+      "sha256": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF4/HostileTargets.lean": {
+      "bytes": 2487,
+      "identity": [
+        16777231,
+        966064327,
+        33188,
+        1,
+        2487,
+        1790457603854918018,
+        1790457603854918018
+      ],
+      "sha256": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF4/ReviewerControls.lean": {
+      "bytes": 3543,
+      "identity": [
+        16777231,
+        966064328,
+        33188,
+        1,
+        3543,
+        1790457603855059643,
+        1790457603855059643
+      ],
+      "sha256": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF4/SemanticJudge.lean": {
+      "bytes": 1245,
+      "identity": [
+        16777231,
+        966064330,
+        33188,
+        1,
+        1245,
+        1790457603855319974,
+        1790457603855319974
+      ],
+      "sha256": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixLegacyStageA/Contract.lean": {
+      "bytes": 3407,
+      "identity": [
+        16777231,
+        966064315,
+        33188,
+        1,
+        3407,
+        1790457603853641817,
+        1790457603853641817
+      ],
+      "sha256": "d318979b90db6e3824d15313019f2ae33836d51dc467cebe0e2f98ba36d26b90"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixLegacyStageA/RawTargets.lean": {
+      "bytes": 2704,
+      "identity": [
+        16777231,
+        966064316,
+        33188,
+        1,
+        2704,
+        1790457603853774233,
+        1790457603853774233
+      ],
+      "sha256": "bf052ec70632502bf0f9fbb470b2e2e6cafd8ce67014cd0c2386757aaecbb55c"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixStageA/AliasTargets.lean": {
+      "bytes": 570,
+      "identity": [
+        16777231,
+        966064313,
+        33188,
+        1,
+        570,
+        1790457603853479609,
+        1790457603853479609
+      ],
+      "sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixStageA/Contract.lean": {
+      "bytes": 3588,
+      "identity": [
+        16777231,
+        966064311,
+        33188,
+        1,
+        3588,
+        1790457603853202611,
+        1790457603853202611
+      ],
+      "sha256": "6da98be9ca07314046042b99aca09bb35e17c1112ec8aea528424cbaeb034511"
+    },
+    "${EXECUTION_ROOT}/native/src/PidStoppedPrefixStageA/RawTargets.lean": {
+      "bytes": 3060,
+      "identity": [
+        16777231,
+        966064312,
+        33188,
+        1,
+        3060,
+        1790457603853337110,
+        1790457603853337110
+      ],
+      "sha256": "af47707c71b7fc8bcb522fd18413990d6798216a055c55272f04f8fd52a2dcb1"
+    },
+    "${EXECUTION_ROOT}/native/src/StoppedPrefixProbabilityRoot.lean": {
+      "bytes": 159,
+      "identity": [
+        16777231,
+        966064332,
+        33188,
+        1,
+        159,
+        1790457603855571932,
+        1790457603855571932
+      ],
+      "sha256": "5e0e2d39d492ab2b060fdb4cbab098b266283d8053a382b59bb45484d41744d5"
+    },
+    "${EXECUTION_ROOT}/supervision/PID.json": {
+      "bytes": 155,
+      "identity": [
+        16777231,
+        966064293,
+        33188,
+        1,
+        155,
+        1790457603684651532,
+        1790457603684651532
+      ],
+      "sha256": "36bfaee276428dcca2e137a457a0237ab418dd47f67cd9765818fea15a5870f2"
+    },
+    "${EXECUTION_ROOT}/supervision/PROCESS_OBSERVATIONS.json": {
+      "bytes": 951165,
+      "identity": [
+        16777231,
+        966079452,
+        33188,
+        1,
+        951165,
+        1790457895954390648,
+        1790457895954390648
+      ],
+      "sha256": "afe3c336424d978b0c157dad780144e710111fd78b8231d7ab10a1d553e017b3"
+    },
+    "${EXECUTION_ROOT}/supervision/REGISTERED.json": {
+      "bytes": 982,
+      "identity": [
+        16777231,
+        966064292,
+        33188,
+        1,
+        982,
+        1790457603682818667,
+        1790457603682818667
+      ],
+      "sha256": "ded989660fc7d4d66bdc732ac213e0422d30c4ceca6c45752cab328c7e05a263"
+    },
+    "${EXECUTION_ROOT}/supervision/RESULT.json": {
+      "bytes": 66041,
+      "identity": [
+        16777231,
+        966079453,
+        33188,
+        1,
+        66041,
+        1790457895954734937,
+        1790457895954734937
+      ],
+      "sha256": "782a8d11fd69e274a0dd98809e148dd2d89fe25ca302bbd213e7618aa83f3849"
+    },
+    "${EXECUTION_ROOT}/supervision/stderr.log": {
+      "bytes": 0,
+      "identity": [
+        16777231,
+        966079451,
+        33188,
+        1,
+        0,
+        1790457895950552792,
+        1790457895950571501
+      ],
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "${EXECUTION_ROOT}/supervision/stdout.log": {
+      "bytes": 295,
+      "identity": [
+        16777231,
+        966079450,
+        33188,
+        1,
+        295,
+        1790457895950501085,
+        1790457895950501085
+      ],
+      "sha256": "1579324f79f7216a57a1a959ba40267f0f9389d8fb622229795743750a547481"
+    },
+    "${PREPARATION_ROOT}/COMMAND_ROSTER.json": {
+      "bytes": 24513,
+      "identity": [
+        16777231,
+        965943307,
+        33188,
+        1,
+        24513,
+        1790456161148122700,
+        1790456161148122700
+      ],
+      "sha256": "2533ef645aae198f731bbe163e6dd9558d479566206f945dc0ec775201e68b19"
+    },
+    "${PREPARATION_ROOT}/CONTROL_ROSTER.json": {
+      "bytes": 7844,
+      "identity": [
+        16777231,
+        965943308,
+        33188,
+        1,
+        7844,
+        1790456161149285657,
+        1790456161149285657
+      ],
+      "sha256": "dbeb9c47db0f1fd26ce3c173148da0b0e42d5bc2a3b6b9e319421c8286dd23de"
+    },
+    "${PREPARATION_ROOT}/PACKET.json": {
+      "bytes": 58367,
+      "identity": [
+        16777231,
+        965943354,
+        33188,
+        1,
+        58367,
+        1790456161194515897,
+        1790456161194515897
+      ],
+      "sha256": "a6efef42d0f2111765488bcc6749a2ede695cca2389e28413b39a4b696381bce"
+    },
+    "${PREPARATION_ROOT}/SOURCE_MANIFEST.json": {
+      "bytes": 10543,
+      "identity": [
+        16777231,
+        965943309,
+        33188,
+        1,
+        10543,
+        1790456161150580197,
+        1790456161150580197
+      ],
+      "sha256": "2e3983ddaf0cd5ff167d2da0b47ed46315dea9cb61d393d8cf96dda63853bd9f"
+    },
+    "${PREPARATION_ROOT}/inputs/reviewed-supervisor.py": {
+      "bytes": 17453,
+      "identity": [
+        16777231,
+        965943311,
+        33188,
+        1,
+        17453,
+        1790456161151668404,
+        1790456161151668404
+      ],
+      "sha256": "d174fa421268cde49a4baf7fce0486798d0a8ebaaf0b57f753cdc907a6d01bd3"
+    },
+    "${PREPARATION_ROOT}/inputs/runtime.py": {
+      "bytes": 27277,
+      "identity": [
+        16777231,
+        965943312,
+        33188,
+        1,
+        27277,
+        1790456161152537653,
+        1790456161152537653
+      ],
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "${PREPARATION_ROOT}/inventory_outer.py": {
+      "bytes": 5552,
+      "identity": [
+        16777231,
+        965943313,
+        33188,
+        1,
+        5552,
+        1790456161153380319,
+        1790456161153380319
+      ],
+      "sha256": "2e79854b257fa27c6da1fd3b48a224c9497a9424cdbf3c984c266fb04d370e7d"
+    },
+    "${PREPARATION_ROOT}/observe_boundary.py": {
+      "bytes": 7257,
+      "identity": [
+        16777231,
+        965943314,
+        33188,
+        1,
+        7257,
+        1790456161154858526,
+        1790456161154858526
+      ],
+      "sha256": "4af9d56240d334783d8fcbd1240e59e544c431f0db014f492274a10ddd3c8169"
+    },
+    "${PREPARATION_ROOT}/outer.py": {
+      "bytes": 8149,
+      "identity": [
+        16777231,
+        965943315,
+        33188,
+        1,
+        8149,
+        1790456161156227774,
+        1790456161156227774
+      ],
+      "sha256": "30a57f1252978d89baec3f3131e2a6d0eb1036e3b9b752db064ecb76bd4321ac"
+    },
+    "${PREPARATION_ROOT}/readback.py": {
+      "bytes": 18723,
+      "identity": [
+        16777231,
+        965943355,
+        33188,
+        1,
+        18723,
+        1790456161196031603,
+        1790456161196031603
+      ],
+      "sha256": "78f39e137a1d6e77bf47ef32e31d1b51b3cd5e747902ce5cf6ac7c32e19f4183"
+    },
+    "${PREPARATION_ROOT}/run_reviewer.py": {
+      "bytes": 15546,
+      "identity": [
+        16777231,
+        965943316,
+        33188,
+        1,
+        15546,
+        1790456161157144981,
+        1790456161157144981
+      ],
+      "sha256": "404532b6b91ea4f3b1ac8c7aebcc75f28e9a5c3112864acb07a18e30d3fa444a"
+    },
+    "${PREPARATION_ROOT}/sources/F1F2CandidateRoot.lean": {
+      "bytes": 251,
+      "identity": [
+        16777231,
+        965943318,
+        33188,
+        1,
+        251,
+        1790456161158109647,
+        1790456161158109647
+      ],
+      "sha256": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7"
+    },
+    "${PREPARATION_ROOT}/sources/F4CandidateRoot.lean": {
+      "bytes": 142,
+      "identity": [
+        16777231,
+        965943319,
+        33188,
+        1,
+        142,
+        1790456161158769688,
+        1790456161158769688
+      ],
+      "sha256": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49"
+    },
+    "${PREPARATION_ROOT}/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        965943322,
+        33188,
+        1,
+        3873,
+        1790456161159883603,
+        1790456161159883603
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "${PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        965943324,
+        33188,
+        1,
+        12861,
+        1790456161160818602,
+        1790456161160818602
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "${PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        965943325,
+        33188,
+        1,
+        3492,
+        1790456161162478850,
+        1790456161162478850
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "${PREPARATION_ROOT}/sources/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        965943327,
+        33188,
+        1,
+        9093,
+        1790456161163867057,
+        1790456161163867057
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "${PREPARATION_ROOT}/sources/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        965943328,
+        33188,
+        1,
+        27203,
+        1790456161165375889,
+        1790456161165375889
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "${PREPARATION_ROOT}/sources/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        965943330,
+        33188,
+        1,
+        11737,
+        1790456161167136137,
+        1790456161167136137
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "${PREPARATION_ROOT}/sources/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        965943332,
+        33188,
+        1,
+        7101,
+        1790456161168227594,
+        1790456161168227594
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixCausal/AxiomControls.lean": {
+      "bytes": 1191,
+      "identity": [
+        16777231,
+        965943334,
+        33188,
+        1,
+        1191,
+        1790456161169772133,
+        1790456161169772133
+      ],
+      "sha256": "5d405fc1415b9181108b19dcf4bfd8da4b8cde55632dcda31ec7fbddec5890ca"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixCausal/Controls.lean": {
+      "bytes": 3122,
+      "identity": [
+        16777231,
+        965943335,
+        33188,
+        1,
+        3122,
+        1790456161170772382,
+        1790456161170772382
+      ],
+      "sha256": "bb7b74be06fca1befa2214239a82ea5f9e7fb385d36631612e1e93977e646bcd"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/Candidate.lean": {
+      "bytes": 9394,
+      "identity": [
+        16777231,
+        965943337,
+        33188,
+        1,
+        9394,
+        1790456161171834673,
+        1790456161171834673
+      ],
+      "sha256": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/HostileTargets.lean": {
+      "bytes": 5931,
+      "identity": [
+        16777231,
+        965943338,
+        33188,
+        1,
+        5931,
+        1790456161172963213,
+        1790456161172963213
+      ],
+      "sha256": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/ReviewerControls.lean": {
+      "bytes": 4752,
+      "identity": [
+        16777231,
+        965943339,
+        33188,
+        1,
+        4752,
+        1790456161173762962,
+        1790456161173762962
+      ],
+      "sha256": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/SemanticJudge.lean": {
+      "bytes": 2120,
+      "identity": [
+        16777231,
+        965943340,
+        33188,
+        1,
+        2120,
+        1790456161174439295,
+        1790456161174439295
+      ],
+      "sha256": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF4/Candidate.lean": {
+      "bytes": 1528,
+      "identity": [
+        16777231,
+        965943342,
+        33188,
+        1,
+        1528,
+        1790456161175258794,
+        1790456161175258794
+      ],
+      "sha256": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF4/HostileTargets.lean": {
+      "bytes": 2487,
+      "identity": [
+        16777231,
+        965943343,
+        33188,
+        1,
+        2487,
+        1790456161175895502,
+        1790456161175895502
+      ],
+      "sha256": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF4/ReviewerControls.lean": {
+      "bytes": 3543,
+      "identity": [
+        16777231,
+        965943344,
+        33188,
+        1,
+        3543,
+        1790456161176525459,
+        1790456161176525459
+      ],
+      "sha256": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF4/SemanticJudge.lean": {
+      "bytes": 1245,
+      "identity": [
+        16777231,
+        965943345,
+        33188,
+        1,
+        1245,
+        1790456161177155250,
+        1790456161177155250
+      ],
+      "sha256": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixLegacyStageA/Contract.lean": {
+      "bytes": 3407,
+      "identity": [
+        16777231,
+        965943347,
+        33188,
+        1,
+        3407,
+        1790456161178048582,
+        1790456161178048582
+      ],
+      "sha256": "d318979b90db6e3824d15313019f2ae33836d51dc467cebe0e2f98ba36d26b90"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixLegacyStageA/RawTargets.lean": {
+      "bytes": 2704,
+      "identity": [
+        16777231,
+        965943348,
+        33188,
+        1,
+        2704,
+        1790456161178752582,
+        1790456161178752582
+      ],
+      "sha256": "bf052ec70632502bf0f9fbb470b2e2e6cafd8ce67014cd0c2386757aaecbb55c"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/AliasTargets.lean": {
+      "bytes": 570,
+      "identity": [
+        16777231,
+        965943350,
+        33188,
+        1,
+        570,
+        1790456161179559706,
+        1790456161179559706
+      ],
+      "sha256": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/Contract.lean": {
+      "bytes": 3588,
+      "identity": [
+        16777231,
+        965943351,
+        33188,
+        1,
+        3588,
+        1790456161180153497,
+        1790456161180153497
+      ],
+      "sha256": "6da98be9ca07314046042b99aca09bb35e17c1112ec8aea528424cbaeb034511"
+    },
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/RawTargets.lean": {
+      "bytes": 3060,
+      "identity": [
+        16777231,
+        965943352,
+        33188,
+        1,
+        3060,
+        1790456161180747163,
+        1790456161180747163
+      ],
+      "sha256": "af47707c71b7fc8bcb522fd18413990d6798216a055c55272f04f8fd52a2dcb1"
+    },
+    "${PREPARATION_ROOT}/sources/StoppedPrefixProbabilityRoot.lean": {
+      "bytes": 159,
+      "identity": [
+        16777231,
+        965943353,
+        33188,
+        1,
+        159,
+        1790456161181334329,
+        1790456161181334329
+      ],
+      "sha256": "5e0e2d39d492ab2b060fdb4cbab098b266283d8053a382b59bb45484d41744d5"
+    },
+    "${REPOSITORY_ROOT}/audit/formal/lean/lake-manifest.json": {
+      "bytes": 3144,
+      "identity": [
+        16777231,
+        959856758,
+        33188,
+        1,
+        3144,
+        1790152759787813488,
+        1790152759787813488
+      ],
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "${REPOSITORY_ROOT}/audit/formal/lean/lakefile.toml": {
+      "bytes": 243,
+      "identity": [
+        16777231,
+        959856759,
+        33188,
+        1,
+        243,
+        1790152759787882697,
+        1790152759787882697
+      ],
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "${REPOSITORY_ROOT}/audit/formal/lean/lean-toolchain": {
+      "bytes": 25,
+      "identity": [
+        16777231,
+        959856760,
+        33188,
+        1,
+        25,
+        1790152759787949531,
+        1790152759787949531
+      ],
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "/bin/ps": {
+      "bytes": 170816,
+      "identity": [
+        16777231,
+        1152921500312571423,
+        35309,
+        1,
+        170816,
+        1779353822000000000,
+        1779353822000000000
+      ],
+      "sha256": "472992c470606d28f577590decfecd7f4a20f832fd92c671bebc6d44790b5d02"
+    },
+    "${PYTHON_INSTALLATION_ROOT}/Python": {
+      "bytes": 5454512,
+      "identity": [
+        16777231,
+        655969999,
+        33261,
+        1,
+        5454512,
+        1781596791856890555,
+        1781596791856977347
+      ],
+      "sha256": "696ffa2cf9562522c387f7c2b3a990ef67e574df2d921822fe310ea35587cce0"
+    },
+    "${PYTHON_INSTALLATION_ROOT}/bin/python3.14": {
+      "bytes": 52448,
+      "identity": [
+        16777231,
+        655970006,
+        33261,
+        1,
+        52448,
+        1781596791977611260,
+        1781596791977686926
+      ],
+      "sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf"
+    },
+    "/usr/lib/dyld": {
+      "bytes": 2374000,
+      "identity": [
+        16777231,
+        1152921500312573277,
+        33261,
+        1,
+        2374000,
+        1779353822000000000,
+        1779353822000000000
+      ],
+      "sha256": "80d8943e882f81d2b9aed35e3689be36878d34a8af5289c564856147d11a368e"
+    }
+  },
+  "input_snapshots": 137,
+  "mathematical_adoption": false,
+  "packet_sha256": "a6efef42d0f2111765488bcc6749a2ede695cca2389e28413b39a4b696381bce",
+  "reader_seconds": 0.4793135831132531,
+  "reader_sha256": "78f39e137a1d6e77bf47ef32e31d1b51b3cd5e747902ce5cf6ac7c32e19f4183",
+  "records": 41,
+  "scope": "Read-only exact retained-byte/receipt joins; no native rerun, installed-inventory replay, atomicity, authenticity or mathematical/application adoption.",
+  "source_modules": 25,
+  "status": "execution_evidence_matches_frozen_r5_pending_root_semantic_adoption",
+  "streams": 58
+}

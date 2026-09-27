@@ -1,0 +1,864 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "${PYTHON_INSTALLATION_ROOT}/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "${PREPARATION_ROOT}/observe_boundary.py",
+        "--stage",
+        "${EXECUTION_ROOT}",
+        "--clock-sha256",
+        "ORIGINAL_CLOCK_SHA256_AT_ADMISSION",
+        "--phase",
+        "PRE"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "boundary-PRE"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "--version"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "tool-version"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidFiniteConvergence/Deterministic.olean",
+        "${EXECUTION_ROOT}/native/src/PidFiniteConvergence/Deterministic.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidFiniteConvergence-Deterministic"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidFiniteConvergence/SxEventBridge.olean",
+        "${EXECUTION_ROOT}/native/src/PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidFiniteConvergence-SxEventBridge"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/MgwBridgeDepsV1/SxDnf/Contract.olean",
+        "${EXECUTION_ROOT}/native/src/MgwBridgeDepsV1/SxDnf/Contract.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-MgwBridgeDepsV1-SxDnf-Contract"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/MgwBridgeDepsV1/JoinLog/Contract.olean",
+        "${EXECUTION_ROOT}/native/src/MgwBridgeDepsV1/JoinLog/Contract.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-MgwBridgeDepsV1-JoinLog-Contract"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidMgwBridge/Contract.olean",
+        "${EXECUTION_ROOT}/native/src/PidMgwBridge/Contract.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidMgwBridge-Contract"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidPrefixProbability/Contract.olean",
+        "${EXECUTION_ROOT}/native/src/PidPrefixProbability/Contract.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidPrefixProbability-Contract"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/MgwBridgeDepsV1/SxDnf/JudgeCore.olean",
+        "${EXECUTION_ROOT}/native/src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-MgwBridgeDepsV1-SxDnf-JudgeCore"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixStageA/Contract.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixStageA/Contract.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixStageA-Contract"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixStageA/RawTargets.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixStageA/RawTargets.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixStageA-RawTargets"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixStageA/AliasTargets.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixStageA/AliasTargets.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixStageA-AliasTargets"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixLegacyStageA/Contract.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixLegacyStageA/Contract.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixLegacyStageA-Contract"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixLegacyStageA/RawTargets.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixLegacyStageA/RawTargets.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixLegacyStageA-RawTargets"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixCausal/Controls.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixCausal/Controls.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixCausal-Controls"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixCausal/AxiomControls.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixCausal/AxiomControls.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixCausal-AxiomControls"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF1F2/HostileTargets.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF1F2/HostileTargets.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixF1F2-HostileTargets"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF1F2/ReviewerControls.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF1F2/ReviewerControls.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixF1F2-ReviewerControls"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF1F2/Candidate.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF1F2/Candidate.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixF1F2-Candidate"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF1F2/SemanticJudge.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF1F2/SemanticJudge.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixF1F2-SemanticJudge"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/F1F2CandidateRoot.olean",
+        "${EXECUTION_ROOT}/native/src/F1F2CandidateRoot.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-F1F2CandidateRoot"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF4/HostileTargets.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF4/HostileTargets.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixF4-HostileTargets"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF4/ReviewerControls.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF4/ReviewerControls.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixF4-ReviewerControls"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF4/Candidate.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF4/Candidate.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixF4-Candidate"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/PidStoppedPrefixF4/SemanticJudge.olean",
+        "${EXECUTION_ROOT}/native/src/PidStoppedPrefixF4/SemanticJudge.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-PidStoppedPrefixF4-SemanticJudge"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/F4CandidateRoot.olean",
+        "${EXECUTION_ROOT}/native/src/F4CandidateRoot.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-F4CandidateRoot"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "${EXECUTION_ROOT}/native/objects/StoppedPrefixProbabilityRoot.olean",
+        "${EXECUTION_ROOT}/native/src/StoppedPrefixProbabilityRoot.lean"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "compile-StoppedPrefixProbabilityRoot"
+    },
+    {
+      "argv": [
+        "${LEAN_INSTALLATION_ROOT}/bin/leanchecker",
+        "--fresh",
+        "StoppedPrefixProbabilityRoot"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "fresh-kernel"
+    },
+    {
+      "argv": [
+        "${PYTHON_INSTALLATION_ROOT}/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "${PREPARATION_ROOT}/observe_boundary.py",
+        "--stage",
+        "${EXECUTION_ROOT}",
+        "--clock-sha256",
+        "ORIGINAL_CLOCK_SHA256_AT_ADMISSION",
+        "--phase",
+        "POST"
+      ],
+      "cwd": "${EXECUTION_ROOT}/native/src",
+      "label": "boundary-POST"
+    }
+  ],
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "${LEAN_INSTALLATION_ROOT}/bin:/usr/bin:/bin"
+  },
+  "execution_root": "${EXECUTION_ROOT}",
+  "expected_terminal": "universal_f1f2_f4_exact_views_causal_controls_kernel_checked_pending_root_adoption",
+  "input_pins": {
+    "${LEAN_INSTALLATION_ROOT}/bin/lean": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+    "${LEAN_INSTALLATION_ROOT}/bin/leanchecker": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+    "${LEAN_INSTALLATION_ROOT}/lib/lean/libleanshared.dylib": "2fc79202bfe36e7db7e2db0f3b8d3b9ede110d279cc9cf37d22327160c166ddf",
+    "${LEAN_INSTALLATION_ROOT}/src/lean/Init/Classical.lean": "4e3bb021681d948c72dd3ab90d849e67999776dcabca4de55e8da14593474815",
+    "${LEAN_INSTALLATION_ROOT}/src/lean/Lean/Elab/Tactic/Classical.lean": "4f8349eeb64c77347235883eda610324eeb76d40acac524b0500c4fde775db5a",
+    "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}/BOUNDARY_EXTERNAL_INPUT_PINS.json": "183c6ef6448ddefca75dbe69b35b59639379d22b94726ca850c00d5021685d54",
+    "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}/inputs/view-successor/INSTALLED_BYTE_PINS.json": "bfb616da0626b7cfdcce7986f69583842eb4a2fee436e0c0491e2d977d73ad15",
+    "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}/inputs/view-successor/LOOKUP_NAMESPACES.json": "fbe1dfc40d6a33d1e84e46dec9310b4c3b38ebe42f1d8604860e370ade522196",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/lake-manifest.json": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/lakefile.toml": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/lean-toolchain": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+    "${HISTORICAL_DEPENDENCY_ROOT}/scripts/check-lean-finite-convergence.py": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+    "${HISTORICAL_DEPENDENCY_ROOT}/scripts/check-lean-sxpid3-informative-invariance.py": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/F1F2CandidateRoot.lean": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidMgwBridge/Contract.lean": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidPrefixProbability/Contract.lean": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/Candidate.lean": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/HostileTargets.lean": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/ReviewerControls.lean": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/SemanticJudge.lean": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/AliasTargets.lean": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/Contract.lean": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44",
+    "${HISTORICAL_F1F2_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/RawTargets.lean": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/F4CandidateRoot.lean": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidMgwBridge/Contract.lean": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidPrefixProbability/Contract.lean": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixF4/Candidate.lean": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixF4/HostileTargets.lean": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixF4/ReviewerControls.lean": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixF4/SemanticJudge.lean": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/AliasTargets.lean": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/Contract.lean": "eed5a163bdaefc96156afd60d96d03cb2376f0435284c96b89aac35c09a70d44",
+    "${HISTORICAL_F4_PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/RawTargets.lean": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035",
+    "${PREPARATION_ROOT}/COMMAND_ROSTER.json": "2533ef645aae198f731bbe163e6dd9558d479566206f945dc0ec775201e68b19",
+    "${PREPARATION_ROOT}/CONTROL_ROSTER.json": "dbeb9c47db0f1fd26ce3c173148da0b0e42d5bc2a3b6b9e319421c8286dd23de",
+    "${PREPARATION_ROOT}/SOURCE_MANIFEST.json": "2e3983ddaf0cd5ff167d2da0b47ed46315dea9cb61d393d8cf96dda63853bd9f",
+    "${PREPARATION_ROOT}/inputs/reviewed-supervisor.py": "d174fa421268cde49a4baf7fce0486798d0a8ebaaf0b57f753cdc907a6d01bd3",
+    "${PREPARATION_ROOT}/inputs/runtime.py": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d",
+    "${PREPARATION_ROOT}/inventory_outer.py": "2e79854b257fa27c6da1fd3b48a224c9497a9424cdbf3c984c266fb04d370e7d",
+    "${PREPARATION_ROOT}/observe_boundary.py": "4af9d56240d334783d8fcbd1240e59e544c431f0db014f492274a10ddd3c8169",
+    "${PREPARATION_ROOT}/outer.py": "30a57f1252978d89baec3f3131e2a6d0eb1036e3b9b752db064ecb76bd4321ac",
+    "${PREPARATION_ROOT}/run_reviewer.py": "404532b6b91ea4f3b1ac8c7aebcc75f28e9a5c3112864acb07a18e30d3fa444a",
+    "${PREPARATION_ROOT}/sources/F1F2CandidateRoot.lean": "fea34e9603b1b299080449be1d78067d2a748b35e29e159bd65839fe7f508bc7",
+    "${PREPARATION_ROOT}/sources/F4CandidateRoot.lean": "a3c4341d7a84acdb8477dde6768377337a3a7684f18432067ac27cefc8282b49",
+    "${PREPARATION_ROOT}/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383",
+    "${PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "${PREPARATION_ROOT}/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "${PREPARATION_ROOT}/sources/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "${PREPARATION_ROOT}/sources/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "${PREPARATION_ROOT}/sources/PidMgwBridge/Contract.lean": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642",
+    "${PREPARATION_ROOT}/sources/PidPrefixProbability/Contract.lean": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixCausal/AxiomControls.lean": "5d405fc1415b9181108b19dcf4bfd8da4b8cde55632dcda31ec7fbddec5890ca",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixCausal/Controls.lean": "bb7b74be06fca1befa2214239a82ea5f9e7fb385d36631612e1e93977e646bcd",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/Candidate.lean": "43e4f34c208c85ff9e1bfecb9f01c7ea2c1661f4db8d372b9404572c18a7a243",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/HostileTargets.lean": "93eb16aad83a9f11d47e6edefc501508070182b373399aacb12c27e658213f6d",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/ReviewerControls.lean": "aed4995fd257ba8cc81ba041fcee35eddcdff938a423f340fd76056980e690c5",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF1F2/SemanticJudge.lean": "28d1f651eb3489837cb04f354e5e408fa72db697a736631cedb7fefed2388363",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF4/Candidate.lean": "b0ec7d66573ef1d9e2ad2ba56b2c2478e737daa1a7b82a4cedc1c59636aa8519",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF4/HostileTargets.lean": "2cdc2d933038378ea6948d277c9c803365749be47cd3becff2ea09a1e19a6ae2",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF4/ReviewerControls.lean": "94d6594522f8a516a15491689001efa7bc2bf7297cd9066875189cd47d4a609a",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixF4/SemanticJudge.lean": "fc3af5360b375a2bb80543a13b8be7e52f8f18189a91cb949a71beefc72f0ac8",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixLegacyStageA/Contract.lean": "d318979b90db6e3824d15313019f2ae33836d51dc467cebe0e2f98ba36d26b90",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixLegacyStageA/RawTargets.lean": "bf052ec70632502bf0f9fbb470b2e2e6cafd8ce67014cd0c2386757aaecbb55c",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/AliasTargets.lean": "c86d2e5e2f1f219c1d17e307ebf46b464360dce09d94db3ef3533e90af7c44ba",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/Contract.lean": "6da98be9ca07314046042b99aca09bb35e17c1112ec8aea528424cbaeb034511",
+    "${PREPARATION_ROOT}/sources/PidStoppedPrefixStageA/RawTargets.lean": "af47707c71b7fc8bcb522fd18413990d6798216a055c55272f04f8fd52a2dcb1",
+    "${PREPARATION_ROOT}/sources/StoppedPrefixProbabilityRoot.lean": "5e0e2d39d492ab2b060fdb4cbab098b266283d8053a382b59bb45484d41744d5",
+    "${REPOSITORY_ROOT}/audit/formal/lean/lake-manifest.json": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "${REPOSITORY_ROOT}/audit/formal/lean/lakefile.toml": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+    "${REPOSITORY_ROOT}/audit/formal/lean/lean-toolchain": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+    "/bin/ps": "472992c470606d28f577590decfecd7f4a20f832fd92c671bebc6d44790b5d02",
+    "${PYTHON_INSTALLATION_ROOT}/Python": "696ffa2cf9562522c387f7c2b3a990ef67e574df2d921822fe310ea35587cce0",
+    "${PYTHON_INSTALLATION_ROOT}/bin/python3.14": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf",
+    "/usr/lib/dyld": "80d8943e882f81d2b9aed35e3689be36878d34a8af5289c564856147d11a368e"
+  },
+  "installed_tables": [
+    "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}/inputs/view-successor/INSTALLED_BYTE_PINS.json",
+    "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}/inputs/view-successor/LOOKUP_NAMESPACES.json",
+    "${HISTORICAL_BOUNDARY_PREPARATION_ROOT}/BOUNDARY_EXTERNAL_INPUT_PINS.json"
+  ],
+  "inventory_table_pins": {
+    "EXTERNAL_INPUT_PINS.json": "183c6ef6448ddefca75dbe69b35b59639379d22b94726ca850c00d5021685d54",
+    "INSTALLED_BYTE_PINS.json": "bfb616da0626b7cfdcce7986f69583842eb4a2fee436e0c0491e2d977d73ad15",
+    "LOOKUP_NAMESPACES.json": "fbe1dfc40d6a33d1e84e46dec9310b4c3b38ebe42f1d8604860e370ade522196"
+  },
+  "inventory_timeout_seconds": 600,
+  "lean": "${LEAN_INSTALLATION_ROOT}/bin/lean",
+  "lean_path_tail": [
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/.lake/packages/mathlib/.lake/build/lib/lean",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/.lake/packages/plausible/.lake/build/lib/lean",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/.lake/packages/importGraph/.lake/build/lib/lean",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/.lake/packages/proofwidgets/.lake/build/lib/lean",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/.lake/packages/aesop/.lake/build/lib/lean",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/.lake/packages/Qq/.lake/build/lib/lean",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/.lake/packages/batteries/.lake/build/lib/lean",
+    "${HISTORICAL_DEPENDENCY_ROOT}/audit/formal/lean/.lake/packages/Cli/.lake/build/lib/lean",
+    "${LEAN_INSTALLATION_ROOT}/lib/lean"
+  ],
+  "leanchecker": "${LEAN_INSTALLATION_ROOT}/bin/leanchecker",
+  "maximum_children": 29,
+  "maximum_inventory_age_seconds": 300,
+  "minimum_admission_remaining_seconds": 2400,
+  "modules": [
+    "PidFiniteConvergence.Deterministic",
+    "PidFiniteConvergence.SxEventBridge",
+    "MgwBridgeDepsV1.SxDnf.Contract",
+    "MgwBridgeDepsV1.JoinLog.Contract",
+    "PidMgwBridge.Contract",
+    "PidPrefixProbability.Contract",
+    "MgwBridgeDepsV1.SxDnf.JudgeCore",
+    "PidStoppedPrefixStageA.Contract",
+    "PidStoppedPrefixStageA.RawTargets",
+    "PidStoppedPrefixStageA.AliasTargets",
+    "PidStoppedPrefixLegacyStageA.Contract",
+    "PidStoppedPrefixLegacyStageA.RawTargets",
+    "PidStoppedPrefixCausal.Controls",
+    "PidStoppedPrefixCausal.AxiomControls",
+    "PidStoppedPrefixF1F2.HostileTargets",
+    "PidStoppedPrefixF1F2.ReviewerControls",
+    "PidStoppedPrefixF1F2.Candidate",
+    "PidStoppedPrefixF1F2.SemanticJudge",
+    "F1F2CandidateRoot",
+    "PidStoppedPrefixF4.HostileTargets",
+    "PidStoppedPrefixF4.ReviewerControls",
+    "PidStoppedPrefixF4.Candidate",
+    "PidStoppedPrefixF4.SemanticJudge",
+    "F4CandidateRoot",
+    "StoppedPrefixProbabilityRoot"
+  ],
+  "postflight_reserve_seconds": 660,
+  "preparation_status": "uncompiled_unexecuted_not_admitted",
+  "python": "${PYTHON_INSTALLATION_ROOT}/bin/python3.14",
+  "record_modules": {
+    "PidStoppedPrefixCausal.AxiomControls": {
+      "expected": [
+        {
+          "id": "forbidden_axiom_rejected",
+          "layer": "DNF_JUDGE_AXIOM",
+          "status": "expected_control_observed"
+        }
+      ],
+      "prefix": "STOPPED_PREFIX_AXIOM_CONTROL_RESULT "
+    },
+    "PidStoppedPrefixCausal.Controls": {
+      "expected": [
+        {
+          "expected": false,
+          "id": "legacy_complement_unequal",
+          "left": "PidStoppedPrefixCausalControls.legacyViaMask",
+          "observed": false,
+          "right": "PidStoppedPrefixCausalControls.legacyExpanded",
+          "status": "expected_comparison_observed"
+        },
+        {
+          "expected": true,
+          "id": "canonical_complement_equal",
+          "left": "PidStoppedPrefixCausalControls.canonicalViaMask",
+          "observed": true,
+          "right": "PidStoppedPrefixCausalControls.canonicalExpanded",
+          "status": "expected_comparison_observed"
+        },
+        {
+          "expected": false,
+          "id": "legacy_f1_unequal",
+          "left": "PidStoppedPrefixLegacyStageARawTargets.first_hit_factorization",
+          "observed": false,
+          "right": "PidStoppedPrefixLegacyStageAContract.first_hit_factorization_target",
+          "status": "expected_comparison_observed"
+        },
+        {
+          "expected": true,
+          "id": "canonical_f1_equal",
+          "left": "PidStoppedPrefixStageARawTargets.first_hit_factorization",
+          "observed": true,
+          "right": "PidStoppedPrefixStageAAliasTargets.first_hit_factorization",
+          "status": "expected_comparison_observed"
+        },
+        {
+          "expected": true,
+          "id": "legacy_f2_equal",
+          "left": "PidStoppedPrefixLegacyStageARawTargets.first_hit_mass",
+          "observed": true,
+          "right": "PidStoppedPrefixLegacyStageAContract.first_hit_mass_target",
+          "status": "expected_comparison_observed"
+        },
+        {
+          "expected": true,
+          "id": "canonical_f2_equal",
+          "left": "PidStoppedPrefixStageARawTargets.first_hit_mass",
+          "observed": true,
+          "right": "PidStoppedPrefixStageAAliasTargets.first_hit_mass",
+          "status": "expected_comparison_observed"
+        }
+      ],
+      "prefix": "STOPPED_PREFIX_CAUSAL_RESULT "
+    },
+    "PidStoppedPrefixF1F2.ReviewerControls": {
+      "expected": [
+        {
+          "id": "miniature_positive",
+          "layer": "exact_theorem_type_and_axioms",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "definition_kind",
+          "layer": "DNF_JUDGE_DECLARATION_KIND",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "explicit_receiver",
+          "layer": "DNF_JUDGE_TARGET_TYPE",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "implicit_receiver",
+          "layer": "DNF_JUDGE_TARGET_TYPE",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "wrong_theorem",
+          "layer": "DNF_JUDGE_TARGET_TYPE",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "alias_mismatch",
+          "layer": "DNF_JUDGE_CONTRACT_VIEW",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "universe_specialization",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "factorization_final_hit_only",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "factorization_unmasked_prefix",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "factorization_wrong_final_mask",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "factorization_normalized_masks",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "mass_shifted_exponent",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "mass_swapped_probabilities",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "mass_positive_event_only",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "mass_nonempty_prefix_only",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "factorization_explicit_receiver",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "factorization_implicit_receiver",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "mass_explicit_receiver",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "mass_implicit_receiver",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        }
+      ],
+      "prefix": "STOPPED_PREFIX_F1F2_CONTROL_RESULT "
+    },
+    "PidStoppedPrefixF1F2.SemanticJudge": {
+      "expected": [
+        {
+          "alias_target": "PidStoppedPrefixStageAAliasTargets.first_hit_factorization",
+          "raw_target": "PidStoppedPrefixStageARawTargets.first_hit_factorization",
+          "status": "accepted",
+          "theorem": "PidStoppedPrefixF1F2Candidate.first_hit_factorization"
+        },
+        {
+          "alias_target": "PidStoppedPrefixStageAAliasTargets.first_hit_mass",
+          "raw_target": "PidStoppedPrefixStageARawTargets.first_hit_mass",
+          "status": "accepted",
+          "theorem": "PidStoppedPrefixF1F2Candidate.first_hit_mass"
+        }
+      ],
+      "prefix": "STOPPED_PREFIX_F1F2_JUDGE_RESULT "
+    },
+    "PidStoppedPrefixF4.ReviewerControls": {
+      "expected": [
+        {
+          "id": "miniature_positive",
+          "layer": "exact_theorem_type_and_axioms",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "definition_kind",
+          "layer": "DNF_JUDGE_DECLARATION_KIND",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "explicit_receiver",
+          "layer": "DNF_JUDGE_TARGET_TYPE",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "implicit_receiver",
+          "layer": "DNF_JUDGE_TARGET_TYPE",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "wrong_theorem",
+          "layer": "DNF_JUDGE_TARGET_TYPE",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "alias_mismatch",
+          "layer": "DNF_JUDGE_CONTRACT_VIEW",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "universe_specialization",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "target_only",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "source_only",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "last_only",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "stage_explicit_receiver",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        },
+        {
+          "id": "stage_implicit_receiver",
+          "layer": "complete_type",
+          "status": "expected_control_observed"
+        }
+      ],
+      "prefix": "STOPPED_PREFIX_STAGE_A_CONTROL_RESULT "
+    },
+    "PidStoppedPrefixF4.SemanticJudge": {
+      "expected": [
+        {
+          "alias_target": "PidStoppedPrefixStageAAliasTargets.native_return_kills",
+          "raw_target": "PidStoppedPrefixStageARawTargets.native_return_kills",
+          "status": "accepted",
+          "theorem": "PidStoppedPrefixF4Candidate.native_return_kills"
+        }
+      ],
+      "prefix": "STOPPED_PREFIX_F4_JUDGE_RESULT "
+    }
+  },
+  "resource_contract": {
+    "boundary_child_timeout_seconds": 600,
+    "boundary_post_reserve_seconds": 60,
+    "compiler_memory_argument_mib": 4096,
+    "deadline_is_hard_real_time": false,
+    "fresh_kernel_child_timeout_seconds": 900,
+    "main_child_count": 29,
+    "maximum_inventory_age_seconds": 300,
+    "memory_scope": "Child process group RSS sampling; not aggregate process tree cap. Compiler -M4096. On Darwin no RLIMIT_AS; observed overrun fails. Exact pinned source tables are read in memory; no global disk cap claimed.",
+    "minimum_admission_remaining_seconds": 2400,
+    "observed_group_rss_bytes_per_child": 4294967296,
+    "ordinary_child_timeout_seconds": 180,
+    "postflight_reserve_seconds": 660,
+    "pre_admission_inventory_child_count": 1,
+    "pre_admission_inventory_cleanup_seconds": 45,
+    "pre_admission_inventory_work_cap_seconds": 600,
+    "root_readback_reserve_seconds": 600,
+    "rss_is_hard_os_limit": false,
+    "rss_sample_interval_seconds": 0.1,
+    "stage_seconds": 3600,
+    "stderr_bytes_per_child": 4194304,
+    "stdout_bytes_per_child": 4194304,
+    "supervisor_cleanup_seconds": 45,
+    "supervisor_observation_bytes": 8388608,
+    "supervisor_stderr_bytes": 4194304,
+    "supervisor_stdout_bytes": 4194304
+  },
+  "root_readback_reserve_seconds": 600,
+  "schema": "pid-rs/stopped-prefix-probability-native-source-proposal-v1",
+  "scope": {
+    "F1F2_existing_controls": 19,
+    "F4_existing_controls": 12,
+    "F4_export_rechecked_in_new_shared_closure": 1,
+    "causal_predicate_controls": 6,
+    "forbidden_axiom_control": 1,
+    "full_stage_a_accepted": false,
+    "historical_F4_acceptance_unchanged": true,
+    "mathematical_verification_status": "not_executed",
+    "maximum_attempts": 1,
+    "mode": "normal isolated Python only",
+    "native_concurrency": 1,
+    "new_F1_F2_exports_selected": 2,
+    "retries": 0,
+    "root_adoption": "pending_future_execution_and_readback",
+    "scientific_novelty_or_stopped_gradient_claim": false,
+    "source_to_installed_authenticity": false
+  },
+  "stage_seconds": 3600,
+  "status": "SOURCE_ONLY_NATIVE_UNADMITTED"
+}

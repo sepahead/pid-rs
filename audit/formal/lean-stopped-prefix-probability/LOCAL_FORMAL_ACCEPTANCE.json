@@ -1,0 +1,209 @@
+{
+  "schema": "pid-rs/stopped-prefix-probability-local-acceptance-projection-v2",
+  "status": "private_publication_candidate_of_existing_local_acceptance",
+  "accepted_utc": "2026-09-26T21:28:05.363056+00:00",
+  "original_deadline_utc": "2026-09-26T22:19:04.585507+00:00",
+  "checked": {
+    "commands": 29,
+    "streams": 58,
+    "records": 41,
+    "source_modules": 25,
+    "input_snapshots": 137,
+    "root_readback_files": 382,
+    "readback_bytes": 1118194504,
+    "installed_files_at_each_boundary": 139949,
+    "fresh_kernel_seconds": 206.89100983412936,
+    "actual_successful_exports": 3,
+    "newly_accepted_F1_F2_exports": 2,
+    "historical_F4_export_rechecked": 1
+  },
+  "actual_tool_results": {
+    "inventory": {
+      "exit_code": 0
+    },
+    "root_admission_writer": {
+      "exit_code": 0
+    },
+    "native_outer": {
+      "exit_code": 0
+    },
+    "root_readback": {
+      "exit_code": 0,
+      "stderr_bytes": 0
+    }
+  },
+  "exports": [
+    {
+      "alias_target": "PidStoppedPrefixStageAAliasTargets.first_hit_factorization",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidStoppedPrefixStageAContract.first_hit_factorization_target.{u, v, w}",
+      "raw_target": "PidStoppedPrefixStageARawTargets.first_hit_factorization",
+      "status": "accepted",
+      "theorem": "PidStoppedPrefixF1F2Candidate.first_hit_factorization",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidStoppedPrefixStageAAliasTargets.first_hit_mass",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidStoppedPrefixStageAContract.first_hit_mass_target.{u, v, w}",
+      "raw_target": "PidStoppedPrefixStageARawTargets.first_hit_mass",
+      "status": "accepted",
+      "theorem": "PidStoppedPrefixF1F2Candidate.first_hit_mass",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidStoppedPrefixStageAAliasTargets.native_return_kills",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "∀ (I : Type u) (X : I → Type v) (T : Type w) [inst : Fintype.{u} I] [Nonempty.{u + 1} I] [(i : I) → Fintype.{v} (X i)]\n  [Fintype.{w} T] [inst_4 : DecidableEq.{u + 1} I] [inst_5 : (i : I) → DecidableEq.{v + 1} (X i)]\n  [inst_6 : DecidableEq.{w + 1} T] (z : PidMgwBridgeContract.Key.{u, v, w} I X T)\n  (alpha : PidMgwBridgeContract.Node.{u} I) (rows : List.{max (max w v) u} (PidMgwBridgeContract.Key.{u, v, w} I X T))\n  (hz :\n    @Membership.mem.{max (max u v) w, max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n      (List.{max (max w v) u} (PidMgwBridgeContract.Key.{u, v, w} I X T))\n      (@List.instMembership.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)) rows z),\n  And\n    (@Eq.{1} Real (@PidPrefixProbabilityContract.positiveOnPrefix.{u, v, w} I X T inst inst_4 inst_5 z alpha rows)\n      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))\n    (@Eq.{1} Real\n      (@PidPrefixProbabilityContract.negativeOnPrefix.{u, v, w} I X T inst inst_4 inst_5 inst_6 z alpha rows)\n      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))",
+      "raw_target": "PidStoppedPrefixStageARawTargets.native_return_kills",
+      "status": "accepted",
+      "theorem": "PidStoppedPrefixF4Candidate.native_return_kills",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    }
+  ],
+  "statements": {
+    "F1": "For every finite nonempty source-index set, finite coordinate/target alphabets, equality instances, normalized nonnegative finite law p, arbitrary event A and natural n: splitting the iid (n+1)-row measure restricted to n misses followed by a hit yields the product of the unnormalized complement-masked n-row law and hit-masked final-row law.",
+    "F2": "Under the same premises, event mass a lies in [0,1] and the first-hit word has measure ENNReal.ofReal((1-a)^n*a), including n=0 and a=0 or1.",
+    "F4": "For every declared finite source/target setting, anchor z, node alpha and comparison list containing the complete source-plus-target key z, both native positive and target-filtered negative prefix contributions equal zero. No law or independence premise is used."
+  },
+  "semantic_review": {
+    "actual_product_measure": true,
+    "normalized_nonnegative_law_definition_read": true,
+    "no_assumed_cycle_law_or_normalized_mask_premise": true,
+    "root_read_candidate_contract_raw_alias_and_judge_sources": true,
+    "all_41_raw_records_read": true,
+    "allowed_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "axiom_fixture_rejected_and_excluded_from_fresh_root": true,
+    "F1_F2_printed_type_note": "Pretty-printed theorem types name the complete target abbreviations. Root separately read their source expansions and raw propositions; native semantic judges compare full types definitionally and compile exact raw/alias assignments. The printed strings alone are not expanded-statement evidence.",
+    "frozen_metadata_note": "Source proposal comments and packet.scope planning labels remain immutable pre-execution metadata. This acceptance and actual terminal receipts carry the new runtime disposition; they are not retroactively edited."
+  },
+  "native_completed_utc": "2026-09-26T21:24:55.923192+00:00",
+  "kernel": {
+    "command": [
+      "${LEAN_INSTALLATION_ROOT}/bin/leanchecker",
+      "--fresh",
+      "StoppedPrefixProbabilityRoot"
+    ],
+    "cwd": "${EXECUTION_ROOT}/native/src",
+    "elapsed_seconds": 206.89100983412936,
+    "execution_error": null,
+    "failure": null,
+    "label": "fresh-kernel",
+    "limits": {
+      "observed_group_rss_bytes": 4294967296,
+      "rss_limit_is_hard_os_cap": false,
+      "rss_sample_interval_seconds": 0.1,
+      "seconds": 900,
+      "stderr_bytes": 4194304,
+      "stdout_bytes": 4194304
+    },
+    "peak_observed_group_rss_bytes": 3381280768,
+    "remaining_live_group_processes": [],
+    "retained_stderr_bytes": 0,
+    "retained_stdout_bytes": 0,
+    "returncode": 0,
+    "started_utc": "2026-09-26T21:21:05.650130+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ordinal": 27,
+    "original_command_record": {
+      "bytes": 1064,
+      "sha256": "2dfca5a3ad40532b4b5404e8b474d41e571efad3a0a8faf584b307c555fef3af"
+    },
+    "streams": [
+      {
+        "path": "evidence/streams/27-fresh-kernel/stdout.log",
+        "original_bytes": 0,
+        "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "transformation": "identity"
+      },
+      {
+        "path": "evidence/streams/27-fresh-kernel/stderr.log",
+        "original_bytes": 0,
+        "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "transformation": "identity"
+      }
+    ]
+  },
+  "outer": {
+    "status": "observed_wrapper_completion_pending_receipt_review",
+    "returncode": 0,
+    "failure": null,
+    "observed_survivors": [],
+    "observations_are_atomic": false,
+    "completed_utc": "2026-09-26T21:24:55.950335+00:00"
+  },
+  "boundary_receipts": [
+    "evidence/boundary/INSTALLED_ADMISSION.json",
+    "evidence/boundary/INSTALLED_PRE.json",
+    "evidence/boundary/INSTALLED_POST.json"
+  ],
+  "statistical_scope": "Ideal iid auxiliary rows from a fixed finite law; if the law is a fitted table, the result is conditional on that frozen table. No inference of iid raw sensor rows or population calibration. F4 is deterministic.",
+  "novelty": "F1/F2 are classical finite probability formalized in the project framework; F4 is an invariant of the project prefix definition, rechecked here. No scientific-priority or breakthrough claim.",
+  "not_claimed": [
+    "FullStageA",
+    "stopped-gradient unbiasedness",
+    "expected-runtime theorem",
+    "cost-note formalization",
+    "continuous/shared-exclusions or another PID transfer",
+    "application or deployment readiness",
+    "atomicity or authenticated toolchain",
+    "full main hostedCI acceptance"
+  ],
+  "public_portable_replay": "not_run",
+  "hosted_replay": "not_run",
+  "current_publication_gate": "not_run",
+  "projection_limits": "Original private records remain unchanged. Public metadata omits declared process/session/terminal handles and replaces complete private roots with role placeholders. Original-native hashes are not hashes of the projected files. Of 58 selected main streams, 56 preserve native bytes and two PRE/POST boundary stdout files retain the already declared v1 locator projections. All 41 theorem/control values are unchanged. This supplies no new native, portable, hosted, atomicity or binary-authentication credit.",
+  "root_acceptance_projection": {
+    "path": "evidence/ROOT_ACCEPTANCE.projection.json",
+    "original_private_record": {
+      "bytes": 4669,
+      "sha256": "40f7e1001f85849fb6e76b1527ede16cc1974fa6c9efc71ce2c77a005da6f15f"
+    },
+    "public_projection": {
+      "bytes": 4485,
+      "sha256": "51cf56aa39f53a3c318413768fe5993a7c698f5b3a9b4a7fd837190098d43a85"
+    }
+  },
+  "original_native_hash_joins": {
+    "original_clock_sha256": "6fb2ff0305b1b099393b190b882208852fffee5e50b8c29be4b3988b1976dfc5",
+    "packet_sha256": "a6efef42d0f2111765488bcc6749a2ede695cca2389e28413b39a4b696381bce",
+    "admission_sha256": "485d1868d4e75996142a880309d38dda23fcfc8839400e1146967f31d87761ea",
+    "source_readiness_seal_sha256": "c6fd68e96534b00b24bdd17b7b458437b4ea69a677d7d6067a39627f6f055987",
+    "root_readback_sha256": "baaca965389ebf74be81076d74ba157aa7d5ba39a6e54c4d523017e40b63cbdb",
+    "native_result_sha256": "d912f16fa11d73353aa1c7f931f336e4eab27e63d661ea673bd4d535af470678",
+    "outer_result_sha256": "9dd12e1ad394e54eed06e829a3e6151aea75c1b5f24f795491f5882ce7a331fb"
+  }
+}

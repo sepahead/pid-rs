@@ -48,6 +48,7 @@ STANDALONE_MARKDOWN_PAPERS=(
   "embodied-sensor-utility"
   "embodied-sensor-overview"
   "cross-implementation-reverification"
+  "stopped-prefix-probability"
   "fault-tolerant-shared-exclusions"
   "mathematical-results-guide"
   "finite-target-copy-mgw-synergy"
@@ -69,6 +70,7 @@ STANDALONE_MARKDOWN_SOURCES=(
   "audit/research/embodied-sensor-utility/EXPOSITION.md"
   "audit/research/embodied-sensor-utility/OVERVIEW.md"
   "audit/evidence/cross-implementation-reverification-2026-09-26.md"
+  "audit/formal/lean-stopped-prefix-probability/EXPOSITION.md"
   "audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md"
   "MATHEMATICAL_RESULTS_GUIDE.md"
   "audit/evidence/finite-target-copy-mgw-synergy.md"
@@ -401,6 +403,9 @@ scripts/check-numerical-assurance-pdf-self-test.sh
 scripts/check-pid2-represented-coordinate-assurance-pdf.sh "$MODE"
 scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh "$MODE"
 scripts/check-cross-implementation-reverification-pdf.sh "$MODE"
+python3 -I -B scripts/check-stopped-prefix-probability-pdf-self-test.py
+python3 -O -I -B scripts/check-stopped-prefix-probability-pdf-self-test.py
+scripts/check-stopped-prefix-probability-pdf.sh "$MODE"
 scripts/check-fault-tolerant-shared-exclusions-pdf.sh "$MODE"
 scripts/check-sxpid3-source-marginal-audit-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"

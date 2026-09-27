@@ -1,0 +1,23 @@
+{
+  "schema": "pid-rs/stopped-prefix-probability-admission-v1",
+  "status": "ROOT_ADMITTED",
+  "packet_sha256": "a6efef42d0f2111765488bcc6749a2ede695cca2389e28413b39a4b696381bce",
+  "outer_sha256": "30a57f1252978d89baec3f3131e2a6d0eb1036e3b9b752db064ecb76bd4321ac",
+  "driver_sha256": "404532b6b91ea4f3b1ac8c7aebcc75f28e9a5c3112864acb07a18e30d3fa444a",
+  "original_clock_sha256": "6fb2ff0305b1b099393b190b882208852fffee5e50b8c29be4b3988b1976dfc5",
+  "fresh_inventory_sha256": "d68c34c6bac0d6c51de88a81edcbdf7f57cc3b73471c13bc1511db1ca4005a61",
+  "fresh_inventory_outer_sha256": "395cb1f50db3f3e36701875e5aee4c8ad983f30bb6ac5f3d4c9e937c7368b3d5",
+  "current_correction_main_evidence": {
+    "commit": "a5ebef7ea0924caec91df481834956e3f81f1e86",
+    "promotion_sha256": "79d6b56ad08e514184b7402f6107ca849566ef79223230935ab602a5fc8c3808",
+    "full_main_hosted_ci": "pending, separate from this mathematical attempt"
+  },
+  "root_inventory_terminal": {
+    "exit_code": 0,
+    "basis": "Root passes these only after directly observing the actual successful inventory tool result."
+  },
+  "admission_writer_sha256": "35a7a80a0f5a24315866bb91cc48d2ee11d3e700b952db48c9ea9a4d47925e8d",
+  "admitted_utc": "2026-09-26T21:20:03.465257+00:00",
+  "admitted_monotonic_ns": 2586117743922375,
+  "mathematical_adoption": false
+}

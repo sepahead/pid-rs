@@ -7,6 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Publish three locally accepted finite first-hit and complete-key cancellation results for the
+  categorical MGW prefix construction, with exact Lean sources, selected execution evidence,
+  a standalone eight-page report and an explanatory SVG. Preserve the failed correspondence
+  attempt and stopped-gradient counterexamples. Add reproducible PDF and causal checker controls;
+  keep portable theorem replay, stopped-gradient results and runtime implementation explicitly open.
+
 - Correct the September Prisoma handoff's categorical method identity to fitted-quantized MGW
   shared exclusions. Retain the earlier source-bound July `I_min` audit, and distinguish the
   current same-row descriptive route from held-out qualification.

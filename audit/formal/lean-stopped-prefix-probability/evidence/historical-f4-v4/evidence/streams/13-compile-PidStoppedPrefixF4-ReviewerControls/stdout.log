@@ -1,0 +1,12 @@
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"miniature_positive","layer":"exact_theorem_type_and_axioms","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"definition_kind","layer":"DNF_JUDGE_DECLARATION_KIND","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"explicit_receiver","layer":"DNF_JUDGE_TARGET_TYPE","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"implicit_receiver","layer":"DNF_JUDGE_TARGET_TYPE","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"wrong_theorem","layer":"DNF_JUDGE_TARGET_TYPE","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"alias_mismatch","layer":"DNF_JUDGE_CONTRACT_VIEW","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"universe_specialization","layer":"complete_type","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"target_only","layer":"complete_type","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"source_only","layer":"complete_type","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"last_only","layer":"complete_type","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"stage_explicit_receiver","layer":"complete_type","status":"expected_control_observed"}
+STOPPED_PREFIX_STAGE_A_CONTROL_RESULT {"id":"stage_implicit_receiver","layer":"complete_type","status":"expected_control_observed"}

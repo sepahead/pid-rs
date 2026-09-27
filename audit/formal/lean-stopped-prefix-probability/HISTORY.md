@@ -1,0 +1,21 @@
+# Current result and preserved history
+
+Author: Sepehr Mahmoudian.
+
+These records describe distinct closures and owners. Later acceptance does not edit an earlier failure, extend its clock or make its source dependencies interchangeable.
+
+| Record | Observed disposition | Preserved evidence |
+|---|---|---|
+| F1/F2 v3 correspondence attempt | Candidate compiled; F1 raw/contract correspondence failed; neither export accepted; no fresh-kernel step. This is a formal engineering failure, not a counterexample to the probability identities. | [Failure archive](../../archive/stopped-prefix-f1f2-v3/DISPOSITION.md), exact diagnostic and historical 15-source selection. |
+| F4 v4, completed 24 September 2026 | One deterministic F4 theorem locally accepted for the older exact 15-source closure; 19 commands and 38 streams. No F1/F2 acceptance in that run. | [Historical F4 record](evidence/historical-f4-v4/DISPOSITION.md), unchanged historical acceptance projection and relocated exact source map. |
+| Combined attempt, closed 26 September at 20:52:59 UTC | Inventory succeeded; root's subsequent admission command rejected its age as stale. Root had spent over the unchanged 300-second freshness budget preparing readback. No admission, Lean proof command or native proof directory existed. | [Operational refusal projection](evidence/history/OPERATIONAL_REFUSAL.projection.json), with only private terminal handles omitted and its original-byte hash retained in [provenance](evidence/history/PROVENANCE.json). This was execution planning, not a theorem or toolchain defect. |
+| Successor source preparation, deadline 21:08:35 UTC | Closed incomplete before its admission writer and final helper seal were ready. Administrative closure was recorded at 21:12:11 UTC. Root later prepared the missing operational pieces in a separately owned readiness task. | [Selected closure projection](evidence/history/SOURCE_PREPARATION_CLOSURE.projection.json), with the original record hash. It was not itself an admission or proof run. |
+| Joint v2 execution, owner 21:19:04–22:19:04 UTC | Native work completed at 21:24:55; readback completed at 21:26:24; root accepted and closed at 21:28:05. F1/F2 were newly accepted and the unchanged F4 proof was rechecked with the repaired shared targets. | [Root acceptance projection](evidence/ROOT_ACCEPTANCE.projection.json), [local projection](LOCAL_FORMAL_ACCEPTANCE.json), [commands/streams](evidence/COMMANDS.json) and [original/projection hash ledger](evidence/PROJECTIONS.json). |
+
+The [historical source map](HISTORICAL_SOURCE_MAP.json) preserves the older two StageA declarations once as inert text and selects unchanged successors by hash. The accepted joint [source map](SOURCE_MAP.json) instead selects the explicit canonical decision-term repair. Both exact histories remain inspectable; no second active F4 package or duplicate theorem acceptance is implied.
+
+The [stopped-gradient archive](../../archive/stopped-prefix-research/DISPOSITION.md) preserves different handwritten failures and open arguments. Omitting anchor or terminal likelihood-score terms can change a desired derivative even when a terminal prefix contribution is zero. Those counterexamples do not refute the accepted finite F1/F2/F4 statements, and those statements do not settle the archive's gradient, infinite-expectation or variance claims.
+
+**Publication-preparation snapshot, 26 September 2026.** The following paragraph records the candidate state on that date. See [the current publication disposition](PUBLICATION.md) for later source and PDF status.
+
+This publication candidate assembles selected local evidence. It has no fresh public portable replay, hosted proof replay, rendered figure or accepted PDF yet. The unformalized occupancy-cost note is outside its theorem roster. Original private receipts and their ownership windows remain unchanged. The [v2 metadata projection ledger](evidence/PUBLIC_METADATA_PROJECTIONS.json) distinguishes original native bytes, the preserved first publication candidate and the current public metadata; process handles are omitted only from the declared projections. All 58 main and 38 historical stream files retain their v1 bytes. The 58 main files include two previously declared boundary locator projections and 56 exact native-byte copies.

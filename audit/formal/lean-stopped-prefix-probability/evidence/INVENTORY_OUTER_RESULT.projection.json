@@ -1,0 +1,30 @@
+{
+  "cleanup_reserve_seconds": 45.0,
+  "command": [
+    "${PYTHON_INSTALLATION_ROOT}/bin/python3.14",
+    "-I",
+    "-S",
+    "-B",
+    "${PREPARATION_ROOT}/observe_boundary.py",
+    "--stage",
+    "${EXECUTION_ROOT}",
+    "--clock-sha256",
+    "6fb2ff0305b1b099393b190b882208852fffee5e50b8c29be4b3988b1976dfc5",
+    "--phase",
+    "ADMISSION"
+  ],
+  "completed_inventory_outer_monotonic_ns": 2586094390417916,
+  "completed_inventory_outer_utc": "2026-09-26T21:19:40.111870+00:00",
+  "completed_utc": "2026-09-26T21:19:39.978553+00:00",
+  "cwd": "${PREPARATION_ROOT}",
+  "deadline_is_hard_real_time": false,
+  "deadline_utc": "2026-09-26T21:29:49.797329+00:00",
+  "failure": null,
+  "fresh_inventory_observed": true,
+  "observations_are_atomic": false,
+  "observed_survivors": [],
+  "registered_utc": "2026-09-26T21:19:04.805219+00:00",
+  "returncode": 0,
+  "root_admission": "not_granted",
+  "status": "observed_wrapper_completion_pending_receipt_review"
+}
