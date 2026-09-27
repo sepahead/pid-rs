@@ -12,9 +12,16 @@ defining method papers separately; Section 15 lists them.
 This report records a second implementation of the main pid-rs estimators, written from the
 published definitions, and compares it with pid-rs. It also re-derives several repository results,
 tests one repository bound in exact arithmetic, and records one defect and one citation error that
-the review found. The checks ran on commit `d1f401a` and again on commit `0e96b2b`, which
+the review found. The original implementation checks ran on commit `d1f401a` and again on commit `0e96b2b`, which
 contains the two fixes below. Section 14.7 records later defects found in two evidence checkers;
 those defects do not change the retained estimator outputs.
+
+A diagnostic recorded on 27 September 2026 at commit
+`676dcb60d3762ae81672087d5ecddd7023440130` is reported separately in Section 4.5. It compares
+the continuous redundancy estimate with a same-row Gaussian-integrand Monte Carlo reference
+at four noise scales. The observed discrepancies are 0.0048–0.0247 nats. This adds a bounded
+reference comparison, with no numerical accuracy assertion; it does not extend the
+second-implementation agreement figures below or establish calibration.
 
 The main results are:
 
@@ -65,7 +72,7 @@ evidence classes and limits of independence.
 | MGW categorical shared exclusions | Makkeh, Gutknecht and Wibral, [arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5) | `discrete_sxpid2`, `discrete_sxpid3`, `discrete_sxpid_n` | Second implementation on 60 systems; re-derivation | Empirical plug-in law only |
 | Williams–Beer $I_{\min}$ | Williams and Beer, [arXiv:1004.2515v1](https://arxiv.org/abs/1004.2515v1) | `imin_pid2`, `imin_pid3` | Second implementation on 40 systems | A different redundancy measure |
 | KSG1 mutual information | Kraskov, Stögbauer and Grassberger (2004), [DOI 10.1103/PhysRevE.69.066138](https://doi.org/10.1103/PhysRevE.69.066138) | `ksg_mi`, `ksg_local_mi_terms`, `ksg_mi_concat_xy` | Second implementation; two lemmas | Implementation agreement only |
-| Ehrlich source-disjunction redundancy | Ehrlich et al., [arXiv:2311.06373v3](https://arxiv.org/abs/2311.06373v3) | `isx_redundancy` | Second implementation | Restricted continuous domain |
+| Ehrlich source-disjunction redundancy | Ehrlich et al., [arXiv:2311.06373v3](https://arxiv.org/abs/2311.06373v3) | `isx_redundancy` | Second implementation; separate Gaussian reference diagnostic (Section 4.5) | Restricted continuous domain; no calibration claim |
 | PID2 and PID3 compositions | Ehrlich et al. atom construction | `pid2_isx`, `incomplete_pid3_diagnostic`, research `pid3_isx` | Second implementation | Composition, not calibration |
 | Raw resampling percentiles | Project-defined summaries | `block_bootstrap`, `block_bootstrap_paired`, `bootstrap_rows_stats`, `bootstrap_quantized_sxpid2` | Exact index analysis; defect fixed with tests | No coverage claim |
 | Levina–Bickel intrinsic dimension | Levina and Bickel (2004) | `intrinsic_dimension_report` | Re-derivation; source check | Diagnostic only |
@@ -104,6 +111,11 @@ This is retrospective, exploratory evidence. The checkers fail when a difference
 $10^{-12}$ nats, but that tolerance was chosen after the results were known. It is a regression
 guard, not a sealed acceptance rule.
 
+Section 4.5 has a different comparison design: one existing Rust diagnostic and an analytic
+integrand evaluated on the same synthetic rows. Its four settings share latent pseudorandom
+draws. It supplies neither a second implementation nor independent data, custody or institutional
+review; formal refinement and general estimator accuracy remain unestablished.
+
 ### 1.3 Correspondence edges
 
 The repository separates five correspondence edges. This report touches them as follows:
@@ -122,6 +134,9 @@ The repository separates five correspondence edges. This report touches them as 
 ## 2. Notation
 
 All logarithms are natural logarithms. Information is in nats.
+
+The finite-alphabet notation in this section governs the categorical checks. Section 4
+states the continuous setting, and Section 4.5 specifies its Gaussian laws separately.
 
 - $S_1,\ldots,S_m$ are the sources and $T$ is the target. Each variable takes values in a finite
   alphabet. A complete realization is $z=(s_1,\ldots,s_m,t)$.
@@ -406,8 +421,99 @@ absent.
 The incomplete PID3 diagnostic abstained on 18 lattice entries in total, as designed; the checker
 counts these abstentions and compares every produced value. The full output is
 [`results/check_continuous.txt`](cross-implementation-reverification-2026-09-26/results/check_continuous.txt).
-The agreement is implementation agreement only. These data satisfy the absolute-continuity
-premise, but the check says nothing about estimator bias, variance or calibration.
+The agreement is implementation agreement only. The generating population models have
+full-dimensional densities, but this finite comparison says nothing about estimator bias,
+variance or calibration.
+
+### 4.5 Paired Gaussian reference diagnostic
+
+On 27 September 2026, the existing ignored test
+`multi_sigma_ksg_vs_fixed_sample_reference` in
+[`sxpid_gaussian_oracle.rs`](../../crates/pid-core/tests/sxpid_gaussian_oracle.rs) ran unchanged
+at commit `676dcb60d3762ae81672087d5ecddd7023440130`. This is a comparison with a reference
+mean, separate from Section 4.4's agreement between implementations. The defining continuous
+shared-exclusions functional is Ehrlich et al., Definition 2 and its relative-precision
+convention ([arXiv:2311.06373v3](https://arxiv.org/abs/2311.06373v3)); the values here use natural
+logarithms and are in nats.
+
+For each ideal independent row, let $A,B,Z$ be independent standard-normal variables and set
+
+$$
+S_1=A,\qquad S_2=B,\qquad
+T=\frac{A+B+\sigma Z}{\sqrt{2+\sigma^2}},
+\qquad \sigma\in\{0.3,0.6,1.0,1.5\}.
+$$
+
+The ideal joint Gaussian law is full-dimensional for every listed positive $\sigma$.
+Each input matrix has $N=6000$ rows and one column. The sources already have the same
+standard-normal marginal scale, and the target uses its known population scale; no
+sample-fitted standardization or quantization is performed. The source relative-precision
+gauge and common partition convention are fixed. Rescaling a source or changing that
+convention would pose a different estimand question.
+
+Actual inputs are finite binary64 pseudorandom realizations generated by the repository's
+xorshift64*/Box–Muller helper, which floors its first uniform input at $10^{-12}$.
+Gaussian support and independent-row statements describe the ideal model, not a property
+proved of this finite deterministic generator. Every setting restarts seed `0x5EED_0001`,
+so all four reuse the same latent $A,B,Z$ draws; they are not independent replications.
+The source/target support declarations are explicit caller assumptions. Positive target
+noise is a model parameter, not a repair applied to observed ties.
+
+For $\rho=(2+\sigma^2)^{-1/2}$, the helper evaluates the analytic Gaussian pointwise MI
+
+$$
+i_\rho(a,t)=-\frac12\log(1-\rho^2)
+-\frac{\rho^2(a^2+t^2)-2\rho at}{2(1-\rho^2)}.
+$$
+
+This expression follows by dividing the standardized bivariate Gaussian joint density by
+the product of its two standard-normal marginal densities and taking the natural logarithm.
+
+For source index $a\in\{1,2\}$ and standard-normal density $\phi$, define
+
+$$
+w_a=\frac{\phi(s_a)}{\phi(s_1)+\phi(s_2)},\qquad
+g(s_1,s_2,t)=\log\!\left(w_1e^{i_\rho(s_1,t)}+w_2e^{i_\rho(s_2,t)}\right).
+$$
+
+The reference $\bar g_N=N^{-1}\sum_{i=1}^N g(s_{1i},s_{2i},t_i)$ is the sample mean
+of this analytic integrand on the estimator's own rows. It is not the exact population
+expectation. The helper uses a shifted log-sum-exp and Welford mean/variance updates.
+Its printed reference MC SE is $s_g/\sqrt N$, where $s_g^2$ is the sample variance of
+the integrand values. That ordinary Monte Carlo interpretation assumes the ideal
+independent-row model. It is not an uncertainty estimate for the paired discrepancy,
+the PID atoms, or comparisons between the coupled noise settings.
+
+The kNN local estimates share fitted neighbour structure, so treating their rowwise
+values as independent would not supply the missing paired-discrepancy uncertainty.
+Independent repetitions of the complete data-generation and estimation procedure
+would be a separate study; none were run for this table.
+
+Both KSG MI and Ehrlich redundancy use $k=3$, Chebyshev distance and zero reserved tie
+epsilon. The test computes full PID2 results but prints only redundancy. All four
+printed rows are retained below, in nats and at their original four-decimal precision.
+
+| Noise $\sigma$ | Estimated Red $\hat R$ | Reference $\bar g_N$ | Reference-only MC SE | $\lvert\hat R-\bar g_N\rvert$ |
+|---:|---:|---:|---:|---:|
+| 0.3 | 0.2180 | 0.2427 | 0.0065 | 0.0247 |
+| 0.6 | 0.2196 | 0.2250 | 0.0054 | 0.0054 |
+| 1.0 | 0.1762 | 0.1810 | 0.0043 | 0.0048 |
+| 1.5 | 0.1331 | 0.1273 | 0.0035 | 0.0058 |
+
+The largest observed discrepancy is at $\sigma=0.3$, the strongest-dependence setting
+among these four laws. These are discrepancies from a sample reference, not certified
+errors against population truth, estimates of bias, or evidence of statistical significance.
+The diagnostic contains **no numerical accuracy assertion**. Its successful exit records
+completion of the selected test; the separate 4,000-row regression and its tolerance were
+filtered out. No new tolerance is introduced here.
+
+The [execution projection](cross-implementation-reverification-2026-09-26/results/continuous-gaussian-diagnostic-2026-09-27.json)
+preserves the command arguments, observed source/input identities, all four numeric lines,
+toolchain, timing scopes and original raw-log hashes. It is explicitly a selected public
+projection; the original logs retain private machine paths and are not reproduced or
+silently rewritten here. Section 13 gives the selected command. Section 11 scopes the cost.
+This one coupled draw set does not establish calibration, a consistency rate, coverage,
+high-dimensional behavior, continuous PID3, hyperbolic PID or application value.
 
 ## 5. Complete test suite
 
@@ -912,6 +1018,28 @@ measured times are in
 the complete run on `0e96b2b`, with a cold release build and the test suite, took 160 s of wall
 time on an Apple M4 Max with macOS 26.5.1, rustc 1.96.0, Python 3.14.6 and NumPy 2.4.6. These are measurements of the checks, not benchmarks of pid-rs.
 
+**Cost of the Section 4.5 diagnostic.** The selected release command enables
+`experimental-pipelines`, which enables the continuous route without enabling `parallel`.
+It calls `pid_core::experimental::continuous::pid2_isx_with_budget` four times on
+$6000\times1$ source and target matrices. Each call computes three MI terms, Ehrlich
+redundancy and the checked PID2 atom construction; only redundancy is printed. The observed
+1.42 s is the whole four-case test-harness duration, including data generation, reference
+means and validation work. Cargo reports 14.60 s compilation separately; the outer wrapper
+records 16.31 s elapsed. The recorded host was Apple M4 Max, Darwin/arm64, with rustc
+1.97.1 and cargo 1.97.1. These are observed strings, not toolchain attestations.
+
+For this serial call, the Ehrlich kernel scans every other row per query: $O(N^2d)$
+coordinate-distance work, $O(N)$ per-query scratch and $O(N)$ retained local records,
+where $d$ is the total source/target coordinate count (three here). It does not retain
+an $N\times N$ distance matrix. The fixed-dimensional reference pass costs $O(N)$
+work with constant accumulator storage beyond the input vectors. The custom resource
+budget raises the estimated pairwise-distance ceiling to 250 million while retaining
+the default estimated-memory, coarse-operation and thread limits. Errors stop the
+test through `unwrap`; no cancellation token is used. No learned preprocessing,
+training, resampling, per-case latency, peak-memory measurement or repeated performance
+distribution is included. The result is an offline diagnostic measurement, not a
+standalone redundancy benchmark or online qualification.
+
 ## 12. Review record
 
 In the first review round, two model-review sessions reported on a draft: one for mathematics
@@ -947,8 +1075,27 @@ difference.
 After the outputs were retained, a second run on each commit matched all eight retained outputs of
 that time byte for byte. After the SMT check was added, a run on commit `e1e0b81` matched all nine;
 [`results/reproduction-confirmation.txt`](cross-implementation-reverification-2026-09-26/results/reproduction-confirmation.txt)
-records these runs. [`MANIFEST.json`](cross-implementation-reverification-2026-09-26/MANIFEST.json) lists
-every retained file with its size and SHA-256.
+records these runs. [`MANIFEST.json`](cross-implementation-reverification-2026-09-26/MANIFEST.json)
+lists the retained original-comparison and correction artifacts with their sizes and SHA-256
+hashes. It does not inventory the later Section 4.5 execution projection, which records its
+own observed input identities and original raw-log hashes.
+
+The later Section 4.5 diagnostic is a separate recorded execution and is not run by the
+original re-verification script above. From the recorded source commit
+`676dcb60d3762ae81672087d5ecddd7023440130`, its repository-relative command is:
+
+```text
+cargo test --locked --release -p pid-core --features experimental-pipelines \
+  --test sxpid_gaussian_oracle multi_sigma_ksg_vs_fixed_sample_reference \
+  -- --exact --ignored --nocapture
+```
+
+The retained run selected one test: one passed, zero failed and two filtered out.
+The [public execution projection](cross-implementation-reverification-2026-09-26/results/continuous-gaussian-diagnostic-2026-09-27.json)
+is derived from the original raw stdout/stderr and process/environment records. It
+omits private absolute executable/checkout paths and tool-session locators; it is not
+a complete raw log or an authenticated execution receipt. The diagnostic was not
+rerun to prepare this publication update.
 
 ## 14. Semantic audit of the formal packages
 

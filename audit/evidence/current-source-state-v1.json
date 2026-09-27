@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "8379bdec53aac5d244350a72ab1ed6ac644ed23d43f5fb2b7e05d890acda441f",
-        "size_bytes": 321040
+        "sha256": "d388eb31a6a257a3da5c49951643cadadb6b391c9bbf23f24e0ec1cdca1781aa",
+        "size_bytes": 321513
       },
       {
         "git_mode": "100644",
@@ -496,8 +496,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "145a109516fc72f5451a50383f887261d2e213fbcb9c79f0de147c7c715d3359",
-        "size_bytes": 91220
+        "sha256": "ed6fc78fc6c09966879f301a673d03160e9e10c894720daa1a66a7599d633236",
+        "size_bytes": 91231
       },
       {
         "git_mode": "100644",
@@ -538,8 +538,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "de70196887014633bd35ebc2aff25801685ba9bd570041561e038ceecd3dd2c8",
-        "size_bytes": 34416
+        "sha256": "37d99aea10b47ca1661aa9b76f90eb95238a7591c829e454e34c3b552cab1b9d",
+        "size_bytes": 35884
       },
       {
         "git_mode": "100644",
@@ -1960,8 +1960,14 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/cross-implementation-reverification-2026-09-26.md",
-        "sha256": "bfbc71edcde72ac5ccf13aaa79e8245f7420b91cbc16a85528a83746f73c121f",
-        "size_bytes": 68555
+        "sha256": "a407b0af93d2a969265d36ae1d1916c81e5c1f07830d697aab0208fa3fcacee6",
+        "size_bytes": 77636
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/cross-implementation-reverification-2026-09-26/GAUSSIAN_PUBLICATION_REVIEW.md",
+        "sha256": "f36e827e3a8487f2658bbd89ac4473d51ed4143447d296d22a94ab3ef280253a",
+        "size_bytes": 6793
       },
       {
         "git_mode": "100644",
@@ -2112,6 +2118,12 @@
         "path": "audit/evidence/cross-implementation-reverification-2026-09-26/results/claim-scope-clarification-visual-review.json",
         "sha256": "966793ce16ae5e1c8becda5f7734996b1ef790cb6dc813dd567325a85da9d19a",
         "size_bytes": 3215
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/cross-implementation-reverification-2026-09-26/results/continuous-gaussian-diagnostic-2026-09-27.json",
+        "sha256": "3346ec7dbe27cc485361f04ca7210752d6fcb4eb6cc0574248055d332202e218",
+        "size_bytes": 8290
       },
       {
         "git_mode": "100644",
@@ -27994,8 +28006,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/cross-implementation-reverification.pdf",
-        "sha256": "db1d4c76a3403fb472d04eeb70043c65ee0162ca6d3f0143b528a6720db35123",
-        "size_bytes": 487094
+        "sha256": "a1f99ced21036a70a5f4d55043b897cdc54bc1a8b11f7bf1c13bea54b99e235d",
+        "size_bytes": 524776
       },
       {
         "git_mode": "100644",
@@ -28216,8 +28228,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "3d198634adbf647c22f939d38135d112fefbe6785e77830ab44d024a75724cc6",
-        "size_bytes": 303837
+        "sha256": "5c231e57b8660427514748298978cb8f81870cebf343b67da26883195bf6e638",
+        "size_bytes": 303984
       },
       {
         "git_mode": "100755",
@@ -28486,7 +28498,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "5c4d84e935e35b4d7b283ecc8443d6304887878fb88f9a072f2603e97f42de38",
+        "sha256": "0cece56d2e6958a3efe01674c9b014b7ebede414245318632fe7ef32b028ebd3",
         "size_bytes": 90915
       },
       {
@@ -28516,8 +28528,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-cross-implementation-reverification-pdf.sh",
-        "sha256": "029cf43794f177e01c9b4969cd3702600e070350b53aa107baf28a93ac138ef8",
-        "size_bytes": 15559
+        "sha256": "4f76dddc3b1dd24c7d1d1f3bc33b3b8341b3a106af7d51164644ee8ace574856",
+        "size_bytes": 15905
       },
       {
         "git_mode": "100755",
@@ -29086,7 +29098,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "cc20742a16761f1dd4b8bc6b9d76d11892ea453e0af8cff1200eeb7c79cabf03",
+        "sha256": "5842a41924dc0a5d6be83509aeeed53ec1aafae0c2c7025d413a0bebfc3aa2e6",
         "size_bytes": 138785
       },
       {
@@ -30026,8 +30038,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "c1b4933c7af4de6d1cbdee8b07347ec41894382efd837d3a4faa27aff9635ac3",
-    "entry_count": 4980
+    "entries_sha256": "cc7cae2c0830f76570d9a29e66d6619678025a1d3e85701738b46dd6865d0165",
+    "entry_count": 4982
   },
   "subprojections": [
     {
@@ -30047,7 +30059,7 @@
       ]
     },
     {
-      "entries_sha256": "2d0365ec0e259c8f356deea66f7c7cb43b21ac6112eed1c7b5e3d4bd35bff24d",
+      "entries_sha256": "943bb04c1e378a430299d6c6a583e2db7c8a5f6cb51617e8e191d18145d405c7",
       "entry_count": 37,
       "name": "generated_pdf_set",
       "selectors": [
@@ -30055,7 +30067,7 @@
       ]
     },
     {
-      "entries_sha256": "a8e745ffc4ee01dc9ee3879a388c4bc6c4eb0daa63cb4acd27b8b872fcb6a45f",
+      "entries_sha256": "f41d57ef709d744f896f701dd96428bac3783619ae0d22ab8c624fe01a50db5f",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

@@ -1,0 +1,160 @@
+{
+  "record_kind": "Selected public execution projection; not a complete raw log or authenticated receipt",
+  "author": "Sepehr Mahmoudian",
+  "projection_date": "2026-09-27",
+  "defining_source": {
+    "title": "Partial Information Decomposition for Continuous Variables based on Shared Exclusions: Analytical Formulation and Estimation",
+    "arxiv_revision": "2311.06373v3",
+    "doi": "10.1103/PhysRevE.110.014115",
+    "url": "https://arxiv.org/abs/2311.06373v3",
+    "scope": "Definition 2 continuous functional; natural-log units used here"
+  },
+  "observed_execution": {
+    "source_commit": "676dcb60d3762ae81672087d5ecddd7023440130",
+    "source_clean_observed": true,
+    "started_utc": "2026-09-27T03:26:23.511827+00:00",
+    "completed_utc": "2026-09-27T03:26:39.825792+00:00",
+    "returncode": 0,
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "--release",
+      "-p",
+      "pid-core",
+      "--features",
+      "experimental-pipelines",
+      "--test",
+      "sxpid_gaussian_oracle",
+      "multi_sigma_ksg_vs_fixed_sample_reference",
+      "--",
+      "--exact",
+      "--ignored",
+      "--nocapture"
+    ],
+    "command_projection": "Only the absolute executable locator is replaced by cargo; original arguments are unchanged. Working directory is the repository root.",
+    "selected_test": "multi_sigma_ksg_vs_fixed_sample_reference",
+    "build_profile": "release",
+    "features": [
+      "experimental-pipelines"
+    ],
+    "parallel_feature_enabled": false,
+    "selected_tests_passed": 1,
+    "selected_tests_failed": 0,
+    "tests_filtered_out": 2,
+    "numerical_accuracy_assertion": false,
+    "input_bytes_unchanged_recorded": true,
+    "input_sha256": {
+      "Cargo.lock": "2a390c1a3f468ed938e8c2e6597e78b26b933761c6200b0bf5e01d4b75f3c81d",
+      "Cargo.toml": "e4011f053cb49a0378b2118bce9c50cd440eb603ac7efe8011a6f16dc344eea4",
+      "crates/pid-core/Cargo.toml": "da8c4f5f4b32954df5c654ecf40cddc69b4367403f01a2b87e81c1bab9723063",
+      "crates/pid-core/tests/sxpid_gaussian_oracle.rs": "ab223f1369831b45743b965b0486690c3b773ab316bc64b6933ca2206d0eba1a",
+      "crates/pid-core/tests/common/mod.rs": "f46b101efdae9e65bb77ddea3ece9071ddf108ce1a36ab2a0d6653afda3a2532",
+      "crates/pid-core/src/isx.rs": "2f8d49f17307b4cf6c8cb284287e0d5c09affff36c96e3abca82c1f2a25db79a",
+      "crates/pid-core/src/ksg.rs": "e8e1537f679571383d83980139b45d5167bbfaceb691133bd22c087ed4824c79",
+      "crates/pid-core/src/pid2.rs": "c063c108758c926202a38b76fa4e962418a281d4896445924edd56bd4cd6faec"
+    }
+  },
+  "model_and_reference": {
+    "ideal_model": "Per ideal independent row: independent standard-normal A,B,Z; S1=A; S2=B; T=(A+B+sigma*Z)/sqrt(2+sigma^2).",
+    "ideal_support": "Full-dimensional joint Gaussian for each positive listed sigma; a population-model declaration, not inferred from unique binary64 samples.",
+    "represented_inputs": "Deterministic xorshift64*/Box-Muller binary64 realizations; first uniform input is floored at 1e-12. These approximate the ideal Gaussian model.",
+    "row_count": 6000,
+    "dimensions": {
+      "source_one": 1,
+      "source_two": 1,
+      "target": 1
+    },
+    "k_mi": 3,
+    "k_redundancy": 3,
+    "metric": "Chebyshev",
+    "reserved_tie_epsilon": 0,
+    "seed_hex": "0x5EED_0001",
+    "cross_sigma_coupling": "Every sigma restarts the same seed and reuses identical latent A/B/Z draws; four coupled law settings, not independent replications.",
+    "gauge": "Equal standard-normal source marginals in fixed population-standardized coordinates, constant relative precision and common source partition convention; target normalized by its known population scale.",
+    "fitted_preprocessing": false,
+    "quantization": false,
+    "reference": "Analytic Gaussian pointwise MI and density-weighted log-sum-exp integrand, then a Monte Carlo mean on the estimator's same rows; not an exact population value.",
+    "reference_mc_se": "Welford sample standard deviation divided by sqrt(N), interpreted only for the reference mean under the ideal independent-row model.",
+    "paired_uncertainty_boundary": "kNN local estimate terms share fitted neighbour structure; a naive independent-row MCSE for those terms does not supply paired-discrepancy uncertainty. Independent full-data replications would be a separate study and were not run here.",
+    "mc_se_excludes": [
+      "paired-discrepancy uncertainty",
+      "PID-atom uncertainty",
+      "cross-sigma uncertainty"
+    ],
+    "units": "nats",
+    "decimal_encoding": "Strings preserve original four-decimal printed precision; no extra digits or certified error intervals are inferred."
+  },
+  "rows": [
+    {
+      "sigma_printed": "0.3",
+      "estimated_redundancy_nats_printed": "0.2180",
+      "reference_mean_nats_printed": "0.2427",
+      "reference_only_mc_se_nats_printed": "0.0065",
+      "absolute_paired_discrepancy_nats_printed": "0.0247",
+      "raw_line": "sigma=0.3: KSG Red=0.2180  reference=0.2427  MC SE=0.0065  |diff|=0.0247"
+    },
+    {
+      "sigma_printed": "0.6",
+      "estimated_redundancy_nats_printed": "0.2196",
+      "reference_mean_nats_printed": "0.2250",
+      "reference_only_mc_se_nats_printed": "0.0054",
+      "absolute_paired_discrepancy_nats_printed": "0.0054",
+      "raw_line": "sigma=0.6: KSG Red=0.2196  reference=0.2250  MC SE=0.0054  |diff|=0.0054"
+    },
+    {
+      "sigma_printed": "1.0",
+      "estimated_redundancy_nats_printed": "0.1762",
+      "reference_mean_nats_printed": "0.1810",
+      "reference_only_mc_se_nats_printed": "0.0043",
+      "absolute_paired_discrepancy_nats_printed": "0.0048",
+      "raw_line": "sigma=1.0: KSG Red=0.1762  reference=0.1810  MC SE=0.0043  |diff|=0.0048"
+    },
+    {
+      "sigma_printed": "1.5",
+      "estimated_redundancy_nats_printed": "0.1331",
+      "reference_mean_nats_printed": "0.1273",
+      "reference_only_mc_se_nats_printed": "0.0035",
+      "absolute_paired_discrepancy_nats_printed": "0.0058",
+      "raw_line": "sigma=1.5: KSG Red=0.1331  reference=0.1273  MC SE=0.0035  |diff|=0.0058"
+    }
+  ],
+  "timing": {
+    "harness_seconds_printed": "1.42",
+    "harness_scope": "All four full PID2 calculations (three MI terms plus redundancy and checked atom construction each), input generation, reference calculations, validation and test-harness work.",
+    "cargo_build_seconds_printed": "14.60",
+    "outer_wrapper_elapsed_seconds": 16.313691165763885,
+    "layers": "Compilation, test-harness duration and outer elapsed duration are different recorded timing layers.",
+    "environment": {
+      "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14) (Homebrew)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: aarch64-apple-darwin\nrelease: 1.97.1\nLLVM version: 22.1.8",
+      "cargo": "cargo 1.97.1 (c980f4866 2026-06-30) (Homebrew)",
+      "architecture": "arm64",
+      "os_family": "Darwin",
+      "cpu": "Apple M4 Max"
+    },
+    "qualification": "One observed run; no per-case latency, peak-memory, scaling benchmark or online qualification."
+  },
+  "selected_stdout_lines": [
+    "test multi_sigma_ksg_vs_fixed_sample_reference ... ok",
+    "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1.42s"
+  ],
+  "raw_evidence": {
+    "original_stdout_sha256": "585cca9288bf8ee41cc2e4e248914478b9caddd1fdb369bdbebe2fcbb913202f",
+    "original_stderr_sha256": "23a30938d4e0854e3a81d85abddffd1fbb4b3a842fbbbbf563f3d2e15abc9d22",
+    "raw_logs": "Privately preserved unchanged; not embedded as complete logs in this projection.",
+    "omitted": [
+      "absolute executable and working-directory locators",
+      "compiler progress and machine-specific compilation/build paths",
+      "conversation/tool-session locators"
+    ],
+    "process_receipt_boundary": "RESULT.json records status, return code, elapsed time and raw-log hashes; tool-session/terminal locators are recorded separately and are not fabricated here."
+  },
+  "nonclaims": [
+    "No new execution in publication preparation",
+    "No exact population redundancy",
+    "No new estimator or theorem",
+    "No numerical accuracy assertion or new tolerance",
+    "No calibration, consistency or coverage claim",
+    "No continuous PID3, hyperbolic PID or application qualification"
+  ]
+}

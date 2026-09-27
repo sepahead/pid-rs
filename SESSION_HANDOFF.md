@@ -1,10 +1,28 @@
-# Session handoff — updated 26 September 2026
+# Session handoff — updated 27 September 2026
 
 This is the entry point for continuing the pid-rs scientific and engineering program without the
 previous conversation. It is a dated coordination record. Current source, claim decisions, and
 fresh Git/hosted observations take precedence over its observations. Machine-specific locations
 and recovery instructions are in the ignored `.local/SESSION_HANDOFF.md` supplied with the local
 handoff. No local path is required by the public mathematical documents.
+
+## Continuous diagnostic checkpoint of 27 September 2026
+
+[Section 4.5 of the re-verification report](audit/evidence/cross-implementation-reverification-2026-09-26.md#45-paired-gaussian-reference-diagnostic)
+and its [PDF](output/pdf/cross-implementation-reverification.pdf) document a separate run of the
+existing Rust Gaussian diagnostic at `676dcb60d3762ae81672087d5ecddd7023440130`.
+For 6,000 scalar-source rows and $k=3$, the four noise settings give redundancy discrepancies
+of 0.0247, 0.0054, 0.0048 and 0.0058 nats from the analytic-integrand sample mean. These are not
+certified errors against population truth. The four settings reuse latent draws; the reported
+Monte Carlo standard error concerns only the reference mean under the ideal IID model.
+
+The [execution projection](audit/evidence/cross-implementation-reverification-2026-09-26/results/continuous-gaussian-diagnostic-2026-09-27.json)
+retains the command, source identities, complete printed table and original log hashes. The
+selected test has no numerical accuracy assertion. It took 1.42 seconds for four full PID2 calls
+and their reference calculations on the recorded machine; this is an offline diagnostic, not an
+online qualification. No estimator, runtime code, formal theorem or research-program status
+changed. The original comparison manifest and `run.sh` retain their original scope and do not
+include this later diagnostic. Follow the current claim decisions for the open obligations.
 
 ## Checkpoint of 26 September 2026
 

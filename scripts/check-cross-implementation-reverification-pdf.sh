@@ -9,7 +9,7 @@ HEADER="$ROOT/audit/formal/latex/cross-implementation-reverification/publication
 FILTER="$ROOT/audit/formal/latex/cross-implementation-reverification/filter.lua"
 TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
 CHECK_NAME="Cross-implementation re-verification PDF check"
-EXPECTED_PAGES="22"
+EXPECTED_PAGES="24"
 MODE="${1:---exact}"
 
 if [[ $# -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then
@@ -115,6 +115,8 @@ validate_pdf() {
       'Correction: intrinsic-dimension provenance' \
       'Rust implementation and computational cost' \
       'Routes considered' \
+      'Paired Gaussian reference diagnostic' \
+      'Reference-only MC SE' \
       'Semantic audit of the formal packages' \
       'cargo test --locked --release -p pid-core --all-features' \
       'Levina and Bickel' \
@@ -229,6 +231,8 @@ expected_repository_uris = {
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/rust/audit_dump_continuous.rs",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/rust/audit_dump_discrete.rs",
     "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs",
+    "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/tests/sxpid_gaussian_oracle.rs",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/continuous-gaussian-diagnostic-2026-09-27.json",
     'https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/checker-rejection-correction.json',
 }
 observed_repository_uris = set()
@@ -275,7 +279,7 @@ if len(form_xobjects) != 1:
     fail(f"form XObject inventory changed: {len(form_xobjects)}")
 if observed_repository_uris != expected_repository_uris:
     fail(f"repository-navigation URI inventory changed: {sorted(observed_repository_uris)}")
-expected_action_counts = {"/GoTo": 0, "/GoToR": 0, "/URI": 44}
+expected_action_counts = {"/GoTo": 0, "/GoToR": 0, "/URI": 49}
 if action_counts != expected_action_counts:
     fail(f"navigation inventory changed: {action_counts}")
 print(

@@ -7,6 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Publish the existing continuous shared-exclusions Gaussian diagnostic in the re-verification
+  report and its 24-page PDF. Retain all four noise settings, the largest observed discrepancy,
+  reference-only standard errors, coupled samples and measured Rust workload. Separate this
+  reference comparison from implementation agreement; it establishes no calibration, new estimator
+  or application result. Update the exact PDF profile and current documentation bindings.
+
 - Correct the certified-SxPID2 checker's current documentation binding after the re-verification
   PDF grew to 22 pages. Keep the original CI rejection, historical proof receipts, mathematical
   statements and validation rules unchanged.

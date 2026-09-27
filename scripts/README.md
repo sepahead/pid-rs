@@ -1927,7 +1927,7 @@ publication give same-toolchain reproducibility. The builder accepts only an abs
 destination in an existing nonsymbolic directory.
 
 `check-cross-implementation-reverification-pdf.sh` validates the Markdown math, rebuilds the PDF
-and checks all 22 A4 pages. Its pinned pypdf object gate requires the source-derived trailer ID,
+and checks all 24 A4 pages. Its pinned pypdf object gate requires the source-derived trailer ID,
 `en-US` language, a marked structure tree, a bounded first-page `GoTo`, HTTPS-only external links,
 Link-only annotations and the exact inventory of repository-navigation URIs. It rejects
 JavaScript, attachments, forms, collection state, permissions and unknown actions, and it checks
@@ -1935,8 +1935,9 @@ reviewed text sentinels, embedded fonts and a nonempty raster for every page. Ex
 byte identity; cross-toolchain mode requires identical layout text and page geometry. The report's
 evidence directory is reproduced separately by its `run.sh`, which exports a commit, reruns the
 Rust generators, the Python checks and the SMT obligation check, and compares every output with the
-retained copy. These
-checks establish publication hygiene and output reproduction, not mathematical correctness,
+retained copy. The separate Gaussian diagnostic in Section 4.5 has its own recorded command
+and execution projection; `run.sh` does not reproduce that later run. These checks establish
+publication hygiene and output reproduction, not mathematical correctness,
 estimator calibration or independent review.
 
 `build-fault-tolerant-shared-exclusions-pdf.sh` and `check-fault-tolerant-shared-exclusions-pdf.sh`
