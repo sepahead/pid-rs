@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "d388eb31a6a257a3da5c49951643cadadb6b391c9bbf23f24e0ec1cdca1781aa",
-        "size_bytes": 321513
+        "sha256": "4b11b479efad2b514aa713309b95e6c15902e2b1a6e6c4988e55243bb9cede70",
+        "size_bytes": 321767
       },
       {
         "git_mode": "100644",
@@ -538,8 +538,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "37d99aea10b47ca1661aa9b76f90eb95238a7591c829e454e34c3b552cab1b9d",
-        "size_bytes": 35884
+        "sha256": "959240a94d4d9b01de7325a15f5e3c4c1db46a1888bd7942e11c0dfe01d1adc6",
+        "size_bytes": 36373
       },
       {
         "git_mode": "100644",
@@ -13284,6 +13284,12 @@
         "path": "audit/evidence/primegaps-to-pid-transfer-ledger-v1.json",
         "sha256": "18763feaa707ea797d409de7df7e152e77fc778d4bd631c2ca9734790a4c7bda",
         "size_bytes": 61999
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/prisoma-pid-route-correction-2026-09-27.md",
+        "sha256": "8010c628073ac95d8d2c5db2a9a35e17b2a67a97d1e540490dd25bfcaebf42c6",
+        "size_bytes": 3810
       },
       {
         "git_mode": "100644",
@@ -29098,7 +29104,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "5842a41924dc0a5d6be83509aeeed53ec1aafae0c2c7025d413a0bebfc3aa2e6",
+        "sha256": "79dba1ba1bf41d62002dd277a6a1bf4b4d8a53a07eb646401a0955666ef12f76",
         "size_bytes": 138785
       },
       {
@@ -30038,8 +30044,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "cc7cae2c0830f76570d9a29e66d6619678025a1d3e85701738b46dd6865d0165",
-    "entry_count": 4982
+    "entries_sha256": "10388907e0a6040d847fa301e07fdc7c0eca01aac4f205cf8941536c74e94b8b",
+    "entry_count": 4983
   },
   "subprojections": [
     {
@@ -30067,7 +30073,7 @@
       ]
     },
     {
-      "entries_sha256": "f41d57ef709d744f896f701dd96428bac3783619ae0d22ab8c624fe01a50db5f",
+      "entries_sha256": "b5bb9c2d1094ab850a2971af585041c225be1cb80383a1c4b0742e3c05a5e0a8",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

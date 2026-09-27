@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Correct the September Prisoma handoff's categorical method identity to fitted-quantized MGW
+  shared exclusions. Retain the earlier source-bound July `I_min` audit, and distinguish the
+  current same-row descriptive route from held-out qualification.
+
 - Publish the existing continuous shared-exclusions Gaussian diagnostic in the re-verification
   report and its 24-page PDF. Retain all four noise settings, the largest observed discrepancy,
   reference-only standard errors, coupled samples and measured Rust workload. Separate this

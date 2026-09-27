@@ -101,8 +101,13 @@ integration stays `not_claimed` in the release scope.
   [embodied-sensor note](audit/research/embodied-sensor-utility/EXPOSITION.md) needs. Its raw
   captures are not public. The target is future pressure, so a pressure source must not copy the
   outcome. Any PID use must start from task loss and conditional mutual information; MGW atoms
-  would be a secondary, descriptive layer. Prisoma's existing screens use Williams–Beer $I_{\min}$,
-  a separate measure family with different axioms.
+  would be a secondary, descriptive layer. **Method correction, 27 September:** the categorical
+  harness at this same Prisoma commit uses fitted-quantized MGW shared-exclusions PID2,
+  not Williams–Beer $I_{\min}$. Its recorded evaluation fits and estimates on the same rows;
+  the PLS variant also uses target-supervised projection. These are descriptive routes, not
+  held-out qualification. The earlier July audit correctly identifies $I_{\min}$ at its own
+  older source commit. The [source comparison](audit/evidence/prisoma-pid-route-correction-2026-09-27.md)
+  records both identities and corrects this handoff's earlier statement.
 - **CREBAIN.** Main `37a786f` (23 September) adds ground-sensor pressure windows over NCP and a
   city simulation. It still has no pid-rs code dependency, receiver or estimand contract.
 - **Haldir, Manwe, NCP.** No PID-relevant change. Haldir keeps its rule that PID never creates or
