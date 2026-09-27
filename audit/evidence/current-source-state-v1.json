@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "9e1eaef34633b0361d4b11ab7e04a41fa35216db5ecc2422cc40d217c83673cc",
-        "size_bytes": 320801
+        "sha256": "8379bdec53aac5d244350a72ab1ed6ac644ed23d43f5fb2b7e05d890acda441f",
+        "size_bytes": 321040
       },
       {
         "git_mode": "100644",
@@ -28486,7 +28486,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "7f962bd1e94f977003aec3294f5770d83e42da506ec2af53394db2ab1d90a3d4",
+        "sha256": "5c4d84e935e35b4d7b283ecc8443d6304887878fb88f9a072f2603e97f42de38",
         "size_bytes": 90915
       },
       {
@@ -29086,7 +29086,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "f79b1b4518f33dc296f8a8ccb3966f0db40552cfb35506ed74617ec6af21d50e",
+        "sha256": "cc20742a16761f1dd4b8bc6b9d76d11892ea453e0af8cff1200eeb7c79cabf03",
         "size_bytes": 138785
       },
       {
@@ -30026,7 +30026,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "7a135c4610f1590ce4c6d47e321d5c4370b9c2e342e39e3915bb97977bcad278",
+    "entries_sha256": "c1b4933c7af4de6d1cbdee8b07347ec41894382efd837d3a4faa27aff9635ac3",
     "entry_count": 4980
   },
   "subprojections": [
@@ -30055,7 +30055,7 @@
       ]
     },
     {
-      "entries_sha256": "4a5eab92562f292cd827d75d56452ace44426e85e65cee9916d0ac9fe8cb97b3",
+      "entries_sha256": "a8e745ffc4ee01dc9ee3879a388c4bc6c4eb0daa63cb4acd27b8b872fcb6a45f",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

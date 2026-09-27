@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Correct the certified-SxPID2 checker's current documentation binding after the re-verification
+  PDF grew to 22 pages. Keep the original CI rejection, historical proof receipts, mathematical
+  statements and validation rules unchanged.
+
 - Strengthen the research SMT and fault-tolerance comparison checkers: reject solver errors and
   extra results, validate positive lattice coefficients, and reject nonfinite or malformed
   categorical inputs before aggregation. Retain causal regression controls and the original
