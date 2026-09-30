@@ -30214,7 +30214,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "cd76ca32dae34ef07b6d96134c40d201663c3efbd0146361c91e70f9f322bd74",
+        "sha256": "0faba6d936d319d8ca2ab7094789e2b0d0d8dd1320bb133fec46bf237ed3f917",
         "size_bytes": 138785
       },
       {
@@ -31166,7 +31166,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "588f016e2e53101a82555bc86356d370a881e1a6c868b59a8a177ea337b04682",
+    "entries_sha256": "646ebb3c0e4dc7efb2f3831725c5f3214e5137ec8d1109b6a4b60d617978a97d",
     "entry_count": 5170
   },
   "subprojections": [
