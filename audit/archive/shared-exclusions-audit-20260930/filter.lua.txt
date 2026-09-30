@@ -1,0 +1,11 @@
+function Header(element)
+  if element.level > 1 then element.level = element.level - 1 end
+  return {pandoc.RawBlock("latex", "\\par\\Needspace{5\\baselineskip}"), element}
+end
+function Table(element)
+  if #element.colspecs == 3 then
+    local widths = {0.23, 0.43, 0.34}
+    for i = 1, 3 do element.colspecs[i][2] = widths[i] end
+  end
+  return element
+end

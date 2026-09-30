@@ -1,0 +1,33 @@
+# Current prefix source and PDF review
+
+Author: Sepehr Mahmoudian
+
+Disposition: the bounded finish criteria are complete. No remaining error was found in the current one-source formula, local IID clarification, displayed arithmetic or seven-page PDF rendering. This is permission to treat these exact artifacts as scoped drafts, not full mathematical audit, publication acceptance or Candidate authority. Earlier reviews and deficiencies remain historical records.
+
+## Exact current bindings
+
+| Artifact | SHA-256 |
+|---|---|
+| Current `EXPOSITION.md` | `87d21111e82f98cec235059bff8f451d848f5cf2d7a318042d9f1f9e3c6a42e1` |
+| `build-v14/report.pdf` | `c883cd1071eeccb57835e176cdbaafa4886bd53f1e0136ec871bbede897ed77e` |
+| `build-v14/RESULT.json` | `7c2b353d60a582ea72552d1511ca0a2efa81a570624bd846711e26ed73a9634a` |
+| Repeat `build-v15/report.pdf` | `4f1eb82d70420a962ddc38ccf91ebdcff01f91486cb7567b8004523b4213d913` |
+| `build-v15/RESULT.json` | `a2b6bfec33fd34d283efa90d1fbe7b54d21ac298a5ea12318f944fbe6859e928` |
+
+The complete current source was reread. Both retained build source copies match its exact hash; both generated `body.tex` files hash to `c8247f366af4c22c7a7e0853224f3456020b8c830aa2e7cbdd199f6fbdcd5b99`. The actual build receipts join that source to the named PDFs and unchanged template/filter/style identities. Pandoc and all three LuaLaTeX calls in each receipt returned zero. Fresh log search found no Overfull, Underfull, Warning or undefined match; this is a lexical diagnostic, not a full publication gate.
+
+## Mathematical correction
+
+The preserved `EXPOSITION-before-fair-IID.md` has SHA `53ed7447b8e8476df4e235bc50688baf6570c8fc7bc731efe29db92cf9a34c96`. Its exact current diff changes only the expectation example to three IID complete rows of independent fair bits S and T. This fixes the load-bearing distinction between independence within a row and independence across rows. The deterministic block formula itself requires neither independence assumption.
+
+The displayed Dk/Rj/Bh formula matches the inspected native one-source branch. Its current-arrival gate, retained product/rank, empty product and zero-rank convention give the stated B1 indicator. Under the now explicit example law, the positive contribution is 5/8, the negative contributions are 1/4, 1/8 and 1/32, and the mean is 7/32. Raw rank adds 1/16 to give 9/32; nonarrival recount subtracts 1/8 to give 3/32. The owned finite normal/optimized readback and its limitations remain in EXECUTION.txt; it is not a universal formal proof.
+
+All other mathematics and limitations are unchanged from the fully reviewed predecessor: random-anchor score, IID moment 4 versus bound 32/3 versus coupled 64/3, joint exogenous masks and matched oracle access, finite fault minimax versus event consistency, exact-zero products, negative atoms and exposed application failures. Actual V7 remains setup only, with no Fin3 proofs or Candidate. Programs A–E remain open.
+
+## Actual every-page inspection
+
+Both PDFs are 93,578 bytes and seven A4 pages. All fourteen pages were freshly rendered at 115 dpi and personally viewed, not sampled or accepted from another review. Page 4 visibly includes the corrected three-row IID fair-bit premise and the complete prefix formula. All equations, brackets, subscripts, tables and page numbers are readable; no clipping or missing table row was found. The table across pages 2–3 repeats its header. Later moment, sensor, fault, application-negative and evidence paragraphs survive pagination. The corresponding rendered PNGs are byte-equal in this Poppler context, while the raw PDF hashes differ; byte repeatability has not passed.
+
+Actual metadata states title “Shared exclusions PID audit”, author Sepehr Mahmoudian, draft scope, seven A4 pages, no encryption, forms or JavaScript. Actual Poppler annotation rosters in both PDFs contain MGW version 5 twice on physical page 1 and April version 2 once on page 6. Neither immutable PDF checker was modified or run by this reviewer; the observed physical roster remains unchanged. The PDFs are not tagged, and no accessibility or archival conformance is claimed.
+
+Assume stable retained files and unchanged reviewed tool/import custody. Hash joins are not authentication, atomic snapshots or independent custody. No Lean/solver/Rust campaign, shared edit, flag/kernel change, Git operation, outside edit or deletion occurred. The writing guidance kept this repository review concise and source-qualified; it caused no Pages upload. Full proof-body/receipt review, refinement, calibration, application confirmation and mainline publication remain separate unfinished work.

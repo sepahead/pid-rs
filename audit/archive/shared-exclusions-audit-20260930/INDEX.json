@@ -1,0 +1,99 @@
+{
+  "authority": "inert_historical_draft_and_negative_evidence_only",
+  "excluded": [
+    "raw_private_build_and_prefix_receipts",
+    "full_formal_and_numerical_inputs",
+    "toolchain_closure",
+    "private_application_data",
+    "other_historical_stdout"
+  ],
+  "existing_four_profile_archive_checker_coverage": false,
+  "nonclaims": [
+    "complete_replay",
+    "publication_acceptance",
+    "scientific_acceptance",
+    "runtime_change",
+    "independent_custody",
+    "whole_folder_retirement"
+  ],
+  "payloads": [
+    {
+      "bytes": 22162,
+      "execution_authority": false,
+      "path": "EXPOSITION-before-fair-IID.md.txt",
+      "role": "historical_omitted_IID_premise",
+      "sha256": "53ed7447b8e8476df4e235bc50688baf6570c8fc7bc731efe29db92cf9a34c96"
+    },
+    {
+      "bytes": 22185,
+      "execution_authority": false,
+      "path": "EXPOSITION.md.txt",
+      "role": "historical_exact_draft_source",
+      "sha256": "87d21111e82f98cec235059bff8f451d848f5cf2d7a318042d9f1f9e3c6a42e1"
+    },
+    {
+      "bytes": 24462,
+      "execution_authority": false,
+      "path": "body.tex.txt",
+      "role": "inert_generated_TeX_body",
+      "sha256": "c8247f366af4c22c7a7e0853224f3456020b8c830aa2e7cbdd199f6fbdcd5b99"
+    },
+    {
+      "bytes": 4651,
+      "execution_authority": false,
+      "path": "current-source-review.md.txt",
+      "role": "historical_advisory_source_and_page_review",
+      "sha256": "dc83da8b1b876df22f1e133f2ddea8387612314bf5b249a33a65457b29cdaa78"
+    },
+    {
+      "bytes": 93578,
+      "execution_authority": false,
+      "path": "draft.pdf",
+      "role": "historical_scoped_draft_not_publication_acceptance",
+      "sha256": "c883cd1071eeccb57835e176cdbaafa4886bd53f1e0136ec871bbede897ed77e"
+    },
+    {
+      "bytes": 358,
+      "execution_authority": false,
+      "path": "filter.lua.txt",
+      "role": "inert_original_formatting_filter",
+      "sha256": "6b5f1999df409ab30220f83a76fbd3538bee69c53eaf097ba00de27d6f9793f7"
+    },
+    {
+      "bytes": 4051,
+      "execution_authority": false,
+      "path": "pid-rs-report-tables.sty.txt",
+      "role": "inert_original_table_style",
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    {
+      "bytes": 1568,
+      "execution_authority": false,
+      "path": "publication.tex.txt",
+      "role": "inert_original_template",
+      "sha256": "6c1bdc96966314b2b264e6e42d33abc72790c6681ba80625db8c6ecf5a2878b4"
+    },
+    {
+      "bytes": 93578,
+      "execution_authority": false,
+      "path": "repeat-draft.pdf",
+      "role": "historical_distinct_build_failed_raw_repeatability",
+      "sha256": "4f1eb82d70420a962ddc38ccf91ebdcff01f91486cb7567b8004523b4213d913"
+    },
+    {
+      "bytes": 4322,
+      "execution_authority": false,
+      "path": "root-review-v2.md.txt",
+      "role": "historical_advisory_root_disposition",
+      "sha256": "1633ebbb91c4d7cd377dff18b61ad0d8381fac9b5c4ead96a3a5c11414455476"
+    },
+    {
+      "bytes": 3466,
+      "execution_authority": false,
+      "path": "OBSERVATIONS.json",
+      "role": "derived_historical_observation_projection_not_raw_receipt",
+      "sha256": "b4830ac04288a49a03be0fcd5d837b123b26bf3800360544dd6b616b5b726088"
+    }
+  ],
+  "schema": "pid-rs/historical-shared-exclusions-archive/v1"
+}

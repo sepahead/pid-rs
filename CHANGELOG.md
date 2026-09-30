@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve the [bounded shared-exclusions audit](audit/archive/shared-exclusions-audit-20260930/ARCHIVE.md)
+  as historical draft evidence, including the IID correction, negative application findings,
+  exact source/PDF bytes and failed raw repeatability. Record public observation projections and
+  explicit private-receipt omissions. No scientific claim, runtime or publication status changes.
+
 - Publish three locally accepted finite first-hit and complete-key cancellation results for the
   categorical MGW prefix construction, with exact Lean sources, selected execution evidence,
   a standalone eight-page report and an explanatory SVG. Preserve the failed correspondence

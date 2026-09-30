@@ -1,0 +1,411 @@
+This report reviews categorical shared-exclusions PID and its extensions through
+three evidence channels: defining sources, formal and numerical correspondence,
+and statistical and application assumptions. The current bounded checks agree.
+Two source/navigation errors and several diagnostic weaknesses were found and
+preserved. Full triple-check completion remains open. No scientific-priority,
+generic calibration or deployment-benefit claim is made.
+
+## Object and assumptions
+
+The categorical object is the finite-law shared-exclusions measure of
+[Makkeh, Gutknecht and Wibral, version 5](https://arxiv.org/abs/2002.03356v5).
+For source indices $1,\ldots,n$, an antichain $\alpha$ is a nonempty family of nonempty
+source groups, with no group containing another. At a supported observation
+$z=(s_1,\ldots,s_n,t)$, define
+
+$$
+A_\alpha(z)=\bigcup_{a\in\alpha}\bigcap_{i\in a}\{S_i=s_i\}.
+$$
+
+Thus a group uses AND; the family uses OR. Write $u=P(A_\alpha)$,
+$j=P(A_\alpha,T=t)$ and $q=P(T=t)$. Support gives $0<j\le\min(u,q)$.
+The cumulative components, in nats, are
+
+$$
+c^+=-\log u,\qquad c^-=\log(q/j),\qquad
+c^{\rm net}=\log\frac{j}{uq}.
+$$
+
+For $\beta\preceq\alpha$ when each group in $\alpha$ contains a group in
+$\beta$, each component's pointwise atom vector $\pi(z)$ solves
+$c_\alpha(z)=\sum_{\beta\preceq\alpha}\pi_\beta(z)$.
+Finite Möbius inversion solves this linear system. For $p(z)=P(Z=z)$, define
+averaged net atoms $\Pi_\alpha=\sum_{z:p(z)>0}p(z)\pi_\alpha^{\rm net}(z)$.
+Informative and misinformative component nonnegativity does not imply net
+nonnegativity. Negative net atoms must remain visible.
+
+Categorical MGW, continuous Ehrlich, Williams--Beer $I_{\min}$ and KSG are
+different objects. Quantization, projection and added noise change variables
+or laws. A support declaration is an assumption, not a property inferred from
+unique observed rows. The continuous full PID3 path remains research-only.
+
+The finite reference calculations use explicitly specified laws and exact rational
+arithmetic or exact rational log-products. Floating replicas are labeled separately.
+Where rows are called IID, complete
+source-and-target rows are independent and identically distributed; coordinates
+within a row need not be independent. Files are assumed stable during bounded
+reads. Hash equality is not authenticity, atomicity or independent custody.
+Python mode repeats share code. Model critiques are advisory, not independent
+human review. Decimal illustrations are not directed logarithm enclosures.
+
+## Audit coverage
+
+The current integration catalog has 75 methods and 48 references. All novelty
+fields are none. Its generated rendering is coherent; this does not verify
+all methods or all references. The retained primary checkout is older and dirty.
+It must not replace the integration or be reset without preservation.
+
+The foundational result map has nine families. The following are current
+boundaries, not new adjudications of every proof.
+
+| Result family | Retained result | Important open edge |
+|---|---|---|
+| Categorical foundations | Event semantics and exact negative witnesses | Complete paper-to-code correspondence |
+| Finite plug-in convergence | Fixed finite support and IID or stationary ergodic limits | Floating/runtime refinement |
+| Support-change continuity | Analytic finite-alphabet modulus and scoped witnesses | Complete formal logarithmic/lattice path |
+| Dependency-color concentration | Bounds under the declared dependency graph | Automatic valid coloring and application calibration |
+| Exact PID2 assurance | Supplied-count two-source identities; conditional certifier | General compiled-code refinement and integration |
+| SxPID3 factorization | Informative components factor through the complete joint source marginal; bounded audit | Full three-source certificate |
+| Binary64 and quantizers | Measure-specific arithmetic and diagnostics | Full numerical and fitting/evaluation guarantees |
+| KSG harmonic arithmetic | Scoped exact integer/harmonic core | Publication integration; old C12 route permanently failed |
+| Manifold small-ball bridge | Conditional common-radius population lemma | Adaptive estimator, expectation and mixed-support transfer |
+
+Seven companions cover prefix mean, bias, gradient, support-change cusp,
+target-copy synergy, fixed-world comparison and first-hit cancellation.
+Local acceptance records are separate from full replay and publication.
+Later log-score, conditional Bayes, fault and availability results do not prove
+that a learned predictor, sensor or neural intervention improves.
+
+Fresh formal-source joins match 11 aggregate source pins, 26 target-copy and
+fixed-world modules, and 83 selected source/receipt bindings. Nine auxiliary
+SMT snapshots match their checker pins. These mathematical packets were not
+rerun with a Lean kernel or SMT solver. Not all 246 aggregate theorem bodies or complete historical
+streams have received a fresh line-by-line review. The finite fault argument
+below was independently reconstructed from its complete definitions and proof.
+
+The current full SxPID3 certificate is still proposed: Programs A--E are
+zero of five closed. Nineteen Fin3 propositions have been stated; no candidate
+proof exists. Revision-six setup failed: a negative proof-definition fixture
+reached Lean's built-in proposition linter before the intended declaration-kind
+guard. That failed campaign is preserved. A separately frozen revision-seven
+uses a same-type abbreviation as the negative fixture. Both actual Python modes
+completed setup, fresh kernel replay of the `True`-only smoke and six intended
+causal refusals. Each campaign made 23 recorded calls, including parser controls;
+the summary alone lists 22. No linter option, compiler flag, kernel, target, judge
+or estimator changed. This operational prerequisite supplies no Fin3 proof,
+source/cache equivalence, statistical calibration or application evidence.
+
+## Exact finite numerical checks
+
+Generated carriers have 4, 18 and 166 nodes for two, three and four sources.
+The checks cover every entry of both matrix inverse products, reverse-DNF order,
+and all 2, 6 and 24 source permutations. The generated three-source carrier
+matches the literal Rust registry. These are executed finite comparisons,
+not native kernel proofs or arbitrary-input Rust refinement.
+
+| Binary empirical laws | Tables | Supported anchors | Maximum total count |
+|---|---:|---:|---:|
+| Two sources and target | 494 | 1,320 | 4 |
+| Three sources and target | 968 | 2,448 | 3 |
+
+The corpus checks 148,032 pointwise and 58,200 averaged component expressions
+using exact rational log-products. Component nonnegativity holds in this corpus;
+150 two-source and 336 three-source averaged net coordinates are negative.
+Four-source probability values and arbitrary alphabets were not exhausted.
+
+An independent scaled-integer calculation matches all 561 committed sum-oracle
+expectations, including 71 exact cancellations and 11 rounded overflows. Exact
+Fraction arithmetic checks the direct/range identity on 6,920 small-$n$ KSG
+harmonic rows and 354 declared
+endpoint zeros. The stress corpus has 1,278 rows, including 114 checked endpoint
+zeros. Decimal accuracy of the remaining 1,164 nonzero stress rows was not checked.
+These comparisons do not execute the Rust arithmetic helpers.
+
+### Rust implementation and computational cost
+
+Existing categorical Rust APIs implement two to four sources; fitted quantization
+targets the fitted categorical law. The new prefix and availability diagnostics
+are Python references, not new Rust learners or estimator refinements. A case at
+horizon three enumerates 4,096 complete words; four-source carrier generation
+searches all 32,767 nonempty families of nonempty source subsets. These are finite
+workload counts, not measured performance. This audit reports no fresh timing,
+online suitability or complete allocation guarantee. Continuous brute-force
+neighbor paths remain quadratic in row count.
+
+### A nonempty expression can be exactly zero
+
+In binary cell order $(S_1,S_2,T)$, use counts
+$(0,0,1,1,1,4,1,0)$, total eight. For each supported anchor, compute its target
+count, singleton count and union count, form the two net cumulatives, subtract
+the union cumulative from the first singleton cumulative, and average with
+count/eight weights. For counts $N,U,J,Q$ (total, event, event-target intersection
+and target), the log argument is $NJ/(UQ)$. At anchor 010, the singleton has
+$U=2,J=1,Q=3$ and gives $8/(2\cdot3)=4/3$; the union has $U=3,J=2,Q=3$
+and gives $16/9$. The full supported-row calculation is:
+
+| Anchor | Count | First singleton ratio | Union ratio |
+|---|---:|---:|---:|
+| 010 | 1 | 4/3 | 16/9 |
+| 011 | 1 | 4/5 | 8/15 |
+| 100 | 1 | 8/9 | 8/9 |
+| 101 | 4 | 16/15 | 16/15 |
+| 110 | 1 | 8/9 | 1 |
+
+The 100 and 101 rows cancel within their singleton-minus-union differences.
+The other rows give five nonzero log terms. Clearing the denominator yields
+
+$$
+8V=\log(4/5)+\log(8/9)+\log(4/3)
+       -\log(8/15)-\log(16/9).
+$$
+
+The numerator product is $128/135$; the denominator product is also $128/135$.
+Hence $8V=\log 1=0$, so $V=0$. A nonempty canonical term list cannot prove a
+nonzero value. This reconstructs a retained completeness counterexample;
+it is not a new priority claim or a freshly certified interval.
+
+Python logarithm replicas also produce tiny nonzero values at exact zero and
+tiny negative values for exact nonnegative components. Their largest recorded
+zero residuals are about $2.22\times10^{-16}$ and $1.11\times10^{-16}$ nats.
+These are replica observations, not measured Rust defects. A final exact sum
+cannot undo rounding in upstream logarithms. Do not clamp atoms or change a
+kernel from these observations. Exact products or certified intervals are
+needed when an exact sign matters.
+
+## Prefix means and score derivatives
+
+For the one-source block, let $Z_0=(S_0,T_0)$ be the anchor and
+$Z_1,\ldots,Z_h$ the later rows. Define $D_k=\mathbf1\{S_k\ne S_0\}$ and
+$R_j=\sum_{k=1}^j\mathbf1\{T_k=T_0\}$, the number of retained target matches.
+The native block is
+
+$$
+B_h=\sum_{j=1}^h\left[
+ \frac{\prod_{k=1}^jD_k}{j}
+ -\mathbf1\{T_j=T_0\}
+  \frac{\prod_{1\le k\le j:\,T_k=T_0}D_k}{R_j}\right].
+$$
+
+The second term is defined as zero when $R_j=0$; an empty product is one.
+It contributes only on a current target-match arrival. Thus
+$B_1=\mathbf1\{S_1\ne S_0,\ T_1\ne T_0\}$.
+Raw time $j$ and retained rank $R_j$ are different. Direct enumeration and a
+separate event-mass polynomial agree for three two-source laws, horizons zero
+through three, and all four atoms: 14,040 complete words, including zero-mass
+words. Only one law tests a nonzero tangent.
+
+For three IID complete rows of independent fair bits $S$ and $T$, at horizon
+two, each anchor gives the same calculation. The positive mean is
+$1/2+(1/2)^2/2=5/8$. Negative contributions are first arrival $1/4$, a target
+miss followed by a target match and source miss $1/8$, and two retained misses
+$1/16$ divided by rank two. Thus
+
+$$
+E B_2=\frac58-\left(\frac14+\frac18+\frac1{32}\right)=\frac7{32}.
+$$
+
+Replacing $R_2=1$ by raw rank two halves the $1/8$ target-miss/arrival
+subtraction, giving $7/32+1/16=9/32$. Recounting an earlier exclusion when
+the second row is not an arrival adds a $1/8$ subtraction, giving
+$7/32-1/8=3/32$. Both incorrect rules are retained as causal controls.
+
+For a differentiable normalized positive finite law $p_\theta$ and a parameter-independent
+block $B$ on $h+1$ IID rows, write $s_\theta(z)=p'_\theta(z)/p_\theta(z)$.
+Differentiating the finite sum, then each product, gives
+
+$$
+\frac{d}{d\theta}E_\theta B
+=\sum_w B(w)\sum_{r=0}^{h}p'_\theta(w_r)
+                   \prod_{k\ne r}p_\theta(w_k)
+=E_\theta\left[B\sum_{r=0}^{h}s_\theta(Z_r)\right].
+$$
+
+The score sum includes the random anchor $r=0$. At one source, horizon one,
+use diagonal masses $\theta/2$ and off-diagonal masses $(1-\theta)/2$.
+The block is one exactly when both bits differ between the two rows. Its mean
+is $(\theta^2+(1-\theta)^2)/2$, whose derivative is $2\theta-1$.
+At $\theta=3/4$ the full derivative is $1/2$; omitting the anchor score gives
+$1/4$ by exchangeability of the two IID rows.
+
+### Equal marginals do not justify an IID second moment
+
+At $\theta=3/4$, the scores in binary order are $(4/3,-4,-4,4/3)$ and
+$E s^2=16/3$. Instead of IID rows, take
+$Z_1=(1-S_0,1-T_0)$. Complement preserves the displayed law, so both marginals
+remain correct. Both bits differ, hence $B_1=1$; the two scores are equal.
+Consequently
+
+$$
+E\left[\bigl(B_1(s(Z_0)+s(Z_1))\bigr)^2\right]=4E s^2=64/3.
+$$
+
+For IID rows, normalization gives $E s=\sum_z p'_\theta(z)=0$.
+Since $|B_1|\le1$, independence gives
+$E[B_1^2(s_0+s_1)^2]\le E[(s_0+s_1)^2]=2E s^2$.
+This IID unit-range upper bound is $32/3$ and is exceeded. It is not the
+actual IID block-score moment: that value is
+$2(3/8)^2(8/3)^2+2(1/8)^2(8)^2=4$. The weaker envelope 32 is not exceeded.
+Identical rows give block zero and fail as an
+attack; that failed construction remains archived. The successor diagnostic
+constructs the actual complement pairs, checks both marginals and evaluates
+the native block. This is a finite counterexample to dropping IID, not a
+confidence-coverage or optimization theorem.
+
+Complete-key return cancels later native increments; source-only return does
+not. The latter can leave a contribution of $-1$. The bounded deterministic
+return check covers 512 words. No infinite stopping or terminal-score deletion
+theorem is inferred. Decimal cusp examples illustrate a handwritten boundary:
+support-changing differentiation remains separate from common-support scores.
+
+## Sensor availability without an extra PID objective
+
+Assume a finite sensor/target law, an exogenous availability mask $M$ jointly
+independent of all sensors and target, and an oracle using true conditional
+probabilities with natural-log loss. The baseline receives the full mask but no
+sensor readings; the augmented oracle receives that same mask and the available
+readings. Their optimal losses are $H(T\mid M)$ and $H(T\mid M,S_M)$, so their
+gain is $I(T;S_M\mid M)$. Joint mask independence reduces each conditional law
+to the specified sensor/target law. For $q(m)=P(M=m)$, the gain is therefore
+
+$$
+J=\sum_m q(m)I(S_m;T).
+$$
+
+The empty subset contributes zero. Self-redundancy and inversion give
+$I(S_m;T)=\sum_{\alpha\preceq\{m\}}\Pi_\alpha$ for nonempty $m$.
+The condition $\alpha\preceq\{m\}$ means that some branch $a\in\alpha$
+is contained in $m$. Interchanging two finite sums therefore gives
+
+$$
+J=\sum_\alpha\Pi_\alpha w_\alpha,\qquad
+w_\alpha=\sum_m q(m)\mathbf1\{\exists a\in\alpha:a\subseteq m\}.
+$$
+
+Thus this oracle objective is fixed by subset MI; rewriting it in PID coordinates
+does not supply an extra optimization criterion. Overlapping branches must be
+counted once. For two independent fair availability bits and singleton branches
+$\{1\},\{2\}$, three of four masks qualify: $w=3/4$, not $1/2+1/2=1$.
+Fresh exact checks cover nine laws at two, three and four sources, 75 nonempty
+subset identities and 18 weighted objectives. They do not prove sampled utility.
+
+### Equal synergy can mean different added value
+
+On the same eight equally likely worlds, let $A,B,U$ be independent fair bits,
+target $T=(A,B)$ and base sensor $A$. Compare added sensors $U$, $B$ and $A$.
+For $U$ and $B$, the source union has probability $3/4$ and its target-restricted
+probability is $1/4$. Redundancy is $\log(4/3)$. Using
+$\mathrm{Syn}=I(A,C;T)-I(A;T)-I(C;T)+\mathrm{Red}$ gives synergy
+$\log(4/3)$ in both cases. A duplicate has synergy zero.
+
+Let base and added availability be independent with probabilities $4/5$ and
+$9/10$, also jointly independent of the bits. Both compared oracles see the same
+full mask; the baseline gets available base readings, and the augmented oracle
+also gets available added readings. Added noise has gain zero.
+The complementary bit is useful whenever it arrives, so its gain is
+$(9/10)\log 2$. A duplicate is useful only when it arrives and the base fails,
+so its gain is $(9/10)(1/5)\log 2=(9/50)\log 2$.
+Equal synergy therefore does not identify this task's gain.
+
+Pairwise mask independence is insufficient. For independent fair $X,Y$, set
+$M=1$ when $X=Y$. Then $M$ is independent of each individual bit, but not of
+their joint state. Conditional on observed $M$, seeing $X$ determines $Y$.
+If $X$ is shown only when $M=1$, its gain given the mask is $(1/2)\log 2$,
+despite $I(X;Y)=0$. The exogenous-mask formula cannot be used under this selection.
+
+## A finite fault result and real application limits
+
+For the retained binary fault game, set target $T=S_1$, diagonal masses $9/20$
+and off-diagonal masses $1/20$. A report must preserve at least one coordinate.
+Forecast probabilities are strictly positive and sum to one. Worst report loss
+is averaged under this fixed law.
+
+The admissible source-only attack sends 00 to 01 and 10 with probabilities
+$4/9,5/9$, sends 11 with the opposite probabilities, and leaves 01 and 10
+unchanged. Each of the four target/report cells has mass $1/4$:
+$(9/20)(4/9)+1/20=1/4$ and $(9/20)(5/9)=1/4$.
+Each surviving report therefore has a fair target.
+
+For positive forecast masses $a+b=1$, $(a-b)^2\ge0$ gives $ab\le1/4$.
+Taking logs gives $(-\log a-\log b)/2\ge\log 2$. Worst loss dominates the
+attack's mean, so every forecast has risk at least $\log 2$. Constant fair
+forecasting attains it. This establishes the finite game's value.
+The event-consistency forecast is
+$f_C(t\mid r)=P(T=t\mid S_1=r_1\ \text{or}\ S_2=r_2)$.
+For reports 00, 01, 10 and 11, its target-zero probabilities are respectively
+$10/11,10/19,9/19,1/11$. Diagonal states have worst correct-target probability
+$9/19$; off-diagonal states have $1/11$. Their total masses are $9/10$ and
+$1/10$, so its worst risk is
+
+$$
+\frac9{10}\log(19/9)+\frac1{10}\log 11>\log 2,
+$$
+
+because both log arguments exceed two. Its risk is about 0.91228249 nats.
+This refutes the proposed minimax extension, not the published MGW measure.
+Historical acceptance used ordinary Lean recompilation and axiom output;
+it was not a separate fresh-kernel campaign.
+
+The physical-intelligence E1 study uses 64 already exposed simulator training
+episodes and a same-fit quantized empirical law: two camera summaries, pressure
+and a future target. Earlier compiled Rust, count/log and source-order checks
+agree. Camera-pair conditional MI given pressure is 0.0072275646778 nats,
+not the top atom 0.0927952904945. Negative camera atoms remain. The chosen
+useful-margin comparison failed. No held-out, IID, field or sensor-benefit result
+follows; this audit did not rerun those compiled studies.
+
+The NEST neural capture has only five lagged rows from six controller steps.
+One source is a function of another and adds zero conditional MI. Perfect
+in-table target recovery alone is not forecast performance. A new
+study needs independent reset trials and a separately fixed external target.
+In the older office study, a positive empirical conditional-MI increment also
+coexisted with worse loss for its frozen fitted predictor. The test rows are
+already exposed; fresh confirmation is required. These negative results stay.
+
+## Corrections and next milestones
+
+The foundational descriptor witness cites
+[Lyu, Clark and Raviv, April preprint version 2](https://arxiv.org/abs/2604.03869v2).
+The machine registry incorrectly binds that exact witness to their distinct
+March PRE paper. An isolated two-hunk correction preserves the PRE reference
+and adds the April source. It remains unapplied: semantic authority must be
+explicitly reviewed, not merely resealed to pass. A separately cited Matthias
+source edge is also missing. The guide's cover/navigation says six companions
+where seven are listed; the existing publication is not fully coherent.
+
+Diagnostic preimages remain: the first dependence test lacked an actual pair
+law, the first sensor overlap control compared supplied constants, and an
+unexecuted sensor prototype had an invalid sorting dependency. Their successors
+use the actual pair, mask law and complete fixed carrier. The first combined
+readback used the wrong sensor source; it failed closed. Equal-valued wrong
+integer types exposed another readback weakness and prompted explicit typed
+checks. None required changing scientific values, proof flags or kernels.
+
+Next scientific milestone: prove the frozen Fin3 carrier/codec/order/registry
+targets, then separately establish event/count/product/sign semantics,
+independent solver encoding, directed-log certificates and compiled refinement.
+Complete proof-body and receipt-stream review remains part of the requested
+triple audit. Practical sensor and neural work requires predeclared targets,
+new evaluation data, appropriate dependence handling and non-PID baselines.
+
+No commit, push, main promotion or deletion occurred. Git and outside custody
+are read-only in this session. All nine named iCloud folders remain protected:
+whole-root useful-byte successors are unverified, and one historical retrieval
+failed. Eight roots have no observed allocated file blocks; the remaining root
+uses about 31 MiB. Existing cloud placeholders are not evidence of duplication.
+
+## Evidence and reproduction
+
+Detailed scopes are retained beside this report in `provenance/RESULT.txt`,
+`formal/RESULT.md`, `formal/ROSTER.md`, the numerical review and its count correction,
+`numerical/COVERAGE.json` and `statistics/FAILURES.md`. Root readback binds the
+named finite outputs and their current sources. Reports are preparation, not
+accepted remote publication or independent storage custody.
+
+Run the prefix and sensor scripts under isolated Python, once normally and
+once with `-O`. Run the numerical diagnostic and arithmetic scripts with the
+current integration checkout as their sole argument; the zero-witness script
+takes none. Then run the scoped `readback.py`. Require actual zero exits,
+complete records and empty stderr. Same-code output equality is a mode check,
+not a second scientific derivation. Preserve every rejected output. The PDF
+build inputs, commands, captured streams and repeatability comparison are
+retained in separate fresh build directories.

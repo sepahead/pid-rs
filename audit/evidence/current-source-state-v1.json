@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "94e90fed7911818f25774f2dadc21aca41714988b0644d9de9ad660f4a557d15",
-        "size_bytes": 322248
+        "sha256": "154e95d06eafdb8cb13a6b47df9409dd334e4457c7e32fdc1e2df06fc6fae3bb",
+        "size_bytes": 322645
       },
       {
         "git_mode": "100644",
@@ -1644,6 +1644,84 @@
         "path": "audit/archive/python-verifier-custody-m0-recovery-20260919/e16a6915262e8bf2fac1752ff959d9d3733c7a7d.bundle",
         "sha256": "d9bf6f964ed404554ad227583e6b4ea6027b7028cee239e5892f40ccabeaebb6",
         "size_bytes": 895902
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/ARCHIVE.md",
+        "sha256": "945688c57d377bf5cf395443366bfa316de95fbac551f2b94b98548ddd7f5751",
+        "size_bytes": 4769
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/EXPOSITION-before-fair-IID.md.txt",
+        "sha256": "53ed7447b8e8476df4e235bc50688baf6570c8fc7bc731efe29db92cf9a34c96",
+        "size_bytes": 22162
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/EXPOSITION.md.txt",
+        "sha256": "87d21111e82f98cec235059bff8f451d848f5cf2d7a318042d9f1f9e3c6a42e1",
+        "size_bytes": 22185
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/INDEX.json",
+        "sha256": "5e80d0cdc9dc49debb46212e6498f25579af4ea9aa6ab42f94dd376e17378ca7",
+        "size_bytes": 3284
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/OBSERVATIONS.json",
+        "sha256": "b4830ac04288a49a03be0fcd5d837b123b26bf3800360544dd6b616b5b726088",
+        "size_bytes": 3466
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/body.tex.txt",
+        "sha256": "c8247f366af4c22c7a7e0853224f3456020b8c830aa2e7cbdd199f6fbdcd5b99",
+        "size_bytes": 24462
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/current-source-review.md.txt",
+        "sha256": "dc83da8b1b876df22f1e133f2ddea8387612314bf5b249a33a65457b29cdaa78",
+        "size_bytes": 4651
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/draft.pdf",
+        "sha256": "c883cd1071eeccb57835e176cdbaafa4886bd53f1e0136ec871bbede897ed77e",
+        "size_bytes": 93578
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/filter.lua.txt",
+        "sha256": "6b5f1999df409ab30220f83a76fbd3538bee69c53eaf097ba00de27d6f9793f7",
+        "size_bytes": 358
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/pid-rs-report-tables.sty.txt",
+        "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+        "size_bytes": 4051
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/publication.tex.txt",
+        "sha256": "6c1bdc96966314b2b264e6e42d33abc72790c6681ba80625db8c6ecf5a2878b4",
+        "size_bytes": 1568
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/repeat-draft.pdf",
+        "sha256": "4f1eb82d70420a962ddc38ccf91ebdcff01f91486cb7567b8004523b4213d913",
+        "size_bytes": 93578
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-audit-20260930/root-review-v2.md.txt",
+        "sha256": "1633ebbb91c4d7cd377dff18b61ad0d8381fac9b5c4ead96a3a5c11414455476",
+        "size_bytes": 4322
       },
       {
         "git_mode": "100644",
@@ -31088,8 +31166,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "adf8b637ab5e183495c4670901829039b277391573baa92f0cd57782be1818cb",
-    "entry_count": 5157
+    "entries_sha256": "588f016e2e53101a82555bc86356d370a881e1a6c868b59a8a177ea337b04682",
+    "entry_count": 5170
   },
   "subprojections": [
     {
@@ -31117,7 +31195,7 @@
       ]
     },
     {
-      "entries_sha256": "0a2d7909c85a55ca96c59e4a3ffbe803435b1e2482706f5623e7a90ea412123d",
+      "entries_sha256": "af83dd2361c26d8e9046c79e0f9ce0286b61b5fde25798ce8a7c5316b12bf26f",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

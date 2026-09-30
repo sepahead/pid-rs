@@ -1,0 +1,37 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox,needspace}
+\usepackage{pid-rs-report-tables}
+\usepackage{hyperref,xurl,bookmark}
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,
+  pdftitle={Shared exclusions PID audit},pdfauthor={Sepehr Mahmoudian},
+  pdfsubject={Scoped source, formal, numerical and application review},pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Shared exclusions PID audit}{Draft with explicit limits}
+\PidConfigureSections
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em plus 0.08em minus 0.04em}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTpre}{0.5em}
+\setlength{\LTpost}{0.5em}
+\setlist{itemsep=0.2em,topsep=0.3em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\passthrough}[1]{#1}
+\newcounter{none}
+\let\PidSavedTexttt\texttt
+\renewcommand{\texttt}[1]{\PidSavedTexttt{\seqsplit{#1}}}
+\AtBeginEnvironment{longtable}{\footnotesize\RaggedRight\setlength{\tabcolsep}{3pt}}
+\title{\PidReportTitle{Shared exclusions PID audit}{Draft scope, exact checks and application limits}}
+\author{Sepehr Mahmoudian}
+\date{30 September 2026}
+\begin{document}
+\PidMakeTitle
+\input{body.tex}
+\end{document}

@@ -1,0 +1,121 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pid-rs-report-tables}[2026/07/25 pid-rs formal-report visual system]
+
+% A restrained academic visual system for the formal PDF set.  It improves
+% hierarchy and scanability without changing theorem, equation, or table
+% semantics.  The palette remains distinguishable in grayscale and avoids
+% using color as the only carrier of meaning.
+\RequirePackage{colortbl}
+\RequirePackage{etoolbox}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+
+\definecolor{PidPrimary}{HTML}{194F7A}
+\definecolor{PidSecondary}{HTML}{2F6475}
+\definecolor{PidAccent}{HTML}{2D7D8C}
+\definecolor{PidText}{HTML}{23313D}
+\definecolor{PidMuted}{HTML}{5A6975}
+\definecolor{PidRule}{HTML}{CAD4DC}
+\definecolor{PidSoft}{HTML}{F3F6F8}
+\definecolor{PidCodeBackground}{HTML}{F6F8F9}
+\definecolor{PidTableHeader}{HTML}{CBDDE7}
+\definecolor{PidTableStripe}{HTML}{E5EDF2}
+
+\newcommand{\PidTableRowBands}{%
+  \rowcolors{2}{PidTableStripe}{white}%
+  \setlength{\extrarowheight}{0.28ex}%
+}
+
+\AtBeginEnvironment{tabular}{\PidTableRowBands}
+\AtBeginEnvironment{tabularx}{\PidTableRowBands}
+\AtBeginEnvironment{longtable}{\PidTableRowBands}
+
+% Place this immediately after an ordinary booktabs \toprule.  Keeping the
+% booktabs command untouched avoids \noalign failures and makes first-page
+% and continuation-header styling explicit in the document source.
+\newcommand{\PidTableHeaderRow}{\rowcolor{PidTableHeader}}
+
+\newcommand{\PidConfigureSections}{%
+  \titleformat{\section}
+    {\Large\bfseries\color{PidPrimary}}
+    {\thesection}{0.72em}{}
+    [\vspace{0.12em}\color{PidRule}\titlerule]
+  \titleformat{\subsection}
+    {\large\bfseries\color{PidSecondary}}
+    {\thesubsection}{0.62em}{}
+  \titleformat{\subsubsection}
+    {\normalsize\bfseries\color{PidText}}
+    {\thesubsubsection}{0.55em}{}
+  \titlespacing*{\section}{0pt}{1.55em}{0.62em}
+  \titlespacing*{\subsection}{0pt}{1.15em}{0.38em}
+  \titlespacing*{\subsubsection}{0pt}{0.95em}{0.28em}%
+}
+
+\newcommand{\PidSetRunningHeads}[2]{%
+  \pagestyle{fancy}%
+  \fancyhf{}%
+  \fancyhead[L]{\footnotesize\sffamily\color{PidMuted}#1}%
+  \fancyhead[R]{\footnotesize\sffamily\color{PidMuted}#2}%
+  \fancyfoot[C]{\footnotesize\sffamily\color{PidMuted}\thepage}%
+  \setlength{\headheight}{14pt}%
+  \renewcommand{\headrulewidth}{0.38pt}%
+  \renewcommand{\headrule}{%
+    {\color{PidRule}\hrule width \headwidth
+      height \headrulewidth \vskip-\headrulewidth}}%
+  \fancypagestyle{pidfirst}{%
+    \fancyhf{}%
+    \fancyfoot[C]{\footnotesize\sffamily\color{PidMuted}\thepage}%
+    \renewcommand{\headrulewidth}{0pt}}%
+}
+
+\newcommand{\PidReportTitle}[2]{%
+  {\color{PidPrimary}\fontsize{21}{25}\selectfont\bfseries #1\par}%
+  \vspace{0.38em}%
+  {\color{PidText}\large\normalfont #2\par}%
+}
+
+\makeatletter
+\newcommand{\PidMakeTitle}{%
+  \begingroup
+  \thispagestyle{pidfirst}%
+  \setlength{\fboxsep}{0.58em}%
+  \noindent\colorbox{PidPrimary}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+      \color{white}\sffamily\small\bfseries
+      PID-RS TECHNICAL REPORT SERIES}}
+  \par\vspace{1.15em}%
+  {\raggedright\@title\par}%
+  \vspace{0.9em}%
+  {\raggedright\small\color{PidMuted}\@author\hfill\@date\par}%
+  \vspace{0.58em}%
+  \noindent{\color{PidAccent}\rule{5.2em}{1.35pt}}%
+  {\color{PidRule}\rule{\dimexpr\linewidth-5.2em\relax}{0.45pt}}%
+  \par\vspace{0.75em}%
+  \endgroup
+}
+
+\newcommand{\PidConfigureAbstract}{%
+  \renewcommand{\abstractname}{\color{PidPrimary}Abstract}%
+  \BeforeBeginEnvironment{abstract}{%
+    \par\smallskip
+    \noindent{\color{PidRule}\rule{\linewidth}{0.6pt}}\par}%
+  \AfterEndEnvironment{abstract}{%
+    \par\noindent{\color{PidRule}\rule{\linewidth}{0.4pt}}\par\medskip}%
+}
+
+\newcommand{\PidConfigureLinksAndListings}{%
+  \AtBeginDocument{%
+    \@ifpackageloaded{hyperref}{%
+      \hypersetup{%
+        linkcolor=PidPrimary,
+        citecolor=PidSecondary,
+        urlcolor=PidAccent}%
+    }{}%
+    \@ifpackageloaded{listings}{%
+      \lstset{%
+        backgroundcolor=\color{PidCodeBackground},
+        rulecolor=\color{PidRule}}%
+    }{}%
+  }%
+}
+\makeatother

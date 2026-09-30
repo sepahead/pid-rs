@@ -1,0 +1,179 @@
+{
+  "Fin3_proof_acceptance": false,
+  "builds": [
+    {
+      "command_labels": [
+        "pandoc",
+        "pass-1",
+        "pass-2",
+        "pass-3"
+      ],
+      "omission_reason": "machine_specific_input_locators",
+      "pdf": "draft.pdf",
+      "raw_receipt_omitted": true,
+      "raw_receipt_sha256": "7c2b353d60a582ea72552d1511ca0a2efa81a570624bd846711e26ed73a9634a",
+      "recorded_returncodes": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "command_labels": [
+        "pandoc",
+        "pass-1",
+        "pass-2",
+        "pass-3"
+      ],
+      "omission_reason": "machine_specific_input_locators",
+      "pdf": "repeat-draft.pdf",
+      "raw_receipt_omitted": true,
+      "raw_receipt_sha256": "a2b6bfec33fd34d283efa90d1fbe7b54d21ac298a5ea12318f944fbe6859e928",
+      "recorded_returncodes": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "class": "derived_historical_observation_projection_not_raw_receipt",
+  "complete_replay": false,
+  "differing_bytes_inside_explicit_ID_span": true,
+  "full_publication_acceptance": false,
+  "full_scientific_audit_acceptance": false,
+  "independent_custody": false,
+  "prefix_raw_output_omitted_reason": "machine_specific_source_locators",
+  "prefix_raw_output_sha256": "f3ef2143e5bb321f437eccdee3dfc949d6fe28e1d681fb1e756617654b35d0d2",
+  "prefix_selected_fields": {
+    "across_rows_independent": false,
+    "all_three_row_marginals": [
+      [
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      [
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ],
+      [
+        "1/4",
+        "1/4",
+        "1/4",
+        "1/4"
+      ]
+    ],
+    "dependent_h2_mean": "0/1",
+    "dependent_row_law": [
+      {
+        "D1": 0,
+        "D2": 0,
+        "R1": 1,
+        "R2": 2,
+        "mass": "1/4",
+        "native": "0/1",
+        "word": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "D1": 0,
+        "D2": 0,
+        "R1": 1,
+        "R2": 2,
+        "mass": "1/4",
+        "native": "0/1",
+        "word": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "D1": 0,
+        "D2": 0,
+        "R1": 1,
+        "R2": 2,
+        "mass": "1/4",
+        "native": "0/1",
+        "word": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "D1": 0,
+        "D2": 0,
+        "R1": 1,
+        "R2": 2,
+        "mass": "1/4",
+        "native": "0/1",
+        "word": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      }
+    ],
+    "fresh_word_counts": [
+      4,
+      16,
+      64,
+      256,
+      1024,
+      4096
+    ],
+    "fresh_words": 5460,
+    "iid_h2_mean": "7/32",
+    "native_negative_words": 836,
+    "within_each_row_independent_fair_bits": true
+  },
+  "raw_differing_bytes": 54,
+  "raw_pdf_repeatability": false,
+  "schema": "pid-rs/historical-shared-exclusions-public-projection/v1",
+  "scope": "selected source/PDF/build/prefix observations only"
+}

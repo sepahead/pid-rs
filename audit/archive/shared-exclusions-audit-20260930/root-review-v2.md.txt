@@ -1,0 +1,75 @@
+# Current shared exclusions audit disposition
+
+Author: Sepehr Mahmoudian
+
+The current [seven-page PDF](build-v14/report.pdf) is suitable for scoped draft
+delivery. The explicit prefix formula and complete-row IID premise resolve the
+identified exposition gaps. This closes the bounded document-review queue, not
+the full mathematical audit, a Fin3 proof campaign or publication acceptance.
+The earlier `ROOT_REVIEW.md` remains an unchanged historical disposition.
+
+## Exact evidence
+
+Current `EXPOSITION.md` has SHA-256
+`87d21111e82f98cec235059bff8f451d848f5cf2d7a318042d9f1f9e3c6a42e1`.
+The PDF has SHA-256
+`c883cd1071eeccb57835e176cdbaafa4886bd53f1e0136ec871bbede897ed77e`.
+The repeat PDF has SHA-256
+`4f1eb82d70420a962ddc38ccf91ebdcff01f91486cb7567b8004523b4213d913`.
+Root rechecked these bytes and read the independent current-source disposition,
+`../wibral-report-v12-independent/REVIEW-current-v14.md`, SHA-256
+`dc83da8b1b876df22f1e133f2ddea8387612314bf5b249a33a65457b29cdaa78`.
+That reviewer reread the complete current source and inspected every page of both
+builds. Root previously inspected all seven current pages at 95 dpi and now also
+inspected pages 3, 4 and 5 at 170 dpi: signed arithmetic, the prefix formula and
+score derivation, and the sensor objective remain readable without observed
+clipping or missing glyphs. The three renders are retained in
+`root-current-highres-v1`.
+
+The two build receipts retain zero exits for pandoc and three LuaLaTeX passes.
+Root's existing normal/optimized diagnostic capture,
+`root-pdf-review-v3/RESULT.json`, has SHA-256
+`ad5abd6396331f2a79ec6777fe85fecca03efb026e55ea159c815e71cc2597ac`.
+Both diagnostic outputs are equal at
+`29af38105d9985e7e93af5771afd10c75ae6266a14e00cb4ebeb448805fbb939`.
+Twelve fonts are embedded and Unicode-mapped; three physical URI annotations
+represent two logical citations. Extracted text is equal. Raw PDFs are not:
+54 differing bytes lie inside the explicit trailer-ID span. No normalized
+comparison is substituted for byte repeatability. These are current pypdf
+6.15.0 diagnostics, not the older guide's unrecovered 6.16.1 publication gate.
+
+## Mathematical scope
+
+The deterministic one-source block does not require IID rows. Its horizon-two
+mean of 7/32 does require the stated three IID complete rows of independent fair
+source and target bits. Copying one such row three times instead gives zero.
+Raw-time substitution gives the rejected 9/32; repeated nonarrival subtraction
+gives the rejected 3/32. Independent exact checks cover 5,460 binary words through
+horizon five, including 836 negative values. This is finite evidence and an
+inspected handwritten identity, not a new general kernel-checked theorem.
+
+Negative atoms, exact-zero cancellation, the random-anchor score, coupled-row
+counterexample, matched-mask sensor assumptions, fault-extension rejection and
+exposed application failures remain explicit. No scientific tolerance, estimator,
+proof flag, kernel, warning predicate or old publication gate was changed.
+The separate accepted v7 setup includes only a True smoke: all nineteen Fin3
+obligations and Programs A–E remain open. Earlier deficiencies, wrong expectations,
+failed fixtures, source preimages and rejected builds remain preserved.
+
+Assumptions: files remain stable during bounded reads; finite probability laws and
+natural-log units are used; complete-row IID, common positive support and joint
+mask independence apply only where stated. Hashes are not authentication,
+atomic snapshots or independent custody. Correlated Python modes and finite
+checks do not establish estimator calibration, deployment utility, source/cache
+equivalence, accessibility or archival conformance.
+
+## Remaining delivery work
+
+Implement, independently review and adopt the Fin3 candidate controller before
+proof construction. Full proof-body/receipt review, Rust refinement, statistical
+calibration and new application confirmation remain required. Companion patches,
+guide-cover repair and catalog proposals remain unapplied. Git metadata and the
+designated integration checkout are read-only in this session: no commit, push,
+main promotion, deletion or new space gain occurred. No iCloud root is cleared
+for deletion. The writing guidance kept this successor concise and explicitly
+qualified; it caused no external upload.
