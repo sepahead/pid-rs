@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Explain the finite MGW prefix-cancellation result with a worked camera–acoustic example,
+  explicit sampling and target assumptions, and unchanged negative evidence. Update its PDF
+  and navigation; preserve the initial publication inventory with a separate editorial ledger.
+
 - Rename the inert application-report source to avoid discovery as a pip requirements file.
   Preserve its exact bytes, unchanged PDF and historical filename; update archive links and custody.
 

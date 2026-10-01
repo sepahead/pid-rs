@@ -4,6 +4,25 @@ Author: Sepehr Mahmoudian · 27 September 2026.
 
 The [standalone exposition](EXPOSITION.md) and [PDF](../../../output/pdf/stopped-prefix-probability.pdf) derive two classical finite IID probability identities and an exact invariant of the project's categorical MGW prefix statistic. They explain the probability model, complete proof steps, endpoint cases, counterexamples and implementation boundary.
 
+This work asks when a prefix calculation can omit further updates without changing its finite
+sum. That question matters before attempting a faster sampler or a learning objective: stopping
+arithmetic and differentiating a stopped random path require different proofs. The exposition
+explains this motivation before the theorems. Its camera–acoustic example follows fixed feature
+categories and an offline target label through increments $1,-1/2,0$, then permanent zeros.
+It distinguishes a first-return event from one particular sampled word and shows where the
+complete source-plus-target equality is used. The example is illustrative, not a sensor experiment.
+
+The intended use is an internal calculation for offline categorical analysis or a separately
+justified future learning method. Direct evaluation of a small table can be simpler; rare complete
+keys can limit any savings. The result supplies neither a sensor-fusion policy nor evidence of
+better detection or control. It also does not justify omitting a terminal probability-score term:
+the retained gradient counterexample explains that failure. These application and limitation
+sections add no theorem export or runtime claim.
+
+The [first-publication inventory](PUBLICATION_FILES.json) preserves its dated eight-page snapshot.
+The [editorial successor inventory](PUBLICATION_REVISION_20261001.json) binds this nine-page
+revision's source, publication page, profile and PDF. Neither inventory grants new formal acceptance.
+
 For a fixed finite law and event $A$ with mass $a$, a word containing $n$ misses followed by one hit has mass $(1-a)^n a$, including $n=0$, $a=0$ and $a=1$. Splitting its restricted law gives a product of unnormalized miss and hit measures. Separately, if a comparison list contains the complete source-plus-target anchor, both defined prefix contributions are zero. That condition is sufficient, not necessary or an earliest-stop characterization.
 
 The [three-export theorem map](THEOREM_MAP.md) records local acceptance at 21:28:05 UTC on 26 September 2026: newly accepted F1/F2 and a fresh F4 recheck under the joint source closure. The [expanded source statements](THEOREM_STATEMENTS.md), [source map](SOURCE_MAP.json), [acceptance projection](LOCAL_FORMAL_ACCEPTANCE.json), [raw exported type records](evidence/EXPORTED_TYPES.json) and [command evidence](evidence/COMMANDS.json) distinguish statements from execution. The 41 theorem/control records include three theorem exports; they do not represent 41 theorems.

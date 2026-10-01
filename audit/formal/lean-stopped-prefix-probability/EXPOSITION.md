@@ -12,6 +12,41 @@ A prefix calculation can avoid later updates when its definitions make every lat
 
 The surrounding information functional is Makkeh, Gutknecht and Wibral's categorical shared exclusions. Its source event is an OR of source-collection matches, each collection being an AND of coordinate matches; the shared-information definition is in [MGW, equations (6)–(8)](https://arxiv.org/pdf/2002.03356v5). The finite-prefix statistic is a project construction documented in [the existing prefix exposition, Section 2](../../research/finite-prefix-mgw-gradient/EXPOSITION.md). F1 and F2 are classical finite IID probability, and F4 is an invariant of the exact prefix definitions. None introduces a new PID functional or general gradient method.
 
+## Why this work was pursued
+
+The computational question is whether a sampled MGW prefix calculation must keep updating after
+its result can no longer change. The existing construction adds a contribution for each longer
+prefix of comparison rows. Those updates can require source comparisons, target filtering and
+lattice operations. For a specified finite horizon, omitting a nonzero contribution changes the
+statistic. A fixed horizon can also leave a tail when the intended quantity is a separately
+justified longer-prefix or limiting expectation. These are different errors.
+
+We therefore pursued an exact condition for skipping zero contributions, before proposing a
+faster implementation or an adaptive stopping algorithm. F4 supplies one such condition: a
+comparison row repeats the **complete source-plus-target anchor**. Both defined prefix terms are
+then zero, and remain zero in every later prefix. F1/F2 supply the finite IID measure identities
+needed to study the occurrence of that event. The probability result and the deterministic rule
+have different assumptions; neither substitutes for the other.
+
+This matters for correctness before it matters for speed. It permits a future implementation to
+omit these particular arithmetic updates while preserving a specified finite prefix sum. It also
+exposes a tempting error: a zero terminal increment does not make the terminal probability-score
+term disappear from a gradient. Section 6 explains that distinction and its retained
+counterexample.
+
+The intended application is an internal calculation in offline categorical PID analysis or a
+future, separately justified learning method. It is not a sensor-selection rule, a detector or a
+new fusion architecture. Section 6 follows camera and microphone features into a frozen joint
+table and shows where the cancellation rule would act. No speedup or task improvement has been
+measured. Direct evaluation can be preferable for a small known table; rare complete-key returns
+can make this guard unhelpful.
+
+The contribution of this paper is a precise, locally verified connection between finite
+probability measures and the project's prefix definitions, including boundary cases and failed
+routes. F1/F2 are classical probability; F4 is a project invariant. This is a foundation for a
+possible computational improvement, not evidence of a practical breakthrough or scientific
+priority.
+
 ![Finite first-hit probabilities and complete-key prefix cancellation.](figures/first-hit-and-prefix-return.svg)
 
 The upper panel illustrates two misses followed by a hit under a fixed auxiliary IID law; the restricted factors retain their original masses. The lower panel shows why a complete source-plus-target key survives target filtering and makes both prefix contributions zero. The arguments have different premises.
@@ -156,6 +191,85 @@ This formal packet introduces no Rust API or feature gate for a stopped-prefix s
 The law's occupied support is $m=|\{x\in K:p(x)>0\}|\le|Y|\prod_{i\in I}|X_i|$. The deterministic guard itself needs no PMF table. Fitting or storing that table, preprocessing sensor rows and generating comparison draws are separate operations. For an offline categorical sensor analysis, the source categories, target and any quantizer must be fixed and reported before interpreting resampling from such a table.
 
 A direct return guard compares at most $|I|+1$ coordinates per supplied row. Under constant-cost categorical equality, scanning $n$ rows costs $O(n|I|)$ equality operations. It stores $O(|I|)$ categorical values for the anchor and $O(1)$ additional guard state. These counts exclude sampling, input storage, lattice joins and other estimator state. No timing is reported, and no expected cost, variance advantage or seeded-sampler refinement is established here. No implementation-specific memory budget, cancellation contract or failure behavior is introduced; those would belong to a future sampler/guard API. The finite guard can be interpreted offline over a supplied list or incrementally over supplied rows, but no real-time guarantee follows. Small known PMFs can instead be evaluated or differentiated directly, and a predictive task may be served by MI, CMI or task loss without PID.
+
+### Worked camera–acoustic example
+
+Let $X_1$ indicate a high visual evidence score and $X_2$ a high acoustic evidence score for the
+same region and time window. Let $Y$ be a separately established binary label for drone presence.
+“Separately established” describes label collection; it does not assert statistical independence
+from the features. Fit any score calibration and category boundaries on training data, then freeze
+them for the audit. State how missing observations are encoded. PID then concerns these declared
+categorical features and target, not the raw pixels or waveform. Changing the categories changes
+the estimand. The following rows are synthetic; they are not recordings or a detector evaluation.
+
+Take anchor $z=(1,1;1)$, node $\alpha=\{\{1\},\{2\}\}$ and comparison rows
+
+$$
+x_1=(0,0;0),\qquad x_2=(0,0;1),\qquad x_3=z=(1,1;1).
+$$
+
+The first two mismatch sets are both $\{1,2\}$, so both singleton families equal $\alpha$.
+Their pairwise unions are $\{1\}$, $\{1,2\}$ and $\{2\}$; removing the nonminimal union leaves
+$\alpha$. The third mismatch set is empty. The definitions therefore give:
+
+| Prefix | $P$ | $N$ | $P-N$ |
+|---|---:|---:|---:|
+| $[x_1]$ | $1$ | $0$ | $1$ |
+| $[x_1,x_2]$ | $1/2$ | $1$ | $-1/2$ |
+| $[x_1,x_2,z]$ | $0$ | $0$ | $0$ |
+
+At the first prefix, the last target is $0$, so $N=0$. At the second, target filtering retains
+only $x_2$. Thus $N$ uses retained rank $1$, while $P$ uses raw length $2$. Dividing both terms
+by $2$ would change the statistic. At the third, the complete anchor makes both predicates false,
+and every later prefix still contains it. Consequently, this path's accumulated prefix value is
+$1-1/2=1/2$ at every specified horizon $H\ge3$, whatever later rows occur. Omitting those later
+updates preserves that finite value. The value is not being identified with a population atom,
+an unbiased estimator or detection performance.
+
+For a separate probability illustration, assign mass $1/4$ to each of $(0,0;0)$, $(0,0;1)$,
+$(1,0;0)$ and $z$, then freeze this synthetic table. Under auxiliary IID draws, F2 with
+$A=\{z\}$ gives
+
+$$
+\Pr(\text{any two misses, then the first return})=(3/4)^2(1/4)=9/64.
+$$
+
+The particular ordered word displayed above has mass $(1/4)^3=1/64$. These are different events.
+This calculation specializes the finite law already proved; it adds no Lean export. F4 itself
+needed neither the table nor IID draws.
+
+The target label makes this an offline analysis example. A deployed detector does not receive its
+unknown ground-truth target as an input. Resampling with replacement from a frozen fitted table
+defines an auxiliary conditional experiment; it does not make successive camera/audio windows
+independent or prove that the table describes the population. Scene or episode separation,
+temporal dependence, label quality and held-out task evaluation remain separate obligations.
+Labelled robot episodes can supply other source features and outcome targets under the same
+finite preparation contract. No robot-control or ecosystem integration result is established here.
+
+### When to use this result, and when to use another route
+
+The proposed use is to omit arithmetic or lattice updates in this specific finite-prefix
+construction. Compare it with the same calculation without the guard, including the cost of
+checking complete-key equality. Also compare it with direct evaluation of the known categorical
+table. More sources, finer bins and more target categories can make complete keys rare under a
+diffuse joint law; dependence and occupied support affect that conclusion. The guard can then
+save little work. No return-time, variance or speedup bound follows from the implementation
+discussion.
+
+For a sensor decision, start with the task and its loss. If the question is how much Shannon
+information a second source adds to a first, conditional mutual information answers that declared
+question. PID is an additional description when its signed, measure-specific decomposition is
+itself needed. This paper does not establish that such a description improves prediction,
+placement or fusion. Its finite categorical result does not transfer to the distinct continuous
+Ehrlich PID or to a hyperbolic estimator.
+
+For training, a smooth probability model on fixed categories and hard assignment of observations
+to bins are different objects. A derivative of the former does not supply a useful derivative
+through the latter. A learned encoder, moving thresholds, a varying target law and the sampling
+score each require stated assumptions. The existing fixed-horizon gradient construction is a
+separate result. A useful adaptive method would still need a correct stopped-gradient identity,
+integrability and interchange arguments, variance and cost bounds, a Rust implementation, and
+comparison with direct differentiation and task-based baselines. F1/F2/F4 do not close those gaps.
 
 ### The unfinished stopping argument
 

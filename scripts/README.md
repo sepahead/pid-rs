@@ -3216,7 +3216,9 @@ runs before the older long PDF gates. No PDF check proves a mathematical or appl
 
 The [finite first-hit publication](../audit/formal/lean-stopped-prefix-probability/PUBLICATION.md)
 uses `build-stopped-prefix-probability-pdf.sh` and `check-stopped-prefix-probability-pdf.sh`.
-The canonical Markdown and repository SVG produce one eight-page PDF. The checker binds both
+The canonical Markdown and repository SVG produce one standalone PDF. Its motivation and
+camera–acoustic example explain the finite calculation, proposed use, costs and open obligations.
+The checker binds both
 sources, the exact figure-font manifest and shared templates to the trailer ID. It compares one
 fresh rebuild, verifies author, page and navigation inventories, and rejects additional or chained
 PDF actions. The SVG renderer uses four hash-checked open fonts in private Fontconfig directories;

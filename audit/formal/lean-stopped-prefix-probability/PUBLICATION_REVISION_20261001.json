@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-01",
+  "author": "Sepehr Mahmoudian",
+  "scope": "Selected nine-page editorial revision; byte inventory only, not new formal or application acceptance",
+  "self_excluding": true,
+  "predecessor_inventory": {
+    "path": "audit/formal/lean-stopped-prefix-probability/PUBLICATION_FILES.json",
+    "sha256": "720733d356a06688e3f75138b45570116ceee02671959c1a4f2ef4ba0c9f25b9",
+    "containing_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+    "role": "unchanged dated first-publication snapshot, including eight-page publication rows"
+  },
+  "files": [
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/EXPOSITION.md",
+      "bytes": 28510,
+      "sha256": "3d295bc1d1b4c44dcb766edd0f07c9daa8389c2c16423fb21c8ce4b3389aff1a"
+    },
+    {
+      "path": "audit/formal/lean-stopped-prefix-probability/PUBLICATION.md",
+      "bytes": 6075,
+      "sha256": "2ae1c11a8f062f04af0a52d290739b905797c0e1c5fdd590fba37015ab04c09f"
+    },
+    {
+      "path": "audit/formal/latex/stopped-prefix-probability/profile.json",
+      "bytes": 6794,
+      "sha256": "46a0f1d876b84772ebe2c44cf062f9b2517e619345f3895f8bc50b12bba15610"
+    },
+    {
+      "path": "output/pdf/stopped-prefix-probability.pdf",
+      "bytes": 304580,
+      "sha256": "fe32061a183564b2b562e213afc5600703443022e397ffc767384eeb4abe3542"
+    }
+  ]
+}

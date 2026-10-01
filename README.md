@@ -149,9 +149,13 @@ still needs comparison with direct differentiation and task-based evaluation.
 The [first-hit and cancellation companion](audit/formal/lean-stopped-prefix-probability/PUBLICATION.md)
 proves finite first-hit measure factorization and mass, including zero-probability endpoints.
 Its deterministic complete-anchor return rule makes both defined prefix contributions zero.
-The [eight-page PDF](output/pdf/stopped-prefix-probability.pdf) explains all three results and
+The [standalone PDF](output/pdf/stopped-prefix-probability.pdf) explains all three results and
 why zero future increments alone do not prove a stopped-gradient method. Exact local proof
 sources and failed approaches are retained; portable theorem replay and a Rust sampler remain open.
+The motivation is to omit provably zero arithmetic updates without changing a finite prefix sum.
+A worked camera–acoustic example shows the categorical inputs, offline target label and each
+increment. It explains when direct table evaluation is simpler and why no sensor or training
+improvement follows from cancellation alone.
 
 The separate [support-change note](audit/research/support-change-mi-cusp/EXPOSITION.md) and
 [PDF](output/pdf/support-change-mi-cusp.pdf) explain a negative result: every cell probability can
