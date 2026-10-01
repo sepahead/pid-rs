@@ -1,0 +1,179 @@
+# Real world PID problems and verification requirements
+
+Author: Sepehr Mahmoudian
+
+Date: 1 October 2026. Status: application plan and manual derivations, not formally verified new results.
+
+The cited problems are real. Our current work has not yet demonstrated a biological or robotic improvement. It supplies mathematical safeguards, uncompiled proof targets and an unrun simulation protocol. This report defines experiments that could establish useful progress, their input and output statistics, and the evidence needed before claiming success.
+
+The proposed decision is whether a selected signal helps predict a declared task output, especially when another signal is unavailable. An engineer or neuroscientist could use the analysis to investigate a failure and choose a candidate sensor or neuron grouping. Direct task loss is the primary success measure. PID is an additional description of information organization, not a substitute for task performance.
+
+## Documented problems and proposed studies
+
+### Neural decoding under changing recordings
+
+Neural decoders can become ineffective when recording conditions change. Sussillo and colleagues studied unexpected electrode-signal loss and changes across recording days in a non-human-primate brain–machine interface. Their result motivates robustness research; it does not validate our PID method. [Sussillo et al., 2016](https://arxiv.org/abs/1610.05872).
+
+Proposed inputs are spike counts from three fixed, disjoint neuron groups. One row is one selected reach, with a count window ending before the movement outcome. Each group receives one four-category representation, fitted on training data only. The proposed target is one binary reach-direction label. The direction rule, excluded ambiguous reaches and timing alignment must be fixed before evaluation. Counts have units of spikes; window duration has units of milliseconds; category labels have no physical units.
+
+The Neural Latents Benchmark supplies actual motor-cortex recordings and movement measurements. Its MC_Maze and MC_RTT datasets have different task structures. They must not be pooled as one law without an explicit mixture model. The official page also records an electrode-index conversion issue for MC_Maze. Dataset availability is not an audit of trial labels, permissions, preprocessing or independence. [NLB dataset documentation](https://neurallatents.github.io/datasets.html).
+
+Training estimates a categorical law and trains pair/triple predictors. Evaluation uses untouched trials, with grouping by recording session where possible. Channel-loss tests omit a group explicitly. We compare both a frozen predictor subjected to a fault and a predictor trained for the available subset; these answer different questions. Success would be lower held-out log loss or better robustness than equally resourced baselines. It would not establish biological causation, months-long stability or clinical benefit.
+
+### Drone sensing under poor visual conditions
+
+EuRoC contains real micro-aerial-vehicle recordings with stereo images, IMU measurements and ground truth. Its flights range from favorable conditions to dynamic motion, motion blur and poor illumination. The official documentation identifies brightness differences between cameras and synchronization/ground-truth limitations. These are concrete obstacles to trustworthy evaluation. [Burri et al., 2016](https://doi.org/10.1177/0278364915620033), [official EuRoC documentation](https://projects.asl.ethz.ch/datasets/euroc-mav/).
+
+Proposed sources are separate left-camera, right-camera and IMU summaries from strictly past windows. Raw image intensity, angular velocity and acceleration are different physical quantities. The feature maps must state their units, calibration and time alignment. Each summary receives four training-frozen categories. The target is a future yaw-change class: negative, near-zero or positive, using a predeclared time horizon and angular threshold. Those numerical choices remain unresolved; no experiment is launch-ready.
+
+Hold out complete flights, not neighboring frames. A PMF row is a past-window/future-horizon pair; a flight is its dependence cluster. Uniform-window and equal-flight weighting define different laws; freeze one. Freeze camera-omission and degradation schedules before evaluating. Describe each condition separately. EuRoC has no GNSS channel, so it cannot validate GNSS-failure claims.
+
+Useful first progress would be better held-out motion-class prediction under the declared failures. An odometry claim also needs pose error, drift and estimator-failure measurements. An offline masked-recording study does not establish closed-loop flight safety. A software copy of one camera-derived feature is not a physically independent backup sensor.
+
+### Robotic slip detection with vision and touch
+
+Gao and colleagues describe a robot with synchronized visual and tactile observations of grasped objects. They evaluate slip classification on objects excluded from training. This supports a real contact-perception problem and an object-level split. Their reported performance is their result, not ours. [Gao et al., 2023](https://arxiv.org/html/2302.13564v1).
+
+Start with two sources: a visual summary and a tactile summary. Do not invent a third independent modality to obtain PID3. Four symbols per source and a binary slip label give at most 32 complete source–target states. The paper uses 0 for slip and 1 for stable; preserve that convention or document an explicit label mapping. Raw-data availability and label construction still need auditing.
+
+Hold out entire objects and grasp episodes. All augmentations of a grasp stay in the same split. A slip detector uses observations available at detection time; an early-warning predictor must end its input window before independently established slip onset. These are different targets. Proposed success is better held-out detection at a fixed false-alarm budget than visual-only and tactile-only baselines. Safe force control requires a later controller experiment.
+
+## Statistical object and assumptions
+
+The study uses the categorical shared-exclusions measure defined by Makkeh, Gutknecht and Wibral, not continuous Ehrlich PID, Williams–Beer I_min, BROJA or a context-free statistic. Information values use natural logarithms and therefore nats. [Makkeh et al., 2021](https://doi.org/10.1103/PhysRevE.103.032149).
+
+For a three-source study, let S1, S2 and S3 be the categorical inputs and T the categorical output. Let e name a declared operating condition. The population object is one finite joint law P_e(S1,S2,S3,T). Each probability is nonnegative and all probabilities sum to one. Dependence between inputs is allowed. Neither Gaussianity nor independence between sensors is assumed by the categorical definition.
+
+The empirical law P_hat assigns each observed complete state its integer count divided by the total row count N. Computing this table does not require independent rows. Interpreting it as a population estimate, attaching confidence, or comparing future tasks does require a sampling model. A cell absent from the table is not proven impossible in the population.
+
+| Statistical property | Required declaration | Current evidence |
+|---|---|---|
+| Input/output alphabets | Fixed category labels and target rule | Proposed; biological/drone choices not frozen |
+| Joint support | Allowed complete states and structural zeros | No population support certificate |
+| Context | Recording session, task and degradation condition | Must remain explicit |
+| Sampling unit | Reach, complete flight or grasp episode | Proposed; no new data audited |
+| Dependence | Independence between units or a justified dependent model | Not established by distinct seeds/timestamps |
+| Training role | Fit features, categories and models on training only | Required, not demonstrated by an experiment |
+| Evaluation role | Untouched units with no selection or refitting | No new held-out result |
+| Missingness | Explicit sensor availability and refusal rules | Zero values are not missingness markers |
+| Target frequency | Natural prior or deliberately balanced prior | Must not be silently substituted |
+| Numerical meaning | Exact-real target versus binary64 computation | Formal implementation correspondence remains open |
+
+Feature binning changes the estimand. It is not merely a faster evaluation of the original continuous sensor law. Fit identity, bin edges, occupancy and sensitivity to representation must be retained. A balanced two-class protocol describes an equal-weight mixture of two conditional laws, not the natural prevalence of those classes in deployment. No input means, variances, correlations or observed output frequencies have been measured for these proposed studies.
+
+## The exact MGW event
+
+Fix an anchor source state s and target t with positive joint probability. Let alpha be a nonempty antichain of nonempty source subsets. An antichain is a family in which no distinct member contains another.
+
+For each subset A, its matching event requires agreement with s on every input in A. The family event E_alpha(s) occurs when at least one subset matches: AND within a subset, OR across subsets. Define q as P_e(E_alpha(s)), r as P_e(E_alpha(s), T=t), and p as P_e(T=t).
+
+The positive anchor belongs to every matching subset event. Therefore q, r and p are positive. The pointwise quantity is:
+
+```text
+i_sx(t; alpha at s) = ln(r) - ln(q) - ln(p).
+```
+
+This is the log posterior/prior ratio for the family event. Paper Equation 7 uses log2; multiply its bits by ln(2) for nats. Averaging uses the same joint law; lattice inversion produces PID atoms. Label pointwise, averaged, empirical and population values separately.
+
+Shared-exclusions atoms can be negative. They must not be clamped or treated as universally nonnegative reliability budgets. A 2025 preprint by Matthias, Makkeh, Wibral and Gutknecht establishes a general discrete incompatibility between all-atom positivity, target chain rule and invertible re-encoding invariance. Its table explicitly classifies shared-exclusions PID as signed. This is an external result, not a new discovery by this project, and not a continuous-only impossibility theorem. [Theorem 2 and Table 2](https://arxiv.org/html/2512.16662v1).
+
+## What an extra signal can improve
+
+The following is a manual exact-real derivation and a proposed formal target. No new Lean/kernel check of this derivation has occurred.
+
+Assume a finite normalized law P on X, Z and T. X is a retained input tuple and Z is an added signal. Both ideal predictors are the actual posteriors of this same law. Expectations use P, not a separately fitted or changed test law. Only positive joint-probability states contribute; their required posterior probabilities are positive.
+
+1. Define the log loss of a predictor q as the average of minus ln(q(T given inputs)) under P.
+2. For the ideal predictor P(T given X), this average is conditional entropy H_P(T given X), by its defining finite sum.
+3. For the ideal predictor P(T given X,Z), it is H_P(T given X,Z).
+4. Subtracting the losses gives the difference of those conditional entropies. This equals conditional mutual information I_P(T;Z given X).
+5. If Z=f(X) throughout positive support, specifying Z after X does not change the conditional target law. The two losses are equal and ideal gain is zero.
+
+```text
+L_P(P(T|X)) - L_P(P(T|X,Z)) = I_P(T;Z|X).
+Z = f(X) on support implies this ideal gain is zero.
+```
+
+This is a classical decision comparator, not a new PID definition. Proper scoring rules motivate evaluation of probabilistic predictions. [Gneiting and Raftery, 2007](https://doi.org/10.1198/016214506000001437). The project proposes using this identity to prevent unjustified sensor-selection claims.
+
+For a separately trained predictor q, finite loss requires q>0 on true positive support; otherwise loss is infinite or the calculation refuses. Its loss includes conditional divergence between the true posterior and q. Training can change that divergence. Fitted loss improvement is not automatically common-law CMI. A feature can help a restricted model without adding ideal information; redundant inputs can hurt a model.
+
+Approximate predictability of Z from X is not the exact deterministic premise. A good reconstruction score or zero empirical CMI on a small table does not prove the premise throughout population support. A faulty sensor may cease to follow the previously assumed mapping.
+
+## Worked negative example of duplicated evidence
+
+This is a constructed finite-law example, not an observed neural or robotic result. Its manual derivation is not a formal certificate.
+
+Let T be balanced binary. Let S equal T with probability 9/10 and disagree with probability 1/10, symmetrically. Set all three inputs equal to S. States (T,S)=(0,0),(0,1),(1,0),(1,1) have probabilities 9/20,1/20,1/20,9/20, respectively. This is a normalized nonnegative law. All added channels are deterministic copies, so their ideal information gain is zero.
+
+Consider the possible training outcome with eight class-0 examples having S=0 and eight class-1 examples having S=1. Use fitted class priors 1/2. Use four declared input categories, even though only two appear, and add one count per category in each class. Each class-conditional denominator is 8+4=12. For observed S=0, the estimated class-0 to class-1 likelihood ratio is 9.
+
+A naive-Bayes predictor multiplies this ratio once per input. One, two and three duplicate channels produce odds 9, 81 and 729. Their predicted probability of T=1 given S=0 is respectively 1/10, 1/82 and 1/730. The assumption of independent inputs conditional on T is false for duplicates.
+
+For the rare outcome T=1,S=0, the losses are ln(10), ln(82) and ln(730). The extra copies increase confidence in the wrong prediction. This is not only a single-outcome observation: by symmetry the expected loss for odds c is:
+
+```text
+F(c) = (9/10) ln(1 + 1/c) + (1/10) ln(1 + c)
+     = ln(1 + c) - (9/10) ln(c).
+F'(c) = (c/10 - 9/10) / (c(c + 1)).
+```
+
+The derivative is positive for c>9. Hence expected loss increases from odds 81 to 729, despite zero ideal added information. This is a counterexample to a universal rule that adding a redundant channel improves decoding. It does not show that all redundant sensors are harmful, or that PID alone detects this failure.
+
+## The current simulation pilot
+
+The existing proposal concerns simulated spiking populations, not biological neurons or real flight. It proposes 32 reset runs: 16 training and 16 untouched evaluation, balanced with eight examples per target class in each role. No completed 32-run capture, fixed seed/order manifest or measured benefit is claimed here.
+
+The two prescribed goal vectors are (-5,-5,95) and (5,5,105) metres, with zero reference velocity. Three selected positive-axis populations supply spike counts; each contains eight simulated neurons. All six signed populations belong in the retained recording identity, even when only three are chosen as PID sources. Selecting these sources is a representation choice, not evidence of biological circuitry.
+
+The actual proposed first completed count window spans 19.9 milliseconds, distinct from a requested 20-millisecond duration. The remaining delivery tail must be kept separate. Each count C is encoded as min(3,floor(C/8)): bins 0–7, 8–15, 16–23 and at least 24. These choices were influenced by earlier exposed traces and therefore are not an independent discovery test.
+
+The PID table has three four-symbol inputs and a binary target: capacity 4 cubed times 2 = 128 states. With 16 training rows, at most 16 states can be occupied. Sparse occupancy is not a calibration certificate. The command/goal is already present in the simulation input construction; goal decoding is a synthetic encoding check, not proof of useful navigation or neural computation.
+
+The proposed baseline is separately trained categorical naive Bayes with add-one smoothing. That is not a full joint-table posterior. Its conditional-independence model can be wrong, as the worked example demonstrates. Compute any empirical CMI from one common training table, not by subtracting unrelated fitted models' losses. Keep every evaluation row out of the PID training table and out of model selection.
+
+For the balanced training design, each class has eight rows and each conditional factor lies between 1/12 and 9/12. A k-input naive-Bayes model therefore has posterior odds at most 9 to the power k in either direction. Its target probability is at least 1/(1+9 to the power k). Pair and triple losses are bounded above by ln(82) and ln(730), respectively. These manual exact-real bounds depend on this precise model and count design; they are not binary64 guarantees, observed losses or formal statistical certificates.
+
+## Statistical acceptance requirements
+
+Report paired evaluation losses on the same units. A positive difference, pair loss minus triple loss, favors the triple. Report the target-only baseline, all predeclared subsets, failures, occupancy and missingness alongside this difference. Fitted-model performance and empirical-PID estimates are distinct outputs.
+
+Before any confidence statement, fix the unit, sample design, estimator, target weighting, dependence assumptions and multiplicity rule. Independent resets cannot be inferred from different seeds. Trials from one recording session, frames from one flight and windows from one grasp can share latent causes. If independence is not justified, an independent-row inequality must not be used. A block procedure requires its own dependence assumptions and calibration evidence.
+
+Under the precise two/three-input smoothed model above, each paired difference lies between minus ln(730) and ln(82). This supplies a finite range, not independence. A bounded-independent-unit concentration argument is a proposed later formal target, based on classical probability inequalities. No confidence value or significance claim is reported without the required proof, sampling evidence and actual scores. [Hoeffding, 1963](https://doi.org/10.1080/01621459.1963.10500830).
+
+If several groupings, masks or representations are searched, select using training/validation only and evaluate the frozen choice once, or account for the entire predeclared comparison family. Reading evaluation data contaminates that confirmation role. Preserve the exposed result as exploratory; do not relabel it or replace its unfavorable rows.
+
+Robotics success additionally requires a useful task effect, not merely statistical separation from zero. Declare the minimum worthwhile gain, false-alarm or miss cost, latency and failure handling before evaluation. Report class-conditional performance when deployment prevalence differs from the balanced test design.
+
+## Formal and numerical verification
+
+Current new source contains 26 generic event-law theorem drafts and 16 semantic-control drafts. Neither set has been compiled or kernel checked. The new declaration-inspector component and source-only checker preparation do not change that status. They are not complete qualified proof infrastructure.
+
+Acceptance requires unmodified upstream Lean/kernel, Mathlib and verifier releases, with pinned versions and recorded provenance; independently specified complete theorem types, binders, universes and assumptions; actual declaration existence and module provenance; individual permitted-axiom inventories; fresh complete proof checking; and correspondence to the intended finite probability law. A local installation label does not prove stock bytes. No sorry, custom truth axiom, fake judge result, altered proof kernel or relaxed acceptance threshold may close a gap. Standard Lean axioms, if allowed, must be listed explicitly rather than hidden.
+
+Check premise satisfiability, null states, empty families, wrong OR/AND events, wrong target conditioning, heterogeneous alphabets, duplicate inputs and three-source parity controls. A signed or unnormalized array must not masquerade as a probability law. Formal identities over a stated law do not prove data independence, estimator calibration, sensor reliability or biological causation.
+
+Executable calculations need shape/alignment checks, integer-count range checks, finite intermediate values, explicit zero-support rules and deterministic accumulation. Evaluate probabilities in log space with a stable log-sum-exp normalization rather than multiplying many tiny factors. Distinguish exact-real derivations, binary64 results and directed numerical certificates. Reject or report unsupported input instead of adding noise, clamping atoms or loosening tolerances to obtain a favorable answer.
+
+## Rust implementation and computational cost
+
+The inspected Rust default surface exposes categorical `discrete_sxpid2`, `discrete_sxpid3` and general two-to-four-source methods through `stable::categorical`. The general averaged method also has explicit resource-budget and cooperative-cancellation variants. Its inputs are aligned categorical matrices, one matrix per source and one for the target. The proposed examples use N rows and one categorical column per variable. The current biological/drone adapter, predictor, frozen dataset manifest and end-to-end application learner are not implemented by naming these APIs.
+
+The engineering baseline is source-derived, not a timing benchmark. It describes the general three-source event pass as 37 K squared PMF-entry visits, where K is occupied complete support. At K=16 that is 9,472 entry visits; inversion, histograms, preprocessing and prediction are additional work. This is a dated baseline work count, not a new measurement or proof that the dirty working tree matches that revision. The captured Rust implementation and cost reference identifies baseline 8a1142c; its exact source bytes and digest accompany this report.
+
+For fixed source count, categorical event scans can grow quadratically with occupied support. Storing the source rows grows with N and categorical width. Real image encoders, alignment, training, repeated masks and resampling can dominate PID cost. A resampling procedure repeats the full relevant pipeline; it must not omit refitting costs when its definition includes refitting.
+
+Existing resource guards and cancellation are not peak-RSS, deadline or hard-real-time guarantees. Do not raise budgets or remove diagnostics to present a successful application. No latency, hardware throughput, numerical-error envelope or deployment timing is measured in this report. Proof-tool runtime is separate from estimator runtime. Begin with bounded offline evaluation.
+
+## Negative evidence and next milestones
+
+Retain the failed/unsupported approaches: atom size as universal sensor utility; signed-atom clamping; conditional-independence modeling of duplicate channels; zero-filled missing sensors; frame-randomized flight splits; biological claims from simulated spikes; population support inferred from an empirical table; and calibration inferred from a finite algebra check. The constructed duplicate example is a counterexample; the remaining items are rejected inference routes, not newly executed failures.
+
+The previous private progress PDF repeated every byte except its two trailer identifier strings. That byte-reproduction failure remains preserved. It does not invalidate its mathematical prose, but it prevents claiming exact PDF reproduction. No altered PDF flags, normalization or weaker comparison is authorized by this report.
+
+The next mathematical milestone is accepted unchanged-kernel checking of the event-law statements and controls, followed by the same-law decision identity. The next application milestone is one fully specified and audited offline biological or real-flight dataset study, with a direct-loss baseline and untouched evaluation units. The simulation pilot can first test extraction and scoring mechanics but cannot replace that real-data milestone.
+
+Each milestone must retain positive, null, failed and refused outcomes with assumptions and exact evidence. No new formal result or application benefit is claimed. Source review, PDF checks and scientific acceptance are separate.
+
+Citation: Sepehr Mahmoudian (2026), *Real world PID problems and verification requirements*. Include the exact repository commit or release, plus local changes. Software: [CITATION.cff](CITATION.cff).

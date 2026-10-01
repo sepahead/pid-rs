@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "154e95d06eafdb8cb13a6b47df9409dd334e4457c7e32fdc1e2df06fc6fae3bb",
-        "size_bytes": 322645
+        "sha256": "e4a0bdf6b1cb93a7bfc909784d6a316345eb8efc232710d82dd458111221c082",
+        "size_bytes": 323055
       },
       {
         "git_mode": "100644",
@@ -1722,6 +1722,90 @@
         "path": "audit/archive/shared-exclusions-audit-20260930/root-review-v2.md.txt",
         "sha256": "1633ebbb91c4d7cd377dff18b61ad0d8381fac9b5c4ead96a3a5c11414455476",
         "size_bytes": 4322
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/ARCHIVE.md",
+        "sha256": "af6c4a4cda7b3be700da287dbd8c6734cebfa02c82b9eeb34a2e263dd62972d5",
+        "size_bytes": 6322
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/CITATION.cff",
+        "sha256": "068494ce8fd32bc5e86a714d0f6d0ed04338206aacf667237e72da3a2bb79a98",
+        "size_bytes": 2894
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/INDEX.json",
+        "sha256": "8ab89e462d3ea560a1d1cff4012350598feaad5b68233a8d2455eb330fd91ae3",
+        "size_bytes": 3896
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/application-before-layout-correction.md.txt",
+        "sha256": "08bcff48b4792aa6a923a76d2e3c85cd18b43ac61783ef4080dec6b25dda9a44",
+        "size_bytes": 24251
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/application-before-layout-correction.pdf",
+        "sha256": "747339c802381e61aa9621a1a7577454a47b13d7e76cf42fea66683ba998a0c5",
+        "size_bytes": 69156
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/application-requirements.md.txt",
+        "sha256": "3f2891351841454d36e22221a899d9b2c7b0c2279e85380348755a3a747d05a3",
+        "size_bytes": 24453
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/application-requirements.pdf",
+        "sha256": "de4c0581a8d0bceea0e9eed5f6b9f6ecf72d3778814994d5c7d6c05e791139f1",
+        "size_bytes": 73931
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/progress-draft.pdf",
+        "sha256": "6d9e30be9525ed7e5d5b03ac1884cece2c2ebfd3a88f8ba0571b35ebc422f1a6",
+        "size_bytes": 61214
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/progress-repeat.pdf",
+        "sha256": "85d1a03a7590d52779957009c0366a0a267ac27b17e1c109e939efb0e40380ca",
+        "size_bytes": 61214
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/progress.md.txt",
+        "sha256": "9bf383741a36ad533dc418874bf607cfdb21889ed99d894df1ac675517448df6",
+        "size_bytes": 8515
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/source-redundancy.md.txt",
+        "sha256": "afaebc3b5b350459690f0b0b5d12e49781ac8665d605efe753a80eb9a0d277fe",
+        "size_bytes": 15640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/source-redundancy.pdf",
+        "sha256": "35ec6e6b8d2db09b6244d67a05e2c6adadbe49df6abeda7b6cf07cbcc70bf9b0",
+        "size_bytes": 85554
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/stock-verifier-audit.md.txt",
+        "sha256": "af1c9113ea71d12e22a95f996c1a5729c8f88b357623ab26f435daa867179c0e",
+        "size_bytes": 6305
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/stock-verifier-audit.pdf",
+        "sha256": "20651f48d7b2959cdbd86d9b5f006b198a56ce459eed1bc38eb3e76751735254",
+        "size_bytes": 41955
       },
       {
         "git_mode": "100644",
@@ -30214,7 +30298,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "0faba6d936d319d8ca2ab7094789e2b0d0d8dd1320bb133fec46bf237ed3f917",
+        "sha256": "faff40d1b568f5a86b6e553839f852a0e6b3f0bc798bbdec2277b78e11ccd0ff",
         "size_bytes": 138785
       },
       {
@@ -31166,8 +31250,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "646ebb3c0e4dc7efb2f3831725c5f3214e5137ec8d1109b6a4b60d617978a97d",
-    "entry_count": 5170
+    "entries_sha256": "ff032695c6bb431e4551c3bfe9be1ff6286d9561c200acfe22b8d43c4fe0ac59",
+    "entry_count": 5184
   },
   "subprojections": [
     {
@@ -31195,7 +31279,7 @@
       ]
     },
     {
-      "entries_sha256": "af83dd2361c26d8e9046c79e0f9ce0286b61b5fde25798ce8a7c5316b12bf26f",
+      "entries_sha256": "ff04d03ee6dabe0829f15e9c0c5c55dfc808ae637ce7ae9b6d5c6d91a9a63f03",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

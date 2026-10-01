@@ -1,0 +1,111 @@
+{
+  "schema": "pid-rs/exploratory-shared-exclusions-evidence-archive/v1",
+  "authority": "inert_historical_draft_and_negative_evidence_only",
+  "scientific_acceptance": false,
+  "formal_acceptance": false,
+  "publication_acceptance": false,
+  "existing_four_profile_archive_checker_coverage": false,
+  "declared_formal_pdf_set_admission": false,
+  "excluded": [
+    "private_build_streams_and_machine_specific_receipts",
+    "full_checking_code_payloads",
+    "raw_application_captures",
+    "native_and_import_closure",
+    "rendered_inspection_images",
+    "complete_replay_inputs",
+    "subsequent_supervisor_and_dataset_reviews"
+  ],
+  "payloads": [
+    {
+      "path": "ARCHIVE.md",
+      "bytes": 6322,
+      "sha256": "af6c4a4cda7b3be700da287dbd8c6734cebfa02c82b9eeb34a2e263dd62972d5",
+      "role": "archive_explanation_and_nonclaims",
+      "execution_authority": false
+    },
+    {
+      "path": "CITATION.cff",
+      "bytes": 2894,
+      "sha256": "068494ce8fd32bc5e86a714d0f6d0ed04338206aacf667237e72da3a2bb79a98",
+      "role": "historical_software_citation_companion",
+      "execution_authority": false
+    },
+    {
+      "path": "application-before-layout-correction.md.txt",
+      "bytes": 24251,
+      "sha256": "08bcff48b4792aa6a923a76d2e3c85cd18b43ac61783ef4080dec6b25dda9a44",
+      "role": "historical_failed_presentation_source",
+      "execution_authority": false
+    },
+    {
+      "path": "application-before-layout-correction.pdf",
+      "bytes": 69156,
+      "sha256": "747339c802381e61aa9621a1a7577454a47b13d7e76cf42fea66683ba998a0c5",
+      "role": "failed_table_clipping_PDF",
+      "execution_authority": false
+    },
+    {
+      "path": "application-requirements.md.txt",
+      "bytes": 24453,
+      "sha256": "3f2891351841454d36e22221a899d9b2c7b0c2279e85380348755a3a747d05a3",
+      "role": "exact_exploratory_application_source",
+      "execution_authority": false
+    },
+    {
+      "path": "application-requirements.pdf",
+      "bytes": 73931,
+      "sha256": "de4c0581a8d0bceea0e9eed5f6b9f6ecf72d3778814994d5c7d6c05e791139f1",
+      "role": "historical_application_draft_no_benefit_claim",
+      "execution_authority": false
+    },
+    {
+      "path": "progress-draft.pdf",
+      "bytes": 61214,
+      "sha256": "6d9e30be9525ed7e5d5b03ac1884cece2c2ebfd3a88f8ba0571b35ebc422f1a6",
+      "role": "historical_progress_draft",
+      "execution_authority": false
+    },
+    {
+      "path": "progress-repeat.pdf",
+      "bytes": 61214,
+      "sha256": "85d1a03a7590d52779957009c0366a0a267ac27b17e1c109e939efb0e40380ca",
+      "role": "distinct_build_failed_exact_byte_repetition",
+      "execution_authority": false
+    },
+    {
+      "path": "progress.md.txt",
+      "bytes": 8515,
+      "sha256": "9bf383741a36ad533dc418874bf607cfdb21889ed99d894df1ac675517448df6",
+      "role": "exact_historical_progress_source",
+      "execution_authority": false
+    },
+    {
+      "path": "source-redundancy.md.txt",
+      "bytes": 15640,
+      "sha256": "afaebc3b5b350459690f0b0b5d12e49781ac8665d605efe753a80eb9a0d277fe",
+      "role": "exact_manual_categorical_MGW_derivation",
+      "execution_authority": false
+    },
+    {
+      "path": "source-redundancy.pdf",
+      "bytes": 85554,
+      "sha256": "35ec6e6b8d2db09b6244d67a05e2c6adadbe49df6abeda7b6cf07cbcc70bf9b0",
+      "role": "historical_mathematical_draft_formal_chain_open",
+      "execution_authority": false
+    },
+    {
+      "path": "stock-verifier-audit.md.txt",
+      "bytes": 6305,
+      "sha256": "af1c9113ea71d12e22a95f996c1a5729c8f88b357623ab26f435daa867179c0e",
+      "role": "exact_source_audit_draft",
+      "execution_authority": false
+    },
+    {
+      "path": "stock-verifier-audit.pdf",
+      "bytes": 41955,
+      "sha256": "20651f48d7b2959cdbd86d9b5f006b198a56ce459eed1bc38eb3e76751735254",
+      "role": "historical_stock_source_audit_draft",
+      "execution_authority": false
+    }
+  ]
+}

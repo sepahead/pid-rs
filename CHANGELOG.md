@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve [exploratory shared-exclusions findings](audit/archive/shared-exclusions-research-findings-20261001/ARCHIVE.md)
+  with exact mathematical, application and verifier-audit draft sources/PDFs. Retain the failed
+  application layout and PDF byte-repetition pair. Record assumptions, negative findings and
+  private-evidence omissions without changing scientific, formal, runtime or publication status.
+
 - Preserve the [bounded shared-exclusions audit](audit/archive/shared-exclusions-audit-20260930/ARCHIVE.md)
   as historical draft evidence, including the IID correction, negative application findings,
   exact source/PDF bytes and failed raw repeatability. Record public observation projections and

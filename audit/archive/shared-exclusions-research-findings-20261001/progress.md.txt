@@ -1,0 +1,145 @@
+Author: Sepehr Mahmoudian
+
+This private report records mathematical progress and the remaining checks. It
+does not announce a new formally verified theorem or application benefit.
+Remote main was read back at commit `f93f2b6` on 30 September. Its recorded CI
+observation at 22:14 UTC found all 47 jobs successful. These checks cover that
+committed software, not the unfinished proofs or later verifier drafts.
+
+## Mathematical scope and progress
+
+The object is the categorical shared-exclusions PID of Makkeh, Gutknecht and
+Wibral, not another PID functional or the continuous estimator. Assume one
+normalized law on finite source and target alphabets, at least two sources,
+positive-probability anchors, the full antichain lattice and natural-log units
+(nats). The argument below concerns exact probabilities. It is not an estimator
+calibration claim; independent sampling is not needed for the finite-law identity.
+
+Each lattice node is a nonempty family of nonempty source sets, with no member
+containing another. The order $\beta\preceq\alpha$ means that every set in
+$\alpha$ contains some set in $\beta$. At an anchor, a node's event is the OR
+of its sets' matching-source AND events. Its informative component is minus the
+logarithm of that event's probability; its misinformative component uses the
+probability conditional on the target. The component atoms are the unique
+coefficients whose sums below each node recover these components. Write
+$\pi^+_\beta,\pi^-_\beta$ for their averages under the common law.
+
+For a nonempty proper retained source group $C$, write $R$ for the other sources.
+Let $K$ be exactly the set of nodes not below or equal to the single-set node
+$\{C\}$.
+Define $A=H(S_R\mid S_C)$, $B=H(S_R\mid S_C,T)$ and
+$\Delta=I(S_R;T\mid S_C)=A-B$. Subtracting the component value at $\{C\}$
+from its top-node value removes exactly the atoms below $\{C\}$. Averaging the
+remaining joint-minus-retained surprisal gives conditional entropy. Thus the
+manually reviewed derivation gives component
+budgets $\sum_{\beta\in K}\pi^+_\beta=A$ and
+$\sum_{\beta\in K}\pi^-_\beta=B$. Using the published nonnegativity of these
+exact component atoms, the absolute **averaged** signed mass
+$M=\sum_{\beta\in K}|\pi^+_\beta-\pi^-_\beta|$ obeys
+
+$$\Delta\leq M\leq A+B=2A-\Delta.$$
+
+The triangle inequality gives the lower bound; component nonnegativity gives
+the upper bound. This is not the average of absolute pointwise atoms. A separate
+event-based proof route seeks to derive positivity from actual probabilities;
+its convergence, lattice and formal-checking obligations remain open.
+
+The question matters when a sensor or neural source may be redundant. If
+$S_R=f(S_C)$ on the law's positive support, the manual event argument predicts
+zero components at every position in $K$. Observed duplicate rows alone cannot
+establish this population premise. MI, conditional MI and direct task loss are
+the first baselines when only prediction or source removal is at issue.
+
+**Negative example.** Let $S_1=X$, $S_2=Z$ and $T=X$, with independent fair bits
+$X,Z$. Here $C=\{1\}$, $R=\{2\}$ and $K$ consists of the two nodes
+$\{\{2\}\}$ and $\{\{1,2\}\}$. The four joint states each have probability
+$1/4$. For a fixed anchor,
+$P(S_1=x\text{ or }S_2=z)=3/4$, whereas the same event has probability one
+given $T=x$. Thus redundancy is $r=\log(4/3)$. Since $I(S_2;T)=0$ and
+$I(S_1;T)=I(S_1,S_2;T)=\log2$, source 2 unique information is $-r$ and synergy
+is $r$. Hence $\Delta=0$ but $M=2\log(4/3)>0$. Zero conditional MI does not
+force individual PID atoms to vanish.
+
+## Five unresolved verifier findings
+
+Independent source review found the following causes in the stopped v5 verifier.
+These are static findings, not reproduced runtime failures. They do not establish
+a positive-selection bypass or a counterexample to the published PID.
+
+1. **Early persistence failure.** A directory synchronization error can skip
+   feasible original evidence capture. Start failure records before persistence
+   and attempt each safe role.
+2. **Lost input prefixes.** A later read error can discard earlier measured pins
+   and shrink later checking. Retain prefixes and derive the complete safe
+   recheck domain separately.
+3. **Incomplete negative guards.** A trusted negative can retain semantic facts
+   that its producer could not reach. Check producer identity, stage and the
+   exact semantic-fact census.
+4. **Lost receipt prefixes.** A later error can discard earlier receipt pins,
+   including an observed result. Keep per-file outcomes and prior pins; do not
+   invent missing receipts.
+5. **Suppressed role rechecks.** One unavailable original role can prevent
+   checking other available roles. Recheck each safe role independently and
+   retain actual drift evidence.
+
+The repair design is independently reviewed. A new v6 draft has source-writing
+permission only; the worker reported at 22:57 UTC that no v6 files or tests had
+been produced. This is a dated author report, not a verified repair. Imports,
+native calls and formal acceptance are not authorized by
+that permission. The separate fixture-guard conflict remains unresolved. All
+19 Fin3 mathematical targets remain open. No guard, limit, kernel flag or
+numerical tolerance is relaxed to obtain a pass.
+
+## Application and preservation limits
+
+The proposed neural pilot remains exactly 32 reset trials: 16 training and 16
+sealed confirmation trials. Its harness, seed and split manifest, installed
+runtime qualification and editor launch window are not ready. The exposed
+five-row simulator law is descriptive evidence, not held-out prediction or
+physical/biological benefit. No smaller substitute experiment was run.
+
+All nine named iCloud roots remain protected. One complete local recovery does
+not supply approved distinct custody or deletion clearance; other roots retain
+missing-byte or revision gaps. Failed attempts, counterexamples and source
+preimages are kept. No other-editor files or cloud roots are removed.
+
+## Rust implementation and computational cost
+
+At main revision `f93f2b6`, the default-build categorical API includes
+`stable::categorical::discrete_sxpid_n_averaged_with_budget_and_cancellation`,
+implemented in `crates/pid-core/src/sxpid.rs`. It accepts two to four source
+matrices and a target matrix. Write $N$ for aligned rows, $D$ for their total
+column width and $Q$ for occupied complete source-target states. This report
+adds no Rust API, continuous estimator or deployed learner.
+The general-coalition budget wrapper and event-based formal route are not
+implemented or benchmarked. For already computed averaged atoms, summing the
+$|K|$ absolute values requires $O(|K|)$ arithmetic and $O(1)$ extra accumulator
+space. This is an arithmetic-operation count, not a timing or numerical-error
+guarantee; it excludes estimating the law and computing its atoms. Inputs
+to an eventual empirical wrapper would be categorical rows with explicit source
+and target alphabets and occupied support. Sampling, resampling, cancellation,
+resource limits and binary64 error bounds still require their own contracts.
+No timing, calibration or real-time suitability is claimed.
+
+## Evidence and next checks
+
+The six-page *Source redundancy and SxPID3 atom budgets* note gives the detailed
+three-source derivation and negative examples. The companion evidence map names
+its exact local lane. The general-law design remains a
+manual proof proposal. Conditional linear SMT checks are not probability proofs.
+Next checks are the exact v6 source review and hostile controls; formal event,
+logarithm and lattice correspondence; numerical refinement; and the unchanged
+neural pilot admission. Same-host reviews and sequential hashes do not prove
+atomic custody or independent archival preservation.
+
+Defining source: Makkeh, Gutknecht and Wibral, *Introducing a differentiable
+measure of pointwise shared information*, Physical Review E 103, 032149 (2021),
+[arXiv version 5](https://arxiv.org/html/2002.03356v5). The budgets and proposed
+proof routes are repository derivations, with no scientific-priority claim.
+
+Report citation: Sepehr Mahmoudian, *Wibral PID research status*, 1 October 2026,
+private progress report, revision 5. Cite software separately using
+[CITATION.cff](https://github.com/sepahead/pid-rs/blob/f93f2b6e559c62705be694842c2603f572ce9e0f/CITATION.cff)
+and the exact repository revision
+`f93f2b6e559c62705be694842c2603f572ce9e0f`; that revision does not contain this
+private report or its unfinished mathematical designs.

@@ -1,0 +1,194 @@
+# Source redundancy and SxPID3 atom budgets
+
+Author: Sepehr Mahmoudian
+
+## Why this distinction matters
+
+A third sensor can repeat information already present in two sensors. A positive PID atom whose label mentions that sensor does not show that it adds information. We derive the exact five-position exclusion rule for categorical shared exclusions, then apply it to an existing neural-simulator table. The derivation also bounds near-redundant sources through conditional entropy.
+
+This is an exploratory mathematical note, not a new PID definition or a scientific-priority claim. Formal verification of the probability and lattice correspondence, numerical certification, and application benefit remain open. Conditional solver evidence is reported separately below.
+
+## Definitions and assumptions
+
+Use the finite categorical construction of Makkeh, Gutknecht and Wibral, [arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5). This is not Ehrlich continuous PID or Williams–Beer `I_min`.
+
+Let $P$ be one normalized finite joint law of $(S_1,S_2,S_3,T)$. Evaluate only states $z=(s_1,s_2,s_3,t)$ with $P(z)>0$. All logarithms are natural and values are in nats. No independent-row assumption is needed for an assigned finite-law identity. An empirical table defines its own law; it does not prove a population relationship.
+
+Write $12=\{1,2\}$, and similarly for $13$, $23$ and $123$. For a nonempty source subset $A$, let $E_A(z)$ be the event that every source in $A$ equals its value at $z$. An antichain $\alpha$ is a nonempty family of nonempty source subsets, with no member containing another. A semicolon separates its members: $13;23$ means $\{\{1,3\},\{2,3\}\}$.
+
+Define $W_\alpha(z)=\bigcup_{A\in\alpha}E_A(z)$. Thus the event uses AND within a subset and OR between subsets. The two cumulative components are
+
+$$
+r^+_\alpha(z)=-\ln P(W_\alpha(z)),\qquad
+r^-_\alpha(z)=-\ln P(W_\alpha(z)\mid T=t).
+$$
+
+The supported anchor belongs to every source event and its target event, so these probabilities are positive. Order antichains by $\alpha\preceq\beta$ when every $B\in\beta$ contains some $A\in\alpha$. Define component atoms by the finite inversion
+
+$$
+r^\sigma_\alpha(z)=\sum_{\beta\preceq\alpha}\pi^\sigma_\beta(z),
+\qquad \sigma\in\{+,-\}.
+$$
+
+Let $P_\beta=\mathbb E_P[\pi^+_\beta]$, $Q_\beta=\mathbb E_P[\pi^-_\beta]$, and $N_\beta=P_\beta-Q_\beta$. The paper's Theorem IV.3 supplies exact-real component nonnegativity. This is an explicit semantic premise of the entropy bounds, not a fact established by the linear solver. Signed net atoms can be negative.
+
+## The exact excluded positions
+
+The three-source lattice has 18 nodes. Its source-pair downset is
+
+$$
+D_{12}=\{\alpha:\alpha\preceq\{12\}\}.
+$$
+
+Membership means that at least one member of $\alpha$ is contained in $12$. Outside this downset, every member must contain source 3. The only available subsets are $3,13,23,123$; only $13$ and $23$ are incomparable. Therefore its complement is exactly
+
+$$
+K=\{\{3\},\{13\},\{23\},\{13;23\},\{123\}\}.
+$$
+
+The other 13 positions belong to $D_{12}$. This is a partition of one three-source lattice, not a comparison of independently estimated PID2 and PID3 results. For example, $\{2;3\}\in D_{12}$ because its member $2$ is contained in $12$.
+
+## Component entropy budgets
+
+Every node is below the top $\{123\}$. Subtract the reconstruction at $\{12\}$ from the reconstruction at the top. For each component, the downset terms cancel and leave
+
+$$
+\sum_{\beta\in K}\pi^\sigma_\beta(z)
+=r^\sigma_{\{123\}}(z)-r^\sigma_{\{12\}}(z).
+$$
+
+For the informative component, the ratio of the joint source mass to the pair mass is $P(s_3\mid s_1,s_2)$. For the misinformative component, condition both masses on the same target $t$. Hence
+
+$$
+\sum_K\pi^+_\beta(z)=-\ln P(s_3\mid s_1,s_2),\qquad
+\sum_K\pi^-_\beta(z)=-\ln P(s_3\mid s_1,s_2,t).
+$$
+
+Average with the same joint weights $P(z)$ and define
+
+$$
+A=H(S_3\mid S_1,S_2),\quad B=H(S_3\mid S_1,S_2,T),\quad
+\Delta=I(S_3;T\mid S_1,S_2)=A-B.
+$$
+
+Finite sums commute, so $\sum_K P_\beta=A$, $\sum_K Q_\beta=B$, and $\sum_K N_\beta=\Delta$. Classical finite-law conditioning gives $0\le B\le A$ after averaging; this inequality need not hold between the two local surprisals at each anchor.
+
+For any subset $U\subseteq K$, component nonnegativity implies $0\le\sum_U P_\beta\le A$ and $0\le\sum_U Q_\beta\le B$. Subtract to obtain
+
+$$
+-B\le\sum_U N_\beta\le A.
+$$
+
+Define the absolute mass of the averaged net atoms by $M=\sum_K|N_\beta|$. The triangle inequality and $|P_\beta-Q_\beta|\le P_\beta+Q_\beta$ give
+
+$$
+\Delta=\left|\sum_KN_\beta\right|\le M\le A+B=2A-\Delta.
+$$
+
+Pointwise, $\sum_K|\pi^+_\beta(z)-\pi^-_\beta(z)|\le\sum_K(\pi^+_\beta(z)+\pi^-_\beta(z))$. Averaging gives the same upper bound $A+B$ for the mean local absolute mass. It is a different quantity and can exceed $M$.
+
+## Determinism and a failed weaker claim
+
+If $S_3=f(S_1,S_2)$ on all positive support, both conditional probabilities in the local budget equal 1. Both component sums are zero. Each is a finite sum of nonnegative components, so every component on $K$ is zero at every supported anchor. Averaging preserves those zeros. The special case $S_3=f(S_2)$ is sufficient.
+
+Zero conditional MI alone is weaker: it gives $A=B$, not $A=B=0$. Here is an exact counterexample. Let $S_1$ and $S_3$ be independent fair bits, let $S_2$ be constant, and set $T=S_1$. The four supported states each have probability $1/4$. Then $A=B=\ln2$ and $\Delta=0$.
+
+The unique immediate lower cover of $\{3\}$ is $\{3;12\}$. At every supported anchor, $W_{3;12}$ is the union of the two realized bit events. Its probability is $3/4$ and its target-conditioned probability is 1. Its net cumulative is $\ln(4/3)$, while the source-3 singleton net cumulative is zero. Thus
+
+$$
+N_{\{3\}}=-\ln(4/3)\ne0.
+$$
+
+Other excluded atoms balance this negative value so their sum remains zero. Therefore a zero signed sum cannot certify individual zeros. A separate label-based claim also fails: with independent fair bits $S_1,S_2$, $S_3=S_1$ and $T=S_1$, the bottom atom $\{1;2;3\}$ equals $\ln(4/3)>0$, although all five excluded positions are zero.
+
+## Sharpness across finite alphabets
+
+The entropy-only upper bound is sharp as a supremum when alphabet sizes may vary. Let $X$ be uniform on $L$ symbols. Let finite $U,V$ be independent of each other and of $X$. Set $S_1=X$, $S_2$ constant, $S_3=(U,V)$, and $T=(X,U)$. Then $A=H(U)+H(V)$, $B=H(V)$ and $\Delta=H(U)$.
+
+For each occupied $z=(u,v)$, put $p_z=P(U=u,V=v)>0$. The union at $\{3;12\}$ has mass $L^{-1}+(1-L^{-1})p_z$ and target-conditioned mass 1. Its averaged net cumulative is
+
+$$
+r_L=\sum_zp_z[-\ln(L^{-1}+(1-L^{-1})p_z)]\longrightarrow A.
+$$
+
+The limit follows term by term on finite positive support. The singleton-cover identity gives $N_{\{3\}}=\Delta-r_L$. If $C$ is the total magnitude of negative excluded atoms, then $M=\Delta+2C$ and $C\ge\max(r_L-\Delta,0)$. Consequently $M$ approaches $2A-\Delta$ from below. This proves supremum sharpness, not a finite-alphabet maximizer or a formally checked probability theorem.
+
+## The existing neural simulator table
+
+The retained CREBAIN/NEST capture contains six controller steps. At step $k$, the sources are completed-window spike counts for channels 01, 02 and 03, population `d00.positive`. The target is whether channel 01's east-acceleration *proposal* at step $k+1$ is nonzero. There is no observed seventh target, so only five lagged rows enter the empirical law.
+
+| Row | $S_1$ | $S_2$ | $S_3$ | $T$ |
+|---|---:|---:|---:|---:|
+| 1 | 28 | 29 | 28 | 1 |
+| 2 | 30 | 30 | 30 | 1 |
+| 3 | 29 | 29 | 28 | 0 |
+| 4 | 0 | 29 | 28 | 0 |
+| 5 | 0 | 32 | 30 | 1 |
+
+Each row has mass $1/5$. The observed alphabet sizes are $4,3,2,2$: five occupied cells out of 48 product cells. On this support, $f(29)=28$ and $f(30)=f(32)=30$, so $S_3=f(S_2)$. All five excluded positions vanish in exact arithmetic.
+
+Nevertheless, the atom $\beta=\{2;3\}$ is nonzero. Its only strict lower node is $\{1;2;3\}$. Source-2 agreement implies source-3 agreement here, so $W_\beta=E_3$. Count the events directly:
+
+| Count | Row 1 | Row 2 | Row 3 | Row 4 | Row 5 |
+|---|---:|---:|---:|---:|---:|
+| $W_\beta$ | 3 | 2 | 3 | 3 | 2 |
+| $W_{1;2;3}$ | 3 | 2 | 3 | 4 | 3 |
+| $T\cap W_\beta$ | 1 | 2 | 2 | 2 | 2 |
+| $T\cap W_{1;2;3}$ | 1 | 2 | 2 | 2 | 2 |
+
+Subtract the two informative cumulatives to get local component values $(0,0,0,\ln(4/3),\ln(3/2))$. The two target-intersection counts agree, so every misinformative component is zero. Therefore
+
+$$
+N_{\{2;3\}}=\frac{\ln(4/3)+\ln(3/2)}5=\frac{\ln2}5\quad\text{nats}.
+$$
+
+This position is inside $D_{12}$, so the value does not contradict the zero increment. All observed source-pair values are distinct; any recorded target is therefore determined by that pair in this tiny empirical law. No population determinism or forecast performance follows. Completed count windows are 19,900 or 20,000 microsecond tics, not matched-width firing rates. The target was chosen retrospectively in a single closed-loop simulation; no new capture, reset-trial confirmation, biological result or physical actuation is reported.
+
+## A decoder bound for near redundancy
+
+Let $S_3$ have an alphabet of size $m\ge2$. Fix a decoder $f:(S_1,S_2)\mapsto\mathcal A_{S_3}$ and let $\varepsilon=P[S_3\ne f(S_1,S_2)]$. Define the error indicator $E$. Since $E$ is determined by $(S_1,S_2,S_3)$, its conditional entropy given those sources is zero. Apply the entropy chain rule in both orders:
+
+$$
+A=H(E,S_3\mid S_1,S_2)
+=H(E\mid S_1,S_2)+H(S_3\mid E,S_1,S_2).
+$$
+
+When $E=0$, the decoder fixes $S_3$, so the corresponding conditional entropy is zero. When $E=1$, at most $m-1$ alphabet values remain, giving conditional entropy at most $\ln(m-1)$. Weight these cases by their probabilities to obtain $H(S_3\mid E,S_1,S_2)\le\varepsilon\ln(m-1)$. Conditioning also gives $H(E\mid S_1,S_2)\le H(E)=h(\varepsilon)$, where $h(x)=-x\ln x-(1-x)\ln(1-x)$ and $0\ln0=0$. Adding yields the classical Fano bound $A\le h(\varepsilon)+\varepsilon\ln(m-1)$. Finally, $M\le A+B\le2A$ gives $M\le2[h(\varepsilon)+\varepsilon\ln(m-1)]$.
+
+If only $\varepsilon\le r$ with $0\le r\le1$ is known, maximize this expression on $[0,r]$. Its derivative is $\ln((1-x)(m-1)/x)$, so the maximum occurs at $\min(r,1-1/m)$, not always at $r$. For $m=1$, all excluded components are zero. This is an assigned-law bound, not a confidence interval: a fitted decoder's empirical error requires separate selection and sampling evidence. The decoder/probability correspondence has no formal execution evidence here.
+
+## Rust implementation and computational cost
+
+The existing default-build API `pid_core::stable::categorical::discrete_sxpid3_averaged_with_budget_and_cancellation` evaluates empirical categorical MGW atoms. It does not implement or certify this new exclusion-budget diagnostic. The source route is `crates/pid-core/src/sxpid.rs`; the implementation reviewed here has SHA-256 `748a3ead55f247db341cf687d5ec29be2fd7e935cd0c627433c4667ce7ef18d5`.
+
+Let $N$ be aligned rows, $D$ total categorical coordinates, and $J$ occupied joint cells. For three sources the lattice has $\ell=18$ nodes and at most $a=3$ members per node. The existing general engine's source-derived envelope is
+
+$$
+O(7ND\log(\max(2,N))+\ell aDJ^2+\ell^2a^2J+C_3),
+$$
+
+where $C_3$ is lattice setup. Its event pass visits $(2\ell+1)J^2$ PMF entries if admitted and completed. The neural shape $N=J=5,D=4$ therefore gives $37\cdot25=925$ visits for that general route—not a measured count for the specialized API. The specialized PID3 inversion has separate setup costs.
+
+Materialized rows require $O(ND)$ storage. Pointwise output adds $O(J(\ell+D))$; the averaged route avoids retaining the full atom table but still allocates per anchor. Preprocessing and histogram sorting are included above. This study trains no predictor and performs no resampling. Repeated PID evaluations pay their own costs. Resource preflight, allocation failures and cooperative cancellation are guards, not hard RSS or latency guarantees. No runtime measurement or online suitability is reported.
+
+Logarithms, divisions and products use binary64. Pointwise inversion is compensated; averaging exactly accumulates represented addends. This does not make the real-valued result exact. Small residuals cannot be silently clamped or called exact zeros. A runtime diagnostic still needs a numerical error contract and causal regressions. No Rust code, kernel, feature flag, budget or tolerance changed for this note.
+
+## Verification and remaining work
+
+The QF_LRA files encode five nonnegative component pairs. On 30 September 2026, pinned Z3 4.16.0 returned the expected results in both normal and optimized Python orchestration: three UNSAT checks for the absolute-mass upper bound, every-subset interval, and componentwise zero under zero budgets; five SAT controls for premise consistency, signed cancellation, missing positivity, a false CMI-only mass bound, and abstract-cone sharpness. Each mode also checked the solver version. All 18 child commands and both callers returned zero, with empty stderr and unchanged recorded source pins. Exact streams and caller records are retained separately.
+
+The first zero query tested only signed zeros; its unexecuted source preimage is preserved. The stronger component query was independently source-reviewed before execution. The missing-positivity control concerns arbitrary real arrays: it does not show that positivity is necessary for the actual MGW deterministic theorem, which also admits a direct event-inversion proof.
+
+These solver observations establish only the encoded conditional statements. No separate proof certificate was checked by a kernel. They do not prove the event law, all 18 lattice nodes, logarithmic entropy identities, the lower norm bound, sharpness family, decoder bound, Rust refinement, binary64 error, estimator calibration or deployment benefit. These remain explicit obligations. The 19 Fin3 targets and Programs A–E stay open.
+
+The useful application is descriptive: check which atoms a repeated sensor can affect, or use a valid entropy/error bound to limit excluded atom mass. If the question is only added target information, compute conditional MI. If the question is sensor or controller value, use held-out task loss and properly designed ablations. Neither decision is settled by a positive PID atom.
+
+## Sources and citation
+
+Makkeh, Gutknecht and Wibral (2021), [Introducing a differentiable measure of pointwise shared information](https://arxiv.org/abs/2002.03356v5), defines the categorical functional and component framework. The cut, budgets, examples and sharpness argument above are derived from that framework; no priority claim is made.
+
+Médard (2010), [MIT Information Theory Lecture 2](https://ocw.mit.edu/courses/6-441-information-theory-spring-2010/5c0b5a8a544cb2320778e4c9e5dea64f_MIT6_441S10_lec02.pdf), gives the classical finite entropy and Fano arguments. It supplies no PID or decoder-calibration theorem.
+
+The existing neural source is `capture-3-drones.json`, 360,196 bytes, SHA-256 `6dd62e7d5758fe9cd1776fd899dbfe8b964fbcf94dcb879254f143ac42f4d923`. Its local locator and review receipts remain in the private evidence record; it is not a new dataset.
+
+Cite: Sepehr Mahmoudian (2026), *Source redundancy and SxPID3 atom budgets*, exploratory note. Include the exact repository commit or release when citing a published successor. Cite the software through `CITATION.cff` and the defining paper separately. This private draft has no publication acceptance.
