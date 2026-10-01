@@ -1,0 +1,48 @@
+{
+  "schema": "pid-rs/current-documentation-custody-review/v1",
+  "date": "2026-10-01",
+  "scope": "reviewed_current_scripts_guide_binding_only",
+  "scientific_or_formal_acceptance": false,
+  "failed_predecessor": {
+    "commit": "0c3e6ee627914b61ce36e2f10f2a97a298eeda0b",
+    "run": 36838641731,
+    "job": 110292095412,
+    "step": "python3 -I -S -B scripts/check-certified-sxpid2-claim.py",
+    "failure_time_utc": "2026-10-01T09:04:35Z",
+    "conclusion": "failure",
+    "cause": "current_scripts_guide_bytes_differ_from_previous_reviewed_documentation_binding",
+    "complete_job_log_bytes": 171852,
+    "complete_job_log_sha256": "892e740c6f2a3c013ddd1a00a71f43dd9a9574acd7f6603df4370a4cc1dd5f55",
+    "raw_log_preserved_locally_not_in_repository": true
+  },
+  "historical_document": {
+    "commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+    "path": "scripts/README.md",
+    "git_blob": "c797d5e2f06b90afd7c8faa1d40a872e60e94cea",
+    "sha256": "4461a37311b877737c9f853b379b34d6bd0ef541bbd83145310f1ee134192fac"
+  },
+  "current_document": {
+    "commit": "0c3e6ee627914b61ce36e2f10f2a97a298eeda0b",
+    "path": "scripts/README.md",
+    "git_blob": "38db8e9cce1d4e334eeaa63b17b16212e530593a",
+    "bytes": 305146,
+    "sha256": "c54f98e2dfd350aabbe66da04b140daa91033588cc1b3fcb5f3f103904c3adc4",
+    "reviewed_change": "one_stopped_prefix_publication_navigation_paragraph_only"
+  },
+  "predecessor_checker": {
+    "path": "scripts/check-certified-sxpid2-claim.py",
+    "bytes": 90915,
+    "sha256": "90c7e5be1bbbceca161ebd29d28bdd5f355a2db513212a82e4b5eecdf6bc25b5"
+  },
+  "unchanged_current_rebind_authority": {
+    "path": "scripts/check-certified-sxpid2-claim-self-test.py",
+    "sha256": "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b",
+    "fixed_checker_anchor": "cb3f58f0b190454cb3f1090de8798261ec78f194",
+    "permitted_current_role": "reviewed-documentation:scripts/README.md",
+    "complete_byte_guard_retained": true,
+    "guard_logic_and_hostile_tests_unchanged": true
+  },
+  "historical_receipts_and_claim_authority_unchanged": true,
+  "no_kernel_flags_thresholds_or_method_changes": true,
+  "runtime_and_hosted_successor_results_not_asserted_by_this_record": true
+}

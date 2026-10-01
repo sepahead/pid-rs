@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Rebind the reviewed current scripts guide after its stopped-prefix publication update.
+  Preserve the [failed predecessor and historical custody](audit/evidence/stopped-prefix-script-guide-custody-20261001.json);
+  keep claim logic, hostile controls, historical proof records and tool settings unchanged.
+
 - Explain the finite MGW prefix-cancellation result with a worked camera–acoustic example,
   explicit sampling and target assumptions, and unchanged negative evidence. Update its PDF
   and navigation; preserve the initial publication inventory with a separate editorial ledger.
