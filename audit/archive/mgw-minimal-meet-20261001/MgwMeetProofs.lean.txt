@@ -1,0 +1,117 @@
+import MgwMeetContract
+
+universe u v w
+
+namespace MgwMeetProofs
+open MgwMeetContract
+
+theorem minimal_contains {ι : Type u} [DecidableEq ι] :
+    ∀ (F : Family ι) (a : Finset ι), a ∈ F →
+      ∃ b ∈ Minimal F, b ⊆ a := by
+  classical
+  intro F a ha
+  let K : Family ι := F.filter fun b => b ⊆ a
+  have hK : K.Nonempty := ⟨a, Finset.mem_filter.mpr ⟨ha, Finset.Subset.refl a⟩⟩
+  obtain ⟨b, hb, hcard⟩ := Finset.exists_min_image K (fun b : Finset ι => b.card) hK
+  have hbF : b ∈ F := (Finset.mem_filter.mp hb).1
+  have hba : b ⊆ a := (Finset.mem_filter.mp hb).2
+  refine ⟨b, Finset.mem_filter.mpr ⟨hbF, ?_⟩, hba⟩
+  intro c hc hcb
+  have hcK : c ∈ K := Finset.mem_filter.mpr ⟨hc, Finset.Subset.trans hcb hba⟩
+  exact (Finset.eq_of_subset_of_card_le hcb (hcard c hcK)).symm
+
+theorem minimal_valid {ι : Type u} [DecidableEq ι] :
+    ∀ (F : Family ι), F.Nonempty → (∀ a ∈ F, a.Nonempty) →
+      Valid (Minimal F) := by
+  classical
+  intro F hF hbranches
+  obtain ⟨a, ha⟩ := hF
+  obtain ⟨b, hb, _⟩ := minimal_contains F a ha
+  refine ⟨⟨b, hb⟩, ?_, ?_⟩
+  · intro c hc
+    exact hbranches c (Finset.mem_filter.mp hc).1
+  · intro c hc d hd hcd
+    exact ((Finset.mem_filter.mp hd).2 c (Finset.mem_filter.mp hc).1 hcd).symm
+
+theorem minimal_dnf {ι : Type u} [DecidableEq ι] :
+    ∀ (F : Family ι) (pattern : ι → Bool),
+      DNF (Minimal F) pattern ↔ DNF F pattern := by
+  classical
+  intro F pattern
+  constructor
+  · rintro ⟨a, ha, hpattern⟩
+    exact ⟨a, (Finset.mem_filter.mp ha).1, hpattern⟩
+  · rintro ⟨a, ha, hpattern⟩
+    obtain ⟨b, hb, hba⟩ := minimal_contains F a ha
+    exact ⟨b, hb, fun i hi => hpattern i (hba hi)⟩
+
+theorem meet_valid {ι : Type u} [DecidableEq ι] :
+    ∀ (A B : Family ι), Valid A → Valid B →
+      Valid (Minimal (A ∪ B)) := by
+  classical
+  intro A B hA hB
+  apply minimal_valid
+  · obtain ⟨a, ha⟩ := hA.1
+    exact ⟨a, Finset.mem_union.mpr (Or.inl ha)⟩
+  · intro a ha
+    rcases Finset.mem_union.mp ha with ha | hb
+    · exact hA.2.1 a ha
+    · exact hB.2.1 a hb
+
+theorem meet_bounds {ι : Type u} [DecidableEq ι] :
+    ∀ (A B : Family ι),
+      LE (Minimal (A ∪ B)) A ∧ LE (Minimal (A ∪ B)) B := by
+  classical
+  intro A B
+  constructor
+  · intro a ha
+    exact minimal_contains (A ∪ B) a (Finset.mem_union.mpr (Or.inl ha))
+  · intro b hb
+    exact minimal_contains (A ∪ B) b (Finset.mem_union.mpr (Or.inr hb))
+
+theorem meet_greatest {ι : Type u} [DecidableEq ι] :
+    ∀ (A B G : Family ι), LE G A → LE G B →
+      LE G (Minimal (A ∪ B)) := by
+  classical
+  intro A B G hGA hGB b hb
+  rcases Finset.mem_union.mp (Finset.mem_filter.mp hb).1 with ha | hb
+  · exact hGA b ha
+  · exact hGB b hb
+
+theorem meet_dnf {ι : Type u} [DecidableEq ι] :
+    ∀ (A B : Family ι) (pattern : ι → Bool),
+      DNF (Minimal (A ∪ B)) pattern ↔
+        DNF A pattern ∨ DNF B pattern := by
+  classical
+  intro A B pattern
+  rw [minimal_dnf]
+  constructor
+  · rintro ⟨a, ha, hpattern⟩
+    rcases Finset.mem_union.mp ha with ha | hb
+    · exact Or.inl ⟨a, ha, hpattern⟩
+    · exact Or.inr ⟨a, hb, hpattern⟩
+  · rintro (⟨a, ha, hpattern⟩ | ⟨b, hb, hpattern⟩)
+    · exact ⟨a, Finset.mem_union.mpr (Or.inl ha), hpattern⟩
+    · exact ⟨b, Finset.mem_union.mpr (Or.inr hb), hpattern⟩
+
+theorem source_meet_union {ι : Type u} [DecidableEq ι]
+    {Ω : Type v} {Alphabet : ι → Type w} :
+    ∀ (A B : Family ι) (S : (i : ι) → Ω → Alphabet i) (anchor x : Ω),
+      SourceEvent (Minimal (A ∪ B)) S anchor x ↔
+        SourceEvent A S anchor x ∨ SourceEvent B S anchor x := by
+  classical
+  intro A B S anchor x
+  constructor
+  · rintro ⟨a, ha, heq⟩
+    rcases Finset.mem_union.mp (Finset.mem_filter.mp ha).1 with ha | hb
+    · exact Or.inl ⟨a, ha, heq⟩
+    · exact Or.inr ⟨a, hb, heq⟩
+  · rintro (⟨a, ha, heq⟩ | ⟨b, hb, heq⟩)
+    · obtain ⟨c, hc, hca⟩ :=
+        minimal_contains (A ∪ B) a (Finset.mem_union.mpr (Or.inl ha))
+      exact ⟨c, hc, fun i hi => heq i (hca hi)⟩
+    · obtain ⟨c, hc, hcb⟩ :=
+        minimal_contains (A ∪ B) b (Finset.mem_union.mpr (Or.inr hb))
+      exact ⟨c, hc, fun i hi => heq i (hcb hi)⟩
+
+end MgwMeetProofs

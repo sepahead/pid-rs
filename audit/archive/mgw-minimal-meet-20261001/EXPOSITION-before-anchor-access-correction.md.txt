@@ -1,0 +1,108 @@
+# Finite family normalization for shared exclusions
+
+Author: Sepehr Mahmoudian
+
+Eight generic finite-family statements passed stock Lean and its fresh kernel check. They construct the inclusion-minimal family, prove its meet properties and preserve the shared-exclusion event on every state. This removes a set-theoretic prerequisite from the cumulative-bound derivation. It does not yet connect to the repository's native finite-set event API or prove the probability and entropy steps. SxPID3 and its original nineteen Fin3 obligations remain open.
+
+## Problem and mathematical scope
+
+Categorical Makkeh--Gutknecht--Wibral shared exclusions use a disjunction of source-matching conjunctions. A cumulative bound needs to replace two branch families by their inclusion-minimal union without changing that event. Assuming this preservation would leave a gap; checking eighteen three-source nodes would not prove the construction for arbitrary finite families.
+
+The defining PID source is [Makkeh, Gutknecht and Wibral, *Introducing a differentiable measure of pointwise shared information*, arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5), published in 2021. The finite-set proof is a project formalization, not a new PID or a claim of scientific priority. Information quantities in this project use natural logarithms and nats; the eight statements here contain no probability or information units. Continuous Ehrlich shared exclusions and KSG are different methods.
+
+For example, take $A=\{\{1,2\},\{1,3\}\}$ and $B=\{\{2\}\}$. Their raw union has three branches. Its minimal family is $\{\{2\},\{1,3\}\}$: branch $\{1,2\}$ is absorbed because a match on both sources already matches source 2. The output event is still the event of $A$ **or** the event of $B$. It is not either operand alone or an intersection.
+
+## Definitions and assumptions
+
+Let $I$ be any source-index type with decidable equality. A branch is a finite subset of $I$; a family $F$ is a finite set of branches. No finite universe of indices is required. Define
+
+$$
+\operatorname{Min}(F)=\{a\in F:\ \forall b\in F,\ b\subseteq a\Rightarrow b=a\}.
+$$
+
+A valid family is nonempty, contains no empty branch and is an antichain: distinct branches do not contain one another. The redundancy order is
+
+$$
+A\preceq B\quad\Longleftrightarrow\quad
+\forall b\in B,\ \exists a\in A:\ a\subseteq b.
+$$
+
+For a Boolean pattern $p:I\to\{\mathrm{false},\mathrm{true}\}$, write
+
+$$
+\Phi_F(p)\quad\Longleftrightarrow\quad
+\exists a\in F:\ \forall i\in a,\ p(i)=\mathrm{true}.
+$$
+
+For each index $i$, let $S_i:\Omega\to\mathcal A_i$ be a source map. State space $\Omega$ and alphabets $\mathcal A_i$ may be arbitrary; alphabets may depend on $i$. For the **same** anchor $s$ and test state $x$ in every expression, define
+
+$$
+E_F(s,x)\quad\Longleftrightarrow\quad
+\exists a\in F:\ \forall i\in a,\ S_i(x)=S_i(s).
+$$
+
+There is no independence, IID, support, decoder, probability, finite-alphabet or decidable-alphabet premise. Logical event preservation includes empty families and empty branches. Validity excludes them only where explicitly stated.
+
+## Constructing a minimal branch
+
+Fix $a\in F$ and form $K=\{b\in F:b\subseteq a\}$. It is finite and nonempty because $a\in K$. Choose $b\in K$ with minimum cardinality, using the shipped finite minimum lemma.
+
+If $c\in F$ and $c\subseteq b$, then $c\subseteq a$, hence $c\in K$. Minimum cardinality gives $|b|\leq|c|$, while inclusion gives $|c|\leq|b|$. A finite subset with equal cardinality is equal to its superset, so $c=b$. Thus $b$ is in $\operatorname{Min}(F)$ and $b\subseteq a$. This proves `minimal_contains`; minimal existence is constructed, not supplied as a premise.
+
+Now assume $F$ and all its branches are nonempty. The constructed witness proves that $\operatorname{Min}(F)$ is nonempty. Its branches belong to $F$, so they remain nonempty. If retained branches $c,d$ satisfy $c\subseteq d$, minimality of $d$ gives $d=c$. Therefore the output is valid. This proves `minimal_valid` without assuming that the input was already an antichain.
+
+## Preserving Boolean patterns
+
+A retained satisfied branch is an original satisfied branch, proving $\Phi_{\operatorname{Min}(F)}(p)\Rightarrow\Phi_F(p)$. Conversely, an original satisfied branch $a$ contains a minimal branch $b$. Every true test on $a$ restricts to $b$, proving the reverse implication. Hence `minimal_dnf` establishes
+
+$$
+\Phi_{\operatorname{Min}(F)}(p)\ \Longleftrightarrow\ \Phi_F(p).
+$$
+
+This is universal in $p$. No assumption that source observations realize every Boolean pattern is needed.
+
+## Establishing the meet properties
+
+Set $M=\operatorname{Min}(A\cup B)$.
+
+1. If $A,B$ are valid, their union is nonempty and has only nonempty branches. The previous validity result therefore proves $M$ valid (`meet_valid`). The raw union need not itself be an antichain.
+2. Every branch of $A$ or $B$ belongs to the union. Its contained minimal witness proves $M\preceq A$ and $M\preceq B$ (`meet_bounds`). This also holds for invalid families.
+3. Suppose $G\preceq A$ and $G\preceq B$. Any branch $b\in M$ belongs to $A$ or $B$. Apply the corresponding premise to obtain $g\in G$ with $g\subseteq b$. Thus $G\preceq M$ (`meet_greatest`).
+
+On valid antichain families these are the specified meet properties. The packet does not install a full partial-order or lattice instance or prove antisymmetry on arbitrary raw families.
+
+Normalization preserves the union's Boolean pattern. A witnessing union branch belongs to one operand; conversely either operand's witnessing branch belongs to the union. Thus `meet_dnf` proves
+
+$$
+\Phi_M(p)\ \Longleftrightarrow\ \Phi_A(p)\lor\Phi_B(p).
+$$
+
+## Preserving source equality events
+
+Forward, a minimal witnessing branch belongs to the union and hence to $A$ or $B$, with all the same source equalities. Reverse, take an operand's satisfied branch and its contained minimal union branch; restrict the equalities to that smaller branch. This directly proves `source_meet_union`:
+
+$$
+E_M(s,x)\ \Longleftrightarrow\ E_A(s,x)\lor E_B(s,x).
+$$
+
+The direct argument needs no decision procedure for alphabet equality. It holds at every state, including states a later probability law might assign zero mass. It proves an event union, not an event-order converse: collapsed sources can make distinct branch families have equal events.
+
+The empty family has a false event; an empty branch has a true conjunction. Normalization preserves both. A decoder valid only on positive support cannot justify changing the full-carrier event at null states. The theorem also supplies no rule for deleting a sensor: constructing the union still uses both operands' anchor values.
+
+## Stock verification and remaining gaps
+
+On 1 October 2026, the fixed contract, eight-proof candidate and separate raw type consumers compiled. All eight printed types matched the frozen consumers. Each axiom list was exactly `propext`, `Classical.choice`, `Quot.sound`. Stock Lean 4.33.0 and `leanchecker --fresh` completed; no kernel, library, Lean default, theorem premise or trust shortcut changed. All seven captured commands returned zero with empty stderr. The actual run ended at 14:14:33 UTC; this single observation is not a performance benchmark.
+
+The [proof source](../mgw-minimal-meet-lean-v1/attempts/attempt-1/MgwMeetProofs.lean), [fixed definitions](../mgw-minimal-meet-lean-v1/MgwMeetContract.lean), [raw consumers](../mgw-minimal-meet-lean-v1/MgwMeetReadback.lean) and [result review](../mgw-minimal-meet-actual-result-review-v1/RECEIPT.md) expose the exact scope. Selected endpoint hashes matched before and after; they do not authenticate native tools or the entire transitive cache. The independently counted attempt and caller records totalled 197,521 bytes. Shared host, model and exposed derivation are not blind or human-independent review. Root's caller-status transcription is not a raw authenticated tool transcript.
+
+Two unexecuted wrapper designs were rejected for incomplete byte accounting and masked upstream errors. Their sources and critiques remain retained; a fresh reviewed wrapper fixed those defects before this one execution. Earlier failed proofs and negative support/decoder findings remain separate evidence. No second attempt was used after this accepted result.
+
+The [cumulative-bound derivation](../mgw-meet-defect-report-v1/EXPOSITION.md) still needs formal native event membership, target intersection, probability-mass mapping and weighted-entropy steps. Its scalar checks do not prove those bridges. No Möbius inversion, individual-atom guarantee, estimator calibration, original Fin3 acceptance or real-world improvement follows from these eight predicates.
+
+## Rust implementation and computational cost
+
+This packet exports mathematical propositions, not a new production Rust algorithm. For $m$ branches with bounded width $d$, a hypothetical direct normalization tests up to $m^2$ inclusions; each costs $O(d)$ only under a representation with that subset-test bound. This is $O(m^2d)$ subset work, not a measured runtime or a consequence of Lean's witness theorem. Arbitrary index equality may have additional cost. The finite minimum proof uses classical choice and supplies no executable API or resource guarantee.
+
+A proposed application compares a fixed CO2-only cumulative node with light-or-CO2 on retained categorical occupancy counts. Neither these meet lemmas nor the old negative union-predictor result establishes that a sensor can be removed or prediction improved. Direct task loss and CMI remain necessary comparisons. No new observations or application calculation are reported here.
+
+Cite: Sepehr Mahmoudian, *Finite family normalization for shared exclusions*, 2026, with the exact evidence revision. Cite the MGW paper separately for its defining quantity. This is a private exploratory report, not admission to the active publication roster.

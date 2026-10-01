@@ -1,0 +1,26 @@
+import Mathlib.Data.Finset.Max
+
+universe u v w
+
+namespace MgwMeetContract
+
+abbrev Family (ι : Type u) := Finset (Finset ι)
+
+def Minimal {ι : Type u} [DecidableEq ι] (F : Family ι) : Family ι :=
+  F.filter fun a => ∀ b ∈ F, b ⊆ a → a = b
+
+def Valid {ι : Type u} (F : Family ι) : Prop :=
+  F.Nonempty ∧ (∀ a ∈ F, a.Nonempty) ∧
+    ∀ a ∈ F, ∀ b ∈ F, a ⊆ b → a = b
+
+def LE {ι : Type u} (A B : Family ι) : Prop :=
+  ∀ b ∈ B, ∃ a ∈ A, a ⊆ b
+
+def DNF {ι : Type u} (F : Family ι) (pattern : ι → Bool) : Prop :=
+  ∃ a ∈ F, ∀ i ∈ a, pattern i = true
+
+def SourceEvent {ι : Type u} {Ω : Type v} {Alphabet : ι → Type w}
+    (F : Family ι) (S : (i : ι) → Ω → Alphabet i) (anchor x : Ω) : Prop :=
+  ∃ a ∈ F, ∀ i ∈ a, S i x = S i anchor
+
+end MgwMeetContract

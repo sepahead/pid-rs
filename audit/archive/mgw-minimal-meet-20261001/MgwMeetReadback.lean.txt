@@ -1,0 +1,55 @@
+import MgwMeetProofs
+
+universe u v w
+open MgwMeetContract
+
+example {ι : Type u} [DecidableEq ι] :
+    ∀ (F : Family ι) (a : Finset ι), a ∈ F →
+      ∃ b ∈ Minimal F, b ⊆ a := MgwMeetProofs.minimal_contains
+
+example {ι : Type u} [DecidableEq ι] :
+    ∀ (F : Family ι), F.Nonempty → (∀ a ∈ F, a.Nonempty) →
+      Valid (Minimal F) := MgwMeetProofs.minimal_valid
+
+example {ι : Type u} [DecidableEq ι] :
+    ∀ (F : Family ι) (pattern : ι → Bool),
+      DNF (Minimal F) pattern ↔ DNF F pattern := MgwMeetProofs.minimal_dnf
+
+example {ι : Type u} [DecidableEq ι] :
+    ∀ (A B : Family ι), Valid A → Valid B →
+      Valid (Minimal (A ∪ B)) := MgwMeetProofs.meet_valid
+
+example {ι : Type u} [DecidableEq ι] :
+    ∀ (A B : Family ι),
+      LE (Minimal (A ∪ B)) A ∧ LE (Minimal (A ∪ B)) B := MgwMeetProofs.meet_bounds
+
+example {ι : Type u} [DecidableEq ι] :
+    ∀ (A B G : Family ι), LE G A → LE G B →
+      LE G (Minimal (A ∪ B)) := MgwMeetProofs.meet_greatest
+
+example {ι : Type u} [DecidableEq ι] :
+    ∀ (A B : Family ι) (pattern : ι → Bool),
+      DNF (Minimal (A ∪ B)) pattern ↔
+        DNF A pattern ∨ DNF B pattern := MgwMeetProofs.meet_dnf
+
+example {ι : Type u} [DecidableEq ι] {Ω : Type v} {Alphabet : ι → Type w} :
+    ∀ (A B : Family ι) (S : (i : ι) → Ω → Alphabet i) (anchor x : Ω),
+      SourceEvent (Minimal (A ∪ B)) S anchor x ↔
+        SourceEvent A S anchor x ∨ SourceEvent B S anchor x := MgwMeetProofs.source_meet_union
+
+#check MgwMeetProofs.minimal_contains
+#check MgwMeetProofs.minimal_valid
+#check MgwMeetProofs.minimal_dnf
+#check MgwMeetProofs.meet_valid
+#check MgwMeetProofs.meet_bounds
+#check MgwMeetProofs.meet_greatest
+#check MgwMeetProofs.meet_dnf
+#check MgwMeetProofs.source_meet_union
+#print axioms MgwMeetProofs.minimal_contains
+#print axioms MgwMeetProofs.minimal_valid
+#print axioms MgwMeetProofs.minimal_dnf
+#print axioms MgwMeetProofs.meet_valid
+#print axioms MgwMeetProofs.meet_bounds
+#print axioms MgwMeetProofs.meet_greatest
+#print axioms MgwMeetProofs.meet_dnf
+#print axioms MgwMeetProofs.source_meet_union

@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "10461328e4047c525c4c0137c3d32eb1d9868dbadd491048da95ad5f19e04fa6",
-        "size_bytes": 324248
+        "sha256": "3ed8346c28dd0aa41385596eea20897c94652f38d0b9368be421ebc53412916d",
+        "size_bytes": 324612
       },
       {
         "git_mode": "100644",
@@ -1158,6 +1158,78 @@
         "path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-eff7f5a9a1907a8b5e90c19e51872ed82a1d3e5ebaa17a689a563009dcde825b-AGENTS.md.txt",
         "sha256": "eff7f5a9a1907a8b5e90c19e51872ed82a1d3e5ebaa17a689a563009dcde825b",
         "size_bytes": 76923
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/ARCHIVE.md",
+        "sha256": "f96f3db6a41a2b31a503a6d9af3af837dcffd49345efd321e703d538d459ae05",
+        "size_bytes": 5714
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/EXPOSITION-before-anchor-access-correction.md.txt",
+        "sha256": "253a103cda511f7c3ad19bdeed3e1164ab07c627af3a082f06b5b21ba3db3115",
+        "size_bytes": 9912
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/EXPOSITION.md.txt",
+        "sha256": "dda0a3b83fb5be6fedc8016d6dd25f67b46836da88a010e625f31ad5ccba6915",
+        "size_bytes": 10186
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/INDEX.json",
+        "sha256": "7a8a0c5e4cfc9a41a1f382cb02e62958960fa309f83c464caff62d08af7a66e1",
+        "size_bytes": 3433
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/MgwMeetContract.lean.txt",
+        "sha256": "7a011e7850792fb7b8594d6d816b8dfaeca946dc59e136008938685e3eac4d56",
+        "size_bytes": 824
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/MgwMeetProofs.lean.txt",
+        "sha256": "9aafe849093b9bc34a5df14842039a153e394f02ab46559aa696414deaa7a607",
+        "size_bytes": 4304
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/MgwMeetReadback.lean.txt",
+        "sha256": "402a2f9135f7a2a36d8cd340e3d52f080f9c134422383671c509d2804606f8df",
+        "size_bytes": 2144
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/ROOT-RESULT.txt",
+        "sha256": "52dd681cb9c6942b56597f32f059c90aad15d65121227422c4524681b3e65c52",
+        "size_bytes": 2203
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/WRAPPER-PIPELINE-ADDENDUM.txt",
+        "sha256": "4fa9b08bb5ef24589a3aaaeba99db36f7d92ee46d4dda233be733a1b552b0ebe",
+        "size_bytes": 1117
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/WRAPPER-SOURCE-NEGATIVE.txt",
+        "sha256": "28ce68dfa54b726f15b9a24eb1cf166029e180deebdc3842e4602aec98091a72",
+        "size_bytes": 1222
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/draft.pdf",
+        "sha256": "e92a3785c9d19cfe5d8c0ff7d7c0accf087884bf7832eee16cb992538e0e952e",
+        "size_bytes": 62960
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/mgw-minimal-meet-20261001/readback.stdout.txt",
+        "sha256": "f1b8c6d27a0c52296cc6bef0c15733a5eea83350df94cfe5e67b12b01bc89f4e",
+        "size_bytes": 2241
       },
       {
         "git_mode": "100644",
@@ -30490,7 +30562,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "8480928633a4f9304bcfc362302ffd691b2e24bd4036c8a7beaaf85cf2124014",
+        "sha256": "c571717a810ea50c42c121a18e94dfdf5a7eba90109b815d3d65ba531786b481",
         "size_bytes": 138785
       },
       {
@@ -31442,8 +31514,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "063ab0c6d0db8cb8d2e683291750bcc0fcbe8413562f6ff1fdec3662f813282c",
-    "entry_count": 5216
+    "entries_sha256": "01403da52d8b2487b16a5ffce734db7e7a9879df648d18d40164a7e9f44c1837",
+    "entry_count": 5228
   },
   "subprojections": [
     {
@@ -31471,7 +31543,7 @@
       ]
     },
     {
-      "entries_sha256": "9a7f0bc7059c7f83d8eebaf35fec492f2bc9c76d4dc40290bcc74ff065779679",
+      "entries_sha256": "86508cdf9a8fb6ccd78e7f8b82a6cf60f4f4994e529d00ef34453c980b3ed0ec",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

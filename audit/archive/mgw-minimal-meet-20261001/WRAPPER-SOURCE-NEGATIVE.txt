@@ -1,0 +1,19 @@
+Prelaunch byte-accounting correction, not an execution result
+
+ACTION.sh SHA9356c0bf9b64ee27e00616b4e94511e62c27cea5612ea1e5524dcec0d0235cf0
+remains exact, unexecuted and withdrawn as the prospective launch wrapper.
+Its wc-based reducer counted only multi-file total rows and omitted its final
+accounting record. A singleton batch could therefore be omitted. No candidate,
+compiler, kernel or proof attempt had been launched when this was discovered.
+
+ACTION-v2.sh keeps every scientific definition, type, import, axiom, byte/time
+cap, stock Lean default, command and stopping rule unchanged. It counts every
+regular-file size with shipped Darwin stat, then repeats after creating the
+accounting record. Root also checks complete attempt size after actual exit,
+including outer metadata. No storage/RSS/tree/crash guarantee follows from
+these sequential observations. This is a repair before operational freeze,
+not a repaired historical pass or altered scientific acceptance predicate.
+
+Independent source review must cover ACTION-v2.sh and exact endpoint pins
+before launch. Original ACTION.sh is never to be replayed or called accepted.
+The source critique and fixed-record budget remain part of the retained evidence.

@@ -1,0 +1,32 @@
+Author: Sepehr Mahmoudian. 1 October 2026. Exact bounded result.
+
+Attempt1 completed once: ACTION14:13:15--14:14:32UTC, CALLER end14:14:33.
+Invoking tool returned CALLER0; its stdout197521-byte final census was read.
+Root-transcribed invoking-tool fields are explicitly not a raw protocol preimage.
+All seven complete capture sextets were personally read. All child exits0,
+all stderr empty, stock Lean4.33.0; contract/candidate/kernel stdout empty.
+Eight separate fixed raw consumers compiled; all eight printed exact types match;
+all eight axiom lists are exactly propext/Classical.choice/Quot.sound.
+Stock leanchecker --fresh MgwMeetReadback completed14:13:23--14:14:32UTC, exit0.
+No Lean option, theorem premise, library, kernel or trust shortcut was changed.
+
+All21 selected absolute endpoint checks completed OK before/after. Complete
+inventory identity remains3b50efb4e1746a9341ce1d8b668e89d5ba299fb6e6d5e5c37c8a8180b351a760.
+Candidate4304bytes9aafe849093b9bc34a5df14842039a153e394f02ab46559aa696414deaa7a607;
+fixed contract824/readback2144. Inner build/captures173320bytes; all attempt plus
+caller files197521bytes below33554432. These sequential logical-byte checks do
+not establish RSS, peak physical storage, atomic custody or tool authenticity.
+
+Root accepts only minimal_contains, minimal_valid, minimal_dnf, meet_valid,
+meet_bounds, meet_greatest, meet_dnf and source_meet_union, with their exact
+universal types. Stop on this first full acceptance; attempt2 is not used.
+Independent source reviews and actual-result review remain scoped/shared host.
+V1/V2 unexecuted wrapper defects and every older proof failure remain preserved.
+
+This proves generic finite-family normalization and a pointwise event union;
+not the native finite-set API correspondence or probability/entropy bridge.
+No original nineteen Fin3 obligation, inversion, atom guarantee, calibration,
+application advantage, full SxPID3 closure or publication/main admission follows.
+Assumptions: finite branch/family objects; decidable source-index equality; same
+anchor/state/source map; validity premises exactly where written. Alphabets and
+state types may be arbitrary/dependent, with no IID/support/independence premise.

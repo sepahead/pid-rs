@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve the [finite-family shared-exclusion proof archive](audit/archive/mgw-minimal-meet-20261001/ARCHIVE.md)
+  with eight privately stock-checked predicates, exact sources and a scoped PDF draft.
+  Retain rejected wrapper designs and the corrected source-access assertion;
+  keep native probability/entropy, scientific admission and SxPID3 obligations open.
+
 - Preserve the [application screen for existing results, recent work and bounds](audit/archive/application-screen-20261001/ARCHIVE.md)
   with exact draft/PDF bytes, correction preimages, scalar checks and the rejected glyph build.
   Record unrun sensor-retention and imaging studies, existing negative findings and private

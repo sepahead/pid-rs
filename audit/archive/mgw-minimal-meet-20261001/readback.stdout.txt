@@ -1,0 +1,25 @@
+MgwMeetProofs.minimal_contains.{u} {ι : Type u} [DecidableEq ι] (F : Family ι) (a : Finset ι) :
+  a ∈ F → ∃ b ∈ MgwMeetContract.Minimal F, b ⊆ a
+MgwMeetProofs.minimal_valid.{u} {ι : Type u} [DecidableEq ι] (F : Family ι) :
+  Finset.Nonempty F → (∀ a ∈ F, a.Nonempty) → Valid (MgwMeetContract.Minimal F)
+MgwMeetProofs.minimal_dnf.{u} {ι : Type u} [DecidableEq ι] (F : Family ι) (pattern : ι → Bool) :
+  DNF (MgwMeetContract.Minimal F) pattern ↔ DNF F pattern
+MgwMeetProofs.meet_valid.{u} {ι : Type u} [DecidableEq ι] (A B : Family ι) :
+  Valid A → Valid B → Valid (MgwMeetContract.Minimal (A ∪ B))
+MgwMeetProofs.meet_bounds.{u} {ι : Type u} [DecidableEq ι] (A B : Family ι) :
+  MgwMeetContract.LE (MgwMeetContract.Minimal (A ∪ B)) A ∧ MgwMeetContract.LE (MgwMeetContract.Minimal (A ∪ B)) B
+MgwMeetProofs.meet_greatest.{u} {ι : Type u} [DecidableEq ι] (A B G : Family ι) :
+  MgwMeetContract.LE G A → MgwMeetContract.LE G B → MgwMeetContract.LE G (MgwMeetContract.Minimal (A ∪ B))
+MgwMeetProofs.meet_dnf.{u} {ι : Type u} [DecidableEq ι] (A B : Family ι) (pattern : ι → Bool) :
+  DNF (MgwMeetContract.Minimal (A ∪ B)) pattern ↔ DNF A pattern ∨ DNF B pattern
+MgwMeetProofs.source_meet_union.{u, v, w} {ι : Type u} [DecidableEq ι] {Ω : Type v} {Alphabet : ι → Type w}
+  (A B : Family ι) (S : (i : ι) → Ω → Alphabet i) (anchor x : Ω) :
+  SourceEvent (MgwMeetContract.Minimal (A ∪ B)) S anchor x ↔ SourceEvent A S anchor x ∨ SourceEvent B S anchor x
+'MgwMeetProofs.minimal_contains' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwMeetProofs.minimal_valid' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwMeetProofs.minimal_dnf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwMeetProofs.meet_valid' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwMeetProofs.meet_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwMeetProofs.meet_greatest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwMeetProofs.meet_dnf' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwMeetProofs.source_meet_union' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,17 @@
+Second prelaunch wrapper source correction
+
+ACTION-v2.sh dcd2478d... corrects the total-row/final-record omission but its
+POSIX pipeline exposes only the last command's exit. If find/stat failed and
+awk accepted a partial prefix, the accounting command could return zero.
+No compiler, candidate or kernel had run at discovery. V2 remains unchanged,
+unexecuted and withdrawn; it is not credited with fail-closed upstream errors.
+
+ACTION-v3.sh changes only the interpreter to shipped /bin/bash and enables
+shell pipefail. It retains V2's complete regular-file census and post-record
+recount. Any upstream nonzero now refuses the action. No Lean flag/default,
+mathematical definition, export, import, axiom, time/byte cap or stopping rule
+changes. This is pre-freeze launch plumbing, not a scientific judge change.
+Native /bin/bash is separately pinned. Complete outer records and whole-attempt
+bytes still require root readback after actual exit. Stable cooperative files
+are assumed; the census is not atomic or an RSS/process-tree guarantee.
+Review the exact V3 source before operational freeze; never execute V1/V2.
