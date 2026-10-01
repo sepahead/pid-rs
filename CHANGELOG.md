@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve the [application screen for existing results, recent work and bounds](audit/archive/application-screen-20261001/ARCHIVE.md)
+  with exact draft/PDF bytes, correction preimages, scalar checks and the rejected glyph build.
+  Record unrun sensor-retention and imaging studies, existing negative findings and private
+  omissions without changing methods, scientific claims or active publication status.
+
 - Rebind the reviewed current scripts guide after its stopped-prefix publication update.
   Preserve the [failed predecessor and historical custody](audit/evidence/stopped-prefix-script-guide-custody-20261001.json);
   keep claim logic, hostile controls, historical proof records and tool settings unchanged.

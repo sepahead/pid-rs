@@ -1,0 +1,35 @@
+; Concrete two-bit PMF. Ground finite verification, not a PID theorem.
+(set-logic QF_LRA)
+(define-fun p ((a Bool) (b Bool)) Real (ite (= a b) (/ 1.0 2.0) 0.0))
+(define-fun e ((a Bool) (b Bool)) Bool (not b))
+(define-fun inserted ((a Bool) (b Bool)) Bool (or (not b) (not a)))
+(define-fun decoder-ok ((a Bool) (b Bool)) Bool (=> (> (p a b) 0.0) (= a b)))
+(define-fun supported-membership ((a Bool) (b Bool)) Bool
+  (=> (> (p a b) 0.0) (= (e a b) (inserted a b))))
+(define-fun mass-e ((a Bool) (b Bool)) Real (ite (e a b) (p a b) 0.0))
+(define-fun mass-inserted ((a Bool) (b Bool)) Real
+  (ite (inserted a b) (p a b) 0.0))
+(push 1)
+(assert (not (and
+  (= (+ (p false false) (p false true) (p true false) (p true true)) 1.0)
+  (>= (p false false) 0.0) (>= (p false true) 0.0)
+  (>= (p true false) 0.0) (>= (p true true) 0.0)
+  (decoder-ok false false) (decoder-ok false true)
+  (decoder-ok true false) (decoder-ok true true)
+  (supported-membership false false) (supported-membership false true)
+  (supported-membership true false) (supported-membership true true)
+  (= (+ (mass-e false false) (mass-e false true)
+        (mass-e true false) (mass-e true true)) (/ 1.0 2.0))
+  (= (+ (mass-inserted false false) (mass-inserted false true)
+        (mass-inserted true false) (mass-inserted true true)) (/ 1.0 2.0))
+  (not (= (e false true) (inserted false true))))))
+(check-sat)
+(pop 1)
+; Counterexample to unconditional full-carrier membership equality.
+(assert (not (and
+  (= (e false false) (inserted false false))
+  (= (e false true) (inserted false true))
+  (= (e true false) (inserted true false))
+  (= (e true true) (inserted true true)))))
+(check-sat)
+(exit)

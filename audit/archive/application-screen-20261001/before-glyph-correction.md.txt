@@ -1,0 +1,81 @@
+# Application screening for shared exclusions and bounds
+
+Author: Sepehr Mahmoudian
+
+This first screen covers selected existing and recent mathematics, bounds and ecosystem interfaces. It identifies useful safeguards and two possible study directions, neither run. No new task improvement, state-of-the-art result or scientific priority is established.
+
+The PID lane is finite categorical Makkeh–Gutknecht–Wibral (MGW) shared exclusions. Its defining source is [Makkeh, Gutknecht and Wibral (2021)](https://doi.org/10.1103/PhysRevE.103.032149). Information quantities use natural logarithms and nats. Continuous Ehrlich shared exclusions, KSG MI estimation and other PID definitions remain separate. Quantization changes the estimand. Contextual laws require positive context probability. Sources may depend; complete-row independence is a separate premise.
+
+## What established and recent mathematics can support
+
+Each use below is conditional, not a validated application. Full statements and derivations remain in the linked repository reports.
+
+| Result | Plausible use | Required boundary |
+|---|---|---|
+| Fixed-alphabet averaged-MGW continuity | Bound how an averaged atom can change when the encoded law changes, including rare cells entering support. | Keep the complete alphabet, event map and full Möbius inverse fixed. Supply a justified total-variation radius. Use monotone upper envelopes, not unchecked substitution into nonmonotone exact formulas. Exact-real sensitivity is not a confidence interval or binary64 certificate. |
+| Finite-prefix mean-bias bounds | Plan the horizon of the specific joined-mismatch and target-retained-rank experiment when an MGW atom is already the chosen target. | Complete rows are iid from one finite law. Use a fresh anchor, fixed raw horizon and fixed atom. Population support or probability floors need justification. This is not the ordinary row plug-in API, sampling variance or stopping coverage. |
+| Dependency-color concentration | Account for overlapping rows when a known construction gives mutually independent complete rows within each declared class. | Require one common finite complete-row law. Declare the coloring before outcomes. Spacing, distinct seeds or color labels do not prove independence. Atom transfer needs its continuity/support premises. Automatic valid-color inference is absent. |
+| Recent finite-event decoder result | Inserting a retained-coalition match preserves MGW source-event membership on positive support and two cumulative components. | Finite normalized nonnegative law, positive anchor, nonempty families, nonempty proper retained coalition and a decoder for every residual coordinate on all positive support. OR insertion is not identified with antichain meet. Twenty-six stock-verified statements do not prove full PID3 inversion, zero atoms, calibration or determinism from fitted data. |
+| Older KSG harmonic range | Provide an arithmetic regression oracle for eligible positive-integer digamma terms. | Require $n\ge2$, $1\le k<n$, $k\le x,y\le n$ and the stated digamma premise. The core is scoped; integration remains NO-GO. No MGW-atom bound, neighbor-geometry guarantee or estimator calibration follows. |
+
+For the prefix experiment, write $B_h$ for its block statistic and $\theta$ for the fixed population atom. For any member source collection $C$ of the chosen lattice node, let $K_{CT}$ count positive population cells of its source-target projection. The established mean-error bound is
+
+$$
+\left|\theta-\mathbb E[B_h]\right|\le\frac{K_{CT}-1}{h+1}.
+$$
+
+Here $h+1$ counts the anchor and further complete iid rows. An observed minimum frequency cannot supply a population floor. Simulated ticks and restored siblings cannot be substituted for independent rows without a sampling argument.
+
+Read the [continuity derivation](../../main-milestones/shared-exclusions-audit-20260930/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md), [prefix statistic and bias derivation](../../main-milestones/shared-exclusions-audit-20260930/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md), [dependency assumptions](../../main-milestones/shared-exclusions-audit-20260930/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) and [KSG disposition](../../main-milestones/shared-exclusions-audit-20260930/claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md). Their formal, handwritten, executable and open obligations remain distinct.
+
+## Existing office occupancy evidence remains negative
+
+The repository already evaluates recorded light and CO₂ against binary office occupancy with four training-fitted bins per source. Each recording defines its own empirical law on at most 32 cells. Time-series rows are not declared iid. The later recording has positive MGW synergy largely cancelled by negative unique CO₂ contribution. The tested source-matching-union predictor had worse probability scores than direct baselines. This is a useful warning, not a general rejection of PID or CO₂ sensing. No building-level generalization or PID-guided improvement is established. See the [recorded study and comparisons](../../main-milestones/shared-exclusions-audit-20260930/audit/evidence/real-occupancy-sensors-example-2026-09-08.md) and [UCI problem source](https://archive.ics.uci.edu/dataset/357/occupancy+detection).
+
+## Crebain sensor retention is an unrun candidate
+
+NCP means Neuro-Cybernetic Protocol. It owns transport and buffer contracts, not neural computation or scientific validity. Crebain's optional [sensor contract](https://github.com/sepahead/crebain/tree/main/integrations/ncp-force-ground-sensors) exposes timed RGB and pressure observations. Its [family contract](https://github.com/sepahead/crebain/blob/main/integrations/ncp-force-ground-sensors/FAMILY.md) defines a future three-tick pressure-RMS target. The reported E1 forecast remains null or inconclusive, not PID benefit.
+
+Proposed context $c$ fixes the simulator profile, scene, cameras, microphone, continuation action, landmark and horizon. Let $S_R$ be a training-fitted binary bin of pre-landmark RGB change in one fixed region. Let $S_A$ bin prior pressure RMS. Let $T$ bin the later pressure RMS in pascals. Freeze feature arithmetic, thresholds, edge/tie rules, missingness and clipping policy before evaluation. The object is $P(S_R,S_A,T\mid C=c)$, with binary alphabets and at most eight cells. It describes encoded simulator features, not calibrated analog sensors or a physical drone.
+
+Start with one row per prospectively independent episode. Keep restored siblings, repeated continuations and overlapping windows together in every split. Inputs must end before target availability. Check source and availability ticks and retain absent cells explicitly. Reject collapsed bins, broken synchronization, insufficient support or leakage.
+
+The decision is whether RGB forecasting value justifies acquisition cost in predeclared units. Compare constant, RGB-only, acoustic-only and joint forecasts using held-out log loss (nats per row) or Brier score (dimensionless). Compare MI, CMI and modality ablations. A predeclared training-only PID selector must improve that decision against a matched selector without PID. Otherwise retain the null result. No current selector, prospective evidence or real-flight benefit is claimed.
+
+## Brain imaging is an unrun candidate with additional gates
+
+[ZAPBench](https://arxiv.org/html/2503.02618v1) defines roughly thirty-second calcium-imaging forecasting. It poses a context-length and representation-budget problem beyond spike counting. A proposal would use training-fitted bins for recent and distant activity summaries $S_1,S_2$ and a future regional summary $T$, with fixed stimulus/session context. Normalized calcium activity is dimensionless, not spikes or voltage. If binary PID selects context, evaluate the original trace MAE and measured cost in declared units. Binary event prediction would be a different task.
+
+Do not use a pointwise PID value requiring the unknown target as an online selector. Group stimulus repeats and purge overlapping raw and preprocessing windows. The published normalization uses a 400-step temporal baseline window, so causal availability needs separate inspection. Remaining temporal dependence still needs an uncertainty model. One fish gives no cross-animal inference. Taxis is withheld from benchmark training; a taxis-specific training law cannot be manufactured from test labels.
+
+Public [ZAPBench datasets](https://zapbench-release.storage.googleapis.com/volumes/README.html) state CC-BY 4.0. [Fish Fire&Wire](https://www.janelia.org/fish-firewire) is different: approved group access, no redistribution, versioned incomplete snapshots and no submission using its data before December 1, 2027. No access request or data use occurred here. A static connectome alone does not supply a functional source-target law. The user-linked [MindStudio article](https://www.mindstudio.ai/blog/fruit-fly-brain-connectome-ai-training) does not establish a PID benefit; its email-classifier claim remains unverified in this screen.
+
+## A rejected selector is only conditional mutual information
+
+Fix one finite law, context, encoded sources and target. Define $I_1=I(S_1;T)$, $I_2=I(S_2;T)$ and $I_{12}=I(S_1,S_2;T)$ under that same contextual law. Let $R$ be MGW redundancy. The two-source definitions give
+
+$$
+U_2=I_2-R,\qquad
+\mathrm{Syn}=I_{12}-I_1-I_2+R.
+$$
+
+Add the expressions without clamping any signed term:
+
+$$
+U_2+\mathrm{Syn}
+=(I_2-R)+(I_{12}-I_1-I_2+R)
+=I_{12}-I_1
+=I(S_2;T\mid S_1).
+$$
+
+The first cancellation is exact scalar algebra; the last equality is the finite-law Shannon chain rule. Thus a selector using this sum is a CMI selector, not evidence of extra MGW value. This identity is already used in the recorded office study. Shipped Z3 4.16.0 returned unsat for the scalar counterexample obligation and sat for its deliberately false control. Both commands returned zero with empty stderr. The sources and captures remain beside this report. This check does not prove the probability interpretation, estimator accuracy or application benefit. A genuine MGW-dependent rule still needs a predeclared scientific rationale and matched held-out test.
+
+## FLUX 3 Action and VLA adoption are not ready locally
+
+The official [FLUX 3 Action code](https://github.com/black-forest-labs/flux-action) and [DROID card](https://huggingface.co/black-forest-labs/flux-3-action-droid) expose camera, state and instruction inputs and action chunks. No inspected local matching consumer is adopted. Absence in those checkouts is not external nonexistence. Do not equate joint video/action prediction with an interventional planner.
+
+The inspected Prisoma revision retains an older offline action-target screen, same-row fitting warnings and a missing typed source-target ancestry route. Modern integrations linked by NCP are absent from that local checkout. These are revision-local blockers, not global claims about Prisoma. A future physical-outcome study needs a target-specific prediction landmark, tensor ancestry, explicit units, episode-level splits and matched input access. A representation already conditioned on the proposal cannot be used as a source for predicting that same proposal. No weights were downloaded, consumer pin changed or physical actuator controlled.
+
+## Advancement requires a decision that improves
+
+Retain null benefit, extra cost, CMI-equivalent ranking, sparse support, unstable quantization, dependence failures, leakage and rights restrictions. Formally checked arithmetic and finite-law identities remain valuable even when an application fails. They do not establish novelty or deployment value. The next step is to freeze a lawful study whose decision genuinely needs MGW, then compare it against strong direct baselines on untouched evaluation groups.

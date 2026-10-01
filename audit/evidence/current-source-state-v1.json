@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "e41efc836a5f7ea4f03644985b3f397716c711f8fcaeefff05667773dddb0018",
-        "size_bytes": 323838
+        "sha256": "10461328e4047c525c4c0137c3d32eb1d9868dbadd491048da95ad5f19e04fa6",
+        "size_bytes": 324248
       },
       {
         "git_mode": "100644",
@@ -840,6 +840,186 @@
         "path": "audit/archive/advisory-councils-20260725-20260726/payload/fable5-pid2-represented-sum-review-prompt.md",
         "sha256": "8607fec9c789e7963e905c799880d1a0e0c97250f86b3373e7d29dec9d7f4ecb",
         "size_bytes": 5306
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/ARCHIVE.md",
+        "sha256": "e57d4fe506426cea7f68517a066edbcddd3be24cfb9ba32d027552c9bafee3b6",
+        "size_bytes": 6862
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/EXPOSITION.md.txt",
+        "sha256": "a9653ab7ba1fa3481f15f2de68e54247283670fb7ea8837c06288879c3b6fe35",
+        "size_bytes": 11849
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/INDEX.json",
+        "sha256": "666e64b3b689e57a74f7d2fa39657c71520117119e125d7e213c0aaed0f82314",
+        "size_bytes": 8758
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/OBSERVATIONS.json",
+        "sha256": "57b5fe35bab9cd3009a60c38346f68dbdf84f8433e485306122a6d90302638ad",
+        "size_bytes": 4239
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/added-information-algebra.smt2.txt",
+        "sha256": "cb4d3365413ac05b2c1f1a063cc309b6aabcec07ad21dce9a635d7f13924f8fd",
+        "size_bytes": 322
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/added-information-false-control.smt2.txt",
+        "sha256": "d6ec9bdbd70d9260d1841a38e817ab8e284c80f23b1232669a742c3f838baf9a",
+        "size_bytes": 381
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/algebra.after-clock.txt",
+        "sha256": "5287bbfc0327f0998fb7e4e02ca0416ef1c533010fdca166d2182c514eb8420b",
+        "size_bytes": 21
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/algebra.before-clock.txt",
+        "sha256": "5287bbfc0327f0998fb7e4e02ca0416ef1c533010fdca166d2182c514eb8420b",
+        "size_bytes": 21
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/algebra.exit.txt",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/algebra.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/algebra.stdout.txt",
+        "sha256": "5c17dfcc2a8f1f30d9e96df6a9825a5030ade046d560332c19de74d93d591a18",
+        "size_bytes": 6
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/before-first-review.md.txt",
+        "sha256": "a1a803374090c8623d56defd11199eccb29d287922b65f1e4c59c7fb6a4aa392",
+        "size_bytes": 11465
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/before-glyph-correction.md.txt",
+        "sha256": "285bd3f12cd01f56d63b323099246d1b70baedadf12c4b4201c3ae87f3121b65",
+        "size_bytes": 11855
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/before-math-markup.md.txt",
+        "sha256": "bf97bc897190c4912ab9d40b5bf3b1df7a025999187b836693da02c6c9c7e9b8",
+        "size_bytes": 11783
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/before-positive-support.md.txt",
+        "sha256": "df5a42f1cfbb35ca6aaf6475ad5096bbc898e7c623eb50dd20313672f65a0cbf",
+        "size_bytes": 11828
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/before-premise-corrections.md.txt",
+        "sha256": "9fa2588387e2bc161e1951159833243429999e64d3e695919176afc32f6fd82d",
+        "size_bytes": 11792
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/draft.pdf",
+        "sha256": "ef80abc34f23dea661724306c9090c186eb346ba2dba4639529975a09b780973",
+        "size_bytes": 52526
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/false-control.after-clock.txt",
+        "sha256": "5287bbfc0327f0998fb7e4e02ca0416ef1c533010fdca166d2182c514eb8420b",
+        "size_bytes": 21
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/false-control.before-clock.txt",
+        "sha256": "5287bbfc0327f0998fb7e4e02ca0416ef1c533010fdca166d2182c514eb8420b",
+        "size_bytes": 21
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/false-control.exit.txt",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/false-control.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/false-control.stdout.txt",
+        "sha256": "d9dbf94b05b8314af9ca7f2034e92685c33447917605a7243b1099c693a12e5e",
+        "size_bytes": 4
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/positive-support-counterexample.smt2.txt",
+        "sha256": "b6f18545cb693a179c74c5adfc37d4694409ce08c1fb7412a2e7ef695daa3cc3",
+        "size_bytes": 1662
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/positive-support.after-clock.txt",
+        "sha256": "2b2294079d993c8d939af2b5c77b88123d50a4d1bd378622dcb785700d8f5d1b",
+        "size_bytes": 21
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/positive-support.before-clock.txt",
+        "sha256": "2b2294079d993c8d939af2b5c77b88123d50a4d1bd378622dcb785700d8f5d1b",
+        "size_bytes": 21
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/positive-support.exit.txt",
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "size_bytes": 2
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/positive-support.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/positive-support.stdout.txt",
+        "sha256": "c2af3da181f0cb683d48aba3b47c40b7f3814d13fa817ae57f7f098acb636fca",
+        "size_bytes": 10
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/positive-support.version.txt",
+        "sha256": "b5a56c4665985ee7fe2444f5e4264a71463d7f635c992b47e85587d74c26cac5",
+        "size_bytes": 27
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/application-screen-20261001/rejected-glyph.pdf",
+        "sha256": "b403c2923862e239cef90c6f2d0ed4dfe811289299ff05a703668372d4ddfd13",
+        "size_bytes": 52540
       },
       {
         "git_mode": "100644",
@@ -30310,7 +30490,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "d3525e58384b8deefa9705ee2ff332d1a6d8c6c21e45ed07b765b50d12fc2b8a",
+        "sha256": "8480928633a4f9304bcfc362302ffd691b2e24bd4036c8a7beaaf85cf2124014",
         "size_bytes": 138785
       },
       {
@@ -31262,8 +31442,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "67d9befdd9821ac4199f08e4adcb4c498dbadb94285765b86a81042066eed8fc",
-    "entry_count": 5186
+    "entries_sha256": "063ab0c6d0db8cb8d2e683291750bcc0fcbe8413562f6ff1fdec3662f813282c",
+    "entry_count": 5216
   },
   "subprojections": [
     {
@@ -31291,7 +31471,7 @@
       ]
     },
     {
-      "entries_sha256": "04f9ddcf29ad8d99e9e57d510471a9545ffdb958e7440c981a7d261d012587c1",
+      "entries_sha256": "9a7f0bc7059c7f83d8eebaf35fec492f2bc9c76d4dc40290bcc74ff065779679",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

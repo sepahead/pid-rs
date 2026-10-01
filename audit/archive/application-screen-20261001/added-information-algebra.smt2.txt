@@ -1,0 +1,11 @@
+; Exact-real scalar identity only. Not a finite-law or estimator proof.
+(set-logic QF_LRA)
+(declare-const i1 Real)
+(declare-const i2 Real)
+(declare-const ij Real)
+(declare-const r Real)
+(define-fun u2 () Real (- i2 r))
+(define-fun syn () Real (+ (- ij i1 i2) r))
+(assert (not (= (+ u2 syn) (- ij i1))))
+(check-sat)
+(exit)

@@ -1,0 +1,102 @@
+{
+  "schema": "pid-rs/application-screen-archive-observations/v1",
+  "authority": "derived_sanitized_summary_not_raw_receipt",
+  "scientific_acceptance": false,
+  "formal_acceptance": false,
+  "active_publication_acceptance": false,
+  "application_improvement_demonstrated": false,
+  "existing_four_profile_archive_checker_coverage": false,
+  "declared_formal_pdf_set_admission": false,
+  "observation_date": "2026-10-01",
+  "defining_pid": "finite_categorical_Makkeh_Gutknecht_Wibral_arxiv_2002.03356v5",
+  "units": "nats",
+  "scope": "selected_old_recent_and_bound_application_screen_not_exhaustive",
+  "solver": {
+    "observed_version": "Z3 version 4.16.0 - 64 bit",
+    "native_installation_attestation": false,
+    "queries": [
+      {
+        "source": "added-information-algebra.smt2.txt",
+        "stdout": "algebra.stdout.txt",
+        "result_sequence": ["unsat"],
+        "actual_exit": 0,
+        "stderr_bytes": 0,
+        "scope": "exact_real_scalar_cancellation_only"
+      },
+      {
+        "source": "added-information-false-control.smt2.txt",
+        "stdout": "false-control.stdout.txt",
+        "result_sequence": ["sat"],
+        "actual_exit": 0,
+        "stderr_bytes": 0,
+        "scope": "deliberately_false_scalar_equality_control"
+      },
+      {
+        "source": "positive-support-counterexample.smt2.txt",
+        "stdout": "positive-support.stdout.txt",
+        "result_sequence": ["unsat", "sat"],
+        "actual_exit": 0,
+        "stderr_bytes": 0,
+        "scope": "ground_four_state_rational_boolean_support_example_not_general_decoder"
+      }
+    ],
+    "version_custody": "one_positive_support_campaign_version_file_not_binary_or_each_invocation_attestation",
+    "probability_chain_rule_proved_by_scalar_query": false,
+    "general_decoder_or_pid_theorem_proved": false
+  },
+  "rendering": {
+    "rejected": {
+      "path": "rejected-glyph.pdf",
+      "source": "before-glyph-correction.md.txt",
+      "pages": 4,
+      "bytes": 52540,
+      "sha256": "b403c2923862e239cef90c6f2d0ed4dfe811289299ff05a703668372d4ddfd13",
+      "actual_producer_exit": 1,
+      "child_exits": [0, 0, 0, 0],
+      "reason": "three_missing_subscript_two_glyphs_under_unchanged_gate",
+      "status": "rejected_preserved_not_replayed"
+    },
+    "successor": {
+      "path": "draft.pdf",
+      "source": "EXPOSITION.md.txt",
+      "pages": 4,
+      "bytes": 52526,
+      "sha256": "ef80abc34f23dea661724306c9090c186eb346ba2dba4639529975a09b780973",
+      "actual_producer_exit": 0,
+      "child_exits": [0, 0, 0, 0],
+      "source_change": "exactly_three_CO2_labels_changed_to_ASCII",
+      "status": "bounded_private_draft_handoff_not_active_publication"
+    },
+    "all_pages_color_and_gray_inspected_locally": true,
+    "high_resolution_pages_inspected_locally": [1, 2, 3],
+    "raw_logs_rasters_and_receipts_in_public_packet": false,
+    "repeat_byte_equality_established": false,
+    "portable_original_file_annotations": false,
+    "pdf_a_pdf_ua_printer_certification": false
+  },
+  "finite_event_dependency": {
+    "source_sha256": "51eb4d2c136be5c49481106a00c20f3f66da56a128d4686a5278c8ad90579bf1",
+    "report_source_sha256": "a63a5e1b2d2ed1f4bc17ced994a30aef07a304c22ee4f7e06ffeaeda022a3961",
+    "report_pdf_sha256": "fc2bb774047cfeed0255edfe066f6c7cd03b828783fca9260f52235c001e81bb",
+    "proof_preimages_in_this_archive": false,
+    "scope": "positive_support_or_insertion_and_cumulative_components_not_meet_inverse_atoms",
+    "digest_pointers_provide_recovery": false
+  },
+  "application_status": {
+    "office_occupancy": "existing_negative_record_not_new_experiment",
+    "crebain_rgb_acoustic_retention": "unrun",
+    "zapbench_context_selection": "unrun",
+    "flux_prisoma_adoption": "not_adopted_in_inspected_local_revisions",
+    "unique_plus_synergy_selector": "rejected_as_same_law_CMI_equivalent_not_new_identity"
+  },
+  "omitted_private_evidence": [
+    "raw_build_streams_logs_machine_path_receipts",
+    "raw_review_provider_process_records",
+    "full_rasters_and_replay_inputs",
+    "local_endpoint_map",
+    "finite_event_proof_and_report_preimages"
+  ],
+  "whole_folder_successor": false,
+  "off_host_custody_of_omitted_private_bytes_established": false,
+  "cleanup_clearance": false
+}
