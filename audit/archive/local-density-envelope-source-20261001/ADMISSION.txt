@@ -1,0 +1,96 @@
+Restricted integral envelope v2: source-writing admission only
+Author responsibility: Sepehr Mahmoudian. 1 October 2026.
+
+Root read the complete eight-file v1 source packet43408B, independent launch
+criteria7247e6dd and receipt e8eaaedba4b48c4c19e2e29c0e74a04d15ff5029f370b37ccf0bae6887db47b7,
+and independent closure criteria f3d11e09/design
+94020b0c5410eb569283219db63b31608a91c82ae4c706d58c6da5b1463eb4ce.
+V1 is preserved unexecuted/no-launch. Its two prospective proof slots were never
+admitted or spent. Source review found assurance, discarded-consumer and final
+external-caller accounting gaps. Do not repair v1 or reinterpret its predicate.
+
+Choose a separately reviewed source revision for the SAME six propositions,
+using named raw consumer theorems and a universe-aware exact export/kind/axiom
+judge. Freeze complete dependency custody and genuine causal fault controls
+prospectively. Counts/consensus/source compatibility are not acceptance.
+
+Only this new ignored lane may be written. Exactly eight regular text sources,
+aggregate<=49152B, individual<=16384B:
+ADMISSION.txt (root-owned, immutable to author);
+TASK.txt; JUDGMENT.txt; LocalDensityEnvelopeContract.lean;
+LocalDensityEnvelopeConsumers.lean; LocalDensityEnvelopeJudge.lean;
+CONTROL-MATRIX.txt; SOURCE-RECEIPT.txt.
+Author may create only the seven non-admission roles. Use apply_patch for edits;
+exact contract cp-p/cmp preservation is allowed. Contract remains byte-identical
+to v1 SHA69c85efa930cd3e5d120c2a3bdd7a5750cab4548e67ee89dc634de40db4c0848.
+No proof candidate, generic/fault executable implementation, wrapper, parser,
+PINS, seal, permission, ledger or execution directory may be created now.
+
+Source design requirements
+Retain all domains, actual restricted integral, local finite measure, positive
+volume/anchor, integrability, a.e. two-sided envelope and four true controls.
+Candidate exports remain exactly six LocalDensityEnvelopeProofs names from v1.
+First three are universe-polymorphic; last three are closed real controls.
+Use six distinct fixed named raw consumer theorem exports with expanded types,
+not examples. Full type equality, theorem kind, level/binder/instance structure,
+public roster and transitive axiom subset must be checked. Allowed axioms remain
+only propext, Classical.choice, Quot.sound. No authored truth assumption in the
+production contract/judge. Prefer the existing standard Meta equality/collector
+APIs; do not change transparency, heartbeats, recursion, kernel or other options.
+Any metadata formatting must be explicitly separated from proof evaluation.
+Raw consumer terms bind candidate exports; no target proof body in the judge.
+
+List exact concrete fault transformations, expected FIRST causal fence and
+complete status/evidence obligations. Cover shadows, wrong/weak/missing/extra
+exports, hidden receiver, kind, direct/helper/imported sorry, authored axiom,
+forbidden execution/import, ambient/replacement/stale routes, missing/crashed/
+timed-out/skipped verification, malformed/missing/duplicate/truncated records
+and checking-to-verdict/capture drift. Mathematical witnesses do not replace
+these controls. Generic positive fixtures are not six-target success. Do not
+disable strict options to force a malformed candidate into a deeper check.
+Do not implement these fixtures or execute any control in this source phase.
+
+Specify complete stock-header/serialized-import/source-object/runtime routing
+and before-after custody, including automatic Init and module edge flags.
+Stock --deps-json has positional entries and per-input errors despite process0;
+all entries must be valid, joined and complete. No regex-only closure claim.
+Fix candidate's one import and all effective search order; no undeclared tactic
+imports or cache writes. Full import identities are not authenticated builds.
+Include final external root invoking evidence in the whole closed accounting.
+Keep cooperative ownership/immutability distinct from hostile OS containment.
+
+Prospective tools only
+Root read current upstream notices and provider metadata; final soundness
+disposition is pending. Proposed separate official stock Lean4.34.1 commit
+5045d0056413266e57c625dcd7c365b10e377c52 and matching Mathlibv4.34.1 commit
+d13f23b723b8a846827a245b89c10fc7d3f11612. The exact tagged Mathlib toolchain
+declares leanprover/lean4:v4.34.1. No new tool/cache has been downloaded or built.
+Actual binary/source/artifact paths and hashes must be qualified and bound
+before any candidate or launch. Do not use4.33 imports/objects as4.34 evidence.
+Preserve every old tool, receipt and mathematical/negative record. This source
+admission neither activates a repository baseline nor authorizes provisioning.
+
+Prospective budget specification, not execution authority
+Keep TWO proof-development slots, stop at first whole-six acceptance or two
+spent failures; no preliminary proof probes or reset. Candidate<=16384B and
+per-attempt ledger<=8192B. Compile180s/kernel900s; proof defaults unchanged.
+Separately enumerate bounded infrastructure/header/judge/control native calls
+and original proof-stage calls; propose at most96 native invocations total and
+whole workflow<=5400s, captures<=4MiB/file, all task/invoking outputs<=256MiB.
+These are NEW explicit ceilings for the necessary controls, not extra proof
+slots. Choose smaller fixed counts where the concrete roster permits. Counts
+must match final implementation/admission before launch; any unknown stays HOLD.
+Library provisioning is a different operational task, not hidden proof setup.
+Retain complete commands/environment/clocks/status/streams/artifact joins and
+all failed/partial/cap/capture records. No skip, warning, drift or missing record
+is success; no repeated used caller or changed frozen predicate after feedback.
+
+Reading and source phase exclusions
+Read both independent critiques and every source acted on yourself; do not
+transfer old acceptance. Record prior exposure/shared host/model/tool cuts.
+No script/import/syntax/compiler/Lean/parser/query/kernel/solver/test/native/
+PDF/Git/network/cache/tool execution or mutation. Read/hash/count text only.
+Root must read all final files and obtain an independent-first source critique
+before any later candidate, infrastructure execution or formal launch admission.
+No new theorem, Wibral PID, hyperbolic/statistical/application/publication/main
+credit or research-program closure. Goal remains active.

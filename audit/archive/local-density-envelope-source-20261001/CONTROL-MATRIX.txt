@@ -1,0 +1,104 @@
+Restricted integral envelope v2: fixed prospective causal controls
+Author responsibility: Sepehr Mahmoudian. Text only; no fixtures/execution.
+
+Each transform needs immutable actual bytes/hash/location/argv/expected FIRST
+fence/exit/streams in a later admitted roster. Unknown implementation means HOLD.
+No strict-option relaxation, used-source mutation or syntax-error substitution.
+The four true contract witnesses are not infrastructure fault controls. Early
+refusal is not deeper coverage. All helper compilations count in stated maxima.
+
+Generic positive baseline<=6 calls: version, generic Contract/Good/Consumers/
+Judge compiles, fresh kernel. Fixed known-true expanded identity/True targets
+include one-universe and closed cases. Exact production canonical/closed/level/
+check functions reused; only imports, registry/prefix/target names differ. Root
+must compare the projection. Complete positive stream/replay precede faults.
+This baseline supplies no integral solution or six-target acceptance.
+
+G01--G18 generic semantic faults<=27 calls total. Each max2 row permits one
+mutant compile then isolated judge compile until FIRST fence; no kernel/retry.
+Isolation removes production-consumer masking; positive consumers remain in
+baseline. Forbidden-source cases stop BEFORE calls. Strict sorry cases stop at
+compiler, without permissive helper precompilation or hidden calls.
+G01(2) expanded identity type -> definitionally equal named alias:
+DENSITY_STRUCTURE; alias mathematics is not being called false.
+G02(2) add explicitly unused inferable [Inhabited Nat] argument:
+DENSITY_STRUCTURE; retain a true proof.
+G03(2) add unused explicit Nat receiver to type/proof: DENSITY_STRUCTURE.
+G04(2) theorem -> def, same name/raw type/value: DENSITY_KIND.
+G05(2) rename one leaf, fixed registry unchanged: DENSITY_ROSTER.
+G06(2) omit one declaration: DENSITY_ROSTER.
+G07(2) add public extra : True in expected namespace: DENSITY_ROSTER.
+G08(1) direct sorry body: strict compiler warning/error, no judge.
+G09(1) private sorry helper used in target: same strict compiler FIRST fence.
+G10(1) separate declared imported sorry helper: compile helper strictly; fail
+BEFORE import/judge. NOT independent corrupted imported-axiom-cache coverage.
+G11(2) private authored exact-type axiom used by theorem: DENSITY_AXIOM in
+isolated judge. Qualified fixture only, forbidden in production.
+G12(0) unsafe helper: source-policy rejection, no unsafe execution.
+G13(0) partial helper: source-policy rejection.
+G14(0) undeclared import: header/source-route rejection.
+G15(2) identity type/proof -> True/True.intro: DENSITY_STRUCTURE.
+G16(2) specialize polymorphic identity to Type0: DENSITY_LEVELS FIRST.
+G17(2) theorem -> opaque, same name/type/value: DENSITY_KIND.
+G18(2) genuinely used second universe v and implicit beta : Type v receiver
+with identity conjunct: DENSITY_LEVELS FIRST, not fake malformed binder syntax.
+
+P01--P06 actual-source faults<=18 calls: after complete exact-six positive
+baseline only. Prebound separate copies; each Proofs/Consumers/Judge max3 until
+FIRST fence. No new solution/search/kernel/slot. Source guards may reject first;
+isolated generic counterpart tests the deeper predicate. Bind actual first
+exit/stream before launch, not post hoc; inability to bind it means HOLD.
+P01 mean_bounds -> True/True.intro under same FQN: raw consumer fails FIRST;
+otherwise structure must reject. Unrelated syntax failure is not coverage.
+P02 add explicit unused Nat receiver and introduce it in proof: raw consumer
+application fails FIRST; if a chosen receiver is inferable, structure rejects.
+P03 theorem mean_bounds -> def unchanged type/body: DENSITY_KIND after consumers.
+P04 omit normalized_log_envelope: consumer missing-constant FIRST; G06 tests roster.
+P05 add public extra : True := True.intro: DENSITY_ROSTER after consumers.
+P06 exact-type private authored axiom replacing mean_bounds proof: production
+source-policy FIRST; isolated G11 tests collector, not string scanning alone.
+
+A01--A20 artifact/refusal faults: immutable metadata copies, no Lean replay.
+Same canonical schema/joins, normal/-O equal outcomes/full output. Never change
+library roots/import corrupted binaries. Before launch bind each distinct
+subcase, single field/row/file delta, hash and exact first refusal. Metadata
+faults test validator refusal, not hostile OS/disk containment.
+A01 append byte to copied fixed contract, old pin: fixed digest mismatch.
+A02 four separate LEAN_PATH/LEAN_SRC_PATH/LEAN_SYSROOT/ELAN_TOOLCHAIN settings:
+clean-environment guard.
+A03 prepend resolving shadow root: root-order/unique-resolution mismatch.
+A04 flip copied olean byte, unchanged source: object pin mismatch, no import.
+A05 remove required roster entry/object: dependency census/role mismatch.
+A06 change serialized edge, unchanged header: header/object graph mismatch.
+A07 positional parser JSON errors nonempty with process0: per-input error.
+A08 separate deleted/duplicated/reordered input rows: positional count/join.
+A09 separate missing/skipped/nonzero/crash/timeout/unknown kernel states:
+required-stage refusal, not inferred pass from silence.
+A10 remove DENSITY_JUDGE_DONE line: complete terminal schema rejection.
+A11 duplicate FQN replacing another: exact ordered unique roster mismatch.
+A12 add thirteenth record: exact record-count/EOF rejection.
+A13 forge accepted status while nonzero exit/wrong canonical field remains:
+stage/type consistency refusal.
+A14 add sorryAx in recorded full axiom array: allowlist refusal.
+A15 separate invalid UTF8/truncated canonical JSON: decode/schema refusal.
+A16 conflicting duplicate status JSON key: duplicate-key refusal, not last wins.
+A17 separate exclusive-open/write/FD-close/stat/hash error statuses: capture
+integrity FIRST; prewritten zero cannot mask failure. Actual syscall fault
+containment requires separately bound caller tests, not these metadata fixtures.
+A18 change input digest after checking endpoint: checking-to-verdict mismatch.
+A19 omit external invoking request/terminal or exclude root file from total:
+whole closed required-role/accounting refusal.
+A20 separate >4MiB file/>256MiB aggregate/symlink/nonregular/unknown-role/omitted
+file-list metadata: cap/type/census refusal. Large metadata counts are not huge
+materialized files; positive actual-byte census remains mandatory.
+
+Remaining calls: headers/infrastructure<=8; two proof slots version+four
+compiles+kernel=6 each,<=12; four normal/-O validator pairs<=8 (closure,
+generic/artifact controls, slot1, slot2). No Lean replay in mode checks.
+6+27+18+8+12+8=79 scheduled verification calls; complete ancillary native command
+roster must reconcile within96 BEFORE launch. Unallocated17 permit no extra
+trials. Unknown counts remain HOLD. Compile180s/kernel900s/whole5400s;
+4MiB/file/256MiB including external invoking closure. Every partial/failure,
+argv/environment/clocks/status/stream/source join and later not-run state is
+retained. Unexpected fault success, unrelated syntax refusal, drift or missing/
+capped record rejects qualification. No fixture/control exists or ran here.

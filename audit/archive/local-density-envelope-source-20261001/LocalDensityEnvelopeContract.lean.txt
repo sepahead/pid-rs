@@ -1,0 +1,104 @@
+/-
+Author: Sepehr Mahmoudian
+Source contract only. No proposition below is asserted or proved here.
+Imports and fixed options are proposed source, not an executed qualification.
+-/
+import Mathlib.MeasureTheory.Integral.Bochner.Set
+import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.MeasureTheory.Measure.Dirac
+
+set_option autoImplicit false
+set_option warningAsError true
+
+open MeasureTheory
+
+universe u
+
+namespace LocalDensityEnvelopeContractDesign
+
+noncomputable def localMean {α : Type u} [MeasurableSpace α]
+    (μ : Measure α) (E : Set α) (f : α → ℝ) : ℝ :=
+  (∫ x in E, f x ∂μ) / μ.real E
+
+def MeanBoundsContract : Prop :=
+  ∀ (α : Type u) [MeasurableSpace α] (μ : Measure α) (E : Set α)
+    (f : α → ℝ) (a ε : ℝ),
+    MeasurableSet E →
+    IsFiniteMeasure (μ.restrict E) →
+    0 < μ.real E →
+    IntegrableOn f E μ →
+    0 < a →
+    0 ≤ ε →
+    (∀ᵐ x ∂(μ.restrict E),
+      a * Real.exp (-ε) ≤ f x ∧ f x ≤ a * Real.exp ε) →
+    a * Real.exp (-ε) ≤ localMean μ E f ∧
+      localMean μ E f ≤ a * Real.exp ε
+
+def NormalizedLogEnvelopeContract : Prop :=
+  ∀ (α : Type u) [MeasurableSpace α] (μ : Measure α) (E : Set α)
+    (f : α → ℝ) (a ε : ℝ),
+    MeasurableSet E →
+    IsFiniteMeasure (μ.restrict E) →
+    0 < μ.real E →
+    IntegrableOn f E μ →
+    0 < a →
+    0 ≤ ε →
+    (∀ᵐ x ∂(μ.restrict E),
+      a * Real.exp (-ε) ≤ f x ∧ f x ≤ a * Real.exp ε) →
+    |Real.log (localMean μ E f / a)| ≤ ε
+
+def ZeroVolumeEmptyControl : Prop :=
+  ∀ (α : Type u) [MeasurableSpace α] (μ : Measure α) (f : α → ℝ)
+    (a ε : ℝ), 0 < a → 0 ≤ ε →
+    MeasurableSet (∅ : Set α) ∧
+    IsFiniteMeasure (μ.restrict (∅ : Set α)) ∧
+    μ.real (∅ : Set α) = 0 ∧
+    IntegrableOn f (∅ : Set α) μ ∧
+    (∀ᵐ x ∂(μ.restrict (∅ : Set α)),
+      a * Real.exp (-ε) ≤ f x ∧ f x ≤ a * Real.exp ε) ∧
+    localMean μ (∅ : Set α) f = 0 ∧
+    ¬(a * Real.exp (-ε) ≤ localMean μ (∅ : Set α) f) ∧
+    |Real.log (localMean μ (∅ : Set α) f / a)| = 0
+
+noncomputable def controlMeasure : Measure ℝ := Measure.dirac 0
+
+def PositiveConstantDensityControl : Prop :=
+  MeasurableSet (Set.univ : Set ℝ) ∧
+  IsFiniteMeasure (controlMeasure.restrict Set.univ) ∧
+  controlMeasure.real Set.univ = 1 ∧
+  IntegrableOn (fun _ : ℝ => (1 : ℝ)) Set.univ controlMeasure ∧
+  (∀ᵐ _x ∂(controlMeasure.restrict Set.univ),
+    (1 : ℝ) * Real.exp 0 ≤ 1 ∧ 1 ≤ (1 : ℝ) * Real.exp 0) ∧
+  (∫ x in Set.univ, (fun _ : ℝ => (1 : ℝ)) x ∂controlMeasure) = 1 ∧
+  localMean controlMeasure Set.univ (fun _ : ℝ => (1 : ℝ)) = 1 ∧
+  |Real.log (localMean controlMeasure Set.univ (fun _ : ℝ => (1 : ℝ)) / 1)| = 0
+
+def MissingUpperBoundControl : Prop :=
+  MeasurableSet (Set.univ : Set ℝ) ∧
+  IsFiniteMeasure (controlMeasure.restrict Set.univ) ∧
+  controlMeasure.real Set.univ = 1 ∧
+  IntegrableOn (fun _ : ℝ => Real.exp (2 : ℝ)) Set.univ controlMeasure ∧
+  0 < Real.exp (2 : ℝ) ∧
+  (∀ᵐ _x ∂(controlMeasure.restrict Set.univ),
+    (1 : ℝ) * Real.exp (-1) ≤ Real.exp (2 : ℝ)) ∧
+  ¬(∀ᵐ _x ∂(controlMeasure.restrict Set.univ),
+    Real.exp (2 : ℝ) ≤ (1 : ℝ) * Real.exp 1) ∧
+  localMean controlMeasure Set.univ (fun _ : ℝ => Real.exp (2 : ℝ)) = Real.exp 2 ∧
+  ¬(|Real.log (localMean controlMeasure Set.univ
+      (fun _ : ℝ => Real.exp (2 : ℝ)) / 1)| ≤ (1 : ℝ))
+
+def MissingLowerBoundControl : Prop :=
+  MeasurableSet (Set.univ : Set ℝ) ∧
+  IsFiniteMeasure (controlMeasure.restrict Set.univ) ∧
+  controlMeasure.real Set.univ = 1 ∧
+  IntegrableOn (fun _ : ℝ => Real.exp (-2 : ℝ)) Set.univ controlMeasure ∧
+  0 < Real.exp (-2 : ℝ) ∧
+  (∀ᵐ _x ∂(controlMeasure.restrict Set.univ),
+    Real.exp (-2 : ℝ) ≤ (1 : ℝ) * Real.exp 1) ∧
+  ¬(∀ᵐ _x ∂(controlMeasure.restrict Set.univ),
+    (1 : ℝ) * Real.exp (-1) ≤ Real.exp (-2 : ℝ)) ∧
+  localMean controlMeasure Set.univ (fun _ : ℝ => Real.exp (-2 : ℝ)) = Real.exp (-2) ∧
+  ¬(|Real.log (localMean controlMeasure Set.univ
+      (fun _ : ℝ => Real.exp (-2 : ℝ)) / 1)| ≤ (1 : ℝ))
+
+end LocalDensityEnvelopeContractDesign

@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "02d48285960f5112c441102a87d80c65b6c1d165820ad2a48b01cbabf04762de",
-        "size_bytes": 324799
+        "sha256": "7773f4d19cbcbd0fef2cf6a497cd54b16da88a781e7348c74a3efb7cb012c964",
+        "size_bytes": 325127
       },
       {
         "git_mode": "100644",
@@ -538,8 +538,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "93e960da80d10506bd717f0ec96bbba02e4a06ef645b76bf6a249a448a369244",
-        "size_bytes": 37203
+        "sha256": "c49d83f58fdbe72af31f17b26a360236e8a53347b100d65112e1b5733437076d",
+        "size_bytes": 39109
       },
       {
         "git_mode": "100644",
@@ -1158,6 +1158,66 @@
         "path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-eff7f5a9a1907a8b5e90c19e51872ed82a1d3e5ebaa17a689a563009dcde825b-AGENTS.md.txt",
         "sha256": "eff7f5a9a1907a8b5e90c19e51872ed82a1d3e5ebaa17a689a563009dcde825b",
         "size_bytes": 76923
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/local-density-envelope-source-20261001/ADMISSION.txt",
+        "sha256": "d978bbbfe4c4e144d3759450a34cef9858d60f9130d4ce91517ec06127599fd6",
+        "size_bytes": 6411
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/local-density-envelope-source-20261001/ARCHIVE.md",
+        "sha256": "b57df7a2e264f332d6c7468e57e47b63c792160e2dc63793a38da619ed381e95",
+        "size_bytes": 3385
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/local-density-envelope-source-20261001/CONTROL-MATRIX.txt",
+        "sha256": "eafb08007a191dcac3b4f27bf88c4e0983b08edd893d2efdc7295dc9256b9596",
+        "size_bytes": 7097
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/local-density-envelope-source-20261001/INDEX.json",
+        "sha256": "55e4bfeaec92dc83f2b5160a897c00cc46fdcc2e5ed83eeab6e1d1569d941601",
+        "size_bytes": 1549
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/local-density-envelope-source-20261001/JUDGMENT.txt",
+        "sha256": "0319f3a34196da775aea2a1f88dedd766962add31e8581cfd27b65b8d907e757",
+        "size_bytes": 7923
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/local-density-envelope-source-20261001/LocalDensityEnvelopeConsumers.lean.txt",
+        "sha256": "feb40a0dc7a2fb3414151a118612a24bf85aee763253a228ffea8a4e0925cbe4",
+        "size_bytes": 5246
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/local-density-envelope-source-20261001/LocalDensityEnvelopeContract.lean.txt",
+        "sha256": "69c85efa930cd3e5d120c2a3bdd7a5750cab4548e67ee89dc634de40db4c0848",
+        "size_bytes": 4280
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/local-density-envelope-source-20261001/LocalDensityEnvelopeJudge.lean.txt",
+        "sha256": "cbb7045c61510ab13e5de89e9a7834b43dc57e1af0fec4cb473fa68e706a864b",
+        "size_bytes": 5461
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/local-density-envelope-source-20261001/SOURCE-RECEIPT.txt",
+        "sha256": "b2a4741337c046738bc0cf88cd72838f48364d2ab506ab3f82cd359a600916d3",
+        "size_bytes": 3950
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/local-density-envelope-source-20261001/TASK.txt",
+        "sha256": "ccf8ba3a3200415d32512d2a3c89c0ad24b5d927bfd27e4904be780d79fe0654",
+        "size_bytes": 8495
       },
       {
         "git_mode": "100644",
@@ -30616,7 +30676,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "9520bc63db3939a1b237ef5ca6d04c3eb858bf7b502716d3953c876a97d72cdd",
+        "sha256": "3a001f92f515657bfea7af1643903ae53e785e49d421b0afb7ee9cdf59b66b51",
         "size_bytes": 138785
       },
       {
@@ -31568,8 +31628,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "f46dbb285771324ccacb85e25bb11e1d42fc6e4c301aa4f5b38f390fb6ac67a4",
-    "entry_count": 5237
+    "entries_sha256": "9f09aaeeb033310e03e31cc2d7778cdec8a7b8d3c0eb89f31f090990ed92a933",
+    "entry_count": 5247
   },
   "subprojections": [
     {
@@ -31597,7 +31657,7 @@
       ]
     },
     {
-      "entries_sha256": "51951aa33c427794ab8896b2f10e07254572836326152304af98792222c00030",
+      "entries_sha256": "376d499059e1fd1836912cf7140f9b40312c1491b8afa63a95a0e950ec121091",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

@@ -1,0 +1,115 @@
+Restricted integral envelope v2: fixed future acceptance predicate
+Author responsibility: Sepehr Mahmoudian. Source only; no actual verdict.
+
+J0 Authority. ADMISSION permits writing these seven roles, not candidate or
+execution. No launch until root has read every final source, obtained an
+independent-first critique, qualified the selected stock route, and separately
+admitted a complete immutable caller/fixture/parser/roster/census packet.
+Unknown qualification or any unresolved concrete source blocker means HOLD.
+
+J1 Scope and source. Require exact admitted eight-file packet, contract SHA
+69c85efa930cd3e5d120c2a3bdd7a5750cab4548e67ee89dc634de40db4c0848,
+six unchanged raw statements, namespaces, kinds, universe counts and source
+policy. Named consumer exports are mandatory. They contain no independently
+derived target proof: each only consumes the designated candidate export.
+Private helper/body review is complete, not inferred from hashes or a catalog.
+Source policy forbids trust injection and execution escapes; acceptance cannot
+be obtained merely by defeating an unimplemented string scanner.
+
+J2 Route custody. Before/after endpoints bind full effective import graph,
+header parsing, positional rows, edge flags, unique source/object/runtime and
+ordered roots. No input disappearance, root replacement, ambient override,
+undeclared import, stale/shadow object, altered stock/default or library write.
+Require source-to-object correspondence appropriate to the qualified route,
+not pretend binary hashes prove source reproducibility/authenticity. All
+assurance and provider/source-review cuts are explicit. Earlier 4.33 source
+API inspection does not qualify actual 4.34.1 behavior or its serialized ABI.
+
+J3 Controls first. CONTROL-MATRIX's immutable generic positive baseline must
+pass its fixed production-equivalent judge checks and fresh replay. Every
+semantic/artifact/refusal fault must fail at its bound FIRST reachable causal
+fence, with complete records and no positive success terminal. A syntax error
+is not a semantic control. Do not relax warningAsError or another predicate to
+reach a deeper fence. Early raw-consumer failure can legitimately mask later
+judge checks, but isolated well-formed generic faults must test the deep judge.
+Imported-sorry strict helper compilation tests the early fence only; it is NOT
+an independent demonstration that a corrupted imported axiom cache is caught.
+Any unexpected positive fault or unexplained refusal of the generic positive
+baseline stops qualification. Fixed infrastructure controls are not proof slots.
+
+J4 Actual ordered compilation. An admitted slot binds candidate bytes BEFORE
+one version query and Contract, Proofs, Consumers, Judge compiles. Every actual
+exit=0, complete stdout/stderr, warnings absent, fixed sources unchanged,
+objects present/regular and complete import/source/object identities. A stage
+not run is not pass. Compilation alone, #check text, source compatibility or
+an anonymous example does not establish persistent raw-consumer kernel credit.
+
+J5 Full expression/kind/universe judge. The actual source judge requires
+exact six-name Proofs and Consumers public rosters; each declaration must be
+ConstantInfo.thmInfo. First three exactly one universe parameter, last three
+zero, matching the fixed target definitions. Types and target values must be
+closed: no metavariables, free variables or loose de Bruijn indices.
+Universe parameter names are renamed positionally to fixed fresh names AFTER
+the count check. Canonicalization erases only binder names and mdata wrappers;
+it retains binderInfo, domains, bodies, constants, applications, projections,
+let nondependency flags and level structure. Expr.equal must then hold between
+FULL canonical actual type and expanded raw target. Standard isDefEq must also
+hold under default settings; no transparency or proof-resource override.
+This deliberately rejects even definitionally equal alias export types and
+extra unused inferable receivers. It is a fixed strict source contract, not
+a claim those equivalent formulations are mathematically false.
+
+J6 Axioms and complete records. Standard collectAxioms must find a subset of
+{propext, Classical.choice, Quot.sound} for ALL six candidate AND six consumer
+theorems. No sorryAx, authored truth axiom or other trust assumption. Imported
+collector metadata belongs to the qualified trusted runtime, not an independent
+proof of upstream soundness. Source manual review and actual fresh replay are
+also required. Judge must emit exactly six ordered DENSITY_EXPORT / paired
+DENSITY_CONSUMER JSON records, then exactly DENSITY_JUDGE_DONE 6 6 once.
+Each record's exact theorem/target/kind/universe count/full canonical type and
+target/axioms/status is independently parsed and joined to the frozen roster.
+Compare complete canonical fields, not only a printed header or positive word.
+Reject duplicate keys/names, extra records, invalid UTF8, ellipsis/truncation,
+missing terminal, malformed JSON or disagreeing type/axiom payloads. Constructor
+repr is metadata serialization, not a pretty-printer/proof-default override.
+Formatting size/compatibility must be qualified; no clipping to fit the cap.
+
+J7 Fresh kernel. Require one actual stock leanchecker replay on the current
+generated Judge artifact and its full admitted dependencies, after named raw
+consumers persist. Complete actual command/clocks/status/streams and artifact
+join required. Exit0 with complete empty expected streams is necessary, not
+alone sufficient. Missing/skipped/crashed/timed-out kernel refuses. No inference
+from discarded examples, an earlier object, prior packet or a manually labelled
+success. All twelve persistent types/kinds/axiom lists must be read completely.
+
+J8 Production faults. After the first whole canonical positive baseline, apply
+only prebound actual-source transformations. No new proof search, changed fixed
+judge or retry credit. Each fails at its bound earliest source/compile/consumer/
+judge fence. Generic controls and production faults have separate identities;
+neither is a renamed additional canonical proof attempt. If faults or closure
+fail, the partial canonical elaboration/kernel result is retained but task
+acceptance is refused. First complete acceptance stops all later proof slots.
+
+J9 Resource/status/capture closure. All actual calls fit the prospectively
+bound <=96 roster and5400s whole envelope; compile<=180s/kernel<=900s. Every
+file<=4MiB and closed aggregate<=256MiB, including invoking observations and
+final root census. Require successful exclusive writes/FD closure, complete
+argv/environment/UTC clocks/exit/streams, no status inference from silence.
+Input/source and checking-to-verdict endpoints must agree. Account every file,
+including failed and partial stages; reject symlinks/unknown roles or missing
+root invoking closure. Root transcription is labelled, not authenticated raw
+tool custody. Partial writes, zero-looking records after errors, unexpected
+stderr/warnings, signal/timeout, cap breach, nonzero/unknown or drift refuse.
+
+J10 Stopping and human disposition. Exactly two possible proof slots, first
+whole acceptance stops; no preliminary queries, reset or third attempt. Strict
+proof failure may inform final slot and that development exposure is retained.
+All controls/routing/defaults remain fixed before candidate. Root independently
+reads complete proof sources, actual evidence, refusals and final inventory;
+council agreement/counts do not override any predicate. An actual independent
+readback is shared-host/model/tool advice, not independent institutional trust.
+
+Allowed future status only: source unqualified / qualification refused / slot
+not run / actual rejected or incomplete / exact-six scoped formal acceptance.
+No Wibral-functional, hyperbolic/statistical/calibration/application/publication,
+mainline, original19, controller or research-program closure follows.

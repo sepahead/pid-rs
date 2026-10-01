@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve the [restricted-integral source design](audit/archive/local-density-envelope-source-20261001/ARCHIVE.md)
+  as incomplete, unexecuted inert text. Record its assumptions, unit distinctions,
+  missing shadow controls and retained negative evidence; grant no proof,
+  estimator, application or research-program closure.
+
 - Retain [native-event development sources and failed-control output](audit/archive/mgw-native-meet-20261001/INDEX.json)
   as inert text, without active formal or publication admission.
 

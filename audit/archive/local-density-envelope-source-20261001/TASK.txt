@@ -1,0 +1,124 @@
+Restricted integral envelope v2: fixed source task, not launch authority
+Author responsibility: Sepehr Mahmoudian. 1 October 2026.
+
+ADMISSION is authoritative. This eight-file source packet supersedes only the
+unexecuted v1 design. No candidate, fixture, caller or tool qualification exists
+here. Preserve v1 and both critiques; no old failure or assurance is converted
+into success. All six propositions are the exact 4280-byte contract SHA256
+69c85efa930cd3e5d120c2a3bdd7a5750cab4548e67ee89dc634de40db4c0848.
+
+Mathematical scope
+The first two propositions concern the ACTUAL restricted Bochner integral of
+a real function, divided by real set volume. The measurable type is arbitrary
+at universe u; the ambient measure need not be finite. Required hypotheses are
+a measurable set, finite restricted measure, strictly positive real volume,
+integrability on that set, positive anchor a, epsilon>=0 and a restricted a.e.
+two-sided exponential envelope. No supplied scalar mean bound replaces the
+integral. The upper/lower integral comparison and positive denominator must
+precede the logarithm argument. Units are natural-log units. No normalized PMF,
+IID, smooth density, sampling or finite-information premise is inferred.
+Four TRUE control targets retain the arbitrary empty-set witness, unit Dirac
+constant density, and positive exp(2)/exp(-2) examples missing respectively an
+upper/lower envelope. Real.log 0 is totalized to 0 in Lean: empty-set log zero
+is not evidence that a normalized positive-mean theorem holds at zero volume.
+
+Six candidate and six persistent raw-consumer theorem names
+LocalDensityEnvelopeProofs.{mean_bounds, normalized_log_envelope,
+zero_volume_empty, positive_constant_density, missing_upper_bound,
+missing_lower_bound}; corresponding LocalDensityEnvelopeConsumers names.
+Their fixed targets are respectively MeanBoundsContract,
+NormalizedLogEnvelopeContract, ZeroVolumeEmptyControl,
+PositiveConstantDensityControl, MissingUpperBoundControl,
+MissingLowerBoundControl in LocalDensityEnvelopeContractDesign.
+The first three have exactly ONE universe parameter; last three have NONE.
+All are expanded raw types, not aliases to the contract's Prop definitions.
+Binder names and source metadata may vary; binder annotations, domains,
+order, constants, applications, proposition structure and universes may not.
+The named consumer bodies only apply the corresponding candidate export.
+They persist in the environment for fresh replay, unlike discarded examples.
+
+Later candidate scope, only after independent source review and root admission
+At most two fresh proof slots. A candidate contains one import only:
+LocalDensityEnvelopeContract. Fixed autoImplicit=false, warningAsError=true.
+Exactly the six public theorem names above; private proof helpers are allowed.
+No declaration outside that namespace, authored axiom, sorry/admit, unsafe,
+partial, native_decide, oracle, new syntax/elaborator/attribute, run_cmd/run_tac,
+external execution, generated source, new import or changed option. No runtime,
+transparency, heartbeat, recursion, kernel or proof-default override. Ordinary
+library proof-producing tactics are allowed, not exempt from source/axiom/kernel
+checks. Future source validator/manual review must cover the complete body and
+the cooperative write scope, not just scan a few banned strings. Source policy
+is not hostile operating-system containment. Candidate<=16384B; ledger<=8192B.
+Fixed contract, consumers, judge, tools and dependencies are immutable to author.
+
+Future tool qualification, not inherited stock assurance
+Only a separately qualified stock Lean4.34.1 commit
+5045d0056413266e57c625dcd7c365b10e377c52 with matching Mathlibv4.34.1 commit
+d13f23b723b8a846827a245b89c10fc7d3f11612 is proposed. Actual paths, binary and
+runtime hashes, imported sources/objects, metadata and defaults are UNKNOWN.
+No provisioning is authorized. Root-relayed current stock-review HOLD for new
+4.33 deductions is not independently rechecked here; no 4.33 assurance transfers
+to 4.34.1. Proposed versions/commit identities alone are not qualification.
+
+Required complete import/source/object/runtime census before candidate
+Start with contract's three direct Mathlib imports, consumers' Proofs import,
+judge's Consumers, CollectAxioms, InstantiateLevelParams and Meta.Basic imports.
+Enumerate the effective ordered roots, automatic Init unless prelude, and every
+transitive import edge including module/public/meta/all flags. Use the reviewed
+shipped header parser in a prospectively bound batch, not regex-only closure.
+Its --deps-json output is positional: require one row per ordered input,
+result present and no per-input errors even if process exit=0. Recursively join
+each module to unique source and serialized import/object metadata; require
+consistent edges, source/olean identities and all effective runtime artifacts.
+Reject ambiguous roots, shadowing, missing imports, symlinks/unknown roles,
+source-object drift or unsupported metadata interpretation. Freeze directory
+membership/order, config/toolchain/package manifests and all selected hashes
+before candidate and before/after launch. No library rebuild/cache write or
+ambient LEAN_PATH/LEAN_SRC_PATH/LEAN_SYSROOT/ELAN_TOOLCHAIN route. Explicit root
+routing must be qualified without changing proof defaults. Hash joins do not
+authenticate builds, establish kernel soundness or prove upstream source review.
+
+Fixed future verification route
+Generic positive judge baseline and fixed faults first qualify infrastructure;
+they are not the six mathematical targets. Then an admitted proof slot has
+one stock version query, Contract/Proofs/Consumers/Judge compilations in order,
+and one fresh stock kernel replay on the generated Judge module importing the
+persistent consumer theorems. All source/body/type/kind/axiom records are read
+manually as well as structurally compared. A production positive baseline must
+precede the fixed actual-source fault variants; a generic fixture cannot replace
+that baseline. No changed predicate after feedback. Unexpected fixed-control
+behavior refuses qualification, not another proof-development opportunity.
+
+Prospective resource and call budget
+Hard ceilings: 96 native/verifier invocations total, whole workflow5400s,
+compile180s each, fresh kernel900s each, every output file4MiB, complete closed
+task plus invoking evidence256MiB. Stock proof defaults unchanged. Fixed planned
+category ceilings: header/infrastructure8; generic positive baseline6;
+18 generic semantic faults27; two proof slots6 each=12;
+six actual-source faults3 each=18; four normal/optimized metadata pairs8.
+Total planned verification/query calls79; 17 remain unallocated, NOT authorized
+extra trials. CONTROL-MATRIX fixes these categories. No hidden fixture helper
+compilation, proof probe, query or reexecution may be charged elsewhere.
+Final implementation must provide the complete exact command/process roster,
+including ancillary native programs and header/verifier calls, reconcile it
+with <=96 before launch and bind all per-call envelopes. These prospective
+categories alone are NOT a complete process census. If final counts/routing are
+unknown or exceed the ceiling, HOLD; obtain separate admission rather than
+reinterpret or waive the limit. Unused second slot is explicitly not run.
+Stop at first whole-six accepted attempt, or after two spent proof failures.
+No initial probe, reused caller, concealed attempt, slot reset or third attempt.
+
+Evidence and scope firewall
+Require complete argv/environment/clocks/exit/streams for each called stage;
+explicit not-run states after a stop; generated object/source joins; unchanged
+fixed-input endpoints; and a closed all-file census including external invoking
+tool request/observations/terminal and root accounting after caller closure.
+No truncated, skipped, missing, nonzero, warning, unknown, drift or cap record
+is success. Capture failure preserves partial evidence and refuses; never
+substitute a retrospective account for missing contemporaneous custody.
+This source packet proves nothing. Later success would concern only two local
+integral propositions and four controls, not density representation, product
+ball volume, pushforward/gauge/hyperbolic geometry, adaptive-radius statistics,
+expectation interchange, Rust/binary64 refinement, calibration, Wibral PID,
+original nineteen Fin3 obligations, Programs A--E, application, publication,
+mainline or research-program closure. All old campaigns remain untouched.

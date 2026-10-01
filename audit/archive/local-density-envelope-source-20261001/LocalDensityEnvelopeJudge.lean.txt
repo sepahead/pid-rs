@@ -1,0 +1,108 @@
+/- Trusted source judge only; not compiled or qualified. No proof defaults changed.
+Canonical constructor dumps below are metadata, not pp/proof-option overrides. -/
+import LocalDensityEnvelopeConsumers
+import Lean.Util.CollectAxioms
+import Lean.Util.InstantiateLevelParams
+import Lean.Meta.Basic
+
+set_option autoImplicit false
+set_option warningAsError true
+
+open Lean Meta Elab Command
+namespace LocalDensityEnvelopeJudge
+
+structure Entry where
+  candidate : Name
+  consumer : Name
+  target : Name
+  levels : Nat
+
+def entries : List Entry := [
+  ⟨``LocalDensityEnvelopeProofs.mean_bounds, ``LocalDensityEnvelopeConsumers.mean_bounds,
+    ``LocalDensityEnvelopeContractDesign.MeanBoundsContract, 1⟩,
+  ⟨``LocalDensityEnvelopeProofs.normalized_log_envelope, ``LocalDensityEnvelopeConsumers.normalized_log_envelope,
+    ``LocalDensityEnvelopeContractDesign.NormalizedLogEnvelopeContract, 1⟩,
+  ⟨``LocalDensityEnvelopeProofs.zero_volume_empty, ``LocalDensityEnvelopeConsumers.zero_volume_empty,
+    ``LocalDensityEnvelopeContractDesign.ZeroVolumeEmptyControl, 1⟩,
+  ⟨``LocalDensityEnvelopeProofs.positive_constant_density, ``LocalDensityEnvelopeConsumers.positive_constant_density,
+    ``LocalDensityEnvelopeContractDesign.PositiveConstantDensityControl, 0⟩,
+  ⟨``LocalDensityEnvelopeProofs.missing_upper_bound, ``LocalDensityEnvelopeConsumers.missing_upper_bound,
+    ``LocalDensityEnvelopeContractDesign.MissingUpperBoundControl, 0⟩,
+  ⟨``LocalDensityEnvelopeProofs.missing_lower_bound, ``LocalDensityEnvelopeConsumers.missing_lower_bound,
+    ``LocalDensityEnvelopeContractDesign.MissingLowerBoundControl, 0⟩]
+
+/- Total structural normalization: erase only binder names and metadata wrappers.
+All binder annotations, domains, bodies, constants, applications and levels stay.
+It is stricter than logical equivalence; exports must use expanded raw types. -/
+def canonical : Expr → Expr
+  | .app f a => .app (canonical f) (canonical a)
+  | .lam _ t b bi => .lam .anonymous (canonical t) (canonical b) bi
+  | .forallE _ t b bi => .forallE .anonymous (canonical t) (canonical b) bi
+  | .letE _ t v b nd => .letE .anonymous (canonical t) (canonical v) (canonical b) nd
+  | .mdata _ b => canonical b
+  | .proj n i b => .proj n i (canonical b)
+  | e => e
+
+def closed (e : Expr) : Bool := !e.hasMVar && !e.hasFVar && !e.hasLooseBVars
+
+def normalizeLevels (e : Expr) (names : List Name) : Expr :=
+  let levels := (List.range names.length).map fun i =>
+    mkLevelParam (Name.str .anonymous s!"density_universe_{i}")
+  e.instantiateLevelParams names levels
+
+def checkRoster (prefix : String) (expected : List Name) : MetaM Unit := do
+  let env ← getEnv
+  let observed := env.constants.toList.filterMap fun (name, _) =>
+    if name.toString.startsWith prefix then some name else none
+  unless observed.length == expected.length &&
+      observed.all expected.contains && expected.all observed.contains do
+    throwError "DENSITY_ROSTER: {prefix} expected exactly {expected.length} public names"
+
+def checkDeclaration (name target : Name) (levelCount : Nat) : MetaM Json := do
+  let actual ← getConstInfo name
+  match actual with
+  | .thmInfo _ => pure ()
+  | _ => throwError "DENSITY_KIND: {name} is not a theorem"
+  let expected ← getConstInfoDefn target
+  unless actual.levelParams.length == levelCount && expected.levelParams.length == levelCount do
+    throwError "DENSITY_LEVELS: {name} has the wrong universe parameter structure"
+  unless closed actual.type && closed expected.value do
+    throwError "DENSITY_CLOSED: {name} has a free variable or metavariable"
+  let a := normalizeLevels actual.type actual.levelParams
+  let e := normalizeLevels expected.value expected.levelParams
+  let ac := canonical a
+  let ec := canonical e
+  unless Expr.equal ac ec do
+    throwError "DENSITY_STRUCTURE: {name} differs in expanded type or binder annotations"
+  unless ← withNewMCtxDepth <| isDefEq a e do
+    throwError "DENSITY_TYPE: {name} is not definitionally equal to its raw target"
+  let allowed : List Name := [``propext, ``Classical.choice, ``Quot.sound]
+  let axioms ← collectAxioms name
+  for axiomName in axioms do
+    unless allowed.contains axiomName do
+      throwError "DENSITY_AXIOM: {name} uses {axiomName}"
+  let ordered := axioms.toList.mergeSort (fun x y => x.toString ≤ y.toString)
+  return Json.mkObj [
+    ("theorem", Json.str name.toString),
+    ("target", Json.str target.toString),
+    ("kind", Json.str "theorem"),
+    ("universe_parameters", Json.arr (actual.levelParams.map (Json.str ∘ Name.toString)).toArray),
+    ("expected_universe_count", toJson levelCount),
+    ("canonical_type", Json.str (reprStr ac)),
+    ("canonical_target", Json.str (reprStr ec)),
+    ("axioms", Json.arr (ordered.map (Json.str ∘ Name.toString)).toArray),
+    ("status", Json.str "accepted")]
+
+def judge : MetaM Unit := do
+  checkRoster "LocalDensityEnvelopeProofs." (entries.map fun entry => entry.candidate)
+  checkRoster "LocalDensityEnvelopeConsumers." (entries.map fun entry => entry.consumer)
+  for entry in entries do
+    let candidate ← checkDeclaration entry.candidate entry.target entry.levels
+    IO.println ("DENSITY_EXPORT " ++ candidate.compress)
+    let consumer ← checkDeclaration entry.consumer entry.target entry.levels
+    IO.println ("DENSITY_CONSUMER " ++ consumer.compress)
+  IO.println "DENSITY_JUDGE_DONE 6 6"
+
+end LocalDensityEnvelopeJudge
+
+run_cmd liftTermElabM LocalDensityEnvelopeJudge.judge

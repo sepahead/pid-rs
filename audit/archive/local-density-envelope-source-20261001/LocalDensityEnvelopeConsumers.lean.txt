@@ -1,0 +1,96 @@
+/- Fixed named raw consumers, not a solution candidate. No elaboration claimed. -/
+import LocalDensityEnvelopeProofs
+
+set_option autoImplicit false
+set_option warningAsError true
+
+open MeasureTheory
+universe u
+namespace LocalDensityEnvelopeConsumers
+
+theorem mean_bounds :
+  ∀ (α : Type u) [MeasurableSpace α] (μ : Measure α) (E : Set α)
+    (f : α → ℝ) (a ε : ℝ),
+    MeasurableSet E →
+    IsFiniteMeasure (μ.restrict E) →
+    0 < μ.real E →
+    IntegrableOn f E μ →
+    0 < a →
+    0 ≤ ε →
+    (∀ᵐ x ∂(μ.restrict E),
+      a * Real.exp (-ε) ≤ f x ∧ f x ≤ a * Real.exp ε) →
+    a * Real.exp (-ε) ≤ LocalDensityEnvelopeContractDesign.localMean μ E f ∧
+      LocalDensityEnvelopeContractDesign.localMean μ E f ≤ a * Real.exp ε
+  := @LocalDensityEnvelopeProofs.mean_bounds
+
+theorem normalized_log_envelope :
+  ∀ (α : Type u) [MeasurableSpace α] (μ : Measure α) (E : Set α)
+    (f : α → ℝ) (a ε : ℝ),
+    MeasurableSet E →
+    IsFiniteMeasure (μ.restrict E) →
+    0 < μ.real E →
+    IntegrableOn f E μ →
+    0 < a →
+    0 ≤ ε →
+    (∀ᵐ x ∂(μ.restrict E),
+      a * Real.exp (-ε) ≤ f x ∧ f x ≤ a * Real.exp ε) →
+    |Real.log (LocalDensityEnvelopeContractDesign.localMean μ E f / a)| ≤ ε
+  := @LocalDensityEnvelopeProofs.normalized_log_envelope
+
+theorem zero_volume_empty :
+  ∀ (α : Type u) [MeasurableSpace α] (μ : Measure α) (f : α → ℝ)
+    (a ε : ℝ), 0 < a → 0 ≤ ε →
+    MeasurableSet (∅ : Set α) ∧
+    IsFiniteMeasure (μ.restrict (∅ : Set α)) ∧
+    μ.real (∅ : Set α) = 0 ∧
+    IntegrableOn f (∅ : Set α) μ ∧
+    (∀ᵐ x ∂(μ.restrict (∅ : Set α)),
+      a * Real.exp (-ε) ≤ f x ∧ f x ≤ a * Real.exp ε) ∧
+    LocalDensityEnvelopeContractDesign.localMean μ (∅ : Set α) f = 0 ∧
+    ¬(a * Real.exp (-ε) ≤ LocalDensityEnvelopeContractDesign.localMean μ (∅ : Set α) f) ∧
+    |Real.log (LocalDensityEnvelopeContractDesign.localMean μ (∅ : Set α) f / a)| = 0
+  := @LocalDensityEnvelopeProofs.zero_volume_empty
+
+theorem positive_constant_density :
+  MeasurableSet (Set.univ : Set ℝ) ∧
+  IsFiniteMeasure (LocalDensityEnvelopeContractDesign.controlMeasure.restrict Set.univ) ∧
+  LocalDensityEnvelopeContractDesign.controlMeasure.real Set.univ = 1 ∧
+  IntegrableOn (fun _ : ℝ => (1 : ℝ)) Set.univ LocalDensityEnvelopeContractDesign.controlMeasure ∧
+  (∀ᵐ _x ∂(LocalDensityEnvelopeContractDesign.controlMeasure.restrict Set.univ),
+    (1 : ℝ) * Real.exp 0 ≤ 1 ∧ 1 ≤ (1 : ℝ) * Real.exp 0) ∧
+  (∫ x in Set.univ, (fun _ : ℝ => (1 : ℝ)) x ∂LocalDensityEnvelopeContractDesign.controlMeasure) = 1 ∧
+  LocalDensityEnvelopeContractDesign.localMean LocalDensityEnvelopeContractDesign.controlMeasure Set.univ (fun _ : ℝ => (1 : ℝ)) = 1 ∧
+  |Real.log (LocalDensityEnvelopeContractDesign.localMean LocalDensityEnvelopeContractDesign.controlMeasure Set.univ (fun _ : ℝ => (1 : ℝ)) / 1)| = 0
+  := @LocalDensityEnvelopeProofs.positive_constant_density
+
+theorem missing_upper_bound :
+  MeasurableSet (Set.univ : Set ℝ) ∧
+  IsFiniteMeasure (LocalDensityEnvelopeContractDesign.controlMeasure.restrict Set.univ) ∧
+  LocalDensityEnvelopeContractDesign.controlMeasure.real Set.univ = 1 ∧
+  IntegrableOn (fun _ : ℝ => Real.exp (2 : ℝ)) Set.univ LocalDensityEnvelopeContractDesign.controlMeasure ∧
+  0 < Real.exp (2 : ℝ) ∧
+  (∀ᵐ _x ∂(LocalDensityEnvelopeContractDesign.controlMeasure.restrict Set.univ),
+    (1 : ℝ) * Real.exp (-1) ≤ Real.exp (2 : ℝ)) ∧
+  ¬(∀ᵐ _x ∂(LocalDensityEnvelopeContractDesign.controlMeasure.restrict Set.univ),
+    Real.exp (2 : ℝ) ≤ (1 : ℝ) * Real.exp 1) ∧
+  LocalDensityEnvelopeContractDesign.localMean LocalDensityEnvelopeContractDesign.controlMeasure Set.univ (fun _ : ℝ => Real.exp (2 : ℝ)) = Real.exp 2 ∧
+  ¬(|Real.log (LocalDensityEnvelopeContractDesign.localMean LocalDensityEnvelopeContractDesign.controlMeasure Set.univ
+      (fun _ : ℝ => Real.exp (2 : ℝ)) / 1)| ≤ (1 : ℝ))
+  := @LocalDensityEnvelopeProofs.missing_upper_bound
+
+theorem missing_lower_bound :
+  MeasurableSet (Set.univ : Set ℝ) ∧
+  IsFiniteMeasure (LocalDensityEnvelopeContractDesign.controlMeasure.restrict Set.univ) ∧
+  LocalDensityEnvelopeContractDesign.controlMeasure.real Set.univ = 1 ∧
+  IntegrableOn (fun _ : ℝ => Real.exp (-2 : ℝ)) Set.univ LocalDensityEnvelopeContractDesign.controlMeasure ∧
+  0 < Real.exp (-2 : ℝ) ∧
+  (∀ᵐ _x ∂(LocalDensityEnvelopeContractDesign.controlMeasure.restrict Set.univ),
+    Real.exp (-2 : ℝ) ≤ (1 : ℝ) * Real.exp 1) ∧
+  ¬(∀ᵐ _x ∂(LocalDensityEnvelopeContractDesign.controlMeasure.restrict Set.univ),
+    (1 : ℝ) * Real.exp (-1) ≤ Real.exp (-2 : ℝ)) ∧
+  LocalDensityEnvelopeContractDesign.localMean LocalDensityEnvelopeContractDesign.controlMeasure Set.univ (fun _ : ℝ => Real.exp (-2 : ℝ)) = Real.exp (-2) ∧
+  ¬(|Real.log (LocalDensityEnvelopeContractDesign.localMean LocalDensityEnvelopeContractDesign.controlMeasure Set.univ
+      (fun _ : ℝ => Real.exp (-2 : ℝ)) / 1)| ≤ (1 : ℝ))
+  := @LocalDensityEnvelopeProofs.missing_lower_bound
+
+end LocalDensityEnvelopeConsumers

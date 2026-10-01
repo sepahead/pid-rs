@@ -1,10 +1,38 @@
-# Session handoff — updated 27 September 2026
+# Session handoff — updated 2 October 2026
 
 This is the entry point for continuing the pid-rs scientific and engineering program without the
 previous conversation. It is a dated coordination record. Current source, claim decisions, and
 fresh Git/hosted observations take precedence over its observations. Machine-specific locations
 and recovery instructions are in the ignored `.local/SESSION_HANDOFF.md` supplied with the local
 handoff. No local path is required by the public mathematical documents.
+
+## Formal-integrity checkpoint of 2 October 2026
+
+The [restricted-integral archive](audit/archive/local-density-envelope-source-20261001/ARCHIVE.md)
+preserves eight prospective source files, not compiled theorems. Its two targets
+require a measurable set, finite restricted measure, positive set volume,
+integrability, a positive anchor and local almost-everywhere exponential bounds.
+The ambient measure need not be finite. The integral has function-times-measure
+units; the mean and anchor have function units. The log of their ratio is dimensionless.
+No PID, estimator-calibration or application result follows.
+
+The archived control matrix lacks separate local predicate `abbrev` and `def`
+shadow cases. New private control sources do not qualify the archived design.
+Stock Lean 4.34.1, matching Mathlib, complete execution custody and a candidate
+remain unqualified. Both prospective integral proof slots are unspent. Keep the
+recorded cap failure and explicitly labelled transcript reconstruction; neither
+this deposit nor an exact file census authorizes deletion of larger archives.
+
+One earlier native-event run retained three named candidates and three named
+controls. Its three anonymous raw-type examples did not survive as fresh-replay
+consumers; do not count them as such. Historical zero exits retain their exact
+scope. New deductive promotion from stock Lean 4.33.0 is held following upstream
+soundness repairs in [4.33.1](https://lean-lang.org/doc/reference/stable/releases/v4.33.1/)
+and [4.34.1](https://lean-lang.org/doc/reference/latest/releases/v4.34.1/).
+This is a tool-assurance limitation, not a finding that a retained theorem is false.
+Old pins, proofs and negative receipts remain unchanged. All five SxPID3 programs,
+the original nineteen finite obligations and hyperbolic estimator qualification
+remain open. PDF correction and publication admission are separate unfinished work.
 
 ## Finite first-hit publication checkpoint of 27 September 2026
 
