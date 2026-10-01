@@ -1,0 +1,44 @@
+MgwNativeMeetProofs.native_source_membership.{u, v, w} {ι : Type u} {V : ι → Type v} {T : Type w} [Fintype ι]
+  [(i : ι) → Fintype (V i)] [Fintype T] [DecidableEq ι] [(i : ι) → DecidableEq (V i)] [DecidableEq T]
+  (F : MgwMeetContract.Family ι) (anchor state : PidFiniteConvergence.CategoricalKey ι V T) :
+  state ∈ PidFiniteConvergence.sxSourceEvent F anchor ↔
+    MgwMeetContract.SourceEvent F (fun i key => key.1 i) anchor state
+MgwNativeMeetProofs.native_source_meet_union.{u, v, w} {ι : Type u} {V : ι → Type v} {T : Type w} [Fintype ι]
+  [(i : ι) → Fintype (V i)] [Fintype T] [DecidableEq ι] [(i : ι) → DecidableEq (V i)] [DecidableEq T]
+  (A B : MgwMeetContract.Family ι) (anchor : PidFiniteConvergence.CategoricalKey ι V T) :
+  PidFiniteConvergence.sxSourceEvent (MgwMeetContract.Minimal (A ∪ B)) anchor =
+    PidFiniteConvergence.sxSourceEvent A anchor ∪ PidFiniteConvergence.sxSourceEvent B anchor
+MgwNativeMeetProofs.native_target_restricted_meet_union.{u, v, w} {ι : Type u} {V : ι → Type v} {T : Type w} [Fintype ι]
+  [(i : ι) → Fintype (V i)] [Fintype T] [DecidableEq ι] [(i : ι) → DecidableEq (V i)] [DecidableEq T]
+  (A B : MgwMeetContract.Family ι) (anchor : PidFiniteConvergence.CategoricalKey ι V T) :
+  PidFiniteConvergence.sxTargetRestrictedEvent (MgwMeetContract.Minimal (A ∪ B)) anchor =
+    PidFiniteConvergence.sxTargetRestrictedEvent A anchor ∪ PidFiniteConvergence.sxTargetRestrictedEvent B anchor
+MgwNativeMeetControls.or_witness :
+  have A := {{0}};
+  have B := {{1}};
+  have anchor := (fun x => false, false);
+  have state := (fun i => if i = 0 then false else true, false);
+  state ∈ PidFiniteConvergence.sxSourceEvent (MgwMeetContract.Minimal (A ∪ B)) anchor ∧
+    state ∈ PidFiniteConvergence.sxSourceEvent A anchor ∧ state ∉ PidFiniteConvergence.sxSourceEvent B anchor
+MgwNativeMeetControls.source_not_target_witness :
+  have F := {{0}};
+  have anchor := (fun x => false, false);
+  have state := (fun x => false, true);
+  state ∈ PidFiniteConvergence.sxSourceEvent F anchor ∧ state ∉ PidFiniteConvergence.sxTargetRestrictedEvent F anchor
+MgwNativeMeetControls.same_anchor_witness :
+  have F := {{0}};
+  have anchor := (fun x => false, false);
+  have otherSource := (fun x => true, false);
+  have otherTarget := (fun x => false, true);
+  (otherSource ∉ PidFiniteConvergence.sxSourceEvent (MgwMeetContract.Minimal (F ∪ F)) anchor ∧
+      otherSource ∈ PidFiniteConvergence.sxSourceEvent F anchor ∪ PidFiniteConvergence.sxSourceEvent F otherSource) ∧
+    otherTarget ∉ PidFiniteConvergence.sxTargetRestrictedEvent (MgwMeetContract.Minimal (F ∪ F)) anchor ∧
+      otherTarget ∈
+        PidFiniteConvergence.sxTargetRestrictedEvent F anchor ∪
+          PidFiniteConvergence.sxTargetRestrictedEvent F otherTarget
+'MgwNativeMeetProofs.native_source_membership' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwNativeMeetProofs.native_source_meet_union' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwNativeMeetProofs.native_target_restricted_meet_union' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwNativeMeetControls.or_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwNativeMeetControls.source_not_target_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwNativeMeetControls.same_anchor_witness' depends on axioms: [propext, Classical.choice, Quot.sound]

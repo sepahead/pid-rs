@@ -1,0 +1,100 @@
+import MgwNativeMeetProofs
+import MgwMeetReadback
+
+universe u v w
+
+example {ι : Type u} {V : ι → Type v} {T : Type w}
+    [Fintype ι] [∀ i, Fintype (V i)] [Fintype T]
+    [DecidableEq ι] [∀ i, DecidableEq (V i)] [DecidableEq T] :
+    ∀ (F : MgwMeetContract.Family ι)
+      (anchor state : PidFiniteConvergence.CategoricalKey ι V T),
+      state ∈ PidFiniteConvergence.sxSourceEvent F anchor ↔
+        MgwMeetContract.SourceEvent F
+          (fun i (key : PidFiniteConvergence.CategoricalKey ι V T) => key.1 i)
+          anchor state := MgwNativeMeetProofs.native_source_membership
+
+example {ι : Type u} {V : ι → Type v} {T : Type w}
+    [Fintype ι] [∀ i, Fintype (V i)] [Fintype T]
+    [DecidableEq ι] [∀ i, DecidableEq (V i)] [DecidableEq T] :
+    ∀ (A B : MgwMeetContract.Family ι)
+      (anchor : PidFiniteConvergence.CategoricalKey ι V T),
+      PidFiniteConvergence.sxSourceEvent (MgwMeetContract.Minimal (A ∪ B)) anchor =
+        PidFiniteConvergence.sxSourceEvent A anchor ∪
+          PidFiniteConvergence.sxSourceEvent B anchor :=
+      MgwNativeMeetProofs.native_source_meet_union
+
+example {ι : Type u} {V : ι → Type v} {T : Type w}
+    [Fintype ι] [∀ i, Fintype (V i)] [Fintype T]
+    [DecidableEq ι] [∀ i, DecidableEq (V i)] [DecidableEq T] :
+    ∀ (A B : MgwMeetContract.Family ι)
+      (anchor : PidFiniteConvergence.CategoricalKey ι V T),
+      PidFiniteConvergence.sxTargetRestrictedEvent
+          (MgwMeetContract.Minimal (A ∪ B)) anchor =
+        PidFiniteConvergence.sxTargetRestrictedEvent A anchor ∪
+          PidFiniteConvergence.sxTargetRestrictedEvent B anchor :=
+      MgwNativeMeetProofs.native_target_restricted_meet_union
+
+namespace MgwNativeMeetControls
+open MgwMeetContract PidFiniteConvergence
+
+theorem or_witness :
+    let A : Family (Fin 2) := {{0}}
+    let B : Family (Fin 2) := {{1}}
+    let anchor : CategoricalKey (Fin 2) (fun _ => Bool) Bool := (fun _ => false, false)
+    let state : CategoricalKey (Fin 2) (fun _ => Bool) Bool :=
+      (fun i => if i = 0 then false else true, false)
+    state ∈ sxSourceEvent (MgwMeetContract.Minimal (A ∪ B)) anchor ∧
+      state ∈ sxSourceEvent A anchor ∧ state ∉ sxSourceEvent B anchor := by
+  classical
+  dsimp only
+  have hminimal : MgwMeetContract.Minimal (({{0}} : Family (Fin 2)) ∪ {{1}}) =
+      ({{0}} : Family (Fin 2)) ∪ {{1}} := by
+    ext a
+    simp only [MgwMeetContract.Minimal, Finset.mem_filter, Finset.mem_union, Finset.mem_singleton]
+    constructor
+    · exact fun h => h.1
+    · rintro (rfl | rfl) <;> simp [Finset.subset_iff]
+  rw [hminimal]
+  simp [sxSourceEvent, sourceBranchEvent, sourceCollectionEquivalent]
+
+theorem source_not_target_witness :
+    let F : Family (Fin 1) := {{0}}
+    let anchor : CategoricalKey (Fin 1) (fun _ => Bool) Bool := (fun _ => false, false)
+    let state : CategoricalKey (Fin 1) (fun _ => Bool) Bool := (fun _ => false, true)
+    state ∈ sxSourceEvent F anchor ∧ state ∉ sxTargetRestrictedEvent F anchor := by
+  classical
+  simp [sxSourceEvent, sourceBranchEvent, sourceCollectionEquivalent,
+    sxTargetRestrictedEvent, sourceTargetBranchEvent,
+    sourceTargetCollectionEquivalent, targetEquivalent]
+
+theorem same_anchor_witness :
+    let F : Family (Fin 1) := {{0}}
+    let anchor : CategoricalKey (Fin 1) (fun _ => Bool) Bool := (fun _ => false, false)
+    let otherSource : CategoricalKey (Fin 1) (fun _ => Bool) Bool :=
+      (fun _ => true, false)
+    let otherTarget : CategoricalKey (Fin 1) (fun _ => Bool) Bool :=
+      (fun _ => false, true)
+    (otherSource ∉ sxSourceEvent (MgwMeetContract.Minimal (F ∪ F)) anchor ∧
+      otherSource ∈ (sxSourceEvent F anchor ∪ sxSourceEvent F otherSource)) ∧
+    (otherTarget ∉ sxTargetRestrictedEvent (MgwMeetContract.Minimal (F ∪ F)) anchor ∧
+      otherTarget ∈ (sxTargetRestrictedEvent F anchor ∪
+        sxTargetRestrictedEvent F otherTarget)) := by
+  classical
+  simp [MgwMeetContract.Minimal, sxSourceEvent, sourceBranchEvent, sourceCollectionEquivalent,
+    sxTargetRestrictedEvent, sourceTargetBranchEvent,
+    sourceTargetCollectionEquivalent, targetEquivalent]
+
+end MgwNativeMeetControls
+
+#check MgwNativeMeetProofs.native_source_membership
+#check MgwNativeMeetProofs.native_source_meet_union
+#check MgwNativeMeetProofs.native_target_restricted_meet_union
+#check MgwNativeMeetControls.or_witness
+#check MgwNativeMeetControls.source_not_target_witness
+#check MgwNativeMeetControls.same_anchor_witness
+#print axioms MgwNativeMeetProofs.native_source_membership
+#print axioms MgwNativeMeetProofs.native_source_meet_union
+#print axioms MgwNativeMeetProofs.native_target_restricted_meet_union
+#print axioms MgwNativeMeetControls.or_witness
+#print axioms MgwNativeMeetControls.source_not_target_witness
+#print axioms MgwNativeMeetControls.same_anchor_witness

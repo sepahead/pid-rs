@@ -1,0 +1,88 @@
+{
+  "format": 1,
+  "record_type": "inert-raw-development-preservation",
+  "date": "2026-10-01",
+  "author": "Sepehr Mahmoudian",
+  "license": "MIT",
+  "roster": "Exactly eight listed raw payloads plus this self-excluding INDEX.json.",
+  "payloads": [
+    {
+      "path": "MgwNativeMeetContract.lean.txt",
+      "recorded_private_origin": "mgw-native-meet-lean-v2/MgwNativeMeetContract.lean",
+      "bytes": 63,
+      "sha256": "c25979963842dfff778b62bf5abf90824a0ec2e76017d317d661f81c5c68e6fb",
+      "git_mode": "100644",
+      "role": "fixed development contract"
+    },
+    {
+      "path": "MgwNativeMeetProofs.lean.txt",
+      "recorded_private_origin": "mgw-native-meet-lean-v2/attempts/attempt-2/MgwNativeMeetProofs.lean",
+      "bytes": 3127,
+      "sha256": "a41bf173a7e1b7b888971044f2379a369b416800dea1b0ba50df0c166a79ffbb",
+      "git_mode": "100644",
+      "role": "terminal attempt-2 candidate source"
+    },
+    {
+      "path": "MgwNativeMeetReadback.lean.txt",
+      "recorded_private_origin": "mgw-native-meet-lean-v2/MgwNativeMeetReadback.lean",
+      "bytes": 4842,
+      "sha256": "4b428c601c18d7c76d29698cdba8ec97963b96731caf1d7cb52eeb991929131c",
+      "git_mode": "100644",
+      "role": "terminal attempt-2 development readback"
+    },
+    {
+      "path": "references/Deterministic.lean.txt",
+      "recorded_private_origin": "mgw-native-meet-lean-v2/references/PidFiniteConvergence/Deterministic.lean",
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "git_mode": "100644",
+      "role": "selected historical source dependency"
+    },
+    {
+      "path": "references/SxEventBridge.lean.txt",
+      "recorded_private_origin": "mgw-native-meet-lean-v2/references/PidFiniteConvergence/SxEventBridge.lean",
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "git_mode": "100644",
+      "role": "selected historical source dependency"
+    },
+    {
+      "path": "readback.stdout.txt",
+      "recorded_private_origin": "mgw-native-meet-lean-v2/attempts/attempt-2/captures/stage-8.stdout.txt",
+      "bytes": 3470,
+      "sha256": "e4b7df2a398b15f298346019623da402bc42ff8005b2af75651483e2f06154d3",
+      "git_mode": "100644",
+      "role": "recorded attempt-2 compiler output"
+    },
+    {
+      "path": "failed-readback.lean.txt",
+      "recorded_private_origin": "mgw-native-meet-lean-v1/MgwNativeMeetReadback.lean",
+      "bytes": 4746,
+      "sha256": "7ba511ce31cd6a0024c4b0eccc4ad690ad53d084a65daf14aafa145fca3337c1",
+      "git_mode": "100644",
+      "role": "rejected attempt-1 development readback"
+    },
+    {
+      "path": "failed-readback.stdout.txt",
+      "recorded_private_origin": "mgw-native-meet-lean-v1/attempts/attempt-1/captures/stage-8.stdout.txt",
+      "bytes": 5054,
+      "sha256": "3e167b522db109a84d9db345abcf990a7ff22dd2e35174b4a66b04d75ae9bef2",
+      "git_mode": "100644",
+      "role": "rejected attempt-1 compiler output"
+    }
+  ],
+  "omissions": [
+    "Complete private attempts, imports, compiled artifacts, tools, pins, callers, timestamps and custody records are not deposited.",
+    "Generic imports are intentionally unresolved here. Files are inert text, not an executable formal package.",
+    "Exposition, PDFs and scientific/advisory/root reports are not included."
+  ],
+  "nonimplications": [
+    "This is byte preservation, not active formal, scientific or publication admission.",
+    "Recorded compiler output is not authenticated external execution or independent reproduction.",
+    "Failed compiler recovery and linter hints are rejected historical evidence, not endorsed instructions.",
+    "No original nineteen Fin3 obligation or SxPID3/hyperbolic program is closed.",
+    "No Rust refinement, numerical/statistical calibration, application utility, predictive improvement or novelty is established.",
+    "This partial deposit does not prove complete-folder custody, off-host durability or deletion/retirement clearance.",
+    "Sequential same-host observations assume stable cooperative files; they are not an atomic snapshot."
+  ]
+}

@@ -1,0 +1,74 @@
+import MgwNativeMeetContract
+
+universe u v w
+
+namespace MgwNativeMeetProofs
+
+theorem native_source_membership {ι : Type u} {V : ι → Type v} {T : Type w}
+    [Fintype ι] [∀ i, Fintype (V i)] [Fintype T]
+    [DecidableEq ι] [∀ i, DecidableEq (V i)] [DecidableEq T] :
+    ∀ (F : MgwMeetContract.Family ι)
+      (anchor state : PidFiniteConvergence.CategoricalKey ι V T),
+      state ∈ PidFiniteConvergence.sxSourceEvent F anchor ↔
+        MgwMeetContract.SourceEvent F
+          (fun i (key : PidFiniteConvergence.CategoricalKey ι V T) => key.1 i)
+          anchor state := by
+  classical
+  intro F anchor state
+  unfold PidFiniteConvergence.sxSourceEvent
+  constructor
+  · intro h
+    rcases Finset.mem_biUnion.mp h with ⟨collection, hcollection, hbranch⟩
+    unfold PidFiniteConvergence.sourceBranchEvent at hbranch
+    have heq := (Finset.mem_filter.mp hbranch).2
+    refine ⟨collection, hcollection, ?_⟩
+    intro i hi
+    exact (heq i hi).symm
+  · rintro ⟨collection, hcollection, heq⟩
+    refine Finset.mem_biUnion.mpr ⟨collection, hcollection, ?_⟩
+    unfold PidFiniteConvergence.sourceBranchEvent
+    apply Finset.mem_filter.mpr
+    refine ⟨Finset.mem_univ state, ?_⟩
+    intro i hi
+    exact (heq i hi).symm
+
+theorem native_source_meet_union {ι : Type u} {V : ι → Type v} {T : Type w}
+    [Fintype ι] [∀ i, Fintype (V i)] [Fintype T]
+    [DecidableEq ι] [∀ i, DecidableEq (V i)] [DecidableEq T] :
+    ∀ (A B : MgwMeetContract.Family ι)
+      (anchor : PidFiniteConvergence.CategoricalKey ι V T),
+      PidFiniteConvergence.sxSourceEvent (MgwMeetContract.Minimal (A ∪ B)) anchor =
+        PidFiniteConvergence.sxSourceEvent A anchor ∪
+          PidFiniteConvergence.sxSourceEvent B anchor := by
+  classical
+  intro A B anchor
+  apply Finset.ext
+  intro state
+  simp only [Finset.mem_union, native_source_membership]
+  exact MgwMeetProofs.source_meet_union A B
+    (fun i (key : PidFiniteConvergence.CategoricalKey ι V T) => key.1 i)
+    anchor state
+
+theorem native_target_restricted_meet_union
+    {ι : Type u} {V : ι → Type v} {T : Type w}
+    [Fintype ι] [∀ i, Fintype (V i)] [Fintype T]
+    [DecidableEq ι] [∀ i, DecidableEq (V i)] [DecidableEq T] :
+    ∀ (A B : MgwMeetContract.Family ι)
+      (anchor : PidFiniteConvergence.CategoricalKey ι V T),
+      PidFiniteConvergence.sxTargetRestrictedEvent
+          (MgwMeetContract.Minimal (A ∪ B)) anchor =
+        PidFiniteConvergence.sxTargetRestrictedEvent A anchor ∪
+          PidFiniteConvergence.sxTargetRestrictedEvent B anchor := by
+  classical
+  intro A B anchor
+  rw [PidFiniteConvergence.sx_target_restricted_event_eq_inter
+        (MgwMeetContract.Minimal (A ∪ B)) anchor,
+      native_source_meet_union A B anchor,
+      PidFiniteConvergence.sx_target_restricted_event_eq_inter A anchor,
+      PidFiniteConvergence.sx_target_restricted_event_eq_inter B anchor]
+  exact Finset.union_inter_distrib_right
+    (PidFiniteConvergence.sxSourceEvent A anchor)
+    (PidFiniteConvergence.sxSourceEvent B anchor)
+    (PidFiniteConvergence.targetBranchEvent anchor)
+
+end MgwNativeMeetProofs

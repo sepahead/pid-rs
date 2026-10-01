@@ -1,0 +1,83 @@
+MgwNativeMeetReadback.lean:53:15: error: Ambiguous term
+  Minimal
+Possible interpretations:
+  _root_.Minimal : (?m.137 → Prop) → ?m.137 → Prop
+  
+  MgwMeetContract.Minimal : Family ?m.137 → Family ?m.137
+MgwNativeMeetReadback.lean:55:21: error: Invalid projection: Projections extract constructor fields for one-constructor inductive types. The expression
+  h
+has type
+  List.Mem a (List.filter (fun b => decide ((fun a => ∀ b ∈ {{0}} ∪ {{1}}, b ⊆ a → a = b) b)) ([{0}].union [{1}]))
+which is not a one-constructor inductive type.
+MgwNativeMeetReadback.lean:56:4: error: unsolved goals
+case mpr.inl
+⊢ {0} ∈ MgwMeetContract.Minimal {{0}, {1}}
+
+case mpr.inr
+⊢ {1} ∈ MgwMeetContract.Minimal {{0}, {1}}
+MgwNativeMeetReadback.lean:53:24: warning: This simp argument is unused:
+  Finset.mem_filter
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Minimal, Finset.mem_union, Finset.mem_singleton]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MgwNativeMeetReadback.lean:56:35: warning: This simp argument is unused:
+  Finset.subset_iff
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MgwNativeMeetReadback.lean:83:8: error: Ambiguous term
+  Minimal
+Possible interpretations:
+  _root_.Minimal : (?m.109 → Prop) → ?m.109 → Prop
+  
+  MgwMeetContract.Minimal : Family ?m.109 → Family ?m.109
+MgwNativeMeetReadback.lean:81:51: error: unsolved goals
+⊢ ∀ x ∈ MgwMeetContract.Minimal {{0}}, 0 ∈ x
+MgwNativeMeetProofs.native_source_membership.{u, v, w} {ι : Type u} {V : ι → Type v} {T : Type w} [Fintype ι]
+  [(i : ι) → Fintype (V i)] [Fintype T] [DecidableEq ι] [(i : ι) → DecidableEq (V i)] [DecidableEq T]
+  (F : MgwMeetContract.Family ι) (anchor state : PidFiniteConvergence.CategoricalKey ι V T) :
+  state ∈ PidFiniteConvergence.sxSourceEvent F anchor ↔
+    MgwMeetContract.SourceEvent F (fun i key => key.1 i) anchor state
+MgwNativeMeetProofs.native_source_meet_union.{u, v, w} {ι : Type u} {V : ι → Type v} {T : Type w} [Fintype ι]
+  [(i : ι) → Fintype (V i)] [Fintype T] [DecidableEq ι] [(i : ι) → DecidableEq (V i)] [DecidableEq T]
+  (A B : MgwMeetContract.Family ι) (anchor : PidFiniteConvergence.CategoricalKey ι V T) :
+  PidFiniteConvergence.sxSourceEvent (MgwMeetContract.Minimal (A ∪ B)) anchor =
+    PidFiniteConvergence.sxSourceEvent A anchor ∪ PidFiniteConvergence.sxSourceEvent B anchor
+MgwNativeMeetProofs.native_target_restricted_meet_union.{u, v, w} {ι : Type u} {V : ι → Type v} {T : Type w} [Fintype ι]
+  [(i : ι) → Fintype (V i)] [Fintype T] [DecidableEq ι] [(i : ι) → DecidableEq (V i)] [DecidableEq T]
+  (A B : MgwMeetContract.Family ι) (anchor : PidFiniteConvergence.CategoricalKey ι V T) :
+  PidFiniteConvergence.sxTargetRestrictedEvent (MgwMeetContract.Minimal (A ∪ B)) anchor =
+    PidFiniteConvergence.sxTargetRestrictedEvent A anchor ∪ PidFiniteConvergence.sxTargetRestrictedEvent B anchor
+MgwNativeMeetControls.or_witness :
+  have A := {{0}};
+  have B := {{1}};
+  have anchor := (fun x => false, false);
+  have state := (fun i => if i = 0 then false else true, false);
+  state ∈ PidFiniteConvergence.sxSourceEvent (MgwMeetContract.Minimal (A ∪ B)) anchor ∧
+    state ∈ PidFiniteConvergence.sxSourceEvent A anchor ∧ state ∉ PidFiniteConvergence.sxSourceEvent B anchor
+MgwNativeMeetControls.source_not_target_witness :
+  have F := {{0}};
+  have anchor := (fun x => false, false);
+  have state := (fun x => false, true);
+  state ∈ PidFiniteConvergence.sxSourceEvent F anchor ∧ state ∉ PidFiniteConvergence.sxTargetRestrictedEvent F anchor
+MgwNativeMeetControls.same_anchor_witness :
+  have F := {{0}};
+  have anchor := (fun x => false, false);
+  have otherSource := (fun x => true, false);
+  have otherTarget := (fun x => false, true);
+  (otherSource ∉ PidFiniteConvergence.sxSourceEvent (MgwMeetContract.Minimal (F ∪ F)) anchor ∧
+      otherSource ∈ PidFiniteConvergence.sxSourceEvent F anchor ∪ PidFiniteConvergence.sxSourceEvent F otherSource) ∧
+    otherTarget ∉ PidFiniteConvergence.sxTargetRestrictedEvent (MgwMeetContract.Minimal (F ∪ F)) anchor ∧
+      otherTarget ∈
+        PidFiniteConvergence.sxTargetRestrictedEvent F anchor ∪
+          PidFiniteConvergence.sxTargetRestrictedEvent F otherTarget
+'MgwNativeMeetProofs.native_source_membership' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwNativeMeetProofs.native_source_meet_union' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwNativeMeetProofs.native_target_restricted_meet_union' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwNativeMeetControls.or_witness' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'MgwNativeMeetControls.source_not_target_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MgwNativeMeetControls.same_anchor_witness' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
