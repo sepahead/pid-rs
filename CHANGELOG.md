@@ -7,6 +7,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Rename the inert application-report source to avoid discovery as a pip requirements file.
+  Preserve its exact bytes, unchanged PDF and historical filename; update archive links and custody.
+
 - Preserve [exploratory shared-exclusions findings](audit/archive/shared-exclusions-research-findings-20261001/ARCHIVE.md)
   with exact mathematical, application and verifier-audit draft sources/PDFs. Retain the failed
   application layout and PDF byte-repetition pair. Record assumptions, negative findings and

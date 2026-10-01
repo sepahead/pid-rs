@@ -18,8 +18,8 @@
   "payloads": [
     {
       "path": "ARCHIVE.md",
-      "bytes": 6322,
-      "sha256": "af6c4a4cda7b3be700da287dbd8c6734cebfa02c82b9eeb34a2e263dd62972d5",
+      "bytes": 6321,
+      "sha256": "d529aaef24ea1302da235cbf02a0d830688538df76b9af58c5ae74ce974a9c4c",
       "role": "archive_explanation_and_nonclaims",
       "execution_authority": false
     },
@@ -45,7 +45,7 @@
       "execution_authority": false
     },
     {
-      "path": "application-requirements.md.txt",
+      "path": "application-assumptions.md.txt",
       "bytes": 24453,
       "sha256": "3f2891351841454d36e22221a899d9b2c7b0c2279e85380348755a3a747d05a3",
       "role": "exact_exploratory_application_source",

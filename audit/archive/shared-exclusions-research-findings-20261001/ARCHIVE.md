@@ -31,7 +31,7 @@ control Lean drafts remained uncompiled at this report's observation.
 ## Prediction and real data requirements
 
 The [application report](application-requirements.pdf) and
-[exact source](application-requirements.md.txt) distinguish common-law ideal
+[exact source](application-assumptions.md.txt) distinguish common-law ideal
 posterior loss from fitted-model loss. Their constructed duplicated-input
 naive-Bayes example shows that added copies can increase expected log loss despite
 zero ideal information gain. It is not an observed deployment or a PID remedy.

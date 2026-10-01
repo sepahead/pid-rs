@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "e4a0bdf6b1cb93a7bfc909784d6a316345eb8efc232710d82dd458111221c082",
-        "size_bytes": 323055
+        "sha256": "b4dea11819f53cdd7ffc7e374e018ee420b25c22b1057efb01e8e78109050424",
+        "size_bytes": 323249
       },
       {
         "git_mode": "100644",
@@ -1726,8 +1726,8 @@
       {
         "git_mode": "100644",
         "path": "audit/archive/shared-exclusions-research-findings-20261001/ARCHIVE.md",
-        "sha256": "af6c4a4cda7b3be700da287dbd8c6734cebfa02c82b9eeb34a2e263dd62972d5",
-        "size_bytes": 6322
+        "sha256": "d529aaef24ea1302da235cbf02a0d830688538df76b9af58c5ae74ce974a9c4c",
+        "size_bytes": 6321
       },
       {
         "git_mode": "100644",
@@ -1738,8 +1738,14 @@
       {
         "git_mode": "100644",
         "path": "audit/archive/shared-exclusions-research-findings-20261001/INDEX.json",
-        "sha256": "8ab89e462d3ea560a1d1cff4012350598feaad5b68233a8d2455eb330fd91ae3",
-        "size_bytes": 3896
+        "sha256": "71e01ed8a32832e9e8e19cd8d740b6ef770c04227e04dc98acca5e30a442ce1b",
+        "size_bytes": 3895
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/shared-exclusions-research-findings-20261001/application-assumptions.md.txt",
+        "sha256": "3f2891351841454d36e22221a899d9b2c7b0c2279e85380348755a3a747d05a3",
+        "size_bytes": 24453
       },
       {
         "git_mode": "100644",
@@ -1752,12 +1758,6 @@
         "path": "audit/archive/shared-exclusions-research-findings-20261001/application-before-layout-correction.pdf",
         "sha256": "747339c802381e61aa9621a1a7577454a47b13d7e76cf42fea66683ba998a0c5",
         "size_bytes": 69156
-      },
-      {
-        "git_mode": "100644",
-        "path": "audit/archive/shared-exclusions-research-findings-20261001/application-requirements.md.txt",
-        "sha256": "3f2891351841454d36e22221a899d9b2c7b0c2279e85380348755a3a747d05a3",
-        "size_bytes": 24453
       },
       {
         "git_mode": "100644",
@@ -30298,7 +30298,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "faff40d1b568f5a86b6e553839f852a0e6b3f0bc798bbdec2277b78e11ccd0ff",
+        "sha256": "9dd003d2b71adc66994a6ffc2dbdc7aa9db08417b49d9627d1f922fc631255cb",
         "size_bytes": 138785
       },
       {
@@ -31250,7 +31250,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "ff032695c6bb431e4551c3bfe9be1ff6286d9561c200acfe22b8d43c4fe0ac59",
+    "entries_sha256": "196abf1a482c2037f45531816fbe36180a8f1bb8b23870efb9b16672397fc47c",
     "entry_count": 5184
   },
   "subprojections": [
@@ -31279,7 +31279,7 @@
       ]
     },
     {
-      "entries_sha256": "ff04d03ee6dabe0829f15e9c0c5c55dfc808ae637ce7ae9b6d5c6d91a9a63f03",
+      "entries_sha256": "1d1c2d5b6e45f5299ad7c97394e28b412af57d5c3abdb68820db0dd05faacf4b",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
