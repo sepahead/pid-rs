@@ -1,0 +1,420 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,array,xcolor}
+\usepackage{microtype,ragged2e,enumitem,etoolbox,needspace}
+\usepackage{pid-rs-report-tables}
+\usepackage{pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,
+citecolor=PidPrimary,
+pdftitle={Relative error for an angular SxPID3 atom},
+pdfauthor={Sepehr Mahmoudian},
+pdfsubject={Exact-real population truncation bound; formal, numerical and application qualification open},
+pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Angular SxPID3: relative truncation error}{Population reference}
+\PidWorkflowConfigureSections
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.30em plus 0.05em minus 0.03em}
+\setlength{\emergencystretch}{3em}
+\setlist{itemsep=0.1em,topsep=0.2em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\newcommand{\E}{\mathbb E}
+\newcommand{\ac}[1]{\{#1\}}
+\title{\PidReportTitle{Relative error for an angular SxPID3 atom}
+{A uniform eight-term bound and a correction to the earlier report}}
+\author{Sepehr Mahmoudian}
+\date{5 October 2026}
+\begin{document}
+\PidMakeTitle
+\textbf{Hand-derived population result; formal verification UNRUN.}
+For the fixed law below, eight even-moment terms give
+\[
+ 0\leq\frac{A-A_8}{A}\leq\frac1{1253376}<10^{-6}
+ \quad\text{when}\quad 0<|a|+|b|\leq\tfrac12.
+\]
+Here \(A\) is the averaged top atom of the stated continuous functional.
+The proper terms in \(A_8\) are exact real quantities. This is not a
+floating-point, sampling, estimator-calibration or application guarantee.
+At the origin, \(A=A_8=0\); the relative quotient is undefined.
+
+\PidWorkflowSection{Correction and population model}
+The earlier \emph{Conditional angular references for continuous SxPID3}
+report says ``zero ratios'' on page 4. For its phase-sum proper nodes, the
+correct statement is
+\[
+ G_\alpha/(p_TF_\alpha)=1,\qquad
+ i_\alpha=\ln1=0,\qquad R_\alpha=0.
+\]
+The ratios are one; their logarithms are zero. This supplement preserves
+that report and its historical execution hold. It adds the following
+two-harmonic bound, which the earlier source did not supply.
+
+Put \(L=2\pi\). The variables \(S_1,S_2,S_3,T\) are scalar angles in
+\([0,L)\), in radians, with fixed product Lebesgue measure. Fix real
+\(a,b\), let \(r=|a|+|b|<1\), and define
+\begin{align*}
+ v&=(t-s_1)\bmod L, & u&=(t-s_1-s_2-s_3)\bmod L,\\
+ p(s_1,s_2,s_3,t)&=L^{-4}(1+a\cos v+b\cos u).
+\end{align*}
+Its positive density lies between \((1-r)L^{-4}\) and \((1+r)L^{-4}\).
+Integrating \(t\) removes both harmonics, giving \(p_S=L^{-3}\);
+integrating \(s_1\) gives \(p_T=L^{-1}\). Thus the law is normalized,
+the sources are independent uniform angles and the target is uniform.
+The torus density is smooth, and coordinate seams have probability zero.
+The bounded positive likelihood ratios make the information integrals finite.
+All logarithms are natural; information is in nats.
+
+\newpage
+\PidWorkflowSection{The functional and its proper averages}
+The defining method is the pure-continuous branch-sum construction of
+\href{https://arxiv.org/html/2311.06373v3}{Ehrlich et al., arXiv v3},
+Sections II.2 and III.2, Equation (16), and Appendix B Definition 3.
+The model and the error bound in this report are project-derived.
+They are not theorems attributed to that paper. Multiply its bit values
+by \(\ln2\) to obtain nats. Categorical MGW and the general RCP/RN
+construction are different objects.
+
+For an antichain \(\alpha\) of incomparable nonempty source subsets,
+\[
+ F_\alpha=\sum_{B\in\alpha}p_{S_B},\quad
+ G_\alpha=\sum_{B\in\alpha}p_{T,S_B},\quad
+ i_\alpha=\ln\frac{G_\alpha}{p_TF_\alpha},\quad R_\alpha=\E_p i_\alpha.
+\]
+These branch sums are sums of densities, not finite-union probabilities.
+The same population law supplies every marginal and every average.
+The fixed radian measure also applies when branch sizes differ;
+normalizing each marginal to a unit-Haar density changes the functional.
+
+For any nonempty proper source subset \(B\), an omitted source removes
+the \(b\) harmonic. The remaining marginals are
+\[
+ p_{S_B}=L^{-|B|},\qquad p_{T,S_B}=L^{-|B|-1}
+ \begin{cases}1+a\cos v,&1\in B,\\1,&1\notin B.\end{cases}
+\]
+Every proper node therefore has local ratio \(1+aw_\alpha\cos v\), where
+\[
+ w_\alpha=\frac{\sum_{B\in\alpha,\,1\in B}L^{-|B|}}
+ {\sum_{B\in\alpha}L^{-|B|}},\qquad 0\leq w_\alpha\leq1.
+\]
+Under the actual law, \(v\) has density \((1+a\cos v)/L\). Define
+\begin{align*}
+ R(w)&=\frac1L\int_0^L(1+a\cos v)\ln(1+aw\cos v)\,dv,\\
+ P&=R(1/2),\qquad D=R(2/3),\qquad Q=R(1).
+\end{align*}
+The averaging weight remains \(a\), not \(aw\). For \(|c|<1\),
+\[
+ H(a,c)=\ln\frac{1+\sqrt{1-c^2}}2+
+ \frac{ac}{1+\sqrt{1-c^2}},\qquad R(w)=H(a,aw).
+\]
+To obtain this expression, set \(z=c/(1+\sqrt{1-c^2})\) and
+\(K=(1+\sqrt{1-c^2})/2\). Then
+\(1+c\cos v=K|1+ze^{iv}|^2\), with \(|z|<1\). Its absolutely uniformly
+convergent log series has uniform mean \(\ln K\) and cosine-weighted
+mean \(z\). The lower-bound proof below can also use the integral directly.
+
+\newpage
+\PidWorkflowSection{The top cut and the positive series}
+Write \(\beta\preceq\alpha\) if every branch of \(\alpha\) contains
+a branch of \(\beta\). The signed averaged atoms satisfy
+\(R_\alpha=\sum_{\beta\preceq\alpha}\Pi_\beta\).
+There are 18 nodes. The unique top is \(\ac{123}\).
+
+Every proper antichain has a branch that extends to a pair, so the lower
+sets of \(\ac{12},\ac{13},\ac{23}\) together cover exactly the seventeen
+proper nodes. Intersections of these lower sets are the lower sets of
+the antichains containing the corresponding pairs. Inclusion-exclusion
+of their signed atom sums gives
+\begin{align*}
+ \sum_{\text{proper }\beta}\Pi_\beta
+ &=R_{\ac{12}}+R_{\ac{13}}+R_{\ac{23}}\\
+ &\quad-R_{\ac{12}\ac{13}}-R_{\ac{12}\ac{23}}-R_{\ac{13}\ac{23}}\\
+ &\quad+R_{\ac{12}\ac{13}\ac{23}}=Q+D-2P.
+\end{align*}
+The seven weights are \(1,1,0,1,1/2,1/2,2/3\): all branches in
+these cuts have size two. No positivity of individual atoms is assumed.
+
+Use \(h=L^{-4}\) only as a uniform probability reference for calculation.
+The torus change to \((s_1,s_2,v,u)\) has integer inverse
+\(t=v+s_1\), \(s_3=v-u-s_2\) and determinant magnitude one.
+Hence \(v,u\) are independent uniform angles under \(h\). With
+\(Y=a\cos v+b\cos u\), full MI and the top atom are
+\[
+ J=\E_h[(1+Y)\ln(1+Y)],\qquad Q=J(a,0),\qquad
+ \boxed{A=J-Q-D+2P.}
+\]
+For \(|Y|\leq r<1\), uniform absolute convergence permits integration of
+\[
+ (1+Y)\ln(1+Y)=Y+\sum_{n\geq2}\frac{(-1)^nY^n}{n(n-1)}.
+\]
+A simultaneous shift of both angles by \(\pi\) negates \(Y\), so odd
+moments vanish. The constant Fourier coefficient gives
+\(\E\cos^{2j}v=\binom{2j}{j}/4^j\). Independence then yields
+\begin{align*}
+ J&=\sum_{m\geq1}\frac{M_m}{2m(2m-1)},\\
+ M_m&=\frac{(2m)!}{4^m}\sum_{j=0}^{m}
+ \frac{a^{2j}b^{2m-2j}}{(j!)^2((m-j)!)^2}.
+\end{align*}
+Every coefficient is nonnegative, including for negative amplitudes.
+
+\newpage
+\PidWorkflowSection{A positive denominator: all analytic steps}
+In \(J(a,b)-J(a,0)\), the \(j=m\) term cancels at each order.
+All remaining even-moment terms are nonnegative; the first is \(b^2/4\).
+Therefore
+\[
+ J-Q\geq b^2/4.
+\]
+A curvature check uses \(C=\cos v\), \(E=\cos u\) under the uniform
+reference. For \(t\) between zero and \(b\), the positive floor
+\(1+aC+tE\geq1-r\) permits differentiation under the integral.
+Pairing \((C,E)\) with \((-C,-E)\) gives
+\[
+ J_{bb}(a,t)=\E\frac{E^2}{1+aC+tE}
+ =\E\frac{E^2}{1-(aC+tE)^2}\geq\E E^2=\tfrac12.
+\]
+Independence and \(\E E=0\) give \(J_b(a,0)=0\), so
+\[
+ J(a,b)-J(a,0)=b^2\int_0^1(1-s)J_{bb}(a,sb)\,ds\geq b^2/4.
+\]
+The integral remainder includes both signs of \(b\).
+
+For \(0\leq w\leq1\), the floor \(1+awC\geq1-|a|>0\) likewise
+justifies differentiating \(R\). Algebra using \(\E C=0\) yields
+\begin{align*}
+ R'(w)&=a^2(1-w)\E\frac{C^2}{1+awC},\\
+ R''(w)&=-a^2\E\frac{(1+aC)C^2}{(1+awC)^2}\leq0.
+\end{align*}
+Thus \(R\) is concave. Since \(R(0)=0\) and
+\(1/2=(3/4)(2/3)+(1/4)0\),
+\[
+ P\geq\tfrac34D,\qquad 2P-D\geq\tfrac23P.
+\]
+Symmetry of \(C\) gives
+\[
+ \E\frac{C^2}{1+awC}=\E\frac{C^2}{1-a^2w^2C^2}\geq\tfrac12.
+\]
+Consequently \(R'(w)\geq a^2(1-w)/2\), and integration gives
+\[
+ P\geq\frac{a^2}{2}\left(\frac12-\frac18\right)=\frac{3a^2}{16},
+ \qquad 2P-D\geq a^2/8.
+\]
+Combining the two contributions and completing a square,
+\[
+ \boxed{A\geq a^2/8+b^2/4\geq r^2/12,}\qquad
+ \frac{a^2}{8}+\frac{b^2}{4}-\frac{r^2}{12}
+ =\frac{(|a|-2|b|)^2}{24}\geq0.
+\]
+No division by \(a,b,P,D\) occurred; their zero cases remain valid.
+
+\newpage
+\PidWorkflowSection{Uniform error and worked values}
+For integer \(M\geq1\), retain \(m=1,\ldots,M\) to define \(J_M\).
+Since \(M_m\leq r^{2m}\), replace every omitted denominator by
+\((2M+2)(2M+1)\) and sum a geometric series:
+\[
+ 0\leq J-J_M\leq B_M=
+ \frac{r^{2M+2}}{(2M+2)(2M+1)(1-r^2)}.
+\]
+Define \(A_M=J_M-Q-D+2P\), keeping the proper terms exact. Then
+\(A-A_M=J-J_M\geq0\). For \(0<r<1\), the positive true denominator gives
+\[
+ 0\leq e_M:=\frac{|A-A_M|}{A}
+ \leq\frac{B_M}{a^2/8+b^2/4}
+ \leq\frac{12r^{2M}}{(2M+2)(2M+1)(1-r^2)}.
+\]
+Both factors depending on \(r\) increase on \((0,1)\). Hence at
+\(M=8\), uniformly for \(0<r\leq1/2\),
+\[
+ e_8\leq\frac{12(1/2)^{16}}{18\cdot17\cdot(3/4)}
+ =\frac1{1253376}<\frac1{1000000}.
+\]
+The final comparison is an integer inequality. It also implies \(A_8>0\)
+off the origin. At the origin only zero absolute error is stated.
+
+For \(a=b=1/4\), \(r=1/2\) and
+\[
+ A\geq\frac3{128},\qquad B_8=\frac1{60162048},\qquad
+ e_8\leq\frac1{1410048}.
+\]
+The first two truncations are \(J_1=1/32\), \(J_2=131/4096\), and
+\begin{align*}
+ J_8&=\frac{3787665970322303}{118219490218475520},\\
+ A_8&=J_8-H(1/4,1/4)-H(1/4,1/6)+2H(1/4,1/8).
+\end{align*}
+Thus \([A_8,A_8+1/60162048]\) is a real-expression enclosure.
+It is not an executable outward-rounded interval.
+
+\begin{center}\small
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\PidTableHeaderRow \(a\) & \(b\) & Lower bound on \(A\) & Relative ceiling\\
+\midrule
+\(1/2\)&\(0\)&\(1/32\)&\(1/1880064\)\\
+\(0\)&\(1/2\)&\(1/16\)&\(1/3760128\)\\
+\(1/4\)&\(1/4\)&\(3/128\)&\(1/1410048\)\\
+\(1/3\)&\(1/6\)&\(1/48\)&\(1/1253376\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+All four cases have \(r=1/2\) and the same \(B_8\). The last row attains
+only the weighted-square relaxation, not the actual atom or error bound.
+At \(M=7\), this same uniform ceiling is \(1/245760>10^{-6}\);
+it does not certify the target and does not prove actual failure.
+
+\newpage
+\PidWorkflowSection{Negative controls and interpretation}
+\textbf{A positive average does not imply a positive local atom.}
+Set \(a=0\), \(b=1/4\), \(u=\pi\). Every proper local cumulative is
+zero, but the local top atom is \(\ln(3/4)<0\). The average remains
+positive. Neither local nor averaged signs are silently clamped.
+
+\textbf{The top label is not added task information.}
+At \(b=0\) and \(a\neq0\),
+\[
+ p(t\mid s_1,s_2,s_3)=p(t\mid s_1),\qquad
+ I(S_2,S_3;T\mid S_1)=J-Q=0,
+\]
+while \(A=2P-D\geq a^2/8>0\). Ordinary MI/CMI answers the added-information
+question. A positive atom alone establishes no predictive, sensor-selection
+or control advantage.
+
+\textbf{MI's denominator cannot be silently reused.}
+The derivative proof gives \(Q>D>P>0\) on the same \(b=0,a\neq0\) axis.
+Therefore \(A=2P-D<P<Q=J\). A relative bound divided by \(J\) is not
+automatically a bound divided by \(A\); the positive atom lower bound is
+the required additional argument.
+
+\textbf{The averaging law matters.}
+Replacing \(H(a,c)\) by \(H(c,c)\) changes a proper-node value by
+\((a-c)c/(1+\sqrt{1-c^2})\), which is nonzero at \(c=a/2,a\neq0\).
+Multiplying all proper terms by \(b\) would wrongly remove their nonzero
+baseline at \(b=0\).
+
+\textbf{A tempting positive-coefficient proof fails.}
+Expansion under the same bounded integral gives
+\[
+ R(w)=\sum_{m\geq1}a^{2m}\frac{\binom{2m}{m}}{4^m}
+ \left(\frac{w^{2m-1}}{2m-1}-\frac{w^{2m}}{2m}\right).
+\]
+The leading coefficient of \(2P-D\) is \(11/72\), but its \(a^6\)
+coefficient is \(-3089/2239488\). Its coefficients are not all positive.
+This rejects dropping its signed tail without proof; it does not by
+itself decide the stronger global inequality \(2P-D\geq11a^2/72\).
+
+\textbf{The boundary is excluded.}
+At \(r=1\), the stated strict density floor and geometric denominator
+cease to apply. For \(r>1\), some phases give negative proposed density.
+Changed gauges, dependent or nonuniform sources, singular embeddings,
+rounded angles and other PID functionals require new arguments.
+The earlier mixed-dimensional raw-radius contrast remains unresolved;
+this analytic theorem does not repair an estimator.
+
+\newpage
+\PidWorkflowSection{Separate error budgets and legitimate use}
+The theorem approximates an exactly specified population law with known
+parameters. It does not estimate that law from data. The following error
+sources require separate evidence.
+
+\begin{center}\small
+\begin{tabular}{@{}p{35mm}p{111mm}@{}}
+\toprule
+\PidTableHeaderRow Source of error & Covered statement or open obligation\\
+\midrule
+Series truncation & \(0\leq A-A_M\leq B_M\), with exact real \(Q,D,P\).\\
+Arithmetic & A computed \(\widetilde A_M\) needs errors in \(J_M,Q,D,P\);
+the theorem supplies none.\\
+Parameter fitting & A recording-to-parameter map and its uncertainty are
+not supplied. Fitted values do not prove the population model.\\
+Sampling/dependence & No IID premise is needed for the identities. Real
+phase time rows need their own temporal and observation assumptions.\\
+Application & No held-out task gain, robustness, calibration or useful
+decision follows from the bound.\\
+\bottomrule
+\end{tabular}
+\end{center}
+If qualified component enclosures later give absolute errors
+\(\eta_J,\eta_Q,\eta_D,\eta_P\), the triangle inequality gives
+\[
+ |A-\widetilde A_M|\leq B_M+\eta_J+\eta_Q+\eta_D+2\eta_P.
+\]
+For \(r>0\), division by \(a^2/8+b^2/4\) gives a conditional relative
+ceiling. These symbols do not assert that any such component enclosure
+has been implemented. Near the origin the true scale is quadratic in
+the amplitudes, so uncaptured absolute rounding error is especially relevant.
+
+This is a useful offline reference for a deliberately specified stochastic
+phase channel: it tests the named decomposition, top-cut reconstruction,
+proper-node weighting and signed-atom interpretation. An analytic reference
+can reveal a formula mismatch even when finite samples look plausible.
+It cannot establish finite-sample calibration by itself.
+
+Measured neural or interferometric phases would need justified phase
+extraction, gauge, grouping, target, noise model and joint law. No recording
+is shown to satisfy this two-harmonic density. No data result or performance
+measurement is reported. Two harmonic inputs are not two datasets.
+
+For an actual decision, compare full MI/CMI, a known phase-residual
+statistic, direct task loss, fixed-model and retrained ablation, explicit
+failure utility, coverage, Bayesian or Fisher design, another PID and no PID.
+The chosen comparator must answer the same task. A short formula with a
+small truncation error does not justify a costly PID analysis by itself.
+
+\newpage
+\PidWorkflowSection{Rust implementation and computational cost}
+The exact input here is the supplied real pair \((a,b)\), not a training
+set. Population support is the full four-dimensional angle box with periodic
+seams; there is no empirical alphabet or occupied-support count. A proposed
+sampled diagnostic would take \(N\) aligned rows of four scalar angles,
+three source columns and one target column. Parameter fitting, inference
+and resampling are additional operations outside this result.
+
+No new Rust generator, series evaluator, outward interval, learner or binding
+is implemented by this report. The existing research route is
+\texttt{experimental::mixed\_dimension\_pid3::pid3\_isx\_report} and
+\texttt{pid3\_isx}, in \texttt{crates/pid-core/src/pid3.rs}, under
+\texttt{research-mixed-dimension-pid3} with explicit runtime opt-in.
+Its sample-based full PID3 route retains mixed-dimensional raw-radius gaps.
+Incomplete PID3 is an availability diagnostic, not a missing-atom oracle.
+
+The source-derived cost baseline records four triangular distance matrices:
+distance payload alone is \(16N(N-1)\) bytes, before scratch and other
+allocations. Existing resource preflight and research warnings still apply.
+Its sample estimator is not this parameter-specified analytic calculation.
+No timing, peak-memory or real-time qualification is reported here.
+
+The first \(M\) moments contain \(M(M+3)/2\) nonnegative summands,
+forty-four at \(M=8\). Exact rational parameters make \(J_8\) rational.
+A streaming evaluator may keep current coefficients, powers, moment and
+sum; caching powers and factorials uses \(O(M)\) rational objects.
+Term counts are not constant-bit operation or memory bounds: numerators,
+denominators and GCD costs grow. Fixed-width factorial overflow, saturation
+or modular arithmetic cannot silently replace exact arithmetic.
+
+The proper terms need qualified square-root and logarithm enclosures,
+plus subtraction-error propagation. A future evaluator needs explicit
+input bounds, resource limits, cancellation and fail-closed behavior.
+Those contracts are not supplied. Proof checking is separate from formula
+evaluation and estimator runtime; no formal kernel was run.
+
+\PidWorkflowSubsection{Evidence, source and citation}
+The detailed Markdown is \emph{Relative truncation error for the averaged
+angular top atom} (5 October 2026). Its complete hand proof received an
+independent-first advisory model critique. Unchanged finite rational and
+18-node checks passed in normal and optimized Python; they do not prove
+the integrals or continuum theorem. Exact retrieved-paper custody,
+formal replay, executable refinement and applications remain open.
+
+Defining method: Ehrlich et al., \emph{Partial Information Decomposition
+for Continuous Variables based on Shared Exclusions: Analytical Formulation
+and Estimation}, arXiv:2311.06373v3;
+\href{https://doi.org/10.1103/PhysRevE.110.014115}{Physical Review E 110,
+014115 (2024)}. Software citation:
+\href{https://github.com/sepahead/pid-rs/blob/c2c18dc4a823f0343c958697a7c8e78da8da4102/CITATION.cff}{pid-rs CITATION.cff}.
+Suggested report citation: Sepehr Mahmoudian, \emph{Relative error for an
+angular SxPID3 atom} (2026), including the exact repository commit or release
+when published. This private supplement is not accepted remote-main publication.
+\end{document}

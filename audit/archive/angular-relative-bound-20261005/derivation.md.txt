@@ -1,0 +1,442 @@
+# Relative truncation error for the averaged angular top atom
+
+Sepehr Mahmoudian, 5 October 2026.
+
+This is a project-derived, handwritten result for one specified continuous
+population law. It establishes a positive denominator for the existing
+two-harmonic approximation. For `0 < |a|+|b| <= 1/2`, retaining eight even
+moments gives relative error at most `1/1253376 < 10^-6` in the averaged top
+atom. Formal verification, a certified evaluator and sampling guarantees
+remain open. No scientific-priority claim is made.
+
+Suggested citation: Sepehr Mahmoudian, *Relative truncation error for the
+averaged angular top atom* (2026), including the exact repository commit or
+release when published. Cite the defining method paper separately.
+
+## 1. Exact object and source boundary
+
+The predecessor is the 3 October 2026 local specification
+[Two harmonics: a nonzero-proper continuous SxPID3 reference](../../research-and-storage-20261003/two-harmonic-sxpid3-v1/CANDIDATE.md),
+14,804 bytes, SHA-256
+`4da36e266ba14aaaea0755caec3088e3c9f4c3b6272c29325d671535821515cb`.
+Its historical statement that no relative bound was supplied remains true
+about that packet. It did not prove such a bound impossible.
+
+The paper-defined functional is Ehrlich et al., *Partial Information
+Decomposition for Continuous Variables based on Shared Exclusions:
+Analytical Formulation and Estimation*,
+[arXiv:2311.06373v3](https://arxiv.org/html/2311.06373v3), separately published
+at [DOI 10.1103/PhysRevE.110.014115](https://doi.org/10.1103/PhysRevE.110.014115).
+Sections II.2 and III.2, Equation (16), and Appendix B Definition 3 provide
+the continuous branch sums, averaging and finite inversion. The current
+audit inspected the versioned HTML. An exact local paper-byte binding is
+not supplied by this packet. The model and bounds below are local
+derivations, not theorems attributed to that paper.
+
+Let `L=2*pi`, and let `S1,S2,S3,T` be scalar angles in `[0,L)`, in radians.
+Fix product Lebesgue measure, real `a,b`, and `r=|a|+|b|<1`. Define
+
+\[
+ v=(t-s_1)\bmod L,\qquad u=(t-s_1-s_2-s_3)\bmod L,
+ \qquad p(s_1,s_2,s_3,t)=L^{-4}(1+a\cos v+b\cos u).
+\]
+
+The density lies between `(1-r)L^-4` and `(1+r)L^-4`. Integrating over `t`
+removes both cosines, giving `p_S=L^-3`; integrating over `s1` gives
+`p_T=L^-1`. Thus the law is normalized, the three sources are independent
+uniform angles, and the target is uniform. The torus density is positive
+and smooth; seams have probability zero. The ratio to `p_S*p_T` is bounded
+away from zero and infinity, so the information integrals below are finite.
+
+This is a specified population model, not an empirical count law or a fit
+to recordings. The identities need no IID sampling premise. A sampler,
+estimator or recorded time series needs its own sampling assumptions.
+Natural logarithms give nats. The scalar numerical densities use the fixed
+radian gauge, including at mixed-cardinality nodes; replacing these with
+unit-Haar marginal densities changes the defining branch sums. Uniform
+probability measures used to calculate integrals below do not make that
+replacement.
+
+For a proper nonempty source subset `B`, integrating an omitted source
+removes the `b` term. The target/source marginal is
+
+\[
+ p_{T,S_B}=L^{-|B|-1}
+ \begin{cases}1+a\cos v,&1\in B,\\1,&1\notin B.\end{cases}
+ \qquad p_{S_B}=L^{-|B|}.
+\]
+
+For a proper antichain `alpha`, the branch-sum log ratio is therefore
+`ln(1+a*w_alpha*cos v)`, where
+
+\[
+ w_\alpha=
+ \frac{\sum_{B\in\alpha,\,1\in B}L^{-|B|}}
+      {\sum_{B\in\alpha}L^{-|B|}}.
+\]
+
+Under the actual law, `v` has density `(1+a*cos v)/L`. Define its averaged
+cumulative for `0<=w<=1` by
+
+\[
+ R(w)=\frac1L\int_0^L(1+a\cos v)\ln(1+aw\cos v)\,dv.
+ \qquad P=R(1/2),\quad D=R(2/3),\quad Q=R(1).
+\]
+
+The first `a` is the population weight; it cannot be replaced by `aw`.
+The available exact elementary expression is
+
+\[
+ H(a,c)=\ln\frac{1+\sqrt{1-c^2}}2+
+          \frac{ac}{1+\sqrt{1-c^2}},\qquad R(w)=H(a,aw).
+\]
+
+For completeness, put `z=c/(1+sqrt(1-c^2))` and
+`K=(1+sqrt(1-c^2))/2`. Then `1+c*cos v=K*|1+z*exp(iv)|^2` and `|z|<1`.
+Expand the logarithm in its uniformly absolutely convergent Fourier
+series. Its uniform mean is `ln K` and its cosine-weighted mean is `z`.
+This proves the displayed formula. The proof of the lower bound below
+also works directly from the integral and requires no square-root or
+logarithm evaluation.
+
+## 2. Why the averaged top atom is J-Q-D+2P
+
+For antichains use `beta<=alpha` when every branch of `alpha` contains a
+branch of `beta`. Define atoms by the finite cumulative equations
+`R_alpha=sum_{beta<=alpha} Pi_beta`. There are 18 positions for three
+sources. The top is the one-branch antichain `{123}`; `A` denotes its
+averaged atom, not its pointwise value.
+
+Every proper antichain belongs to at least one of the lower sets of
+`{12}`, `{13}`, `{23}`: select one proper branch and extend it to a pair.
+The intersection of two such lower sets is the lower set of the antichain
+containing the two pairs. The same statement holds for the triple
+intersection. Finite inclusion-exclusion applies to the signed atom sum,
+so the sum of all 17 proper atoms is
+
+\[
+ R_{\{12\}}+R_{\{13\}}+R_{\{23\}}
+ -R_{\{12\}\{13\}}-R_{\{12\}\{23\}}-R_{\{13\}\{23\}}
+ +R_{\{12\}\{13\}\{23\}}.
+\]
+
+All branches in these seven cumulatives have size two. Their weights are
+respectively `1,1,0,1,1/2,1/2,2/3`, so this sum is `Q+D-2P`. This direct
+top-cut argument independently reconstructs the predecessor's full-table
+top coefficient without using the values of its mixed-cardinality atoms.
+
+Let `h=L^-4` be the uniform integration reference. The coordinate change
+`(s1,s2,s3,t) -> (s1,s2,v,u)` has the integer inverse
+`t=v+s1`, `s3=v-u-s2` modulo `L`, with determinant of magnitude one.
+Consequently `v,u` are independent uniform angles under `h`. Put
+`Y=a*cos v+b*cos u`. The full mutual information is
+
+\[
+ J(a,b)=\mathbb E_h[(1+Y)\ln(1+Y)],\qquad Q=J(a,0).
+\]
+
+Since the top cumulative is `J`, the atom of interest is exactly
+
+\[
+ \boxed{A(a,b)=J(a,b)-Q-D+2P.}
+\]
+
+## 3. The existing positive series and absolute tail
+
+For `|Y|<=r<1`, absolute uniform convergence permits integration of
+
+\[
+ (1+Y)\ln(1+Y)=Y+\sum_{n\ge2}\frac{(-1)^nY^n}{n(n-1)}.
+\]
+
+Shifting both angles by `pi` negates `Y` and preserves uniform measure,
+so odd moments vanish. The even cosine mean is
+`E cos^(2j)(v)=binom(2j,j)/4^j`: expand the power of
+`(exp(iv)+exp(-iv))/2` and keep its constant Fourier term. Independence
+then gives
+
+\[
+ J=\sum_{m\ge1}\frac{M_m}{2m(2m-1)},\qquad
+ M_m=\frac{(2m)!}{4^m}
+ \sum_{j=0}^m\frac{a^{2j}b^{2m-2j}}{(j!)^2((m-j)!)^2}.
+\]
+
+All coefficients are nonnegative, including for negative `a` or `b`.
+For integer `M>=1`, define `J_M` by retaining `m=1,...,M`. Since
+`0<=M_m<=r^(2m)`,
+
+\[
+ 0\le J-J_M\le B_M:=
+ \frac{r^{2M+2}}{(2M+2)(2M+1)(1-r^2)}.
+\]
+
+Indeed the first omitted denominator is the smallest tail denominator;
+replacing all subsequent ones by it leaves a geometric series. Define
+`A_M=J_M-Q-D+2P`, with the proper terms kept exact. Then
+`0<=A-A_M=J-J_M<=B_M`. A numerical implementation that approximates the
+proper terms must add those errors separately.
+
+## 4. A positive denominator for the atom
+
+### 4.1 The additional harmonic contributes at least b²/4
+
+In the convergent series for `J(a,b)-J(a,0)`, the `j=m` term cancels at
+each `m`. Every remaining term is nonnegative. The `m=1,j=0` term is
+`b²/4`. Therefore
+
+\[
+ J-Q\ge b^2/4.
+\]
+
+A second hand derivation uses curvature rather than the series. Write
+`C=cos v`, `E=cos u` under the independent uniform reference. For fixed
+`a` and any `t` on the segment from zero to `b`, differentiation under the
+integral is justified by `1+aC+tE>=1-r>0`. Thus
+
+\[
+ \partial_b^2J(a,t)=\mathbb E\frac{E^2}{1+aC+tE}
+ =\mathbb E\frac{E^2}{1-(aC+tE)^2}\ge\mathbb E E^2=1/2.
+\]
+
+The equality averages the integrand with its image under
+`(C,E)->(-C,-E)`. Also `partial_b J(a,0)=0`, since `E` has zero mean and
+is independent of `C`. The integral form of Taylor's theorem gives
+
+\[
+ J(a,b)-J(a,0)=b^2\int_0^1(1-s)\partial_b^2J(a,sb)\,ds\ge b^2/4.
+\]
+
+This argument includes both signs of `b`. It shares the stated law and
+analytic differentiation premises with the first route; it is not an
+independent institution or formal checker.
+
+### 4.2 The proper terms contribute at least a²/8
+
+Let `C=cos v` under the uniform reference. The denominator of the
+integrand defining `R` is at least `1-|a|>0` for `0<=w<=1`, permitting
+two derivatives under the bounded integral. They are
+
+\[
+ R'(w)=a^2(1-w)\mathbb E\frac{C^2}{1+awC},\qquad
+ R''(w)=-a^2\mathbb E\frac{(1+aC)C^2}{(1+awC)^2}\le0.
+\]
+
+The first identity follows by writing
+`(1+aC)/(1+awC)=1+a*(1-w)*C/(1+awC)` and using `E C=0`.
+The second shows concavity, because `1+aC>0`. With `R(0)=0` and
+`1/2=(3/4)*(2/3)+(1/4)*0`, concavity gives
+
+\[
+ P\ge\tfrac34D,\qquad 2P-D\ge\tfrac23P.
+\]
+
+Symmetry of `C` also gives
+
+\[
+ \mathbb E\frac{C^2}{1+awC}
+ =\mathbb E\frac{C^2}{1-a^2w^2C^2}\ge\mathbb E C^2=1/2.
+\]
+
+Hence `R'(w)>=a²(1-w)/2`. Integrating from zero to `1/2` yields
+
+\[
+ P\ge\frac{a^2}{2}\left(\frac12-\frac18\right)
+   =\frac{3a^2}{16},\qquad
+ \boxed{2P-D\ge a^2/8.}
+\]
+
+The predecessor's closed-form derivative provides a check:
+`R'(w)=a²(1-w)/(s*(1+s))`, where `s=sqrt(1-a²w²)`.
+Since `0<s<=1`, its denominator is at most two, giving the same bound.
+No division by `a`, `b`, `P` or `D` was used, so their zero cases survive.
+
+### 4.3 Combine the two bounds
+
+For every real `a,b` with `r<1`,
+
+\[
+ \boxed{A\ge a^2/8+b^2/4\ge r^2/12.}
+\]
+
+The final step is the exact square identity
+
+\[
+ \frac{a^2}{8}+\frac{b^2}{4}-\frac{(|a|+|b|)^2}{12}
+ =\frac{(|a|-2|b|)^2}{24}\ge0.
+\]
+
+Thus `A>0` at every nonzero parameter pair in this domain. At the origin,
+all cumulatives and atoms are zero; relative error is the undefined
+quotient `0/0`. The bound is for the averaged top atom only.
+
+## 5. Uniform relative error and worked exact values
+
+For every `0<r<1` and integer `M>=1`, define relative truncation error by
+`e_M=|A-A_M|/A`. The established sign of the tail and denominator imply
+
+\[
+ 0\le e_M\le
+ \frac{B_M}{a^2/8+b^2/4}
+ \le\frac{12r^{2M}}{(2M+2)(2M+1)(1-r^2)}.
+\]
+
+Both `r^(2M)` and `1/(1-r²)` increase for `0<r<1`. At `M=8` and
+`r<=1/2` the last expression is at most
+
+\[
+ \frac{12(1/2)^{16}}{18\cdot17\cdot(3/4)}
+ =\frac1{1253376}<\frac1{1000000}.
+\]
+
+The last inequality is an integer comparison. In this domain `A_8>0`
+also follows because the relative error ceiling is smaller than one.
+The displayed bound tends to zero as `r` tends to zero, but this does not
+define a relative error at the origin.
+
+For the original example `a=b=1/4`,
+
+\[
+ r=1/2,\quad A\ge\frac{3}{128},\quad
+ B_8=\frac1{60162048},\quad
+ e_8\le\frac{128}{3\cdot60162048}=\frac1{1410048}.
+\]
+
+Here `J_1=1/32`, `J_2=131/4096`, and
+
+\[
+ J_8=\frac{3787665970322303}{118219490218475520},\qquad
+ A_8=J_8-H(1/4,1/4)-H(1/4,1/6)+2H(1/4,1/8).
+\]
+
+Thus `[A_8,A_8+1/60162048]` is an exact-real enclosure. The endpoint is
+a rational-plus-elementary expression; printing that expression does not
+make it a machine-certified interval. The first moment formula gives
+`J_1=(a²+b²)/4`; the next gives
+`J_2=J_1+(a^4+b^4)/32+a²b²/8`, explaining both small fractions above.
+
+All four examples below have `r=1/2` and the same `B_8=1/60162048`.
+
+| a | b | Proven lower bound on A | Proven relative ceiling |
+|---:|---:|---:|---:|
+| 1/2 | 0 | 1/32 | 1/1880064 |
+| 0 | 1/2 | 1/16 | 1/3760128 |
+| 1/4 | 1/4 | 3/128 | 1/1410048 |
+| 1/3 | 1/6 | 1/48 | 1/1253376 |
+
+The last row attains equality only in the weighted-square lower-envelope
+step. It is not asserted to attain the actual atom bound or tail error.
+Changing either amplitude sign leaves the series and bounds unchanged.
+For `M=7`, the same uniform argument gives `1/245760>10^-6`; this means
+that this ceiling does not certify the target accuracy at order seven.
+It does not prove that the actual order-seven error exceeds that target.
+
+## 6. Counterexamples, failed routes and interpretation
+
+*Pointwise positivity does not follow.* Set `a=0`, `b=1/4`, and `u=pi`.
+Every proper pointwise cumulative is zero, but the pointwise top atom is
+`ln(3/4)<0`. Its averaged top atom remains positive. Signed atoms are never
+clamped by this result.
+
+*The top atom is not necessarily added task information.* Set `b=0` and
+`0<|a|<1`. Then `p(t|s1,s2,s3)=p(t|s1)`, so
+`I(S2,S3;T|S1)=J-Q=0`. Nonetheless `A=2P-D>=a²/8>0`.
+This model is useful to test the named decomposition and its interpretation.
+MI/CMI suffices when the question is the additional information of the two
+extra sources. Neither a positive top atom nor the small series error shows
+predictive, sensor-selection or control benefit.
+
+*The joint-MI denominator cannot be reused without proof.* For `b=0`,
+`R'(w)>0` at `a!=0,w<1`, hence `Q>D>P>0` and `A=2P-D<Q=J`.
+A bound with denominator `J` is not automatically a bound with denominator
+`A`. The new lower-bound proof is the missing step.
+
+*A tempting coefficientwise strengthening fails.* Expansion gives
+
+\[
+ R(w)=\sum_{m\ge1}a^{2m}\frac{\binom{2m}{m}}{4^m}
+ \left(\frac{w^{2m-1}}{2m-1}-\frac{w^{2m}}{2m}\right).
+\]
+
+The leading coefficient of `2P-D` is `11/72`, but its `a^6` coefficient
+is `-3089/2239488`. Consequently its higher coefficients are not all
+nonnegative. Retaining only the leading coefficient cannot be justified
+by the positive-series argument used for `J-Q`. This rejects that proof
+route; by itself it neither proves nor refutes the stronger global
+inequality `2P-D>=11a²/72`.
+
+The present proof excludes `r=1`, where its uniform positive-denominator
+argument and stated geometric tail cease to apply. For `r>1`, suitable
+phases make the proposed density negative. Changed gauges, nonuniform or
+dependent source laws, fitted amplitudes, rounded observations, singular
+embeddings, other PID definitions and population estimation require new
+premise-explicit arguments. The predecessor's mixed-dimensional raw-radius
+contrast also remains: this analytic result does not repair that estimator.
+
+## Rust implementation and computational cost
+
+The exact estimand is the specified population averaged top atom `A(a,b)`.
+This packet adds no public Rust implementation, feature or estimator. The
+existing route is
+`experimental::mixed_dimension_pid3::pid3_isx_report` (and the scalar
+`pid3_isx`) in `crates/pid-core/src/pid3.rs`, re-exported by `src/lib.rs`
+under `research-mixed-dimension-pid3`. It also requires the explicit runtime
+mixed-dimension opt-in. It is a sample-based research route, not this
+parameter-specified analytic reference. The incomplete PID3 API is an
+availability diagnostic and cannot supply the missing full atoms.
+
+The relevant source-derived baseline is the integration's
+`RUST_IMPLEMENTATION_AND_COST.md`, originally anchored to
+`8a1142cae32fae637b3bdfe39f890cb29176d144`; current exports and the warning
+beside `pid3_isx` were also read. The existing PID3 implementation retains
+four triangular distance matrices, with distance payload `16*N*(N-1)`
+bytes before scratch and other allocations. Its resource preflight and
+research warnings remain applicable. No timing is reported here.
+
+For known parameters, the analytic calculation has no data rows, training
+set, empirical alphabet or occupied support. Its population support is
+the full four-dimensional angle box (with periodic seams). A possible
+sampled diagnostic would take `N` aligned rows of four scalar angles,
+three source columns and one target column. Fitting parameters or
+resampling rows would be additional work and additional error sources;
+neither is implemented or covered by this theorem.
+
+Computing the first `M` exact moments visits `M*(M+3)/2` nonnegative summands,
+44 at `M=8`. Rational parameter powers and factorial/binomial coefficients
+can be reused. A streaming evaluator need retain only its current
+coefficient, powers, moment and accumulated sum, or `O(M)` rational
+objects if powers/factorials are cached. These counts are not constant-bit
+time or memory bounds: numerator and denominator bit lengths and GCD
+costs grow. Fixed-width factorial overflow, saturation and modular
+arithmetic cannot silently replace exact rational arithmetic.
+
+The small accompanying Python script checks finite rational formulas and
+the 18-node top cut. It does not evaluate `H`, produce an outward interval
+for `A`, or constitute a production evaluator. An actual Rust interval
+route needs exact or outward input bounds, qualified square-root/logarithm
+enclosures, and propagation of every proper-term error through
+`J_M-Q-D+2P`. `B_M` covers only the omitted `J` terms. Near zero, a lower
+denominator on the scale `r²` makes uncaptured absolute rounding errors
+especially relevant. No cancellation, memory, deadline or failure contract
+for that proposed evaluator is implemented here.
+
+The intended use is an offline analytic reference and interpretation test.
+A supplied-parameter ceiling costs few scalar operations; obtaining valid
+model parameters and guarantees for recorded data is a separate problem.
+There is no online or real-time qualification. Formal proof checking is
+separate from both formula evaluation and estimator runtime and is UNRUN.
+
+## 7. Exact evidence and remaining edges
+
+[The review](REVIEW.md) records twelve route choices, fifty named hostile
+lenses and independence limits. [The evidence record](EVIDENCE.md) binds
+the files and actual finite checks. The proof above is handwritten; its
+finite arithmetic can be reproduced with `rational_checks.py` in normal
+and optimized isolated Python modes. Those checks do not prove the
+integrals, infinite series or continuum inequalities.
+
+Source-to-local-definition correspondence is a scoped hand reading, with
+exact retrieved-paper custody still open here. Local definition to the
+analytic result is the displayed hand proof. Formal object/kernel replay,
+algorithm-to-Rust refinement, finite-precision enclosure, sample-law fit,
+estimator calibration and application value are all separate open edges.
+Neither this packet nor its prospective PDF closes a general PID3 claim.

@@ -1,0 +1,165 @@
+"""Finite exact-arithmetic checks for angular-relative-error-v1.
+
+This script checks only the named rational and finite-lattice predicates.
+It does not evaluate logarithms, prove integrals, or certify floating point.
+It writes no files and uses no nonstandard library or external process.
+"""
+
+from fractions import Fraction as F
+from itertools import combinations
+from math import comb, factorial
+import json
+
+
+def require(condition, name):
+    if not condition:
+        raise RuntimeError(name)
+
+
+def moment_factorial(a, b, m):
+    return F(factorial(2 * m), 4**m) * sum(
+        (
+            a ** (2 * j)
+            * b ** (2 * m - 2 * j)
+            / (factorial(j) ** 2 * factorial(m - j) ** 2)
+            for j in range(m + 1)
+        ),
+        F(0),
+    )
+
+
+def moment_binomial(a, b, m):
+    return sum(
+        (
+            F(comb(2 * m, 2 * j) * comb(2 * j, j)
+              * comb(2 * m - 2 * j, m - j), 4**m)
+            * a ** (2 * j) * b ** (2 * m - 2 * j)
+            for j in range(m + 1)
+        ),
+        F(0),
+    )
+
+
+def tail(r, order):
+    if type(r) is not F or not F(0) <= r < F(1):
+        raise ValueError("tail requires a rational 0 <= r < 1")
+    if type(order) is not int or order < 1:
+        raise ValueError("tail order must be a positive integer")
+    return r ** (2 * order + 2) / (
+        (2 * order + 2) * (2 * order + 1) * (1 - r * r)
+    )
+
+
+def relative_ceiling(a, b, order):
+    r = abs(a) + abs(b)
+    if r == 0:
+        raise ValueError("relative error is undefined at the origin")
+    return tail(r, order) / (a * a / 8 + b * b / 4)
+
+
+def leq(lower, upper):
+    return all(any((a & b) == a for a in lower) for b in upper)
+
+
+def main():
+    require(tail(F(1, 2), 8) == F(1, 60162048), "B8")
+    uniform = tail(F(1, 2), 8) / (F(1, 2) ** 2 / 12)
+    require(uniform == F(1, 1253376), "uniform M8 quotient")
+    require(uniform < F(1, 1000000), "uniform one-part-per-million")
+    require(relative_ceiling(F(1, 4), F(1, 4), 8)
+            == F(1, 1410048), "equal-amplitude quotient")
+    require(tail(F(1, 2), 7) / (F(1, 2) ** 2 / 12)
+            == F(1, 245760), "M7 uniform ceiling")
+    require(F(1, 245760) > F(1, 1000000), "M7 cannot use this ceiling")
+
+    controls = []
+    for name, invoke in (
+        ("undefined-origin", lambda: relative_ceiling(F(0), F(0), 8)),
+        ("excluded-radius-one", lambda: tail(F(1), 8)),
+        ("negative-radius", lambda: tail(F(-1, 4), 8)),
+        ("nonpositive-order", lambda: tail(F(1, 2), 0)),
+        ("boolean-order", lambda: tail(F(1, 2), True)),
+    ):
+        try:
+            invoke()
+        except ValueError:
+            controls.append(name)
+        else:
+            raise RuntimeError(name + " was accepted")
+
+    parameters = (
+        (F(0), F(0)), (F(1, 2), F(0)), (F(0), F(1, 2)),
+        (F(1, 4), F(1, 4)), (F(-1, 4), F(1, 4)),
+        (F(1, 4), F(-1, 4)), (F(-1, 4), F(-1, 4)),
+        (F(1, 3), F(1, 6)), (F(1, 100), F(1, 100)),
+    )
+    moment_checks = 0
+    square_checks = 0
+    examples = []
+    for a, b in parameters:
+        x, y = abs(a), abs(b)
+        require(x*x/8 + y*y/4 - (x+y)**2/12 == (x-2*y)**2/24,
+                "weighted-square identity")
+        square_checks += 1
+        terms = []
+        for m in range(1, 9):
+            first = moment_factorial(a, b, m)
+            second = moment_binomial(a, b, m)
+            require(first == second, "finite moment coefficient parity")
+            require(first >= 0, "positive moment coefficient")
+            require(first <= (x+y)**(2*m), "finite moment ceiling")
+            base = moment_factorial(a, F(0), m)
+            require(first >= base, "finite J-Q coefficient")
+            moment_checks += 1
+            terms.append(first / (2*m*(2*m-1)))
+        if (a, b) in ((F(1, 4), F(1, 4)), (F(1, 2), F(0)),
+                      (F(0), F(1, 2)), (F(1, 3), F(1, 6))):
+            examples.append({
+                "a": str(a), "b": str(b),
+                "quadratic_atom_lower_bound": str(a*a/8 + b*b/4),
+                "J1": str(terms[0]), "J2": str(sum(terms[:2], F(0))),
+                "J8": str(sum(terms, F(0))),
+                "B8": str(tail(x+y, 8)),
+                "relative_atom_ceiling": str(relative_ceiling(a, b, 8)),
+            })
+
+    antichains = []
+    for count in range(1, 8):
+        for family in combinations(range(1, 8), count):
+            if all((a & b) not in (a, b) for a, b in combinations(family, 2)):
+                antichains.append(family)
+    require(len(antichains) == 18, "complete three-source carrier")
+    singles = ((3,), (5,), (6,))
+    doubles = ((3, 5), (3, 6), (5, 6))
+    for node in antichains:
+        coefficient = sum(leq(node, cut) for cut in singles)
+        coefficient -= sum(leq(node, cut) for cut in doubles)
+        coefficient += leq(node, (3, 5, 6))
+        require(coefficient == (0 if node == (7,) else 1),
+                "top-cut inclusion-exclusion")
+
+    def r_coefficient(w, m):
+        return F(comb(2*m, m), 4**m) * (
+            w**(2*m-1)/(2*m-1) - w**(2*m)/(2*m)
+        )
+
+    rejected_coefficient = 2*r_coefficient(F(1, 2), 3) - r_coefficient(F(2, 3), 3)
+    require(rejected_coefficient < 0, "failed coefficientwise strengthening")
+    print(json.dumps({
+        "task": "angular-relative-error-v1",
+        "scope": "finite rational identities and finite lattice only",
+        "formal_proof": "unrun",
+        "float_or_sampling_guarantee": False,
+        "moment_comparisons": moment_checks,
+        "weighted_square_checks": square_checks,
+        "antichain_cut_checks": len(antichains),
+        "rejected_controls": controls,
+        "uniform_relative_M8_ceiling": str(uniform),
+        "uniform_relative_M7_ceiling": str(F(1, 245760)),
+        "negative_a6_coefficient_of_2P_minus_D": str(rejected_coefficient),
+        "worked_examples": examples,
+    }, sort_keys=True, indent=2))
+
+
+if __name__ == "__main__":
+    main()

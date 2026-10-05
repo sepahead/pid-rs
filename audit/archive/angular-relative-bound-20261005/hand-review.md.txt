@@ -1,0 +1,130 @@
+# Independent-first angular relative-bound disposition
+
+5 October 2026. Advisory model review, exact hand scope. Root adjudication
+and public acceptance are separate. Read ADMISSION.md and INDEPENDENT.md
+for the prospectively frozen exposure order and independence limits.
+
+Reviewed author source: ../angular-relative-error-v1/CANDIDATE.md,
+18052 bytes, SHA-256
+6521f04879d75762497504bda1f70ab4eb2cd887df76fc62c02d4c47e4674c7b.
+Read in full through line 442, followed by the complete author REVIEW.md,
+EVIDENCE.md and rational_checks.py. INDEPENDENT.md was already written at
+5387 bytes, SHA-256
+49828caa735787fff328be26c988b09a0eab62c73b82240319fe3d693dde1472.
+
+## Disposition
+
+HAND GO for the exact-real population theorem as stated, subject to the
+recorded defining-paper and executable boundaries. The source establishes
+for every real a,b with 0<r=|a|+|b|<=1/2 and M=8:
+
+A=J-Q-D+2P >= a^2/8+b^2/4 >= r^2/12 > 0,
+0 <= (A-A8)/A <= 1/1253376 < 1/1000000.
+
+At the origin A=A8=0, while the relative quotient is undefined. All
+proper terms in A8 are exact real expressions. This is an approximation
+theorem for a specified law, not a finite-precision or sampling guarantee.
+No correction to the mathematical candidate is required by this review.
+
+## Stepwise analytic adjudication
+
+1. **Population and marginals.** The positive floor (1-r)L^-4 justifies
+   every displayed log. Target integration removes both harmonics, and
+   integration of S1 also removes both. Every proper source subset omits
+   a variable from the joint harmonic. The proper marginals and branch
+   weights follow with the same target and fixed radian gauge.
+2. **Own-law mean.** The uniform torus reference is a device for integration;
+   it is not substituted into the defining PID. The actual v law has
+   density (1+a*cos(v))/L. Fourier factorization of 1+c*cos(v) proves H(a,c)
+   with the original a in the averaging weight. This agrees with the
+   independent route and retains the wrong-weight negative control.
+3. **Top lower cut.** Each proper antichain contains a branch extendable to
+   a pair, so the union of the three pair lower sets covers exactly the
+   seventeen proper positions. Their intersections are the corresponding
+   multi-pair lower sets. Signed inclusion-exclusion therefore gives the
+   seven-cut formula and Q+D-2P. No atom positivity was assumed.
+4. **Joint integral and series.** The explicit integer inverse verifies the
+   torus change of variables; v,u are independent under the uniform
+   reference. |Y|<=r<1 gives uniform absolute convergence. The simultaneous
+   half-period shift cancels all odd moments. Independent cosine constant
+   coefficients give the factorial formula and nonnegative even terms.
+5. **Extra harmonic lower bound.** Subtracting J(a,0) cancels j=m at each
+   order; all remaining terms are nonnegative, beginning with b^2/4.
+   The author's curvature cross-check also works: sign-pairing converts
+   E[E^2/(1+aC+tE)] to E[E^2/(1-(aC+tE)^2)]>=1/2; independence yields
+   J_b(a,0)=0. Taylor's integral remainder handles both signs of b.
+6. **Proper-term lower bound.** The direct derivative identity follows by
+   algebra and E[C]=0; positive density gives R''<=0. Concavity at
+   1/2=(3/4)(2/3)+(1/4)0 gives D<=4P/3, hence 2P-D>=2P/3. Sign-pairing
+   C gives R'>=a^2(1-w)/2, so P>=3a^2/16 and 2P-D>=a^2/8. The direction
+   of each inequality is correct. No division by a or P is needed.
+7. **Radius envelope.** The weighted-square identity is exact, with
+   (|a|-2|b|)^2/24 on the right. The bound is uniform for real signs.
+   Equality in this relaxation is not sharpness of A or of its error.
+8. **Tail and relative ceiling.** The first omitted term has degree 2M+2
+   and denominator (2M+2)(2M+1). The geometric bound B_M has the stated
+   exponent. Division uses the positive true A, not J or A_M. Monotonicity
+   in r gives the exact M=8 fraction. The origin is separately handled.
+9. **Examples and negatives.** The four tabulated lower bounds and rational
+   ceilings are correct. The M=7 ceiling fails to certify the requested
+   target; it does not prove actual order-seven error is too large. The
+   pointwise-negative, zero-CMI-positive-atom and negative-a^6-coefficient
+   witnesses each refute the stronger claim they name.
+10. **Cost and transfer.** The source correctly separates forty-four moment
+    terms from big-integer bit cost and research PID3 estimator runtime.
+    Proper-term outward enclosures, floating-point propagation, parameter
+    fitting, calibration and useful applications remain open.
+
+The independently written route gives a weaker denominator A>=a^2/9+b^2/4
+but a second-moment tail, resulting in 3/10027008. This is consistent with
+the author's bound. It is a retained alternative hand proof, not a reason
+to change the reviewed theorem or to claim optimality.
+
+## Fifty-lens actual review against the frozen roster
+
+1--5: exact paper revision and continuous branch-sum construction inspected;
+fixed Lebesgue radians and natural logarithms explicit. Exact local paper
+bytes remain unbound. 6--10: positive full-dimensional density, null seams,
+normalization and both marginals proved. 11--14: torus inverse, calculation
+reference, marginalization and own-law averaging checked. 15--18: the
+seven-cut lattice proof, signed atoms and averaged scope checked.
+
+19--20: named functional, source groups and target specify the question;
+they do not supply a deployment rationale. 21--22: MI and CMI correctly
+serve as simpler task comparators. 23--30: direct loss, fixed and retrained
+ablation, failure utility, coverage, Bayesian/Fisher design and other PID
+functionals remain application alternatives, not validated methods selected
+by this mathematical packet. 31: retaining only the old absolute result is
+a valid no-action choice if publication correspondence later fails.
+
+32--36: real signs, phase symmetry, moments, convergence and positive J
+terms checked. 37--40: tail denominator/exponent, independently derived
+second-moment alternative, R' and concavity checked. 41--44: positive true
+denominator, origin, a=0 axis and b=0 interpretation witness all survive.
+45--47: truncation, floating-point, parameter and sampling/dependence errors
+remain distinct; no data or calibration assertion was found. 48: Rust
+availability, bit costs and missing runtime contracts explicit. 49: formal
+and executable edges remain open. 50: same-model/custody dependence, local
+working evidence, pending root decision and publication limits explicit.
+
+No dissent about the displayed inequality remains. Shared cuts are the
+model, the primary-paper interpretation, uniform phase reference and
+ordinary real analysis; the additional independent route does not remove
+them. No human, institutional, empirical or external custody independence
+is claimed. The lens count is a coverage record, not proof evidence.
+
+## Finite reproduction and reopening
+
+After complete script read, the unchanged author rational_checks.py was
+run once in normal and once in optimized isolated Python. Both completed
+with exit zero and identical visible JSON: 72 moment comparisons, nine
+weighted-square identities, eighteen top-cut checks, five refused inputs,
+the four worked fractions, and -3089/2239488 for the failed coefficient.
+No log, integral, float, kernel or scientific estimator was evaluated.
+This corroborates finite arithmetic only; no independent judge was used.
+
+Reopen if the source-to-functional mapping changes, a missing analytic
+premise is found, a top-cut coefficient fails, or the exact arithmetic
+changes. Preserve these bytes before correction. A certified executable,
+formal statement or empirical evaluation requires its own admission and
+actual evidence. New PDF source/production acceptance is a separate task.

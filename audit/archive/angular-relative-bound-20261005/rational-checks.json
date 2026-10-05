@@ -1,0 +1,61 @@
+{
+  "antichain_cut_checks": 18,
+  "float_or_sampling_guarantee": false,
+  "formal_proof": "unrun",
+  "moment_comparisons": 72,
+  "negative_a6_coefficient_of_2P_minus_D": "-3089/2239488",
+  "rejected_controls": [
+    "undefined-origin",
+    "excluded-radius-one",
+    "negative-radius",
+    "nonpositive-order",
+    "boolean-order"
+  ],
+  "scope": "finite rational identities and finite lattice only",
+  "task": "angular-relative-error-v1",
+  "uniform_relative_M7_ceiling": "1/245760",
+  "uniform_relative_M8_ceiling": "1/1253376",
+  "weighted_square_checks": 9,
+  "worked_examples": [
+    {
+      "B8": "1/60162048",
+      "J1": "1/16",
+      "J2": "33/512",
+      "J8": "233199666677/3607772528640",
+      "a": "1/2",
+      "b": "0",
+      "quadratic_atom_lower_bound": "1/32",
+      "relative_atom_ceiling": "1/1880064"
+    },
+    {
+      "B8": "1/60162048",
+      "J1": "1/16",
+      "J2": "33/512",
+      "J8": "233199666677/3607772528640",
+      "a": "0",
+      "b": "1/2",
+      "quadratic_atom_lower_bound": "1/16",
+      "relative_atom_ceiling": "1/3760128"
+    },
+    {
+      "B8": "1/60162048",
+      "J1": "1/32",
+      "J2": "131/4096",
+      "J8": "3787665970322303/118219490218475520",
+      "a": "1/4",
+      "b": "1/4",
+      "quadratic_atom_lower_bound": "3/128",
+      "relative_atom_ceiling": "1/1410048"
+    },
+    {
+      "B8": "1/60162048",
+      "J1": "5/144",
+      "J2": "491/13824",
+      "J8": "13643270443313377/383463648078594048",
+      "a": "1/3",
+      "b": "1/6",
+      "quadratic_atom_lower_bound": "1/48",
+      "relative_atom_ceiling": "1/1253376"
+    }
+  ]
+}

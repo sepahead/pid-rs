@@ -7,6 +7,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Publish the [angular SxPID3 supplement](audit/archive/angular-relative-bound-20261005/ARCHIVE.md)
+  and [dated result map](RESEARCH_RESULTS_2026_10_05.md): a hand-derived positive atom
+  lower bound and relative truncation ceiling below one part per million for one specified law.
+  Preserve worked examples, interpretation counterexamples and failed proof routes;
+  keep formal verification, numerical certification and application benefits open.
+
+- Refresh the current operational documentation binding after the allocation and cancellation
+  clarification. Preserve the historical Lean replay and terminal C12 records unchanged.
+
 - Clarify that allocation-error recovery covers explicit fallible reservations, not every
   process-level allocation failure. Document cooperative cancellation without promising that
   a request after the final check affects a completed call; leave numerical code unchanged.

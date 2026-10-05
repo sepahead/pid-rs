@@ -1,0 +1,43 @@
+# Angular supplement: final private presentation review
+
+Sepehr Mahmoudian, 5 October 2026.
+
+Root accepts private readability for the eight-page supplement. Root personally
+inspected all 24 actual color, grayscale and high-resolution page images and
+read the full derivation, independent hand critique, worker visual review,
+metadata, font and URL inventories. No clipping, missing glyph, unreadable
+equation or color-only scientific meaning was observed. The worker's earlier
+"root pending" statement remains an unchanged source-time observation.
+
+PDF: 98,411 bytes, SHA-256
+5752880f70f3affbd59dda780946de3ce0e60d611a11464fc4b736065bdbe761.
+TeX: 18,587 bytes, SHA-256
+ad5971e0207e6d42452f3b6d6c043f63145af8d947b6805a6610dfada71612f7.
+
+All twenty visual lenses in VISUAL-REVIEW.md were applied: hierarchy,
+typography, grid, spacing, narrative, motif provenance/coherence/restraint,
+palette, separation of decoration and data, redundant status labels,
+grayscale, searchable text, high-resolution fidelity, A4/fonts, declared
+links, repeat-pass agreement, source separation, dependency limits and
+all-page inspection. Formula extraction, physical print, tagged accessibility,
+complete action-graph analysis, relocation, independent rebuilding and complete
+runtime closure remain unqualified.
+
+The single stock LuaHBTeX production and later inspection completed with zero
+exits. Final passes two and three have identical PDF and auxiliary bytes.
+The initial conventional rerun warning is retained. Raw font-memory counters
+differ by 76 reported bytes; raw debug-log identity was not the new predicate.
+No historical failed predicate or artifact was changed or waived.
+
+Scientific status is handwritten, independently hand-reviewed, not formally
+verified. Finite rational checks do not prove integrals or infinite series.
+The theorem concerns the specified positive four-angle population law, fixed
+radian/product-Lebesgue gauge, nats, and exact proper-node terms. Its M=8
+relative truncation ceiling is 1/1253376 for 0<|a|+|b|<=1/2. No certified
+floating-point evaluator, estimator calibration or application gain follows.
+The origin exception, pointwise negative atom, zero-CMI positive averaged
+atom, failed coefficient route and old ratio-one/log-zero correction remain.
+
+This disposition permits an honestly labelled exploratory archive deposit,
+not admission to the existing formal-publication PDF set. Public delivery,
+applicable local checks and exact Git readback are separate subsequent work.

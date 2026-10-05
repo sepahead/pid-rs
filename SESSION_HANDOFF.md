@@ -1,5 +1,16 @@
 # Session handoff — updated 2 October 2026
 
+## Angular supplement, 5 October 2026
+
+The [dated result map](RESEARCH_RESULTS_2026_10_05.md) links the new
+[eight-page PDF and source archive](audit/archive/angular-relative-bound-20261005/ARCHIVE.md).
+It gives a hand-derived relative truncation ceiling below $10^{-6}$ for one
+specified angular law, with exact proper terms and a positive atom lower bound.
+Formal verification and certified evaluation remain open; all five general
+SxPID3 programs remain open. Application routes include neural imaging,
+embodied intelligence, VLA/world models and the discussed ecosystem projects,
+not only sensors. Preserve all counterexamples and failed predecessor evidence.
+
 This is the entry point for continuing the pid-rs scientific and engineering program without the
 previous conversation. It is a dated coordination record. Current source, claim decisions, and
 fresh Git/hosted observations take precedence over its observations. Machine-specific locations

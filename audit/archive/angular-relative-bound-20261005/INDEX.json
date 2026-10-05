@@ -1,0 +1,16 @@
+{
+  "schema": "pid-rs/inert-research-archive-v1",
+  "recorded": "2026-10-05",
+  "status": "hand-derived exploratory supplement; formal verification open",
+  "payloads": [
+    {"path": "relative-error.pdf", "size_bytes": 98411, "sha256": "5752880f70f3affbd59dda780946de3ce0e60d611a11464fc4b736065bdbe761", "role": "eight-page report"},
+    {"path": "publication.tex.txt", "size_bytes": 18587, "sha256": "ad5971e0207e6d42452f3b6d6c043f63145af8d947b6805a6610dfada71612f7", "role": "inert exact TeX source"},
+    {"path": "pid-rs-report-tables.sty.txt", "size_bytes": 4051, "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6", "role": "inert table style"},
+    {"path": "pid-rs-workflow-publication.sty.txt", "size_bytes": 8607, "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9", "role": "inert publication style"},
+    {"path": "derivation.md.txt", "size_bytes": 18052, "sha256": "6521f04879d75762497504bda1f70ab4eb2cd887df76fc62c02d4c47e4674c7b", "role": "full hand derivation and negative findings"},
+    {"path": "hand-review.md.txt", "size_bytes": 7773, "sha256": "798a7bc0b6780bbe63061b9d132e6450687b1cf559e0bd9d380401c7b00d592c", "role": "independent-first hand critique"},
+    {"path": "rational-checks.py.txt", "size_bytes": 5894, "sha256": "f7bc77448077f44bd3ea5af074ed4c983e4dc919b92a023e151f2fc1fced446c", "role": "inert finite rational and lattice checker"},
+    {"path": "rational-checks.json", "size_bytes": 1596, "sha256": "3c2d0dc3e66ddd56b92d222ea8b9be2c21c6244f17f0b161dd3e8a8ceb3f0621", "role": "observed finite check output"},
+    {"path": "presentation-review.md.txt", "size_bytes": 2499, "sha256": "69711b1768be2cf0045014577038607ce8920f7e3f3f4d830beea84b8884beb2", "role": "scoped final private presentation disposition"}
+  ]
+}

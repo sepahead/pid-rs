@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "55c9fe53d586bf5ace5047855a19c58a7a320154c33bf51a34811bb4377803ea",
-        "size_bytes": 325403
+        "sha256": "9432368bce25f24301cdf1814d141b67d851969fd196cf175edd4dbee936db0b",
+        "size_bytes": 326038
       },
       {
         "git_mode": "100644",
@@ -525,6 +525,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "RESEARCH_RESULTS_2026_10_05.md",
+        "sha256": "31036475ffe9bebc1dc0718bbd5f1ff7f7ec527375bce87df549839bbb52bbfa",
+        "size_bytes": 3913
+      },
+      {
+        "git_mode": "100644",
         "path": "RUST_IMPLEMENTATION_AND_COST.md",
         "sha256": "0d7f99859dca02427946b8500c415d539095061142e5263a14f3cfc237f34f9a",
         "size_bytes": 23810
@@ -538,8 +544,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "c49d83f58fdbe72af31f17b26a360236e8a53347b100d65112e1b5733437076d",
-        "size_bytes": 39109
+        "sha256": "2a8ea0d24229917c2a0847d286e0987db0c2d6359b06db73ef13aefbdf45579b",
+        "size_bytes": 39774
       },
       {
         "git_mode": "100644",
@@ -840,6 +846,72 @@
         "path": "audit/archive/advisory-councils-20260725-20260726/payload/fable5-pid2-represented-sum-review-prompt.md",
         "sha256": "8607fec9c789e7963e905c799880d1a0e0c97250f86b3373e7d29dec9d7f4ecb",
         "size_bytes": 5306
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/ARCHIVE.md",
+        "sha256": "64aced1f8801f0ca05f313201264e4af7fd8e811419290168c53c2ed589f998c",
+        "size_bytes": 4756
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/INDEX.json",
+        "sha256": "18781d3a30a480991414596058be8f7a5363e33692098329b7462cd939887ab8",
+        "size_bytes": 1800
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/derivation.md.txt",
+        "sha256": "6521f04879d75762497504bda1f70ab4eb2cd887df76fc62c02d4c47e4674c7b",
+        "size_bytes": 18052
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/hand-review.md.txt",
+        "sha256": "798a7bc0b6780bbe63061b9d132e6450687b1cf559e0bd9d380401c7b00d592c",
+        "size_bytes": 7773
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/pid-rs-report-tables.sty.txt",
+        "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+        "size_bytes": 4051
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/pid-rs-workflow-publication.sty.txt",
+        "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+        "size_bytes": 8607
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/presentation-review.md.txt",
+        "sha256": "69711b1768be2cf0045014577038607ce8920f7e3f3f4d830beea84b8884beb2",
+        "size_bytes": 2499
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/publication.tex.txt",
+        "sha256": "ad5971e0207e6d42452f3b6d6c043f63145af8d947b6805a6610dfada71612f7",
+        "size_bytes": 18587
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/rational-checks.json",
+        "sha256": "3c2d0dc3e66ddd56b92d222ea8b9be2c21c6244f17f0b161dd3e8a8ceb3f0621",
+        "size_bytes": 1596
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/rational-checks.py.txt",
+        "sha256": "f7bc77448077f44bd3ea5af074ed4c983e4dc919b92a023e151f2fc1fced446c",
+        "size_bytes": 5894
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/angular-relative-bound-20261005/relative-error.pdf",
+        "sha256": "5752880f70f3affbd59dda780946de3ce0e60d611a11464fc4b736065bdbe761",
+        "size_bytes": 98411
       },
       {
         "git_mode": "100644",
@@ -30676,7 +30748,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "3a001f92f515657bfea7af1643903ae53e785e49d421b0afb7ee9cdf59b66b51",
+        "sha256": "050c287ba87632a773b75bbad68aa8b77169d046cf3e442326cbf0c04293d3dd",
         "size_bytes": 138785
       },
       {
@@ -31628,8 +31700,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "37962e61a2886b425fec5bd4d598859c31707a5bd5d0ebb240fc536e2c1bc853",
-    "entry_count": 5247
+    "entries_sha256": "8e543da424c286fd8a4efe5a01e431289acbc533bba11fc72dc2b090375eb7f2",
+    "entry_count": 5259
   },
   "subprojections": [
     {
@@ -31657,7 +31729,7 @@
       ]
     },
     {
-      "entries_sha256": "dc818f65a133d61efa4674e417d75fc99f96674df04fc9b91cc30724c2d4eb38",
+      "entries_sha256": "e5169c255026310401381b8cb6ae50744502e8ae9a7bf0d9ef2085a14b4a6a8a",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
