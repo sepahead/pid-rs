@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "7773f4d19cbcbd0fef2cf6a497cd54b16da88a781e7348c74a3efb7cb012c964",
-        "size_bytes": 325127
+        "sha256": "55c9fe53d586bf5ace5047855a19c58a7a320154c33bf51a34811bb4377803ea",
+        "size_bytes": 325403
       },
       {
         "git_mode": "100644",
@@ -526,8 +526,8 @@
       {
         "git_mode": "100644",
         "path": "RUST_IMPLEMENTATION_AND_COST.md",
-        "sha256": "3b4748f17ff07fa070dbb0a38c19abd5f7c852041871b1bcfd7279379c2de2ef",
-        "size_bytes": 23594
+        "sha256": "0d7f99859dca02427946b8500c415d539095061142e5263a14f3cfc237f34f9a",
+        "size_bytes": 23810
       },
       {
         "git_mode": "100644",
@@ -28882,8 +28882,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/resource.rs",
-        "sha256": "419e3b23e8bfea2951b2028a6008e723e673b493129d5735d4485e9f7ca1664b",
-        "size_bytes": 12996
+        "sha256": "53b1009984926d957295c9112193eaf9b47c95c5a134897d2538f70612c147d1",
+        "size_bytes": 13112
       },
       {
         "git_mode": "100644",
@@ -31628,7 +31628,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "9f09aaeeb033310e03e31cc2d7778cdec8a7b8d3c0eb89f31f090990ed92a933",
+    "entries_sha256": "37962e61a2886b425fec5bd4d598859c31707a5bd5d0ebb240fc536e2c1bc853",
     "entry_count": 5247
   },
   "subprojections": [
@@ -31657,7 +31657,7 @@
       ]
     },
     {
-      "entries_sha256": "376d499059e1fd1836912cf7140f9b40312c1491b8afa63a95a0e950ec121091",
+      "entries_sha256": "dc818f65a133d61efa4674e417d75fc99f96674df04fc9b91cc30724c2d4eb38",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

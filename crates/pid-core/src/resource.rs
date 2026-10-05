@@ -187,7 +187,9 @@ pub const DEFAULT_MAX_OPERATIONS_HINT: u128 = 10_000_000_000;
 ///
 /// Safe APIs either accept a budget explicitly or inherit [`Self::default`]. A budget is a
 /// preflight guard, not a promise that the operating system can satisfy an allocation below the
-/// ceiling; allocator failures are returned separately as [`PidError::AllocationFailed`].
+/// ceiling. Errors reported by explicit fallible reservations are mapped to
+/// [`PidError::AllocationFailed`]. Ordinary allocations remain; process-level allocation failure
+/// need not return `PidError`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[non_exhaustive]
 pub struct ResourceBudget {

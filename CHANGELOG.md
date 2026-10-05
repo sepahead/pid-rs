@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Clarify that allocation-error recovery covers explicit fallible reservations, not every
+  process-level allocation failure. Document cooperative cancellation without promising that
+  a request after the final check affects a completed call; leave numerical code unchanged.
+
 - Preserve the [restricted-integral source design](audit/archive/local-density-envelope-source-20261001/ARCHIVE.md)
   as incomplete, unexecuted inert text. Record its assumptions, unit distinctions,
   missing shadow controls and retained negative evidence; grant no proof,
