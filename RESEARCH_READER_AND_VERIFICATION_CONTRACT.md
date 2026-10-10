@@ -100,11 +100,11 @@ used by each expectation, support and sampling conditions, and every required
 positive denominator. Define abbreviations at first use. A glossary and a
 bibliography do not replace local definitions.
 
-For example, let \(n\) be a positive integer counting complete observed rows. Let \(z\)
+For example, let $n$ be a positive integer counting complete observed rows. Let $z$
 be one joint source-and-target category in a declared finite alphabet, and let
-\(c_z\) be its nonnegative integer row count. The empirical probability of that
-category is \(\widehat p_n(z)=c_z/n\). Its unit is dimensionless, and the counts
-must sum to \(n\). If \(n=4\) and \(c_z=1\), the probability is \(1/4\).
+$c_z$ be its nonnegative integer row count. The empirical probability of that
+category is $\widehat p_n(z)=c_z/n$. Its unit is dimensionless, and the counts
+must sum to $n$. If $n=4$ and $c_z=1$, the probability is $1/4$.
 This arithmetic evaluates an empirical law; it does not show how well that law
 estimates a population law. A new equation needs its own local meanings when a
 symbol's role changes.

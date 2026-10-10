@@ -7,6 +7,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Bring useful material from five archived shared-exclusions drafts into
+  [current output notes](output/RESEARCH_NOTES_2026_10_10.md): derive the five-position
+  categorical entropy budget, decoder envelope and varying-alphabet sharpness;
+  retain exact cancellation examples, duplicate-predictor harm, the fitted-rule
+  countercontrol and its corrected fraction. Explain finite event normalization,
+  stopped-check failures and unrun application routes. Preserve archived bytes and
+  distinguish source publication from formal, numerical, application and PDF acceptance.
+
 - Add the [reader and verification contract](RESEARCH_READER_AND_VERIFICATION_CONTRACT.md)
   and [process evidence report](RESEARCH_PROCESS_EVIDENCE_2026_10_10.md), with a branching
   evidence diagram, explicit best-of-N accounting, actual review limits and context-matched

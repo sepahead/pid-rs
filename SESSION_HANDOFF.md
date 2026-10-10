@@ -8,6 +8,14 @@ candidate selection, review dependencies, variable definitions and separate evid
 The retained workflow's pause and category-theoretic wording has only the bounded precedence
 specified in the contract; its full old Markdown/TeX/PDF update remains open.
 
+The [current output notes](output/RESEARCH_NOTES_2026_10_10.md) and
+[curation record](audit/evidence/archive-output-curation-20261010.md) bring useful
+content from five fully read archived source partners into active guidance.
+They include categorical entropy bounds, worked counterexamples, event logic,
+retained verification failures and unrun application plans. The archive census
+is not a complete review of all recovery stores; archived PDFs and current
+qualified-PDF obligations retain their separate status.
+
 Useful current material is active and in output, not only in archive. The
 [output predecessor](output/pdf/research-reader-contract-v2-draft/STATUS.md) remains an explicitly
 failed/unqualified draft, not a PDF projection of either current text. Preserve all failed
