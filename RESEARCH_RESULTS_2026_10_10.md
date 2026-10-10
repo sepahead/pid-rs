@@ -6,7 +6,9 @@ The [mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) and
 
 | Current material | Useful conclusion | Boundary / next work |
 |---|---|---|
-| [Useful current research notes in output](output/RESEARCH_NOTES_2026_10_10.md), [curation record](audit/evidence/archive-output-curation-20261010.md) | Five-position categorical entropy budget, decoder envelope, signed-cancellation examples, duplicate-predictor harm and fitted-rule countercontrol, finite event normalization and retained verification failures | Current source successor to five fully read archived drafts, with hand derivations and finite fixture evidence; no new formal, estimator, measured application or qualified-PDF acceptance |
+| [Useful current research notes in output](output/RESEARCH_NOTES_2026_10_10.md), [curation record](audit/evidence/archive-output-curation-20261010.md) | Five-position categorical entropy budget, decoder envelope, signed cancellation, duplicate-predictor controls, event normalization and verification failures | Current source successor to seven fully read archived texts, with hand derivations and finite fixture evidence; no new formal, estimator, measured application or qualified-PDF acceptance |
+| [Stopped-gradient worked example](output/RESEARCH_NOTES_2026_10_10.md#a-constant-mean-sampling-cost-can-hide-unstable-tails) | Four expected rows can hide divergent squared cost and whole-output variance; causal variance stays bounded here but its fourth moment diverges; shared-anchor averaging retains a variance floor | Assigned one-source categorical law, not SxPID3. Fresh IID blocks have a conservative known-model Chebyshev guarantee, not plug-in or recorded-data coverage; analytic differentiation is simpler here |
+| [Finite fault game and reporting control](output/RESEARCH_NOTES_2026_10_10.md#event-consistency-does-not-guarantee-minimax-fault-protection) | Fair forecasting attains minimax log loss `ln2`; consistency forecasting loses. Under a different uniform reporting channel, consistency is Bayes-optimal with expected loss below `ln2` | Same true-source law but different channel and loss objective. Hand proof, not field robustness or a new qualified formal result |
 | [Angular relative-error PDF in output](output/pdf/angular-relative-bound-20261005/relative-error.pdf), [unchanged source/provenance](audit/archive/angular-relative-bound-20261005/ARCHIVE.md) | The existing restricted-law eight-moment result and worked examples are now directly accessible in output | Exact copy of the already published exploratory supplement, outside the declared formal-PDF set; not a new proof, rebuild or admission, with unchanged analytic, numerical and application limits |
 | [Reader and verification contract](RESEARCH_READER_AND_VERIFICATION_CONTRACT.md) | Local variable meanings, actual research strategy, selection accounting and explicit proof dependencies | Project-defined process guidance; current-text qualified PDF remains open |
 | [AI-assisted process evidence report](RESEARCH_PROCESS_EVIDENCE_2026_10_10.md) and [diagram](output/figures/research-evidence-edges-20261010.svg) | Distinguish semantic, formal, executable, population and task connections; compare context-matched paper lessons | No new general framework, scientific-priority or measured workflow-superiority claim |
@@ -16,8 +18,9 @@ The [mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) and
 Useful current content belongs in active documentation and output. Archives
 preserve superseded, rejected and failed evidence; they must not be its only
 home. Keep useful negative results discoverable from the active result map.
-The curation covered five inert source partners and a bounded archive/PDF
-inventory, not every useful byte in all local recovery stores. Preserve
+The curation fully read seven inert source partners and screened selected
+status/payload text in the remaining archive packages, not every useful byte
+in all local recovery stores. Preserve
 historical bytes; use the current notes for corrected, actively linked prose.
 
 ## Still open

@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Extend current output notes with stopped-gradient cost, moment and anchor-reuse
+  examples, a known-model fresh-IID probability bound, and an exact fault-game
+  negative with a different-channel Bayes control. Retain failures and scope limits.
+
 - Bring useful material from five archived shared-exclusions drafts into
   [current output notes](output/RESEARCH_NOTES_2026_10_10.md): derive the five-position
   categorical entropy budget, decoder envelope and varying-alphabet sharpness;

@@ -16,6 +16,8 @@ notes is still open. Negative results belong beside the conclusions they limit.
 | Application-requirements draft | A duplicate can add no ideal information yet harm a restricted classifier; see the exact example below | A constructed law is not a neural, flight or robotic result |
 | Source-redundancy draft | A five-position categorical entropy budget and its zero-conditional-information counterexample; see below | Hand derivation with a published component-positivity premise, not a new kernel check |
 | Stock-verifier draft | Source-found, loaded and executed identities differ; wrong requested targets and stale receipts must be refused | Old matching hashes and zero exits do not lift the current formal-promotion hold |
+| Stopped-gradient draft | Constant mean sampling cost can coexist with divergent variance; causal scoring has bounded variance here but a divergent fourth moment | Assigned IID law and hand calculations; no learner, real-data calibration or kernel replay |
+| Finite fault-game draft | The consistency forecast loses a minimax comparison but is Bayes-optimal under a different specified channel | Different channels and loss objectives must not be conflated; no field-performance result |
 
 The [process report](../RESEARCH_PROCESS_EVIDENCE_2026_10_10.md) and
 [reader contract](../RESEARCH_READER_AND_VERIFICATION_CONTRACT.md) separate these evidence types.
@@ -58,9 +60,10 @@ These meanings use the [MGW v5 definition, Equations (6), (15) and Theorem IV.3]
 and ordinary finite Shannon information; the
 [MIT finite entropy and Fano notes](https://ocw.mit.edu/courses/6-441-information-theory-spring-2010/5c0b5a8a544cb2320778e4c9e5dea64f_MIT6_441S10_lec02.pdf)
 give the classical entropy arguments, not a PID theorem.
-Assigned finite-law calculations need no row-independence premise. Population
+Finite-table identities need no row-independence premise. Population
 confidence, fitted decoder guarantees and deployment value need separate
-sampling, selection and task assumptions. No such guarantees are added here.
+sampling, selection and task assumptions. No generic or recorded-data guarantee
+is added here; the stopped-gradient section states one bound under an assigned IID model.
 
 ## Repeated inputs: which categorical positions can change?
 
@@ -486,6 +489,293 @@ This proves the required sign as a hand derivation for these five nodes,
 not from redundancy monotonicity alone. The lattice/event correspondence,
 calculus and whole statement are not newly kernel-verified here.
 
+## A constant mean sampling cost can hide unstable tails
+
+This is a one-source **categorical MGW** example, not continuous SxPID3.
+Let the source `X` equal its target `Y`, both taking labels 0, 1 and 2.
+The complete row `Z=(X,Y)` therefore has only cells `00`, `11`, `22`.
+For a dimensionless parameter `t` with `|t|<1`, fix the law
+
+$$
+p_t(00)=\epsilon,\qquad
+p_t(11)=\frac{(1-\epsilon)(1+t)}2,\qquad
+p_t(22)=\frac{(1-\epsilon)(1-t)}2,
+\qquad 0<\epsilon\le\frac14.
+$$
+
+Here `epsilon` is the rare-cell mass, not the decoder error used earlier.
+The three positive masses sum to one and keep the same support for every
+allowed `t`. At `t=0`, define the score `s(z)=p'_0(z)/p_0(z)`.
+These are analytic scores of the assigned law, not fitted scores.
+Their values are `0,+1,-1` for `00,11,22`; their mean is zero and magnitude
+at most one. Source and target being equal makes one-source MGW information
+the entropy `H(Z)`: its local source surprise is `-ln p(z)` and its
+target-conditioned surprise is zero. The entropy derivative at `t=0` is
+zero because the equal-probability cells have opposite derivatives.
+
+Sample complete rows `Z0,Z1,...` independently from `p_0`. The anchor `Z0`
+is random. Let `tau` be the first positive row index with `Z_tau=Z0` and
+`Q=tau-1`. For each nonnegative integer `n`, define
+`H_n=sum_{j=1}^n 1/j`, with `H_0=0`; here these are
+harmonic numbers, not entropies. Before the repeat the native increment is
+`1/j`; no target match has occurred. The repeat kills every later increment.
+Thus the stopped native block is `H_Q`.
+
+Let `A_j=sum_{r=0}^j s(Z_r)` include the anchor score. Compare the two
+gradient statistics, in nats per unit of `t`,
+
+$$
+C=\sum_{j=1}^{Q}\frac{A_j}{j},\qquad W=H_Q A_\tau.
+$$
+
+`C` scores each increment when it arrives; `W` scores the whole stopped
+output, including the terminal row. Here `W` is a scalar statistic, not
+the earlier source-match event. Swapping labels 1 and 2 preserves the
+law and stopping time but reverses both scores. Their means are therefore
+zero, provided they are integrable. For each fixed positive `epsilon`,
+geometric return tails and bounded scores give all polynomial moments;
+in particular `|C|<=Q+H_Q<=2Q` and `|W|<=H_Q(Q+2)` suffice.
+This argument verifies the mean only in this symmetric family, not an
+arbitrary stopped-gradient theorem.
+
+### Mean cost and squared cost are different
+
+Conditional on an anchor of mass `q`, `tau` is geometric on positive integers:
+`P(tau=j | anchor)=q(1-q)^(j-1)`. Its first two moments are
+`1/q` and `(2-q)/q^2`. Averaging with the three anchor masses gives
+
+$$
+E\tau=3,\qquad E(\tau+1)=4,\qquad
+E\tau^2=\frac2\epsilon+\frac8{1-\epsilon}-3.
+$$
+
+The middle expression counts both anchor and terminal row. Expected row
+count remains four as the rare mass decreases, but squared cost diverges.
+This is return to the selected anchor, not return to any previously seen row.
+No worst-case latency or per-row lattice cost follows from the mean.
+
+### Whole-output variance diverges
+
+Conditional on rare anchor `00` and `Q=n`, the failure scores are independent
+fair signs and the anchor/terminal scores are zero. Thus
+`E[W^2 | Q=n,Z0=00]=n H_n^2`. Define a separate variable `Q0` with the
+conditional law of `Q` given `Z0=00`: its probabilities are
+`P(Q0=n)=epsilon(1-epsilon)^n`, for nonnegative integers `n`.
+Globally `Q` has a mixture law, not this rare-anchor law.
+Let `m=ceil(1/(2 epsilon))`. Then `epsilon m>=1/2`, `m<=1/epsilon`, and
+`P(Q0>=m)=(1-epsilon)^m>=1/4`. The last bound follows from
+`(1-epsilon)^(1/epsilon)>=1/4` for `epsilon<=1/2`.
+To check it, let `x` range over `(0,1/2]` and `u` be an integration variable.
+Differentiate `ln(1-x)/x`: its derivative is nonpositive
+because `-ln(1-x)=integral_0^x 1/(1-u) du <= x/(1-x)`.
+Its value at `x=1/2` is `ln(1/4)`.
+Consequently
+
+$$
+E W^2\ge\epsilon m H_m^2 P(Q_0\ge m)\ge\frac18 H_m^2
+\longrightarrow\infty\quad(\epsilon\downarrow0).
+$$
+
+Since `E W=0`, this is actual variance divergence, not a diverging upper
+bound. The limit stays within positive laws; no claim is made at `epsilon=0`.
+
+### Causal variance stays bounded, but its fourth moment does not
+
+For rare anchor and `Q=n`, interchange two finite sums:
+`C=sum_{k=1}^n s(Z_k)(H_n-H_{k-1})`. Independence and zero means remove
+cross terms. Expanding the squared weights gives
+
+$$
+E[C^2\mid Q=n,Z_0=00]
+=\sum_{k=1}^n(H_n-H_{k-1})^2
+=\sum_{i,j=1}^n\frac{\min(i,j)}{ij}
+=2n-H_n.
+$$
+
+For a worked conditional example, fix rare anchor and `Q=2`. The two
+failure scores are independent fair signs. Here `C=(3/2)s(Z1)+(1/2)s(Z2)`
+and `W=(3/2)[s(Z1)+s(Z2)]`. Each row below has conditional probability `1/4`.
+
+| First score | Second score | C | W |
+|---:|---:|---:|---:|
+| 1 | 1 | 2 | 3 |
+| 1 | -1 | 1 | 0 |
+| -1 | 1 | -1 | 0 |
+| -1 | -1 | -2 | -3 |
+
+Their second moments are `(4+1+1+4)/4=5/2` and `(9+0+0+9)/4=9/2`;
+fourth moments are `(16+1+1+16)/4=17/2` and `(81+0+0+81)/4=81/2`.
+This is constructed conditional data, not a recording or empirical benchmark.
+
+The diagonal in the general squared-weight identity contributes `H_n`; the two triangular halves contribute
+`2 sum_{j=2}^n (j-1)/j =2n-2H_n`. The identity
+`E H_Q0=sum_{j>=1} P(Q0>=j)/j=sum_{j>=1}(1-epsilon)^j/j=-ln epsilon`
+uses nonnegative summation and the logarithmic power series. Using
+`E Q0=(1-epsilon)/epsilon` yields the exact
+rare-anchor contribution
+
+$$
+E[C^2\mathbf1\{Z_0=00\}]=2(1-\epsilon)+\epsilon\ln\epsilon\le2.
+$$
+
+The other anchors have mass `a=(1-epsilon)/2>=3/8`.
+Their conditional `E Q^2=(1-a)(2-a)/a^2<=65/9` follows by bounding the
+numerator by `(5/8)(13/8)` and denominator below by `9/64`.
+The common anchors' combined probability is at most one. With `|C|<=2Q`,
+`E C^2<=2+260/9=278/9`, uniformly in this family.
+This coarse constant is not claimed optimal. It proves bounded variance
+for `C` here, not a universal ordering against `W`.
+
+Conditional Jensen gives
+`E[C^4 | Q=n,Z0=00] >= (E[C^2 | Q=n,Z0=00])^2`.
+Since `H_n<=n`, the conditional fourth moment is at least `n^2`. Therefore
+
+$$
+E[C^4\mathbf1\{Z_0=00\}]
+\ge\epsilon E Q_0^2
+=\frac{(1-\epsilon)(2-\epsilon)}\epsilon\longrightarrow\infty.
+$$
+
+Uniform second moments do not supply uniform fourth moments or validate
+plug-in variance estimates, normal intervals or deployment safety.
+
+### Fresh IID blocks and reused anchors differ
+
+Let `R` be a positive integer number of comparison streams. These are
+independent copies of the same block conditional on one shared random anchor.
+Write `mu(z)=E[C | Z0=z]` and
+`Cbar` for their average. Conditional variance and total variance give
+
+$$
+\mathrm{Var}(\overline C)
+=\frac{E[\mathrm{Var}(C\mid Z_0)]}{R}
++\mathrm{Var}(\mu(Z_0)).
+$$
+
+The second term does not divide by `R`. In this family `mu(00)=0`.
+Given anchor `11`, each failure score has mean `-a/(1-a)`, so
+`E[C | Q=n,Z0=11]=H_n-na/(1-a)`. The geometric expectations are
+`E H_Q=-ln a` and `E Q=(1-a)/a`, conditional on this anchor. They give
+`mu(11)=-ln a-1`; swapping labels gives `mu(22)=ln a+1`.
+Thus the shared-anchor term is `(1-epsilon)(1+ln a)^2`; as
+`epsilon` decreases it tends to `(1-ln2)^2>0`. Fresh independent complete
+blocks instead divide their variance by `R`. Overlapping streams need
+their actual covariance analysis.
+
+There is a conservative positive statistical conclusion for **fresh IID
+blocks under this assigned family**. Let `Cbar_fresh` average `R` such
+blocks, and let `delta` in `(0,1)` be a requested failure probability.
+Fix both `R` and `delta` before sampling; adaptive choices need a different bound.
+Its mean is zero and variance at most `278/(9R)`. Markov's inequality
+applied to its squared deviation gives, for a positive width `w` in nats per
+unit of `t`,
+`P(|Cbar_fresh|>=w)<=278/(9R w^2)`. Substitute
+
+$$
+w=\sqrt{\frac{278}{9R\delta}}\quad\Longrightarrow\quad
+P(|\overline C_{\mathrm{fresh}}|\ge w)\le\delta.
+$$
+
+This is a hand-derived uniform Chebyshev bound in the stated model, not a
+plug-in or general stopped-gradient interval. It does not apply to shared
+anchors or validate independence in recorded data. Direct differentiation
+already gives the derivative zero without sampling; that is the simpler
+baseline in this validation example. No new calibration study is reported.
+The Markov step follows pointwise from
+`1{|Cbar_fresh|>=w}<=Cbar_fresh^2/w^2`; taking expectations gives the bound.
+
+These are hand reconstructions of the
+[retained stopped-gradient example](../audit/archive/stopped-prefix-research/gradient-counterexamples-2026-09-19.md.txt).
+The [current stopped-prefix exposition](../audit/formal/lean-stopped-prefix-probability/EXPOSITION.md)
+has its own encoded claims and limits; these calculations add no kernel replay.
+They motivate reporting sampling-cost tails, anchor reuse and high moments
+when testing finite categorical gradient methods. They supply no new Rust
+learner, empirically calibrated interval, real-data optimization or physical application.
+
+## Event consistency does not guarantee minimax fault protection
+
+Fix binary sources `S1,S2`, target `T=S1`, and complete source masses
+`P(00)=P(11)=9/20`, `P(01)=P(10)=1/20`. An adversary knows the true pair
+and reports `r=(r1,r2)` preserving at least one true coordinate. It changes
+neither the target nor the true law. For each report, a forecast assigns
+positive masses `f(0|r),f(1|r)` summing to one. Define its risk as the
+true-law expectation of the largest admissible natural-log loss.
+This is an assigned finite threat model, not a measured fault distribution.
+
+A randomized admissible attack is:
+
+| True pair | Report 01 probability | Report 10 probability |
+|---|---:|---:|
+| 00 | 4/9 | 5/9 |
+| 11 | 5/9 | 4/9 |
+| 01 | 1 | 0 |
+| 10 | 0 | 1 |
+
+Every report preserves at least one coordinate. Multiplying the first
+column by true masses gives `P(T=0,r=01)=9/20*4/9+1/20=1/4` and
+`P(T=1,r=01)=9/20*5/9=1/4`. The other column gives the same two masses.
+There are two surviving reports and four target/report cells, not four
+surviving reports. Each report has a fair target.
+
+For either report let `u=f(0|r)`, `v=f(1|r)`, both positive and `u+v=1`.
+The inequality `(u-v)^2>=0` gives `uv<=1/4`; hence
+`[-ln u-ln v]/2>=ln2`. The maximum permissible loss for a true state is
+at least its randomized-attack average. Averaging the fair report losses
+therefore proves risk at least `ln2` for every forecast. Constant fair
+forecasting attains that risk. The minimax value is exactly `ln2` nats.
+Here “minimax” means minimizing this worst-admissible-report expected loss.
+
+Compare the event-consistency forecast
+using `t` now as a target label in `{0,1}`, not the preceding real parameter.
+Define `event_r={S1=r1 OR S2=r2}` as an event of the true sources. Then
+`f_C(t|r)=P(T=t | S1=r1 OR S2=r2)` under the same unchanged law.
+Its target-zero probabilities for `00,01,10,11` are
+`10/11,10/19,9/19,1/11`: their event masses are `11/20,19/20,19/20,11/20`
+and target-zero intersections are `1/2,1/2,9/20,1/20`.
+For a true diagonal pair, the worst allowed correct-target probability
+is `9/19`; for an off-diagonal pair it is `1/11`.
+The two groups have true masses `9/10` and `1/10`. Consequently
+
+$$
+\mathrm{Risk}(f_C)=\frac9{10}\ln(19/9)+\frac1{10}\ln11>\ln2,
+$$
+
+because both log arguments exceed two. Thus this event rule is not minimax
+in this specified game. The conclusion does not refute MGW's defining
+information measure or every possible fault objective. The fair non-PID
+forecast is the decisive comparator; a PID interpretation cannot replace
+the stated adversary, loss and admissible action set.
+
+### A different reporting model gives a positive control
+
+Replace the adversary by a **specified** channel that chooses uniformly
+among each true state's three legal reports, including the unchanged one.
+Its conditional report probability is `1/3` on the consistency event and
+zero outside. In Bayes' rule the common factor `1/3` cancels, giving
+`P(T=t | report r)=P(T=t,event_r)/P(event_r)=f_C(t|r)`.
+The union event alone does not imply that channel.
+
+Under this new channel, `f_C` minimizes ordinary expected log loss, not the
+original worst-case risk. To check the loss inequality at a fixed report,
+write `p_t=P(T=t | report r)` and let `g_t` be any positive normalized
+forecast. The excess loss is `sum_t p_t ln(p_t/g_t)>=0`, because
+`-ln x>=1-x` with `x=g_t/p_t` makes its lower bound
+`sum_t(p_t-g_t)=0`. All `p_t` are positive here.
+For completeness, `x` here is a positive probability ratio:
+`x-1-ln x` has derivative `1-1/x`, decreases up to one and increases after
+one, and has value zero at one. Hence `-ln x>=1-x`.
+Report masses are `11/60` for `00,11` and `19/60` for `01,10`.
+Using the binary entropy `h` already defined above, its expected loss is
+`(11/30)h(1/11)+(19/30)h(9/19)<ln2`; each posterior is nonuniform and
+binary entropy is strictly below its balanced maximum. This adds a genuine
+channel-specific Bayes conclusion, not a rescue of the losing minimax claim.
+
+This reconstructs the finite game in the
+[retained audit](../audit/archive/shared-exclusions-audit-20260930/EXPOSITION.md.txt),
+alongside the [current fault-model exposition](../audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md).
+It can test overbroad robustness claims. It establishes no
+drone, imaging, neural, robotic or learned-model performance result.
+
 ## Rust implementation and computational cost
 
 Existing default-build `stable::categorical` APIs compute empirical MGW PID
@@ -576,7 +866,7 @@ them nor authorize branch, worktree or cloud-recovery deletion.
 
 ## Preserved sources and current successors
 
-The five source partners below were fully read during this curation. Their
+The seven source partners below were fully read during this curation. Their
 PDFs are not accepted current projections. Private runtime and capture
 preimages are not made independently replayable by these links.
 
@@ -592,6 +882,12 @@ preimages are not made independently replayable by these links.
   the decoder budget, captured table and duplicate-loss example above retain
   useful explanations without promoting old tool or application claims.
   The current reader/process reports govern verification accounting.
+- [Stopped-gradient counterexamples](../audit/archive/stopped-prefix-research/gradient-counterexamples-2026-09-19.md.txt):
+  the cost, moment and shared-anchor derivations above retain the useful failure;
+  the fresh-block probability bound requires its stated known model.
+- [Finite shared-exclusions audit](../audit/archive/shared-exclusions-audit-20260930/EXPOSITION.md.txt):
+  the finite-game proof above retains the losing robustness comparison;
+  the positive channel control has a different objective and sampling law.
 
 The archive also contains six failed PDFs, not six mathematical refutations:
 missing glyphs, bad layout, and two failed repeated-byte pairs. Retain their

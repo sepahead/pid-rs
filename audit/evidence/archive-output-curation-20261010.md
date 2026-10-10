@@ -5,12 +5,12 @@ Author: Sepehr Mahmoudian.
 ## Outcome and scope
 
 The [current output notes](../../output/RESEARCH_NOTES_2026_10_10.md) give active,
-corrected successors to useful content in five fully read archived source partners.
-The source is 603 lines, 33,626 bytes, SHA-256
-`d7732f76ed1290dc1a0e0f9e48b44e2310f056d7a2ef65cc8e26ac487cc03a75`.
+corrected successors to useful content in seven fully read archived source partners.
+The source is 899 lines, 47,983 bytes, SHA-256
+`3039afa6a1481ca9ec1e8dc46ff1cd4563b12960e2f4dc90edddfadbff6bad5d`.
 It contains hand derivations, finite counterexamples, retained source-check failures
 and explicitly unrun application proposals. It grants no new formal, Rust,
-numerical, population, deployment or qualified-PDF acceptance.
+numerical, empirical-calibration, deployment or qualified-PDF acceptance.
 
 A read-only census covered 23 archive packages, 263 files, 6,356,851 bytes and
 12 PDFs. Its exact private roster has SHA-256
@@ -21,10 +21,10 @@ or failed repetition pairs; five other source/PDF partners needed curation,
 not automatic PDF promotion. Other local recovery stores are outside this check.
 No branch, worktree, archive or cloud-recovery deletion is authorized by it.
 
-## Five source partners and useful successors
+## Seven source partners and useful successors
 
-All paths below are relative to the repository root. These five source partners
-were read completely: 605 lines and 68,433 bytes. Their historical bytes remain
+All paths below are relative to the repository root. These seven source partners
+were read completely: 1,254 lines and 109,169 bytes. Their historical bytes remain
 unchanged; current prose corrects stale or overbroad wording without erasure.
 
 | Source under `audit/archive/` | SHA-256 | Current useful successor |
@@ -34,11 +34,20 @@ unchanged; current prose corrects stale or overbroad wording without erasure.
 | `shared-exclusions-research-findings-20261001/application-assumptions.md.txt` | `3f2891351841454d36e22221a899d9b2c7b0c2279e85380348755a3a747d05a3` | Duplicate-input loss mechanism, oracle/fitted distinction and application input/target/evaluation assumptions |
 | `shared-exclusions-research-findings-20261001/source-redundancy.md.txt` | `afaebc3b5b350459690f0b0b5d12e49781ac8665d605efe753a80eb9a0d277fe` | Five-position entropy budget, exact-repeat and zero-CMI distinction, decoder envelope, sharpness and descriptive five-row example |
 | `shared-exclusions-research-findings-20261001/stock-verifier-audit.md.txt` | `af1c9113ea71d12e22a95f996c1a5729c8f88b357623ab26f435daa867179c0e` | Dependency-refusal ordering, wrong-cause controls, first-failure preservation, typed-input joins and source/runtime identity limits |
+| `stopped-prefix-research/gradient-counterexamples-2026-09-19.md.txt` | `e0c6b0195e6f6e7a361b49b24d7057cebf390e1dadab3e6f934cb236a7504214` | Constant mean row cost, diverging whole-output variance, bounded causal variance with diverging fourth moment, shared-anchor variance floor and a fresh-IID known-model probability bound |
+| `shared-exclusions-audit-20260930/EXPOSITION.md.txt` | `87d21111e82f98cec235059bff8f451d848f5cf2d7a318042d9f1f9e3c6a42e1` | Exact finite-game minimax counterexample, with a separately reconstructed positive Bayes control under a different reporting channel |
 
 The categorical notes do not inherit the continuous angular result. MGW's
 finite event functional, Ehrlich's continuous functional and `I_min` remain
-different objects. Finite-law evaluation requires no IID row assumption;
+different objects. Direct finite-table evaluation requires no IID row assumption;
 population error bounds and task benefit require separate sampling evidence.
+
+A further status screen covered all 19 remaining packages, not every payload:
+46 selected archival text paths were inspected, 40 fully and six partially.
+It recommended these last two illustrations; other inspected material already
+had active successors or remained obsolete, failed or unexecuted. This does not
+prove all 196 remaining paths lack useful content. PDFs, opaque bundles and
+external recovery stores were not fully reviewed or cleared for deletion.
 
 ## Routes and council evidence
 
@@ -74,6 +83,14 @@ Those are selected-source checks, not full-paper, rights or novelty audits.
 The root rederived the five net fixture ratios and smoothing correction.
 No fixture rerun, new solver or proof-kernel execution is credited.
 
+For the two later illustrations, the root read both complete archived texts,
+the new frozen gradient and fault-game reconstructions, their routes and exposed
+reviews. The initial reconstructions preceded exposure to the new candidate,
+but shared supplied laws and prior project context; training exposure is unknown.
+The 271-line candidate received three exposed model reviews with different
+mathematical focuses. Ten-route/fifty-question records describe reasoning
+coverage by one context each, not tests or independent confirmations.
+
 Selected private evidence commitments are below. These hashes support exact
 identification, not public replay, authenticity or correctness. Machine-specific
 locations remain in ignored local records.
@@ -90,6 +107,15 @@ locations remain in ignored local records.
 | Final two-edit review | `153a8cd9b3a8cabe8a2e08ced5f9011b7f649c1957a33fa58b2ae418143f2831`; complete preimage plus exact diff binds the 603-line source, not a claimed second complete text read |
 | Final categorical exposed review | `5de189767b49184decdfbed26ea465f331ec3fdf75830d0c7cfd16dab0dcd8da`; complete preimage plus exact successor diff, with initial reconstruction preserved |
 | Final duplicate-predictor exposed review | `3d7cc138b003030bb02908a9ffe3f90ac1e34df8cd8e22bce1c567facca2f6eb`; both complete versions read, focused prediction/loss and application limits checked |
+| Remaining-package initial triage | `fd782f490cb7a6fc0ffe3a98a7ea1106b94f08f42fdaead358d9e786cdc48d56`; bounded 19-package status screen, not all payloads or cloud stores |
+| Initial stopped-gradient reconstruction | `47f64a249ba352803431839e89d338cc21716ba6f2ae5ba670f97a630d6a2ffc`; one assigned-law hand derivation, not sharp-asymptotic promotion |
+| Initial fault-game reconstruction | `569c2807fd37029a5c2d1d3f813cd8ac31f99b2b9419b82576a95070ca99328b`; finite threat-model hand reasoning and a distinct uniform-channel positive control |
+| Full 271-line candidate review | `aaa402a4d48269e6dda900757f43a11e1ac29bfc6bd1d802130cd13a80f11d92`; conditional notation and confidence-scope corrections checked |
+| Stopped-gradient exposed review | `21051b1fd7e8ce9b6580b6aa4622d85e93cfbd31518c656358c971d064334352`; full candidate read, narrow first-section hand agreement |
+| Fault-game exposed review | `33ffe90870d7f4b31e8418bc72d055c3039ce629c61e6d99c8c55ada62fdac04`; full candidate read, narrow second-section hand agreement |
+| Final stopped-gradient assembly review | `b3bc05df12224dfc90483420af9ecee2eb7527e0332e89f1c12cceb4d06486e8`; 223 current lines read, exact fragment/section equality and corrected global scope; not full 899-line review |
+| Final fault-game assembly binding | `0197f52496d0e4355a515b45650f4cbe099cc9a7cae106ee31070c24ceb58627`; 178 current lines read, local symbol/objective checks and exact fragment equality |
+| Final bounded curation review | `f7630bc6d50138b190ef44448a1ef217b33de1c24e5ffd658cccdc21ead26874`; full curation preimages, map and handoff; 475/899 current notes lines, then bounded scope-qualifier checks; these appended rows were not reviewed there |
 
 The source reviews found no new mathematical defect under the stated finite-law
 premises. This is advisory evidence, not formal acceptance. The five-node finite
@@ -115,6 +141,30 @@ Zero added CMI does not kill individual signed atoms; small average entropy
 does not bound every rare local value; small decoder error without alphabet
 control need not imply small entropy. Oracle duplicate-input harm does not
 imply every fitted model is harmed. All these counterexamples remain active.
+
+The later candidate initially used a rare-anchor geometric law without enough
+visible conditioning and denied confidence conclusions too broadly. Its
+successor names `Q0` as the rare-conditioned variable and supplies a valid
+Chebyshev bound for fresh IID blocks under the known assigned family. This is
+not plug-in, normal, selected-run or real-data coverage. Earlier candidate bytes
+remain preserved. A reviewer also corrected its own private unconditional
+second-moment constant from `−7` to `−8`; the current notes never use that wrong
+formula. Its original review and a separate erratum remain preserved, the latter
+SHA-256 `75d674371aefcf03e85870edc3ee98262ecb9e05286275512e4378534f3a1022`.
+
+The event-consistency rule loses the stated minimax game. It is Bayes-optimal
+for ordinary expected log loss only after specifying the different uniform
+three-report channel. Cheap mean work is not tail safety; bounded variance is
+not a uniform fourth-moment bound; reused anchors are not fresh IID blocks.
+These are active positive and negative model conclusions, not application gains.
+
+Assembly review also caught an inherited global sentence saying that no
+confidence guarantees were added. The current paragraph distinguishes static
+finite-table identities from the assigned-IID probability bound. Local clarity
+changes define target-label `t`, the report-consistency event, analytic scores,
+predeclared stream count and failure probability. They do not change the fault
+game or gradient formulas. Old review bindings remain attached to their exact
+versions; new narrow receipts bind the assembled source, not unseen full text.
 
 The current formal-promotion hold and historical receipt boundaries remain.
 The unchanged repository math-format checker rejected the reviewed source and

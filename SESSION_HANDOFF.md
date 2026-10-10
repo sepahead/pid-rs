@@ -10,9 +10,11 @@ specified in the contract; its full old Markdown/TeX/PDF update remains open.
 
 The [current output notes](output/RESEARCH_NOTES_2026_10_10.md) and
 [curation record](audit/evidence/archive-output-curation-20261010.md) bring useful
-content from five fully read archived source partners into active guidance.
+content from seven fully read archived source partners into active guidance.
 They include categorical entropy bounds, worked counterexamples, event logic,
-retained verification failures and unrun application plans. The archive census
+stopped-gradient cost/moment and shared-anchor limits, an exact losing fault
+game with a different-channel positive control, verification failures and
+unrun application plans. The archive census
 is not a complete review of all recovery stores; archived PDFs and current
 qualified-PDF obligations retain their separate status.
 
