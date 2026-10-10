@@ -7,6 +7,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Add the [reader and verification contract](RESEARCH_READER_AND_VERIFICATION_CONTRACT.md)
+  and [process evidence report](RESEARCH_PROCESS_EVIDENCE_2026_10_10.md), with a branching
+  evidence diagram, explicit best-of-N accounting, actual review limits and context-matched
+  paper lessons. Keep useful current guidance active and retain the failed predecessor PDF
+  in output with its status. Expose the unchanged useful angular supplement in output,
+  retaining its original source and evidence. Guard source-state recipes against prerequisite failures;
+  preserve formal holds, negative findings and open publication/application obligations.
+
 - Publish the [angular SxPID3 supplement](audit/archive/angular-relative-bound-20261005/ARCHIVE.md)
   and [dated result map](RESEARCH_RESULTS_2026_10_05.md): a hand-derived positive atom
   lower bound and relative truncation ceiling below one part per million for one specified law.

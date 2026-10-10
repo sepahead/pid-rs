@@ -3804,46 +3804,56 @@ python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
 # Maintainer-only final regeneration after every other source byte and file mode is frozen.
 # Generate both interpreter modes into private files first: neither command can truncate the
 # tracked manifest if collection fails.
-state_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-current-source-state.XXXXXX")"
-state_candidate="$state_dir/current-source-state-v1.json"
-state_optimized="$state_dir/current-source-state-v1.optimized.json"
-state_install=""
-cleanup_state() {
-  rm -f -- "$state_candidate" "$state_optimized"
-  if [[ -n "$state_install" ]]; then
-    rm -f -- "$state_install"
-  fi
-  rmdir -- "$state_dir"
-}
-trap cleanup_state EXIT
-(umask 077; set -o noclobber
- python3 -I -S -B scripts/check-current-source-state-v1.py --emit > "$state_candidate"
- python3 -O -I -S -B scripts/check-current-source-state-v1.py --emit > "$state_optimized")
-cmp "$state_candidate" "$state_optimized"
-state_install="$(mktemp audit/evidence/.current-source-state-v1.json.XXXXXX)"
-install -m 0644 "$state_candidate" "$state_install"
-cmp "$state_candidate" "$state_install"
-mv -f -- "$state_install" audit/evidence/current-source-state-v1.json
-state_install=""
-git add audit/evidence/current-source-state-v1.json
-python3 -I -S -B scripts/check-current-source-state-v1.py
-python3 -O -I -S -B scripts/check-current-source-state-v1.py
+(
+  state_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-current-source-state.XXXXXX")" || exit 1
+  state_candidate="$state_dir/current-source-state-v1.json"
+  state_optimized="$state_dir/current-source-state-v1.optimized.json"
+  state_install=""
+  cleanup_state() {
+    rm -f -- "$state_candidate" "$state_optimized"
+    if [[ -n "$state_install" ]]; then
+      rm -f -- "$state_install"
+    fi
+    rmdir -- "$state_dir"
+  }
+  trap cleanup_state EXIT || exit 1
+  umask 077 || exit 1
+  set -o noclobber || exit 1
+  python3 -I -S -B scripts/check-current-source-state-v1.py --emit > "$state_candidate" || exit 1
+  python3 -O -I -S -B scripts/check-current-source-state-v1.py --emit > "$state_optimized" || exit 1
+  cmp "$state_candidate" "$state_optimized" || exit 1
+  state_install="$(mktemp audit/evidence/.current-source-state-v1.json.XXXXXX)" || exit 1
+  install -m 0644 "$state_candidate" "$state_install" || exit 1
+  cmp "$state_candidate" "$state_install" || exit 1
+  mv -f -- "$state_install" audit/evidence/current-source-state-v1.json || exit 1
+  state_install=""
+  git add audit/evidence/current-source-state-v1.json || exit 1
+  python3 -I -S -B scripts/check-current-source-state-v1.py || exit 1
+  python3 -O -I -S -B scripts/check-current-source-state-v1.py || exit 1
+)
 ```
+
+Run the block as one command and require its zero status. A required producer or comparison
+failure before replacement leaves the tracked manifest untouched. A failure after replacement
+leaves an unaccepted candidate; it does not promise rollback or authorize a success claim.
 
 After committing that final manifest, use an exact clean checkout. The shell creates private
 temporary files for transport; the checker itself accepts no path argument:
 
 ```text
-artifact_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-post-commit-source-state.XXXXXX")"
-artifact="$artifact_dir/post-commit-source-state-v2.json"
-(umask 077; set -o noclobber
- python3 -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact"
- python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact.optimized")
-cmp "$artifact" "$artifact.optimized"
-python3 -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact"
-python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact"
-python3 -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
-python3 -O -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
+(
+  artifact_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-post-commit-source-state.XXXXXX")" || exit 1
+  artifact="$artifact_dir/post-commit-source-state-v2.json"
+  umask 077 || exit 1
+  set -o noclobber || exit 1
+  python3 -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact" || exit 1
+  python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact.optimized" || exit 1
+  cmp "$artifact" "$artifact.optimized" || exit 1
+  python3 -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact" || exit 1
+  python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact" || exit 1
+  python3 -I -S -B scripts/check-post-commit-source-state-v2-self-test.py || exit 1
+  python3 -O -I -S -B scripts/check-post-commit-source-state-v2-self-test.py || exit 1
+)
 ```
 
 ## `collect-repository-snapshot.py`

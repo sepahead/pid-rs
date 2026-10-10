@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="565" viewBox="0 0 1120 565" role="img" aria-labelledby="title desc">
+  <title id="title">Separate evidence connections in PID research</title>
+  <desc id="desc">Question, functional and specification have correspondence duties. Specification has direct executable and optional formal routes. Descriptive task scoring need not assert population inference. No connection is labelled qualified.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8Z" fill="#334155"/></marker></defs>
+  <rect width="1120" height="565" fill="#fff"/>
+  <g font-family="sans-serif" fill="#172c40">
+    <text x="30" y="33" font-size="23" font-weight="bold">Different evidence questions; no automatic promotions</text>
+    <text x="30" y="61" font-size="16">Connections name obligations, not passed gates. Formal proof is route-specific.</text>
+    <g fill="#eef4f7" stroke="#334155" stroke-width="1.5">
+      <rect x="30" y="110" width="310" height="75" rx="7"/>
+      <rect x="405" y="110" width="310" height="75" rx="7"/>
+      <rect x="780" y="110" width="310" height="75" rx="7"/>
+      <rect x="780" y="275" width="310" height="75" rx="7"/>
+      <rect x="405" y="275" width="310" height="75" rx="7"/>
+      <rect x="405" y="425" width="310" height="75" rx="7"/>
+      <rect x="30" y="425" width="310" height="75" rx="7"/>
+    </g>
+    <g font-size="19" text-anchor="middle" font-weight="bold">
+      <text x="185" y="139">Scientific question</text><text x="560" y="139">Named PID functional</text>
+      <text x="935" y="139">Exact specification</text><text x="935" y="304">Optional formal route</text>
+      <text x="560" y="304">Executable result</text><text x="560" y="454">Population inference</text>
+      <text x="185" y="454">Task score / proposed use</text>
+    </g>
+    <g font-size="16" text-anchor="middle">
+      <text x="185" y="165">Inputs, outputs, why it matters</text><text x="560" y="165">Source, support, units</text>
+      <text x="935" y="165">Law, domains, premises</text><text x="935" y="330">Statement, imports, axioms</text>
+      <text x="560" y="330">Counts, rounding, resources</text><text x="560" y="480">Sampling and uncertainty</text>
+      <text x="185" y="480">Loss, baseline, transfer limits</text>
+      <text x="373" y="99">Meaning</text><text x="748" y="99">Correspondence</text>
+      <text x="595" y="230">Implementation</text><text x="980" y="238">Encoding</text>
+      <text x="747" y="370">Refinement, if claimed</text>
+      <text x="680" y="392">Inference assumptions</text><text x="285" y="395">Descriptive scoring</text>
+      <text x="374" y="520">Transfer</text>
+    </g>
+    <text x="785" y="444" font-size="16">Solid: correspondence duty</text>
+    <text x="785" y="471" font-size="16">Dashed: route-specific duty</text>
+    <text x="30" y="554" font-size="16">Retain counterexamples, refusals, selection history, shared dependencies and unresolved connections.</text>
+  </g>
+  <g stroke="#334155" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <path d="M340 147H398"/><path d="M715 147H773"/>
+    <path d="M780 180L675 268"/><path d="M560 350V418"/>
+    <path d="M405 312H185V418"/><path d="M405 462H347"/>
+    <path d="M935 185V268" stroke-dasharray="6 5"/>
+    <path d="M780 312H722" stroke-dasharray="6 5"/>
+  </g>
+</svg>

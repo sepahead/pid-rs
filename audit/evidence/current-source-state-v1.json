@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "41059242018535d84591f82471345f67e9995d94b2d5c7baa5c6161fa586e9b9",
-        "size_bytes": 98292
+        "sha256": "b4189e12c9af044e0208fc77932b102f9b38db80e5e80006672f627924231f49",
+        "size_bytes": 100035
       },
       {
         "git_mode": "100644",
@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "9432368bce25f24301cdf1814d141b67d851969fd196cf175edd4dbee936db0b",
-        "size_bytes": 326038
+        "sha256": "15aff3687e7d40d53ee774f6303be68bc257bf55183ee591da7ec44ffbc91f1f",
+        "size_bytes": 326684
       },
       {
         "git_mode": "100644",
@@ -334,8 +334,8 @@
       {
         "git_mode": "100644",
         "path": "CLAUDE.md",
-        "sha256": "f453fb9045339e981399a22fbafc50c5b9fb855aa82ed2f8f0d210317964553a",
-        "size_bytes": 963
+        "sha256": "a2a32f467cab02daee5a3a31a65d97ef24b6dc503c47874c3fc4c7ccba000b24",
+        "size_bytes": 1317
       },
       {
         "git_mode": "100644",
@@ -496,8 +496,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "094ff01badba6a1820211a71047d11537936b83ac88fcb5bfb8df17acea2e89a",
-        "size_bytes": 92562
+        "sha256": "12dc479d9fc29abd2efa8cbd7a459f1402bed428666381fe7148543b234a8a6d",
+        "size_bytes": 92909
       },
       {
         "git_mode": "100644",
@@ -525,9 +525,27 @@
       },
       {
         "git_mode": "100644",
+        "path": "RESEARCH_PROCESS_EVIDENCE_2026_10_10.md",
+        "sha256": "a7cb2d8dcf45d7094d47139434e902eec15a1b41be3256ac7c66aee3ad256181",
+        "size_bytes": 11540
+      },
+      {
+        "git_mode": "100644",
+        "path": "RESEARCH_READER_AND_VERIFICATION_CONTRACT.md",
+        "sha256": "2c994531ba9d56166f838cbaddaae4e36a72e34756b5da24070da462dc7a8c9e",
+        "size_bytes": 13991
+      },
+      {
+        "git_mode": "100644",
         "path": "RESEARCH_RESULTS_2026_10_05.md",
         "sha256": "31036475ffe9bebc1dc0718bbd5f1ff7f7ec527375bce87df549839bbb52bbfa",
         "size_bytes": 3913
+      },
+      {
+        "git_mode": "100644",
+        "path": "RESEARCH_RESULTS_2026_10_10.md",
+        "sha256": "d560f318afd4a69d733dab8a07932b8bde2c5f178c5fcb76cf805ddcc763bdf0",
+        "size_bytes": 3392
       },
       {
         "git_mode": "100644",
@@ -544,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "2a8ea0d24229917c2a0847d286e0987db0c2d6359b06db73ef13aefbdf45579b",
-        "size_bytes": 39774
+        "sha256": "06baa0e47c6139e8a6064608c9bd1de58fb4546c186f0d03053b15dfaabb56c3",
+        "size_bytes": 40835
       },
       {
         "git_mode": "100644",
@@ -14322,6 +14340,12 @@
         "path": "audit/evidence/repository-snapshot.md",
         "sha256": "8af40bf7787486934a2b686245035921bf3f3e1c4705db3b938dac50ba6bae55",
         "size_bytes": 1955
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/research-process-observations-20261010.md",
+        "sha256": "96a47e66164fbd5e317ed3dca5d654ef1157429e253bf86c2c97b9da499476bb",
+        "size_bytes": 5992
       },
       {
         "git_mode": "100644",
@@ -29637,6 +29661,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/figures/research-evidence-edges-20261010.svg",
+        "sha256": "8f5730dbf36a6c65545fc6ee607c69044e32ebebd5c3be6a701c30e518251d5b",
+        "size_bytes": 3400
+      },
+      {
+        "git_mode": "100644",
+        "path": "output/pdf/angular-relative-bound-20261005/relative-error.pdf",
+        "sha256": "5752880f70f3affbd59dda780946de3ce0e60d611a11464fc4b736065bdbe761",
+        "size_bytes": 98411
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/certified-sxpid2-executable-assurance.pdf",
         "sha256": "1d8d38809f877dd4499b8fe79ebe9e469fa116aa1ba4cbc2d5d4e35bafd76800",
         "size_bytes": 481102
@@ -29835,6 +29871,24 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/research-reader-contract-v2-draft/FAILED_UNQUALIFIED_DRAFT.pdf",
+        "sha256": "558a7aa3cae511677fdad7b940f10d46adcfdf637457a882b3bb04006e71934f",
+        "size_bytes": 57664
+      },
+      {
+        "git_mode": "100644",
+        "path": "output/pdf/research-reader-contract-v2-draft/REPORT.md.txt",
+        "sha256": "42cf233323a7ef0a49f59c700ee87c95bcab1785c0e087249bd433926b16bc6b",
+        "size_bytes": 12205
+      },
+      {
+        "git_mode": "100644",
+        "path": "output/pdf/research-reader-contract-v2-draft/STATUS.md",
+        "sha256": "098346280e02b0ecd1b9df2b515e60b748c927a990064c3d85922c3f26568d06",
+        "size_bytes": 3615
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/stopped-prefix-probability.pdf",
         "sha256": "fe32061a183564b2b562e213afc5600703443022e397ffc767384eeb4abe3542",
         "size_bytes": 304580
@@ -29872,8 +29926,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "c54f98e2dfd350aabbe66da04b140daa91033588cc1b3fcb5f3f103904c3adc4",
-        "size_bytes": 305146
+        "sha256": "27f735ce14087f5180920e5ebb8105d720ff35c3cb73cb06251c130e065b4dcb",
+        "size_bytes": 305734
       },
       {
         "git_mode": "100755",
@@ -30748,7 +30802,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "050c287ba87632a773b75bbad68aa8b77169d046cf3e442326cbf0c04293d3dd",
+        "sha256": "4dab31b8bdefa8cb6e17e5510676f155324dfa40be4517c9a4460c3a5f2ac3ee",
         "size_bytes": 138785
       },
       {
@@ -31700,8 +31754,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "8e543da424c286fd8a4efe5a01e431289acbc533bba11fc72dc2b090375eb7f2",
-    "entry_count": 5259
+    "entries_sha256": "e782b677ed09df375c77f897c7afc6ad6b43e60611b48bb92686a9a103516f16",
+    "entry_count": 5268
   },
   "subprojections": [
     {
@@ -31721,15 +31775,15 @@
       ]
     },
     {
-      "entries_sha256": "05fdbafb5f5802bae1c4e91032f70a7f50deba4b58b4c37c93b9250c11757ab9",
-      "entry_count": 38,
+      "entries_sha256": "7d5969e199a83dd46e402d3319f8d893d3e9cfb3094339463e5407dc4f8c939e",
+      "entry_count": 42,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "e5169c255026310401381b8cb6ae50744502e8ae9a7bf0d9ef2085a14b4a6a8a",
+      "entries_sha256": "2df16724ab61c931e5969b49424f11fbe70aab2455d7dc1cf05977021a3ddc84",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

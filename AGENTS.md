@@ -191,16 +191,36 @@ premise-compatible combination of the best parts. Record the selected rationale,
 failure conditions, and evidence needed to reconsider them. Do not count cosmetic variants as
 distinct routes, and do not treat enumeration or council agreement as mathematical evidence.
 
-Scientific documents must be self-contained for a mathematically trained reader who is new to this
-repository. State each equation's domain and assumptions near the equation; define symbols before
-use; show the physical-to-mathematical input and output; include at least one worked example where
-useful; distinguish pointwise, averaged, empirical, and population quantities; report estimator,
-sampling, numerical, resource, and application bounds; and explain both legitimate uses and reasons
-to prefer a simpler method. Cite primary sources for paper-defined and classical results, and mark
-project-defined derivations and novelty status explicitly. Use ASD-STE100-inspired plain technical
-prose for technical sections, but do not claim ASD-STE100 conformance without a separate audit.
-Preserve counterexamples, false positives, unsuccessful routes, and negative results with their
-scope and rejection reason; do not leave stale claims in an apparently current lane.
+Follow the current [research reader and verification contract](RESEARCH_READER_AND_VERIFICATION_CONTRACT.md).
+This bounded extension supersedes only the two retained-workflow wordings identified there:
+explicit user pause in the tool-lifecycle section and category-theoretic claims in the
+objects/morphisms section. The old workflow Markdown/TeX/PDF remain dated preserved artifacts
+pending a separate complete publication update; this extension grants no scientific or formal acceptance.
+
+Scientific documents must state the exact research question, why it matters and the useful advance
+sought. Before the first formula, provide a compact cited glossary and symbol key; define technical
+terms, abbreviations and symbols needed for the argument before use. Give each central equation's
+local meanings, domains, index ranges, units and assumptions. Show physical-to-mathematical inputs
+and outputs, include a recomputable worked example where useful, and distinguish pointwise,
+averaged, empirical and population quantities. Report estimator, sampling, numerical, resource and
+application bounds. Explain the actual AI role, selected strategy and nearest simpler alternatives;
+report the strongest checked findings, their evidence and current application significance separately
+from conditional future possibilities. Keep mechanical, semantic, formal, numerical, statistical,
+visual and human evidence distinct. Cite primary sources for paper-defined and classical results;
+mark project-defined derivations and novelty status. Use ASD-STE100-inspired plain technical prose
+without claiming conformance absent a separate audit. Preserve counterexamples, false positives,
+unsuccessful routes and negative results with scope, rejection reasons and reopen conditions;
+correct stale active claims without erasing their record.
+
+Before adopting an external research method, use the existing claim packet and route memo to state
+the pid-rs problem it solves, map its premises to this context, identify broken premises and needed
+adaptations, compare the simplest applicable alternative, and specify a falsifiable acceptance test.
+Retain the rejection reason when it does not transfer. A source's benchmark, reviewer score or
+different-domain success supplies no PID correctness, calibration, novelty or application credit.
+
+Use the reader contract's selection and review accounting: report actual candidate pools,
+test/judge reuse, allocation versus measured-use matching, named reviewers and lenses,
+exposure, shared dependencies and disagreement dispositions. Counts alone grant no acceptance.
 
 For every new or materially changed mathematical or statistical study, include a section named
 **Rust implementation and computational cost** in the detailed Markdown and PDF, with a concise
@@ -571,16 +591,19 @@ clean checkout. The shell owns these temporary files; v2 makes no path, durabili
 custody claim:
 
 ```text
-artifact_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-post-commit-source-state.XXXXXX")"
-artifact="$artifact_dir/post-commit-source-state-v2.json"
-(umask 077; set -o noclobber
- python3 -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact"
- python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact.optimized")
-cmp "$artifact" "$artifact.optimized"
-python3 -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact"
-python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact"
-python3 -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
-python3 -O -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
+(
+  artifact_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-post-commit-source-state.XXXXXX")" || exit 1
+  artifact="$artifact_dir/post-commit-source-state-v2.json"
+  umask 077 || exit 1
+  set -o noclobber || exit 1
+  python3 -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact" || exit 1
+  python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --emit > "$artifact.optimized" || exit 1
+  cmp "$artifact" "$artifact.optimized" || exit 1
+  python3 -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact" || exit 1
+  python3 -O -I -S -B scripts/check-post-commit-source-state-v2.py --validate-stdin < "$artifact" || exit 1
+  python3 -I -S -B scripts/check-post-commit-source-state-v2-self-test.py || exit 1
+  python3 -O -I -S -B scripts/check-post-commit-source-state-v2-self-test.py || exit 1
+)
 ```
 
 `AGENTS.md` is part of the exact current operational-wiring projection checked by the Lean freeze

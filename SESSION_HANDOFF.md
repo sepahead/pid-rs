@@ -1,5 +1,20 @@
 # Session handoff — updated 2 October 2026
 
+## Reader/process checkpoint, 10 October 2026
+
+The [current map](RESEARCH_RESULTS_2026_10_10.md), [reader contract](RESEARCH_READER_AND_VERIFICATION_CONTRACT.md)
+and [process evidence report](RESEARCH_PROCESS_EVIDENCE_2026_10_10.md) explain actual AI roles,
+candidate selection, review dependencies, variable definitions and separate evidence connections.
+The retained workflow's pause and category-theoretic wording has only the bounded precedence
+specified in the contract; its full old Markdown/TeX/PDF update remains open.
+
+Useful current material is active and in output, not only in archive. The
+[output predecessor](output/pdf/research-reader-contract-v2-draft/STATUS.md) remains an explicitly
+failed/unqualified draft, not a PDF projection of either current text. Preserve all failed
+packets and private receipts. New qualified PDFs, the sharper angular candidate and complete
+application report remain unfinished. No new scientific, formal, calibration, deployment,
+release or research-program closure follows. Revalidate actual Git and hosted state.
+
 ## Angular supplement, 5 October 2026
 
 The [dated result map](RESEARCH_RESULTS_2026_10_05.md) links the new
