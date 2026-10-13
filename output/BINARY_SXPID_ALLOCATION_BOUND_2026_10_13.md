@@ -206,12 +206,12 @@ $z$ measures probability imbalance, not an angle.
 Symmetry reduces the problem to $z\in[0,1]$.
 Continuity gives $g(0)=g(1)=0$.
 For $0<z<1$, define the inverse hyperbolic tangent by
-$\operatorname{atanh}z=\int_0^z du/(1-u^2)$.
+$\mathrm{atanh}z=\int_0^z du/(1-u^2)$.
 Its name makes no hyperbolic-data assumption. Differentiation gives
 
 $$
-g'(z)=\operatorname{atanh}z[k(z)-\beta],\qquad
-k(z)=\frac{2z}{(3-z^2)\operatorname{atanh}z}.
+g'(z)=\mathrm{atanh}z[k(z)-\beta],\qquad
+k(z)=\frac{2z}{(3-z^2)\mathrm{atanh}z}.
 $$
 
 A prime denotes derivative. Logarithmic differentiation gives
@@ -219,13 +219,13 @@ A prime denotes derivative. Logarithmic differentiation gives
 $$
 \frac{k'(z)}{k(z)}
 =\frac{3+z^2}{z(3-z^2)}
--\frac1{(1-z^2)\operatorname{atanh}z}<0.
+-\frac1{(1-z^2)\mathrm{atanh}z}<0.
 $$
 
 The strict sign follows from the integral bound
 
 $$
-\operatorname{atanh}z
+\mathrm{atanh}z
 =z+\int_0^z\frac{u^2}{1-u^2}\,du
 <z+\frac{z^3}{3(1-z^2)}
 \le\frac{z(3-z^2)}{(1-z^2)(3+z^2)}.
