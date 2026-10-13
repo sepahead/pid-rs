@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Document hand-reviewed binary MGW allocation bounds; retain failed routes.
+
 - Extend current output notes with stopped-gradient cost, moment and anchor-reuse
   examples, a known-model fresh-IID probability bound, and an exact fault-game
   negative with a different-channel Bayes control. Retain failures and scope limits.
