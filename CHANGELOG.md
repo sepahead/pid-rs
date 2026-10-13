@@ -7,8 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-- Document hand-reviewed binary MGW allocation bounds; retain failed routes.
-- Use portable notation for the binary allocation proof.
+- Document binary MGW bounds and retain failed routes; use portable notation.
+- Refresh current document bindings; preserve historical proof receipts.
 
 - Extend current output notes with stopped-gradient cost, moment and anchor-reuse
   examples, a known-model fresh-IID probability bound, and an exact fault-game
