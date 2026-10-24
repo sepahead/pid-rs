@@ -1,0 +1,21 @@
+\def\UnicodeFontFile#1#2{"[fonts/#1.otf]:#2"}
+\input{tulmr.fd}
+\documentclass[tikz,border=6pt]{standalone}
+\usepackage{fontspec,unicode-math,pgfplots}
+\defaultfontfeatures{Path=fonts/}
+\setmainfont{SourceSansPro-Regular.otf}[BoldFont=SourceSansPro-Semibold.otf,ItalicFont=SourceSansPro-RegularIt.otf]
+\setsansfont{SourceSansPro-Regular.otf}[BoldFont=SourceSansPro-Semibold.otf]
+\setmathfont{latinmodern-math.otf}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\pgfplotsset{compat=1.18}
+\definecolor{Lapis}{HTML}{1F3F60}
+\definecolor{Turquoise}{HTML}{1F6968}
+\definecolor{Ink}{HTML}{2C3E50}
+\definecolor{Bronze}{HTML}{916400}
+\definecolor{Pomegranate}{HTML}{743E37}
+\definecolor{Ivory}{HTML}{F7F3E9}
+\pdfvariable minorversion=7
+\pdfvariable suppressoptionalinfo=767
+\pgfplotsset{every axis/.append style={font=\small,axis line style={Ink},tick label style={Ink},label style={Ink},
+  tick align=outside,ymajorgrids,grid style={Ink!14},axis on top,enlarge x limits=0.35,
+  legend style={draw=none,font=\small,cells={anchor=west}}}}

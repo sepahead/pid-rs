@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Add the source-partition report on MGW allocation movement, with its exact PDF route and
+  controls; correct four defects of that route found on its first complete run.
 - Document binary MGW bounds and retain failed routes; use portable notation.
 - Refresh current document bindings; preserve historical proof receipts.
 

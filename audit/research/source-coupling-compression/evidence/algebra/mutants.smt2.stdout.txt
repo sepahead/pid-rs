@@ -1,0 +1,22 @@
+M01:drop-third-predicate-equality
+sat
+((x1 true)
+ (y1 true)
+ (x2 true)
+ (y2 true)
+ (x3 false)
+ (y3 true))
+M02:drop-positive-envelope-family
+sat
+((L 0.0)
+ (V 1.0)
+ (B1 1.0)
+ (a_k1 1.0)
+ (v_k1 0.0))
+M03:drop-negative-envelope-family
+sat
+((L 0.0)
+ (V 1.0)
+ (B1 (- 1.0))
+ (a_k1 (- 1.0))
+ (v_k1 0.0))

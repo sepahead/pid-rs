@@ -1,0 +1,40 @@
+{
+  "map": [
+    [
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "rows": 9752,
+  "scope": "observed encoded office test; no population-support or physical sensor constancy claim",
+  "source_names": [
+    "Light",
+    "CO2",
+    "Temperature"
+  ],
+  "thresholds": [
+    "0",
+    "455",
+    "20.745"
+  ],
+  "tuple_counts": [
+    [
+      1,
+      0,
+      4783
+    ],
+    [
+      1,
+      1,
+      4969
+    ]
+  ]
+}

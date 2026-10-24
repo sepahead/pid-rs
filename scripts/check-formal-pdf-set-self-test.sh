@@ -20,6 +20,8 @@ python3 -I -S -B "$ROOT/scripts/check-mgw-derivative-pdf-dispatch-self-test.py"
 python3 -O -I -S -B "$ROOT/scripts/check-mgw-derivative-pdf-dispatch-self-test.py"
 python3 -I -S -B "$ROOT/scripts/check-embodied-sensor-pdf-dispatch-self-test.py"
 python3 -O -I -S -B "$ROOT/scripts/check-embodied-sensor-pdf-dispatch-self-test.py"
+python3 -I -S -B "$ROOT/scripts/check-source-coupling-compression-pdf-self-test.py" --dispatch-only
+python3 -O -I -S -B "$ROOT/scripts/check-source-coupling-compression-pdf-self-test.py" --dispatch-only
 
 TMP_ROOT_INPUT="${TMPDIR:-/tmp}"
 if [[ ! -d "$TMP_ROOT_INPUT" ]]; then
@@ -71,6 +73,7 @@ MARKDOWN_SOURCES=(
   audit/evidence/cross-implementation-reverification-2026-09-26.md
   audit/formal/lean-stopped-prefix-probability/EXPOSITION.md
   audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md
+  audit/research/source-coupling-compression/EXPOSITION.md
   MATHEMATICAL_RESULTS_GUIDE.md
   audit/evidence/finite-target-copy-mgw-synergy.md
   audit/research/finite-prefix-mgw-gradient/EXPOSITION.md
@@ -92,6 +95,7 @@ STANDALONE=(
   cross-implementation-reverification
   stopped-prefix-probability
   fault-tolerant-shared-exclusions
+  source-coupling-compression
   certified-sxpid2-executable-assurance
   dependency-colored-sxpid-concentration
   ecosystem-compatibility-audit
@@ -308,7 +312,7 @@ for literal in required:
     if lines.count(literal) != 1:
         raise SystemExit(f"publication-link gate invocation drifted: {literal!r}")
 early_bias_end = '  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind summary --exact --check --registration "$PID_RS_BIAS_SUMMARY_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256" --work-dir "$PID_RS_BIAS_SUMMARY_WORK_DIR"\nfi\n\n'
-required_block = "# END EMBODIED SENSOR EXACT DISPATCH\n\n" + "\n".join(required) + "\n"
+required_block = "# END SOURCE COUPLING EXACT DISPATCH\n\n" + "\n".join(required) + "\n"
 if text.count(required_block) != 1:
     raise SystemExit(
         "publication-link gates are not one exact contiguous post-inventory block"
@@ -682,9 +686,9 @@ import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 expected = '''if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every declared formal paper passed declared same-toolchain typesetting diagnostics; current bias, derivative-note, and embodied-sensor inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
+  echo "OK: every declared formal paper passed declared same-toolchain typesetting diagnostics; current bias, derivative-note, and embodied-sensor inert source/data controls and source-coupling PDF/controller controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint, post-publication custody receipt, and source-coupling report, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its declared bounded typesetting diagnostics; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper, support-change cusp, embodied-sensor full paper and embodied-sensor overview intentionally have no accepted cross-toolchain relation, and all twelve status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its declared bounded typesetting diagnostics; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper, support-change cusp, embodied-sensor full paper, embodied-sensor overview and source-coupling report intentionally have no accepted cross-toolchain relation, and all thirteen status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi
 '''
 if text.count(expected) != 1:
@@ -1112,11 +1116,12 @@ PY
   fi
   pass "$label"
 done <<'CASES'
-exact success message cannot omit current registered controls	current bias, derivative-note, and embodied-sensor inert source/data controls passed in normal and optimized Python; 	<DELETE>
-exact success message cannot omit the custody receipt	including the root blueprint and post-publication custody receipt	including the root blueprint
+exact success message cannot omit current registered controls	current bias, derivative-note, and embodied-sensor inert source/data controls and source-coupling PDF/controller controls passed in normal and optimized Python; 	<DELETE>
+exact success message cannot omit the custody receipt	including the root blueprint, post-publication custody receipt, and source-coupling report	including the root blueprint
 cross success message cannot call all papers profiled	every declared paper with a reviewed cross-toolchain profile	every declared paper
-cross success message cannot omit required refusals	all twelve status-2 refusals	all seven status-2 refusals
-cross success message cannot omit the two sensor refusals	all twelve status-2 refusals	all ten status-2 refusals
+cross success message cannot omit required refusals	all thirteen status-2 refusals	all seven status-2 refusals
+cross success message cannot omit the two sensor refusals	all thirteen status-2 refusals	all ten status-2 refusals
+cross success message cannot omit the source-coupling refusal	all thirteen status-2 refusals	all twelve status-2 refusals
 CASES
 
 for removed_invocation in \
@@ -1568,7 +1573,7 @@ mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed
 expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
-for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview; do
+for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression; do
   fixture="$TEST_ROOT/missing-$bias_stem-pdf"
   make_fixture "$fixture"
   mv "$fixture/output/pdf/$bias_stem.pdf" "$fixture/removed-bias-paper.pdf"
@@ -1615,4 +1620,4 @@ done
 python3 -I -S -B "$ROOT/scripts/check-finite-target-copy-mgw-pdf-self-test.py"
 python3 -O -I -S -B "$ROOT/scripts/check-finite-target-copy-mgw-pdf-self-test.py"
 
-echo "OK: $PASS_COUNT formal-PDF typed-inventory controls passed; target-copy controller and dispatch controls also passed in both Python modes"
+echo "OK: $PASS_COUNT formal-PDF typed-inventory controls passed; target-copy controller and source-coupling dispatch controls also passed in both Python modes; source-coupling native reproduction remains a separate exact gate"

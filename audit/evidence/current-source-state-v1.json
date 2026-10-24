@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "6f9f11e4ee52c899282e8977bad494a325c874bc974542981695d7648cbdf6d8",
-        "size_bytes": 327657
+        "sha256": "f04095a08978cb8d3626b0eca98abea4784ac3dd6e0d12d1e00fb5c366e23958",
+        "size_bytes": 327828
       },
       {
         "git_mode": "100644",
@@ -496,8 +496,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "6bdf089a5b2308cebc708441a12c4990f15640826d8176c3176d1e6ba3020e6d",
-        "size_bytes": 93297
+        "sha256": "6fb96bc162efd4b8979ee4aa40ff2920138bed4c19e8375b253b599ddc914540",
+        "size_bytes": 93770
       },
       {
         "git_mode": "100644",
@@ -15951,6 +15951,144 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/LICENSE-latin-modern-math.txt",
+        "sha256": "2bd69affc3da00715116f713f57eab9707e96daf3562ad0215987b15b9c16f73",
+        "size_bytes": 1456
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/LICENSE-latin-modern.txt",
+        "sha256": "49ea6cb9257bbee0a3979c48a774cd221550ac1c20c95549efe45fc99cc18050",
+        "size_bytes": 1377
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/LICENSE-source-sans.txt",
+        "sha256": "4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9",
+        "size_bytes": 4529
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/LPPL.txt",
+        "sha256": "5f05fcf6ef25a6c31bccd2df7c0c46b23107bbeb2ce5cdba74efb5cc357f4dbb",
+        "size_bytes": 19106
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/NOTICE-latin-modern-math.txt",
+        "sha256": "e6fdd5fb44b656146fa988d191f58901c09a347d3f4fbaa3b45b24a6ad7ec30b",
+        "size_bytes": 4588
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/NOTICE-latin-modern.txt",
+        "sha256": "7cac4a4a78985ccb1ed429bb2eddf32eeb2e413c94493c7b268385bb7b525250",
+        "size_bytes": 33548
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/SourceSansPro-Regular.otf",
+        "sha256": "7134d229b15cdd0827376d8a24f6f531f616eb1b3fecd16e1cf8a86d0bf6bc51",
+        "size_bytes": 293200
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/SourceSansPro-RegularIt.otf",
+        "sha256": "d38e0d70cd4f4aa072457c5ae647b987f10c3cea34bff581ee358a7c2a526053",
+        "size_bytes": 208408
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/SourceSansPro-Semibold.otf",
+        "sha256": "aa53ed4fc17334a0c2ee8412c1e4e728bfb732a96b119164f7354343dad8f2f2",
+        "size_bytes": 295952
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/SourceSansPro-SemiboldIt.otf",
+        "sha256": "cdeddc767fdb11770451c5fac8f98b7d343b7fc9604f9db5034f50f7f437047a",
+        "size_bytes": 210012
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/latinmodern-math.otf",
+        "sha256": "6075562b771f8b82f0c179e363389684f2dd09de30038269e2628e504bd7be0f",
+        "size_bytes": 733736
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/lmmono10-italic.otf",
+        "sha256": "14e6328a5383d2b927c47051093ce0aff60deea07e6df71b8b99ee8d9c2ff8f2",
+        "size_bytes": 63584
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/lmmono10-regular.otf",
+        "sha256": "22deb6d3be3ffcb40b33f0e010afb256c677d97c2a2bdee1f5740cdc97751558",
+        "size_bytes": 64684
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/lmmonolt10-bold.otf",
+        "sha256": "2f4ae1bd30d4203a1c74c61d61dddbd5e2c2d5a7001d456b1b98e08b7c47ffb9",
+        "size_bytes": 66332
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/lmmonolt10-boldoblique.otf",
+        "sha256": "a739b6deaafe0b9e8ae1eec9db1f425c52e1f6f483ca8e07e359bdd118310bba",
+        "size_bytes": 75300
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/lmroman10-bold.otf",
+        "sha256": "102fe06c430a8b681b2bf6876b7cd967ae4d47b4b6b41d915eb7913b726d9fb1",
+        "size_bytes": 111240
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/lmroman10-bolditalic.otf",
+        "sha256": "c37a28eed7a6e03f792b98b5e5f637b2fcda378bb4855f99284f1a88fe35f124",
+        "size_bytes": 118204
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/lmroman10-italic.otf",
+        "sha256": "c1fce25075567bb8dbf2151658c3b442690041db17a2d49fc9e55905ea5b7169",
+        "size_bytes": 118828
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/fonts/lmroman10-regular.otf",
+        "sha256": "1aa18cfefa58132c52ce5de70db1fd1154201c19cd2b2cdaffba4906a33e6852",
+        "size_bytes": 111536
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/pid-rs-report-tables.sty",
+        "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+        "size_bytes": 4051
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/pid-rs-workflow-publication.sty",
+        "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+        "size_bytes": 8607
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/publication.tex",
+        "sha256": "9b67e0c5ae502e311528c84ddd7f3a643a200b1f222a0f794639840e104bbc7e",
+        "size_bytes": 1863
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/source-coupling-compression/report-filter.lua",
+        "sha256": "3bc546bd0a225c613fee7fd6c429a0eea9d9f7f4e698c150cf7761e0bc8a66bf",
+        "size_bytes": 1161
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/stopped-prefix-probability/figure-fonts.json",
         "sha256": "a801cbafe3ce1832dd1418a5c99256cb3efb873ebaea6837f0cf5a0e18aa69c9",
         "size_bytes": 998
@@ -27315,6 +27453,1128 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/EXPOSITION.md",
+        "sha256": "53dd9a17a534e2fc408fa5018db24aaef8a7487ec0698103f3ae74daf51f7c5e",
+        "size_bytes": 27318
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/DEVELOPMENT.json",
+        "sha256": "83423c65ee9940e502acd339699d7d7c89c0a4b8d4d5d6ba6f9e26eb9f3e19a9",
+        "size_bytes": 6453
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/EXECUTION.optimized.json",
+        "sha256": "1d69e557370540ab480777fe274041334d25d4b50bcf10d2525e7285dc1698ba",
+        "size_bytes": 266
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/RESULT.json",
+        "sha256": "2d0d49cba95d40ab24c706ec35c7919e9cfc1d7771692fb6f88ad5241afc904e",
+        "size_bytes": 12512
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/ROSTER.tsv",
+        "sha256": "8d16b465682ff9634390e8d5c6cb576df97969cd03f121cbd0d99ef5699c347c",
+        "size_bytes": 2116
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/coalition-cuts.smt2",
+        "sha256": "b06f986550f6bf848f110a7941f1a676f1de82ecd14666163440c384f943bc54",
+        "size_bytes": 5620
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/coalition-cuts.smt2.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/coalition-cuts.smt2.stdout.txt",
+        "sha256": "191e4e67f06b6a682c13e307f6010fda56e4c00a3ad8b04d9c89edde30d0727e",
+        "size_bytes": 532
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/events.smt2",
+        "sha256": "c58df52c9382fc7888bbf0b78f58760cc50f42dcf89ea1a8ae4eb3fdb3372b68",
+        "size_bytes": 3394
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/events.smt2.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/events.smt2.stdout.txt",
+        "sha256": "83669b32c1cebddae60e731be05b4968799504b1fc28ea3d15a8c1f40e820a0d",
+        "size_bytes": 260
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/mutants.corrected.smt2",
+        "sha256": "503b25f95be305c80fa744f2e73fd921bb73e34a0ca9c66f29598327ba3ca943",
+        "size_bytes": 4275
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/mutants.smt2.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/algebra/mutants.smt2.stdout.txt",
+        "sha256": "e6cf002a941cb128985d1961430c54491a4f7e1fb293bc824f3fd51d0305e15d",
+        "size_bytes": 296
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/attempt-streams/campaign-normal.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/attempt-streams/campaign-normal.stdout.jsonl",
+        "sha256": "089d3155f61c9df2e126c513919062db05935b88ee4ac37aa41e9b55dd039167",
+        "size_bytes": 580
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/attempt-streams/campaign-v2-normal.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/attempt-streams/campaign-v2-normal.stdout.jsonl",
+        "sha256": "3fe175b518fa903e6ad17c5ce32b8b5376c3571fc2cd5231a1d4db2320046aaf",
+        "size_bytes": 1907
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/attempt-streams/campaign-v3-normal.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/attempt-streams/campaign-v3-normal.stdout.jsonl",
+        "sha256": "4ff1a4ff68beeb05ed0758ddf86e57e7b6f77d6b01eafee36ac7312cfb2e1873",
+        "size_bytes": 1968
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/attempt-streams/campaign-v3-optimized.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/attempt-streams/campaign-v3-optimized.stdout.jsonl",
+        "sha256": "4ff1a4ff68beeb05ed0758ddf86e57e7b6f77d6b01eafee36ac7312cfb2e1873",
+        "size_bytes": 1968
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/EXECUTION.json",
+        "sha256": "4cee8ada5267409c1104d141d4f20a60b71f0fd84de32b0d9a5b1fcecc56f60d",
+        "size_bytes": 267
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/REPORT.json",
+        "sha256": "ad0f9781265c7bdf3a9eadae04c063428e4507f946644d0cbbc42b240521bc2b",
+        "size_bytes": 6645
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-02.json",
+        "sha256": "d57abee88d844b62bcd1ed88f71159089cb300ab55734e98c10cf77524550b50",
+        "size_bytes": 82665
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-03.json",
+        "sha256": "3593befd384b08305c4e8b78f4180bab5924c5eb2e567890552832bbb4bb3ea4",
+        "size_bytes": 91542
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-04.json",
+        "sha256": "727e364c96a40ef2b65a175a6a8c64b6ceb54dc1474a906852f60453a3217fb6",
+        "size_bytes": 87293
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-05.json",
+        "sha256": "c8c4e0e6fa65372dc81694aac77280b47091acff25bad5dd554eb0be88696142",
+        "size_bytes": 90669
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-06.json",
+        "sha256": "f1ca0b8ef242baf4e5949cf090cfb464a4a1de7d7b7964b345f94cf69f65140d",
+        "size_bytes": 91429
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-07.json",
+        "sha256": "f75a8675a980eef217b55ba2b9e43b565b61d7535877b7810d3d2ecfe7b09f72",
+        "size_bytes": 70001
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-08.json",
+        "sha256": "2b9741143eeef15e77bfd78f432c883c82612ab4b8939462e4289ef88ff364f0",
+        "size_bytes": 55511
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-09.json",
+        "sha256": "62918956be3512a4755bc57e9d9380baabeef959473b6a04aab9d626cbf50019",
+        "size_bytes": 85060
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-10.json",
+        "sha256": "f7882051b9b8a6e0732aa1467238c1f4d77ab095ba64e3b012cd05de2ae29224",
+        "size_bytes": 73838
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-11.json",
+        "sha256": "6d6687a832b72b8d63efb3f530f1eec1ab418cd0c915b3489fecd0a957222221",
+        "size_bytes": 69662
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-12.json",
+        "sha256": "305320cb3c90c48838f670857f4d033759c814740e69cf0f042965c788a50e09",
+        "size_bytes": 75302
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-13.json",
+        "sha256": "2128c0224da94498032adbedda1b783c664683aed0116b3392dcc79d6366fd50",
+        "size_bytes": 71353
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-14.json",
+        "sha256": "1c6361d458aa660bbbaaa53eda4d85362cc02468d809a0256d68ba598ff5a245",
+        "size_bytes": 59709
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-15.json",
+        "sha256": "de23c68cc9a95b5015ae150e17639ab12a26041170e3d7b2af75131d216a455a",
+        "size_bytes": 60209
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-16.json",
+        "sha256": "27e0d7eb1f4344c001bd10fbe9aacbc540b3aae40d390cc3e22d8bf51acd5616",
+        "size_bytes": 74668
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-17.json",
+        "sha256": "ae4607f062ceb860f16568718d6a52785a195d80af3df5c3b0837e5b90ada052",
+        "size_bytes": 75332
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-2015-02-18.json",
+        "sha256": "178e495e3ecbcf5e20f7becf25e398459ea70b0f1c99a4e78cca9107d73c727b",
+        "size_bytes": 72993
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-test.json",
+        "sha256": "a22d503b0dac0dc6e940284172bc6b5a2627552238fdf6cbb68efd66f56888e0",
+        "size_bytes": 80089
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-train.json",
+        "sha256": "45ffd4e3ed0d7d4e803c9cf34008a1a79e87577c0041343506774aed672b5e82",
+        "size_bytes": 118588
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/office-validation.json",
+        "sha256": "65c1a90d5afbbced17a9014cf970b7273b7744021f12a82fad77e0284a4a23c3",
+        "size_bytes": 87748
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/room-2017-12-22.json",
+        "sha256": "0a7738bbf862e51552802ef0ee886da8854a83e8e91e9ece870114af2a9e5431",
+        "size_bytes": 103997
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/room-2017-12-23.json",
+        "sha256": "a3cdc91f6257901134ecf6b66554ae3967aae3c95d78ec01367c7a7cea035adf",
+        "size_bytes": 113414
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/room-2017-12-24.json",
+        "sha256": "438aba6a52e9d677b8ad199f70c08a3d2f0a20e422f50b8951be53f6212433d5",
+        "size_bytes": 52145
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/room-2017-12-25.json",
+        "sha256": "682eb905321d1d0a0bef9f5c8cfb21eaa4af1a1f3b4ac759325d13bb8809db1d",
+        "size_bytes": 56840
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/room-2017-12-26.json",
+        "sha256": "70b818a47b2bd22136a514c759dfef42f0c224f087d37d4fa447e2070450d9d5",
+        "size_bytes": 52371
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/room-2018-01-10.json",
+        "sha256": "c24db64f111aa903bc67b67332b7ccf0c0eed8c666c31bd62e55a51885fe427c",
+        "size_bytes": 91493
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/room-2018-01-11.json",
+        "sha256": "4e1c97feb0e1bd4e75e2966d1bd06ef30400d6c2511a59f758b8da3956886cc1",
+        "size_bytes": 52147
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/room-test.json",
+        "sha256": "35a608c33c60e8b2496ee23f2bc09b9a54d1815f838a63d1cffa5065666048d6",
+        "size_bytes": 98181
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/room-train.json",
+        "sha256": "4910dad4176ed180c5ddea7f9f8095babd15921ab46f12384e375da6eaed769e",
+        "size_bytes": 125582
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/laws/room-validation.json",
+        "sha256": "7250c1a2eb91b7ccb5e961ade02086aaecd3b886b64634ef93b445b444782ada",
+        "size_bytes": 52371
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-02-fixed.bin",
+        "sha256": "8f770841723e3e6a1d9405f90a064e20017bd8cbfa21fe29e3e352c1369986a0",
+        "size_bytes": 509
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-02-lossless.bin",
+        "sha256": "c6b8a223acf6bae97e93f50e5215e5d9a938f0d911047beb7aaceeb3093845ef",
+        "size_bytes": 512
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-02-lossy.bin",
+        "sha256": "a9b438fe74e7bfcbc3c65d349303fba2cccf3d0c34ddb387b075342bc966da1b",
+        "size_bytes": 425
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-03-fixed.bin",
+        "sha256": "9cf8ccb537f3cf231a7f8935b62b7b354542a1def2fcee3a4870ae306dd13d9c",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-03-lossless.bin",
+        "sha256": "421a66d77f382f821cf525a56197ab8102bc6cd133709f76d05eab1d6cc8cea8",
+        "size_bytes": 829
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-03-lossy.bin",
+        "sha256": "96523b0dec867077f81474bc4c7005349e6976346822e4af8e597d20b6707320",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-04-fixed.bin",
+        "sha256": "5cb40bceb83055500bc1d3b88a3bf70c9bfa308a54a77a9a20d1ae99286b31a8",
+        "size_bytes": 672
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-04-lossless.bin",
+        "sha256": "0c61c791b666057c772d31b91725fff1d93ff21251a6b514312346069feb453a",
+        "size_bytes": 669
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-04-lossy.bin",
+        "sha256": "fcebb567e4d86a99b980315a7a98b03f929acd3eb4a4844df6d5f7a01e8f844a",
+        "size_bytes": 534
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-05-fixed.bin",
+        "sha256": "493f39a77007f0b3c94a1c542f59fc2f1026d2577987c092cd17d1a1b99b7330",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-05-lossless.bin",
+        "sha256": "adf5484df03f6c34d696fef8734d8b320c1a05c6f5d04fdb6874d88e910b21d0",
+        "size_bytes": 835
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-05-lossy.bin",
+        "sha256": "7423909023d2c4de87c9f40c7b5f931b5784b9e0b073a6b8798e230519f60fe6",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-06-fixed.bin",
+        "sha256": "b82dab060fef33ce26eba189046146dacaed54fe9cdbc977c637a5ab2582a58c",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-06-lossless.bin",
+        "sha256": "03852359cba3bb0abb2a3f7b63cd4161cf5a1e8c440f404b309b9e93d7d6bc82",
+        "size_bytes": 829
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-06-lossy.bin",
+        "sha256": "804b3da498ad4fd8b25173efa6311b3e9a95a4057d1c0f3fb614462fc3edd4d3",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-07-fixed.bin",
+        "sha256": "18146b8a880b3b74ec466fbb6ae251349bbdd415dd553c9250e7579058abdc2e",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-07-lossless.bin",
+        "sha256": "c8edcbefc5474b3e7178a2633efcc71ee81fdb9f63ab6ce6faf4e1333c88f38d",
+        "size_bytes": 835
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-07-lossy.bin",
+        "sha256": "4e64bcff20e73d91d5ae0cebb89af03a74b3fece3bd9d123865897a3aaa1fce0",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-08-fixed.bin",
+        "sha256": "aec82a909c7b770605b73853bf3ff9f6ab355ccd3acea1ea5e08b26bc8636361",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-08-lossless.bin",
+        "sha256": "8afca255e3ef7d5972735caaf7bae93d553c963208eb07b890403fc32378fc24",
+        "size_bytes": 643
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-08-lossy.bin",
+        "sha256": "a80474ca63531f0890f1c14092ac9235ca56b10f502fe1ddf41f223ffba74501",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-09-fixed.bin",
+        "sha256": "3b0604dfbe677f4e7a40156736b7542ce338647e2d3a13cee874660e9199b45b",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-09-lossless.bin",
+        "sha256": "a98d1284444eb7448ddbfdb68faabfba65353fecafc569e15c1bafb37d0ec697",
+        "size_bytes": 829
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-09-lossy.bin",
+        "sha256": "521da7eaf1186916db78f49860cc1790ffbf6219393285bd811079894ac656e8",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-10-fixed.bin",
+        "sha256": "df7544cb9d8cf20931c5c1f62d5eccd2e0005e2cab8c88ef5a53433fc986fce3",
+        "size_bytes": 507
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-10-lossless.bin",
+        "sha256": "7da58a4e09b66f06b7dcc06620637a34729fea105c8fb1a693cfbb038223bde2",
+        "size_bytes": 504
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-10-lossy.bin",
+        "sha256": "24340ba8ca8030ce79e16ed355e4c50277adcc9eb038b2d613181bba542330f6",
+        "size_bytes": 423
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-11-fixed.bin",
+        "sha256": "dc7c4965c7d558de0f4d10289b21123fe58e0db2fcd1364717d0957469705441",
+        "size_bytes": 498
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-11-lossless.bin",
+        "sha256": "c0ccec669bdca558b8516b49a60af2dc510bf6df86a4fd1037e3ed58649cfcca",
+        "size_bytes": 420
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-11-lossy.bin",
+        "sha256": "0a52eafa9ebaae3289d979a1975a54e66bc7a440ff339127995eb18d3209376b",
+        "size_bytes": 417
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-12-fixed.bin",
+        "sha256": "8c03246fbf90e3000055f0a152782185a4f32e0e80b3a104898066646fbb4b76",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-12-lossless.bin",
+        "sha256": "e0ac7b3ffc2439ceece5e43cb00168a580d52094bc2b5c8e6015cb3344722840",
+        "size_bytes": 643
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-12-lossy.bin",
+        "sha256": "6126c475b13fc05edcd1a222374c3a4ea17a6a3064a4cb20bc96926e29e7e62d",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-13-fixed.bin",
+        "sha256": "87d24150857e24b2739f48cf76965be347c1146ad6e71b40e867c1fdd3624ebc",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-13-lossless.bin",
+        "sha256": "16f5cf453b4459af5a46e81eedcab8eebbe1fc3364cde357222928a95462e9cd",
+        "size_bytes": 643
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-13-lossy.bin",
+        "sha256": "084c57ecbc8687fbcc266a3bc01865c17b2d0a0c34c9b105c692d733e9e446ae",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-14-fixed.bin",
+        "sha256": "a8b61cc6995e51cd34972d2ed4560de1bc980ec96ad9c654b99abe8517ad754e",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-14-lossless.bin",
+        "sha256": "3bba3d14177976758ed62a2aeb9c975359f62b088c5191cb3b50078622c9a528",
+        "size_bytes": 643
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-14-lossy.bin",
+        "sha256": "f09dab9ab9498f3503dc5ac50815e04bd69c5747382e422c3b69b9c25d930fbf",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-15-fixed.bin",
+        "sha256": "231454e9557b61f8a5a7dd9dd2117ca43c80ac6629cff1110bec67dbb7744a80",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-15-lossless.bin",
+        "sha256": "4630703f3d74a4faa198df5c87a3d3b8c20443286bdd7fe32ae0a0e0930840de",
+        "size_bytes": 643
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-15-lossy.bin",
+        "sha256": "141633248a280bfb7cb247cc87b84a5b9d9a57592c9d16c4a8e49e1c6945a594",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-16-fixed.bin",
+        "sha256": "e4ee0f6022d504d1c81dba3885e4f60ca54f04b80df8af108cb95aeb9233d8a6",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-16-lossless.bin",
+        "sha256": "51fef98973cfae20fe183df68161294bb9119c454fa07e897e23ec7de01bc51f",
+        "size_bytes": 643
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-16-lossy.bin",
+        "sha256": "a8de3b0c257782ea55e3760be03dd2f6a905a1febed2b90279a40bdb2a6fedda",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-17-fixed.bin",
+        "sha256": "039f298b30223eec2f662f3e480dfef468bcfb2f2ec405654e8c7af9d9bdf7a0",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-17-lossless.bin",
+        "sha256": "c87b92faf64ea5667f4c938b0cb262f6428a1015813160da1d72fcf4025bc499",
+        "size_bytes": 643
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-17-lossy.bin",
+        "sha256": "e1343da5b0668f40a6203ffa8a11bd126e4418aed9d99cb479f155bcaea961c0",
+        "size_bytes": 640
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-18-fixed.bin",
+        "sha256": "2498ea9588bb8ef5ec177fe0f6d9bb6d1aeae0856ad64ae3bf5741d52442e8c0",
+        "size_bytes": 501
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-18-lossless.bin",
+        "sha256": "46ba52d956c71e4273bac77d15ac3e3d7b9bed8a85d93fff299107490252ec92",
+        "size_bytes": 422
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-2015-02-18-lossy.bin",
+        "sha256": "54c0f82ca117c88eb86a8dec5eb071e9e7e13b6bfe4f9bdb092cd50b63316f21",
+        "size_bytes": 419
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-test-fixed.bin",
+        "sha256": "0ee0ec51a9093b16c5c150b458206b50b9a77d412ac5d21ba52a7b642722a2ad",
+        "size_bytes": 3949
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-test-lossless.bin",
+        "sha256": "fa1ea1aaf748c31a8dc7e956dc22be71640cb91f024a5343c7cffbee30ffdac6",
+        "size_bytes": 2721
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-test-lossy.bin",
+        "sha256": "9d3bf2fdee732423d970c0be8d82fce51b76db87b997315146ff89e029f932c4",
+        "size_bytes": 2718
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-train-fixed.bin",
+        "sha256": "71390c33ed794f098c11eabe4bd88c7f329f51a057d82f4739998192af426c08",
+        "size_bytes": 3590
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-train-lossless.bin",
+        "sha256": "373b3d57bfb1df3fd7e1f06054bc9d8b0e560bf3664f6b24ec9d5baf9fe8552a",
+        "size_bytes": 3593
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-train-lossy.bin",
+        "sha256": "547b0e10ce67096f3965758d6af6a8c08f8fd55af93fb1919d5cee84365e9eea",
+        "size_bytes": 2479
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-validation-fixed.bin",
+        "sha256": "96aca22b359bcfbe03cd1ab10678b9a8048ac190b7b1448a8f54265f7b2d18d3",
+        "size_bytes": 1048
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-validation-lossless.bin",
+        "sha256": "c425bfdad6e52f2b159dee8c8e6a1578b864e2b420a3c1918624c73e54982029",
+        "size_bytes": 1045
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/office-validation-lossy.bin",
+        "sha256": "dc7fc6234c9e06777453d1fe4f3730c6918c3912fb377fb8aafb60e0c44a4774",
+        "size_bytes": 784
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-22-fixed.bin",
+        "sha256": "7022eb888c9b45c64693b27feb50559ed866398fb47c5ca1970ee47d328f5286",
+        "size_bytes": 837
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-22-lossless.bin",
+        "sha256": "42d74c78f91db907387d00c03f683d337eaaebe2b54af93a7e1652b52eff0155",
+        "size_bytes": 840
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-22-lossy.bin",
+        "sha256": "a56c0e8184feac58df126cda7c3d0667b07e7c1ff908113884cc94d06766c7dc",
+        "size_bytes": 642
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-23-fixed.bin",
+        "sha256": "d39ba9c284d7b201e0fb4ee5c7a88981eba6fbafeadf6df17ec31408bd303818",
+        "size_bytes": 1331
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-23-lossless.bin",
+        "sha256": "014da45c5f5ecbb807a95b4003deafa56c5bac843cccb7f232c1c985c62e7366",
+        "size_bytes": 1334
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-23-lossy.bin",
+        "sha256": "f1b16f112a8c08c3f13cdb9060548cfd0407121955505355650c56ada6f67d97",
+        "size_bytes": 971
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-24-fixed.bin",
+        "sha256": "70ca96d087123ecf4d385a137a3cfed5595f8f0d056ebd44272017a76101e271",
+        "size_bytes": 687
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-24-lossless.bin",
+        "sha256": "fe5d4b5840c74de55d174e4639c6b0934f4ab69164033b2f74d5ecebaa1f6969",
+        "size_bytes": 406
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-24-lossy.bin",
+        "sha256": "efa6666b65bb1957acf2f85aa5558314124ca954364b76c7927a9d66c6b2e945",
+        "size_bytes": 542
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-25-fixed.bin",
+        "sha256": "45b8dbc22779f34eaae251d564021d467326c95ff68bb061bd0db1c5b0ef9b90",
+        "size_bytes": 932
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-25-lossless.bin",
+        "sha256": "dca6f092e0644457e424f93331af3a6cc084ddecd1bc8e9d16578979899200ef",
+        "size_bytes": 708
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-25-lossy.bin",
+        "sha256": "2c491ea4d11453a1c0486dbda8f601e61e20288fbbfcecc0bb8b06a4d4664a75",
+        "size_bytes": 705
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-26-fixed.bin",
+        "sha256": "d3a5e6c6a0e299ff3f903b97f6511a21222424bf7ec57b1864c231db69f52192",
+        "size_bytes": 687
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-26-lossless.bin",
+        "sha256": "35b104f5725b769011cb4527b7cdc609cb4c67f5b1e91e25b17125de94676d7f",
+        "size_bytes": 406
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2017-12-26-lossy.bin",
+        "sha256": "823f020a90305bf14ecee5a18226c1d38652637a444a63a27ddf094220d9b21a",
+        "size_bytes": 542
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2018-01-10-fixed.bin",
+        "sha256": "d60caf7f783ff4718ad6acff8d68655afc146a1ce8e9cb5c1e768de5c80bed2a",
+        "size_bytes": 661
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2018-01-10-lossless.bin",
+        "sha256": "fbcfeae1c2a0267cd71ffa74cdc115e94ccc42232a8c24ca2988996e8654eb9a",
+        "size_bytes": 664
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2018-01-10-lossy.bin",
+        "sha256": "a2624a5db7d7fe5a5525430b172e24cfb8f85ae4c384ea6df786295b99e999f9",
+        "size_bytes": 525
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2018-01-11-fixed.bin",
+        "sha256": "002e666f14e53b8a7e8369c06179a3c313025d75dac688930f5b50f0cbd3c57a",
+        "size_bytes": 681
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2018-01-11-lossless.bin",
+        "sha256": "066990c9adf30c64ac61441fead0c891aefc4b97e6568aba4d5db275ca998bb4",
+        "size_bytes": 404
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-2018-01-11-lossy.bin",
+        "sha256": "bde9670c16fb41babd82dc9be6ccdc71d7e82d548f35709ffc9d0b925a77e74c",
+        "size_bytes": 538
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-test-fixed.bin",
+        "sha256": "119e8bde5f559dc1763018fea4e931cfc9da307a4fea68080bd164feae45e617",
+        "size_bytes": 1055
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-test-lossless.bin",
+        "sha256": "9269ee72aac69edf91c31898588d84a1ca30559b668dc41dd6db0b8449ff14f2",
+        "size_bytes": 1058
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-test-lossy.bin",
+        "sha256": "5224252d02eb79a1a09e9d6dcfdc26f18d76074ef6c7ff13cef3a5cacf945077",
+        "size_bytes": 788
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-train-fixed.bin",
+        "sha256": "56cfd30a89cb9e27975779cd63f7cfd48269eda9ec8361d4ecb6142c6e32d1b8",
+        "size_bytes": 2921
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-train-lossless.bin",
+        "sha256": "0722847b556daf81283e10471f9131c42359198ae71c972b9f7bc210dd76ad8a",
+        "size_bytes": 2924
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-train-lossy.bin",
+        "sha256": "bfbf2cea60fcc6b99dfe5c416bc7f1a047bec05aace2ca1fa046f8649ff38f6d",
+        "size_bytes": 2032
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-validation-fixed.bin",
+        "sha256": "d3a5e6c6a0e299ff3f903b97f6511a21222424bf7ec57b1864c231db69f52192",
+        "size_bytes": 687
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-validation-lossless.bin",
+        "sha256": "35b104f5725b769011cb4527b7cdc609cb4c67f5b1e91e25b17125de94676d7f",
+        "size_bytes": 406
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/campaign/wire/room-validation-lossy.bin",
+        "sha256": "823f020a90305bf14ecee5a18226c1d38652637a444a63a27ddf094220d9b21a",
+        "size_bytes": 542
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/controls-attempt-1/INPUTS.sha256",
+        "sha256": "e8201f656e6ebf7b50c703421c87038bfee26f664a36049487c624d07620e49f",
+        "size_bytes": 87
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/controls-attempt-1/RESULT.md",
+        "sha256": "6bf4696d9d6ecdce03f6bb1a62b53cd67c3ca9841855362ee6e03bd202eaf4a8",
+        "size_bytes": 1113
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/controls-attempt-1/stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/controls-attempt-1/stdout.json",
+        "sha256": "d000b551f54aebab92e7a07232334c747a10b0c2b00ebada09b0812352f56959",
+        "size_bytes": 769
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/controls-attempt-2/stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/controls-attempt-2/stdout.json",
+        "sha256": "e8f7f1de1ed236f8c3c4f194745a202e80b0cce198057d6a31102eff21ce518a",
+        "size_bytes": 832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/controls-attempt-3/stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/controls-attempt-3/stdout.json",
+        "sha256": "3b0a276ffab85f734e38448c7c71fdaca83ae6917f70667d3fff30974c9bdd80",
+        "size_bytes": 879
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/coupling-bound.json",
+        "sha256": "8979c2b59f5987a58ece26d5a03085dd6d11d5513e2a6cdbd1cb4c8661ae8f70",
+        "size_bytes": 502480
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/negative/author-draft-invalid.md.gz",
+        "sha256": "7ecfe30aa09abc8e406d0df477fc3725f2c9cd90caf1c6545c175c3b92f28801",
+        "size_bytes": 19344
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/negative/before-copyedit.md.gz",
+        "sha256": "300cb1e7def77be6f2714bbcd51a4fae101c25eb6e39ea3a9552472ac283c4fd",
+        "size_bytes": 11925
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/negative/before-copyedit.pdf",
+        "sha256": "30b06761e9d570d15fb7ca8569581f85d38471468cd62f5fbcbab6aca4f12df5",
+        "size_bytes": 152569
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/negative/layout-first.log.gz",
+        "sha256": "3dc7db3691d7b419de589d626e49f5afe8d473133b159ac45d75ec5fe4adc375",
+        "size_bytes": 12111
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/negative/layout-first.pdf",
+        "sha256": "4c540301975529c34c07d47c8609b3f4b64701fade2a5949bb34ece9d1e0af1c",
+        "size_bytes": 155191
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/evidence/summary-ground.json",
+        "sha256": "efe5c5a0269cdbd2c57b2ae5703c85e19e9e0f873f21ba3af3a0a36e503be16d",
+        "size_bytes": 15526
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/allocation-comparison.pdf",
+        "sha256": "1748b7748ea99381c565aea5d8e6aabb279ddde958b954548005ea67c49ae3de",
+        "size_bytes": 10090
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/allocation-comparison.svg",
+        "sha256": "f15a4e9d83158e3dc9edeadc083963fb8734b84571d736a26b88b8e976984580",
+        "size_bytes": 46933
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/allocation-comparison.tex",
+        "sha256": "0e14173bcddeb7d3960c9722b26915e512469eecc655bf3c2ba4cf79ba821dfb",
+        "size_bytes": 762
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/allocation.dat",
+        "sha256": "8d555f13bf3601fd1d6c2e112cf347042b1a4697d74299e4bed2ddc1be65da94",
+        "size_bytes": 127
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/figure-preamble.tex",
+        "sha256": "688100a1cbc15d8cc477e04bd287e883316f720294d5de649ae4bb5ac33bc067",
+        "size_bytes": 1028
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/office-mechanism.json",
+        "sha256": "a0dce1eaeb088aac86863018b359d440f03296af3f254d768a51f2170d9d4d86",
+        "size_bytes": 462
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/office-recoding.pdf",
+        "sha256": "6fb2c049f63e90504cef14a362c0e36dd46c02672aec50b1e175539ae8875871",
+        "size_bytes": 13494
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/office-recoding.svg",
+        "sha256": "b755e7779f41a830f012292eb1457333b2d78ed13629486de4ab261933c4a65d",
+        "size_bytes": 74585
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/office-recoding.tex",
+        "sha256": "9655e4dffc0c9d46a4be74ab706eb92087776091c522971259b9023ed74e12e7",
+        "size_bytes": 1230
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/prediction-comparison-v2.pdf",
+        "sha256": "19e2c7183e3e6027fac9ca885ce912bcaae6718d68394151a2605fd91026d1d9",
+        "size_bytes": 7795
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/prediction-comparison-v2.svg",
+        "sha256": "7f4e04d9be992e09d5e5cad0625094c19ca1a4a3ef04587386a21fb428c594ca",
+        "size_bytes": 44268
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/prediction-comparison-v2.tex",
+        "sha256": "f842e7cbad8919424304878b9af3ca339ebbd0ac1a8f2132d822110f5c247955",
+        "size_bytes": 779
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/figures/prediction.dat",
+        "sha256": "7271a15b6dace8d03e227ff73030db5edd328ea0227a7c69f5dde5bdd5fa04cb",
+        "size_bytes": 195
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/summary.csv",
+        "sha256": "8ea6dd267900e1d1128ca53281bdd99a1620b3c06d0753e57cda276e72745ed8",
+        "size_bytes": 9145
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/adapter.py",
+        "sha256": "0b2efe3a6e70e17b81f364294b58adf510d53f7e402d1b0dd1e390dd26b18afc",
+        "size_bytes": 1737
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/adapter_v2.py",
+        "sha256": "9de407d7715e0688d1ade5870db6f91eacbd6e1498f1860ea68705a4b70c717f",
+        "size_bytes": 1741
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/adapter_v3.py",
+        "sha256": "d6c848230da6e914c321d1ff99752d79718a774f300065bb6b98382bb9f3f749",
+        "size_bytes": 1743
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/candidate.py",
+        "sha256": "08e5014c73d01b776c1b073e54a04e9d11b66c78cac94a2aca846b9f13159b13",
+        "size_bytes": 12923
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/candidate_v2.py",
+        "sha256": "7235481051451579eb4a2e993c3623c662b20853b323df17f80c5012529c90f6",
+        "size_bytes": 14925
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/controls.py",
+        "sha256": "4043e900833fa29edb8fd3e5a2132c2cbd2d7d6e95bff2698e6abead3f48dfd3",
+        "size_bytes": 5328
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/controls_v2.py",
+        "sha256": "46d69b0b9117ad4324b2cf85bc89dfde9a864eed8c1fb04a028e358f7327aebf",
+        "size_bytes": 6383
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/controls_v3.py",
+        "sha256": "0b5b56930b6e98eede42ce85d9fdd02b1edd413fe0bb04b97e7ed50a8c13b706",
+        "size_bytes": 6766
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/council-verifier-v1/exact_reference.py",
+        "sha256": "a5f01e63cb3466dc08ec9482dc57f7394ac45e6274d16b110f00d9caf53a333f",
+        "size_bytes": 16820
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/exact-reference-v2/exact_reference_v2.py",
+        "sha256": "503b526efa10d6439c6992d33c430e215977cde6aea4bddbe00e48fe888e86d7",
+        "size_bytes": 26621
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/post_study_bound.py",
+        "sha256": "7c4ebd8ffa19fd04577e831836c1fecb33d7ad8e075ed7d0b5d73925cfa0d365",
+        "size_bytes": 7190
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/run_study.py",
+        "sha256": "1533f0e4f680bf3b0fd430f5c1916458b6bb5b12e3e30999de72cbacbe5b5f77",
+        "size_bytes": 13338
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/run_study_v2.py",
+        "sha256": "e0649c95365b08f1563502e488261f526f044daa698cdca8966b052be882d1d7",
+        "size_bytes": 14014
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/source-coupling-compression/verification/run_study_v3.py",
+        "sha256": "b23c73bda0c07a947cbf7fde43ee187bdfa2b215ea326a48b9e61a6a615eb62f",
+        "size_bytes": 14014
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/support-change-mi-cusp/EXPOSITION.md",
         "sha256": "b27f3f5daf941dfbe42a65d519b8f6e291900a47a0630b8b6d8d0e66bdbcad76",
         "size_bytes": 10325
@@ -29919,6 +31179,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/source-coupling-compression.pdf",
+        "sha256": "5bd3be5b2541f2c84e6e46bb6aa63aaafd1b145ef09e24b56d3e9dc51f597342",
+        "size_bytes": 152881
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/stopped-prefix-probability.pdf",
         "sha256": "fe32061a183564b2b562e213afc5600703443022e397ffc767384eeb4abe3542",
         "size_bytes": 304580
@@ -29956,8 +31222,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "27f735ce14087f5180920e5ebb8105d720ff35c3cb73cb06251c130e065b4dcb",
-        "size_bytes": 305734
+        "sha256": "7b24df6cb39eac0092d01870d45877a930b5a7eb838eec4dd866d1fe5d1a142a",
+        "size_bytes": 310347
       },
       {
         "git_mode": "100755",
@@ -30048,6 +31314,12 @@
         "path": "scripts/build-recorded-office-sensors-pdf.py",
         "sha256": "88d567c8ad5b9b04453f951fbc24924e86d6ce65f564e43507c35496a82dd5d2",
         "size_bytes": 23402
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/build-source-coupling-compression-pdf.py",
+        "sha256": "194f6bf43ef43b347851449c744d76c3dfb481571ac89281b412462e2a061da2",
+        "size_bytes": 54910
       },
       {
         "git_mode": "100755",
@@ -30370,14 +31642,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "ee11b10fea084e7eab73e420c76b47bb01aa59d97ef5944b897dca9392ef8d19",
-        "size_bytes": 81478
+        "sha256": "04132610480ffe0165fc73d79ff0967acd07422ceaae0c68bdc64c97b617280b",
+        "size_bytes": 82171
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "8ef97d6b294fb38394a465c6b6d2a836d9859fe20419a1c290a78447570f0223",
-        "size_bytes": 31189
+        "sha256": "938a3052aff0eadb8427571893e159a355d008e7903179ec8cf0c08310e7184f",
+        "size_bytes": 33547
       },
       {
         "git_mode": "100755",
@@ -30832,7 +32104,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "0060917185279c6b4397a5648f31fa8f59a83b2e65412b7ff3595dd19c7e7656",
+        "sha256": "b53ebbebadd6bef2f430b6d4d10d51431a6d858187ab527f4376fe66860d26ce",
         "size_bytes": 138785
       },
       {
@@ -31418,6 +32690,12 @@
         "size_bytes": 40762
       },
       {
+        "git_mode": "100644",
+        "path": "scripts/check-source-coupling-compression-pdf-self-test.py",
+        "sha256": "38078fa5d941d25392f056aaba041968e445195882e6d1d9b85481eb660a1bc8",
+        "size_bytes": 24633
+      },
+      {
         "git_mode": "100755",
         "path": "scripts/check-source-errata-self-test.py",
         "sha256": "38a7a290c68ca1cc2f2f4fa0c56460fe6e82d61864447f4d8f6d7733ac4ea63e",
@@ -31784,8 +33062,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "a9922064ff336b3e761dee2bef8763ed8a1b6167464d571c86cfbeb5eab099c9",
-    "entry_count": 5273
+    "entries_sha256": "e8d4c16f844eb2ae0031791830ff0e7ff272788c2fc592229e8ff34de75b054c",
+    "entry_count": 5486
   },
   "subprojections": [
     {
@@ -31797,23 +33075,23 @@
       ]
     },
     {
-      "entries_sha256": "a4feb16968b1edb0d39c1fb98772f995db74459662b02d7c719170159eba7fee",
-      "entry_count": 2089,
+      "entries_sha256": "a48e7172b3cf29d3a247d8f78c56dbdfbe6946f43fb23e9d7e668a0fa609d701",
+      "entry_count": 2112,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "7d5969e199a83dd46e402d3319f8d893d3e9cfb3094339463e5407dc4f8c939e",
-      "entry_count": 42,
+      "entries_sha256": "bd68c730db3da9e590f6637f744ae04fb461fe8b0bc639bc26f6d50034c7b07d",
+      "entry_count": 43,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "53489d2f10d1d0c267c6e076de3e73d5ec0df2ba7d8ca98547a2171f4cf2fd7f",
+      "entries_sha256": "1daea2e88608017c0c996d201a1c334fc10b9168824cfccd93341c6422c0a49f",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

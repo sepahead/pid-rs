@@ -1,0 +1,22 @@
+\input{figures/figure-preamble.tex}
+\begin{document}
+\begin{tikzpicture}[font=\small,>=Stealth]
+\node[draw=Lapis,fill=Ivory,rounded corners=2pt,text width=55mm,align=center,inner sep=5mm] (old)
+  {\textbf{Original encoded pair}\\[2mm]
+   CO$_2$ bit\quad Temperature bit\\[1mm]
+   $(1,0)$: 4,783 rows\\
+   $(1,1)$: 4,969 rows};
+\node[draw=Turquoise,fill=Ivory,rounded corners=2pt,text width=55mm,align=center,inner sep=5mm,right=22mm of old] (new)
+  {\textbf{After the fixed tuple map}\\[2mm]
+   virtual bit\quad Temperature bit\\[1mm]
+   $(0,0)$: 4,783 rows\\
+   $(1,1)$: 4,969 rows};
+\draw[->,thick,Lapis] (old.east)--node[above,font=\scriptsize] {$g$} (new.west);
+\node[below=6mm of old.south,align=center,text width=58mm] {CO$_2$ code is always 1\\(reading $>455$ ppm)};
+\node[below=6mm of new.south,align=center,text width=58mm] {New second-source bit\\copies the temperature bit};
+\node[below=21mm of $(old.south)!0.5!(new.south)$,text width=137mm,align=center,font=\small,text=Ink]
+  {On these observed test rows, decode $00\mapsto10$ and $11\mapsto11$.\\
+   The retained light bit and occupancy target stay unchanged.\\
+   Joint recovery does not preserve the original source partitions.};
+\end{tikzpicture}
+\end{document}

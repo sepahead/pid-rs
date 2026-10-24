@@ -1,0 +1,14 @@
+\input{figures/figure-preamble.tex}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[width=13cm,height=7.3cm,ybar,bar width=10pt,ymin=0,ymax=0.39,
+  xtick={1,2},xticklabels={Room test,Office test},ylabel={Mean logarithmic loss (nats per row)},
+  legend style={at={(0.5,1.03)},anchor=south,legend columns=2}]
+\addplot[fill=Lapis,draw=Lapis] table[x=dataset,y=full]{figures/prediction.dat};
+\addplot[fill=Turquoise,draw=Turquoise] table[x=dataset,y=refit]{figures/prediction.dat};
+\addplot[fill=Bronze,draw=Bronze] table[x=dataset,y=remap]{figures/prediction.dat};
+\addplot[fill=Pomegranate,draw=Pomegranate] table[x=dataset,y=xonly]{figures/prediction.dat};
+\legend{Full inputs,Compressed refit,Fixed-model remap,Retained source only}
+\end{axis}
+\end{tikzpicture}
+\end{document}

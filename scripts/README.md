@@ -3413,6 +3413,65 @@ cusp exact dispatch and their two status-2 refusals, and
 `check-embodied-sensor-pdf-dispatch-self-test.py` in both modes for the two sensor routes.
 The existing blueprint/custody hostile-suite calls and custody record checker in normal and
 optimized Python remain required.
+
+### Source-partition report PDF
+
+`build-source-coupling-compression-pdf.py` adds the source-partition report as a thirteenth
+exact-only route. It binds the canonical
+[`EXPOSITION.md`](../audit/research/source-coupling-compression/EXPOSITION.md), its selected
+figure bundle, the local wrapper/filter/styles and thirteen fonts with their license notices.
+The figure PDFs are pinned reviewed inputs; this leaf does not rerun their TeX/SVG/data
+production or the scientific experiments. Other research companions are outside its producer
+inventory. A change to a pinned producer input requires a reviewed binding update.
+
+The exact operation requires two new retained build directories. Each runs the pinned Pandoc
+projection and two stock LuaLaTeX passes, then checks the honestly untagged eleven-page A4,
+PDF 1.7 profile, author/title/producer metadata, searchable text, embedded fonts and ToUnicode,
+internal destinations and admitted URI actions. The fresh bodies must match the selected
+Pandoc projection; the fresh PDFs must match each other and the committed PDF byte for byte.
+Input/tool hashes are checked before and after execution. Selected TeX inputs and the Python/
+pypdf package are pinned; these observations are not a complete native loader or filesystem
+isolation claim. Visual inspection and the staged publication-link gate remain separate.
+
+Use an existing admitted interpreter with pypdf 6.16.1. No installation is performed. Supply
+an original finite monotonic deadline, no more than 600 seconds ahead, and an absent absolute
+work path under an existing canonical parent. The controller caps each child at 45 seconds,
+each retained stream at 512 KiB, each native output file at 2 MiB and its polled work tree at
+32 MiB. It terminates its owned process group on a failure or limit and retains logs and
+terminal receipts. The aggregate tree bound is monitored, not an operating-system disk quota.
+Do not reuse a failed or successful output directory, or reset a campaign deadline after a failure.
+
+```text
+<admitted-python> -I -B scripts/check-source-coupling-compression-pdf-self-test.py --work-dir <fresh-normal-controls> --deadline <original-control-deadline>
+<admitted-python> -O -I -B scripts/check-source-coupling-compression-pdf-self-test.py --work-dir <fresh-optimized-controls> --deadline <original-control-deadline>
+<admitted-python> -I -B scripts/build-source-coupling-compression-pdf.py --check --tex-root <canonical-tex-root> --work-dir <fresh-build-work> --deadline <original-build-deadline>
+python3 -I -S -B scripts/check-source-coupling-compression-pdf-self-test.py --dispatch-only
+python3 -O -I -S -B scripts/check-source-coupling-compression-pdf-self-test.py --dispatch-only
+python3 -I -S -B scripts/build-source-coupling-compression-pdf.py --cross-toolchain
+```
+
+The full controls retain actual mutated source/PDF fixtures and exercise metadata, fonts,
+actions, process errors, limits and real shell dispatch. They require fresh output and deadline
+arguments and cap their fixture tree at 6 MiB. Dispatch-only controls need no parser or producer;
+their default fresh temporary directory is retained and they have a 60-second deadline. The
+cross command refuses before parser/tool/build prerequisites with status 2 and zero build credit.
+Neither a synthetic dispatch pass nor that refusal is a hosted PDF render.
+
+The aggregate's exact preflight additionally requires `PID_RS_SOURCE_COUPLING_PYTHON`,
+`PID_RS_SOURCE_COUPLING_TEX_ROOT`, `PID_RS_SOURCE_COUPLING_WORK_DIR`,
+`PID_RS_SOURCE_COUPLING_DEADLINE`, `PID_RS_SOURCE_COUPLING_CONTROL_NORMAL`,
+`PID_RS_SOURCE_COUPLING_CONTROL_OPTIMIZED` and `PID_RS_SOURCE_COUPLING_CONTROL_DEADLINE`.
+It forwards those original bindings to both control modes and the real leaf before the older
+long PDF gates. Its inventory self-test exercises the new source/PDF omissions and invokes
+the new dispatch controls in both modes. Existing bias, derivative and sensor registrations,
+other TeX roots and every previous leaf predicate remain required. These commands describe
+the contract; their presence does not report a successful run or scientific acceptance.
+
+To rerun the study scripts in `audit/research/source-coupling-compression/verification/`, download
+the two public recordings named in the report (UCI 864, DOI 10.24432/C5P605, and UCI 357, DOI
+10.24432/C5X01N). Place `uci864-data.csv`, `datatraining.txt`, `datatest.txt` and `datatest2.txt`
+in `.local/research-and-storage-20261005/application-benchmarks-v1/native-attempt-2/raw/` under the
+repository root, an ignored location. The scripts check the SHA-256 of each file before use.
 The PDF inventory compares sorted validated stems. Sorting full filenames before removing `.pdf`
 does not preserve stem order for a paper and its `-summary` companion; the first failed baseline
 and its source preimage remain archived with the bias publication.

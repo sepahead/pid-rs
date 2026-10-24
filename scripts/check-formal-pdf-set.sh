@@ -50,6 +50,7 @@ STANDALONE_MARKDOWN_PAPERS=(
   "cross-implementation-reverification"
   "stopped-prefix-probability"
   "fault-tolerant-shared-exclusions"
+  "source-coupling-compression"
   "mathematical-results-guide"
   "finite-target-copy-mgw-synergy"
   "finite-prefix-mgw-gradient"
@@ -72,6 +73,7 @@ STANDALONE_MARKDOWN_SOURCES=(
   "audit/evidence/cross-implementation-reverification-2026-09-26.md"
   "audit/formal/lean-stopped-prefix-probability/EXPOSITION.md"
   "audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md"
+  "audit/research/source-coupling-compression/EXPOSITION.md"
   "MATHEMATICAL_RESULTS_GUIDE.md"
   "audit/evidence/finite-target-copy-mgw-synergy.md"
   "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md"
@@ -150,6 +152,18 @@ if [[ "${actual_pdf[*]}" != "${expected_pdf[*]}" ]]; then
   echo "formal PDF set: rendered PDF inventory differs from the declared standalone-paper set" >&2
   exit 1
 fi
+
+# BEGIN SOURCE COUPLING PREFLIGHT
+if [[ "$MODE" == "--exact" ]]; then
+  : "${PID_RS_SOURCE_COUPLING_PYTHON:?formal PDF set: source-coupling pinned Python is required}"
+  : "${PID_RS_SOURCE_COUPLING_TEX_ROOT:?formal PDF set: source-coupling TeX root is required}"
+  : "${PID_RS_SOURCE_COUPLING_WORK_DIR:?formal PDF set: source-coupling fresh work directory is required}"
+  : "${PID_RS_SOURCE_COUPLING_DEADLINE:?formal PDF set: source-coupling original deadline is required}"
+  : "${PID_RS_SOURCE_COUPLING_CONTROL_NORMAL:?formal PDF set: source-coupling normal control output is required}"
+  : "${PID_RS_SOURCE_COUPLING_CONTROL_OPTIMIZED:?formal PDF set: source-coupling optimized control output is required}"
+  : "${PID_RS_SOURCE_COUPLING_CONTROL_DEADLINE:?formal PDF set: source-coupling control deadline is required}"
+fi
+# END SOURCE COUPLING PREFLIGHT
 
 # BEGIN EMBODIED SENSOR PREFLIGHT
 # Require every sensor binding before any registered bias, derivative, or sensor call.
@@ -247,6 +261,14 @@ if [[ "$MODE" == "--exact" ]]; then
   "$PID_RS_EMBODIED_SENSOR_PYTHON" -I -S -B scripts/build-embodied-sensor-pdfs.py --kind overview --exact --check --root "$ROOT" --manifest-sha256 "$PID_RS_EMBODIED_SENSOR_MANIFEST_SHA256" --registration "$PID_RS_EMBODIED_SENSOR_OVERVIEW_REGISTRATION" --registration-sha256 "$PID_RS_EMBODIED_SENSOR_OVERVIEW_REGISTRATION_SHA256" --work-dir "$PID_RS_EMBODIED_SENSOR_OVERVIEW_WORK_DIR" --stage-monotonic-deadline "$PID_RS_EMBODIED_SENSOR_PRODUCTION_MONOTONIC_DEADLINE"
 fi
 # END EMBODIED SENSOR EXACT DISPATCH
+
+# BEGIN SOURCE COUPLING EXACT DISPATCH
+if [[ "$MODE" == "--exact" ]]; then
+  "$PID_RS_SOURCE_COUPLING_PYTHON" -I -B scripts/check-source-coupling-compression-pdf-self-test.py --work-dir "$PID_RS_SOURCE_COUPLING_CONTROL_NORMAL" --deadline "$PID_RS_SOURCE_COUPLING_CONTROL_DEADLINE"
+  "$PID_RS_SOURCE_COUPLING_PYTHON" -O -I -B scripts/check-source-coupling-compression-pdf-self-test.py --work-dir "$PID_RS_SOURCE_COUPLING_CONTROL_OPTIMIZED" --deadline "$PID_RS_SOURCE_COUPLING_CONTROL_DEADLINE"
+  "$PID_RS_SOURCE_COUPLING_PYTHON" -I -B scripts/build-source-coupling-compression-pdf.py --check --tex-root "$PID_RS_SOURCE_COUPLING_TEX_ROOT" --work-dir "$PID_RS_SOURCE_COUPLING_WORK_DIR" --deadline "$PID_RS_SOURCE_COUPLING_DEADLINE"
+fi
+# END SOURCE COUPLING EXACT DISPATCH
 
 python3 -I -B scripts/check-publication-links.py
 python3 -O -I -B scripts/check-publication-links.py
@@ -552,8 +574,23 @@ if [[ "$MODE" == "--cross-toolchain" ]]; then
 fi
 # END EMBODIED SENSOR CROSS REFUSAL
 
+# BEGIN SOURCE COUPLING CROSS REFUSAL
+if [[ "$MODE" == "--cross-toolchain" ]]; then
+  if python3 -I -S -B scripts/build-source-coupling-compression-pdf.py --cross-toolchain; then
+    echo "formal PDF set: source-coupling cross-toolchain mode unexpectedly accepted" >&2
+    exit 1
+  else
+    SOURCE_COUPLING_CROSS_STATUS=$?
+  fi
+  if [[ "$SOURCE_COUPLING_CROSS_STATUS" -ne 2 ]]; then
+    echo "formal PDF set: source-coupling refusal returned $SOURCE_COUPLING_CROSS_STATUS, expected 2" >&2
+    exit 1
+  fi
+fi
+# END SOURCE COUPLING CROSS REFUSAL
+
 if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every declared formal paper passed declared same-toolchain typesetting diagnostics; current bias, derivative-note, and embodied-sensor inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
+  echo "OK: every declared formal paper passed declared same-toolchain typesetting diagnostics; current bias, derivative-note, and embodied-sensor inert source/data controls and source-coupling PDF/controller controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint, post-publication custody receipt, and source-coupling report, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its declared bounded typesetting diagnostics; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper, support-change cusp, embodied-sensor full paper and embodied-sensor overview intentionally have no accepted cross-toolchain relation, and all twelve status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its declared bounded typesetting diagnostics; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper, support-change cusp, embodied-sensor full paper, embodied-sensor overview and source-coupling report intentionally have no accepted cross-toolchain relation, and all thirteen status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi

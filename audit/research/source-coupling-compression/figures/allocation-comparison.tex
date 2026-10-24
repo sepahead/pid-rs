@@ -1,0 +1,14 @@
+\input{figures/figure-preamble.tex}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[width=13cm,height=7.3cm,ybar,bar width=12pt,ymin=0,ymax=0.7,
+  xtick={1,2},xticklabels={Room test,Office test},ylabel={Information (nats)},
+  legend style={at={(0.5,1.03)},anchor=south,legend columns=3},
+  nodes near coords,nodes near coords style={font=\scriptsize,/pgf/number format/.cd,fixed,precision=3}]
+\addplot[fill=Lapis,draw=Lapis] table[x=dataset,y=D]{figures/allocation.dat};
+\addplot[fill=Turquoise,draw=Turquoise] table[x=dataset,y=lower]{figures/allocation.dat};
+\addplot[fill=Bronze,draw=Bronze] table[x=dataset,y=lost]{figures/allocation.dat};
+\legend{Allocation movement $D$,MI lower certificate,Lost joint MI $L$}
+\end{axis}
+\end{tikzpicture}
+\end{document}
