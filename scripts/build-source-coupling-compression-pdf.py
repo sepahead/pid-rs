@@ -42,7 +42,7 @@ MAX_LOG_BYTES = 512 * 1024
 MAX_FILES = 1024
 MAX_CHILD_SECONDS = 45.0
 MAX_CAMPAIGN_SECONDS = 600.0
-PDF_PIN = {"bytes": 152881, "sha256": "5bd3be5b2541f2c84e6e46bb6aa63aaafd1b145ef09e24b56d3e9dc51f597342"}
+PDF_PIN = {"bytes": 152907, "sha256": "4c83d8508d63d0a7098fb15fcbbed2b95731b9a2d6ba7c4f67c95074d138c481"}
 # Populated only from the reviewed public input packet before execution admission.
 INPUTS: dict[str, dict] = {
     "audit/formal/latex/source-coupling-compression/fonts/LICENSE-latin-modern-math.txt": {
@@ -138,8 +138,8 @@ INPUTS: dict[str, dict] = {
         "sha256": "3bc546bd0a225c613fee7fd6c429a0eea9d9f7f4e698c150cf7761e0bc8a66bf"
     },
     "audit/research/source-coupling-compression/EXPOSITION.md": {
-        "bytes": 27318,
-        "sha256": "53dd9a17a534e2fc408fa5018db24aaef8a7487ec0698103f3ae74daf51f7c5e"
+        "bytes": 26928,
+        "sha256": "30d0de9c570bdc3741df89274fa27816b2104cfcab455b9dd9eacf9756021f08"
     },
     "audit/research/source-coupling-compression/figures/allocation-comparison.pdf": {
         "bytes": 10090,
@@ -636,8 +636,8 @@ PYPDF_PIN: dict = {
     "version": "6.16.1"
 }
 BODY_PIN: dict = {
-    "bytes": 32151,
-    "sha256": "39c2539f9dec8f992c8410ae4844f5a0b36c31309e292b1a0ab4e5f09e9f22e9"
+    "bytes": 31609,
+    "sha256": "5e3cfc5f9e0e27414ebfd05117c714685c04a75e91b8df230983c37b1174419c"
 }
 RELATIVE_URIS: frozenset[str] = frozenset()  # every PDF link is absolute
 SENTINELS = (

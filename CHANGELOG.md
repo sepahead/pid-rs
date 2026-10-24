@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Add the source-partition report on MGW allocation movement, with its exact PDF route and
   controls; correct four defects of that route found on its first complete run.
+- Repair main after that report: its Markdown now uses GitHub math delimiters, which the
+  Markdown math gate requires, and the certified-SxPID2 claim check rebinds the reviewed
+  scripts guide and formal-PDF-set digests. Preserve the
+  [failed predecessor and historical custody](audit/evidence/source-partition-script-guide-custody-20261024.json);
+  claim logic, hostile controls and historical proof records are unchanged.
 - Document binary MGW bounds and retain failed routes; use portable notation.
 - Refresh current document bindings; preserve historical proof receipts.
 
