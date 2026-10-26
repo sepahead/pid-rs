@@ -7,13 +7,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-- Stop citing social-media posts, which can be deleted or edited and can present opinions as
-  facts; AGENTS.md states the rule. Remove links to posts on X from dated custody records where
-  no check depends on them, and keep each record readable without them: the external deep-audit Markdown states each post's
-  date instead of linking it, its PDF and the 25 July review packet's workflow PDF lose their X
-  link annotations only, and schema 2 of the citation-edge source manifest records the four
-  public posts by role and UTC time, without names or links. The citation-edge checker validates schema 2 with
-  four new causal controls. The observed bytes remain at commit `acf561c0`; see the
+- Stop citing social-media posts, which can be deleted or edited and can present opinions as facts;
+  AGENTS.md states the rule. Remove links to posts on X from dated custody records where no check
+  depends on them, and keep each record readable without them: the external deep-audit Markdown
+  states each post's date instead of linking it, its PDF and the 25 July review packet's workflow
+  PDF lose their X link annotations and the file objects that held them, with pages, text, outline
+  and other links unchanged, and schema 2 of the citation-edge source manifest records the four
+  public posts by role and UTC time, without names or links. The citation-edge checker validates
+  schema 2 with four new causal controls. The observed bytes remain at commit `acf561c0`; see the
   [redaction record](audit/evidence/x-link-redaction-2026-10-26.md). The workflow publication and
   the preserved pre-authorship copies follow with its next build and visual review.
 - Add the source-partition report on MGW allocation movement, with its exact PDF route and

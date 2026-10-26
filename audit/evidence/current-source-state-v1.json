@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "2c84b72d0c44fbb5d98e2e2018aa627624e5b0914b7ac774736cd78c920b77b6",
-        "size_bytes": 329132
+        "sha256": "dfc44c58c3a2d3c6537b2a133729e1196702ce37fefb2d83a3039099af630716",
+        "size_bytes": 329218
       },
       {
         "git_mode": "100644",
@@ -3634,8 +3634,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.pdf",
-        "sha256": "c1514aa745a5d2badd19f820306d5d270c56dc435e9d5d3a6ea1e4586af5d2b1",
-        "size_bytes": 309419
+        "sha256": "f1e5bd727dca62086d42e525b402d52385b0ebcc506e59c9ef236198be6c07f8",
+        "size_bytes": 303676
       },
       {
         "git_mode": "100644",
@@ -14560,20 +14560,20 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/x-link-redaction-2026-10-26.md",
-        "sha256": "9a7d39b3d3c68dfb395ccadc98e94d0662b9483376846e840d1b0971d6097915",
-        "size_bytes": 5943
+        "sha256": "4e12351e78cd852f04ca34c4ef9da31ddcaca68ee20ead536895c1f54ea2506e",
+        "size_bytes": 7776
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/x-link-redaction-2026-10-26/council.md",
-        "sha256": "6934cee83aac2c1a7e7a3da497e07f8631ff23faad12e5aa66205b64ef2f80f0",
-        "size_bytes": 7022
+        "sha256": "1eeaaee1edee0ba988deec4ac8d421cc593d85d986c8bfa39168123259313902",
+        "size_bytes": 7481
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/x-link-redaction-2026-10-26/redact-milestone-1.py.txt",
-        "sha256": "87a86d54a57640d73cfd65d36ed5d07133edda30d0fcb10ac2a60003fb34efbb",
-        "size_bytes": 5562
+        "sha256": "adedf7abfc44909a6caff1ceeb378a40aae5281465c6666dcfd540912e768e7e",
+        "size_bytes": 11759
       },
       {
         "git_mode": "100644",
@@ -28606,8 +28606,8 @@
       {
         "git_mode": "100644",
         "path": "audit/review-packets/2026-07-25/README.md",
-        "sha256": "aa4f19d373d060256791d345e3eb91b779ed16fd35688bec5140800976812daf",
-        "size_bytes": 2420
+        "sha256": "b8b5f9ed62366d135e67b15a9cbca2bf053f41d18ca1a2aaa444ead9ae7fe423",
+        "size_bytes": 2476
       },
       {
         "git_mode": "100644",
@@ -28660,14 +28660,14 @@
       {
         "git_mode": "100644",
         "path": "audit/review-packets/2026-07-25/manifest.sha256",
-        "sha256": "16b47171e0704a000af2190adf333a3e7688372633c54ddb4df3b1aedef66929",
+        "sha256": "b21cea95ae54f46bc89ba1bce1834cda8018ccfa26a4d01ba149f97a5520ec6d",
         "size_bytes": 1074
       },
       {
         "git_mode": "100644",
         "path": "audit/review-packets/2026-07-25/mathematical-problem-solving-workflow.pdf",
-        "sha256": "4388f44695fa93ea262167c372de41de6c737487aa2cf1e1c43a4f2fb9bfa8fc",
-        "size_bytes": 630979
+        "sha256": "87c75bdfc00fac762f65ef8c39992d911a1dfe39cdc13d35543e96265b38b1d8",
+        "size_bytes": 627900
       },
       {
         "git_mode": "100644",
@@ -32128,7 +32128,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "83407a2e4d9fb58c762becdd7bd81e265d68173600e61e21f3aeceb8cc1be327",
+        "sha256": "903bfed4c68845110bf98ad1d75c3f4312b52cac39340832531fc82272e124d4",
         "size_bytes": 138951
       },
       {
@@ -33086,7 +33086,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "9e66427de1ba955a0244272a6d6f513cf21aa1096b6b64d2d86b7ff4ab9e1113",
+    "entries_sha256": "f94b610ad1b88f97d0538b11df495e1d38589c7a7b032e59ba05d59ce7d57101",
     "entry_count": 5490
   },
   "subprojections": [
@@ -33115,7 +33115,7 @@
       ]
     },
     {
-      "entries_sha256": "2a2c51799e6c254ddf621007957b05833a27d05c7471881f42a0b3e0f291251e",
+      "entries_sha256": "0939b0b918e81cc4deeef1b24f9b50ad05e0f5aff240c8472228e73d873335be",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

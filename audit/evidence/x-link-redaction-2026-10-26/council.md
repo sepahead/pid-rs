@@ -58,7 +58,7 @@ run and inspected.
 | 31 | Math exemption | The external audit keeps its observed math syntax under the new digest. |
 | 32 | Scope | The workflow publication is deferred with a stated reason, not silently skipped. |
 | 33 | Reversibility | One revert restores every changed file. |
-| 34 | Reproducibility | The redaction script and pypdf version are retained. |
+| 34 | Reproducibility | The redaction script and pypdf version are retained; the script derives the current files from the observed bytes and reproduces them exactly. |
 | 35 | Tool trust | pypdf 6.16.1 is installed from the repository's hash-pinned requirement. |
 | 36 | Negative evidence | The schema-1 manifest stays retrievable through `previous_revision`. |
 | 37 | Reader comprehension | The record explains the change without assuming knowledge of PDF internals. |
@@ -72,6 +72,7 @@ run and inspected.
 | 45 | Future policy | New text cites no social-media posts, because posts can be deleted or edited and can present opinions as facts that bias readers and AI agents; AGENTS.md states the rule. |
 | 46 | Thesis separation | The policy applies to public repositories; other documents are unaffected. |
 | 47 | Shallow clones | Verifying observed bytes needs a clone with history; the record says how. |
-| 48 | Inventory completeness | Text files and all 115 tracked PDFs were scanned for links to X. |
+| 48 | Inventory completeness | Text files were scanned for links to X, and all 115 tracked PDFs at object level, including decoded streams. |
 | 49 | Remaining work | The workflow publication and its pre-authorship copies are listed. |
 | 50 | Failure handling | Any failed gate stops the step before `main`; nothing is forced. |
+| 51 | Byte-level completeness | Removing an annotation from a page kept its object in the file, so the first version left the link targets in the bytes. Found by an object-level scan before `main` moved; the corrected script drops unreferenced objects and fails if any object or decoded stream still holds a locator of X. |
