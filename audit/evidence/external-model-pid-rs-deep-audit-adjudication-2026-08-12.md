@@ -16,6 +16,12 @@ between models is correlated evidence, not independence.
 | `external-model-pid-rs-deep-audit-2026-08-12.md` | 97,481 | `c289373b23aeb521952101e9143d924b60316ccece6ab9be84c2ff2b9b0ebe71` | Parsed in full, 1,404 lines |
 | `external-model-pid-rs-deep-audit-2026-08-12.pdf` | 185,287 | `3cf7457232eb4ba71ac93a1007fea003d61033a2f0caddab2963fa2175bf3fd2` | 29 A4 pages rendered and inspected; unencrypted; no forms or JavaScript |
 
+**Link redaction, 26 October 2026.** Both preserved inputs were replaced by link-free successors.
+In the Markdown, each of the 15 links to posts on X became dated text; in the PDF, the 15 link
+annotations to X were removed, and its pages and text are unchanged. The bytes listed above remain
+retrievable at commit `acf561c0e2bd6724614019acd65c8830246ac5fb`;
+[the redaction record](x-link-redaction-2026-10-26.md) lists both digests of each file.
+
 The PDF's metadata names “OpenAI GPT-5.6 Pro” as author. That is provenance, not authority. The
 review itself says it could not clone the exact tree, retrieve every blob, render the committed
 PDFs, or inspect the authors' GitLab code. Repository-local rechecks therefore supersede its

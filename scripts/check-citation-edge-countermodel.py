@@ -38,7 +38,8 @@ REQUIRED_SENTINELS = (
 
 MANIFEST_ID = "X-VECTOR-BUNDLE-CITATION-SOURCES-001"
 RECORD_ID = "X-VECTOR-BUNDLE-CITATION-EDGE-001"
-EXPECTED_MANIFEST_SHA256 = "bc6db3d1d5c5dd8c2b0059280881d041ea1b07b5fd8aabd2d20c953ebed0b907"
+# Schema 2, without links to the public posts; schema 1 is PREVIOUS_MANIFEST_REVISION below.
+EXPECTED_MANIFEST_SHA256 = "1a771a026a7bf86f46cba8f1654e3ab3578347d625c3d12b3cd3de4b52914e1d"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 EXPECTED_ARTIFACTS = {
@@ -85,27 +86,19 @@ EXPECTED_ARTIFACTS = {
     },
 }
 
-EXPECTED_WEB_LOCATORS = {
-    "x-author-acknowledgement": (
-        "https://x.com/prz_chojecki/status/2080766940604481575",
-        "2080766940604481575",
-        "author_acknowledgement",
-    ),
-    "x-author-correction": (
-        "https://x.com/prz_chojecki/status/2080767793452970317",
-        "2080767793452970317",
-        "author_correction",
-    ),
-    "x-specific-objection": (
-        "https://x.com/tonylfeng/status/2080757463780094146",
-        "2080757463780094146",
-        "specific_objection",
-    ),
-    "x-original-claim": (
-        "https://x.com/prz_chojecki/status/2080659698085191915",
-        "2080659698085191915",
-        "original_claim",
-    ),
+# The four public posts of the exchange, by time, role, and the author's role. Schema 2 keeps no
+# link, post identifier, or name; the schema-1 manifest that listed them remains at the commit named in
+# previous_revision.
+EXPECTED_PUBLIC_STATEMENTS = {
+    "original-claim": ("2026-07-24T14:21:43Z", "original_claim", "draft author"),
+    "specific-objection": ("2026-07-24T20:50:12Z", "specific_objection", "independent reader"),
+    "author-acknowledgement": ("2026-07-24T21:27:52Z", "author_acknowledgement", "draft author"),
+    "author-correction": ("2026-07-24T21:31:15Z", "author_correction", "draft author"),
+}
+PREVIOUS_MANIFEST_REVISION = {
+    "retained_at_commit": "acf561c0e2bd6724614019acd65c8830246ac5fb",
+    "schema": 1,
+    "sha256": "bc6db3d1d5c5dd8c2b0059280881d041ea1b07b5fd8aabd2d20c953ebed0b907",
 }
 
 EXPECTED_SOURCE_ARROWS = {
@@ -440,12 +433,28 @@ def validate_source_manifest(path: Path) -> tuple[dict[str, Any], dict[str, tupl
             "digest_scope",
             "manifest_id",
             "observed_at",
+            "previous_revision",
+            "public_statements",
             "schema",
-            "web_locators",
         },
         "source manifest",
     )
-    require(manifest["schema"] == 1, "source manifest schema must be 1")
+    require(
+        type(manifest["schema"]) is int and manifest["schema"] == 2,
+        "source manifest schema must be the integer 2",
+    )
+    previous = require_exact_keys(
+        manifest["previous_revision"],
+        set(PREVIOUS_MANIFEST_REVISION),
+        "previous source-manifest revision",
+    )
+    require(
+        all(
+            type(previous[key]) is type(value) and previous[key] == value
+            for key, value in PREVIOUS_MANIFEST_REVISION.items()
+        ),
+        "previous source-manifest revision drifted",
+    )
     require(manifest["manifest_id"] == MANIFEST_ID, "source manifest id drifted")
     require(manifest["observed_at"] == "2026-07-25", "source observation date drifted")
     require(
@@ -461,6 +470,7 @@ def validate_source_manifest(path: Path) -> tuple[dict[str, Any], dict[str, tupl
             "source_theorems_reproved_by_validator",
             "thread_completeness_claimed",
             "x_content_bytes_retained_in_repository",
+            "x_post_locators_retained_in_repository",
         },
         "source manifest claims",
     )
@@ -542,30 +552,41 @@ def validate_source_manifest(path: Path) -> tuple[dict[str, Any], dict[str, tupl
             require(span_id not in spans, f"duplicate global source span id {span_id!r}")
             spans[span_id] = (artifact_id, page_start, page_end)
 
-    web_locators = index_objects(manifest["web_locators"], "locator_id", "web locators")
-    require(set(web_locators) == set(EXPECTED_WEB_LOCATORS), "X locator inventory drifted")
-    for locator_id, (url, status_id, role) in EXPECTED_WEB_LOCATORS.items():
-        locator = require_exact_keys(
-            web_locators[locator_id],
+    statements = index_objects(
+        manifest["public_statements"], "statement_id", "public statements"
+    )
+    require(
+        set(statements) == set(EXPECTED_PUBLIC_STATEMENTS),
+        "public-statement inventory drifted",
+    )
+    for statement_id, (posted_utc, role, author) in EXPECTED_PUBLIC_STATEMENTS.items():
+        statement = require_exact_keys(
+            statements[statement_id],
             {
-                "canonical_locator",
+                "author",
                 "content_sha256",
-                "locator_id",
+                "platform",
+                "posted_utc",
                 "retention",
                 "role",
-                "status_id",
+                "statement_id",
             },
-            f"web locator {locator_id}",
+            f"public statement {statement_id}",
         )
-        require(locator["canonical_locator"] == url, f"{locator_id}: URL drifted")
-        require(locator["status_id"] == status_id, f"{locator_id}: status id drifted")
-        require(url.endswith(status_id), f"{locator_id}: URL/status id mismatch")
-        require(locator["role"] == role, f"{locator_id}: role drifted")
-        require(locator["content_sha256"] is None, f"{locator_id}: unretained content has a digest")
+        require(statement["posted_utc"] == posted_utc, f"{statement_id}: posting time drifted")
+        require(statement["role"] == role, f"{statement_id}: role drifted")
+        require(statement["author"] == author, f"{statement_id}: author drifted")
+        require(statement["platform"] == "X", f"{statement_id}: platform drifted")
+        require(statement["content_sha256"] is None, f"{statement_id}: unretained content has a digest")
         require(
-            locator["retention"] == "locator_only_no_content_digest",
-            f"{locator_id}: X retention boundary drifted",
+            statement["retention"] == "not_retained_no_link",
+            f"{statement_id}: retention boundary drifted",
         )
+    require(
+        [statement["statement_id"] for statement in manifest["public_statements"]]
+        == sorted(statements, key=lambda key: statements[key]["posted_utc"]),
+        "public statements are not in posting order",
+    )
 
     return artifacts, spans, raw
 
@@ -634,7 +655,10 @@ def validate_application_record(
         },
         "citation-edge application record",
     )
-    require(record["schema"] == 1, "application record schema must be 1")
+    require(
+        type(record["schema"]) is int and record["schema"] == 1,
+        "application record schema must be the integer 1",
+    )
     require(record["record_id"] == RECORD_ID, "application record id drifted")
     require(record["manifest_id"] == MANIFEST_ID, "application/manifest id mismatch")
     manifest_digest = hashlib.sha256(manifest_raw).hexdigest()

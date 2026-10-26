@@ -1149,15 +1149,15 @@ This appendix lists every distinct external link parsed from the inspected workf
 
 **14. ["Structural Impossibility of Antichain-Lattice Partial Information Decomposition," arXiv:2604.038...](https://arxiv.org/abs/2604.03869v2)** - workflow line 151; **PID primary**. Equation/algorithm/claim-boundary review where load-bearing.
 
-**15. [Thread introduction](https://x.com/Qiaoqiao2001/status/2080003441821163958)** - workflow line 189; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**15. Thread introduction (public post on X, 22 July 2026, 18:53 UTC; link removed on 2026-10-26)** - workflow line 189; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**16. [Exact problem and audit requirements](https://x.com/Qiaoqiao2001/status/2080003451270885851)** - workflow line 190; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**16. Exact problem and audit requirements (public post on X, 22 July 2026, 18:54 UTC; link removed on 2026-10-26)** - workflow line 190; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**17. [Independent routes and blocker rules](https://x.com/Qiaoqiao2001/status/2080003454165295403)** - workflow line 191; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**17. Independent routes and blocker rules (public post on X, 22 July 2026, 18:54 UTC; link removed on 2026-10-26)** - workflow line 191; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**18. [Long-run work pattern](https://x.com/Qiaoqiao2001/status/2080003459248755141)** - workflow line 192; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**18. Long-run work pattern (public post on X, 22 July 2026, 18:54 UTC; link removed on 2026-10-26)** - workflow line 192; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**19. [Research loop](https://x.com/Qiaoqiao2001/status/2080003461517549887)** - workflow line 193; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**19. Research loop (public post on X, 22 July 2026, 18:54 UTC; link removed on 2026-10-26)** - workflow line 193; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
 **20. [Cycle Double Cover prompt](https://cdn.openai.com/pdf/04d1d1e4-bc75-476a-97cf-49055cd98d31/cdc_prompt.pdf)** - workflow line 197; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
@@ -1197,15 +1197,15 @@ This appendix lists every distinct external link parsed from the inspected workf
 
 **38. [generalized claim](https://github.com/pw/erdos477-cubic/blob/8440d599890b5a5ef7b212c65338723ab2443eaf/appendix/refutation-brief-K4-12.md)** - workflow line 276; **Unrelated mathematical case study**. Role/custody reviewed only; move outside PID trust surface.
 
-**39. [original claim](https://x.com/prz_chojecki/status/2080659698085191915)** - workflow line 301; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**39. original claim (public post on X, 24 July 2026, 14:21 UTC; link removed on 2026-10-26)** - workflow line 301; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
 **40. [linked draft](https://www.ulam.ai/research/algebraizable.pdf)** - workflow line 301; **Unrelated mathematical case study**. Role/custody reviewed only; move outside PID trust surface.
 
-**41. [specific objection](https://x.com/tonylfeng/status/2080757463780094146)** - workflow line 301; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**41. specific objection (public post on X, 24 July 2026, 20:50 UTC; link removed on 2026-10-26)** - workflow line 301; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**42. [acknowledgement](https://x.com/prz_chojecki/status/2080766940604481575)** - workflow line 301; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**42. acknowledgement (public post on X, 24 July 2026, 21:27 UTC; link removed on 2026-10-26)** - workflow line 301; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**43. [correction post](https://x.com/prz_chojecki/status/2080767793452970317)** - workflow line 301; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**43. correction post (public post on X, 24 July 2026, 21:31 UTC; link removed on 2026-10-26)** - workflow line 301; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
 **44. [2306.04631v3](https://arxiv.org/abs/2306.04631v3)** - workflow line 333; **Supporting/process source**. Retain only with an explicit role; not evidence for PID correctness.
 
@@ -1221,15 +1221,15 @@ This appendix lists every distinct external link parsed from the inspected workf
 
 **50. [Ten Advances in Mathematics and Theoretical Computer Science](https://cdn.openai.com/pdf/ten-proofs-oai.pdf)** - workflow line 471; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**51. [Alpöge post](https://x.com/__alpoge__/status/2086868936495423561)** - workflow line 532; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**51. Alpöge post (public post on X, 10 August 2026, 17:35 UTC; link removed on 2026-10-26)** - workflow line 532; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**52. [note-and-image reply](https://x.com/__alpoge__/status/2086870739257639034)** - workflow line 532; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**52. note-and-image reply (public post on X, 10 August 2026, 17:42 UTC; link removed on 2026-10-26)** - workflow line 532; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**53. [historical explanation](https://x.com/__alpoge__/status/2086876565913338272)** - workflow line 532; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**53. historical explanation (public post on X, 10 August 2026, 18:05 UTC; link removed on 2026-10-26)** - workflow line 532; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**54. [Anthropic announcement](https://x.com/AnthropicAI/status/2086867246073401655)** - workflow line 532; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**54. Anthropic announcement (public post on X, 10 August 2026, 17:28 UTC; link removed on 2026-10-26)** - workflow line 532; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
-**55. [X media rendition](https://pbs.twimg.com/media/HPYN4LHaIAA30oA?format=jpg&name=large)** - workflow line 532; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**55. X media rendition (image attached to a post on X on 10 August 2026; link removed on 2026-10-26)** - workflow line 532; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
 **56. [Anthropic research page](https://www.anthropic.com/research/riemann-zeta)** - workflow line 552; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
@@ -1271,7 +1271,7 @@ This appendix lists every distinct external link parsed from the inspected workf
 
 **75. [exact reviewed PDF transport](http://www.bdim.eu/item?id=RLIN_2000_9_11_3_183_0&fmt=pdf)** - workflow line 575; **Unrelated mathematical case study**. Role/custody reviewed only; move outside PID trust surface.
 
-**76. [non-primary contextual reply](https://x.com/IBhadoo/status/2086892351537184814)** - workflow line 584; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
+**76. non-primary contextual reply (public post on X, 10 August 2026, 19:08 UTC; link removed on 2026-10-26)** - workflow line 584; **Mutable process narrative**. Do not use as PID scientific authority; archive or remove from core protocol.
 
 **77. [check-citation-edge-countermodel.py](https://github.com/sepahead/pid-rs/blob/main/scripts/check-citation-edge-countermodel.py)** - workflow line 1692; **Repository evidence**. Direct repository artifact; bind to an exact commit, not `main`.
 

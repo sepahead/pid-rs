@@ -1,0 +1,141 @@
+"""Milestone 1: remove X (Twitter) links from dated pid-rs custody files, verifiably.
+
+Markdown: each [label](X URL) becomes 'label (public post on X, <UTC time>; link removed on
+2026-10-26)'; the X media link becomes a dated description. Nothing else changes.
+PDF: X URI link annotations are removed; page count, page text, and every other annotation stay.
+Run from the worktree root with the Homebrew Python that has pypdf 6.16.1.
+"""
+from __future__ import annotations
+
+import datetime
+import hashlib
+import io
+import logging
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+logging.disable(logging.CRITICAL)
+from pypdf import PdfReader, PdfWriter  # noqa: E402
+
+X_ANY = re.compile(r"(x\.com/|twitter\.com/|twimg\.com|//t\.co/)")
+X_LINK = re.compile(r"\[([^\]\n]+)\]\((https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/(\d+))\)")
+MEDIA_LINK = re.compile(r"\[([^\]\n]+)\]\((https://pbs\.twimg\.com/media/[^)\s]+)\)")
+
+
+def utc_of(status_id: str) -> str:
+    stamp = ((int(status_id) >> 22) + 1288834974657) / 1000
+    when = datetime.datetime.fromtimestamp(stamp, datetime.timezone.utc)
+    return f"{when.day} {when:%B %Y}, {when:%H:%M} UTC"
+
+
+def sha(raw: bytes) -> str:
+    return hashlib.sha256(raw).hexdigest()
+
+
+def redact_markdown(path: Path, media_note: str) -> tuple[bytes, bytes, int]:
+    original = path.read_bytes()
+    text = original.decode("utf-8")
+    pairs: list[tuple[str, str]] = []
+
+    def link(match: re.Match[str]) -> str:
+        new = f"{match.group(1)} (public post on X, {utc_of(match.group(3))}; link removed on 2026-10-26)"
+        pairs.append((new, match.group(0)))
+        return new
+
+    def media(match: re.Match[str]) -> str:
+        new = f"{match.group(1)} ({media_note}; link removed on 2026-10-26)"
+        pairs.append((new, match.group(0)))
+        return new
+
+    redacted = MEDIA_LINK.sub(media, X_LINK.sub(link, text))
+    if X_ANY.search(redacted):
+        sys.exit(f"{path}: an X locator remains")
+    # Reversing every recorded replacement must give back the original bytes exactly.
+    restored = redacted
+    for new, old in pairs:
+        if restored.count(new) != 1:
+            sys.exit(f"{path}: replacement text is not unique: {new[:60]!r}")
+        restored = restored.replace(new, old, 1)
+    if restored != text:
+        sys.exit(f"{path}: bytes outside the replaced links changed")
+    return original, redacted.encode("utf-8"), len(pairs)
+
+
+def pdf_text(raw: bytes) -> list[str]:
+    result = subprocess.run(["pdftotext", "-layout", "-", "-"], input=raw, capture_output=True, check=True)
+    return result.stdout.decode("utf-8", "replace").split("\f")
+
+
+def annotation_uris(reader: PdfReader) -> list[list[str]]:
+    pages = []
+    for page in reader.pages:
+        uris = []
+        for annotation in page.get("/Annots") or []:
+            node = annotation.get_object()
+            action = node.get("/A")
+            uri = action.get_object().get("/URI") if action is not None else None
+            uris.append(str(uri) if uri is not None else f"<{node.get('/Subtype')}>")
+        pages.append(uris)
+    return pages
+
+
+def redact_pdf(path: Path) -> tuple[bytes, bytes, int]:
+    original = path.read_bytes()
+    reader = PdfReader(io.BytesIO(original), strict=False)
+    writer = PdfWriter(clone_from=reader)
+    writer.pdf_header = reader.pdf_header
+    removed = 0
+    for page in writer.pages:
+        kept = []
+        for annotation in page.get("/Annots") or []:
+            node = annotation.get_object()
+            action = node.get("/A")
+            uri = action.get_object().get("/URI") if action is not None else None
+            if uri is not None and X_ANY.search(str(uri)):
+                removed += 1
+                continue
+            kept.append(annotation)
+        if "/Annots" in page:
+            if kept:
+                from pypdf.generic import ArrayObject, NameObject
+                page[NameObject("/Annots")] = ArrayObject(kept)
+            else:
+                from pypdf.generic import NameObject
+                del page[NameObject("/Annots")]
+    buffer = io.BytesIO()
+    writer.write(buffer)
+    redacted = buffer.getvalue()
+    before, after = annotation_uris(reader), annotation_uris(PdfReader(io.BytesIO(redacted), strict=False))
+    if len(before) != len(after):
+        sys.exit(f"{path}: page count changed")
+    for old, new in zip(before, after):
+        if [u for u in old if not X_ANY.search(u)] != new:
+            sys.exit(f"{path}: a non-X annotation changed")
+    if pdf_text(original) != pdf_text(redacted):
+        sys.exit(f"{path}: page text changed")
+    return original, redacted, removed
+
+
+def main() -> int:
+    base = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, check=True).stdout.strip()
+    jobs = [
+        ("audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.md", "md",
+         "image attached to a post on X on 10 August 2026"),
+        ("audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.pdf", "pdf", None),
+        ("audit/review-packets/2026-07-25/mathematical-problem-solving-workflow.pdf", "pdf", None),
+    ]
+    for relative, kind, note in jobs:
+        path = Path(relative)
+        if kind == "md":
+            original, redacted, count = redact_markdown(path, note)
+        else:
+            original, redacted, count = redact_pdf(path)
+        path.write_bytes(redacted)
+        print(f"{relative}\t{count}\t{len(original)}\t{sha(original)}\t{len(redacted)}\t{sha(redacted)}\t{base}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

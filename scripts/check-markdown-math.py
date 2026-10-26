@@ -12,9 +12,12 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parent.parent
+# The external audit keeps its observed syntax. Its 15 links to posts on X became dated text on
+# 2026-10-26; the observed bytes (c289373b...) remain at commit acf561c0 and are recorded in
+# audit/evidence/x-link-redaction-2026-10-26.md.
 PRESERVED_EXTERNAL_MARKDOWN_SHA256 = {
     "audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.md": (
-        "c289373b23aeb521952101e9143d924b60316ccece6ab9be84c2ff2b9b0ebe71"
+        "1e9bd270df74f8b92991e8cb0b548d5c4677b4e55ee7662b9889a37b06ca6c20"
     ),
 }
 # These pre-acceptance drafts are immutable source evidence, not current rendered prose.

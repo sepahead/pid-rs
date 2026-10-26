@@ -5124,7 +5124,7 @@
     },
     {
       "artifact": "audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.md",
-      "artifact_sha256": "c289373b23aeb521952101e9143d924b60316ccece6ab9be84c2ff2b9b0ebe71",
+      "artifact_sha256": "1e9bd270df74f8b92991e8cb0b548d5c4677b4e55ee7662b9889a37b06ca6c20",
       "evidence_class": "model_review",
       "id": "REVIEW-EXTERNAL-MODEL-2026_08_12",
       "independence": {

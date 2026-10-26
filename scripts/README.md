@@ -3134,9 +3134,14 @@ typed source-arrow signatures, predicate/arrow and source/local bindings, variab
 hypothesis evidence, unresolved ambiguity, the conditional equation disposition, and the scoped
 downstream blast radius must agree. The external PDFs and X content are not retained, so this is a
 record/cross-binding check, not a recomputation of the observed PDF hashes, a source-theorem proof,
-or a complete thread archive. Its self-test rejects the existing nine countermodel/document
-mutations plus neighboring-arrow swap, source-span removal, arrow reversal, missing hypothesis,
-false equation disposition, digest drift, and page drift.
+or a complete thread archive. Schema 2 of the manifest records the four public posts of the exchange
+by role, the author's role and UTC posting time, without names, links or post identifiers; its `previous_revision`
+field names the schema-1 digest and the commit that keeps it. Its self-test rejects the existing
+nine countermodel/document mutations plus neighboring-arrow swap, source-span removal, arrow
+reversal, missing hypothesis, false equation disposition, digest drift, and page drift. Four
+schema-2 controls add a floating-point schema, a Boolean in the previous-revision pointer, a
+reintroduced link field, and swapped statement order; each must fail with the message of its own
+check.
 
 ```text
 python3 scripts/check-citation-edge-countermodel.py

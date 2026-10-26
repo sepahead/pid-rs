@@ -212,6 +212,12 @@ without claiming conformance absent a separate audit. Preserve counterexamples, 
 unsuccessful routes and negative results with scope, rejection reasons and reopen conditions;
 correct stale active claims without erasing their record.
 
+Do not cite posts on social media, such as X (formerly Twitter), as sources. A post can be deleted
+or edited after it is cited and can present an opinion as a fact, which biases readers and AI
+agents and weakens scientific rigour. State the substance in your own words, say that it came
+from a public post and when, cite the primary source if one exists, and neither link the post nor
+name its author.
+
 Before adopting an external research method, use the existing claim packet and route memo to state
 the pid-rs problem it solves, map its premises to this context, identify broken premises and needed
 adaptations, compare the simplest applicable alternative, and specify a falsifiable acceptance test.

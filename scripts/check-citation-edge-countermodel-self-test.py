@@ -41,6 +41,14 @@ def expect_rejection(label: str, *arguments: str) -> None:
     require(result.returncode != 0, f"mutation survived: {label}\n{result.stdout}{result.stderr}")
 
 
+def expect_rejection_message(label: str, message: str, *arguments: str) -> None:
+    """Require a rejection that names the intended check, not an incidental later one."""
+    result = run(*arguments)
+    output = result.stdout + result.stderr
+    require(result.returncode != 0, f"mutation survived: {label}\n{output}")
+    require(message in output, f"mutation {label} was rejected for another reason:\n{output}")
+
+
 def canonical_bytes(value: object) -> bytes:
     return (json.dumps(value, indent=2, sort_keys=True) + "\n").encode("utf-8")
 
@@ -237,7 +245,62 @@ def main() -> int:
 
         reject_application_mutation("source-page-drift", source_page_drift)
 
-    print("OK: citation-edge countermodel checker rejected 16/16 mutations")
+        # Schema-2 manifest controls. The manifest's semantic checks run before its digest pin,
+        # so each case must fail with the message of the check that it targets.
+        def reject_manifest_mutation(
+            label: str,
+            message: str,
+            mutate: Callable[[dict[str, object]], None],
+        ) -> None:
+            application = copy.deepcopy(application_value)
+            manifest = copy.deepcopy(manifest_value)
+            mutate(manifest)
+            write_application_case(application_copy, manifest_copy, application, manifest)
+            expect_rejection_message(
+                label,
+                message,
+                "--application-record",
+                str(application_copy),
+                "--source-manifest",
+                str(manifest_copy),
+            )
+
+        def float_schema(manifest: dict[str, object]) -> None:
+            manifest["schema"] = 2.0
+
+        reject_manifest_mutation(
+            "manifest-float-schema", "source manifest schema must be the integer 2", float_schema
+        )
+
+        def boolean_previous_schema(manifest: dict[str, object]) -> None:
+            previous = manifest["previous_revision"]
+            require(isinstance(previous, dict), "previous revision is not an object")
+            previous["schema"] = True
+
+        reject_manifest_mutation(
+            "previous-revision-boolean-schema",
+            "previous source-manifest revision drifted",
+            boolean_previous_schema,
+        )
+
+        def reintroduced_link(manifest: dict[str, object]) -> None:
+            statement = object_by_id(manifest["public_statements"], "statement_id", "original-claim")
+            statement["canonical_locator"] = "https://example.invalid/post"
+
+        reject_manifest_mutation(
+            "reintroduced-post-link", "public statement original-claim keys differ", reintroduced_link
+        )
+
+        def statement_order_swap(manifest: dict[str, object]) -> None:
+            statements = manifest["public_statements"]
+            require(isinstance(statements, list), "public statements are not an array")
+            statements.reverse()
+
+        reject_manifest_mutation(
+            "statement-order-swap", "public statements are not in posting order", statement_order_swap
+        )
+
+    print("OK: citation-edge countermodel checker rejected 20/20 mutations")
     return 0
 
 

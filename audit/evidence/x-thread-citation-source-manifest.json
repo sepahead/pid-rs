@@ -119,44 +119,54 @@
     "pdf_digest_recomputed_by_validator": false,
     "source_theorems_reproved_by_validator": false,
     "thread_completeness_claimed": false,
-    "x_content_bytes_retained_in_repository": false
+    "x_content_bytes_retained_in_repository": false,
+    "x_post_locators_retained_in_repository": false
   },
   "digest_scope": "sha256_of_raw_downloaded_pdf_bytes_observed_on_2026-07-25",
   "manifest_id": "X-VECTOR-BUNDLE-CITATION-SOURCES-001",
   "observed_at": "2026-07-25",
-  "schema": 1,
-  "web_locators": [
+  "previous_revision": {
+    "retained_at_commit": "acf561c0e2bd6724614019acd65c8830246ac5fb",
+    "schema": 1,
+    "sha256": "bc6db3d1d5c5dd8c2b0059280881d041ea1b07b5fd8aabd2d20c953ebed0b907"
+  },
+  "public_statements": [
     {
-      "canonical_locator": "https://x.com/prz_chojecki/status/2080766940604481575",
+      "author": "draft author",
       "content_sha256": null,
-      "locator_id": "x-author-acknowledgement",
-      "retention": "locator_only_no_content_digest",
-      "role": "author_acknowledgement",
-      "status_id": "2080766940604481575"
-    },
-    {
-      "canonical_locator": "https://x.com/prz_chojecki/status/2080767793452970317",
-      "content_sha256": null,
-      "locator_id": "x-author-correction",
-      "retention": "locator_only_no_content_digest",
-      "role": "author_correction",
-      "status_id": "2080767793452970317"
-    },
-    {
-      "canonical_locator": "https://x.com/tonylfeng/status/2080757463780094146",
-      "content_sha256": null,
-      "locator_id": "x-specific-objection",
-      "retention": "locator_only_no_content_digest",
-      "role": "specific_objection",
-      "status_id": "2080757463780094146"
-    },
-    {
-      "canonical_locator": "https://x.com/prz_chojecki/status/2080659698085191915",
-      "content_sha256": null,
-      "locator_id": "x-original-claim",
-      "retention": "locator_only_no_content_digest",
+      "platform": "X",
+      "posted_utc": "2026-07-24T14:21:43Z",
+      "retention": "not_retained_no_link",
       "role": "original_claim",
-      "status_id": "2080659698085191915"
+      "statement_id": "original-claim"
+    },
+    {
+      "author": "independent reader",
+      "content_sha256": null,
+      "platform": "X",
+      "posted_utc": "2026-07-24T20:50:12Z",
+      "retention": "not_retained_no_link",
+      "role": "specific_objection",
+      "statement_id": "specific-objection"
+    },
+    {
+      "author": "draft author",
+      "content_sha256": null,
+      "platform": "X",
+      "posted_utc": "2026-07-24T21:27:52Z",
+      "retention": "not_retained_no_link",
+      "role": "author_acknowledgement",
+      "statement_id": "author-acknowledgement"
+    },
+    {
+      "author": "draft author",
+      "content_sha256": null,
+      "platform": "X",
+      "posted_utc": "2026-07-24T21:31:15Z",
+      "retention": "not_retained_no_link",
+      "role": "author_correction",
+      "statement_id": "author-correction"
     }
-  ]
+  ],
+  "schema": 2
 }

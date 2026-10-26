@@ -18,7 +18,7 @@
     {
       "path": "audit/evidence/assurance-registry-typed-view-v1.json",
       "role": "assurance_registry_typed_view",
-      "sha256": "3b7f9dd27479105c506f9f077649ccc982b01aabcaf1852467677e8dbf7f6687",
+      "sha256": "2578f3416f25dd39ba4910dd171848bb7dd29ab84d01725c11fa5e6bbb761f19",
       "size_bytes": 243346
     },
     {
@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "b4189e12c9af044e0208fc77932b102f9b38db80e5e80006672f627924231f49",
-        "size_bytes": 100035
+        "sha256": "0d65b84de784d25184fa6a8a57810227eaa6fb6794e8d148f8d524066cbb7089",
+        "size_bytes": 100438
       },
       {
         "git_mode": "100644",
@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "6aa74cec2169a011d837de51d5868384e39ae3e7c4d93e6ec2960451bd497f07",
-        "size_bytes": 328254
+        "sha256": "2c84b72d0c44fbb5d98e2e2018aa627624e5b0914b7ac774736cd78c920b77b6",
+        "size_bytes": 329132
       },
       {
         "git_mode": "100644",
@@ -2410,7 +2410,7 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/assurance-registry-typed-view-v1.json",
-        "sha256": "3b7f9dd27479105c506f9f077649ccc982b01aabcaf1852467677e8dbf7f6687",
+        "sha256": "2578f3416f25dd39ba4910dd171848bb7dd29ab84d01725c11fa5e6bbb761f19",
         "size_bytes": 243346
       },
       {
@@ -3628,20 +3628,20 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.md",
-        "sha256": "c289373b23aeb521952101e9143d924b60316ccece6ab9be84c2ff2b9b0ebe71",
-        "size_bytes": 97481
+        "sha256": "1e9bd270df74f8b92991e8cb0b548d5c4677b4e55ee7662b9889a37b06ca6c20",
+        "size_bytes": 97725
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.pdf",
-        "sha256": "3cf7457232eb4ba71ac93a1007fea003d61033a2f0caddab2963fa2175bf3fd2",
-        "size_bytes": 185287
+        "sha256": "c1514aa745a5d2badd19f820306d5d270c56dc435e9d5d3a6ea1e4586af5d2b1",
+        "size_bytes": 309419
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md",
-        "sha256": "f0e8fed8fa0319eb5f56d4b942821f2c2f1aa77b41b4f99bc7bbf3a6b73a2bc8",
-        "size_bytes": 21489
+        "sha256": "d71f3763b708e894a84136feb625a5736028d6fc607c37ac810a3cdceb0de336",
+        "size_bytes": 21936
       },
       {
         "git_mode": "100644",
@@ -14559,15 +14559,33 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/x-link-redaction-2026-10-26.md",
+        "sha256": "9a7d39b3d3c68dfb395ccadc98e94d0662b9483376846e840d1b0971d6097915",
+        "size_bytes": 5943
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/x-link-redaction-2026-10-26/council.md",
+        "sha256": "6934cee83aac2c1a7e7a3da497e07f8631ff23faad12e5aa66205b64ef2f80f0",
+        "size_bytes": 7022
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/x-link-redaction-2026-10-26/redact-milestone-1.py.txt",
+        "sha256": "87a86d54a57640d73cfd65d36ed5d07133edda30d0fcb10ac2a60003fb34efbb",
+        "size_bytes": 5562
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/x-thread-citation-edge-application.json",
-        "sha256": "6c9cc1007e1dcdf4659b2b095cd83fa1056b4f51c7348ac935145f2076e66254",
+        "sha256": "74e82e128ab68fc63ce89a11d39bff13287a7658bcd595691e15508ecd4b3a74",
         "size_bytes": 15924
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/x-thread-citation-source-manifest.json",
-        "sha256": "bc6db3d1d5c5dd8c2b0059280881d041ea1b07b5fd8aabd2d20c953ebed0b907",
-        "size_bytes": 6028
+        "sha256": "1a771a026a7bf86f46cba8f1654e3ab3578347d625c3d12b3cd3de4b52914e1d",
+        "size_bytes": 6145
       },
       {
         "git_mode": "100644",
@@ -28588,8 +28606,8 @@
       {
         "git_mode": "100644",
         "path": "audit/review-packets/2026-07-25/README.md",
-        "sha256": "c49949c168b6ebf57e8c8823b0257a6a3163cffa8374c4dfcf9c4d9751f51c95",
-        "size_bytes": 1874
+        "sha256": "aa4f19d373d060256791d345e3eb91b779ed16fd35688bec5140800976812daf",
+        "size_bytes": 2420
       },
       {
         "git_mode": "100644",
@@ -28642,14 +28660,14 @@
       {
         "git_mode": "100644",
         "path": "audit/review-packets/2026-07-25/manifest.sha256",
-        "sha256": "874b6bb8e64b5ca3f23be35cfe133b273a07cf680631bd3bde8aa3cc5565fc1b",
+        "sha256": "16b47171e0704a000af2190adf333a3e7688372633c54ddb4df3b1aedef66929",
         "size_bytes": 1074
       },
       {
         "git_mode": "100644",
         "path": "audit/review-packets/2026-07-25/mathematical-problem-solving-workflow.pdf",
-        "sha256": "b2ec5bed40e5c018aa49ef0c42710d554af55f604193d5c730b424a49af80ac8",
-        "size_bytes": 553199
+        "sha256": "4388f44695fa93ea262167c372de41de6c737487aa2cf1e1c43a4f2fb9bfa8fc",
+        "size_bytes": 630979
       },
       {
         "git_mode": "100644",
@@ -31228,8 +31246,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "7b24df6cb39eac0092d01870d45877a930b5a7eb838eec4dd866d1fe5d1a142a",
-        "size_bytes": 310347
+        "sha256": "e26ba5db65826329646f923b8db778b8388567d2d2e84bbc663af2667695425e",
+        "size_bytes": 310797
       },
       {
         "git_mode": "100755",
@@ -31510,20 +31528,20 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "a926336808267b4e93113c51d685d7c43446e48518c63e4a005a434a9d338cd4",
+        "sha256": "ce2bf3d0f758349d3ee5438829ed34bee08ea0340368e029333a6809ef8c38c7",
         "size_bytes": 90915
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-citation-edge-countermodel-self-test.py",
-        "sha256": "7d1a7b06643830670a7d60b8c1ff8e5508f94929965a7e0d47c0cb452ed273f1",
-        "size_bytes": 9910
+        "sha256": "277028e8bc5429cf88704a8856c16ce998a69a6528f2f27a0f0778348950cb79",
+        "size_bytes": 12626
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-citation-edge-countermodel.py",
-        "sha256": "1edfef2c7040eef64187e6c7ae376cee4662c3f386f4ed988da01689edcd2a47",
-        "size_bytes": 45245
+        "sha256": "0a916382307891616cdddd01db8d2ea5889262ab6537cf4f0c51c77163c22496",
+        "size_bytes": 46457
       },
       {
         "git_mode": "100644",
@@ -32110,8 +32128,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "5841f4770bce8b610315e3e399c6305684298ab8c328e3d1adb4a2f5e15c24ea",
-        "size_bytes": 138785
+        "sha256": "83407a2e4d9fb58c762becdd7bd81e265d68173600e61e21f3aeceb8cc1be327",
+        "size_bytes": 138951
       },
       {
         "git_mode": "100644",
@@ -32122,8 +32140,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-markdown-math.py",
-        "sha256": "89f2126faed9bcde53a24b467ebb57278483318d28e5f488cf77955ea523bb95",
-        "size_bytes": 18309
+        "sha256": "bf8b4902affb994648d50c5455fbc56774c97c079d39e4078a291fff4d0dd591",
+        "size_bytes": 18547
       },
       {
         "git_mode": "100755",
@@ -33068,8 +33086,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "0c57c64db0a890490f352856962655fe516bd19046b51c5ba0631ebcfab6bcf7",
-    "entry_count": 5487
+    "entries_sha256": "2cfe404bb92bbc9fe26b666273089dbfa4b91246f2dd91bf483d660eca704178",
+    "entry_count": 5490
   },
   "subprojections": [
     {
@@ -33097,7 +33115,7 @@
       ]
     },
     {
-      "entries_sha256": "74156867f5f81f8d4bb76e099887cafd787be505435f30e470e5dff4933bf6df",
+      "entries_sha256": "2a2c51799e6c254ddf621007957b05833a27d05c7471881f42a0b3e0f291251e",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
