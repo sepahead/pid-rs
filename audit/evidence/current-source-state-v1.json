@@ -484,7 +484,7 @@
       {
         "git_mode": "100644",
         "path": "PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
-        "sha256": "4fb6a5c5e4178f70dad0008b0f939bf0a689257fadf1ae95ecb33183ff875cae",
+        "sha256": "cf69bcdb6644c2e93e76725e7d98c8474f7be02b1a469bc9c716467620013f37",
         "size_bytes": 31466
       },
       {
@@ -5038,7 +5038,7 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/pid-mathematical-audit-protocol-v1.json",
-        "sha256": "f1812aceb10d28c6d9638e3dba6b04371194297c8e26c32dbe03ad6804455800",
+        "sha256": "4b6a20e11a3a4d9f2cc85c978dd9cb74448676e042799aa0764f91ef48f1d1c1",
         "size_bytes": 58046
       },
       {
@@ -33086,7 +33086,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "2cfe404bb92bbc9fe26b666273089dbfa4b91246f2dd91bf483d660eca704178",
+    "entries_sha256": "9e66427de1ba955a0244272a6d6f513cf21aa1096b6b64d2d86b7ff4ab9e1113",
     "entry_count": 5490
   },
   "subprojections": [

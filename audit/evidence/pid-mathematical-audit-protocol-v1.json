@@ -19,7 +19,7 @@
       "role": "typed_assurance_and_review_projection",
       "schema": "pid-rs/assurance-registry-typed-view",
       "schema_revision": 1,
-      "sha256": "3b7f9dd27479105c506f9f077649ccc982b01aabcaf1852467677e8dbf7f6687"
+      "sha256": "2578f3416f25dd39ba4910dd171848bb7dd29ab84d01725c11fa5e6bbb761f19"
     }
   ],
   "correspondence_edges": [
