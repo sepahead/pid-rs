@@ -1,0 +1,4017 @@
+{
+ "schema": "pid-rs/workflow-actual-views/v2",
+ "pdf_sha256": "446832ea439c838c6037ba7ad495294f8f07c7916162ff4ac0785bf3f50bed52",
+ "rendering_receipt_sha256": "bc64dbbcd56e818e6f5d98d67635c54c2f31b4341f749ea4c4cf339398966d87",
+ "scope": "Actual views by one AI agent; no independent, external or human review is claimed.",
+ "reviewer": "one AI agent",
+ "sittings": [
+  {
+   "id": "A",
+   "start_utc": "2026-10-28T04:51:22+00:00",
+   "end_utc": "2026-10-28T05:25:07+00:00"
+  },
+  {
+   "id": "B",
+   "start_utc": "2026-10-28T12:42:11+00:00",
+   "end_utc": "2026-10-28T13:08:35+00:00"
+  }
+ ],
+ "views": [
+  {
+   "image": "color-120/page-01.png",
+   "sha256": "8bfe610677a62605ffd173175e0632e5d9d41fde46209d3820bfdf5c4241cf21",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    1
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:52:13+00:00",
+   "outcome": "clear",
+   "finding": "Title page: series band, title, subtitle, author and the date 1 September 2026; revised 26 October 2026 on one line; abstract and the first contents page align to the grid without collision.",
+   "normal_render_components": [
+    {
+     "page": 1,
+     "sha256": "8bfe610677a62605ffd173175e0632e5d9d41fde46209d3820bfdf5c4241cf21"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-02.png",
+   "sha256": "86f583dc304d6d821b902025303c7a2b0dab285f2cc530c2075e7f9b8f9834a2",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    2
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:52:13+00:00",
+   "outcome": "advisory",
+   "finding": "Dense contents page: 3.4 Source observations and 3.4.1 Erdős-problem research thread now point to page 17 and 3.4.10 to page 29; leaders and numbers stay separate; the page is dense but readable.",
+   "normal_render_components": [
+    {
+     "page": 2,
+     "sha256": "86f583dc304d6d821b902025303c7a2b0dab285f2cc530c2075e7f9b8f9834a2"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-03.png",
+   "sha256": "4997aa8add523768a70941ad82cef5f92e5a4f0a030c5ed197353048af740625",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    3
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:52:13+00:00",
+   "outcome": "clear",
+   "finding": "Final contents page: entries 3.6.8.1 through 3.11 align with their page numbers; the remaining blank space is the expected end of the contents.",
+   "normal_render_components": [
+    {
+     "page": 3,
+     "sha256": "4997aa8add523768a70941ad82cef5f92e5a4f0a030c5ed197353048af740625"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-04.png",
+   "sha256": "050a1d12b1bf5e1a570427680594704b2676df2854602ee4cd33a5b4457a3f54",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    4
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:52:13+00:00",
+   "outcome": "clear",
+   "finding": "Primer opening: section and subsection headings, the estimator, program and decision displays with subscripts, and the boxed four-object chain are contained and legible.",
+   "normal_render_components": [
+    {
+     "page": 4,
+     "sha256": "050a1d12b1bf5e1a570427680594704b2676df2854602ee4cd33a5b4457a3f54"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-05.png",
+   "sha256": "a3d5a300c29c05576185f53781162aa7755943490caae96d66f98375393a4118",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    5
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:52:49+00:00",
+   "outcome": "clear",
+   "finding": "Figure 1 with four numbered cards, lettered transition badges and the legend band, its caption, and equations (1) and (2) with their numbers are contained and legible.",
+   "normal_render_components": [
+    {
+     "page": 5,
+     "sha256": "a3d5a300c29c05576185f53781162aa7755943490caae96d66f98375393a4118"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-06.png",
+   "sha256": "7a39d8111ec122893100f21e8f187ac6d83c6d37156d67df15d8754715d11447",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    6
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:52:49+00:00",
+   "outcome": "clear",
+   "finding": "Figure 2 premise boxes, the hatched shared oracle, AND and OR nodes and the rotated GO tag fit without overlap; section 1.3.1 and the arrowed certificate display read cleanly.",
+   "normal_render_components": [
+    {
+     "page": 6,
+     "sha256": "7a39d8111ec122893100f21e8f187ac6d83c6d37156d67df15d8754715d11447"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-07.png",
+   "sha256": "ac6aed773a250c460e502f04571c44838b478d1ea388417e2e79dc7fd6a7fd83",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    7
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:52:49+00:00",
+   "outcome": "clear",
+   "finding": "PID vocabulary page: displays (3) to (5), the aligned inversion block, subscripts and the Möbius and I-min symbols render intact; section 1.6 begins cleanly.",
+   "normal_render_components": [
+    {
+     "page": 7,
+     "sha256": "ac6aed773a250c460e502f04571c44838b478d1ea388417e2e79dc7fd6a7fd83"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-08.png",
+   "sha256": "b3ce5a4763e2c2b811a11d1370d7ab8b723d64b93861c4f800631321fd63006b",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    8
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:52:49+00:00",
+   "outcome": "clear",
+   "finding": "Sections 1.7 to 2.2: the XOR example, the lexicographic fitness display, the bounded checker statement and displays (6) and (7) stay inside the text block.",
+   "normal_render_components": [
+    {
+     "page": 8,
+     "sha256": "b3ce5a4763e2c2b811a11d1370d7ab8b723d64b93861c4f800631321fd63006b"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-09.png",
+   "sha256": "f08aa4a0ce339bbbf8fbff10fd468847b4947f27bee67f0425ca8fb2d8898357",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    9
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:54:52+00:00",
+   "outcome": "clear",
+   "finding": "Component closure states in monospace, the shaded component-and-gate table with subscripted rows, display (8) with its summation, and (9) are aligned and legible.",
+   "normal_render_components": [
+    {
+     "page": 9,
+     "sha256": "f08aa4a0ce339bbbf8fbff10fd468847b4947f27bee67f0425ca8fb2d8898357"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-10.png",
+   "sha256": "8673c02841a9ef7222199cd69ac4bf21392cb8c7252109794b9240b316e7a066",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    10
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:54:52+00:00",
+   "outcome": "clear",
+   "finding": "Display (10), the four-row evidence table and Figure 3 fit: five suite boxes, the hatched shared cut, PASS and OPEN rotated tags and the dashed candidate route; the caption reads in full.",
+   "normal_render_components": [
+    {
+     "page": 10,
+     "sha256": "8673c02841a9ef7222199cd69ac4bf21392cb8c7252109794b9240b316e7a066"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-11.png",
+   "sha256": "18edca2a1bacc7ea910efcacd453a8cdb51a3331fa1ec62d3a8d0327901c6e52",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    11
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:54:52+00:00",
+   "outcome": "clear",
+   "finding": "Section 2.5 eight-item list, the posterior display (11) with fraction, the interval display (12) with subscripted inf and sup, and section 2.6 are aligned and legible.",
+   "normal_render_components": [
+    {
+     "page": 11,
+     "sha256": "18edca2a1bacc7ea910efcacd453a8cdb51a3331fa1ec62d3a8d0327901c6e52"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-12.png",
+   "sha256": "0207209aca4f5e5ee1f658e2fdfe4a0f2c5cc1fcf98aac8e19b31f4e96d671ee",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    12
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:54:52+00:00",
+   "outcome": "clear",
+   "finding": "Figure 4 nodes, badges and dashed stale paths are intact; section 3 opens and the source-policy paragraph on social-media posts reads in full before continuing to page 13.",
+   "normal_render_components": [
+    {
+     "page": 12,
+     "sha256": "0207209aca4f5e5ee1f658e2fdfe4a0f2c5cc1fcf98aac8e19b31f4e96d671ee"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-13.png",
+   "sha256": "78f0bd665268e6e9cfc06fd4a9ca26d9d1f19e7c2a9d1616713eb3581926c8bb",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    13
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:56:59+00:00",
+   "outcome": "clear",
+   "finding": "The source-review list completes; the 50-lens paragraph, the new suggested citation with its CITATION.cff link, the indented central rule and the glossary opening are aligned.",
+   "normal_render_components": [
+    {
+     "page": 13,
+     "sha256": "78f0bd665268e6e9cfc06fd4a9ca26d9d1f19e7c2a9d1616713eb3581926c8bb"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-14.png",
+   "sha256": "883f8c89e8886ad68207f8ccccd0065c74e1b2f087cfbebf63d90c49cae0d37f",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    14
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:56:59+00:00",
+   "outcome": "advisory",
+   "finding": "The long continuous shared-exclusions bullet with subscripts and Algorithm 6 identifiers is legible; unedited monospaced identifiers wrap mid-token without hyphens.",
+   "normal_render_components": [
+    {
+     "page": 14,
+     "sha256": "883f8c89e8886ad68207f8ccccd0065c74e1b2f087cfbebf63d90c49cae0d37f"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-15.png",
+   "sha256": "01fd14702eed75860ab57f031c14f48587923b14e6b0a44a13946af88bde207b",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    15
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:56:59+00:00",
+   "outcome": "clear",
+   "finding": "Glossary bullets from I-min to Digest keep bold terms, hanging indents and consistent paragraph rhythm.",
+   "normal_render_components": [
+    {
+     "page": 15,
+     "sha256": "01fd14702eed75860ab57f031c14f48587923b14e6b0a44a13946af88bde207b"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-16.png",
+   "sha256": "c45190b594c2ba98877b9044e9a0df1b14338fcbf1d782903001fc03433ce968",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    16
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T04:56:59+00:00",
+   "outcome": "advisory",
+   "finding": "The ecosystem bullet and the shaded primary-source table with linked titles and dates are aligned; the unedited file name ECOSYSTEM_CAPABILITIES.md wraps mid-identifier and the page ends with free space before section 3.4.",
+   "normal_render_components": [
+    {
+     "page": 16,
+     "sha256": "c45190b594c2ba98877b9044e9a0df1b14338fcbf1d782903001fc03433ce968"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-17.png",
+   "sha256": "2ad6e9f2be0c0f3f306c3dc13ad6be34178941c2afcfb84c83dd6b0a9f53cd9e",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    17
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:02:29+00:00",
+   "outcome": "advisory",
+   "finding": "Section 3.4 opens with heading 3.4.1 Erdős-problem research thread; the dated five-post source paragraph and the rewritten Lea opening read in full; unedited commit hashes wrap mid-string, the first after its first character.",
+   "normal_render_components": [
+    {
+     "page": 17,
+     "sha256": "2ad6e9f2be0c0f3f306c3dc13ad6be34178941c2afcfb84c83dd6b0a9f53cd9e"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-18.png",
+   "sha256": "6bbbb3fa1be69912c9fddff8f38fd1f3629882ef3790dfee01ee5269dea91490",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    18
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:02:29+00:00",
+   "outcome": "clear",
+   "finding": "The abbrev code block, five SafeVerify bullets with inline code and links, and the project-interpretation paragraph keep consistent spacing and legible link text.",
+   "normal_render_components": [
+    {
+     "page": 18,
+     "sha256": "6bbbb3fa1be69912c9fddff8f38fd1f3629882ef3790dfee01ee5269dea91490"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-19.png",
+   "sha256": "4458be6db3cb1ec677936da9d7ae0db6c7aeafb3595ad8f675e4196b7144c575",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    19
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:02:29+00:00",
+   "outcome": "advisory",
+   "finding": "The rewritten Grothendieck opening with its parenthesized date and the en dash in human–AI, the numbered process observations and inline code are legible; unedited repository and hash identifiers wrap mid-string.",
+   "normal_render_components": [
+    {
+     "page": 19,
+     "sha256": "4458be6db3cb1ec677936da9d7ae0db6c7aeafb3595ad8f675e4196b7144c575"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-20.png",
+   "sha256": "e3127808e633c54f6eb3db6bc1829aad8cedc7e79e4b2f2c16a997b027cd027d",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    20
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:02:29+00:00",
+   "outcome": "advisory",
+   "finding": "The flint code block, exact rational values and the first rows of the shaded twenty-lens table align; the unedited inline version token python-flint==0.8.0 wraps at its equals sign.",
+   "normal_render_components": [
+    {
+     "page": 20,
+     "sha256": "e3127808e633c54f6eb3db6bc1829aad8cedc7e79e4b2f2c16a997b027cd027d"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-21.png",
+   "sha256": "704f68c5e8b8eb0cd98fc7844d8e6c0f976d98006246f6ffea51c20e0d2f7aa9",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    21
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:03:41+00:00",
+   "outcome": "clear",
+   "finding": "Lens rows 4 to 20 continue under a repeated header with consistent shading and bold dispositions; section 3.4.4 opens with linked repository names and hashes.",
+   "normal_render_components": [
+    {
+     "page": 21,
+     "sha256": "704f68c5e8b8eb0cd98fc7844d8e6c0f976d98006246f6ffea51c20e0d2f7aa9"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-22.png",
+   "sha256": "e9dcc4803e3fd908367b0b65504f0b5ac536c9f824ec0da247f53b1211f7c12c",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    22
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:03:41+00:00",
+   "outcome": "advisory",
+   "finding": "The Cordis and DeepSeek prose and five category-theory bullets are legible; the unedited version token 4.0.0-rc.7 wraps across lines.",
+   "normal_render_components": [
+    {
+     "page": 22,
+     "sha256": "e9dcc4803e3fd908367b0b65504f0b5ac536c9f824ec0da247f53b1211f7c12c"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-23.png",
+   "sha256": "5271e191ea26466ce8fbe1a620402dff383db18adb55bf9aa9440fa555a77e36",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    23
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:03:41+00:00",
+   "outcome": "clear",
+   "finding": "The ASCII commuting-square code block keeps its arrows aligned; the twenty-lens adoption table opens with bold and monospaced dispositions.",
+   "normal_render_components": [
+    {
+     "page": 23,
+     "sha256": "5271e191ea26466ce8fbe1a620402dff383db18adb55bf9aa9440fa555a77e36"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-24.png",
+   "sha256": "b7912a4317e0e088d906945ddcc6b549d76e69ba8f0e99727c86e7eecda3aa63",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    24
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:03:41+00:00",
+   "outcome": "clear",
+   "finding": "Lens rows 9 to 20 close the table; section 3.4.5 with its linked prompt, two paragraphs and three numbered questions keeps consistent spacing.",
+   "normal_render_components": [
+    {
+     "page": 24,
+     "sha256": "b7912a4317e0e088d906945ddcc6b549d76e69ba8f0e99727c86e7eecda3aa63"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-25.png",
+   "sha256": "2a4f356a612c2d836c462c0a7d05fa60c787afedc792d143d35e73b6e254d536",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    25
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:04:08+00:00",
+   "outcome": "clear",
+   "finding": "Sections 3.4.6 and 3.4.7 with linked hashes, the six failure-mode bullets, Erdős headings with the double acute, and four numbered process choices keep consistent spacing.",
+   "normal_render_components": [
+    {
+     "page": 25,
+     "sha256": "2a4f356a612c2d836c462c0a7d05fa60c787afedc792d143d35e73b6e254d536"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-26.png",
+   "sha256": "5a7676fe82ecb52508aa5ef6595b03344bf7b0edfa75179c5c5ec85ac32bd443",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    26
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:04:08+00:00",
+   "outcome": "advisory",
+   "finding": "The rewritten correction-chain paragraph names the draft's author and another reader by role with UTC times and no post link; the two exact-sequence displays are legible; unedited digests wrap mid-string.",
+   "normal_render_components": [
+    {
+     "page": 26,
+     "sha256": "5a7676fe82ecb52508aa5ef6595b03344bf7b0edfa75179c5c5ec85ac32bd443"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-27.png",
+   "sha256": "1925efd63c4d36c3f3498c185069bd4d90673b5ac3f6f75171dea7f02d328733",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    27
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:04:08+00:00",
+   "outcome": "advisory",
+   "finding": "Motivic displays with superscripts and subscripts, both countermodel code lines and the surjection display render intact; an unedited digest wraps mid-string.",
+   "normal_render_components": [
+    {
+     "page": 27,
+     "sha256": "1925efd63c4d36c3f3498c185069bd4d90673b5ac3f6f75171dea7f02d328733"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-28.png",
+   "sha256": "9a49ea64dcaab7dc9470b5205162add52b48a7c977ab8af74d467ef5cc107dce",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    28
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:04:08+00:00",
+   "outcome": "clear",
+   "finding": "The seven numbered lenses with bold labels and section 3.4.9 with three linked discussions are legible; the lower page is empty because heading 3.4.10 and its table start on page 29.",
+   "normal_render_components": [
+    {
+     "page": 28,
+     "sha256": "9a49ea64dcaab7dc9470b5205162add52b48a7c977ab8af74d467ef5cc107dce"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-29.png",
+   "sha256": "6f35a1c856c0744d4ceafd205d1ade2030da9113845c5417d64712f2edec649a",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    29
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:04:55+00:00",
+   "outcome": "clear",
+   "finding": "Heading 3.4.10 opens the page above its two shaded tables; digests and page anchors wrap inside their cells and the prose between the tables reads cleanly.",
+   "normal_render_components": [
+    {
+     "page": 29,
+     "sha256": "6f35a1c856c0744d4ceafd205d1ade2030da9113845c5417d64712f2edec649a"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-30.png",
+   "sha256": "33386f14c13269f939c47a0e809e8bf4988d67b541738a8e6b0a9ab3249287bd",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    30
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:04:55+00:00",
+   "outcome": "clear",
+   "finding": "The continued transfer table keeps three aligned columns under a repeated header; the six rejected-transfer bullets read in full.",
+   "normal_render_components": [
+    {
+     "page": 30,
+     "sha256": "33386f14c13269f939c47a0e809e8bf4988d67b541738a8e6b0a9ab3249287bd"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-31.png",
+   "sha256": "26c5155d4049201e31c37229420f764a2dd7abe19e3fef204071e7e9620dbd17",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    31
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:04:55+00:00",
+   "outcome": "advisory",
+   "finding": "The rewritten zeta-thread paragraph gives each post by role and UTC time, the HTML alternative-text field wording and the image identity; the research page is visibly the first table artifact; the image digest wraps after its first character and space remains below the table.",
+   "normal_render_components": [
+    {
+     "page": 31,
+     "sha256": "26c5155d4049201e31c37229420f764a2dd7abe19e3fef204071e7e9620dbd17"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-32.png",
+   "sha256": "3eede411244cf8a737fad451f708165eafcbb0329ae4c0c9cc823f18dc004976",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    32
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:04:55+00:00",
+   "outcome": "advisory",
+   "finding": "The continued artifact table keeps transcript, Lean-repository and comparator cells aligned; long digests and identifiers wrap mid-token inside their column.",
+   "normal_render_components": [
+    {
+     "page": 32,
+     "sha256": "3eede411244cf8a737fad451f708165eafcbb0329ae4c0c9cc823f18dc004976"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-33.png",
+   "sha256": "e124c5a8f69b9115df09d2ec10d89da0287371c384284303720aa7db8ffe5a51",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    33
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:05:36+00:00",
+   "outcome": "advisory",
+   "finding": "Monospaced firewall bullets, the context-source table, and the rewritten third-party-reply paragraph with platform, date and UTC time are legible; one unedited digest bullet wraps mid-token.",
+   "normal_render_components": [
+    {
+     "page": 33,
+     "sha256": "e124c5a8f69b9115df09d2ec10d89da0287371c384284303720aa7db8ffe5a51"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-34.png",
+   "sha256": "ef3f084737fd26dd7b464c831ada15475c07da360473874a43837a3818ab6345",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    34
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:05:36+00:00",
+   "outcome": "clear",
+   "finding": "The numbered method reconstruction with hatted matrices, norms, the rank–trace display and both transfer displays renders intact and stays inside the text block.",
+   "normal_render_components": [
+    {
+     "page": 34,
+     "sha256": "ef3f084737fd26dd7b464c831ada15475c07da360473874a43837a3818ab6345"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-35.png",
+   "sha256": "5e67ae0b20a7bd245e01f1ecaa4b0d3886bfafbbf4dd5d697417c3efccea3492",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    35
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:05:36+00:00",
+   "outcome": "advisory",
+   "finding": "Square-root constants, monospaced decimals, regrouping inequalities and the claim-path paragraph render intact; the unedited claim path wraps mid-token.",
+   "normal_render_components": [
+    {
+     "page": 35,
+     "sha256": "5e67ae0b20a7bd245e01f1ecaa4b0d3886bfafbbf4dd5d697417c3efccea3492"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-36.png",
+   "sha256": "193099c1bdf19fcf71ebf805de08558c79909fe9bdeaabc891fa03c4c136a769",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    36
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:05:36+00:00",
+   "outcome": "clear",
+   "finding": "The discovery-methods subsection and the three-column actor-or-route table from the process appendix keep wrapped cells aligned with alternating shading.",
+   "normal_render_components": [
+    {
+     "page": 36,
+     "sha256": "193099c1bdf19fcf71ebf805de08558c79909fe9bdeaabc891fa03c4c136a769"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-37.png",
+   "sha256": "6306f7cb65f518659dfd85dab9ee7882a68fd376737dd6b7c6f9c8ce242a5dc4",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    37
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:06:19+00:00",
+   "outcome": "clear",
+   "finding": "The actor table closes with the primary-source contribution rows, the reconstruction paragraph reads cleanly, and the four-column phase table opens with aligned headers and wrapped cells.",
+   "normal_render_components": [
+    {
+     "page": 37,
+     "sha256": "6306f7cb65f518659dfd85dab9ee7882a68fd376737dd6b7c6f9c8ce242a5dc4"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-38.png",
+   "sha256": "9faf568d8e3b3394087f55b577bc6e5cd922a3a85ed9455a580fa4940999c804",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    38
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:06:19+00:00",
+   "outcome": "clear",
+   "finding": "The phase table continues under a repeated header with six long rows; bold method terms in the closing paragraph are legible.",
+   "normal_render_components": [
+    {
+     "page": 38,
+     "sha256": "9faf568d8e3b3394087f55b577bc6e5cd922a3a85ed9455a580fa4940999c804"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-39.png",
+   "sha256": "a5fbd2b8c04006efc73e73ab393e70a2d63e41c27a46ff40f77ad11309a18b20",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    39
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:06:19+00:00",
+   "outcome": "clear",
+   "finding": "The thirty-four-lens transfer audit opens with monospaced NEGATIVE and OPEN dispositions and consistent row shading through lens 13.",
+   "normal_render_components": [
+    {
+     "page": 39,
+     "sha256": "a5fbd2b8c04006efc73e73ab393e70a2d63e41c27a46ff40f77ad11309a18b20"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-40.png",
+   "sha256": "3705c7f7ce069a3cad284cb9cdd64f32ca2492c078e41725af2d81be07eb978f",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    40
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:06:19+00:00",
+   "outcome": "clear",
+   "finding": "Lens rows 14 to 25 continue under the repeated header with monospaced dispositions and wrapped transfer classes aligned.",
+   "normal_render_components": [
+    {
+     "page": 40,
+     "sha256": "3705c7f7ce069a3cad284cb9cdd64f32ca2492c078e41725af2d81be07eb978f"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-41.png",
+   "sha256": "371c0363e13301bd4e6328d638968d915fc0d1a76bc76888d95d20c1521c8b3e",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    41
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:13:09+00:00",
+   "outcome": "clear",
+   "finding": "Lens rows 26 to 34 close the table; the three countercontrol bullets with diagonal matrices and the mutual-information expression render intact.",
+   "normal_render_components": [
+    {
+     "page": 41,
+     "sha256": "371c0363e13301bd4e6328d638968d915fc0d1a76bc76888d95d20c1521c8b3e"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-42.png",
+   "sha256": "1df56e21b98f34d7ef93b03f958ea411d133fd0bd3e7a0c463a9cc7382b1a461",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    42
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:13:09+00:00",
+   "outcome": "advisory",
+   "finding": "The nine monospaced M1 to M9 obligations, the four-row negative-control table and the literal sentinels are legible; unedited script names and sentinel values wrap mid-token.",
+   "normal_render_components": [
+    {
+     "page": 42,
+     "sha256": "1df56e21b98f34d7ef93b03f958ea411d133fd0bd3e7a0c463a9cc7382b1a461"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-43.png",
+   "sha256": "1250fb1ce6699db79bb877ddcc593c3f6d0e44ee5867cd5f2ec7b87ce4e9aef2",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    43
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:13:09+00:00",
+   "outcome": "clear",
+   "finding": "The closing transfer paragraph, section 3.5 and subsections 3.5.1 and 3.5.2 keep heading hierarchy, bold defined terms and paragraph rhythm.",
+   "normal_render_components": [
+    {
+     "page": 43,
+     "sha256": "1250fb1ce6699db79bb877ddcc593c3f6d0e44ee5867cd5f2ec7b87ce4e9aef2"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-44.png",
+   "sha256": "5a3f9e4796e92a3a31ef0a21bb37e915620afbb880a0c123394141b62c0e173d",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    44
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:13:09+00:00",
+   "outcome": "clear",
+   "finding": "Judge and ledger paragraphs and section 3.5.3 with the attributed worklog citation and the selection-problem paragraph keep consistent spacing and legible inline code.",
+   "normal_render_components": [
+    {
+     "page": 44,
+     "sha256": "5a3f9e4796e92a3a31ef0a21bb37e915620afbb880a0c123394141b62c0e173d"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-45.png",
+   "sha256": "a3d6af6f33330b82641b3b0ab4fb97362ac7b702f706057e484852b3c5e6c2bc",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    45
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:14:04+00:00",
+   "outcome": "clear",
+   "finding": "The ten-row engineering-transfer table keeps three columns aligned with long wrapped boundary cells; the numbered research loop begins cleanly.",
+   "normal_render_components": [
+    {
+     "page": 45,
+     "sha256": "a3d6af6f33330b82641b3b0ab4fb97362ac7b702f706057e484852b3c5e6c2bc"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-46.png",
+   "sha256": "72ea210c3226098222d429c18c664b07fc7e85f01e80e9b72c1eda4aefe761d4",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    46
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:14:04+00:00",
+   "outcome": "clear",
+   "finding": "The research loop completes; section 3.5.4 opens with two linked Git references, the five-row lane table and the failure-to-repair map start are aligned.",
+   "normal_render_components": [
+    {
+     "page": 46,
+     "sha256": "72ea210c3226098222d429c18c664b07fc7e85f01e80e9b72c1eda4aefe761d4"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-47.png",
+   "sha256": "42f4912f057ce0964b10518ffb2fcb9e5f62a5589de3285d0be36922d347644d",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    47
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:14:04+00:00",
+   "outcome": "advisory",
+   "finding": "Failure-mode rows with bold labels and the revision-pin paragraph are legible; long monospaced paths and identifiers wrap mid-token.",
+   "normal_render_components": [
+    {
+     "page": 47,
+     "sha256": "42f4912f057ce0964b10518ffb2fcb9e5f62a5589de3285d0be36922d347644d"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-48.png",
+   "sha256": "557afb5b82d56396f71ba0acbc4c4d1b1924a947fa7cb03b7ff57a2f57dea148",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    48
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:14:04+00:00",
+   "outcome": "clear",
+   "finding": "The eleven-step exact closure sequence with bold step names and inline monospaced references keeps hanging indents and rhythm.",
+   "normal_render_components": [
+    {
+     "page": 48,
+     "sha256": "557afb5b82d56396f71ba0acbc4c4d1b1924a947fa7cb03b7ff57a2f57dea148"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-49.png",
+   "sha256": "8269128c419d373bd2c9fcb02cbe2a7d7166207389883ddcf262959407164aba",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    49
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:15:29+00:00",
+   "outcome": "clear",
+   "finding": "Step 12, the isolated-lane formal-verification subsection, the reproducibility-epoch paragraph and three linked ledgers read cleanly with inline code.",
+   "normal_render_components": [
+    {
+     "page": 49,
+     "sha256": "8269128c419d373bd2c9fcb02cbe2a7d7166207389883ddcf262959407164aba"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-50.png",
+   "sha256": "12a1425968b42c8bc6719ea2d888f33ebba99a8d3ae77b4673e7d1d143ad77f9",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    50
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:15:29+00:00",
+   "outcome": "clear",
+   "finding": "The ownership and durability paragraphs keep consistent spacing; the lower blank space precedes section 3.5.5 on the next page.",
+   "normal_render_components": [
+    {
+     "page": 50,
+     "sha256": "12a1425968b42c8bc6719ea2d888f33ebba99a8d3ae77b4673e7d1d143ad77f9"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-51.png",
+   "sha256": "356cec37b7a415cf7936276e2569b5a100fa4f41a8f9953fa7f368a230917d36",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    51
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:15:29+00:00",
+   "outcome": "clear",
+   "finding": "Section 3.5.5 with six numbered council steps and the shaded evidence-tag table with monospaced status names is aligned.",
+   "normal_render_components": [
+    {
+     "page": 51,
+     "sha256": "356cec37b7a415cf7936276e2569b5a100fa4f41a8f9953fa7f368a230917d36"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-52.png",
+   "sha256": "2582c350a0da998a610bcfb13a91eb79bd09a76f6bcfbf8b8b3e537c9cb41f8f",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    52
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:15:29+00:00",
+   "outcome": "clear",
+   "finding": "The evidence-tag table completes, monospaced tag names and dispositions read cleanly, and the ten-row role table in section 3.5.6 keeps three columns aligned.",
+   "normal_render_components": [
+    {
+     "page": 52,
+     "sha256": "2582c350a0da998a610bcfb13a91eb79bd09a76f6bcfbf8b8b3e537c9cb41f8f"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-53.png",
+   "sha256": "f9ab82c0a30f15a3333be0602c1d1e344352622d70747de2f83690969c979571",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    53
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:16:50+00:00",
+   "outcome": "clear",
+   "finding": "Section 3.5.7 with the review-joint code template, the saturation paragraph and the start of the independence-vector table are legible and aligned.",
+   "normal_render_components": [
+    {
+     "page": 53,
+     "sha256": "f9ab82c0a30f15a3333be0602c1d1e344352622d70747de2f83690969c979571"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-54.png",
+   "sha256": "f8ad3b74783c747aa83b649ee1d146a2a9921ddf052ccc5a293b4eade3874908",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    54
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:16:50+00:00",
+   "outcome": "clear",
+   "finding": "The independence table completes; section 3.5.9 with seven numbered rules and section 3.5.10 opening keep hierarchy and rhythm.",
+   "normal_render_components": [
+    {
+     "page": 54,
+     "sha256": "f8ad3b74783c747aa83b649ee1d146a2a9921ddf052ccc5a293b4eade3874908"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-55.png",
+   "sha256": "3a19077f15ae916ea86fa292caa0f440f789c4c310c0a20e00294da3286c5d57",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    55
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:16:50+00:00",
+   "outcome": "clear",
+   "finding": "Set notation for the worked cut family, the five-item route-summary list and the frozen run-context bullets with inline code render intact.",
+   "normal_render_components": [
+    {
+     "page": 55,
+     "sha256": "3a19077f15ae916ea86fa292caa0f440f789c4c310c0a20e00294da3286c5d57"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-56.png",
+   "sha256": "23cc2e17f05c145c5e66b0dae7d11856f1cb081e78659511610bb20acbbd120f",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    56
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:16:50+00:00",
+   "outcome": "clear",
+   "finding": "The remaining run-context bullets, section 3.5.12 and the four-row freeze-class table keep wrapped cells aligned; the identity paragraph reads cleanly.",
+   "normal_render_components": [
+    {
+     "page": 56,
+     "sha256": "23cc2e17f05c145c5e66b0dae7d11856f1cb081e78659511610bb20acbbd120f"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-57.png",
+   "sha256": "50bdc7371a33e04c43f8994c999c0cc277e3e26f7d5e0ec90b0e6d2e48d0f4a4",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    57
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:18:52+00:00",
+   "outcome": "clear",
+   "finding": "Section 3.5.13 with eleven continuity bullets and the numbered resume protocol keeps hanging indents and inline code legible.",
+   "normal_render_components": [
+    {
+     "page": 57,
+     "sha256": "50bdc7371a33e04c43f8994c999c0cc277e3e26f7d5e0ec90b0e6d2e48d0f4a4"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-58.png",
+   "sha256": "1e05b82cdd9facb400aa4bbb69b2fe6ce73403c14bd2ad99ff61a7ee38ab83be",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    58
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:18:52+00:00",
+   "outcome": "clear",
+   "finding": "Resume step 6, the compact continuity template code block with wrapped continuation markers, and section 3.5.14 with bold state names render intact.",
+   "normal_render_components": [
+    {
+     "page": 58,
+     "sha256": "1e05b82cdd9facb400aa4bbb69b2fe6ce73403c14bd2ad99ff61a7ee38ab83be"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-60.png",
+   "sha256": "b1e240ced81252a29acf8ffa561df8fac85270d788e860658828490cb843f973",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    60
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:18:52+00:00",
+   "outcome": "clear",
+   "finding": "Section 3.5.16 bullets with monospaced state and edge names, the dependency-orientation and publication paragraphs keep consistent rhythm.",
+   "normal_render_components": [
+    {
+     "page": 60,
+     "sha256": "b1e240ced81252a29acf8ffa561df8fac85270d788e860658828490cb843f973"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-61.png",
+   "sha256": "a8d4855225422a763a71f9c065951a4325544e8fa302c4cb1471268c49fffded",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    61
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:21:06+00:00",
+   "outcome": "clear",
+   "finding": "The compact harness transition-rule code block keeps its indentation; section 3.5.17 lists nine monospaced verification labels.",
+   "normal_render_components": [
+    {
+     "page": 61,
+     "sha256": "a8d4855225422a763a71f9c065951a4325544e8fa302c4cb1471268c49fffded"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-62.png",
+   "sha256": "be10257d5309d3cfb2843980d34955b37e9588272c372039699976f937f6441f",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    62
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:21:06+00:00",
+   "outcome": "clear",
+   "finding": "The route-memo template, the three-field claim-schema table, section 3.6 and subsection 3.6.1 with the packet-field table opening are aligned.",
+   "normal_render_components": [
+    {
+     "page": 62,
+     "sha256": "be10257d5309d3cfb2843980d34955b37e9588272c372039699976f937f6441f"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-63.png",
+   "sha256": "c4b256da38aa8e70f7f27978ad582f6865283bd2ee210884b08be714d76a117e",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    63
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:21:06+00:00",
+   "outcome": "clear",
+   "finding": "The exact-claim packet table continues under a repeated header with sixteen wrapped rows in consistent alternating shading.",
+   "normal_render_components": [
+    {
+     "page": 63,
+     "sha256": "c4b256da38aa8e70f7f27978ad582f6865283bd2ee210884b08be714d76a117e"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-64.png",
+   "sha256": "efc2fb2cc4cfda7b8a0da2b0802760907023e2d3a8795c15c85b44b0a84d57e3",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    64
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:21:06+00:00",
+   "outcome": "clear",
+   "finding": "The packet table closes; the not_applicable and completeness paragraphs and the typed-results subsection with bold value terms keep consistent spacing.",
+   "normal_render_components": [
+    {
+     "page": 64,
+     "sha256": "efc2fb2cc4cfda7b8a0da2b0802760907023e2d3a8795c15c85b44b0a84d57e3"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-65.png",
+   "sha256": "74dd858ec7a7f57ddff8094a05b64c5f7b27ff64ce30a792e77385542baef081",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    65
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:22:49+00:00",
+   "outcome": "advisory",
+   "finding": "The historical inventory snapshot with long digests and file names and the object-class count table are legible; unedited monospaced identifiers wrap mid-token.",
+   "normal_render_components": [
+    {
+     "page": 65,
+     "sha256": "74dd858ec7a7f57ddff8094a05b64c5f7b27ff64ce30a792e77385542baef081"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-66.png",
+   "sha256": "2278c05522dae1ab11383b33d3e44b4ab0e3fb6b46c8c4eda2518431fc96809a",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    66
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:22:49+00:00",
+   "outcome": "clear",
+   "finding": "The count table closes, the lineage paragraph and the bold later-evidence paragraph with two links read cleanly; monospaced OPEN and BLOCKED render.",
+   "normal_render_components": [
+    {
+     "page": 66,
+     "sha256": "2278c05522dae1ab11383b33d3e44b4ab0e3fb6b46c8c4eda2518431fc96809a"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-67.png",
+   "sha256": "bc60f438989215a77e7fda9c02d8deb2ff16fb8c68118a578100960a1f059d8d",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    67
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:22:49+00:00",
+   "outcome": "clear",
+   "finding": "Section 3.6.2 bullets and the mapping-check rule are intact; the corrected sentence on category-theoretic claims, distinct from finite category-valued data, precedes the five numbered questions.",
+   "normal_render_components": [
+    {
+     "page": 67,
+     "sha256": "bc60f438989215a77e7fda9c02d8deb2ff16fb8c68118a578100960a1f059d8d"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-68.png",
+   "sha256": "2e83b23e76eab1b635310a93684bf1b72a7e6bd549929c0eb42a0994b502e950",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    68
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:22:49+00:00",
+   "outcome": "clear",
+   "finding": "The MGW naming paragraph, section 3.6.3 with the ten-row approach registry and section 3.6.4 with eight failure classes keep hierarchy and spacing.",
+   "normal_render_components": [
+    {
+     "page": 68,
+     "sha256": "2e83b23e76eab1b635310a93684bf1b72a7e6bd549929c0eb42a0994b502e950"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-69.png",
+   "sha256": "77f6f2d0d4dddceae8891062cb89ed18ec29dca33a77195350bf751dd7b4fc14",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    69
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:25:07+00:00",
+   "outcome": "clear",
+   "finding": "Section 3.6.5 correction-ledger table, monospaced OPEN and BLOCKED, and section 3.6.6 with the certificate conversion code block are aligned and legible.",
+   "normal_render_components": [
+    {
+     "page": 69,
+     "sha256": "77f6f2d0d4dddceae8891062cb89ed18ec29dca33a77195350bf751dd7b4fc14"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-70.png",
+   "sha256": "c48af529a1148b81ecf24680db3ca6afaab1a62e7a85634a3ac34ffbc19fcda2",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    70
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:25:07+00:00",
+   "outcome": "advisory",
+   "finding": "Certificate prose and section 3.6.7 with monospaced dispositions are legible; the heading Lenses 1–10 sits at the page foot with its table on page 71.",
+   "normal_render_components": [
+    {
+     "page": 70,
+     "sha256": "c48af529a1148b81ecf24680db3ca6afaab1a62e7a85634a3ac34ffbc19fcda2"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-71.png",
+   "sha256": "3f893ce52cb84afeb3d11843e0c44a08c49f97232b3a563586b5ccdbaa0c12a2",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    71
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:25:07+00:00",
+   "outcome": "clear",
+   "finding": "The ten-row core lens table and the Lenses 11–20 heading with its table through lens 16 keep shading, numbering and wrapped questions aligned.",
+   "normal_render_components": [
+    {
+     "page": 71,
+     "sha256": "3f893ce52cb84afeb3d11843e0c44a08c49f97232b3a563586b5ccdbaa0c12a2"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-72.png",
+   "sha256": "db76b2970ca2ccc97baddc571bed6177379d0b2014f9b222adfb0aafdf6445d9",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    72
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:25:07+00:00",
+   "outcome": "clear",
+   "finding": "Lens rows 17 to 20 close the table; the margin and audit paragraphs and the SxPID firewall subsection with conditional-probability notation read cleanly.",
+   "normal_render_components": [
+    {
+     "page": 72,
+     "sha256": "db76b2970ca2ccc97baddc571bed6177379d0b2014f9b222adfb0aafdf6445d9"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-73.png",
+   "sha256": "6537b5ea830b365ba83d59a23503d54cce1e378e4b4317c79e94edea1059cfc4",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    73
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:49:47+00:00",
+   "outcome": "clear",
+   "finding": "The disjunction paragraph, the six-item import binding list with inline not_applicable, the two linked Lyu–Clark–Raviv titles and the normalization paragraph are legible.",
+   "normal_render_components": [
+    {
+     "page": 73,
+     "sha256": "6537b5ea830b365ba83d59a23503d54cce1e378e4b4317c79e94edea1059cfc4"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-74.png",
+   "sha256": "e8459b2a8e98d672a73ede01b858f78f8a108939a723a14d19d6e6bfcec8be4e",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    74
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:49:47+00:00",
+   "outcome": "clear",
+   "finding": "The terminology firewall with hatted empirical notation, the application-record code block and citation-edge gate steps 1 to 4 with monospaced predicates render intact.",
+   "normal_render_components": [
+    {
+     "page": 74,
+     "sha256": "e8459b2a8e98d672a73ede01b858f78f8a108939a723a14d19d6e6bfcec8be4e"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-75.png",
+   "sha256": "102b37ad85d71b63f9bbaef7f5ec3cbb0df2ee7d812f02c9cd489b746928fdeb",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    75
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:49:47+00:00",
+   "outcome": "clear",
+   "finding": "Gate steps 5 to 8, the CLOSED, OPEN and BLOCKED paragraph, the linked checker and Lean file names, and the cheap-invariant bullets keep consistent rhythm.",
+   "normal_render_components": [
+    {
+     "page": 75,
+     "sha256": "102b37ad85d71b63f9bbaef7f5ec3cbb0df2ee7d812f02c9cd489b746928fdeb"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-76.png",
+   "sha256": "bda71999b095c474a51dc1269b0dd0278ca976289195a5a713b1b039a20e0d14",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    76
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:51:11+00:00",
+   "outcome": "clear",
+   "finding": "Invariant bullets with inequality notation, section 3.6.8 holdout prose and steps 1 to 3 of the estimator protocol keep consistent spacing.",
+   "normal_render_components": [
+    {
+     "page": 76,
+     "sha256": "bda71999b095c474a51dc1269b0dd0278ca976289195a5a713b1b039a20e0d14"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-77.png",
+   "sha256": "be091e232c9f70c7b798f838ed6a3ca4c450309f4121bc47bd8c7b13e810099a",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    77
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:51:11+00:00",
+   "outcome": "clear",
+   "finding": "Holdout steps 4 to 12 and the minimum blind-benchmark commitment table with eleven wrapped rows are aligned.",
+   "normal_render_components": [
+    {
+     "page": 77,
+     "sha256": "be091e232c9f70c7b798f838ed6a3ca4c450309f4121bc47bd8c7b13e810099a"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-78.png",
+   "sha256": "cf6fd9545ba0d72ab35531f7b10c594d8424d9fdb0a9027915c06ef78f463183",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    78
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:51:11+00:00",
+   "outcome": "clear",
+   "finding": "The commitment table closes, the custody paragraphs and section 3.6.9 with the ten-row claim-to-evidence matrix keep three columns aligned.",
+   "normal_render_components": [
+    {
+     "page": 78,
+     "sha256": "cf6fd9545ba0d72ab35531f7b10c594d8424d9fdb0a9027915c06ef78f463183"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-79.png",
+   "sha256": "b22146c4cf92810b6e1c9527fc5d842eed925ce42ceee7e74bc25b2de1151155",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    79
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:51:11+00:00",
+   "outcome": "clear",
+   "finding": "Section 3.7 with inline catalog names, subsection 3.7.1 with thirteen packet bullets including I-min and not_applicable, and section 3.7.2 opening read cleanly.",
+   "normal_render_components": [
+    {
+     "page": 79,
+     "sha256": "b22146c4cf92810b6e1c9527fc5d842eed925ce42ceee7e74bc25b2de1151155"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-80.png",
+   "sha256": "64ea5953335becc595d5d6162d0b551fc4654dd89c9a57eec79e1d084c7c84ef",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    80
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:51:53+00:00",
+   "outcome": "clear",
+   "finding": "Routing bullets with monospaced API names, bar and degree notation, fitted-quantizer expectations with subscripts, and the equal-width boundary example are legible.",
+   "normal_render_components": [
+    {
+     "page": 80,
+     "sha256": "64ea5953335becc595d5d6162d0b551fc4654dd89c9a57eec79e1d084c7c84ef"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-81.png",
+   "sha256": "8c3a2a40fbe24d699adfec32ad504794e4d68fc5536a1edde06e4475d2660781",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    81
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:51:53+00:00",
+   "outcome": "advisory",
+   "finding": "Sign-rule and PID3 bullets, the PCA/PLS bullet and section 3.7.3 with bold audit-family labels keep consistent spacing; the unedited NegativeHandling identifier wraps mid-token.",
+   "normal_render_components": [
+    {
+     "page": 81,
+     "sha256": "8c3a2a40fbe24d699adfec32ad504794e4d68fc5536a1edde06e4475d2660781"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-82.png",
+   "sha256": "52aa2c1659499ebeb89c8600c3ee5aded3415dca8fe9a65f4e84b69b127959eb",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    82
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:51:53+00:00",
+   "outcome": "advisory",
+   "finding": "The statistical family bullet, section 3.7.4 with thirteen counterexample bullets, and section 3.7.5 opening are aligned; the unedited trust flag --trust=0 wraps across lines.",
+   "normal_render_components": [
+    {
+     "page": 82,
+     "sha256": "52aa2c1659499ebeb89c8600c3ee5aded3415dca8fe9a65f4e84b69b127959eb"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-83.png",
+   "sha256": "e352d38da64c0e1adc11e0e1ff3d9543fe9a30bd3bffdd320e28a2c14f2237cc",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    83
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:51:53+00:00",
+   "outcome": "clear",
+   "finding": "The optimized-Python paragraph, the seven-step comparator trust split, the conjunctive acceptance paragraph and the hostile-case list with monospaced names read cleanly.",
+   "normal_render_components": [
+    {
+     "page": 83,
+     "sha256": "e352d38da64c0e1adc11e0e1ff3d9543fe9a30bd3bffdd320e28a2c14f2237cc"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-84.png",
+   "sha256": "21badb2a20f4915ae89b218bcde7943952296728816f15385370f8779df895be",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    84
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:52:27+00:00",
+   "outcome": "clear",
+   "finding": "Comparator preconditions with monospaced tool names, the eight-row formal-status ledger with monospaced values, the provenance paragraphs and section 3.7.6 are aligned.",
+   "normal_render_components": [
+    {
+     "page": 84,
+     "sha256": "21badb2a20f4915ae89b218bcde7943952296728816f15385370f8779df895be"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-85.png",
+   "sha256": "405cc4ea85f04d458837dd9188bf6f27619547ea681be1147f7c73423781ddf4",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    85
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:52:27+00:00",
+   "outcome": "clear",
+   "finding": "The consumer-contract paragraph, section 3.8 with eight closure bullets and section 3.9 with checklist bullets keep consistent spacing.",
+   "normal_render_components": [
+    {
+     "page": 85,
+     "sha256": "405cc4ea85f04d458837dd9188bf6f27619547ea681be1147f7c73423781ddf4"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-86.png",
+   "sha256": "692bcef2e35a6da2135707bbbda9f600529e25ad5da36107939c1a9b1f31b8d4",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    86
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:52:27+00:00",
+   "outcome": "clear",
+   "finding": "The remaining checklist bullets, the determinism paragraph with product-measure notation, and section 3.10 with the nine-row four-column gate table and monospaced dispositions are aligned.",
+   "normal_render_components": [
+    {
+     "page": 86,
+     "sha256": "692bcef2e35a6da2135707bbbda9f600529e25ad5da36107939c1a9b1f31b8d4"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-87.png",
+   "sha256": "f1f6e1ded25ef8f6070dda50a0855c475c684f9ea6b3a1b4d2d020aeb8b98010",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    87
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:52:27+00:00",
+   "outcome": "clear",
+   "finding": "The final page: the claim-directory code block, section 3.11 with six evidence-class bullets and the closing paragraphs end cleanly with expected free space.",
+   "normal_render_components": [
+    {
+     "page": 87,
+     "sha256": "f1f6e1ded25ef8f6070dda50a0855c475c684f9ea6b3a1b4d2d020aeb8b98010"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-01.png",
+   "sha256": "5bb2088a9bbb3757621acb93f164d14cb41873fe9c18e5cb8978be96b61fd777",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    1
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:53:03+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale title page: the dark series band, title, author and revised date, abstract and first contents page keep hierarchy and contrast without color.",
+   "normal_render_components": [
+    {
+     "page": 1,
+     "sha256": "5bb2088a9bbb3757621acb93f164d14cb41873fe9c18e5cb8978be96b61fd777"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-02.png",
+   "sha256": "7d5b96257a2cacc4aaf59de5208b0b1e7751cefba7c376a79f2256c3128dddb5",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    2
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:53:03+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale dense contents page: 3.4.1 Erdős-problem research thread at page 17 and 3.4.10 at page 29 read clearly; leaders and numbers stay separate; the page is dense but legible.",
+   "normal_render_components": [
+    {
+     "page": 2,
+     "sha256": "7d5b96257a2cacc4aaf59de5208b0b1e7751cefba7c376a79f2256c3128dddb5"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-03.png",
+   "sha256": "82a979ad99778ef72813b849e68e7c8abcea0aab6ac77d94268a77ce723c7519",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    3
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:53:03+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale final contents page: entries 3.6.8.1 through 3.11 align with page numbers; the free space below is the expected end of the contents.",
+   "normal_render_components": [
+    {
+     "page": 3,
+     "sha256": "82a979ad99778ef72813b849e68e7c8abcea0aab6ac77d94268a77ce723c7519"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-04.png",
+   "sha256": "b48a8aa2b2c1e2dfca7594edafd526efd53a83726954c919ecd9e2488b6a0e0c",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    4
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:53:03+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale primer opening: headings, the estimator, program and decision displays, and the boxed four-object chain stay legible with clear contrast.",
+   "normal_render_components": [
+    {
+     "page": 4,
+     "sha256": "b48a8aa2b2c1e2dfca7594edafd526efd53a83726954c919ecd9e2488b6a0e0c"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-05.png",
+   "sha256": "64e4775c51a26186771fdff7389360bf1da8a3b014b6e1918d959806b0f86e1b",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    5
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:56:13+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale Figure 1: numbered cards, lettered badges and the legend band stay distinct by shape and text; equations (1) and (2) are legible.",
+   "normal_render_components": [
+    {
+     "page": 5,
+     "sha256": "64e4775c51a26186771fdff7389360bf1da8a3b014b6e1918d959806b0f86e1b"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-06.png",
+   "sha256": "beda9e2c618132465f9642bf2836383182b409bd9be7170da1e4093e87431245",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    6
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:56:13+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale Figure 2: premise boxes, the double-ruled shared oracle, AND and OR nodes and the GO tag stay distinct without color; section 1.3.1 reads cleanly.",
+   "normal_render_components": [
+    {
+     "page": 6,
+     "sha256": "beda9e2c618132465f9642bf2836383182b409bd9be7170da1e4093e87431245"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-07.png",
+   "sha256": "279c105b799ba5cc7ac61d75a4b519158bde2caf6d8304542dd8b281a29abd8c",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    7
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:56:13+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale PID vocabulary page: the zeta and Möbius displays, the inversion block and reconstruction identities keep full contrast.",
+   "normal_render_components": [
+    {
+     "page": 7,
+     "sha256": "279c105b799ba5cc7ac61d75a4b519158bde2caf6d8304542dd8b281a29abd8c"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-08.png",
+   "sha256": "cd987c8d3e74f26ccc71e894ac3ce87af4d7c634758ae3bd9d9574f5b38216b0",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    8
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:56:13+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale sections 1.7 to 2.2: the XOR example, the fitness display, the checker statement and displays (6) and (7) remain legible.",
+   "normal_render_components": [
+    {
+     "page": 8,
+     "sha256": "cd987c8d3e74f26ccc71e894ac3ce87af4d7c634758ae3bd9d9574f5b38216b0"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-09.png",
+   "sha256": "9f5b0b443ef461a0f6f418f0e38d2de0384c792f69375b40a79fcc2065e54120",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    9
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:56:42+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale closure-state prose with monospaced states, the vector-and-gate table, display (8) and section 2.4 remain legible with clear contrast.",
+   "normal_render_components": [
+    {
+     "page": 9,
+     "sha256": "9f5b0b443ef461a0f6f418f0e38d2de0384c792f69375b40a79fcc2065e54120"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-10.png",
+   "sha256": "ee4b1cfe587054758c2fae554214101dbceeb1607265626665a2df5d3a4422d1",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    10
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:56:42+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale Figure 3: suites, the hatched shared cut, PASS and OPEN tags, solid versus dashed candidate route and the evidence table stay distinct without color.",
+   "normal_render_components": [
+    {
+     "page": 10,
+     "sha256": "ee4b1cfe587054758c2fae554214101dbceeb1607265626665a2df5d3a4422d1"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-11.png",
+   "sha256": "750f05356bd32d027efa08fa20e11194c4bcbbdd23fef5f09c54ad6633d5040d",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    11
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:56:42+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale section 2.5 list, the posterior display, the sensitivity interval and section 2.6 read clearly.",
+   "normal_render_components": [
+    {
+     "page": 11,
+     "sha256": "750f05356bd32d027efa08fa20e11194c4bcbbdd23fef5f09c54ad6633d5040d"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-12.png",
+   "sha256": "3b95b64ddb9d590764ed8e98c44003a42a82235cf1d9d07e18cf79054df09d6f",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    12
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:56:42+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale Figure 4: CHANGED and state badges, solid versus dashed stale paths and the curved invalidation arrows stay distinct; the source policy paragraph reads in full.",
+   "normal_render_components": [
+    {
+     "page": 12,
+     "sha256": "3b95b64ddb9d590764ed8e98c44003a42a82235cf1d9d07e18cf79054df09d6f"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-13.png",
+   "sha256": "de54a0298bddfc4ae147a86eb2c37e8286f827fbb64a8a46a76c6fc1ad9c185d",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    13
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:57:38+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 13: the 50-lens paragraph, the suggested citation with its grey CITATION.cff link, the indented central rule and the glossary opening keep contrast.",
+   "normal_render_components": [
+    {
+     "page": 13,
+     "sha256": "de54a0298bddfc4ae147a86eb2c37e8286f827fbb64a8a46a76c6fc1ad9c185d"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-14.png",
+   "sha256": "247e6cbf7946c451abb29d9c4084b6f957206fb3e51a4d527dcabdcfa2ebc235",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    14
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:57:38+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 14: the continuous shared-exclusions bullet with subscripts and Algorithm 6 identifiers is legible; unedited monospaced identifiers wrap mid-token.",
+   "normal_render_components": [
+    {
+     "page": 14,
+     "sha256": "247e6cbf7946c451abb29d9c4084b6f957206fb3e51a4d527dcabdcfa2ebc235"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-15.png",
+   "sha256": "88daaeaee5d2c65343d6bc369b5aade67582c6b2d0321d9e6a4f48e97b52d5ea",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    15
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:57:38+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale glossary bullets from I-min to Digest keep bold terms, hanging indents and legible contrast.",
+   "normal_render_components": [
+    {
+     "page": 15,
+     "sha256": "88daaeaee5d2c65343d6bc369b5aade67582c6b2d0321d9e6a4f48e97b52d5ea"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-16.png",
+   "sha256": "e2edf5860dffb3af7a7e0e2c3a806ec95cb328c986c795a5d416e78ada057330",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    16
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:57:38+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 16: the ecosystem bullet and the primary-source table with grey link text remain legible; the unedited file name ECOSYSTEM_CAPABILITIES.md wraps mid-identifier.",
+   "normal_render_components": [
+    {
+     "page": 16,
+     "sha256": "e2edf5860dffb3af7a7e0e2c3a806ec95cb328c986c795a5d416e78ada057330"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-17.png",
+   "sha256": "e008aebd60d35972b1f4e37e939842ff88abcbb7c1ea013bdb8b4de02a67c537",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    17
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:58:32+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 17: heading 3.4.1 Erdős-problem research thread, the loop code block, the search rules, the dated five-post source paragraph and the rewritten Lea opening read clearly; unedited commit hashes wrap mid-string.",
+   "normal_render_components": [
+    {
+     "page": 17,
+     "sha256": "e008aebd60d35972b1f4e37e939842ff88abcbb7c1ea013bdb8b4de02a67c537"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-18.png",
+   "sha256": "2596f162d50ae1cc67bffa532ab3c03d8b06e1d367aa27dc7927641a66ff8b2f",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    18
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:58:32+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 18: the abbrev code block, SafeVerify bullets with grey links and inline code, and the project-interpretation paragraph keep contrast.",
+   "normal_render_components": [
+    {
+     "page": 18,
+     "sha256": "2596f162d50ae1cc67bffa532ab3c03d8b06e1d367aa27dc7927641a66ff8b2f"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-19.png",
+   "sha256": "91730606a7345d3b8cf5bb5da50bd2e222f5fc980f15da10be4a15947da281e0",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    19
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:58:32+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 19: the rewritten Grothendieck opening with its parenthesized date, the numbered observations and inline code read clearly; unedited repository and hash identifiers wrap mid-string.",
+   "normal_render_components": [
+    {
+     "page": 19,
+     "sha256": "91730606a7345d3b8cf5bb5da50bd2e222f5fc980f15da10be4a15947da281e0"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-20.png",
+   "sha256": "f3d12a7145147a1d13b6e6b8cba0e2b086249b174505e732c167e34f36c53ac0",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    20
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:58:32+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 20: the flint code block, exact rationals and the first shaded lens rows stay legible; the unedited python-flint==0.8.0 token wraps at its equals sign.",
+   "normal_render_components": [
+    {
+     "page": 20,
+     "sha256": "f3d12a7145147a1d13b6e6b8cba0e2b086249b174505e732c167e34f36c53ac0"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-21.png",
+   "sha256": "fea6b8804c436699a091ed764207e09c86d8459c0256a81fad8343f2ad62f328",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    21
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:59:06+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 21: lens rows 4 to 20 with bold dispositions keep alternating shading; section 3.4.4 with monospaced hashes reads clearly.",
+   "normal_render_components": [
+    {
+     "page": 21,
+     "sha256": "fea6b8804c436699a091ed764207e09c86d8459c0256a81fad8343f2ad62f328"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-22.png",
+   "sha256": "833dba41956be76c1058d343316705e9f6a48cdeff55e884206ce3396dac0574",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    22
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:59:06+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 22: the Cordis and DeepSeek prose with grey links and the category-theory bullets are legible; the unedited version token 4.0.0-rc.7 wraps across lines.",
+   "normal_render_components": [
+    {
+     "page": 22,
+     "sha256": "833dba41956be76c1058d343316705e9f6a48cdeff55e884206ce3396dac0574"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-23.png",
+   "sha256": "8edf244a35e488c6b1d8b0e15969d78eed1ac23af721b9684f0caeed9f04fa51",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    23
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:59:06+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 23: the ASCII commuting-square code block and the adoption table with bold and monospaced dispositions keep contrast.",
+   "normal_render_components": [
+    {
+     "page": 23,
+     "sha256": "8edf244a35e488c6b1d8b0e15969d78eed1ac23af721b9684f0caeed9f04fa51"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-24.png",
+   "sha256": "5f439d3fc53d5982e197c5da9be1a81d067b575ac831212c6152b09c57de0b75",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    24
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:59:06+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 24: lens rows 9 to 20 close the table; section 3.4.5 with its grey link and three numbered questions reads cleanly.",
+   "normal_render_components": [
+    {
+     "page": 24,
+     "sha256": "5f439d3fc53d5982e197c5da9be1a81d067b575ac831212c6152b09c57de0b75"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-25.png",
+   "sha256": "08ff5c3fb5c1d6b9bd9fc97c1d35ed648a0d698a1c2618ea8ea967ea5662a470",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    25
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:59:36+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 25: Erdős headings with the double acute, monospaced hashes, grey links, failure-mode bullets and numbered process choices remain legible.",
+   "normal_render_components": [
+    {
+     "page": 25,
+     "sha256": "08ff5c3fb5c1d6b9bd9fc97c1d35ed648a0d698a1c2618ea8ea967ea5662a470"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-26.png",
+   "sha256": "9350c4f1be23bd6637f2e272a7dc93753eba3b0b2a9e63436166689cc1a9d88e",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    26
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:59:36+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 26: the rewritten correction-chain paragraph with role-only attribution and UTC times and the exact-sequence displays remain legible; unedited digests wrap mid-string.",
+   "normal_render_components": [
+    {
+     "page": 26,
+     "sha256": "9350c4f1be23bd6637f2e272a7dc93753eba3b0b2a9e63436166689cc1a9d88e"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-27.png",
+   "sha256": "8a95b5a37e36db821efd01c765350db8da003cbd2fde37ad841d302767a1ab0b",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    27
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:59:36+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 27: motivic displays, both countermodel code lines and the surjection display render with full contrast; an unedited digest wraps mid-string.",
+   "normal_render_components": [
+    {
+     "page": 27,
+     "sha256": "8a95b5a37e36db821efd01c765350db8da003cbd2fde37ad841d302767a1ab0b"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-28.png",
+   "sha256": "a4fdccdf6e54cac3cc026672d74c8949e46e1fbd2c6a482e6067d38cb2c1d3bd",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    28
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:59:36+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 28: the seven bold lenses and section 3.4.9 with three grey discussion links read clearly; the lower page is the expected free space before 3.4.10.",
+   "normal_render_components": [
+    {
+     "page": 28,
+     "sha256": "a4fdccdf6e54cac3cc026672d74c8949e46e1fbd2c6a482e6067d38cb2c1d3bd"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-29.png",
+   "sha256": "28de32bd97956518a5aefe90a77715282fbce1dc3b7a09ce00c1b2db58c6a47b",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    29
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:00:07+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 29: heading 3.4.10 at the top, both shaded three-column tables with page anchors and the prose between them remain legible.",
+   "normal_render_components": [
+    {
+     "page": 29,
+     "sha256": "28de32bd97956518a5aefe90a77715282fbce1dc3b7a09ce00c1b2db58c6a47b"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-30.png",
+   "sha256": "069b4091c63b300945ce73098d433677b52e2847e3d52f025b997ec6a5b60f6e",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    30
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:00:07+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 30: the continued transfer table under a repeated header and the six rejected-transfer bullets read clearly.",
+   "normal_render_components": [
+    {
+     "page": 30,
+     "sha256": "069b4091c63b300945ce73098d433677b52e2847e3d52f025b997ec6a5b60f6e"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-31.png",
+   "sha256": "aa61abba4738d2119da11340a7f446737589d8cf8e1614fa1f58eed3d0aee14d",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    31
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:00:07+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 31: the rewritten zeta-thread paragraph and the artifact table with grey link labels and monospaced digests remain legible; the image digest wraps after its first character.",
+   "normal_render_components": [
+    {
+     "page": 31,
+     "sha256": "aa61abba4738d2119da11340a7f446737589d8cf8e1614fa1f58eed3d0aee14d"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-32.png",
+   "sha256": "2f8bf800e41c8bde38328da3499b93afd046228fe20c26826abb3ffa649e4014",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    32
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:00:07+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 32: the continued artifact table keeps three wrapped cells aligned; long digests and identifiers wrap mid-token inside their column.",
+   "normal_render_components": [
+    {
+     "page": 32,
+     "sha256": "2f8bf800e41c8bde38328da3499b93afd046228fe20c26826abb3ffa649e4014"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-33.png",
+   "sha256": "66918e481d0c879e563a58d0e016f07be0b32a8067d1724a44421beb2b0fcc5d",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    33
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:01:57+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 33: monospaced firewall bullets, the context-source table with grey links and the rewritten third-party-reply paragraph remain legible; one digest bullet wraps mid-token.",
+   "normal_render_components": [
+    {
+     "page": 33,
+     "sha256": "66918e481d0c879e563a58d0e016f07be0b32a8067d1724a44421beb2b0fcc5d"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-34.png",
+   "sha256": "1aea20bc01374d813257573f9e1a876c3c7e23d159e39d6e73de8098a90776cc",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    34
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:01:57+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 34: the reconstructed method with hatted matrices, norms, the rank-trace display and both transfer displays renders with full contrast.",
+   "normal_render_components": [
+    {
+     "page": 34,
+     "sha256": "1aea20bc01374d813257573f9e1a876c3c7e23d159e39d6e73de8098a90776cc"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-35.png",
+   "sha256": "7dd265d584f9a4ccb395f1649d0afa9b5eec23f36d05dd8b9318b1669a0f73cd",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    35
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:01:57+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 35: square roots, monospaced decimals and regrouping inequalities render intact; the unedited claim path wraps mid-token.",
+   "normal_render_components": [
+    {
+     "page": 35,
+     "sha256": "7dd265d584f9a4ccb395f1649d0afa9b5eec23f36d05dd8b9318b1669a0f73cd"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-36.png",
+   "sha256": "5642db75208cfb656d82384bd969ffa98a7f9e60c50021fbb75c05a303a1ff4c",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    36
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:01:57+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 36: the discovery-methods subsection and the actor-or-route table from the process appendix keep wrapped cells aligned and legible.",
+   "normal_render_components": [
+    {
+     "page": 36,
+     "sha256": "5642db75208cfb656d82384bd969ffa98a7f9e60c50021fbb75c05a303a1ff4c"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-37.png",
+   "sha256": "f8aacc1eafac6945b9b8a5595186a6354067ab4760ef8135924971bcc4bda296",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    37
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:02:16+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 37: the actor table close, the reconstruction paragraph and the four-column phase table keep headers, shading and wrapped cells distinct without color.",
+   "normal_render_components": [
+    {
+     "page": 37,
+     "sha256": "f8aacc1eafac6945b9b8a5595186a6354067ab4760ef8135924971bcc4bda296"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-38.png",
+   "sha256": "4ae38e1c979cd750bdd796f59d01c314bea2586d301dbfd4f72e242d2fbab03d",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    38
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:02:16+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 38: the continued phase table under a repeated header and the bold method terms of the closing paragraph remain legible.",
+   "normal_render_components": [
+    {
+     "page": 38,
+     "sha256": "4ae38e1c979cd750bdd796f59d01c314bea2586d301dbfd4f72e242d2fbab03d"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-39.png",
+   "sha256": "2681e03b1269f64748906aad41cabefe1867777f538baf2bce7f4ea06173749e",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    39
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:02:16+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 39: the thirty-four-lens audit with monospaced NEGATIVE and OPEN dispositions through lens 13 keeps alternating shading and contrast.",
+   "normal_render_components": [
+    {
+     "page": 39,
+     "sha256": "2681e03b1269f64748906aad41cabefe1867777f538baf2bce7f4ea06173749e"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-40.png",
+   "sha256": "5919b0251018b164cf9048050230e9004f3843311d87bd9286967def379fa82e",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    40
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:02:16+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 40: lens rows 14 to 25 under the repeated header remain aligned and legible.",
+   "normal_render_components": [
+    {
+     "page": 40,
+     "sha256": "5919b0251018b164cf9048050230e9004f3843311d87bd9286967def379fa82e"
+    }
+   ]
+  },
+  {
+   "image": "color-120/page-59.png",
+   "sha256": "8f46be2be073e24ab94f40f7c7dd53348830aca3c32aea4b68c603bdb528522b",
+   "kind": "page",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    59
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:03:11+00:00",
+   "outcome": "clear",
+   "finding": "Final page 59: lifecycle item 4 reads that a hard, slow, or partially complete goal stays active and that the pause call uses update_goal with status paused; no token breaks across lines; item 5 and section 3.5.15 read cleanly.",
+   "normal_render_components": [
+    {
+     "page": 59,
+     "sha256": "8f46be2be073e24ab94f40f7c7dd53348830aca3c32aea4b68c603bdb528522b"
+    }
+   ]
+  },
+  {
+   "image": "color-300/p59-goal-pause.png",
+   "sha256": "0daf90138d645972787fae632f6529f547b9322bf0f35709f7ddb5cf532c3cd2",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    59
+   ],
+   "target": "p59-goal-pause",
+   "crop": [
+    371,
+    478,
+    1852,
+    421
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:03:11+00:00",
+   "outcome": "clear",
+   "finding": "Detail target p59-goal-pause at 300 dpi: the corrected pause sentence and its surrounding item text render with intact glyphs, the monospaced update_goal on one line, and normal word spacing.",
+   "normal_render_components": []
+  },
+  {
+   "image": "gray-120/page-41.png",
+   "sha256": "420760f5e11e54cbc8d9c2b70c45063a146f0927992faee9075dde0d5d63e3f7",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    41
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:03:40+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 41: lens rows 26 to 34 and the three countercontrol bullets with diagonal matrices and the mutual-information expression render with full contrast.",
+   "normal_render_components": [
+    {
+     "page": 41,
+     "sha256": "420760f5e11e54cbc8d9c2b70c45063a146f0927992faee9075dde0d5d63e3f7"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-42.png",
+   "sha256": "050d5b4d999f24d618802f8dce67a4bb8fbc310027242bc01cf2a6b59fbbfcfe",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    42
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:03:40+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 42: the monospaced M1 to M9 obligations, the negative-control table and the literal sentinels remain legible; unedited script names and sentinel values wrap mid-token.",
+   "normal_render_components": [
+    {
+     "page": 42,
+     "sha256": "050d5b4d999f24d618802f8dce67a4bb8fbc310027242bc01cf2a6b59fbbfcfe"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-43.png",
+   "sha256": "eb88fd72f2d4535f9a605681608d20ae535185c82d55bf48c8d161a12b32ef92",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    43
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:03:40+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 43: the closing transfer paragraph, section 3.5 headings and bold defined terms keep hierarchy and contrast.",
+   "normal_render_components": [
+    {
+     "page": 43,
+     "sha256": "eb88fd72f2d4535f9a605681608d20ae535185c82d55bf48c8d161a12b32ef92"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-44.png",
+   "sha256": "41c30f64044b75e6688840abac4ea75e47c14b99bb802ca323db1c8d568c9160",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    44
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:03:40+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 44: judge and ledger paragraphs and section 3.5.3 with the grey worklog citation and the selection-problem paragraph remain legible.",
+   "normal_render_components": [
+    {
+     "page": 44,
+     "sha256": "41c30f64044b75e6688840abac4ea75e47c14b99bb802ca323db1c8d568c9160"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-45.png",
+   "sha256": "1a68f87a204445e1528820f052b3eee74543e0601eb44a54cc1897cb16ecf4df",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    45
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:03:58+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 45: the ten-row engineering-transfer table and the start of the numbered research loop remain aligned and legible.",
+   "normal_render_components": [
+    {
+     "page": 45,
+     "sha256": "1a68f87a204445e1528820f052b3eee74543e0601eb44a54cc1897cb16ecf4df"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-46.png",
+   "sha256": "6fa0c37ee0e227db4b0018412b8c008d7f763db77bd2491f1f2acbd9c8e1e618",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    46
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:03:58+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 46: the research loop, section 3.5.4 with grey Git links, the lane table and the failure-to-repair map opening keep contrast.",
+   "normal_render_components": [
+    {
+     "page": 46,
+     "sha256": "6fa0c37ee0e227db4b0018412b8c008d7f763db77bd2491f1f2acbd9c8e1e618"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-47.png",
+   "sha256": "1142c196c8d0ab112e3992b83957754414e568de5a7d7cac5e061aa296f45099",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    47
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:03:58+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 47: failure-mode rows with bold labels and the revision-pin paragraph remain legible; long monospaced paths wrap mid-token.",
+   "normal_render_components": [
+    {
+     "page": 47,
+     "sha256": "1142c196c8d0ab112e3992b83957754414e568de5a7d7cac5e061aa296f45099"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-48.png",
+   "sha256": "2a048aa0502d28b0f29edf11a39dfec394105119abb9a791513cb2587b01a275",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    48
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:03:58+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 48: the eleven-step closure sequence with bold step names and inline monospaced references keeps hierarchy and contrast.",
+   "normal_render_components": [
+    {
+     "page": 48,
+     "sha256": "2a048aa0502d28b0f29edf11a39dfec394105119abb9a791513cb2587b01a275"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-49.png",
+   "sha256": "1e17e61e3f8b8def6a9282376e35dedeaa94cf148c6edf872b9a7dd6752c3f7f",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    49
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:04:14+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 49: step 12, the isolated-lane subsection, the reproducibility-epoch paragraph and three grey ledger links remain legible.",
+   "normal_render_components": [
+    {
+     "page": 49,
+     "sha256": "1e17e61e3f8b8def6a9282376e35dedeaa94cf148c6edf872b9a7dd6752c3f7f"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-50.png",
+   "sha256": "a4c60db1d85567e5b9b1907312402166f109ba298facc3da0ed1485c8b46954d",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    50
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:04:14+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 50: ownership and durability paragraphs keep consistent spacing and contrast; the lower free space precedes section 3.5.5.",
+   "normal_render_components": [
+    {
+     "page": 50,
+     "sha256": "a4c60db1d85567e5b9b1907312402166f109ba298facc3da0ed1485c8b46954d"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-51.png",
+   "sha256": "e5481d9c8d5b78b8d6a61ae2b2e86676e87714f12b2c5c078b4cbfa0ec7b631b",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    51
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:04:14+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 51: section 3.5.5 with six council steps and the evidence-tag table with monospaced status names stay aligned and legible.",
+   "normal_render_components": [
+    {
+     "page": 51,
+     "sha256": "e5481d9c8d5b78b8d6a61ae2b2e86676e87714f12b2c5c078b4cbfa0ec7b631b"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-52.png",
+   "sha256": "06a4230fe463147b5c312d7b08b6fccc992e9651a9c45a39783fdd0403494192",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    52
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:04:14+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 52: the evidence-tag table close, monospaced tag names and the ten-row role table keep contrast and alignment.",
+   "normal_render_components": [
+    {
+     "page": 52,
+     "sha256": "06a4230fe463147b5c312d7b08b6fccc992e9651a9c45a39783fdd0403494192"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-53.png",
+   "sha256": "32307dbd3737245d22a1104e801c0ae3c00394e7324eec2d171d931f0edb922e",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    53
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:04:35+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 53: section 3.5.7 with the review-joint code template, the saturation paragraph and the independence-vector table opening remain legible.",
+   "normal_render_components": [
+    {
+     "page": 53,
+     "sha256": "32307dbd3737245d22a1104e801c0ae3c00394e7324eec2d171d931f0edb922e"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-54.png",
+   "sha256": "daf434dcf646e73f95203a003c436514738ccd11b20caa3606cfab541e40ae94",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    54
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:04:35+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 54: the independence table close, section 3.5.9 with seven numbered rules and section 3.5.10 keep hierarchy and contrast.",
+   "normal_render_components": [
+    {
+     "page": 54,
+     "sha256": "daf434dcf646e73f95203a003c436514738ccd11b20caa3606cfab541e40ae94"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-55.png",
+   "sha256": "e05a12f254e331c56e685df8b181d6c532d171a1efca060970cd057e3cf99696",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    55
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:04:35+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 55: set notation for the worked cut family, the route-summary list and the run-context bullets with inline code render clearly.",
+   "normal_render_components": [
+    {
+     "page": 55,
+     "sha256": "e05a12f254e331c56e685df8b181d6c532d171a1efca060970cd057e3cf99696"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-56.png",
+   "sha256": "f68d8927cce4977e9591425c795a4886b998fd3d1581508b1df8d22ab18573a4",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    56
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:04:35+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 56: the remaining run-context bullets, section 3.5.12 and the four-row freeze-class table keep wrapped cells aligned.",
+   "normal_render_components": [
+    {
+     "page": 56,
+     "sha256": "f68d8927cce4977e9591425c795a4886b998fd3d1581508b1df8d22ab18573a4"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-57.png",
+   "sha256": "430a44b0f3a83367b0687a64b3cf72f8d97448d042cb76b6ebff084ab617a7db",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    57
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:05+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 57: section 3.5.13 continuity bullets and the numbered resume protocol keep hanging indents and legible inline code.",
+   "normal_render_components": [
+    {
+     "page": 57,
+     "sha256": "430a44b0f3a83367b0687a64b3cf72f8d97448d042cb76b6ebff084ab617a7db"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-58.png",
+   "sha256": "673b86754b7ba401d3a2bb90df45939d79e03f4cd672e1af2e167b810e00bcc5",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    58
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:05+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 58: resume step 6, the continuity template code block with continuation markers and section 3.5.14 with bold state names render clearly.",
+   "normal_render_components": [
+    {
+     "page": 58,
+     "sha256": "673b86754b7ba401d3a2bb90df45939d79e03f4cd672e1af2e167b810e00bcc5"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-59.png",
+   "sha256": "c3eaf651c9a808515331d31f6576b96b2d4363cc04231336182104d161aabdbc",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    59
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:05+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale final page 59: lifecycle item 4 with the pause call written as update_goal with status paused reads without a split token; item 5 and section 3.5.15 are legible.",
+   "normal_render_components": [
+    {
+     "page": 59,
+     "sha256": "c3eaf651c9a808515331d31f6576b96b2d4363cc04231336182104d161aabdbc"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-60.png",
+   "sha256": "c7533f3f6127239a03d221d0bba033540305e3e50acc4c0bd248612a4abb298f",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    60
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:05+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 60: section 3.5.16 bullets with monospaced state and edge names and the orientation and publication paragraphs keep contrast.",
+   "normal_render_components": [
+    {
+     "page": 60,
+     "sha256": "c7533f3f6127239a03d221d0bba033540305e3e50acc4c0bd248612a4abb298f"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-61.png",
+   "sha256": "0d2857f55418184bfc00e03df3afabc60117704ce45678207bd5f7b9b11775b6",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    61
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:20+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 61: the harness transition-rule code block keeps its indentation; section 3.5.17 lists nine monospaced verification labels with clear contrast.",
+   "normal_render_components": [
+    {
+     "page": 61,
+     "sha256": "0d2857f55418184bfc00e03df3afabc60117704ce45678207bd5f7b9b11775b6"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-62.png",
+   "sha256": "edf4d923bef5de270ca03e6f310fafbb5db1dcf53db0b93c02e6525833cbea5a",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    62
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:20+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 62: the route-memo template, the claim-schema table, section 3.6 and the packet-field table opening remain aligned.",
+   "normal_render_components": [
+    {
+     "page": 62,
+     "sha256": "edf4d923bef5de270ca03e6f310fafbb5db1dcf53db0b93c02e6525833cbea5a"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-63.png",
+   "sha256": "2602c632bb0834dd9b4bc54413d921d3532e347e6f4e8c4ba50bf9e3b46a1981",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    63
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:20+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 63: the exact-claim packet table continues under a repeated header with sixteen wrapped rows in legible shading.",
+   "normal_render_components": [
+    {
+     "page": 63,
+     "sha256": "2602c632bb0834dd9b4bc54413d921d3532e347e6f4e8c4ba50bf9e3b46a1981"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-64.png",
+   "sha256": "69b6ced3fb4aff86b25c5b1e7059dd7208f0bf2e0cea31bad61b7d7a08aca0c2",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    64
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:20+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 64: the packet table close and the typed-results subsection with bold value terms keep contrast and spacing.",
+   "normal_render_components": [
+    {
+     "page": 64,
+     "sha256": "69b6ced3fb4aff86b25c5b1e7059dd7208f0bf2e0cea31bad61b7d7a08aca0c2"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-65.png",
+   "sha256": "9f95164f89d7d815b6b6f2d14ed121f7366fd884f451643e6fd77eeed6ddb582",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    65
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:36+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 65: the bold typing principle, the historical inventory snapshot and the object-class count table remain legible; unedited monospaced identifiers wrap mid-token.",
+   "normal_render_components": [
+    {
+     "page": 65,
+     "sha256": "9f95164f89d7d815b6b6f2d14ed121f7366fd884f451643e6fd77eeed6ddb582"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-66.png",
+   "sha256": "38db411600f3445faecb922b49d10d39d2e642171296c14f374e38fd4077d1a3",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    66
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:36+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 66: the count table close, the lineage paragraph and the bold later-evidence paragraph with grey links keep contrast.",
+   "normal_render_components": [
+    {
+     "page": 66,
+     "sha256": "38db411600f3445faecb922b49d10d39d2e642171296c14f374e38fd4077d1a3"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-67.png",
+   "sha256": "d69cbaac3958550685b9cabb061b370c306b66e9448bb055cb759cd5790a9ae5",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    67
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:36+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 67: section 3.6.2 bullets, the mapping-check rule and the corrected category-theoretic sentence before the five numbered questions read clearly.",
+   "normal_render_components": [
+    {
+     "page": 67,
+     "sha256": "d69cbaac3958550685b9cabb061b370c306b66e9448bb055cb759cd5790a9ae5"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-68.png",
+   "sha256": "728fa2de61cdb0d170374104008ce1dd3b7eb77b8aff37e362dad49b63076111",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    68
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:36+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 68: the MGW naming paragraph, the ten-row approach registry and section 3.6.4 failure classes keep hierarchy and contrast.",
+   "normal_render_components": [
+    {
+     "page": 68,
+     "sha256": "728fa2de61cdb0d170374104008ce1dd3b7eb77b8aff37e362dad49b63076111"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-69.png",
+   "sha256": "d9c4957b762adaf34d4808a4311a5442585b6f65c937593cd5d26d386558f490",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    69
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:52+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 69: the correction-ledger table, monospaced OPEN and BLOCKED, and section 3.6.6 with the certificate conversion code block remain legible.",
+   "normal_render_components": [
+    {
+     "page": 69,
+     "sha256": "d9c4957b762adaf34d4808a4311a5442585b6f65c937593cd5d26d386558f490"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-70.png",
+   "sha256": "f4eef8c06d8d31271b364bf3683b028268379639cb17ce2fa6e6dabae85fead6",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    70
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:52+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 70: certificate prose and section 3.6.7 with monospaced dispositions read clearly; the heading Lenses 1–10 sits at the page foot with its table on page 71.",
+   "normal_render_components": [
+    {
+     "page": 70,
+     "sha256": "f4eef8c06d8d31271b364bf3683b028268379639cb17ce2fa6e6dabae85fead6"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-71.png",
+   "sha256": "76ceabefae5f5dea25784bb7514197e060e2f35b4d2f64b0cd63a4a9f45b1bca",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    71
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:52+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 71: the ten-row core lens table and the Lenses 11–20 table through lens 16 keep shading and numbering legible.",
+   "normal_render_components": [
+    {
+     "page": 71,
+     "sha256": "76ceabefae5f5dea25784bb7514197e060e2f35b4d2f64b0cd63a4a9f45b1bca"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-72.png",
+   "sha256": "75466549867a8fd600b3b54e408190894fd61b1d09e0bad22c352f1f12bbcde6",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    72
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:05:52+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 72: lens rows 17 to 20, the margin and audit paragraphs and the SxPID firewall with conditional-probability notation render clearly.",
+   "normal_render_components": [
+    {
+     "page": 72,
+     "sha256": "75466549867a8fd600b3b54e408190894fd61b1d09e0bad22c352f1f12bbcde6"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-73.png",
+   "sha256": "d9af8002c94ba0c3d134826c08f3261576d05282218f382bb7b58e97408a41c7",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    73
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:07+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 73: the disjunction paragraph, the six-item binding list with inline not_applicable and the two grey Lyu–Clark–Raviv titles remain legible.",
+   "normal_render_components": [
+    {
+     "page": 73,
+     "sha256": "d9af8002c94ba0c3d134826c08f3261576d05282218f382bb7b58e97408a41c7"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-74.png",
+   "sha256": "682e8da6c881d3983e73748332b1d9518bb51c9fc2716b1f998b763d5e4366c3",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    74
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:07+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 74: the terminology firewall, the application-record code block and citation-edge gate steps 1 to 4 with monospaced predicates render clearly.",
+   "normal_render_components": [
+    {
+     "page": 74,
+     "sha256": "682e8da6c881d3983e73748332b1d9518bb51c9fc2716b1f998b763d5e4366c3"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-75.png",
+   "sha256": "8f901c39d286feb5a1c8a3d5cbf9a3785ac25bd4b548bfef98dc1cdc62d3286e",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    75
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:07+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 75: gate steps 5 to 8, the CLOSED, OPEN and BLOCKED paragraph, the monospaced checker and Lean file names and the invariant bullets keep contrast.",
+   "normal_render_components": [
+    {
+     "page": 75,
+     "sha256": "8f901c39d286feb5a1c8a3d5cbf9a3785ac25bd4b548bfef98dc1cdc62d3286e"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-76.png",
+   "sha256": "0a2802b9711a7069ea2d37b9d6b6e353d6eda00f1b58fe5b784547ecff97b54f",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    76
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:07+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 76: invariant bullets with inequality notation, section 3.6.8 holdout prose and estimator steps 1 to 3 remain legible.",
+   "normal_render_components": [
+    {
+     "page": 76,
+     "sha256": "0a2802b9711a7069ea2d37b9d6b6e353d6eda00f1b58fe5b784547ecff97b54f"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-77.png",
+   "sha256": "d75bc4a644f3c81d3f42d115aa75c9994bcb7d91476572df528d455b9ef3a217",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    77
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:24+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 77: holdout steps 4 to 12 and the blind-benchmark commitment table with wrapped rows remain aligned and legible.",
+   "normal_render_components": [
+    {
+     "page": 77,
+     "sha256": "d75bc4a644f3c81d3f42d115aa75c9994bcb7d91476572df528d455b9ef3a217"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-78.png",
+   "sha256": "339dc67c3bf618a08efce827c2b21bb05b608bd248da8aa137e0fe5f5e51f520",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    78
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:24+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 78: the commitment table close, custody paragraphs and the claim-to-evidence matrix keep three columns aligned.",
+   "normal_render_components": [
+    {
+     "page": 78,
+     "sha256": "339dc67c3bf618a08efce827c2b21bb05b608bd248da8aa137e0fe5f5e51f520"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-79.png",
+   "sha256": "f39d2cc55eec3b199950ae7d73c58bf8043f9c9352a14172e8823f47cb2e06d2",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    79
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:24+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 79: section 3.7 with monospaced catalog names, the packet bullets with the I-min subscript and section 3.7.2 opening read clearly.",
+   "normal_render_components": [
+    {
+     "page": 79,
+     "sha256": "f39d2cc55eec3b199950ae7d73c58bf8043f9c9352a14172e8823f47cb2e06d2"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-80.png",
+   "sha256": "c66957fbe7e7d121ee4c0a42add99da871266c78a81d5fd5419e39082796a2fd",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    80
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:24+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 80: routing bullets with monospaced API names, bar and degree notation and the equal-width boundary example remain legible.",
+   "normal_render_components": [
+    {
+     "page": 80,
+     "sha256": "c66957fbe7e7d121ee4c0a42add99da871266c78a81d5fd5419e39082796a2fd"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-81.png",
+   "sha256": "fd28bd9c7bcf9cc0814dfbc99fd2ab6ce908e2f01fb32149b6f42b40d201a6d4",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    81
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:46+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 81: sign-rule and PID3 bullets, the PCA/PLS bullet and section 3.7.3 with bold audit-family labels remain legible; the unedited NegativeHandling identifier wraps mid-token.",
+   "normal_render_components": [
+    {
+     "page": 81,
+     "sha256": "fd28bd9c7bcf9cc0814dfbc99fd2ab6ce908e2f01fb32149b6f42b40d201a6d4"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-82.png",
+   "sha256": "e9fb35280eee1fb34966bc6613399d7d0bd81fb70c4f78f8dfcd73f8eace418c",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    82
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:46+00:00",
+   "outcome": "advisory",
+   "finding": "Grayscale page 82: the statistical family bullet, the counterexample bullets and section 3.7.5 opening read clearly; the unedited trust flag wraps across lines.",
+   "normal_render_components": [
+    {
+     "page": 82,
+     "sha256": "e9fb35280eee1fb34966bc6613399d7d0bd81fb70c4f78f8dfcd73f8eace418c"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-83.png",
+   "sha256": "9526d02ab2d2d5315cf7db30c4be8b3f672267a92a85d819f72535c541fdee29",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    83
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:46+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 83: the optimized-Python paragraph, the seven-step comparator trust split and the hostile-case list with monospaced names keep contrast.",
+   "normal_render_components": [
+    {
+     "page": 83,
+     "sha256": "9526d02ab2d2d5315cf7db30c4be8b3f672267a92a85d819f72535c541fdee29"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-84.png",
+   "sha256": "61d391337528e05b7f155a39cd0e4b3ddfd08c0a13489629a1eeae20a9b23c15",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    84
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:06:46+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 84: comparator preconditions, the formal-status ledger with monospaced values and section 3.7.6 remain aligned and legible.",
+   "normal_render_components": [
+    {
+     "page": 84,
+     "sha256": "61d391337528e05b7f155a39cd0e4b3ddfd08c0a13489629a1eeae20a9b23c15"
+    }
+   ]
+  },
+  {
+   "image": "color-300/p01-title-and-date.png",
+   "sha256": "688e652b50c0af811aa124719d3a5cf96412652e014f2a759abffd3b303e996c",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    1
+   ],
+   "target": "p01-title-and-date",
+   "crop": [
+    257,
+    270,
+    1965,
+    577
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:00+00:00",
+   "outcome": "clear",
+   "finding": "Detail p01-title-and-date at 300 dpi: the series band ornament, title, subtitle with monospaced pid-rs, author and the date 1 September 2026; revised 26 October 2026 render sharply with no collision.",
+   "normal_render_components": []
+  },
+  {
+   "image": "gray-120/page-85.png",
+   "sha256": "a35e90945c0079bfba8102ca292470bd68f74a86c9ac4fd35235a1b10fce0a8b",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    85
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:00+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 85: the consumer-contract paragraph, section 3.8 closure bullets and section 3.9 checklist bullets with the monospaced I_min keep contrast.",
+   "normal_render_components": [
+    {
+     "page": 85,
+     "sha256": "a35e90945c0079bfba8102ca292470bd68f74a86c9ac4fd35235a1b10fce0a8b"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-86.png",
+   "sha256": "36f2789dc2dc09b0eb6c93586502bdf1083902c7ebb8384dd70be3ab742f9233",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    86
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:00+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale page 86: the remaining checklist bullets, the determinism paragraph with product-measure notation and the four-column gate table remain aligned and legible.",
+   "normal_render_components": [
+    {
+     "page": 86,
+     "sha256": "36f2789dc2dc09b0eb6c93586502bdf1083902c7ebb8384dd70be3ab742f9233"
+    }
+   ]
+  },
+  {
+   "image": "gray-120/page-87.png",
+   "sha256": "b7e3264754fe5bb7e4d9135bae594a83a6e5e806dee3e0f61203de2414dcf7b9",
+   "kind": "page",
+   "mode": "gray",
+   "dpi": 120,
+   "pages": [
+    87
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:00+00:00",
+   "outcome": "clear",
+   "finding": "Grayscale final page 87: the claim-directory code block, section 3.11 and the closing paragraphs end cleanly with expected free space.",
+   "normal_render_components": [
+    {
+     "page": 87,
+     "sha256": "b7e3264754fe5bb7e4d9135bae594a83a6e5e806dee3e0f61203de2414dcf7b9"
+    }
+   ]
+  },
+  {
+   "image": "color-300/p02-contents-3-4.png",
+   "sha256": "e80f3cb8ce464ee11d31e4e2be3e8eea5ff30e3242c609d1ded1148452741c27",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    2
+   ],
+   "target": "p02-contents-3-4",
+   "crop": [
+    320,
+    256,
+    1902,
+    782
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:17+00:00",
+   "outcome": "advisory",
+   "finding": "Detail p02-contents-3-4 at 300 dpi: entries 3.4 and 3.4.1 Erdős-problem research thread point to page 17, 3.4.10 to page 29; the double acute renders sharply; the long 3.4.11 title wraps to a second line as designed.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p12-source-policy.png",
+   "sha256": "305fc9be46872f448d61b711ae69732a78acfa64f3bdb426e12e4bf6e64ff822",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    12
+   ],
+   "target": "p12-source-policy",
+   "crop": [
+    256,
+    2706,
+    1967,
+    500
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:17+00:00",
+   "outcome": "clear",
+   "finding": "Detail p12-source-policy at 300 dpi: the full source-policy sentence on social-media posts, deletion or editing, opinion as fact, and stating the point in one's own words renders with intact glyphs and spacing.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p13-suggested-citation.png",
+   "sha256": "44094e62427704c60ada17390570afa709f1f529a806742fb97e176274680210",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    13
+   ],
+   "target": "p13-suggested-citation",
+   "crop": [
+    257,
+    923,
+    1966,
+    333
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:17+00:00",
+   "outcome": "clear",
+   "finding": "Detail p13-suggested-citation at 300 dpi: the suggested citation with the italic title, the commit-or-release instruction and the bronze CITATION.cff link render sharply.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p17-erdos-heading.png",
+   "sha256": "ca352d7e8da8f7239181e00476ce2e4358585ce04ffe0630331c325792972ebc",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    17
+   ],
+   "target": "p17-erdos-heading",
+   "crop": [
+    256,
+    252,
+    1966,
+    345
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:17+00:00",
+   "outcome": "clear",
+   "finding": "Detail p17-erdos-heading at 300 dpi: headings 3.4 Source observations and 3.4.1 Erdős-problem research thread render with the double acute intact in both the heading and body faces.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p17-erdos-source.png",
+   "sha256": "9b099d2f9f80efee37ac1d5685bd3f2700f4eb9d7928564b1f4766b49b2d03e4",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    17
+   ],
+   "target": "p17-erdos-source",
+   "crop": [
+    256,
+    1670,
+    1968,
+    551
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:34+00:00",
+   "outcome": "clear",
+   "finding": "Detail p17-erdos-source at 300 dpi: the five-post source paragraph with platform, date, UTC range, the order of the posts and the no-copy statement renders sharply.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p17-lea-source.png",
+   "sha256": "738a83cd2bb2209a61718b843b98636be6eec59897e513648d7cb361de3cb032",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    17
+   ],
+   "target": "p17-lea-source",
+   "crop": [
+    256,
+    2215,
+    1967,
+    290
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:34+00:00",
+   "outcome": "advisory",
+   "finding": "Detail p17-lea-source at 300 dpi: the Lea opening with platform, date and UTC time and the bronze repository link render sharply; the unedited commit hash breaks after its first character.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p19-grothendieck-source.png",
+   "sha256": "c63319ecbd2db560447ad0d9b265de0b3b6184316d41926aca5b82f857745bf7",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    19
+   ],
+   "target": "p19-grothendieck-source",
+   "crop": [
+    256,
+    668,
+    1972,
+    460
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:34+00:00",
+   "outcome": "advisory",
+   "finding": "Detail p19-grothendieck-source at 300 dpi: the thread reference with its parenthesized date and the en dash in human–AI and the italic arXiv titles render sharply; unedited repository and hash identifiers wrap mid-string.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p26-correction-chain.png",
+   "sha256": "5d134ae087be638517ae47625187c462c0748710f1e7e3c9617fe14e54d7e514",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    26
+   ],
+   "target": "p26-correction-chain",
+   "crop": [
+    256,
+    1219,
+    1966,
+    517
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:34+00:00",
+   "outcome": "advisory",
+   "finding": "Detail p26-correction-chain at 300 dpi: the role-only correction chain with UTC times, another reader, the draft author's acknowledgement and the support statement render sharply; the unedited draft digest wraps mid-string.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p29-heading-3-4-10.png",
+   "sha256": "571fff8baaab9b54f340c5f2bf23dfbcb5edc9fa12b806998c15ead507d9cc5c",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    29
+   ],
+   "target": "p29-heading-3-4-10",
+   "crop": [
+    256,
+    102,
+    1966,
+    388
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:48+00:00",
+   "outcome": "clear",
+   "finding": "Detail p29-heading-3-4-10 at 300 dpi: the running head and heading 3.4.10 OpenAI-hosted proof-process walkthroughs open page 29 cleanly above its introductory sentence and table rule.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p31-zeta-thread.png",
+   "sha256": "2571a3a7245efd136103146dee7f294187e9c70a2a7c7af1133c8b966198c8d9",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    31
+   ],
+   "target": "p31-zeta-thread",
+   "crop": [
+    256,
+    781,
+    1970,
+    911
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:48+00:00",
+   "outcome": "advisory",
+   "finding": "Detail p31-zeta-thread at 300 dpi: the role-only thread description with UTC times, the HTML alternative-text field wording and the image identity render sharply; the image digest breaks after its first character.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p33-third-party-reply.png",
+   "sha256": "eb4b66a38833e1641492e6f66a5b7f93772e5bcc36a0af1e4d012c21050e14f8",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    33
+   ],
+   "target": "p33-third-party-reply",
+   "crop": [
+    257,
+    2790,
+    1971,
+    420
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:48+00:00",
+   "outcome": "clear",
+   "finding": "Detail p33-third-party-reply at 300 dpi: the third-party reply with platform, date and UTC time and the sentence that the paper and versioned sources carry the support render sharply.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p67-category-theoretic.png",
+   "sha256": "4e9ba906c73cf63554e0ef0f7afff06a6ba2d9f9805a40a63ccf3d2840ec03cb",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    67
+   ],
+   "target": "p67-category-theoretic",
+   "crop": [
+    257,
+    2141,
+    1965,
+    277
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:07:48+00:00",
+   "outcome": "clear",
+   "finding": "Detail p67-category-theoretic at 300 dpi: the corrected sentence on category-theoretic claims, distinct from finite category-valued data, renders with intact glyphs and spacing.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p05-figure-1-color.png",
+   "sha256": "1e8c43244f0c7ab526ddeb0ea186e3dcc6cf5680424bc8f613bd32fcd7eee49a",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    5
+   ],
+   "target": "p05-figure-1-color",
+   "crop": [
+    257,
+    257,
+    1965,
+    924
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:08:03+00:00",
+   "outcome": "clear",
+   "finding": "Detail p05-figure-1-color at 300 dpi: four numbered cards, lettered transition badges A to C with arrows, the legend band and the caption render sharply with intact labels.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p06-figure-2-color.png",
+   "sha256": "215602c88ff67706edce4d0af346bd122818a502f777a885bb3d5f24da467563",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    6
+   ],
+   "target": "p06-figure-2-color",
+   "crop": [
+    257,
+    257,
+    1965,
+    1135
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:08:03+00:00",
+   "outcome": "clear",
+   "finding": "Detail p06-figure-2-color at 300 dpi: premise boxes, the hatched double-ruled shared oracle, AND and OR nodes, curved arrows, the rotated GO tag and the frozen-set lines render sharply.",
+   "normal_render_components": []
+  },
+  {
+   "image": "gray-300/p05-figure-1-gray.png",
+   "sha256": "9c44d302ddcc45c8f3c037d0c6acfb7a00f1d02445081ab3686765c657ce6324",
+   "kind": "crop",
+   "mode": "gray",
+   "dpi": 300,
+   "pages": [
+    5
+   ],
+   "target": "p05-figure-1-gray",
+   "crop": [
+    257,
+    257,
+    1965,
+    924
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:08:03+00:00",
+   "outcome": "clear",
+   "finding": "Detail p05-figure-1-gray at 300 dpi: cards, numbers, badges, arrows and the legend stay distinct by shape and text without color; the caption is legible.",
+   "normal_render_components": []
+  },
+  {
+   "image": "gray-300/p06-figure-2-gray.png",
+   "sha256": "69b32d08e16b36d264db246440820052020ffb3a57cc2aeee3d7acd198ad9bf1",
+   "kind": "crop",
+   "mode": "gray",
+   "dpi": 300,
+   "pages": [
+    6
+   ],
+   "target": "p06-figure-2-gray",
+   "crop": [
+    257,
+    257,
+    1965,
+    1135
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:08:03+00:00",
+   "outcome": "clear",
+   "finding": "Detail p06-figure-2-gray at 300 dpi: the shared oracle remains distinct by hatching and double rule, AND and OR by labels and shapes, and every set label stays legible without color.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p10-figure-3-color.png",
+   "sha256": "07bd3870658bfe6c3786c72da2225f0f5deb47d11d7e0634701c3557e540bc61",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    10
+   ],
+   "target": "p10-figure-3-color",
+   "crop": [
+    257,
+    1884,
+    1965,
+    1065
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:08:35+00:00",
+   "outcome": "clear",
+   "finding": "Detail p10-figure-3-color at 300 dpi: five suite boxes converge on the hatched shared cut, the PASS and OPEN rotated tags, the dashed candidate route and the caption render sharply.",
+   "normal_render_components": []
+  },
+  {
+   "image": "color-300/p12-figure-4-color.png",
+   "sha256": "464167fe6b97ea72fa9247da3f62dac84dd34f0afee6de7467e11fe771f24912",
+   "kind": "crop",
+   "mode": "color",
+   "dpi": 300,
+   "pages": [
+    12
+   ],
+   "target": "p12-figure-4-color",
+   "crop": [
+    257,
+    696,
+    1965,
+    1205
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:08:35+00:00",
+   "outcome": "clear",
+   "finding": "Detail p12-figure-4-color at 300 dpi: the change-control chain, CHANGED badge, dashed STALE gate and publication, the state row and the curved invalidation arrows render sharply.",
+   "normal_render_components": []
+  },
+  {
+   "image": "gray-300/p10-figure-3-gray.png",
+   "sha256": "bedf6ef06867318c5d2ad0912f3afa6ecf8039ba59dcc798efd57631697ed8ce",
+   "kind": "crop",
+   "mode": "gray",
+   "dpi": 300,
+   "pages": [
+    10
+   ],
+   "target": "p10-figure-3-gray",
+   "crop": [
+    257,
+    1884,
+    1965,
+    1065
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:08:35+00:00",
+   "outcome": "clear",
+   "finding": "Detail p10-figure-3-gray at 300 dpi: the shared cut stays distinct by hatching, the candidate route by dashes and the tags by text; every label is legible without color.",
+   "normal_render_components": []
+  },
+  {
+   "image": "gray-300/p12-figure-4-gray.png",
+   "sha256": "a053fdfb5e5fef271f5121ff8ddf4cdf2acb3483619fedcf2393080dc946c102",
+   "kind": "crop",
+   "mode": "gray",
+   "dpi": 300,
+   "pages": [
+    12
+   ],
+   "target": "p12-figure-4-gray",
+   "crop": [
+    257,
+    696,
+    1965,
+    1205
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T13:08:35+00:00",
+   "outcome": "clear",
+   "finding": "Detail p12-figure-4-gray at 300 dpi: solid versus dashed outlines, badges and the invalidation note keep every distinction without color; the caption is legible.",
+   "normal_render_components": []
+  }
+ ],
+ "superseded_views": [
+  {
+   "image": "color-120/page-59.png",
+   "sha256": "c241805c71c9ad01c908ddac74d2c673e37269757a12b1dc5a81d7175279c14f",
+   "superseded_pdf_sha256": "dc9c7e6c13b80ab0e7f5a1a5755c0c2dcf5e2a5f9f199611ac775c6f92df895a",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    59
+   ],
+   "sitting": "A",
+   "recorded_after_view_utc": "2026-10-28T05:18:52+00:00",
+   "outcome": "advisory",
+   "finding": "Pre-fix render: the corrected lifecycle item 4 is present, but its literal status=\"paused\" broke inside the token across two lines; the wording was shortened and this page is to be viewed again after the rebuild.",
+   "superseded_because": "Page 59 was rebuilt after this view to change the pause wording; this view shows an earlier build."
+  },
+  {
+   "image": "color-120/page-59.png",
+   "sha256": "4bce2fd3dd8c6118c9cdbbe6d41a443ffa2a4b6f5ba1307967ddf053c262d837",
+   "superseded_pdf_sha256": "76240943d99ad68e962b09f707ad253a5e34151c7cc2b3dcc8804fc626651aa6",
+   "mode": "color",
+   "dpi": 120,
+   "pages": [
+    59
+   ],
+   "sitting": "B",
+   "recorded_after_view_utc": "2026-10-28T12:49:47+00:00",
+   "outcome": "advisory",
+   "finding": "Second render of page 59: the shortened wording still splits the monospaced word paused across two lines without a hyphen; the status is being rewritten as a plain word and the page will be viewed again.",
+   "superseded_because": "Page 59 was rebuilt after this view to change the pause wording; this view shows an earlier build."
+  }
+ ]
+}

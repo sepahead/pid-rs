@@ -948,15 +948,15 @@ search rules:
 
 These observations come from the five linked posts:
 
-- [Thread introduction](https://x.com/Qiaoqiao2001/status/2080003441821163958)
-- [Exact problem and audit requirements](https://x.com/Qiaoqiao2001/status/2080003451270885851)
-- [Independent routes and blocker rules](https://x.com/Qiaoqiao2001/status/2080003454165295403)
-- [Long-run work pattern](https://x.com/Qiaoqiao2001/status/2080003459248755141)
-- [Research loop](https://x.com/Qiaoqiao2001/status/2080003461517549887)
+- Thread introduction (public post on X, 22 July 2026, 18:53 UTC; link removed on 2026-10-28)
+- Exact problem and audit requirements (public post on X, 22 July 2026, 18:54 UTC; link removed on 2026-10-28)
+- Independent routes and blocker rules (public post on X, 22 July 2026, 18:54 UTC; link removed on 2026-10-28)
+- Long-run work pattern (public post on X, 22 July 2026, 18:54 UTC; link removed on 2026-10-28)
+- Research loop (public post on X, 22 July 2026, 18:54 UTC; link removed on 2026-10-28)
 
 ### Lea launch thread and source audit: a proof checker is not a trusted problem setter
 
-The [Lea launch thread](https://x.com/chegday/status/2088290461072908638) was inspected on
+The Lea launch thread (public post on X, 14 August 2026, 15:43 UTC; link removed on 2026-10-28) was inspected on
 2026-08-15 together with the public
 [`VIDA-NYU/Lea`](https://github.com/VIDA-NYU/Lea) repository at version-pinned commit
 [`790853c89522bf5899feeb0052b795326feee720`](https://github.com/VIDA-NYU/Lea/commit/790853c89522bf5899feeb0052b795326feee720).
@@ -1052,7 +1052,7 @@ candidate.
 
 ### Grothendieck-constant case study: discovery, certification, and state loss
 
-The [human--AI case-study thread](https://x.com/rah4927/status/2088265007255392411), the exact
+The human--AI case-study thread (public post on X, 14 August 2026, 14:02 UTC; link removed on 2026-10-28), the exact
 arXiv v2 papers
 [*Long-Horizon AI Research for Grothendieck Constant*](https://arxiv.org/abs/2608.11195v2) and
 [*New Lower and Upper Bounds for the Grothendieck Constant*](https://arxiv.org/abs/2608.11158v2),
@@ -1395,11 +1395,11 @@ external mathematics.
 ### Corrected vector-bundle claim: a typed citation-edge failure
 
 The public correction chain beginning with the
-[original claim](https://x.com/prz_chojecki/status/2080659698085191915), the
+original claim (public post on X, 24 July 2026, 14:21 UTC; link removed on 2026-10-28), the
 [linked draft](https://www.ulam.ai/research/algebraizable.pdf), Tony Feng's
-[specific objection](https://x.com/tonylfeng/status/2080757463780094146), the author's
-[acknowledgement](https://x.com/prz_chojecki/status/2080766940604481575), and the conspicuous
-[correction post](https://x.com/prz_chojecki/status/2080767793452970317) was inspected on
+specific objection (public post on X, 24 July 2026, 20:50 UTC; link removed on 2026-10-28), the author's
+acknowledgement (public post on X, 24 July 2026, 21:27 UTC; link removed on 2026-10-28), and the conspicuous
+correction post (public post on X, 24 July 2026, 21:31 UTC; link removed on 2026-10-28) was inspected on
 2026-07-25. The downloaded 18-page draft had SHA-256
 `ebb5aa2c8d1d08cd1c7692ac0526cf537c00985bf5e129ff165be128404e69ca`. The three distinct
 images visible in the claim/correction chain were inspected at their original resolutions: a
@@ -1625,16 +1625,16 @@ statement as an embedded copy of the reviewed evidence.
 
 ### Zeta two-thirds source review: mathematics, methods, process, and the current PID no-direct-transfer disposition
 
-The [Alpöge post](https://x.com/__alpoge__/status/2086868936495423561), its
-[note-and-image reply](https://x.com/__alpoge__/status/2086870739257639034), its
-[historical explanation](https://x.com/__alpoge__/status/2086876565913338272), and the quoted
-[Anthropic announcement](https://x.com/AnthropicAI/status/2086867246073401655) were reviewed on
+The Alpöge post (public post on X, 10 August 2026, 17:35 UTC; link removed on 2026-10-28), its
+note-and-image reply (public post on X, 10 August 2026, 17:42 UTC; link removed on 2026-10-28), its
+historical explanation (public post on X, 10 August 2026, 18:05 UTC; link removed on 2026-10-28), and the quoted
+Anthropic announcement (public post on X, 10 August 2026, 17:28 UTC; link removed on 2026-10-28) were reviewed on
 2026-08-11 together with the linked primary artifacts. The post and image communicate the result;
 they are not additional mathematical evidence. The thread snapshot covered the root, every visible
 same-author reply through status `2086876565913338272`, and the quoted announcement; third-party
 replies and visibility are dynamic. The X attachment's HTML alternative text was empty. Its exact
 large-JPEG transport was the
-[X media rendition](https://pbs.twimg.com/media/HPYN4LHaIAA30oA?format=jpg&name=large): 1168 by
+X media rendition (image attached to a post on X on 10 August 2026; link removed on 2026-10-28): 1168 by
 1709 pixels, MIME
 `image/jpeg`, and a rendering of the first page of the informal note, not a separate derivation;
 SHA-256
@@ -1677,7 +1677,7 @@ sources. Identity proves which bytes were reviewed, not that this note re-proved
 | Related pair-correlation context, [arXiv:2503.15449v4](https://arxiv.org/abs/2503.15449v4), [exact PDF transport](https://arxiv.org/pdf/2503.15449v4) | 339,013-byte PDF; SHA-256 `9b9f3c66c24a1a923e84150cd35e1e45613c59aa5ed894d7a71d84fc440e4c91` | PCC-conditional near-total/simple-on-line context, not an input that makes the new result unconditional. |
 | Bombieri, [“Remarks on Weil's quadratic functional in the theory of prime numbers”](https://eudml.org/doc/252338) | 710,042-byte PDF; SHA-256 `20bd544fc5297766966630092aba4c1e10c6a7e663d14be89bbe1d0c8220b7fd`; [exact reviewed PDF transport](http://www.bdim.eu/item?id=RLIN_2000_9_11_3_183_0&fmt=pdf) | Prior finite-matrix negative-index observation. The PDF transport was HTTP after its HTTPS certificate failed, so it receives reviewed-byte identity only: neither authenticated-source identity nor transport-authentication credit. |
 
-One [non-primary contextual reply](https://x.com/IBhadoo/status/2086892351537184814)
+One non-primary contextual reply (public post on X, 10 August 2026, 19:08 UTC; link removed on 2026-10-28)
 observed that the constant and analytic ingredients had appeared under a closeness-to-line premise.
 The paper's Section 7.4 and the versioned predecessor sources above, not the reply, carry the
 mathematical support for that boundary.

@@ -192,10 +192,10 @@ failure conditions, and evidence needed to reconsider them. Do not count cosmeti
 distinct routes, and do not treat enumeration or council agreement as mathematical evidence.
 
 Follow the current [research reader and verification contract](RESEARCH_READER_AND_VERIFICATION_CONTRACT.md).
-This bounded extension supersedes only the two retained-workflow wordings identified there:
-explicit user pause in the tool-lifecycle section and category-theoretic claims in the
-objects/morphisms section. The old workflow Markdown/TeX/PDF remain dated preserved artifacts
-pending a separate complete publication update; this extension grants no scientific or formal acceptance.
+This bounded extension superseded two retained-workflow wordings: explicit user pause in the
+tool-lifecycle section and category-theoretic claims in the objects/morphisms section. The workflow
+republication of 28 October 2026 applied both corrections to the workflow Markdown, TeX and PDF
+under a new visual review; this extension grants no scientific or formal acceptance.
 
 Scientific documents must state the exact research question, why it matters and the useful advance
 sought. Before the first formula, provide a compact cited glossary and symbol key; define technical

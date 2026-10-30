@@ -1,0 +1,276 @@
+"""Milestone 2: remove X (Twitter) links from the retained pre-authorship workflow copies, verifiably.
+
+The two files are dated custody of the workflow publication as it was before 23 September 2026. Until
+the October 2026 republication, the exact workflow gate bound them through the 5 September visual
+review and the authorship-only check; that gate no longer reads them, and their observed bytes remain
+at commit OBSERVED. The script derives the current files from those observed bytes and verifies each
+output before it writes it. Run it from the worktree root with the Homebrew Python that has pypdf
+6.16.1; `--check` compares the derived bytes with the working tree and writes nothing.
+
+TeX copy: each [label](X URL) becomes 'label (public post on X, <UTC time>; link removed on
+2026-10-28)'; the X media link becomes a dated description. Nothing else changes, and reversing every
+replacement must reproduce the observed bytes. As in milestone 1, labels and other historical wording
+are preserved; only the links go.
+PDF copy: X URI link annotations are removed and every unreferenced object is dropped, so no link
+target stays in the file. Page count, page text, renders, outline, named destinations, document
+information and every other annotation stay the same, and every object and decoded stream of the
+output is scanned for locators of X.
+"""
+from __future__ import annotations
+
+import datetime
+import hashlib
+import io
+import logging
+import re
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+logging.disable(logging.CRITICAL)
+from pypdf import PdfReader, PdfWriter  # noqa: E402
+from pypdf.generic import (  # noqa: E402
+    ArrayObject, ByteStringObject, DictionaryObject, IndirectObject, NameObject, StreamObject,
+    TextStringObject,
+)
+
+OBSERVED = "6aad6ad020260e57a5e3de18f8b3594cafc67293"
+REMOVED_ON = "2026-10-28"
+DIRECTORY = "audit/evidence/mathematical-workflow-authorship-2026-09-23"
+X_ANY = re.compile(r"(x\.com/|twitter\.com/|twimg\.com|//t\.co/)", re.I)
+X_BYTES = re.compile(rb"(x\.com/|twitter\.com/|twimg\.com|//t\.co/|x\\056com|twimg\\056com)", re.I)
+X_LINK = re.compile(r"\[([^\]\n]+)\]\((https://(?:x|twitter)\.com/[A-Za-z0-9_]+/status/(\d+))\)")
+MEDIA_LINK = re.compile(r"\[([^\]\n]+)\]\((https://pbs\.twimg\.com/media/[^)\s]+)\)")
+
+
+def utc_of(status_id: str) -> str:
+    stamp = ((int(status_id) >> 22) + 1288834974657) / 1000
+    when = datetime.datetime.fromtimestamp(stamp, datetime.timezone.utc)
+    return f"{when.day} {when:%B %Y}, {when:%H:%M} UTC"
+
+
+def sha(raw: bytes) -> str:
+    return hashlib.sha256(raw).hexdigest()
+
+
+def observed(relative: str) -> bytes:
+    return subprocess.run(["git", "show", f"{OBSERVED}:{relative}"], capture_output=True, check=True).stdout
+
+
+def redact_text(original: bytes) -> tuple[bytes, int]:
+    text = original.decode("utf-8")
+    pairs: list[tuple[str, str]] = []
+
+    def link(match: re.Match[str]) -> str:
+        new = f"{match.group(1)} (public post on X, {utc_of(match.group(3))}; link removed on {REMOVED_ON})"
+        pairs.append((new, match.group(0)))
+        return new
+
+    def media(match: re.Match[str]) -> str:
+        new = f"{match.group(1)} (image attached to a post on X on 10 August 2026; link removed on {REMOVED_ON})"
+        pairs.append((new, match.group(0)))
+        return new
+
+    redacted = MEDIA_LINK.sub(media, X_LINK.sub(link, text))
+    if X_ANY.search(redacted):
+        sys.exit("an X locator remains in the TeX copy")
+    restored = redacted
+    for new, old in pairs:
+        if restored.count(new) != 1:
+            sys.exit(f"replacement text is not unique: {new[:60]!r}")
+        restored = restored.replace(new, old, 1)
+    if restored != text:
+        sys.exit("bytes outside the replaced links changed")
+    return redacted.encode("utf-8"), len(pairs)
+
+
+def annotation_uris(reader: PdfReader) -> list[list[str]]:
+    pages = []
+    for page in reader.pages:
+        uris = []
+        for annotation in page.get("/Annots") or []:
+            node = annotation.get_object()
+            action = node.get("/A")
+            uri = action.get_object().get("/URI") if action is not None else None
+            uris.append(str(uri) if uri is not None else f"<{node.get('/Subtype')}>")
+        pages.append(uris)
+    return pages
+
+
+def every_object(reader: PdfReader):
+    numbers = set()
+    for generation in reader.xref.values():
+        numbers.update(generation.keys())
+    numbers.update(reader.xref_objStm.keys())
+    for number in sorted(numbers):
+        for generation in range(0, 2):
+            try:
+                obj = reader.get_object(IndirectObject(number, generation, reader))
+            except Exception:
+                continue
+            if obj is not None:
+                yield number, obj
+                break
+
+
+def x_locators(value, where: str) -> list[str]:
+    found: list[str] = []
+    if isinstance(value, (TextStringObject, ByteStringObject, NameObject)):
+        text = value.decode("latin-1") if isinstance(value, bytes) else str(value)
+        if X_ANY.search(text):
+            found.append(f"{where}: {text[:80]}")
+    elif isinstance(value, DictionaryObject):
+        for key, item in value.items():
+            found += x_locators(key, where) + x_locators(item, where)
+        if isinstance(value, StreamObject):
+            if X_BYTES.search(value._data):
+                found.append(f"{where}: raw stream bytes")
+            try:
+                if X_BYTES.search(value.get_data()):
+                    found.append(f"{where}: decoded stream bytes")
+            except Exception:
+                found.append(f"{where}: undecodable stream")
+    elif isinstance(value, ArrayObject):
+        for item in value:
+            found += x_locators(item, where)
+    return found
+
+
+def dangling_references(reader: PdfReader) -> list[str]:
+    present = {number for number, _ in every_object(reader)}
+    missing: list[str] = []
+
+    def walk(value, where: str) -> None:
+        if isinstance(value, IndirectObject):
+            if value.idnum not in present:
+                missing.append(f"{where} -> {value.idnum}")
+        elif isinstance(value, DictionaryObject):
+            for item in value.values():
+                walk(item, where)
+        elif isinstance(value, ArrayObject):
+            for item in value:
+                walk(item, where)
+
+    for number, obj in every_object(reader):
+        walk(obj, f"object {number}")
+    walk(reader.trailer, "trailer")
+    return missing
+
+
+def outline(reader: PdfReader) -> list[tuple[int, str, int | None]]:
+    entries: list[tuple[int, str, int | None]] = []
+
+    def walk(items, depth: int) -> None:
+        for item in items:
+            if isinstance(item, list):
+                walk(item, depth + 1)
+            else:
+                entries.append((depth, item.title, reader.get_destination_page_number(item)))
+
+    walk(reader.outline, 0)
+    return entries
+
+
+def pdf_text(raw: bytes) -> list[str]:
+    result = subprocess.run(["pdftotext", "-layout", "-", "-"], input=raw, capture_output=True, check=True)
+    return result.stdout.decode("utf-8", "replace").split("\f")
+
+
+def renders(raw: bytes) -> list[bytes]:
+    with tempfile.TemporaryDirectory() as directory:
+        source = Path(directory) / "in.pdf"
+        source.write_bytes(raw)
+        subprocess.run(["pdftoppm", "-r", "60", "-png", str(source), str(Path(directory) / "p")], check=True)
+        return [path.read_bytes() for path in sorted(Path(directory).glob("p-*.png"))]
+
+
+def redact_pdf(original: bytes) -> tuple[bytes, int, int]:
+    reader = PdfReader(io.BytesIO(original), strict=False)
+    writer = PdfWriter(clone_from=reader)
+    writer.pdf_header = reader.pdf_header
+    removed = 0
+    for page in writer.pages:
+        kept = []
+        for annotation in page.get("/Annots") or []:
+            node = annotation.get_object()
+            action = node.get("/A")
+            uri = action.get_object().get("/URI") if action is not None else None
+            if uri is not None and X_ANY.search(str(uri)):
+                removed += 1
+                continue
+            kept.append(annotation)
+        if "/Annots" in page:
+            if kept:
+                page[NameObject("/Annots")] = ArrayObject(kept)
+            else:
+                del page[NameObject("/Annots")]
+    present = sum(obj is not None for obj in writer._objects)
+    before = present
+    while True:
+        writer.compress_identical_objects(remove_duplicates=False, remove_unreferenced=True)
+        now = sum(obj is not None for obj in writer._objects)
+        if now == present:
+            break
+        present = now
+    buffer = io.BytesIO()
+    writer.write(buffer)
+    redacted = buffer.getvalue()
+
+    after = PdfReader(io.BytesIO(redacted), strict=False)
+    problems: list[str] = []
+    for number, obj in every_object(after):
+        problems += x_locators(obj, f"object {number}")
+    problems += x_locators(after.trailer, "trailer")
+    if X_BYTES.search(redacted):
+        problems.append("X locator in raw file bytes")
+    problems += [f"dangling reference {item}" for item in dangling_references(after)]
+    old_annotations, new_annotations = annotation_uris(reader), annotation_uris(after)
+    if len(old_annotations) != len(new_annotations):
+        problems.append("page count changed")
+    for page_number, (old, new) in enumerate(zip(old_annotations, new_annotations), start=1):
+        if [uri for uri in old if not X_ANY.search(uri)] != new:
+            problems.append(f"page {page_number}: a non-X annotation changed")
+    if redacted[:8] != original[:8]:
+        problems.append("PDF version header changed")
+    if dict(reader.metadata or {}) != dict(after.metadata or {}):
+        problems.append("document information changed")
+    if outline(reader) != outline(after):
+        problems.append("outline changed")
+    if sorted(reader.named_destinations) != sorted(after.named_destinations):
+        problems.append("named destinations changed")
+    if pdf_text(original) != pdf_text(redacted):
+        problems.append("page text changed")
+    if renders(original) != renders(redacted):
+        problems.append("a 60 dpi page render changed")
+    if problems:
+        sys.exit("\n".join(problems))
+    return redacted, removed, before - present
+
+
+def main() -> int:
+    check = sys.argv[1:] == ["--check"]
+    if sys.argv[1:] not in ([], ["--check"]):
+        sys.exit("usage: redact-milestone-2.py.txt [--check]")
+    status = 0
+    for name, kind in (("previous-source.tex.txt", "text"), ("previous.pdf.bin", "pdf")):
+        relative = f"{DIRECTORY}/{name}"
+        original = observed(relative)
+        if kind == "text":
+            redacted, count = redact_text(original)
+            dropped = 0
+        else:
+            redacted, count, dropped = redact_pdf(original)
+        if check:
+            same = Path(relative).read_bytes() == redacted
+            status |= not same
+            print(f"{relative}\t{'matches' if same else 'DIFFERS'}\t{sha(redacted)}")
+            continue
+        Path(relative).write_bytes(redacted)
+        print(f"{relative}\t{count} links\t{dropped} objects dropped\t{len(original)}\t{sha(original)}"
+              f"\t{len(redacted)}\t{sha(redacted)}")
+    return status
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

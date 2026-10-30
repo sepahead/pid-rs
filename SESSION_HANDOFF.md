@@ -5,8 +5,9 @@
 The [current map](RESEARCH_RESULTS_2026_10_10.md), [reader contract](RESEARCH_READER_AND_VERIFICATION_CONTRACT.md)
 and [process evidence report](RESEARCH_PROCESS_EVIDENCE_2026_10_10.md) explain actual AI roles,
 candidate selection, review dependencies, variable definitions and separate evidence connections.
-The retained workflow's pause and category-theoretic wording has only the bounded precedence
-specified in the contract; its full old Markdown/TeX/PDF update remains open.
+The retained workflow's pause and category-theoretic wording had only the bounded precedence
+specified in the contract until the workflow republication of 28 October 2026, which applied both
+corrections to the Markdown, TeX and PDF under a new visual review.
 
 The [current output notes](output/RESEARCH_NOTES_2026_10_10.md) and
 [curation record](audit/evidence/archive-output-curation-20261010.md) bring useful

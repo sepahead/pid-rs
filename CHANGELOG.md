@@ -7,6 +7,18 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Republish the mathematical problem-solving workflow without links to posts on X: each post is
+  described by its date and the role of its author, a source-policy paragraph states the rule, the
+  two corrections of the research reader contract (explicit user pause and category-theoretic
+  claims) are applied, and a suggested citation is added. A new page-by-page visual review of all
+  87 pages in color and grayscale, plus 22 detail targets at 300 dpi, is bound to the new PDF. The
+  exact gate validates that review and renders the detail targets again to compare their digests;
+  its self-test has 576 controls in exact mode and 574 in cross-toolchain mode. The retired
+  5 September review and authorship-only check stay verifiable through the new
+  `check-workflow-publication-history.py`, which reads Git blobs. The two retained pre-authorship
+  copies lose their 17 links by the verified procedure of the first step, and the citation-edge
+  manifest labels the objecting reader `other reader`. See the
+  [redaction record](audit/evidence/x-link-redaction-2026-10-26.md).
 - Stop citing social-media posts, which can be deleted or edited and can present opinions as facts;
   AGENTS.md states the rule. Remove links to posts on X from dated custody records where no check
   depends on them, and keep each record readable without them: the external deep-audit Markdown

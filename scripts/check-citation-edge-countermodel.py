@@ -39,7 +39,7 @@ REQUIRED_SENTINELS = (
 MANIFEST_ID = "X-VECTOR-BUNDLE-CITATION-SOURCES-001"
 RECORD_ID = "X-VECTOR-BUNDLE-CITATION-EDGE-001"
 # Schema 2, without links to the public posts; schema 1 is PREVIOUS_MANIFEST_REVISION below.
-EXPECTED_MANIFEST_SHA256 = "1a771a026a7bf86f46cba8f1654e3ab3578347d625c3d12b3cd3de4b52914e1d"
+EXPECTED_MANIFEST_SHA256 = "b21a35401490a47f74c14fc2f8a442aa791311bca0f9ec9696eccb5395fec3da"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 EXPECTED_ARTIFACTS = {
@@ -91,7 +91,7 @@ EXPECTED_ARTIFACTS = {
 # previous_revision.
 EXPECTED_PUBLIC_STATEMENTS = {
     "original-claim": ("2026-07-24T14:21:43Z", "original_claim", "draft author"),
-    "specific-objection": ("2026-07-24T20:50:12Z", "specific_objection", "independent reader"),
+    "specific-objection": ("2026-07-24T20:50:12Z", "specific_objection", "other reader"),
     "author-acknowledgement": ("2026-07-24T21:27:52Z", "author_acknowledgement", "draft author"),
     "author-correction": ("2026-07-24T21:31:15Z", "author_correction", "draft author"),
 }

@@ -70,9 +70,71 @@ run and inspected.
 | 43 | Third-party material | Only link annotations of repository-held copies change; no content is rewritten. |
 | 44 | Accessibility | Navigation links to X are gone; the dates make each post findable by other means. |
 | 45 | Future policy | New text cites no social-media posts, because posts can be deleted or edited and can present opinions as facts that bias readers and AI agents; AGENTS.md states the rule. |
-| 46 | Thesis separation | The policy applies to public repositories; other documents are unaffected. |
+| 46 | Policy scope | The policy applies to public repositories; other documents are unaffected. |
 | 47 | Shallow clones | Verifying observed bytes needs a clone with history; the record says how. |
 | 48 | Inventory completeness | Text files were scanned for links to X, and all 115 tracked PDFs at object level, including decoded streams. |
 | 49 | Remaining work | The workflow publication and its pre-authorship copies are listed. |
 | 50 | Failure handling | Any failed gate stops the step before `main`; nothing is forced. |
 | 51 | Byte-level completeness | Removing an annotation from a page kept its object in the file, so the first version left the link targets in the bytes. Found by an object-level scan before `main` moved; the corrected script drops unreferenced objects and fails if any object or decoded stream still holds a locator of X. |
+
+## Second step: 28 October 2026
+
+The second step removed the links from the workflow publication and its two pre-authorship
+copies. One AI agent made and adjudicated the change. A coding agent of another vendor (OpenAI
+Codex) reviewed the plan as one advisory council member and wrote three candidate implementations
+of the new receipt validation from the same written specification. Every lens below is advisory;
+the checks named in it were run and inspected.
+
+### Routes
+
+| Route | Assessment |
+|---|---|
+| S0 No action | Rejected: a current publication would keep 17 links to posts. |
+| S1 New PDF; keep the 5 September review through a delta check | Rejected: the content changed, so a delta check would have to judge content; a new review is the direct evidence. |
+| S2 Review only the changed pages; transfer the old review for the others | Rejected: one review would then cover two PDFs. The receipt binds one review to one PDF. |
+| S3 New PDF, new complete review bound to it, Git-bound check of the retired chain | **Selected.** |
+| S4 Keep the pre-authorship copies unchanged | Rejected: once the gate no longer reads them, link removal breaks no check, and the owner asked for it. |
+| S5 Delete the pre-authorship copies | Rejected: removes retained custody that nobody asked to remove. |
+| S6 Reword the copies to role-only text, as in the new publication | Rejected, dissent retained: it would change the historical wording, not only the links. Link-only redaction matches the first step. |
+| S7 Add retrieval notices next to the redacted copies | Rejected: the record already gives the commit and the retrieval command. |
+| S8 Keep the authorship-only check, pinned to the redacted copies | Rejected: the check would then attest bytes that were never the published predecessor. |
+| S9 Rewrite Git history | Rejected: as in the first step. |
+
+### Validator candidates
+
+The three candidates differ in design, not in their written contract. Each passed its own full
+self-test on this host (572, 529 and 541 controls). Candidate 1 was selected: it requires the
+complete receipt to be canonical bytes, renders the 22 detail targets in both modes (so a failing
+or noisy renderer fails in both), runs the validation in the same clean environment as the page
+renders, and has the widest set of controls. Candidate 2 builds a local copy whose digests are
+bound to new renders, so the exact comparison is tested on every toolchain; this is retained as a
+possible improvement. Candidate 3 has explicit type controls for each integer field. The two
+unselected candidates are not retained in the repository; the selection carries no scientific or
+selection credit.
+
+### Council lenses
+
+| # | Lens | Finding and disposition |
+|---:|---|---|
+| 1 | Owner intent | All remaining links to posts are removed; the scans find none. |
+| 2 | Self-containedness | The workflow describes each post by date and role and cites the primary sources. |
+| 3 | Subject binding | The receipt binds the review to the exact PDF and rendering-receipt digests. |
+| 4 | Review honesty | One AI agent, two sittings, self-reported times; no independent or human review is claimed. |
+| 5 | Single-page views | Each page view must carry the digest of its own render in the rendering receipt. |
+| 6 | Detail targets | A closed roster of 22 boxes; the exact mode renders them again and compares digests. |
+| 7 | Portability | The cross-toolchain mode skips only the crop-digest comparison. |
+| 8 | Outcomes | A view is clear or advisory; a blocker outcome fails the gate. |
+| 9 | Typed records | Exact types; Boolean and floating-point values fail where an integer is required. |
+| 10 | Causal controls | Each mutation must fail with the message of its own rule, in normal and optimized Python. |
+| 11 | Fixture drift | The candidates were written against a one-sitting fixture. Five mutations assumed it and were rewritten for the final records: overlapping sittings, sitting count, undeclared sitting, the review-date shift, and decreasing times, where several records share one second. |
+| 12 | False positive | The selected drive-letter rule matched `https://`. A drive letter must now start a token; two controls cover a URL and a Windows path. |
+| 13 | Record versus image | The exact comparison found that the page-59 record named a box that had been computed again after the last rebuild, while the image had not been rendered again. The record now names the rendered box. |
+| 14 | Retired chain | The history check reads Git blobs; the two receipt files in the tree are unchanged. |
+| 15 | Copy fidelity | The first-step checks pass for both redacted copies; an object-level scan finds no locator of X. |
+| 16 | Array disclosure | The script writes every page annotation array again. The first-step description of the dropped arrays is corrected. |
+| 17 | Role label | `independent reader` became `other reader`; nothing retained establishes independence. |
+| 18 | Date label | The PDF says `revised 26 October 2026`, when the revision began; the receipt gives the review date. Accepted. |
+| 19 | Environment | Under `HOME=/nonexistent`, the self-test fails on this host before and after the change, because LuaTeX's font loader needs a writable cache. The dedicated recipe sets no `HOME` and passes. The historical recipe that sets it is closed and unchanged. |
+| 20 | Independence | The candidates share one model and one specification, and the adjudicator wrote that specification; agreement among them is correlated. |
+| 21 | Ordering | Pins are rebound after every byte is final; the source-state manifest is generated last. |
+| 22 | Hosted preflight | CI runs on the side branch before `main` moves. |

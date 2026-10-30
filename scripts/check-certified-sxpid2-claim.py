@@ -56,7 +56,7 @@ EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "386bf0284ffb78eae5528a8cec327b136af492473698b6a5b9754e8372e3305b"
+        "a7399b7f3b029bcc81271d71926d4cbf8050b6d20f651ded9e86b53303f1b5d1"
     ),
     "justfile": ("5eef6bbb7d4f0d4ecb42af5f302da20b6943b6db2ced093c07db290708d02032"),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
@@ -171,7 +171,7 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        'e26ba5db65826329646f923b8db778b8388567d2d2e84bbc663af2667695425e'
+        '3dea7b5af39b1fd7d6eb444e7cb826c0eec708ac3b9cca62a72ef781a8106fc5'
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (

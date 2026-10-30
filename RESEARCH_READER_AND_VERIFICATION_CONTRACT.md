@@ -182,8 +182,11 @@ application credit follows.
   existing mathematical obligations are unchanged.
 
 The older publication remains a dated preserved artifact. Updating its complete
-Markdown/TeX/PDF projection and visual receipt is a separate publication task;
-this contract does not claim that task is done.
+Markdown/TeX/PDF projection and visual receipt was a separate publication task.
+On 28 October 2026 the workflow republication applied both corrections, with a
+new visual-review receipt
+(`audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md`); the two
+retained sentences quoted above are the wording that this extension superseded.
 
 ## Validation and implementation
 

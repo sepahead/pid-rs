@@ -12,9 +12,10 @@ Mahmoudian on its first page and in its PDF Author metadata. It does not review
 mathematics or certify layout. See [authorship and citation](../AUTHORSHIP.md) for
 historical artifacts and third-party sources.
 
-The workflow and blueprint PDF checkers also accept `--authorship-only`. This mode
-checks the author change against preserved prior bytes without repeating the full
-publication build or transferring an old visual review to the new PDF.
+The blueprint PDF checker also accepts `--authorship-only`. This mode checks the author
+change against preserved prior bytes without repeating the full publication build or transferring
+an old visual review to the new PDF. The workflow checker retired this mode with its October 2026
+republication; `check-workflow-publication-history.py` keeps the retired result verifiable.
 
 ## Cargo-deny toolchain preflight
 
@@ -3061,7 +3062,7 @@ transition—not multi-name atomicity, a validation shortcut, or a publication c
 
 The PDF includes the canonical repository protocol plus a novice-oriented primer, worked negative
 examples, bounded evolutionary-search rules, and a typed evidence-aggregation model. The checker
-binds the exact 90-entry outline depth/title/page manifest and, in exact/refresh mode, the 231-entry
+binds the exact 91-entry outline depth/title/page manifest and, in exact/refresh mode, the 232-entry
 named-destination page/type/coordinate manifest. The Markdown table renderer requires eight
 baseline skips of remaining page space before entering each `longtable`, forcing an earlier page
 break otherwise; this resolves the page boundary before its automatic named destination is
@@ -3085,26 +3086,46 @@ artifact-retention and rendering gate: it does not instantiate the citation-edge
 proofs, prove any PID claim, establish semantic correctness from visual structure, authenticate the
 toolchain, or turn correlated checks of the same bytes into independent evidence.
 
-The [September 5 split visual receipt](../audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md)
-binds all 87 pages in color and grayscale at 120 dpi, 24 color spots at 300 dpi, and the four
-figure pages in grayscale at 300 dpi. It preserves late observations and reconstructed timing;
-it does not claim sole-root or independent complete review. The corresponding predecessor self-test
-retains 357 controls outside the text-portability family, including 24 visual negatives, four
-split-review controls, four machine-scope controls and 12 Python-bytecode controls. Its 71
-text-portability controls bring the declared total to 428. Compact fixtures use independent literal
+The [28 October 2026 visual receipt](../audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md)
+and its [actual-view records](../audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json)
+bind 196 views of the current PDF: all 87 pages in color and in grayscale at 120 dpi, one page per
+view, and 22 named detail targets at 300 dpi, with two superseded views of an earlier build. The
+gate requires each page view to carry the digest of its render in the rendering receipt and every
+page once per mode; a closed roster of detail-target boxes; a clear or advisory outcome for every
+view (a blocker fails) with a finding of at least six words; record times inside declared,
+non-overlapping sittings and never decreasing; a review date equal to the date of the latest view;
+an advisory paragraph that names exactly the advisory pages; exact JSON types; and canonical
+receipt bytes. The records digest is checked last, so a mutation reaches its own rule first. Exact
+mode renders the 22 targets again from the committed PDF in the clean Poppler environment and
+compares their digests; cross-toolchain mode also renders them and skips only that comparison. The
+self-test has 576 controls in exact mode and 574 in cross-toolchain mode, of which 150 and 148
+cover the records. Run standalone without an argument, it takes the cross-toolchain subset; the
+exact gate passes `--exact`. The receipt states one AI agent, two sittings and self-reported times.
+It is agent artifact review, not mathematical proof, accessibility certification, human review or
+hosted success.
+
+The September 5 split visual receipt and the authorship-only check bound the previous PDF and no
+longer bind the current one. `check-workflow-publication-history.py` keeps them verifiable: it
+checks the 21 file entries of the authorship receipt against their Git blobs at the merge that
+introduced the receipt and at the last commit before the republication, requires the two receipt
+files in the tree to be unchanged, and runs the historical visual-receipt validator, extracted
+from the pinned checker blob, on the historical blobs. `--authorship-replay` also replays the
+authorship-only check, which needs Poppler. Its self-test has 18 controls. Both read Git history,
+so they need a full clone; CI runs them in the release-scope job in normal and optimized Python.
+
+The text-portability family keeps 71 controls. Compact fixtures use independent literal
 diagram sequences from retained real extractions;
 synthetic surrounding prose and page partitions keep the controls small. They cover all nine
 ordered pairs of the three observed producer profiles, admitted ASCII whitespace, paired malformed
 labels and bounds, an unlisted permutation of the new page 12 profile, and strict content/order
 failures. Source controls also reject floating-point page keys that compare equal to the reviewed
 integers. Fixture expectations are never derived from the candidate checker.
-Twenty scoped lenses separate visible findings from mandatory extraction, font, action and
-reproduction gates. This is agent artifact review, not mathematical proof, accessibility
-certification, human review or hosted success.
+Twenty scoped lenses in the receipt separate visible findings from mandatory extraction, font,
+action and reproduction gates.
 
 Production Python launches and positive verifier children use explicit `-B` alongside isolation;
 `-I` ignores `PYTHONDONTWRITEBYTECODE`, so the environment variable alone cannot prevent adjacent
-module caches. Source controls bind all 36 production launch sites and the two transitive Python
+module caches. Source controls bind all 42 production launch sites and the two transitive Python
 command vectors while preserving normal and optimized runs. Focused controls import the actual
 synchronizer through its existing loader prefix, distinguish the environment-only failure from
 explicit no-bytecode behavior, and retain rejection of both writable and undeclared cache

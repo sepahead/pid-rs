@@ -11,8 +11,12 @@ This note does not validate the mathematical claims in the external sources. It 
 that the source workflow guarantees a correct proof. The workflow is useful because it makes the
 claim, search, failure, and audit steps explicit.
 
-An author, institution, paper, repository, X thread, or model is a source, not an authority by
-label. Keep each statement attributed until separately adjudicated. Before adopting a lesson,
+An author, institution, paper, repository, social-media post, or model is a source, not an authority
+by label. Keep each statement attributed to its source until separately adjudicated. Do not cite
+social-media posts: a post can be deleted or edited after it is cited and can present an opinion as
+a fact, which biases readers and AI agents and weakens scientific rigor. State such a point in your
+own words as coming from a public post of a given date, cite the primary source if one exists, and
+neither link the post nor name its author. Before adopting a lesson,
 inspect at least: statement semantics; primary-source correspondence; mathematical logic; executable
 or formal implementation; trust surface; numerical representation; hostile controls; provenance
 and selection; reproducibility and independence dimensions; and scope, nonimplications, and transfer
@@ -28,6 +32,11 @@ not retroactively relabelled as 50-lens reviews.
 
 This note is project-defined process guidance. It has no software implementation or defining
 method paper. It adds no PID method, estimator, theorem, benchmark result, or validation.
+
+Suggested citation: Sepehr Mahmoudian (2026), *Mathematical problem-solving workflow for pid-rs*.
+Include the exact repository commit or release. For the software, use
+[CITATION.cff](https://github.com/sepahead/pid-rs/blob/main/CITATION.cff); the sources cited below
+identify their separate authorship.
 
 The protocol is deliberately standalone for a Codex-like agent that resumes after context
 compaction. A continuity record preserves work state, but it is never authority for a theorem,
@@ -180,7 +189,7 @@ linked journal edition are byte-identical.
 
 ## Source observations
 
-### X thread
+### Erdős-problem research thread
 
 The thread author reports six solutions to open Erdős problems in five days. The thread does not, by
 itself, verify those solutions. It describes this repeated loop:
@@ -202,17 +211,16 @@ search rules:
 - Block a route that stops at an unproved statement of comparable strength.
 - Challenge each candidate argument before acceptance.
 
-These observations come from the five linked posts:
-
-- [Thread introduction](https://x.com/Qiaoqiao2001/status/2080003441821163958)
-- [Exact problem and audit requirements](https://x.com/Qiaoqiao2001/status/2080003451270885851)
-- [Independent routes and blocker rules](https://x.com/Qiaoqiao2001/status/2080003454165295403)
-- [Long-run work pattern](https://x.com/Qiaoqiao2001/status/2080003459248755141)
-- [Research loop](https://x.com/Qiaoqiao2001/status/2080003461517549887)
+These observations come from a public thread of five posts that its author published on X (formerly
+Twitter) on 22 July 2026, between 18:53 and 18:54 UTC. In order, the posts introduced the work,
+stated the exact problem and audit requirements, gave the rules for independent routes and
+blockers, described the long-run work pattern, and summarized the research loop. pid-rs retains no
+copy of the thread. The loop and the rules above restate everything that this document uses from
+it.
 
 ### Lea launch thread and source audit: a proof checker is not a trusted problem setter
 
-The [Lea launch thread](https://x.com/chegday/status/2088290461072908638) was inspected on
+The public launch thread for Lea, posted on X on 14 August 2026 at 15:43 UTC, was inspected on
 2026-08-15 together with the public
 [`VIDA-NYU/Lea`](https://github.com/VIDA-NYU/Lea) repository at version-pinned commit
 [`790853c89522bf5899feeb0052b795326feee720`](https://github.com/VIDA-NYU/Lea/commit/790853c89522bf5899feeb0052b795326feee720).
@@ -308,8 +316,8 @@ candidate.
 
 ### Grothendieck-constant case study: discovery, certification, and state loss
 
-The [human--AI case-study thread](https://x.com/rah4927/status/2088265007255392411), the exact
-arXiv v2 papers
+The public thread on X that announced the human--AI case study (14 August 2026, 14:02 UTC), the
+exact arXiv v2 papers
 [*Long-Horizon AI Research for Grothendieck Constant*](https://arxiv.org/abs/2608.11195v2) and
 [*New Lower and Upper Bounds for the Grothendieck Constant*](https://arxiv.org/abs/2608.11158v2),
 and the public
@@ -650,15 +658,14 @@ external mathematics.
 
 ### Corrected vector-bundle claim: a typed citation-edge failure
 
-The public correction chain beginning with the
-[original claim](https://x.com/prz_chojecki/status/2080659698085191915), the
-[linked draft](https://www.ulam.ai/research/algebraizable.pdf), Tony Feng's
-[specific objection](https://x.com/tonylfeng/status/2080757463780094146), the author's
-[acknowledgement](https://x.com/prz_chojecki/status/2080766940604481575), and the conspicuous
-[correction post](https://x.com/prz_chojecki/status/2080767793452970317) was inspected on
-2026-07-25. The downloaded 18-page draft had SHA-256
-`ebb5aa2c8d1d08cd1c7692ac0526cf537c00985bf5e129ff165be128404e69ca`. The three distinct
-images visible in the claim/correction chain were inspected at their original resolutions: a
+The public correction chain was inspected on 2026-07-25. It consisted of the
+[linked draft](https://www.ulam.ai/research/algebraizable.pdf) and four posts on X, all on 24 July
+2026. At 14:21 UTC the draft's author announced its result. At 20:50 UTC another reader posted a
+specific objection to the argument. At 21:27 UTC the draft's author acknowledged the objection, and
+at 21:31 UTC posted a conspicuous correction. pid-rs retains no copy of the posts; the draft and
+the cited papers support the mathematical analysis below. The downloaded 18-page draft had SHA-256
+`ebb5aa2c8d1d08cd1c7692ac0526cf537c00985bf5e129ff165be128404e69ca`. The three distinct images
+visible in the claim/correction chain were inspected at their original resolutions: a
 paper-introduction image, a screenshot of Theorems A and B, and a screenshot of the correction.
 They repeated claims or text present in the draft/thread and supplied no independent proof.
 
@@ -881,23 +888,21 @@ statement as an embedded copy of the reviewed evidence.
 
 ### Zeta two-thirds source review: mathematics, methods, process, and the current PID no-direct-transfer disposition
 
-The [Alpöge post](https://x.com/__alpoge__/status/2086868936495423561), its
-[note-and-image reply](https://x.com/__alpoge__/status/2086870739257639034), its
-[historical explanation](https://x.com/__alpoge__/status/2086876565913338272), and the quoted
-[Anthropic announcement](https://x.com/AnthropicAI/status/2086867246073401655) were reviewed on
-2026-08-11 together with the linked primary artifacts. The post and image communicate the result;
-they are not additional mathematical evidence. The thread snapshot covered the root, every visible
-same-author reply through status `2086876565913338272`, and the quoted announcement; third-party
-replies and visibility are dynamic. The X attachment's HTML alternative text was empty. Its exact
-large-JPEG transport was the
-[X media rendition](https://pbs.twimg.com/media/HPYN4LHaIAA30oA?format=jpg&name=large): 1168 by
-1709 pixels, MIME
-`image/jpeg`, and a rendering of the first page of the informal note, not a separate derivation;
-SHA-256
-`2f4549670ad8fb66f071ef9dff73c78d4b8c71936204e9f473715bdd28257c41`. A WebP transport of the same
-dimensions has different bytes and receives no identity credit here. The Anthropic page's hero alt
-text says “Illustration of a mathematical compass,” while its social card labels the compass image
-“Anthropic logo”; that metadata mismatch has no mathematical content.
+A public thread on X of 10 August 2026 that announced the result was reviewed on 2026-08-11
+together with the linked primary artifacts. It consisted of a first post at 17:35 UTC, a reply with
+a note and an image at 17:42 UTC, and a reply that explained the history of the problem at 18:05
+UTC. The first post quoted an announcement on X of 17:28 UTC by the organization whose research
+page is the first artifact in the table below. The posts and the image communicate the result; they
+are not additional mathematical evidence. The snapshot covered the first post, every visible reply
+by the same author up to the historical explanation, and the quoted announcement; third-party
+replies and visibility change over time. The HTML alternative-text field of the image was empty.
+Its large JPEG rendition was 1168 by 1709 pixels, MIME `image/jpeg`, SHA-256
+`2f4549670ad8fb66f071ef9dff73c78d4b8c71936204e9f473715bdd28257c41`, and it renders the first page
+of the informal note in the table below, not a separate derivation. A WebP rendition of the same
+dimensions has different bytes and receives no identity credit here. pid-rs retains no copy of the
+posts or the image. The Anthropic page's hero alt text says “Illustration of a mathematical
+compass,” while its social card labels the compass image “Anthropic logo”; that metadata mismatch
+has no mathematical content.
 
 The exact source set was:
 
@@ -933,7 +938,7 @@ sources. Identity proves which bytes were reviewed, not that this note re-proved
 | Related pair-correlation context, [arXiv:2503.15449v4](https://arxiv.org/abs/2503.15449v4), [exact PDF transport](https://arxiv.org/pdf/2503.15449v4) | 339,013-byte PDF; SHA-256 `9b9f3c66c24a1a923e84150cd35e1e45613c59aa5ed894d7a71d84fc440e4c91` | PCC-conditional near-total/simple-on-line context, not an input that makes the new result unconditional. |
 | Bombieri, [“Remarks on Weil's quadratic functional in the theory of prime numbers”](https://eudml.org/doc/252338) | 710,042-byte PDF; SHA-256 `20bd544fc5297766966630092aba4c1e10c6a7e663d14be89bbe1d0c8220b7fd`; [exact reviewed PDF transport](http://www.bdim.eu/item?id=RLIN_2000_9_11_3_183_0&fmt=pdf) | Prior finite-matrix negative-index observation. The PDF transport was HTTP after its HTTPS certificate failed, so it receives reviewed-byte identity only: neither authenticated-source identity nor transport-authentication credit. |
 
-One [non-primary contextual reply](https://x.com/IBhadoo/status/2086892351537184814)
+One non-primary contextual reply by a third party, posted on X on 10 August 2026 at 19:08 UTC,
 observed that the constant and analytic ingredients had appeared under a closeness-to-line premise.
 The paper's Section 7.4 and the versioned predecessor sources above, not the reply, carry the
 mathematical support for that boundary.
@@ -1890,7 +1895,11 @@ Under the current Codex function contract, apply this lifecycle:
    `blocked` only after the same impasse has recurred for at least three consecutive goal turns,
    counting the original user-triggered turn, and no safe in-scope progress remains; record the
    blocker and each attempted alternative. When a previously blocked goal resumes, begin a fresh
-   three-turn blocked audit. A paused, hard, slow, or partially complete goal stays active.
+   three-turn blocked audit. A hard, slow, or partially complete goal stays active: difficulty,
+   slowness, or partial progress alone is not a pause request. Pause only at the user's explicit
+   request; then call `update_goal` with status paused when that tool is available, report its
+   returned state, and stop goal work. Use plan or goal tools only when they are actually
+   available, and never invent a successful call.
 5. Derive progress from a versioned obligation registry, not from tool usage. Publish the weighting
    rule, count only closed applicable obligations, retain failed and unknown states separately, and
    report a range when the denominator or scope can still expand.
@@ -2245,7 +2254,8 @@ codomain, metric/divergence, domain, probability statement, and aggregate error 
 an edge from shared names, isomorphic-looking diagrams, matching units, a common implementation,
 or a limiting intuition.
 
-Every categorical claim must answer five questions in its claim packet:
+Every category-theoretic claim, as distinct from a claim about finite category-valued data, must
+answer five questions in its claim packet:
 
 1. What are the exact objects and admissible morphisms, and which PID/method identity does each
    inhabit?

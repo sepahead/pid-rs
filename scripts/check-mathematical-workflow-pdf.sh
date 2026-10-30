@@ -27,11 +27,8 @@ SOURCE="audit/formal/latex/mathematical-problem-solving-workflow.tex"
 MARKDOWN="MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 COMMITTED="output/pdf/mathematical-problem-solving-workflow.pdf"
 RENDERING_RECEIPT="output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
-VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md"
-VISUAL_RECORDS="audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json"
-AUTHORSHIP_DIR="audit/evidence/mathematical-workflow-authorship-2026-09-23"
-AUTHORSHIP_RECEIPT="$AUTHORSHIP_DIR/SUCCESSOR-v2.json"
-AUTHORSHIP_RECEIPT_SHA256="be777ffd770e403bc807ab7e57021439fdeaf35f317ee5889c36000ce5958600"
+VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md"
+VISUAL_RECORDS="audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json"
 SHARED_STYLE="audit/formal/latex/pid-rs-report-tables.sty"
 PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
@@ -58,8 +55,8 @@ FIGURE_STEMS=(
   "invalidation-publication-state-machine"
 )
 
-if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" && "$MODE" != "--refresh" && "$MODE" != "--authorship-only" ]]; then
-  echo "usage: $0 [--exact|--cross-toolchain|--refresh|--authorship-only]" >&2
+if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" && "$MODE" != "--refresh" ]]; then
+  echo "usage: $0 [--exact|--cross-toolchain|--refresh]" >&2
   exit 2
 fi
 
@@ -658,11 +655,6 @@ if [[ "$MODE" != "--refresh" ]]; then
   # inputs made a clean refresh impossible and falsely enlarged the build dependency closure.
   # Exact and cross-toolchain modes still capture the report, rendering, and visual records.
   manifest_paths+=("$COMMITTED" "$RENDERING_RECEIPT" "$VISUAL_RECEIPT" "$VISUAL_RECORDS")
-  manifest_paths+=("$AUTHORSHIP_RECEIPT" "$AUTHORSHIP_DIR/SUCCESSOR.json" "$AUTHORSHIP_DIR/previous.pdf.bin"
-    "$AUTHORSHIP_DIR/previous-rendering-receipt.tsv.txt" "$AUTHORSHIP_DIR/previous-visual-receipt.md.txt"
-    "$AUTHORSHIP_DIR/previous-actual-views.json.txt" "$AUTHORSHIP_DIR/previous-source.tex.txt"
-    "$AUTHORSHIP_DIR/first-page-120dpi.png" "$AUTHORSHIP_DIR/first-page-gray-120dpi.png"
-    "$AUTHORSHIP_DIR/first-page-color-300dpi.png")
 fi
 for stem in "${FIGURE_STEMS[@]}"; do
   manifest_paths+=("$FIGURE_DIR/$stem.svg")
@@ -1386,10 +1378,10 @@ for forbidden in (
 # byte bindings close the residual framing/style parser boundary. Updating either digest is an
 # explicit custody transition, not a claim that the bytes are semantically correct by hashing.
 markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
-if markdown_digest != "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9":
+if markdown_digest != "f05845157268f3b875499ea683f2371198d703a99112992d973b0db842ae42a1":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
-if primer_digest != "80d0f8da82b2d5af40b715ac68acbd4626d58bdf1671a94b0d64e7b51c2e284e":
+if primer_digest != "e4c8a2915681444417418da67603685f2185ca5bb73067764b9f75e87a40f620":
     fail(f"typeset-only primer exact-byte custody drifted: {primer_digest}")
 style_digest = hashlib.sha256(style_bytes).hexdigest()
 if style_digest != "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9":
@@ -1397,22 +1389,31 @@ if style_digest != "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7f
 PY
 
 if [[ "$MODE" != "--refresh" ]]; then
-  python3 -I -S -B - \
-    "$SNAPSHOT_ROOT/$AUTHORSHIP_DIR/previous-visual-receipt.md.txt" \
-    "$SNAPSHOT_ROOT/$AUTHORSHIP_DIR/previous.pdf.bin" \
-    "$SNAPSHOT_ROOT/$AUTHORSHIP_DIR/previous-rendering-receipt.tsv.txt" \
+  mkdir -p "$BUILD_ROOT/pdf-tools-xdg-config" "$BUILD_ROOT/pdf-tools-xdg-cache"
+  env -i \
+    "${CLEAN_BASE_ENV[@]}" \
+    "XDG_CONFIG_HOME=$BUILD_ROOT/pdf-tools-xdg-config" \
+    "XDG_CACHE_HOME=$BUILD_ROOT/pdf-tools-xdg-cache" \
+    "TMPDIR=$BUILD_ROOT/tmp" \
+    python3 -I -S -B - \
+    "$SNAPSHOT_ROOT/$VISUAL_RECEIPT" \
+    "$SNAPSHOT_ROOT/$COMMITTED" \
+    "$SNAPSHOT_ROOT/$RENDERING_RECEIPT" \
     "$EXPECTED_PAGES" \
     "$RENDER_DPI" \
     "$HIGH_RESOLUTION_DPI" \
-    "$SNAPSHOT_ROOT/$AUTHORSHIP_DIR/previous-actual-views.json.txt" <<'PY'
+    "$SNAPSHOT_ROOT/$VISUAL_RECORDS" "$MODE" "$BUILD_ROOT" <<'PY'
 from __future__ import annotations
 
 from collections import Counter
+from datetime import datetime
 import hashlib
 import json
 from pathlib import Path
 import re
+import subprocess
 import sys
+import tempfile
 
 
 def fail(detail: str) -> None:
@@ -1427,6 +1428,10 @@ rendering_receipt_path = Path(sys.argv[3])
 expected_pages = int(sys.argv[4])
 expected_normal_dpi = int(sys.argv[5])
 expected_high_resolution_dpi = int(sys.argv[6])
+mode = sys.argv[8]
+build_root = Path(sys.argv[9])
+if mode not in ("--exact", "--cross-toolchain"):
+    fail("validation mode is not exact or cross-toolchain")
 if expected_pages != 87:
     fail(f"expected-page argument differs from the reviewed value 87: {expected_pages}")
 if expected_normal_dpi != 120:
@@ -1443,7 +1448,14 @@ try:
     text = raw.decode("utf-8")
 except UnicodeDecodeError as error:
     fail(f"is not UTF-8: {error}")
-if any(forbidden in text for forbidden in ("/private/", "/Users/", "file://")):
+
+
+def has_host_path(value: str) -> bool:
+    # A drive letter must start a token, so a URL scheme such as "https://" is not a host path.
+    return bool(re.search(r"/(?:private|Users|home|tmp|var|etc)/|file://|(?<![A-Za-z0-9])[A-Za-z]:[\\/]|\\\\", value))
+
+
+if has_host_path(text):
     fail("contains a private or host-local path")
 lines = text.splitlines()
 if any(
@@ -1472,17 +1484,17 @@ field_order = (
     "high_resolution_dpi",
     "color_pages_reviewed",
     "grayscale_pages_reviewed",
-    "high_resolution_spot_checks",
+    "detail_targets",
     "figure_pages_reviewed",
+    "changed_pages",
+    "previous_publication_pdf_sha256",
     "lens_count",
     "status",
     "review_date_utc",
     "reviewer_kind",
+    "sittings",
     "actual_view_records",
     "actual_view_records_sha256",
-    "normal_review_partition",
-    "high_color_review_partition",
-    "high_gray_review_partition",
     "timing_scope",
 )
 field_values: dict[str, str] = {}
@@ -1505,44 +1517,39 @@ def field(name: str) -> str:
     return field_values[name]
 
 
+# These reviewed literals describe the 28 October 2026 actual-view evidence. A new review must
+# re-pin the date, changed pages, sittings, record digest, roster and review paragraphs together.
+# Subject and rendering digests bind the captured current files, never a historical PDF copy.
+actual_pdf_sha256 = hashlib.sha256(pdf_path.read_bytes()).hexdigest()
+actual_rendering_receipt_sha256 = hashlib.sha256(rendering_receipt_path.read_bytes()).hexdigest()
 expected_fields = {
-    "schema": "pid-rs/mathematical-workflow-visual-review/v3",
+    "schema": "pid-rs/mathematical-workflow-visual-review/v4",
     "subject": "output/pdf/mathematical-problem-solving-workflow.pdf",
-    "pdf_sha256": "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf",
+    "pdf_sha256": actual_pdf_sha256,
     "rendering_receipt": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
-    "rendering_receipt_sha256": "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea",
-    "pages": str(expected_pages),
-    "normal_dpi": str(expected_normal_dpi),
-    "high_resolution_dpi": str(expected_high_resolution_dpi),
-    "color_pages_reviewed": f"1-{expected_pages}",
-    "grayscale_pages_reviewed": f"1-{expected_pages}",
-    "high_resolution_spot_checks": "1-3,5,6,10,12,46-51,58,60,62,65,66,82-87",
-    "figure_pages_reviewed": "5,6,10,12",
+    "rendering_receipt_sha256": actual_rendering_receipt_sha256,
+    "pages": "87",
+    "normal_dpi": "120",
+    "high_resolution_dpi": "300",
+    "color_pages_reviewed": "1-87",
+    "grayscale_pages_reviewed": "1-87",
+    "detail_targets": "22",
+    "figure_pages_reviewed": "5-6,10,12",
+    "changed_pages": "1-2,12-20,26-33,59,67",
+    "previous_publication_pdf_sha256": "24a394e979d0a9430f10e5999790c6d467c502e2ccf6553cc74e5140fbb10263",
     "lens_count": "20",
     "status": "passed",
-    "review_date_utc": "2026-09-05",
-    "reviewer_kind": "split-agent-visual-inspection",
-    "actual_view_records": "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json",
-    "actual_view_records_sha256": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae",
-    "normal_review_partition": "science-original:1-48;root-original:49-64;science-partial:65-76;science-final:77-87;both-modes",
-    "high_color_review_partition": "science-original:1-3,5,6,10,12,46-48;science-final:49-51,58,60,62,65,66,82-87",
-    "high_gray_review_partition": "science-original:5,6,10,12",
-    "timing_scope": "split-stages;original-deadline-not-met;late-and-reconstructed-records-preserved",
+    "review_date_utc": "2026-10-28",
+    "reviewer_kind": "single-agent-visual-inspection",
+    "sittings": "2",
+    "actual_view_records": "audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json",
+    "actual_view_records_sha256": "d3d1e9e364c0daa89e95ba5b5d07ba8fe35f552052c80e268f25b4d551581a53",
+    "timing_scope": "each-record-written-after-its-view;times-self-reported",
 }
 for name, expected in expected_fields.items():
     observed = field(name)
     if observed != expected:
         fail(f"field {name} differs: {observed!r}")
-
-actual_pdf_sha256 = hashlib.sha256(pdf_path.read_bytes()).hexdigest()
-if actual_pdf_sha256 != field_values["pdf_sha256"]:
-    fail(f"subject bytes differ from reviewed pdf_sha256: {actual_pdf_sha256}")
-actual_rendering_receipt_sha256 = hashlib.sha256(rendering_receipt_path.read_bytes()).hexdigest()
-if actual_rendering_receipt_sha256 != field_values["rendering_receipt_sha256"]:
-    fail(
-        "rendering-receipt bytes differ from reviewed rendering_receipt_sha256: "
-        f"{actual_rendering_receipt_sha256}"
-    )
 
 field_line_indices = set(range(2, field_block_end))
 for index, line in enumerate(lines):
@@ -1617,7 +1624,7 @@ expected_lens_rows = (
     ),
     (
         "deterministic reproduction",
-        "The receipt binds the exact selected PDF and render digests; deterministic reproduction remains a separate mandatory machine gate.",
+        "The receipt binds the exact PDF, render and detail-render digests; deterministic reproduction remains a separate mandatory machine gate.",
     ),
     (
         "source/derived-asset separation",
@@ -1625,11 +1632,11 @@ expected_lens_rows = (
     ),
     (
         "portable repository-local dependencies",
-        "This receipt and its view-record projection contain no private host path; dependency custody remains a separate mandatory machine gate.",
+        "This receipt and its view records contain no private host path; dependency custody remains a separate mandatory machine gate.",
     ),
     (
         "normal-size plus high-resolution rendered inspection",
-        "All 87 color and grayscale pages were viewed at 120 dpi; every declared spot page was viewed in 300 dpi color and every figure page in 300 dpi grayscale.",
+        "Every color and grayscale page was viewed alone at 120 dpi, and every named detail target was viewed at 300 dpi.",
     ),
 )
 if len(expected_lens_rows) != 20 or field_values["lens_count"] != str(len(expected_lens_rows)):
@@ -1703,28 +1710,34 @@ for (expected_name, expected_evidence), (name, outcome, evidence) in zip(
     if evidence != expected_evidence:
         fail(f"lens evidence differs for {name}: {evidence!r}")
 
-required_statements = (
-    "The split records cover all 87 color pages and all 87 grayscale pages at 120 dpi. Each partition was inspected in page order; no single uninterrupted full-document review is claimed.",
-    "No blank, clipped, overlapping, misordered, or visibly corrupt page was observed.",
-    "Every workflow figure was reviewed at high resolution in both color and grayscale.",
-    "The source-review agent inspected normal pages 1-48, 65-76 and 77-87 in separate stages; the root agent inspected normal pages 49-64. The declared high-resolution views were split between the source-review stages. No sole-root, independent complete, external or human review is claimed.",
-    "This receipt combines actual agent observations across bounded stages. The original deadline was not met: pages 45-48 were recorded late and root pages 57-64 have reconstructed timing. Earlier partial and late records remain unchanged. This receipt is not a proof of mathematical correctness, accessibility conformance, semantic completeness or a machine-gate pass.",
-    "Dense contents on page 2, prose on pages 49, 50 and 65, internal identifier wrapping on pages 65, 81 and 82, the path split across pages 47-48, and the heading/table separation on pages 70-71 remain readable advisories; no blocking visual defect was observed.",
-)
-tail_lines = lines[table_cursor + 1 :]
-tail_text = "\n".join(tail_lines)
-paragraphs = [
-    " ".join(line.strip() for line in paragraph.splitlines())
-    for paragraph in tail_text.split("\n\n")
-    if paragraph.strip()
-]
-for statement in required_statements:
-    if paragraphs.count(statement) != 1:
-        fail(f"required top-level review paragraph is absent or duplicated: {statement}")
-if paragraphs != list(required_statements):
-    fail("paragraph inventory differs from the closed schema")
-# Actual-view projection checks precede its frozen digest, so missing coverage and false
-# attribution controls must reach their own semantic diagnostics rather than a stale hash.
+# Closed 300-dpi crop roster, transcribed from the reviewed m2-roster.txt.
+detail_roster = {
+    "p01-title-and-date": ("color", 1, [257, 270, 1965, 577]),
+    "p02-contents-3-4": ("color", 2, [320, 256, 1902, 782]),
+    "p12-source-policy": ("color", 12, [256, 2706, 1967, 500]),
+    "p13-suggested-citation": ("color", 13, [257, 923, 1966, 333]),
+    "p17-erdos-heading": ("color", 17, [256, 252, 1966, 345]),
+    "p17-erdos-source": ("color", 17, [256, 1670, 1968, 551]),
+    "p17-lea-source": ("color", 17, [256, 2215, 1967, 290]),
+    "p19-grothendieck-source": ("color", 19, [256, 668, 1972, 460]),
+    "p26-correction-chain": ("color", 26, [256, 1219, 1966, 517]),
+    "p29-heading-3-4-10": ("color", 29, [256, 102, 1966, 388]),
+    "p31-zeta-thread": ("color", 31, [256, 781, 1970, 911]),
+    "p33-third-party-reply": ("color", 33, [257, 2790, 1971, 420]),
+    "p59-goal-pause": ("color", 59, [371, 478, 1852, 421]),
+    "p67-category-theoretic": ("color", 67, [257, 2141, 1965, 277]),
+    "p05-figure-1-color": ("color", 5, [257, 257, 1965, 924]),
+    "p05-figure-1-gray": ("gray", 5, [257, 257, 1965, 924]),
+    "p06-figure-2-color": ("color", 6, [257, 257, 1965, 1135]),
+    "p06-figure-2-gray": ("gray", 6, [257, 257, 1965, 1135]),
+    "p10-figure-3-color": ("color", 10, [257, 1884, 1965, 1065]),
+    "p10-figure-3-gray": ("gray", 10, [257, 1884, 1965, 1065]),
+    "p12-figure-4-color": ("color", 12, [257, 696, 1965, 1205]),
+    "p12-figure-4-gray": ("gray", 12, [257, 696, 1965, 1205]),
+}
+
+# Check semantics before the final records-byte pin: a stale hash must not hide a malformed
+# record, false coverage, or a crop that was never rendered from this PDF.
 def unique_record_object(pairs):
     result = {}
     for key, value in pairs:
@@ -1734,36 +1747,96 @@ def unique_record_object(pairs):
     return result
 
 
+def reject_constant(value):
+    fail(f"actual-view non-finite JSON number: {value}")
+
+
+def exact_keys(value, keys, label):
+    if type(value) is not dict or set(value) != set(keys):
+        fail(f"{label} key inventory differs")
+
+
+def digest(value, label):
+    if type(value) is not str or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+        fail(f"{label} is not a canonical SHA-256 digest")
+
+
+def utc_time(value, label):
+    if type(value) is not str or re.fullmatch(
+        r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\+00:00", value
+    ) is None:
+        fail(f"{label} is not a canonical UTC time")
+    try:
+        moment = datetime.fromisoformat(value)
+    except ValueError:
+        fail(f"{label} is not a valid UTC time")
+    if moment.isoformat() != value:
+        fail(f"{label} is not a canonical UTC time")
+    return moment
+
+
+def reject_host_paths(value):
+    # Inspect decoded strings too, so JSON escapes cannot conceal a private path.
+    if type(value) is str and has_host_path(value):
+        fail("actual-view records contain a private or host-local path")
+    if type(value) is dict:
+        for key, item in value.items():
+            reject_host_paths(key)
+            reject_host_paths(item)
+    elif type(value) is list:
+        for item in value:
+            reject_host_paths(item)
+
+
 try:
     records_raw = actual_records_path.read_bytes()
     if not records_raw.endswith(b"\n") or b"\r" in records_raw:
         fail("actual-view records lack canonical LF termination")
     records_text = records_raw.decode("utf-8")
-    if any(token in records_text for token in ("/private/", "/Users/", "file://")):
-        fail("actual-view records contain a private or host-local path")
-    records = json.loads(records_text, object_pairs_hook=unique_record_object)
+    records = json.loads(
+        records_text, object_pairs_hook=unique_record_object, parse_constant=reject_constant
+    )
 except (OSError, ValueError) as error:
     fail(f"actual-view records cannot be read: {error}")
-if not isinstance(records, dict) or set(records) != {"schema", "pdf_sha256", "rendering_receipt_sha256", "scope", "stages", "views"}:
-    fail("actual-view top-level inventory differs")
-if records.get("schema") != "pid-rs/workflow-split-actual-views/v1":
-    fail("actual-view schema differs")
-if records.get("pdf_sha256") != field_values["pdf_sha256"] or records.get("rendering_receipt_sha256") != field_values["rendering_receipt_sha256"]:
-    fail("actual-view subject binding differs")
-expected_owners = {"science-original": "science", "root-original": "root", "science-partial": "science", "science-final": "science"}
-expected_normal = {"science-original": set(range(1, 49)), "root-original": set(range(49, 65)), "science-partial": set(range(65, 77)), "science-final": set(range(77, 88))}
-expected_high = {("science-original", "color"): {1,2,3,5,6,10,12,46,47,48}, ("science-original", "gray"): {5,6,10,12}, ("science-final", "color"): {49,50,51,58,60,62,65,66,82,83,84,85,86,87}}
-stages = records.get("stages")
-if not isinstance(stages, list) or [s.get("id") if isinstance(s, dict) else None for s in stages] != list(expected_owners):
-    fail("actual-view stage inventory differs")
-for stage in stages:
-    if stage.get("reviewer") != expected_owners[stage["id"]]:
-        fail("actual-view stage reviewer differs")
-views = records.get("views")
-if not isinstance(views, list):
-    fail("actual-view records are not a list")
-normal = {(stage, mode): [] for stage in expected_owners for mode in ("color", "gray")}
-high = {(stage, mode): [] for stage in expected_owners for mode in ("color", "gray")}
+reject_host_paths(records)
+exact_keys(records, {
+    "schema", "pdf_sha256", "rendering_receipt_sha256", "scope", "reviewer", "sittings",
+    "views", "superseded_views",
+}, "actual-view top-level")
+for name, expected in (
+    ("schema", "pid-rs/workflow-actual-views/v2"),
+    ("scope", "Actual views by one AI agent; no independent, external or human review is claimed."),
+    ("reviewer", "one AI agent"),
+    ("pdf_sha256", field_values["pdf_sha256"]),
+    ("rendering_receipt_sha256", field_values["rendering_receipt_sha256"]),
+):
+    if type(records[name]) is not str or records[name] != expected:
+        fail(f"actual-view {name} differs")
+
+sittings = records["sittings"]
+if type(sittings) is not list or not sittings:
+    fail("actual-view sittings must be a non-empty list")
+sitting_times = {}
+previous_end = None
+for sitting in sittings:
+    exact_keys(sitting, {"id", "start_utc", "end_utc"}, "actual-view sitting")
+    name = sitting["id"]
+    if type(name) is not str or re.fullmatch(r"[A-Z]", name) is None:
+        fail("actual-view sitting id must be a single uppercase letter")
+    if name in sitting_times:
+        fail(f"actual-view sitting id is duplicated: {name}")
+    start = utc_time(sitting["start_utc"], f"actual-view sitting {name} start")
+    end = utc_time(sitting["end_utc"], f"actual-view sitting {name} end")
+    if start >= end:
+        fail(f"actual-view sitting start must precede end: {name}")
+    # View timestamps include both endpoints, so sharing an endpoint would overlap.
+    if previous_end is not None and start <= previous_end:
+        fail(f"actual-view sittings overlap or are out of order: {name}")
+    sitting_times[name] = (start, end)
+    previous_end = end
+if len(sittings) != int(field_values["sittings"]):
+    fail("actual-view sitting count differs from receipt")
+
 render_rows = {}
 for line in rendering_receipt_path.read_text(encoding="utf-8").splitlines()[5:]:
     cells = line.split("\t")
@@ -1774,142 +1847,234 @@ for line in rendering_receipt_path.read_text(encoding="utf-8").splitlines()[5:]:
     key = (cells[0], int(cells[1]))
     if key in render_rows:
         fail("actual-view rendering page/mode is duplicated")
+    digest(cells[5], "actual-view rendering digest")
     render_rows[key] = cells[5]
+if set(render_rows) != {(m, p) for m in ("color", "gray") for p in range(1, 88)}:
+    fail("actual-view rendering page inventory differs")
+
+common_keys = {
+    "image", "sha256", "mode", "dpi", "pages", "sitting", "recorded_after_view_utc",
+    "outcome", "finding",
+}
+
+
+def view_metadata(view, label):
+    pages = view["pages"]
+    if type(pages) is not list or len(pages) != 1:
+        fail(f"{label} pages must contain exactly one page")
+    if type(pages[0]) is not int:
+        fail(f"{label} page must have exact integer type")
+    if not 1 <= pages[0] <= 87:
+        fail(f"{label} page is outside 1..87")
+    if type(view["mode"]) is not str or view["mode"] not in ("color", "gray"):
+        fail(f"{label} mode must be color or gray")
+    if type(view["dpi"]) is not int:
+        fail(f"{label} dpi must have exact integer type")
+    digest(view["sha256"], f"{label} image digest")
+    if view["outcome"] == "blocker":
+        fail(f"{label} blocker outcome is forbidden")
+    if type(view["outcome"]) is not str or view["outcome"] not in ("clear", "advisory"):
+        fail(f"{label} outcome must be clear or advisory")
+    finding = view["finding"]
+    if type(finding) is not str or len(re.findall(r"\b\w+(?:[-']\w+)*\b", finding)) < 6:
+        fail(f"{label} finding must contain at least six words")
+    if re.search(r"\bblocker\b", finding, re.IGNORECASE):
+        fail(f"{label} finding contains the word blocker")
+    sitting = view["sitting"]
+    if type(sitting) is not str or sitting not in sitting_times:
+        fail(f"{label} names an undeclared sitting")
+    moment = utc_time(view["recorded_after_view_utc"], f"{label} recorded-after-view time")
+    start, end = sitting_times[sitting]
+    if not start <= moment <= end:
+        fail(f"{label} time is outside its sitting: {sitting}")
+    return pages[0], moment
+
+
+views = records["views"]
+if type(views) is not list or not views:
+    fail("actual-view views must be a non-empty list")
+normal = {"color": set(), "gray": set()}
+crops = {}
 observed_images = set()
+advisory_pages = set()
+previous_time = None
 for view in views:
-    if not isinstance(view, dict):
-        fail("actual-view record is not an object")
-    stage = view.get("stage")
-    if not isinstance(stage, str) or stage not in expected_owners or view.get("reviewer") != expected_owners[stage]:
-        fail("actual-view reviewer partition differs")
-    if view.get("actual_view") is not True or view.get("detail") != "original":
-        fail("actual-view record does not attest an original-detail actual view")
-    pages = view.get("pages")
-    mode, dpi = view.get("mode"), view.get("dpi")
-    if not isinstance(pages, list) or not pages or any(type(n) is not int or not 1 <= n <= 87 for n in pages) or pages != sorted(set(pages)) or mode not in ("color", "gray") or type(dpi) is not int or dpi not in (120, 300):
-        fail("actual-view page/mode/dpi record is malformed")
-    name = view.get("image")
-    if not isinstance(name, str) or name in observed_images or not re.fullmatch(r"(?:sheets/(?:color|gray)-[0-9]+-[0-9]+|(?:color|gray)-300/page-[0-9]+)\.png", name):
-        fail("actual-view image identity is malformed or duplicated")
-    expected_image = (
-        f"sheets/{mode}-{pages[0]:02d}-{pages[-1]:02d}.png" if dpi == 120
-        else f"{mode}-300/page-{pages[0]:02d}.png"
-    )
-    if name != expected_image or (dpi == 300 and len(pages) != 1):
-        fail("actual-view image name differs from page/mode/dpi")
-    observed_images.add(name)
-    if not re.fullmatch(r"[0-9a-f]{64}", str(view.get("sha256", ""))):
-        fail("actual-view image digest is malformed")
-    if dpi == 120:
-        normal[(stage, mode)].extend(pages)
-        components = view.get("normal_render_components")
-        expected_components = [{"page": n, "sha256": render_rows.get((mode, n))} for n in pages]
-        if components != expected_components or any(c["sha256"] is None for c in expected_components):
-            fail("actual-view normal components differ from rendering receipt")
+    if type(view) is not dict or type(view.get("kind")) is not str or view["kind"] not in ("page", "crop"):
+        fail("actual-view kind must be page or crop")
+    kind = view["kind"]
+    keys = common_keys | {"kind", "normal_render_components"}
+    if kind == "crop":
+        keys |= {"target", "crop"}
+    exact_keys(view, keys, f"actual-view {kind}")
+    page, moment = view_metadata(view, "actual-view")
+    if previous_time is not None and moment < previous_time:
+        fail("actual-view times decrease in list order")
+    previous_time = moment
+    render_mode = view["mode"]
+    components = view["normal_render_components"]
+    if kind == "page":
+        if view["dpi"] != 120:
+            fail("actual-view page dpi must be 120")
+        if page in normal[render_mode]:
+            fail(f"actual-view page coverage duplicates: {render_mode}/{page}")
+        normal[render_mode].add(page)
+        expected_image = f"{render_mode}-120/page-{page:02d}.png"
+        if view["sha256"] != render_rows[(render_mode, page)]:
+            fail(f"actual-view page image digest differs from rendering receipt: {render_mode}/{page}")
+        if type(components) is not list or len(components) != 1:
+            fail("actual-view page must have exactly one render component")
+        component = components[0]
+        exact_keys(component, {"page", "sha256"}, "actual-view page component")
+        if type(component["page"]) is not int:
+            fail("actual-view component page must have exact integer type")
+        if component["page"] != page or type(component["sha256"]) is not str or component["sha256"] != view["sha256"]:
+            fail("actual-view page component differs from its image and rendering receipt")
     else:
-        high[(stage, mode)].extend(pages)
-for (stage, mode), pages in normal.items():
-    if sorted(pages) != sorted(expected_normal[stage]):
-        fail(f"actual-view normal coverage differs: {stage}/{mode}")
-for key, pages in high.items():
-    if sorted(pages) != sorted(expected_high.get(key, set())):
-        fail(f"actual-view high coverage differs: {key[0]}/{key[1]}")
-if len(observed_images) != 72:
-    fail("actual-view image inventory differs")
+        if view["dpi"] != 300:
+            fail("actual-view crop dpi must be 300")
+        target = view["target"]
+        if type(target) is not str or target not in detail_roster:
+            fail("actual-view crop target is outside the closed roster")
+        if target in crops:
+            fail(f"actual-view crop target is duplicated: {target}")
+        expected_mode, expected_page, expected_rectangle = detail_roster[target]
+        if render_mode != expected_mode or page != expected_page:
+            fail(f"actual-view crop mode/page differs from roster: {target}")
+        rectangle = view["crop"]
+        if type(rectangle) is not list or len(rectangle) != 4:
+            fail(f"actual-view crop rectangle must have four coordinates: {target}")
+        if any(type(value) is not int for value in rectangle):
+            fail(f"actual-view crop coordinates must have exact integer type: {target}")
+        if rectangle != expected_rectangle:
+            fail(f"actual-view crop rectangle differs from roster: {target}")
+        if type(components) is not list or components:
+            fail(f"actual-view crop components must be an empty list: {target}")
+        expected_image = f"{render_mode}-300/{target}.png"
+        crops[target] = view["sha256"]
+    if type(view["image"]) is not str or view["image"] != expected_image:
+        fail(f"actual-view image name differs from its kind/mode/page/target: {expected_image}")
+    if view["image"] in observed_images:
+        fail("actual-view image identity is duplicated")
+    observed_images.add(view["image"])
+    if view["outcome"] == "advisory":
+        advisory_pages.add(page)
+for render_mode, pages in normal.items():
+    if pages != set(range(1, 88)):
+        fail(f"actual-view page coverage differs: {render_mode}")
+if set(crops) != set(detail_roster):
+    fail("actual-view crop target coverage differs: " + ",".join(sorted(set(detail_roster) - set(crops))))
+if previous_time.date().isoformat() != field_values["review_date_utc"]:
+    fail("review_date_utc is not the UTC date of the latest view")
+
+superseded = records["superseded_views"]
+if type(superseded) is not list:
+    fail("superseded views must be a list")
+for view in superseded:
+    exact_keys(view, common_keys | {"superseded_pdf_sha256", "superseded_because"}, "superseded view")
+    page, _moment = view_metadata(view, "superseded view")
+    digest(view["superseded_pdf_sha256"], "superseded view PDF digest")
+    if view["superseded_pdf_sha256"] == actual_pdf_sha256:
+        fail("superseded view is bound to the current PDF")
+    if view["dpi"] not in (120, 300):
+        fail("superseded view dpi must be 120 or 300")
+    name = view["image"]
+    if type(name) is not str or re.fullmatch(
+        rf'{view["mode"]}-{view["dpi"]}/[A-Za-z0-9_-]+\.png', name
+    ) is None or (view["dpi"] == 120 and name != f'{view["mode"]}-120/page-{page:02d}.png'):
+        fail("superseded view image name differs from mode/dpi/page")
+    if type(view["superseded_because"]) is not str or not view["superseded_because"].strip():
+        fail("superseded view must state why it was superseded")
+
+
+def compact_pages(pages):
+    ordered = sorted(pages)
+    parts = []
+    start = None
+    for index, page in enumerate(ordered):
+        if start is None:
+            start = page
+        if index + 1 == len(ordered) or ordered[index + 1] != page + 1:
+            parts.append(str(start) if start == page else f"{start}-{page}")
+            start = None
+    return ",".join(parts)
+
+
+# The reviewed prose is literal; a new review re-pins it with the fields above.
+required_statements = (
+    "The records cover all 87 color pages and all 87 grayscale pages at 120 dpi, one page per view, and 22 named detail targets at 300 dpi: every passage that this revision changed and every figure, the figures in both modes.",
+    "No blank, clipped, overlapping, misordered, or visibly corrupt page was observed.",
+    "One AI agent made every view, in two sittings, and wrote each record after its view. Record times are self-reported. No independent, external or human review is claimed. Record consistency is not proof that a view happened, and this receipt is not a proof of mathematical correctness, accessibility conformance, semantic completeness or a machine-gate pass.",
+    "Earlier passes over a previous build on 26 and 27 October covered every color page and grayscale pages 1 to 64; the text changed afterwards, so this record supersedes them. During this review, page 59 showed the pause instruction breaking inside a monospaced token; the wording was changed twice, page 59 was viewed again after each rebuild and its detail target after the last, and the two earlier views of page 59 are kept as superseded records.",
+)
+tail_text = "\n".join(lines[table_cursor + 1 :])
+paragraphs = [
+    " ".join(line.strip() for line in paragraph.splitlines())
+    for paragraph in tail_text.split("\n\n")
+    if paragraph.strip()
+]
+for statement in required_statements:
+    if paragraphs.count(statement) != 1:
+        fail(f"required top-level review paragraph is absent or duplicated: {statement}")
+advisory_prefix = "Advisory observations, none of which prevents publication, concern pages "
+advisory_suffix = ": unedited long identifiers, digests, paths and version tokens that wrap inside the token, the dense contents page, a heading left at a page foot, and free space where a heading or table moved to the next page."
+advisory_paragraphs = [paragraph for paragraph in paragraphs if paragraph.startswith(advisory_prefix)]
+if len(advisory_paragraphs) != 1 or not advisory_paragraphs[0].endswith(advisory_suffix):
+    fail("required top-level advisory paragraph is absent or duplicated")
+advisory = advisory_paragraphs[0]
+if advisory[len(advisory_prefix):-len(advisory_suffix)] != compact_pages(advisory_pages):
+    fail("advisory page set differs from actual-view advisory outcomes")
+if paragraphs != [*required_statements, advisory]:
+    fail("paragraph inventory differs from the closed schema")
+# Normalizing paragraphs above gives useful content diagnostics; it must not admit hidden
+# line separators, trailing spaces, or extra blank lines absent from the canonical receipt.
+canonical_receipt = (
+    "# Mathematical workflow PDF visual-review receipt\n\n"
+    + "\n".join(f"{name}: `{field_values[name]}`" for name in field_order)
+    + "\n\n| Lens | Outcome | Evidence |\n|---|---|---|\n"
+    + "\n".join(f"| {name} | {outcome} | {evidence} |" for name, outcome, evidence in observed_lens_rows)
+    + "\n\n" + "\n\n".join([*required_statements, advisory]) + "\n"
+)
+if raw != canonical_receipt.encode("utf-8"):
+    fail("does not have canonical Markdown serialization")
+
+# The shell launches this block with render_pdf_page_set's clean environment, using only
+# captured tools and snapshot inputs. Each fixed target is rendered afresh in a private
+# build directory. No record-supplied path or coordinate becomes an executable argument.
+with tempfile.TemporaryDirectory(prefix="visual-crops.", dir=build_root) as temporary:
+    for target, (render_mode, page, rectangle) in detail_roster.items():
+        output = Path(temporary) / target
+        x, y, width, height = rectangle
+        command = ["pdftoppm", "-png"]
+        if render_mode == "gray":
+            command.append("-gray")
+        command.extend([
+            "-r", "300", "-f", str(page), "-l", str(page),
+            "-x", str(x), "-y", str(y), "-W", str(width), "-H", str(height),
+            "-singlefile", str(pdf_path), str(output),
+        ])
+        try:
+            rendered = subprocess.run(command, capture_output=True, timeout=45, check=False)
+            if rendered.returncode:
+                fail(f"actual-view crop rendering failed: {target}")
+            if rendered.stdout or rendered.stderr:
+                fail(f"actual-view crop rendering emitted a diagnostic: {target}")
+            png = output.with_suffix(".png")
+            if png.is_symlink() or not png.is_file():
+                fail(f"actual-view crop rendering did not produce a regular PNG: {target}")
+            rendered_digest = hashlib.sha256(png.read_bytes()).hexdigest()
+        except (OSError, subprocess.TimeoutExpired) as error:
+            fail(f"actual-view crop rendering could not complete: {target}: {error}")
+        if mode == "--exact" and crops[target] != rendered_digest:
+            fail(f"actual-view crop digest differs from committed-PDF render: {target}")
+# Cross-toolchain mode skips only the comparison with the recorded crop digest: Poppler
+# versions may encode different PNG bytes. Rendering failures/diagnostics, schema, roster,
+# coverage, receipt bindings and the frozen records-byte check still fail in both modes.
+if len(observed_images) != 196:
+    fail("actual-view image inventory must be exactly 196")
 if hashlib.sha256(records_raw).hexdigest() != field_values["actual_view_records_sha256"]:
     fail("actual-view frozen record digest differs")
 
 PY
-  python3 -I -S -B - "$SNAPSHOT_ROOT" "$AUTHORSHIP_RECEIPT_SHA256" <<'PY_AUTHORSHIP'
-from pathlib import Path
-import hashlib
-import json
-import re
-import subprocess
-import sys
-import xml.etree.ElementTree as ET
-
-root = Path(sys.argv[1])
-record_path = root / 'audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR-v2.json'
-expected_record_sha256 = sys.argv[2]
-
-def fail(message):
-    raise SystemExit('mathematical workflow PDF check: authorship successor ' + message)
-
-raw_record = record_path.read_bytes()
-if hashlib.sha256(raw_record).hexdigest() != expected_record_sha256:
-    fail('record identity differs')
-record = json.loads(raw_record)
-if record['schema'] != 'pid-rs/workflow-authorship-successor/v1' or record['author'] != 'Sepehr Mahmoudian':
-    fail('record identity fields differ')
-for relative, pin in record['files'].items():
-    raw = (root / relative).read_bytes()
-    if len(raw) != pin['bytes'] or hashlib.sha256(raw).hexdigest() != pin['sha256']:
-        fail('bound bytes differ: ' + relative)
-prior = root / 'audit/evidence/mathematical-workflow-authorship-2026-09-23/previous.pdf.bin'
-current = root / 'output/pdf/mathematical-problem-solving-workflow.pdf'
-old_source = (root / 'audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-source.tex.txt').read_bytes()
-new_source = (root / 'audit/formal/latex/mathematical-problem-solving-workflow.tex').read_bytes()
-if old_source.count(b'pid-rs contributors') != 2 or new_source != old_source.replace(b'pid-rs contributors', b'Sepehr Mahmoudian'):
-    fail('TeX source differs beyond the two author substitutions')
-
-def run(args):
-    result = subprocess.run(args, capture_output=True, timeout=45, check=False)
-    if result.returncode or result.stderr or len(result.stdout) > 32 * 1024**2:
-        fail('bounded PDF projection failed: ' + args[0])
-    return result.stdout
-
-info = run(['pdfinfo', str(current)]).decode()
-if not re.search(r'^Author:\s+Sepehr Mahmoudian\s*$', info, re.M):
-    fail('current PDF Author metadata differs')
-if not re.search(r'^Pages:\s+87\s*$', info, re.M):
-    fail('current PDF page count differs')
-
-def pages(path):
-    raw = run(['pdftotext', '-bbox', str(path), '-'])
-    tree = ET.fromstring(raw)
-    result = []
-    for page in tree.iter('{http://www.w3.org/1999/xhtml}page'):
-        words = []
-        for word in page.iter('{http://www.w3.org/1999/xhtml}word'):
-            words.append((word.text or '', tuple(float(word.attrib[key]) for key in ('xMin','yMin','xMax','yMax'))))
-        result.append(((float(page.attrib['width']),float(page.attrib['height'])),words))
-    if len(result) != 87 or any(not words for _, words in result):
-        fail('bounded page/text inventory differs')
-    return result
-
-old_pages, new_pages = pages(prior), pages(current)
-def remove_byline(words, expected):
-    matches = [i for i in range(len(words)-1) if (words[i][0],words[i+1][0]) == expected]
-    if len(matches) != 1:
-        fail('first-page byline is absent or repeated')
-    i = matches[0]
-    return words[:i]+words[i+2:], words[i:i+2]
-
-for number, ((old_geometry,old_words),(new_geometry,new_words)) in enumerate(zip(old_pages,new_pages),1):
-    if old_geometry != new_geometry:
-        fail('page geometry differs on page ' + str(number))
-    if number == 1:
-        old_words, old_byline = remove_byline(old_words,('pid-rs','contributors'))
-        new_words, new_byline = remove_byline(new_words,('Sepehr','Mahmoudian'))
-        if any(abs(old_byline[0][1][i]-new_byline[0][1][i]) > .001 for i in (0,1,3)):
-            fail('author baseline or start position differs')
-    if len(old_words) != len(new_words):
-        fail('non-author word count differs on page ' + str(number))
-    for (old_text,old_box),(new_text,new_box) in zip(old_words,new_words):
-        if old_text != new_text or any(abs(a-b) > .001 for a,b in zip(old_box,new_box)):
-            fail('non-author text or word geometry differs on page ' + str(number))
-print('OK: workflow authorship-only delta: exact bound source/PDF bytes, Author metadata, 87-page text and word geometry, and first-page byline; no full replay, all-page visual-review or current rendering-receipt acceptance')
-PY_AUTHORSHIP
-  if [[ "$MODE" == "--authorship-only" ]]; then
-    verify_snapshot_readonly
-    capture_manifest "$ROOT" "$BUILD_ROOT/authorship-root-inputs.after.tsv" ""
-    if ! cmp -s "$BUILD_ROOT/root-inputs.before.tsv" "$BUILD_ROOT/authorship-root-inputs.after.tsv"; then
-      echo "$CHECK_NAME: source changed during authorship-only verification" >&2
-      exit 1
-    fi
-    exit 0
-  fi
 fi
 
 python3 -I -S -B - "$SNAPSHOT_ROOT/$FIGURE_DIR" "${FIGURE_STEMS[@]}" <<'PY'
@@ -2388,8 +2553,9 @@ if [[ "$MODE" != "--refresh" ]]; then
   # The checker self-test contains accepted controls bound to the committed PDF, rendering
   # receipt, and separately scoped visual receipt.  Refresh is the operation that creates/replaces the
   # first two and deliberately invalidates the third, so its accepted controls are necessarily
-  # circular during bootstrap.  Exact/cross modes always run the full hostile suite.
-  bash "$SNAPSHOT_ROOT/scripts/check-mathematical-workflow-pdf-self-test.sh" >/dev/null
+  # circular during bootstrap. Both modes run all hostile cases. Pass the mode so that
+  # cross-toolchain positives do not accidentally require exact local crop-render bytes.
+  bash "$SNAPSHOT_ROOT/scripts/check-mathematical-workflow-pdf-self-test.sh" "$MODE" >/dev/null
 fi
 
 PDF_XDG_CONFIG="$BUILD_ROOT/xdg-config"
@@ -4769,7 +4935,7 @@ outline_manifest = "".join(
     for depth, title, page_index in outline_rows
 ).encode("utf-8")
 outline_manifest_digest = hashlib.sha256(outline_manifest).hexdigest()
-if outline_manifest_digest != "53f61cc06df9b3a311272c35b85750d608dfd98c17aeb74a18e5e9daa7c4d178":
+if outline_manifest_digest != "7c1df48ec6fe6a85d75c81f26465f9abc0d0e463d1cb952f6147dd43c3414ca0":
     fail(f"outline title/depth/target manifest drifted: {outline_manifest_digest}")
 if len(reader.named_destinations) != 232:
     fail(f"named-destination inventory drifted: {len(reader.named_destinations)}")
@@ -4926,13 +5092,13 @@ for destination_name, destination in sorted(reader.named_destinations.items()):
 named_destination_route_digest = hashlib.sha256(
     "".join(named_destination_route_rows).encode("utf-8")
 ).hexdigest()
-if named_destination_route_digest != "15832bfb6b103e3661b45094dfaf4feb5180afc4cdad4f0e77e738eabf457080":
+if named_destination_route_digest != "6e02028604b6c4d7bcd235f383c9fb1edcfcb2f04f844182346cf8ec2fdfd7d8":
     fail(f"named-destination name/page/type manifest drifted: {named_destination_route_digest}")
 if validation_mode in {"--exact", "--refresh"}:
     named_destination_digest = hashlib.sha256(
         "".join(named_destination_rows).encode("utf-8")
     ).hexdigest()
-    if named_destination_digest != "a3c5fd9a99a73e5bbc061cfaa411156013a17de9ebd3cbcb941929b56ae331bd":
+    if named_destination_digest != "35d781b913e584236197721b92ab5cbc6632caf47b2d6e9d1aafa83c940f3b50":
         fail(f"exact named-destination manifest drifted: {named_destination_digest}")
 outline_pages = {
     normalized_heading(re.sub(r"^\s*\d+(?:\.\d+)*\s+", "", title)): page_index

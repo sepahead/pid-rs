@@ -10,6 +10,13 @@ CHECK_NAME="mathematical workflow PDF checker self-test"
 EXPECTED_PAGES=87
 EXPECTED_DPI=120
 EXPECTED_HIGH_RESOLUTION_DPI=300
+# Standalone callers (including the aggregate PDF gate's preflight) remain portable. The
+# production checker passes its mode explicitly; --exact adds the two exact-render positives.
+VISUAL_TEST_MODE="${1:---cross-toolchain}"
+if [[ "$#" -gt 1 || ( "$VISUAL_TEST_MODE" != "--exact" && "$VISUAL_TEST_MODE" != "--cross-toolchain" ) ]]; then
+  echo "usage: $0 [--exact|--cross-toolchain]" >&2
+  exit 2
+fi
 
 TMP_PARENT_RAW="${TMPDIR:-/tmp}"
 if [[ ! -d "$TMP_PARENT_RAW" ]]; then
@@ -68,8 +75,10 @@ C3_FORMAT_CUSTODY_COUNT=0
 C8_TEXT_PORTABILITY_COUNT=0
 PYTHON_BYTECODE_COUNT=0
 VISUAL_RECEIPT_HOSTILE_COUNT=0
+V4_ACTUAL_VIEW_COUNT=0
+EXPECTED_V4_ACTUAL_VIEW_COUNT=150
 SPLIT_VISUAL_HOSTILE_COUNT=0
-EXPECTED_SPLIT_VISUAL_HOSTILE_COUNT=4
+EXPECTED_SPLIT_VISUAL_HOSTILE_COUNT=0
 MACHINE_SCOPE_HOSTILE_COUNT=0
 EXPECTED_MACHINE_SCOPE_HOSTILE_COUNT=4
 EXPECTED_PREDECESSOR_CONTROL_COUNT=218
@@ -82,7 +91,14 @@ EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
 EXPECTED_C8_TEXT_PORTABILITY_COUNT=71
 EXPECTED_PYTHON_BYTECODE_COUNT=12
 EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT=24
-EXPECTED_TOTAL_CONTROL_COUNT=430
+EXPECTED_TOTAL_CONTROL_COUNT=576
+# Cross-toolchain keeps every hostile case but replaces the primary exact positive with a
+# cross-toolchain positive. The two additional mode positives would then duplicate it or
+# reintroduce exact PNG identity, so only those two controls are omitted in this mode.
+if [[ "$VISUAL_TEST_MODE" == "--cross-toolchain" ]]; then
+  EXPECTED_V4_ACTUAL_VIEW_COUNT=148
+  EXPECTED_TOTAL_CONTROL_COUNT=574
+fi
 # This suite never compiles the 87-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
@@ -1956,18 +1972,8 @@ copy_manifest_fixture() {
     "scripts/compare-formal-pdf-renders-self-test.py"
     "audit/evidence/x-thread-citation-edge-application.json"
     "audit/evidence/x-thread-citation-source-manifest.json"
-    "audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md"
-    "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json"
-    "audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR.json"
-    "audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR-v2.json"
-    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous.pdf.bin"
-    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-rendering-receipt.tsv.txt"
-    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-visual-receipt.md.txt"
-    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-actual-views.json.txt"
-    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-source.tex.txt"
-    "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-120dpi.png"
-    "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-gray-120dpi.png"
-    "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-color-300dpi.png"
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md"
+    "audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json"
 
     "audit/formal/latex/mathematical-problem-solving-workflow.tex"
     "audit/formal/latex/pid-rs-report-tables.sty"
@@ -2010,10 +2016,8 @@ copy_manifest_fixture "$BASE_REPOSITORY"
 CHECKER="$BASE_REPOSITORY/scripts/check-mathematical-workflow-pdf.sh"
 BASE_PDF="$BASE_REPOSITORY/output/pdf/mathematical-problem-solving-workflow.pdf"
 BASE_RENDERING_RECEIPT="$BASE_REPOSITORY/output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
-BASE_VISUAL_RECEIPT="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md"
-BASE_VISUAL_RECORDS="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json"
-BASE_HISTORICAL_PDF="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-authorship-2026-09-23/previous.pdf.bin"
-BASE_HISTORICAL_RENDERING_RECEIPT="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-rendering-receipt.tsv.txt"
+BASE_VISUAL_RECEIPT="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md"
+BASE_VISUAL_RECORDS="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json"
 BASE_MARKDOWN="$BASE_REPOSITORY/MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 BASE_FIGURE_DIR="$BASE_REPOSITORY/audit/formal/latex/figures/mathematical-workflow"
 
@@ -5450,9 +5454,10 @@ pattern = re.compile(
     r'(?P<flags>(?: -[A-Za-z]+)+)'
 )
 launches = list(pattern.finditer(text))
-# The authorship successor adds one isolated launch to the previous 42.
-if len(launches) != 43:
-    fail("production Python launch inventory differs from 43")
+# Retiring the authorship heredoc removes one of 43 launches. The v4 validator replaces
+# the old visual launch in place; its Poppler subprocesses add no Python launch sites.
+if len(launches) != 42:
+    fail("production Python launch inventory differs from 42")
 optimized = 0
 for launch in launches:
     flags = launch["flags"].split()
@@ -6175,9 +6180,16 @@ cp "$BASE_VISUAL_RECEIPT" "$VISUAL_CONTROL"
 chmod u+w "$VISUAL_CONTROL"
 
 run_visual_validator() {
-  python3 -I -S -B "$VISUAL_VALIDATOR" \
-    "$1" "$BASE_HISTORICAL_PDF" "$BASE_HISTORICAL_RENDERING_RECEIPT" \
-    "$EXPECTED_PAGES" "$EXPECTED_DPI" "$EXPECTED_HIGH_RESOLUTION_DPI" "${2:-$BASE_VISUAL_RECORDS}"
+  local -a visual_python=(python3 -I -S -B)
+  if [[ "${4:-normal}" == "optimized" ]]; then
+    visual_python=(python3 -O -I -S -B)
+  fi
+  env -i PATH="$PATH" LC_ALL=C LANG=C TZ=UTC \
+    XDG_CONFIG_HOME="$TEST_XDG_CONFIG" XDG_CACHE_HOME="$TEST_XDG_CACHE" TMPDIR="$TEST_ROOT" \
+    "${visual_python[@]}" "$VISUAL_VALIDATOR" \
+    "$1" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" \
+    "$EXPECTED_PAGES" "$EXPECTED_DPI" "$EXPECTED_HIGH_RESOLUTION_DPI" \
+    "${2:-$BASE_VISUAL_RECORDS}" "${3:---cross-toolchain}" "$TEST_ROOT"
 }
 
 expect_visual_reject() {
@@ -6186,8 +6198,8 @@ expect_visual_reject() {
 }
 
 expect_accept \
-  "visual receipt v3 accepts exact artifact bindings, lens evidence, and bounded-review language" \
-  run_visual_validator "$VISUAL_CONTROL"
+  "visual receipt v4 accepts current artifact bindings and all 22 rendered crops ($VISUAL_TEST_MODE)" \
+  run_visual_validator "$VISUAL_CONTROL" "$BASE_VISUAL_RECORDS" "$VISUAL_TEST_MODE"
 
 case_file="$TEST_ROOT/visual-private-path.md"
 cp "$VISUAL_CONTROL" "$case_file"
@@ -6199,7 +6211,7 @@ expect_visual_reject \
 
 case_file="$TEST_ROOT/visual-duplicate-field.md"
 cp "$VISUAL_CONTROL" "$case_file"
-printf "schema: \`pid-rs/mathematical-workflow-visual-review/v3\`\n" >>"$case_file"
+printf "schema: \`pid-rs/mathematical-workflow-visual-review/v4\`\n" >>"$case_file"
 expect_visual_reject \
   "visual receipt rejects duplicate canonical fields" \
   "visual receipt must contain exactly one canonical schema field" \
@@ -6217,7 +6229,7 @@ case_file="$TEST_ROOT/visual-pdf-digest.md"
 cp "$VISUAL_CONTROL" "$case_file"
 replace_once \
   "$case_file" \
-  'pdf_sha256: `ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf`' \
+  'pdf_sha256: `446832ea439c838c6037ba7ad495294f8f07c7916162ff4ac0785bf3f50bed52`' \
   'pdf_sha256: `0000000000000000000000000000000000000000000000000000000000000000`'
 expect_visual_reject \
   "visual receipt rejects a stale PDF digest binding" \
@@ -6228,7 +6240,7 @@ case_file="$TEST_ROOT/visual-rendering-receipt-digest.md"
 cp "$VISUAL_CONTROL" "$case_file"
 replace_once \
   "$case_file" \
-  'rendering_receipt_sha256: `fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea`' \
+  'rendering_receipt_sha256: `bc64dbbcd56e818e6f5d98d67635c54c2f31b4341f749ea4c4cf339398966d87`' \
   'rendering_receipt_sha256: `0000000000000000000000000000000000000000000000000000000000000000`'
 expect_visual_reject \
   "visual receipt rejects a stale rendering-receipt digest binding" \
@@ -6259,15 +6271,15 @@ expect_visual_reject \
   "visual receipt field high_resolution_dpi differs" \
   run_visual_validator "$case_file"
 
-case_file="$TEST_ROOT/visual-high-resolution-spots.md"
+case_file="$TEST_ROOT/visual-detail-target-count.md"
 cp "$VISUAL_CONTROL" "$case_file"
 replace_once \
   "$case_file" \
-  'high_resolution_spot_checks: `1-3,5,6,10,12,46-51,58,60,62,65,66,82-87`' \
-  'high_resolution_spot_checks: `1-3,5,6,10,12,46-51,58,60,62,65,67,82-87`'
+  'detail_targets: `22`' \
+  'detail_targets: `21`'
 expect_visual_reject \
-  "visual receipt rejects high-resolution spot-list drift" \
-  "visual receipt field high_resolution_spot_checks differs" \
+  "visual receipt rejects detail-target count drift" \
+  "visual receipt field detail_targets differs" \
   run_visual_validator "$case_file"
 
 grid_row='| grid | passed | Text blocks, tables, figures, headers, and footers remain aligned to a consistent page grid. |'
@@ -6408,43 +6420,335 @@ for context_mode in comment fence quote details reference-comment; do
     run_visual_validator "$case_file"
 done
 
-# Four added split-review controls; the predecessor 381/24 families stay separate.
-case_file="$TEST_ROOT/visual-false-sole-root.md"
-cp "$VISUAL_CONTROL" "$case_file"
-replace_once "$case_file" \
-  'The source-review agent inspected normal pages 1-48, 65-76 and 77-87 in separate stages; the root agent inspected normal pages 49-64. The declared high-resolution views were split between the source-review stages. No sole-root, independent complete, external or human review is claimed.' \
-  'The root agent completed the page-by-page visual inspection; no independent second-review credit is claimed.'
-expect_reject \
-  "split receipt rejects false sole-root attribution" \
-  "visual receipt required top-level review paragraph is absent or duplicated" \
-  run_visual_validator "$case_file"
-SPLIT_VISUAL_HOSTILE_COUNT=$((SPLIT_VISUAL_HOSTILE_COUNT + 1))
-for split_mode in missing-pages false-view false-reviewer; do
-  case_file="$TEST_ROOT/actual-views-$split_mode.json"
-  python3 -I -S -B - "$BASE_VISUAL_RECORDS" "$case_file" "$split_mode" <<'PY_SPLIT'
+# v4 records use causal mutations before the frozen byte digest. Each case starts from
+# the committed positive control, and runs in normal and optimized Python. Exact crop tests
+# invoke real Poppler; cross-toolchain tests still require every other predicate and the pin.
+expect_v4_accept() {
+  expect_accept "$@"
+  V4_ACTUAL_VIEW_COUNT=$((V4_ACTUAL_VIEW_COUNT + 1))
+}
+expect_v4_reject() {
+  expect_reject "$@"
+  V4_ACTUAL_VIEW_COUNT=$((V4_ACTUAL_VIEW_COUNT + 1))
+}
+if [[ "$VISUAL_TEST_MODE" == "--exact" ]]; then
+  expect_v4_accept "v4 records accept the committed cross-toolchain control" \
+    run_visual_validator "$VISUAL_CONTROL"
+  expect_v4_accept "v4 records accept all exact crops in optimized Python" \
+    run_visual_validator "$VISUAL_CONTROL" "$BASE_VISUAL_RECORDS" --exact optimized
+fi
+expect_v4_accept "v4 records accept the optimized cross-toolchain control" \
+  run_visual_validator "$VISUAL_CONTROL" "$BASE_VISUAL_RECORDS" --cross-toolchain optimized
+
+# The canonical receipt is also byte-closed after its content checks. Python's splitlines and
+# whitespace normalization must not turn noncanonical Markdown into a positive control.
+for whitespace_variant in terminal-blank trailing-spaces vertical-tab; do
+  case_file="$TEST_ROOT/visual-v4-$whitespace_variant.md"
+  python3 -I -S -B - "$VISUAL_CONTROL" "$case_file" "$whitespace_variant" <<'PY_WHITESPACE'
+from pathlib import Path
+import sys
+
+raw = Path(sys.argv[1]).read_bytes()
+variant = sys.argv[3]
+if variant == "terminal-blank":
+    raw += b"\n"
+elif variant == "trailing-spaces":
+    raw = raw.replace(
+        b"corrupt page was observed.\n", b"corrupt page was observed.  \n", 1
+    )
+elif variant == "vertical-tab":
+    raw = raw.replace(b"\n\nNo blank, clipped", b"\v\vNo blank, clipped", 1)
+else:
+    raise SystemExit("unknown v4 whitespace mutation")
+Path(sys.argv[2]).write_bytes(raw)
+PY_WHITESPACE
+  expect_v4_reject "v4 receipt rejects $whitespace_variant serialization" \
+    "visual receipt does not have canonical Markdown serialization" \
+    run_visual_validator "$case_file"
+done
+
+make_v4_mutant() {
+  python3 -I -S -B - "$BASE_VISUAL_RECORDS" "$1" "$2" <<'PY_V4_MUTANT'
+from copy import deepcopy
+from datetime import datetime, timedelta
 import json
 from pathlib import Path
 import sys
-value = json.loads(Path(sys.argv[1]).read_text())
-if sys.argv[3] == "missing-pages":
-    value["views"] = [v for v in value["views"] if not (v["stage"] == "science-final" and v["mode"] == "color" and v["dpi"] == 120 and 87 in v["pages"])]
-elif sys.argv[3] == "false-view":
-    value["views"][0]["actual_view"] = False
-elif sys.argv[3] == "false-reviewer":
-    value["views"][0]["reviewer"] = "root"
+
+records = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+variant = sys.argv[3]
+views = records["views"]
+page = next(view for view in views if view["kind"] == "page")
+crop = next(view for view in views if view["kind"] == "crop")
+superseded = records["superseded_views"][0]
+sitting = records["sittings"][0]
+if variant == "page-image-not-render":
+    page["sha256"] = "0" * 64
+    expected = "actual-view page image digest differs from rendering receipt"
+elif variant == "page-component":
+    page["normal_render_components"][0]["sha256"] = "0" * 64
+    expected = "actual-view page component differs from its image and rendering receipt"
+elif variant == "page-name":
+    page["image"] = "color-120/page-02.png"
+    expected = "actual-view image name differs from its kind/mode/page/target"
+elif variant == "missing-gray-page":
+    views.remove(next(v for v in views if v["kind"] == "page" and v["mode"] == "gray"))
+    expected = "actual-view page coverage differs: gray"
+elif variant == "duplicated-page":
+    views.insert(1, deepcopy(page))
+    expected = "actual-view page coverage duplicates: color/1"
+elif variant in ("crop-digest-exact", "crop-digest-cross"):
+    crop["sha256"] = "0" * 64
+    expected = ("actual-view crop digest differs from committed-PDF render" if variant.endswith("exact")
+                else "actual-view frozen record digest differs")
+elif variant == "missing-target":
+    views.remove(crop)
+    expected = "actual-view crop target coverage differs"
+elif variant == "extra-target":
+    extra = deepcopy(views[-1])
+    extra["target"] = "undeclared-target"
+    extra["image"] = "gray-300/undeclared-target.png"
+    views.append(extra)
+    expected = "actual-view crop target is outside the closed roster"
+elif variant == "duplicate-target":
+    views.insert(views.index(crop) + 1, deepcopy(crop))
+    expected = "actual-view crop target is duplicated"
+elif variant == "changed-rectangle":
+    crop["crop"][0] += 1
+    expected = "actual-view crop rectangle differs from roster"
+elif variant == "one-pixel-rectangle":
+    crop["crop"][2:] = [1, 1]
+    expected = "actual-view crop rectangle differs from roster"
+elif variant == "crop-mode-page":
+    crop["pages"] = [2]
+    expected = "actual-view crop mode/page differs from roster"
+elif variant == "crop-components":
+    crop["normal_render_components"] = deepcopy(page["normal_render_components"])
+    expected = "actual-view crop components must be an empty list"
+elif variant == "blocker-outcome":
+    page["outcome"] = "blocker"
+    expected = "actual-view blocker outcome is forbidden"
+elif variant == "unknown-outcome":
+    page["outcome"] = "passed"
+    expected = "actual-view outcome must be clear or advisory"
+elif variant == "short-finding":
+    page["finding"] = "Only five words are here"
+    expected = "actual-view finding must contain at least six words"
+elif variant == "blocker-finding":
+    page["finding"] = "The word BlOcKeR cannot be concealed in this finding."
+    expected = "actual-view finding contains the word blocker"
+elif variant == "advisory-page-set":
+    page["outcome"] = "advisory"
+    expected = "advisory page set differs from actual-view advisory outcomes"
+elif variant == "time-outside-sitting":
+    page["recorded_after_view_utc"] = (datetime.fromisoformat(sitting["start_utc"]) - timedelta(seconds=1)).isoformat()
+    expected = "actual-view time is outside its sitting"
+elif variant == "overlapping-sittings":
+    records["sittings"].append(dict(sitting, id="C"))
+    expected = "actual-view sittings overlap or are out of order"
+elif variant == "decreasing-times":
+    # Several records share one second; swap the first view with the first strictly later one.
+    first_time = datetime.fromisoformat(views[0]["recorded_after_view_utc"])
+    later = next(
+        index for index, view in enumerate(views)
+        if datetime.fromisoformat(view["recorded_after_view_utc"]) > first_time
+    )
+    views[0], views[later] = views[later], views[0]
+    expected = "actual-view times decrease in list order"
+elif variant == "review-date-not-latest":
+    for view in views + records["superseded_views"]:
+        view["recorded_after_view_utc"] = (datetime.fromisoformat(view["recorded_after_view_utc"]) - timedelta(days=1)).isoformat()
+    for shifted_sitting in records["sittings"]:
+        for key in ("start_utc", "end_utc"):
+            shifted_sitting[key] = (
+                datetime.fromisoformat(shifted_sitting[key]) - timedelta(days=1)
+            ).isoformat()
+    expected = "review_date_utc is not the UTC date of the latest view"
+elif variant.startswith(("bool-", "float-")):
+    value = True if variant.startswith("bool-") else None
+    field = variant.split("-", 1)[1]
+    if field in ("page", "crop-page", "superseded-page"):
+        view = {"page": page, "crop-page": crop, "superseded-page": superseded}[field]
+        view["pages"][0] = value if value is not None else float(view["pages"][0])
+        expected = ("superseded view" if field == "superseded-page" else "actual-view") + " page must have exact integer type"
+    elif field in ("dpi", "crop-dpi", "superseded-dpi"):
+        view = {"dpi": page, "crop-dpi": crop, "superseded-dpi": superseded}[field]
+        view["dpi"] = value if value is not None else float(view["dpi"])
+        expected = ("superseded view" if field == "superseded-dpi" else "actual-view") + " dpi must have exact integer type"
+    elif field == "component":
+        component = page["normal_render_components"][0]
+        component["page"] = value if value is not None else float(component["page"])
+        expected = "actual-view component page must have exact integer type"
+    elif field == "rectangle":
+        crop["crop"][0] = value if value is not None else float(crop["crop"][0])
+        expected = "actual-view crop coordinates must have exact integer type"
+    else:
+        raise SystemExit("unknown typed v4 mutation")
+elif variant == "url-not-host-path":
+    page["finding"] = "This finding cites https://example.org/path and stays otherwise valid."
+    expected = "actual-view frozen record digest differs"
+elif variant == "drive-letter-path":
+    page["finding"] = "A Windows path C:\\reviewer\\image.png must not be published here."
+    expected = "actual-view records contain a private or host-local path"
+elif variant in ("private-path", "escaped-private-path"):
+    page["finding"] = "A private path /private/reviewer/image.png must not be published here."
+    expected = "actual-view records contain a private or host-local path"
+elif variant == "duplicate-json-member":
+    expected = "actual-view duplicate JSON member: dpi"
+elif variant == "malformed-superseded":
+    del superseded["superseded_because"]
+    expected = "superseded view key inventory differs"
+elif variant == "superseded-current-pdf":
+    superseded["superseded_pdf_sha256"] = records["pdf_sha256"]
+    expected = "superseded view is bound to the current PDF"
+elif variant == "superseded-time":
+    superseded["recorded_after_view_utc"] = (datetime.fromisoformat(sitting["end_utc"]) + timedelta(seconds=1)).isoformat()
+    expected = "superseded view time is outside its sitting"
+elif variant == "superseded-not-coverage":
+    superseded.update({k: v for k, v in page.items() if k not in ("kind", "normal_render_components")})
+    views.remove(page)
+    expected = "actual-view page coverage differs: color"
+elif variant == "extra-top-level-key":
+    records["unreviewed"] = True
+    expected = "actual-view top-level key inventory differs"
+elif variant == "scope":
+    records["scope"] = "Independent human review is claimed."
+    expected = "actual-view scope differs"
+elif variant == "reviewer":
+    records["reviewer"] = "two AI agents"
+    expected = "actual-view reviewer differs"
+elif variant == "records-pdf-binding":
+    records["pdf_sha256"] = "0" * 64
+    expected = "actual-view pdf_sha256 differs"
+elif variant == "records-render-binding":
+    records["rendering_receipt_sha256"] = "0" * 64
+    expected = "actual-view rendering_receipt_sha256 differs"
+elif variant == "sittings-empty":
+    records["sittings"] = []
+    expected = "actual-view sittings must be a non-empty list"
+elif variant == "sitting-id":
+    sitting["id"] = "AA"
+    expected = "actual-view sitting id must be a single uppercase letter"
+elif variant == "sitting-id-duplicate":
+    records["sittings"].append(deepcopy(sitting))
+    expected = "actual-view sitting id is duplicated"
+elif variant == "sitting-time-format":
+    sitting["start_utc"] = sitting["start_utc"].replace("+00:00", "Z")
+    expected = "actual-view sitting A start is not a canonical UTC time"
+elif variant == "sitting-time-invalid":
+    sitting["start_utc"] = "2026-02-30T04:51:22+00:00"
+    expected = "actual-view sitting A start is not a valid UTC time"
+elif variant == "sitting-empty-interval":
+    sitting["end_utc"] = sitting["start_utc"]
+    expected = "actual-view sitting start must precede end"
+elif variant == "sitting-count":
+    end = datetime.fromisoformat(records["sittings"][-1]["end_utc"])
+    records["sittings"].append({"id": "C", "start_utc": (end + timedelta(seconds=1)).isoformat(), "end_utc": (end + timedelta(seconds=2)).isoformat()})
+    expected = "actual-view sitting count differs from receipt"
+elif variant == "undeclared-sitting":
+    page["sitting"] = "Z"
+    expected = "actual-view names an undeclared sitting"
+elif variant == "view-time-format":
+    page["recorded_after_view_utc"] = page["recorded_after_view_utc"].replace("+00:00", "Z")
+    expected = "actual-view recorded-after-view time is not a canonical UTC time"
+elif variant == "page-extra-key":
+    page["target"] = "not-a-crop"
+    expected = "actual-view page key inventory differs"
+elif variant == "crop-extra-key":
+    crop["unreviewed"] = True
+    expected = "actual-view crop key inventory differs"
+elif variant == "unknown-kind":
+    page["kind"] = "sheet"
+    expected = "actual-view kind must be page or crop"
+elif variant == "multiple-pages":
+    page["pages"] = [1, 2]
+    expected = "actual-view pages must contain exactly one page"
+elif variant == "nonfinite-json":
+    page["dpi"] = float("nan")
+    expected = "actual-view non-finite JSON number: NaN"
+elif variant == "record-digest-last":
+    page["finding"] = "This changed finding remains structurally valid but was never frozen."
+    expected = "actual-view frozen record digest differs"
 else:
-    raise SystemExit("unknown split mutation")
-Path(sys.argv[2]).write_text(json.dumps(value) + "\n")
-PY_SPLIT
-  case "$split_mode" in
-    missing-pages) expected="visual receipt actual-view normal coverage differs: science-final/color" ;;
-    false-view) expected="visual receipt actual-view record does not attest an original-detail actual view" ;;
-    false-reviewer) expected="visual receipt actual-view reviewer partition differs" ;;
-  esac
-  expect_reject "split receipt rejects $split_mode" "$expected" \
-    run_visual_validator "$VISUAL_CONTROL" "$case_file"
-  SPLIT_VISUAL_HOSTILE_COUNT=$((SPLIT_VISUAL_HOSTILE_COUNT + 1))
+    raise SystemExit(f"unknown v4 mutation: {variant}")
+raw = json.dumps(records, indent=1, ensure_ascii=False) + "\n"
+if variant == "duplicate-json-member":
+    raw = raw.replace('"dpi": 120,', '"dpi": 120, "dpi": 120,', 1)
+elif variant == "escaped-private-path":
+    raw = raw.replace("/private/", r"\u002fprivate\u002f")
+Path(sys.argv[2]).write_text(raw, encoding="utf-8", newline="\n")
+print("visual receipt " + expected)
+PY_V4_MUTANT
+}
+
+for variant in \
+  page-image-not-render page-component page-name missing-gray-page duplicated-page \
+  crop-digest-exact crop-digest-cross missing-target extra-target duplicate-target \
+  changed-rectangle one-pixel-rectangle crop-mode-page crop-components \
+  blocker-outcome unknown-outcome short-finding blocker-finding advisory-page-set \
+  time-outside-sitting overlapping-sittings decreasing-times review-date-not-latest \
+  bool-page float-page bool-dpi float-dpi bool-crop-page float-crop-page \
+  bool-crop-dpi float-crop-dpi bool-component float-component bool-rectangle float-rectangle \
+  bool-superseded-page float-superseded-page bool-superseded-dpi float-superseded-dpi \
+  private-path escaped-private-path url-not-host-path drive-letter-path \
+  duplicate-json-member malformed-superseded \
+  superseded-current-pdf superseded-time superseded-not-coverage \
+  extra-top-level-key scope reviewer records-pdf-binding records-render-binding \
+  sittings-empty sitting-id sitting-id-duplicate sitting-time-format sitting-time-invalid \
+  sitting-empty-interval sitting-count undeclared-sitting view-time-format \
+  page-extra-key crop-extra-key unknown-kind multiple-pages nonfinite-json record-digest-last; do
+  case_file="$TEST_ROOT/actual-views-v4-$variant.json"
+  expected="$(make_v4_mutant "$case_file" "$variant")"
+  visual_mode=--cross-toolchain
+  if [[ "$variant" == "crop-digest-exact" ]]; then
+    visual_mode=--exact
+  fi
+  for python_mode in normal optimized; do
+    expect_v4_reject "v4 records reject $variant ($python_mode)" "$expected" \
+      run_visual_validator "$VISUAL_CONTROL" "$case_file" "$visual_mode" "$python_mode"
+  done
 done
+
+# The extracted validator must reject renderer failure, either diagnostic stream, and absent
+# PNG output in BOTH modes. These inert test-only executables do not replace captured production
+# tools, and their output supplies no crop identity or visual-review evidence.
+run_visual_renderer_probe() {
+  local renderer_directory="$1"
+  local validation_mode="$2"
+  PATH="$renderer_directory:$PATH" run_visual_validator \
+    "$VISUAL_CONTROL" "$BASE_VISUAL_RECORDS" "$validation_mode"
+}
+for renderer_failure in stdout stderr exit missing-png; do
+  renderer_directory="$TEST_ROOT/visual-renderer-$renderer_failure"
+  mkdir "$renderer_directory"
+  case "$renderer_failure" in
+    stdout)
+      printf '#!/bin/sh\nprintf "unexpected rendering output\\n"\n' >"$renderer_directory/pdftoppm"
+      expected="actual-view crop rendering emitted a diagnostic"
+      ;;
+    stderr)
+      printf '#!/bin/sh\nprintf "unexpected rendering diagnostic\\n" >&2\n' >"$renderer_directory/pdftoppm"
+      expected="actual-view crop rendering emitted a diagnostic"
+      ;;
+    exit)
+      printf '#!/bin/sh\nexit 7\n' >"$renderer_directory/pdftoppm"
+      expected="actual-view crop rendering failed"
+      ;;
+    missing-png)
+      printf '#!/bin/sh\nexit 0\n' >"$renderer_directory/pdftoppm"
+      expected="actual-view crop rendering did not produce a regular PNG"
+      ;;
+  esac
+  chmod 0700 "$renderer_directory/pdftoppm"
+  for visual_mode in --exact --cross-toolchain; do
+    expect_v4_reject "v4 rejects renderer $renderer_failure ($visual_mode)" \
+      "visual receipt $expected" \
+      run_visual_renderer_probe "$renderer_directory" "$visual_mode"
+  done
+done
+
+# Split-review controls are retired: v4 has one reviewer and sittings, with no stage or
+# reviewer partition. Historical v3 verification belongs to check-workflow-publication-history.py.
 
 # Four separate controls reject a full-pass claim for each machine-scoped lens.
 for machine_lens in \
@@ -7393,7 +7697,7 @@ c3_control_count=$((
   + C3_EXECUTABLE_CUSTODY_COUNT
   + C3_FORMAT_CUSTODY_COUNT
 ))
-predecessor_control_count=$((PASS_COUNT - c3_control_count - C8_TEXT_PORTABILITY_COUNT - PYTHON_BYTECODE_COUNT - SPLIT_VISUAL_HOSTILE_COUNT - MACHINE_SCOPE_HOSTILE_COUNT))
+predecessor_control_count=$((PASS_COUNT - c3_control_count - C8_TEXT_PORTABILITY_COUNT - PYTHON_BYTECODE_COUNT - SPLIT_VISUAL_HOSTILE_COUNT - MACHINE_SCOPE_HOSTILE_COUNT - V4_ACTUAL_VIEW_COUNT))
 if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C3_BOUNDED_PROBE_COUNT" -ne "$EXPECTED_C3_BOUNDED_PROBE_COUNT" \
     || "$C3_ENTRY_WRAPPER_COUNT" -ne "$EXPECTED_C3_ENTRY_WRAPPER_COUNT" \
@@ -7404,14 +7708,15 @@ if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C8_TEXT_PORTABILITY_COUNT" -ne "$EXPECTED_C8_TEXT_PORTABILITY_COUNT" \
     || "$PYTHON_BYTECODE_COUNT" -ne "$EXPECTED_PYTHON_BYTECODE_COUNT" \
     || "$VISUAL_RECEIPT_HOSTILE_COUNT" -ne "$EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT" \
+    || "$V4_ACTUAL_VIEW_COUNT" -ne "$EXPECTED_V4_ACTUAL_VIEW_COUNT" \
     || "$SPLIT_VISUAL_HOSTILE_COUNT" -ne "$EXPECTED_SPLIT_VISUAL_HOSTILE_COUNT" \
     || "$MACHINE_SCOPE_HOSTILE_COUNT" -ne "$EXPECTED_MACHINE_SCOPE_HOSTILE_COUNT" \
     || "$predecessor_control_count" -ne "$EXPECTED_PREDECESSOR_CONTROL_COUNT" \
     || "$PASS_COUNT" -ne "$EXPECTED_TOTAL_CONTROL_COUNT" ]]; then
-  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, python-bytecode=$PYTHON_BYTECODE_COUNT, visual-receipt-hostile=$VISUAL_RECEIPT_HOSTILE_COUNT, split-visual-hostile=$SPLIT_VISUAL_HOSTILE_COUNT, machine-scope-hostile=$MACHINE_SCOPE_HOSTILE_COUNT, total=$PASS_COUNT"
+  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, python-bytecode=$PYTHON_BYTECODE_COUNT, visual-receipt-hostile=$VISUAL_RECEIPT_HOSTILE_COUNT, v4-actual-view=$V4_ACTUAL_VIEW_COUNT, split-visual-hostile=$SPLIT_VISUAL_HOSTILE_COUNT, machine-scope-hostile=$MACHINE_SCOPE_HOSTILE_COUNT, total=$PASS_COUNT"
 fi
 
-printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; python-bytecode=%d; visual-receipt-hostile=%d; split-visual-hostile=%d; machine-scope-hostile=%d; no report compilation was performed\n' \
+printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; python-bytecode=%d; visual-receipt-hostile=%d; v4-actual-view=%d; split-visual-hostile=%d; machine-scope-hostile=%d; no report compilation was performed\n' \
   "$PASS_COUNT" \
   "$predecessor_control_count" \
   "$C3_BOUNDED_PROBE_COUNT" \
@@ -7423,5 +7728,6 @@ printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen fa
   "$C8_TEXT_PORTABILITY_COUNT" \
   "$PYTHON_BYTECODE_COUNT" \
   "$VISUAL_RECEIPT_HOSTILE_COUNT" \
+  "$V4_ACTUAL_VIEW_COUNT" \
   "$SPLIT_VISUAL_HOSTILE_COUNT" \
   "$MACHINE_SCOPE_HOSTILE_COUNT"
