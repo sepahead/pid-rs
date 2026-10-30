@@ -1,0 +1,122 @@
+"""Inert record, not a repository command: independent checks of the coupling, range and cut bounds.
+
+Run with any Python 3.11+ and only the standard library; it writes nothing. It rebuilds the
+18-node redundancy lattice and its Moebius function by recursion (not matrix inversion), checks
+the constants 129, 65, 22/22/1 and 67, and tests four bounds on 300 random three-source
+distributions with deterministic and random recodings. Result on 30 October 2026: no violation;
+the movement never exceeded 4.1% of the coupling bound; pointwise component atoms were nonnegative
+up to rounding (smallest value -2.2e-16).
+"""
+import itertools, math, random
+from fractions import Fraction
+
+SRC = (0, 1, 2)
+subsets = [frozenset(c) for r in (1, 2, 3) for c in itertools.combinations(SRC, r)]
+# Antichains of nonempty subsets, nonempty: 18 nodes.
+nodes = []
+for r in range(1, len(subsets) + 1):
+    for fam in itertools.combinations(subsets, r):
+        if all(not (a < b or b < a) for a, b in itertools.combinations(fam, 2)):
+            nodes.append(frozenset(fam))
+assert len(nodes) == 18, len(nodes)
+def leq(a, b):  # a <= b in the redundancy lattice: every B in b contains some A in a
+    return all(any(A <= B for A in a) for B in b)
+# Moebius function by recursion: mu(x,x)=1; mu(x,y) = -sum_{x<=z<y} mu(x,z).
+order = sorted(nodes, key=lambda n: sum(leq(m, n) for m in nodes))
+mu = {}
+for x in nodes:
+    for y in order:
+        if not leq(x, y):
+            continue
+        mu[x, y] = 1 if x == y else -sum(mu[x, z] for z in nodes if (x, z) in mu and leq(z, y) and z != y)
+zeta_ones = sum(leq(a, b) for a in nodes for b in nodes)
+c = {b: sum(abs(mu[b, a]) for a in nodes if (b, a) in mu) for b in nodes}   # column abs sums
+w = {B: sum(c[b] for b in nodes if B in b) for B in subsets}
+coef = {i: sum(w[B] for B in subsets if i in B) for i in SRC}
+print("nodes", len(nodes), "zeta_ones", zeta_ones, "sum|mu|", sum(c.values()),
+      "w", sorted({len(B): w[B] for B in subsets}.items()), "coord coef", coef)
+
+def pid(joint, n_src=3):
+    """joint: dict (s0,s1,s2,t)->p. Returns averaged (plus, minus) atoms per node and pointwise min atoms."""
+    pt = {}
+    for k, p in joint.items():
+        pt[k[3]] = pt.get(k[3], 0) + p
+    cum_p = {}; cum_m = {}; min_pt = (0.0, 0.0)
+    avg_plus = {n: 0.0 for n in nodes}; avg_minus = {n: 0.0 for n in nodes}
+    for z, pz in joint.items():
+        if pz <= 0:
+            continue
+        ip = {}; im = {}
+        for n in nodes:
+            ev = sum(p for u, p in joint.items() if p > 0 and any(all(u[i] == z[i] for i in B) for B in n))
+            evt = sum(p for u, p in joint.items() if p > 0 and u[3] == z[3] and any(all(u[i] == z[i] for i in B) for B in n))
+            ip[n] = -math.log(ev); im[n] = -math.log(evt / pt[z[3]])
+        for a in nodes:
+            ap = sum(mu[b, a] * ip[b] for b in nodes if (b, a) in mu)
+            am = sum(mu[b, a] * im[b] for b in nodes if (b, a) in mu)
+            min_pt = (min(min_pt[0], ap), min(min_pt[1], am))
+            avg_plus[a] += pz * ap; avg_minus[a] += pz * am
+    return avg_plus, avg_minus, min_pt
+
+def H(d):
+    return -sum(p * math.log(p) for p in d.values() if p > 0)
+def marg(joint, f):
+    out = {}
+    for k, p in joint.items():
+        key = f(k); out[key] = out.get(key, 0) + p
+    return out
+
+rng = random.Random(20261028)
+worst_neg = (0.0, 0.0); viol = {"coupling": 0, "sharp": 0, "range": 0, "cut": 0}; trials = 0; ratios = []
+for trial in range(300):
+    k = rng.choice([2, 2, 3]); m = rng.choice([2, 3])
+    # random joint of (S, T) and a random coupling S' | S (deterministic or stochastic)
+    support = list(itertools.product(range(k), range(k), range(k), range(m)))
+    weights = [rng.random() ** 3 if rng.random() < 0.7 else 0.0 for _ in support]
+    if sum(weights) == 0:
+        continue
+    pST = {s: wgt / sum(weights) for s, wgt in zip(support, weights) if wgt > 0}
+    deterministic = rng.random() < 0.5
+    maps = [{v: rng.randrange(k) for v in range(k)} for _ in SRC]
+    coupled = {}  # (s, s', t) -> p
+    for s, p in pST.items():
+        if deterministic:
+            sp = tuple(maps[i][s[i]] for i in SRC)
+            coupled[s[:3] + sp + (s[3],)] = coupled.get(s[:3] + sp + (s[3],), 0) + p
+        else:
+            for _ in range(2):
+                sp = tuple(maps[i][s[i]] if rng.random() < 0.7 else rng.randrange(k) for i in SRC)
+                key = s[:3] + sp + (s[3],)
+                coupled[key] = coupled.get(key, 0) + p / 2
+    old = marg(coupled, lambda q: q[0:3] + (q[6],)); new = marg(coupled, lambda q: q[3:6] + (q[6],))
+    ap, am, mn = pid(old); bp, bm, mn2 = pid(new)
+    worst_neg = (min(worst_neg[0], mn[0], mn2[0]), min(worst_neg[1], mn[1], mn2[1]))
+    Dv = sum(abs((ap[a] - am[a]) - (bp[a] - bm[a])) for a in nodes)
+    def condH(sel_a, sel_b, with_t):
+        # H(A | B, [T])
+        j = marg(coupled, lambda q: (sel_a(q), sel_b(q), q[6] if with_t else None))
+        b_ = marg(coupled, lambda q: (sel_b(q), q[6] if with_t else None))
+        return H(j) - H(b_)
+    a_ = {}; b_ = {}; aT = {}; bT = {}
+    for B in subsets:
+        S_B = lambda q, B=B: tuple(q[i] for i in sorted(B)); Sp_B = lambda q, B=B: tuple(q[3 + i] for i in sorted(B))
+        a_[B] = condH(Sp_B, S_B, False); b_[B] = condH(S_B, Sp_B, False)
+        aT[B] = condH(Sp_B, S_B, True); bT[B] = condH(S_B, Sp_B, True)
+    coupling = sum(w[B] * (a_[B] + b_[B]) for B in subsets)
+    sharp = sum(c[n] * max(sum(a_[B] + bT[B] for B in n), sum(b_[B] + aT[B] for B in n)) for n in nodes)
+    rng_b = H(marg(coupled, lambda q: q[0:3])) + H(old) - H(marg(coupled, lambda q: q[6])) \
+        + H(marg(coupled, lambda q: q[3:6])) + H(new) - H(marg(coupled, lambda q: q[6]))
+    # MI per coalition for the cut
+    def mi(dist, B):
+        return H(marg(dist, lambda q: tuple(q[i] for i in sorted(B)))) + H(marg(dist, lambda q: q[3])) \
+            - H(marg(dist, lambda q: tuple(q[i] for i in sorted(B)) + (q[3],)))
+    L = mi(old, frozenset(SRC)) - mi(new, frozenset(SRC))
+    cut = max(abs(mi(old, B) - mi(new, B)) + abs(L - (mi(old, B) - mi(new, B))) for B in subsets)
+    tol = 1e-9
+    viol["coupling"] += Dv > coupling + tol; viol["sharp"] += Dv > sharp + tol
+    viol["range"] += Dv > rng_b + tol; viol["cut"] += cut > Dv + tol
+    trials += 1
+    if Dv > 1e-6:
+        ratios.append((Dv / rng_b, Dv / coupling if coupling else 0))
+print("trials", trials, "min pointwise atoms (plus, minus)", worst_neg, "violations", viol)
+print("max D/range", max(r[0] for r in ratios), "max D/coupling", max(r[1] for r in ratios))

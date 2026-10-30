@@ -1,0 +1,24 @@
+{
+ "inputs": [
+  {
+   "path": "adapter_v3.py",
+   "sha256": "d6c848230da6e914c321d1ff99752d79718a774f300065bb6b98382bb9f3f749"
+  },
+  {
+   "path": "candidate_v2.py",
+   "sha256": "7235481051451579eb4a2e993c3623c662b20853b323df17f80c5012529c90f6"
+  },
+  {
+   "path": "exact-reference-v2/exact_reference_v2.py",
+   "sha256": "503b526efa10d6439c6992d33c430e215977cde6aea4bddbe00e48fe888e86d7"
+  },
+  {
+   "path": "post_study_bound.py",
+   "sha256": "48a30cde87123c3a26695b53f1b65791b49bb9d3b1260c5046b3003986caa09a"
+  },
+  {
+   "path": "../evidence/campaign/REPORT.json",
+   "sha256": "ad0f9781265c7bdf3a9eadae04c063428e4507f946644d0cbbc42b240521bc2b"
+  }
+ ]
+}

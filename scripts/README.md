@@ -3498,6 +3498,15 @@ the two public recordings named in the report (UCI 864, DOI 10.24432/C5P605, and
 10.24432/C5X01N). Place `uci864-data.csv`, `datatraining.txt`, `datatest.txt` and `datatest2.txt`
 in `.local/research-and-storage-20261005/application-benchmarks-v1/native-attempt-2/raw/` under the
 repository root, an ignored location. The scripts check the SHA-256 of each file before use.
+`run_study_v3.py NEW_DIRECTORY` writes the campaign; `--raw-dir DIRECTORY` after the output
+directory selects another raw-data location. Every output file except the timing record
+`EXECUTION.json` must equal its counterpart in `evidence/campaign/`.
+`post_study_bound.py NEW_DIRECTORY` checks its published input manifest `POST_BOUND_INPUTS.json`,
+reads `evidence/campaign/` and writes `REPORT.json`, which must equal `evidence/coupling-bound.json`.
+`chain_lower_certificate.py` writes nothing; it checks 48 integer dual witnesses exactly and prints
+rational lower bounds on the allocation movement of all 30 distributions. These three scripts are
+reproduction aids for the [addendum of 30 October 2026](../audit/research/source-coupling-compression/ADDENDUM-2026-10-30.md);
+a matching replay is not a population or calibration result.
 The PDF inventory compares sorted validated stems. Sorting full filenames before removing `.pdf`
 does not preserve stem order for a paper and its `-summary` companion; the first failed baseline
 and its source preimage remain archived with the bias publication.

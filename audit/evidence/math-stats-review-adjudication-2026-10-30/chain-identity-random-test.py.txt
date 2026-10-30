@@ -1,0 +1,35 @@
+"""Inert record, not a repository command: random test of the chain closed form.
+
+Needs NumPy and SciPy. For 20,000 random vectors l of the seven information changes (one third
+rounded to integers, to include ties and zeros) it solves min ||d||_1 subject to A d = l with HiGHS
+and compares the optimum with the largest total variation along the six maximal chains. Result on
+30 October 2026: no mismatch; the largest relative difference was 6.1e-16. The proof is in the
+source-partition addendum, section 2.
+"""
+import itertools
+import numpy as np
+from scipy.optimize import linprog
+
+SOURCES = (0, 1, 2)
+SETS = [frozenset(c) for r in (1, 2, 3) for c in itertools.combinations(SOURCES, r)]
+NODES = [frozenset(f) for r in range(1, 8) for f in itertools.combinations(SETS, r)
+         if all(not (a < b or b < a) for a, b in itertools.combinations(f, 2))]
+below = lambda a, b: all(any(x <= y for x in a) for y in b)
+A = np.array([[1.0 if below(a, frozenset([B])) else 0.0 for a in NODES] for B in SETS])
+FULL = frozenset(SOURCES)
+POSITION = {B: k for k, B in enumerate(SETS)}
+rng = np.random.default_rng(20261028)
+worst = 0.0
+mismatches = 0
+for trial in range(20000):
+    ell = rng.standard_normal(7) * rng.choice([0.01, 1, 100])
+    if trial % 3 == 0:
+        ell = np.round(ell)
+    optimum = linprog(np.ones(36), A_eq=np.hstack([A, -A]), b_eq=ell, bounds=[(0, None)] * 36, method="highs").fun
+    value = lambda B: ell[POSITION[B]]
+    chain = max(abs(value(frozenset([i]))) + abs(value(frozenset([i, j])) - value(frozenset([i])))
+                + abs(value(FULL) - value(frozenset([i, j]))) for i in SOURCES for j in SOURCES if j != i)
+    gap = abs(optimum - chain) / max(1.0, abs(optimum))
+    worst = max(worst, gap)
+    mismatches += gap > 1e-7
+print({"vectors": 20000, "largest relative difference": worst, "mismatches": mismatches})

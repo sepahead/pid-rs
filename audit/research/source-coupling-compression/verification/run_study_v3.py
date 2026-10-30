@@ -16,7 +16,9 @@ import sys
 import time
 
 ROOT = Path(__file__).resolve().parent
-RAW = ROOT.parents[1] / '.local/research-and-storage-20261005/application-benchmarks-v1/native-attempt-2/raw'
+# The scripts guide places the raw recordings under the repository root:
+# verification -> source-coupling-compression -> research -> audit -> repository.
+RAW = ROOT.parents[3] / '.local/research-and-storage-20261005/application-benchmarks-v1/native-attempt-2/raw'
 spec = importlib.util.spec_from_file_location('study_adapter', ROOT / 'adapter_v3.py')
 A = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(A)
@@ -264,6 +266,8 @@ def run(output):
 
 
 if __name__=='__main__':
-    C.require(len(sys.argv)==2,'expected new output directory')
+    C.require(len(sys.argv)==2 or (len(sys.argv)==4 and sys.argv[2]=='--raw-dir'),
+              'expected new output directory, optionally followed by --raw-dir DIRECTORY')
+    if len(sys.argv)==4:RAW=Path(sys.argv[3])
     run(Path(sys.argv[1]))
 

@@ -1,5 +1,15 @@
 # Session handoff — updated 2 October 2026
 
+## Review adjudication, 30 October 2026
+
+An AI-agent mathematical and statistical review of 28 October 2026 was checked claim by claim in
+the [adjudication record](audit/evidence/math-stats-review-adjudication-2026-10-30.md). The
+source-partition [addendum](audit/research/source-coupling-compression/ADDENDUM-2026-10-30.md)
+carries the repaired replay commands, a closed-form exact lower bound, a tighter exploratory upper
+bound and corrected readings of the empirical results. Open: republish the source-partition
+report's Markdown and PDF with the addendum and a corrected status sentence, under a new visual
+review; the binary constant $K_\star$ stays in $[3,3+\beta]$.
+
 ## Reader/process checkpoint, 10 October 2026
 
 The [current map](RESEARCH_RESULTS_2026_10_10.md), [reader contract](RESEARCH_READER_AND_VERIFICATION_CONTRACT.md)

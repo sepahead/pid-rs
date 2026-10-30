@@ -1,0 +1,58 @@
+"""Inert record, not a repository command: numerical search for the binary allocation constant.
+
+Needs NumPy and SciPy. Usage: python3 binary-constant-search.py.txt RESTARTS (4 were used). For
+binary X and C, a target with four labels (enough by the four-label reduction) and fixed lower limits
+on H(C), it maximizes D/H(C) by differential evolution with a Nelder-Mead polish, then evaluates
+the rare exclusive-or family. Result on 30 October 2026: no ratio above 3; see the record, section 3.
+"""
+import json, math, sys
+import numpy as np
+from scipy.optimize import differential_evolution, minimize
+
+def terms(p):
+    tot = p.sum(); q = p / tot
+    px = np.array([q[0] + q[1], q[2] + q[3]]); pc = np.array([q[0] + q[2], q[1] + q[3]])
+    ent = lambda v: -sum(x * math.log(x) for x in v if x > 0)
+    h = ent(pc); i = ent(px) + h - ent(q)
+    f = sum(v * math.log(1.0 / (px[k // 2] + pc[k % 2] - v)) for k, v in enumerate(q) if v > 0)
+    return f, h, i
+
+def evaluate(theta):
+    lg = theta.reshape(4, 4); lg = lg - lg.max(); cells = np.exp(lg)
+    prior = cells.sum(axis=0)
+    L, h, i = terms(prior)
+    M = hT = j = 0.0; tot = cells.sum()
+    for c in cells:
+        w = c.sum() / tot
+        if w <= 0: continue
+        f, ht, it = terms(c); M += w * f; hT += w * ht; j += w * it
+    cc = L - M
+    d = 2 * abs(cc) + abs(h - hT - cc) + abs(cc - i + j)
+    return d, h
+
+def objective(theta, floor):
+    d, h = evaluate(theta)
+    if h < floor:
+        return 10.0 * (floor - h)          # infeasible: push back above the floor
+    return -d / h
+
+results = []
+for floor in (0.005, 0.02, 0.05, 0.1, 0.2, 0.4, 0.6):
+    best = None
+    for seed in range(int(sys.argv[1])):
+        r = differential_evolution(objective, [(-12, 12)] * 16, args=(floor,), seed=seed, maxiter=600,
+                                   popsize=25, tol=1e-10, polish=False)
+        loc = minimize(objective, r.x, args=(floor,), method="Nelder-Mead",
+                       options={"maxiter": 20000, "xatol": 1e-10, "fatol": 1e-13})
+        x = loc.x if loc.fun < r.fun else r.x
+        val = -objective(x, floor)
+        if best is None or val > best[0]:
+            d, h = evaluate(x); lg = x.reshape(4, 4); lg = lg - lg.max(); cells = np.exp(lg); cells /= cells.sum()
+            best = (val, h, cells.round(6).tolist())
+    results.append({"H_C_floor": floor, "max_ratio": best[0], "H_C": best[1], "law": best[2]})
+    print(json.dumps(results[-1]), flush=True)
+# rare-XOR family for reference
+for e in (1e-2, 1e-4, 1e-6, 1e-8):
+    cells = np.array([[(1 - e) / 2, 0, 0, e / 2], [0, e / 2, (1 - e) / 2, 0], [0, 0, 0, 0], [0, 0, 0, 0]]) + 0.0
+    lg = np.where(cells > 0, np.log(np.where(cells > 0, cells, 1)), -1e9)
+    d, h = evaluate(lg.reshape(-1)); print(json.dumps({"rare_xor_e": e, "ratio": d / h, "H_C": h}))

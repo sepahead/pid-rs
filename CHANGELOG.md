@@ -7,6 +7,18 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Adjudicate an AI-agent mathematical and statistical review of 28 October 2026 and act on it.
+  The source-partition runner now finds the raw recordings under the repository root, and the
+  post-study bound check reads the published campaign and a published input manifest; both
+  replays reproduce the published evidence byte for byte. A new exact checker certifies the
+  closed-form lower bound from all seven coalition information changes, which improves the saved
+  lower bound on six office distributions. A dated
+  [addendum](audit/research/source-coupling-compression/ADDENDUM-2026-10-30.md) gives its proof,
+  a tighter exploratory upper bound from nonnegative component atoms, a target-conditioned
+  coupling bound, and corrections to how the shifted evaluation days, in-sample scores and
+  smoothing should be read; the binary allocation note gains the four-label reduction and a
+  numerical search for its constant. See the
+  [adjudication record](audit/evidence/math-stats-review-adjudication-2026-10-30.md).
 - Republish the mathematical problem-solving workflow without links to posts on X: each post is
   described by its date and the role of its author, a source-policy paragraph states the rule, the
   two corrections of the research reader contract (explicit user pause and category-theoretic

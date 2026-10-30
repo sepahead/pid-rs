@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import sys
 
 ROOT=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('bound_adapter',ROOT/'adapter_v3.py')
@@ -29,11 +30,13 @@ def leq(left,right,n):
 
 
 def main():
+    C.require(len(sys.argv)==2,'expected new output directory')
     frozen=json.loads((ROOT/'POST_BOUND_INPUTS.json').read_bytes())
     for item in frozen['inputs']:
         C.require(hashlib.sha256((ROOT/item['path']).read_bytes()).hexdigest()==item['sha256'],'analysis input drift')
-    output=ROOT/'post-bound-attempt-1';output.mkdir(exist_ok=False)
-    source=ROOT/'campaign-v3-normal';index=json.loads((source/'REPORT.json').read_bytes())
+    # The published campaign index pins every law file by size and SHA-256.
+    output=Path(sys.argv[1]);output.mkdir(exist_ok=False)
+    source=ROOT.parent/'evidence'/'campaign';index=json.loads((source/'REPORT.json').read_bytes())
     result=[]
     for recording in index['recordings']:
         heads=tuple(tuple(t) for t in recording['metadata']['heads'])

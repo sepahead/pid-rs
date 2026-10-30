@@ -1,0 +1,120 @@
+"""Exploratory bounds on allocation movement from nonnegative component atoms (addendum section 3).
+
+Inert record, not a repository command. It needs NumPy and SciPy (HiGHS); the values in the
+addendum were produced with Python 3.14.9, NumPy 2.5.4 and SciPy 1.18.1 in binary64 arithmetic. It
+is an optimization, not a certificate.
+
+For each of the 30 published distributions it computes, from the 28 coalition entropies
+H(S_B), H(S_B | T), H(S'_B), H(S'_B | T):
+  lower = min sum |d| and upper = max sum |d|, where d = (p+ - p-) - (q+ - q-),
+  p+, p-, q+, q- >= 0 and A x = h for the matching entropy vector h; A is the 7 x 18 matrix whose
+  row B selects the nodes at or below the one-collection node {B}.
+The maximum is a mixed-integer program with one binary sign per node (big-M formulation, with M
+above the range bound). It also recomputes the exact allocation movement D from the counts with an
+independent implementation of the MGW redundancy, for comparison.
+
+Usage, from the repository root:
+  python3 audit/research/source-coupling-compression/verification/component-sandwich-exploratory.py.txt
+"""
+import itertools
+import json
+import math
+from collections import Counter
+from pathlib import Path
+
+import numpy as np
+from scipy.optimize import Bounds, LinearConstraint, linprog, milp
+
+STUDY = Path("audit/research/source-coupling-compression")
+SOURCES = (0, 1, 2)
+SETS = [frozenset(c) for r in (1, 2, 3) for c in itertools.combinations(SOURCES, r)]
+NODES = [frozenset(f) for r in range(1, 8) for f in itertools.combinations(SETS, r)
+         if all(not (a < b or b < a) for a, b in itertools.combinations(f, 2))]
+
+
+def below(a, b):
+    """a <= b in the redundancy lattice: every collection of b contains a collection of a."""
+    return all(any(x <= y for x in a) for y in b)
+
+
+ORDER = sorted(NODES, key=lambda n: sum(below(m, n) for m in NODES))
+MU = {}
+for x in NODES:
+    for y in ORDER:
+        if below(x, y):
+            MU[x, y] = 1 if x == y else -sum(MU[x, z] for z in NODES if (x, z) in MU and below(z, y) and z != y)
+A = np.array([[1.0 if below(a, frozenset([B])) else 0.0 for a in NODES] for B in SETS])
+
+
+def components(counts):
+    """Averaged informative and misinformative redundancy values and atoms of a count table."""
+    n = sum(counts.values())
+    target = Counter()
+    for z, c in counts.items():
+        target[z[3]] += c
+    plus, minus = {}, {}
+    for node in NODES:
+        p = m = 0.0
+        for z, c in counts.items():
+            event = sum(v for u, v in counts.items() if any(all(u[i] == z[i] for i in B) for B in node))
+            event_t = sum(v for u, v in counts.items()
+                          if u[3] == z[3] and any(all(u[i] == z[i] for i in B) for B in node))
+            p += c * math.log(n / event)
+            m += c * math.log(target[z[3]] / event_t)
+        plus[node], minus[node] = p / n, m / n
+    atoms = lambda cum: {a: sum(MU[b, a] * cum[b] for b in NODES if (b, a) in MU) for a in NODES}
+    return plus, minus, atoms(plus), atoms(minus)
+
+
+def sandwich(h):
+    nodes = len(NODES)
+    zero = np.zeros((7, nodes))
+    a_eq = np.vstack([np.hstack([A if k == j else zero for k in range(4)]) for j in range(4)])
+    b_eq = np.concatenate(h)
+    eye = np.eye(nodes)
+    d = np.hstack([eye, -eye, -eye, eye])
+    lower = linprog(np.concatenate([np.zeros(4 * nodes), np.ones(nodes)]),
+                    A_ub=np.vstack([np.hstack([d, -eye]), np.hstack([-d, -eye])]), b_ub=np.zeros(2 * nodes),
+                    A_eq=np.hstack([a_eq, np.zeros((28, nodes))]), b_eq=b_eq,
+                    bounds=[(0, None)] * (5 * nodes), method="highs").fun
+    big = sum(hh[-1] for hh in h) + 1.0
+    width = 6 * nodes
+    rows, upper_rhs = [], []
+    for k in range(nodes):
+        r1 = np.zeros(width); r1[:4 * nodes] = -d[k]; r1[4 * nodes + k] = 1; r1[5 * nodes + k] = big
+        r2 = np.zeros(width); r2[:4 * nodes] = d[k]; r2[4 * nodes + k] = 1; r2[5 * nodes + k] = -big
+        rows += [r1, r2]; upper_rhs += [big, 0.0]
+    result = milp(np.concatenate([np.zeros(4 * nodes), -np.ones(nodes), np.zeros(nodes)]),
+                  constraints=[LinearConstraint(np.array(rows), -np.inf, np.array(upper_rhs)),
+                               LinearConstraint(np.hstack([a_eq, np.zeros((28, 2 * nodes))]), b_eq, b_eq)],
+                  integrality=np.concatenate([np.zeros(5 * nodes), np.ones(nodes)]),
+                  bounds=Bounds(np.zeros(width), np.concatenate([np.full(5 * nodes, np.inf), np.ones(nodes)])))
+    if result.status != 0:
+        raise SystemExit(f"mixed-integer program did not finish: {result.message}")
+    return lower, -result.fun
+
+
+def main():
+    index = json.loads((STUDY / "evidence/campaign/REPORT.json").read_text())
+    rows = []
+    for recording in index["recordings"]:
+        heads = [tuple(h) for h in recording["metadata"]["heads"]]
+        for pointer in recording["laws"]:
+            law = json.loads((STUDY / "evidence/campaign" / pointer["path"]).read_text())
+            before = Counter({tuple(r[:4]): r[4] for r in law["counts"]})
+            after = Counter()
+            for z, c in before.items():
+                after[z if z[1:3] in heads else (z[0], *heads[0], z[3])] += c
+            p0, m0, a0p, a0m = components(before)
+            p1, m1, a1p, a1m = components(after)
+            movement = sum(abs((a0p[a] - a0m[a]) - (a1p[a] - a1m[a])) for a in NODES)
+            h = [np.array([cum[frozenset([B])] for B in SETS]) for cum in (p0, m0, p1, m1)]
+            lower, upper = sandwich(h)
+            rows.append({"recording": recording["metadata"]["recording"], "law": law["law"],
+                         "movement": movement, "range_bound": sum(hh[-1] for hh in h),
+                         "component_lower": lower, "component_upper": upper})
+    print(json.dumps(rows, indent=1))
+
+
+if __name__ == "__main__":
+    main()

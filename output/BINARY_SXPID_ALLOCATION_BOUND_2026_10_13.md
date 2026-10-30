@@ -400,3 +400,40 @@ generic calibration, real-data advantage or programme closure is reported.
 Cite: Sepehr Mahmoudian, *Binary shared-exclusions allocation: a uniform entropy
 bound* (2026), with the exact repository commit or release.
 Use [CITATION.cff](../CITATION.cff) for software and cite MGW separately.
+
+## 9. Later analysis, 30 October 2026
+
+An AI-agent review of 28 October 2026 proposed a reduction of the search for $K_\star$, and the
+[adjudication of that review](../audit/evidence/math-stats-review-adjudication-2026-10-30.md) ran a
+numerical search. Both are checked here. Neither closes the interval $3\le K_\star\le3+\beta$.
+
+**Four target labels suffice.** Fix the prior $p_{XC}$; then $h$, $i$ and $L$ are fixed. A target is
+described by its label probabilities $w_t=p(T=t)>0$ and the conditional tables
+$p_t=p_{XC\mid T=t}$, with $\sum_tw_tp_t=p_{XC}$. By section 2 the change vector
+$\Pi(p)-\Pi(q)$ is
+$$
+(L-M,\;-(L-M),\;h-h_T-(L-M),\;(L-M)-i+j),
+$$
+and $M$, $h_T$ and $j$ are averages over $t$ with weights $w_t$ of quantities computed from $p_t$
+alone. So for fixed tables $p_t$ the change vector is an affine function of $w$, and $D$, the sum of
+the absolute values of its four coordinates, is a convex function of $w$. The weights range over
+the bounded polytope $\{w\ge0:\sum_tw_tp_t=p_{XC}\}$, which is cut out by four linear equations
+($\sum_tw_t=1$ follows because every $p_t$ sums to one). A convex function on a bounded polytope
+attains its maximum at a vertex, and a vertex has at most four positive coordinates. Hence every
+target can be replaced by one with at most four labels, the same prior, the same $h$ and at least
+the same $D$, and $K_\star$ is the supremum over targets with at most four labels. The new target need
+not keep any other property of the old one.
+
+**Numerical search.** For targets with four labels and fixed lower limits on $h$, a
+differential-evolution search with a Nelder–Mead polish (four restarts per limit, binary64) found
+these largest ratios:
+
+| Lower limit on $h$ | 0.6 | 0.4 | 0.2 | 0.1 | 0.05 | 0.02 | 0.005 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Largest $D/h$ found | 2.209 | 2.306 | 2.432 | 2.522 | 2.588 | 2.652 | 2.717 |
+
+The best laws had the rare exclusive-or form of section 6, for which $D=3h-2L$. Along that family
+$D/h$ is 2.579, 2.766, 2.839 and 2.877 for $\epsilon=10^{-2},10^{-4},10^{-6},10^{-8}$. It approaches
+three only slowly, because $L/h\le(1/2+\ln2)/\ln(1/\epsilon)$ by section 6. No law with $D/h>3$ was
+found. This supports the conjecture $K_\star=3$, approached only as $h\to0$; it does not prove it. The
+search program is kept with the adjudication record.
