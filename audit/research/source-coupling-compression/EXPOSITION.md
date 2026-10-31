@@ -636,7 +636,7 @@ information and bound (8) is the lower bound of Section 3.
 | Office validation | 2,014 | 549/1007 | 1.336128 | 0 | 0.402366 |
 | Office test | 9,752 | 4783/9752 | 0.582280 | 0 | 0.291415 |
 
-![Pooled test distributions: total change of the atoms, the lower bound from mutual information and the lost joint information. All are in nats, but they answer different questions.](figures/allocation-comparison.pdf)
+![Pooled test distributions: total change of the atoms, the lower bound from mutual information and the lost joint information. All are in nats, but they answer different questions.](figures/allocation-comparison.svg)
 
 **A range bound.** A fair comparison uses one more published fact, MGW Theorem IV.3: the
 informative and misinformative atoms are nonnegative, and they sum to $H(S)$ and $H(S\mid T)$, the
@@ -703,7 +703,7 @@ nothing useful about these distributions.
 **Prediction scores.** The next figure and the table after it give the mean logarithmic loss in
 nats per row; the Brier scores in the full output have no unit.
 
-![Frozen predictors trade losses differently; lower is better. The target-only model and all class scores remain in the full output.](figures/prediction-comparison-v2.pdf)
+![Frozen predictors trade losses differently; lower is better. The target-only model and all class scores remain in the full output.](figures/prediction-comparison-v2.svg)
 
 | Model | Room test | Office test |
 |---|---:|---:|
@@ -779,7 +779,7 @@ makes the new bit at the carbon-dioxide index copy the temperature bit. The map 
 this observed support: the joint predictive information is unchanged, but the attribution to
 sources moves.
 
-![The observed office test recoding. The light bit and the target stay unchanged; recovering the pair does not preserve the partitions of the individual sources.](figures/office-recoding.pdf)
+![The observed office test recoding. The light bit and the target stay unchanged; recovering the pair does not preserve the partitions of the individual sources.](figures/office-recoding.svg)
 
 In (10), $J=\{3\}$ changes to $J'=\{2,3\}$.
 

@@ -3449,7 +3449,9 @@ figure bundle, the local wrapper/filter/styles and thirteen fonts with their lic
 The figure PDFs are pinned reviewed inputs; this leaf does not rerun their TeX/SVG/data
 production or the scientific experiments. The filter turns every relative link of the report into
 an absolute repository URL, because the PDF admits only absolute URI actions; a link that would
-leave the repository root stops the build. Other research companions are outside its producer
+leave the repository root stops the build. The Markdown shows each figure through its SVG
+companion, which GitHub can display; the filter replaces each image `figures/NAME.svg` by the
+vector PDF `figures/NAME.pdf` before the LaTeX is written, so the PDF does not depend on the SVGs. Other research companions are outside its producer
 inventory. A change to a pinned producer input requires a reviewed binding update.
 
 The exact operation requires two new retained build directories. Each runs the pinned Pandoc

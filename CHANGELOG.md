@@ -15,8 +15,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   limits of the recorded-data results (shifted evaluation days, in-sample scores, changed
   smoothing, sparse cells). The report adopts the standard terms of TERMINOLOGY.md, corrects its
   status statement, gives tested replay commands and changes no number of its first version. Three
-  figures take the new terms; the Pandoc filter turns every relative link into an absolute
-  repository URL; the PDF has 17 pages and passes its exact two-build check. A page-by-page visual
+  figures take the new terms, and the Markdown now shows them through their SVG companions on an
+  opaque ivory background, which GitHub can display in light and dark mode; the Pandoc filter maps
+  those images back to the vector PDFs and turns every relative link into an absolute repository
+  URL; the PDF has 17 pages and passes its exact two-build check. A page-by-page visual
   review in color and grayscale, with 300 dpi details, is recorded in the
   [republication record](audit/evidence/source-partition-republication-2026-10-31.md).
 

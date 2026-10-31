@@ -18,24 +18,34 @@ corrections and new results, but a reader of the report or its PDF did not see t
 The republished report takes in the addendum's results with their proofs, uses the standard terms
 of the [terminology list](../../TERMINOLOGY.md), corrects the status statement, defines its terms
 and symbols before the first formula and gives replay commands that were run as written. Three
-figures change their words only. The Pandoc filter accepts the new byline and turns every relative
-link into an absolute repository URL, because the PDF admits only absolute URI actions. The builder
-binds the new inputs, the 17-page count and the renamed section headings.
+figures change their words only. The Markdown now shows the figures through their SVG companions,
+which GitHub can display; the first version linked the figure PDFs, which GitHub cannot show as
+images. Each SVG is the Poppler output of its figure PDF with one added ivory rectangle under the
+drawing, so that the figure stays readable in GitHub's dark mode. The Pandoc filter accepts the new
+byline, maps each SVG image back to its vector PDF before the LaTeX is written, and turns every
+relative link into an absolute repository URL, because the PDF admits only absolute URI actions. The
+builder binds the new inputs, the 17-page count and the renamed section headings.
 
 | File | Bytes | SHA-256 |
 |---|---:|---|
-| `audit/research/source-coupling-compression/EXPOSITION.md` | 51,372 | `230b792f5280cdd6e7e096593f2e5bdba1138f1b86e333f8086a51b2b9d282cf` |
+| `audit/research/source-coupling-compression/EXPOSITION.md` | 51,372 | `f368167d774718a58c840ad8ad0318e742b1cf31dc9376d211d89f8b9e9ab2cc` |
 | `output/pdf/source-coupling-compression.pdf` | 208,911 | `96089c4c24647b8eb0895fd0b229135b672acd247c16662c3f9600d120763d63` |
 | `audit/research/source-coupling-compression/figures/allocation-comparison.pdf` | 10,508 | `f5f14e96d13a5818f6f28ee12b70c7d33a119b75f8621fb2ef69be6aac132738` |
 | `audit/research/source-coupling-compression/figures/prediction-comparison-v2.pdf` | 7,642 | `4dbbddfe957b8dfb858c5217b39e73ef5b6d18372e1c421236d9549874af9236` |
 | `audit/research/source-coupling-compression/figures/office-recoding.pdf` | 13,284 | `075f6400e982d5d9f2743b5213fd87c4e1d006b0f79c7a9742a7591e7d544207` |
-| `audit/formal/latex/source-coupling-compression/report-filter.lua` | 1,872 | `bf5700ef7983285c498207ca5c7fa6b5fae674b247e85c0c6d9a8016c9352548` |
+| `audit/research/source-coupling-compression/figures/allocation-comparison.svg` | 50,833 | `1d5ef3900729892346b31c8e47c589e06052eb58c3ae6108c0fcb4c28dac45ea` |
+| `audit/research/source-coupling-compression/figures/prediction-comparison-v2.svg` | 44,143 | `46e1c77ee397f231ad8d6f12cfcbc647619f239bb6696387d50aff5ccab51a0c` |
+| `audit/research/source-coupling-compression/figures/office-recoding.svg` | 73,624 | `23df3cce3037323b366122fc3b5468f5511e9c5b9168ce30078b6b3cd5d0b220` |
+| `audit/formal/latex/source-coupling-compression/report-filter.lua` | 2,276 | `bdcc61e4e0537f7568e4a50d8c91b0389f01495adc817920880ed6703b83484e` |
 | `audit/formal/latex/source-coupling-compression/publication.tex` | 1,888 | `f50d1e757dcbfbf1d370777060c0e39f231f47965d94de939a64b11bb1ced9d6` |
-| `scripts/build-source-coupling-compression-pdf.py` | 55,019 | `2864091abf46219db1ac58bc215b3bc530df41fe8217b6f156eb1a67eb1ec897` |
+| `scripts/build-source-coupling-compression-pdf.py` | 55,019 | `e76adcd2c74cc403f43f0aaa14b2b1380d10a7b4e320e50317f23b00ade04e25` |
 
 The figure sources were compiled with the exact profile of the report build. Before any change, the
-same procedure rebuilt all three committed figure PDFs byte for byte, and Poppler 26.06.0 rebuilt
-their three SVG companions byte for byte. The first version of every changed file stays in the Git
+same procedure rebuilt all three committed figure PDFs byte for byte, and Poppler 26.06.0
+(`pdftocairo -svg`) rebuilt their three SVG companions byte for byte. The new SVGs are that output
+with the rectangle `<rect x="-1" y="-1" width="W+2" height="H+2" fill="#F7F3E9"/>` inserted after
+`</defs>`, where `W` and `H` are the width and height of the viewBox. Moving the Markdown images to
+the SVGs left the Pandoc output and the PDF byte for byte unchanged. The first version of every changed file stays in the Git
 history of `main` at commit `7b45ca6846a40bc6fd94653a24e640de19d70ad6`.
 
 ## 2. Approaches compared
@@ -128,7 +138,9 @@ declared high-risk subset at 300 dpi: the title block (page 1), the proof of the
 rules of pages 1 and 3 were sampled at 300 dpi and are the same saffron. Two small text changes
 followed; for each, a pixel comparison of the grayscale renders found the changed pages (page 2,
 then pages 3 and 4), which were inspected again in color at 100 dpi. No 300 dpi detail lies on a
-page that those changes touched.
+page that those changes touched. The three SVG companions that the Markdown shows were rendered at
+860 px wide on the dark page color of GitHub (`#0d1117`): each figure appears on an opaque ivory
+card with no dark pixel on its edges.
 
 The review found and fixed these defects before the PDF was bound:
 
@@ -168,7 +180,7 @@ The review found and fixed these defects before the PDF was bound:
 | A4 and font profile | Every page is A4; every font is embedded with a Unicode map (PDF check). |
 | Link and action safety | Only URI and GoTo actions, all URIs absolute (PDF check). |
 | Deterministic reproduction | Two fresh builds equal the committed bytes. |
-| Source and derived assets | The Markdown, figure sources and data stay the sources; the PDF and figure PDFs are derived and pinned. |
+| Source and derived assets | The Markdown, figure sources and data stay the sources; the PDF, figure PDFs and SVGs are derived and pinned. |
 | Portable local dependencies | The wrapper, filter, styles and fonts are repository files; no external runtime dependency. |
 | Normal and high-resolution inspection | Done as described above. |
 

@@ -135,20 +135,20 @@ INPUTS: dict[str, dict] = {
         "sha256": "f50d1e757dcbfbf1d370777060c0e39f231f47965d94de939a64b11bb1ced9d6"
     },
     "audit/formal/latex/source-coupling-compression/report-filter.lua": {
-        "bytes": 1872,
-        "sha256": "bf5700ef7983285c498207ca5c7fa6b5fae674b247e85c0c6d9a8016c9352548"
+        "bytes": 2276,
+        "sha256": "bdcc61e4e0537f7568e4a50d8c91b0389f01495adc817920880ed6703b83484e"
     },
     "audit/research/source-coupling-compression/EXPOSITION.md": {
         "bytes": 51372,
-        "sha256": "230b792f5280cdd6e7e096593f2e5bdba1138f1b86e333f8086a51b2b9d282cf"
+        "sha256": "f368167d774718a58c840ad8ad0318e742b1cf31dc9376d211d89f8b9e9ab2cc"
     },
     "audit/research/source-coupling-compression/figures/allocation-comparison.pdf": {
         "bytes": 10508,
         "sha256": "f5f14e96d13a5818f6f28ee12b70c7d33a119b75f8621fb2ef69be6aac132738"
     },
     "audit/research/source-coupling-compression/figures/allocation-comparison.svg": {
-        "bytes": 50763,
-        "sha256": "e697b0c0dc862ae7a900b11ae52cef943859e86735836e30f2078a52d0fb9bea"
+        "bytes": 50833,
+        "sha256": "1d5ef3900729892346b31c8e47c589e06052eb58c3ae6108c0fcb4c28dac45ea"
     },
     "audit/research/source-coupling-compression/figures/allocation-comparison.tex": {
         "bytes": 766,
@@ -171,8 +171,8 @@ INPUTS: dict[str, dict] = {
         "sha256": "075f6400e982d5d9f2743b5213fd87c4e1d006b0f79c7a9742a7591e7d544207"
     },
     "audit/research/source-coupling-compression/figures/office-recoding.svg": {
-        "bytes": 73554,
-        "sha256": "0ed1558d9b4f2eed7178380ef3960465f8568fdce763d14f863cc806638f8529"
+        "bytes": 73624,
+        "sha256": "23df3cce3037323b366122fc3b5468f5511e9c5b9168ce30078b6b3cd5d0b220"
     },
     "audit/research/source-coupling-compression/figures/office-recoding.tex": {
         "bytes": 1233,
@@ -183,8 +183,8 @@ INPUTS: dict[str, dict] = {
         "sha256": "4dbbddfe957b8dfb858c5217b39e73ef5b6d18372e1c421236d9549874af9236"
     },
     "audit/research/source-coupling-compression/figures/prediction-comparison-v2.svg": {
-        "bytes": 44073,
-        "sha256": "79089d3562d5847887024e22c89375375da718d97de48f760c2084c2c9ce4fc2"
+        "bytes": 44143,
+        "sha256": "46e1c77ee397f231ad8d6f12cfcbc647619f239bb6696387d50aff5ccab51a0c"
     },
     "audit/research/source-coupling-compression/figures/prediction-comparison-v2.tex": {
         "bytes": 785,

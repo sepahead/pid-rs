@@ -49,6 +49,17 @@ function Link(el)
   return el
 end
 
+-- The Markdown shows each figure through its SVG companion, which GitHub can display; the PDF
+-- uses the vector PDF of the same figure. Inline elements are filtered before blocks, so the
+-- image source is already the PDF when Figure writes the LaTeX.
+function Image(el)
+  local stem = el.src:match("^figures/(.+)%.svg$")
+  if stem then
+    el.src = "figures/" .. stem .. ".pdf"
+  end
+  return el
+end
+
 function Figure(fig)
   local image = pandoc.write(pandoc.Pandoc(fig.content), "latex")
   local caption = pandoc.write(pandoc.Pandoc(fig.caption.long), "latex")

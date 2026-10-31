@@ -669,7 +669,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "b0c6131e0583371529f8d539186f1c153f3f54a63b027d157108a3e0c1203d6a",
-    "CHANGELOG.md": "d03401e12ecc9e2b974a4e86b1047b32810cde40d990d8e1510562fa64b2bc77",
+    "CHANGELOG.md": "1a0249bc21c646fd3d0035de46f6c499e09635cf7c70239f762e8cd7656aa0bd",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f05845157268f3b875499ea683f2371198d703a99112992d973b0db842ae42a1"
     ),
@@ -702,12 +702,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
         "bc64dbbcd56e818e6f5d98d67635c54c2f31b4341f749ea4c4cf339398966d87"
     ),
-    "scripts/README.md": 'b3b08b8db026a6991cd8185966868fba667a7100ba1f32b1b369fe59d8446415',
+    "scripts/README.md": '52f03b8aa80efd76baa8c9d7aac6a7e7c2b9aa318759f73b3ccab55a705624e6',
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        'b6357be0c7a1bdc647fe47b2c8d3835458b3385b576b65ec1b995d681a9042fa'
+        'ced9c9e246c7848a9a503b35a8e39195f8c4929ee3212a1fdd3e966066577543'
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
