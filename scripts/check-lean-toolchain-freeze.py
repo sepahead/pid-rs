@@ -780,6 +780,8 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     'scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh': '7fa7c0e8f4663ac041f62a201a2a10b42d35d25053a1cac19d2609810bc9b38a',
     'scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh': '47595a2a44800fabb327fffafde396acce89ea80608addb3ed585eaa6e12d7cd',
     'scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh': 'bb91773d23906cc440a12e64b769b85845f9a414457be379ca12ac0bd35e9e5d',
+    "scripts/check-zeta-pid-transfer-firewall-self-test.py": "2526b89315ae8cf345398342ee7541cb38e7b2d36016b46fb5e8dee3196b3235",
+    "scripts/check-zeta-pid-transfer-firewall.py": "a17d696adade39e6080628c666f95c7312cd308f8735183332f1aad1b5b5020e",
 }
 EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS = frozenset(
     {

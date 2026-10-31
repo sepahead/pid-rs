@@ -191,8 +191,14 @@ stream of all 115 tracked PDFs find no locator of X.
   `.github/workflows/ci.yml`, which gains the four history-check steps in the release-scope job,
   and of `scripts/README.md`, whose workflow paragraphs change. Its digest of the certified-SxPID
   job segment is unchanged.
-- The Lean-freeze map receives current overrides for the changed operational files and binds the
-  new receipt and records; the preserved r14 map is unchanged. The derived assurance-registry view
+- `scripts/check-zeta-pid-transfer-firewall.py` binds the digest of the workflow's zeta source
+  section, and its self-test binds that digest and the checker's canonical output. The section
+  changed only where its four post links and one reply link became dated descriptions; every
+  mathematical sentence the firewall checks is unchanged. Both pins are rebound. This pin was missed
+  at first, because the search for pins looked only for whole-file digests; hosted CI on the first
+  push of this step (commit `fecc938`) found it before `main` moved.
+- The Lean-freeze map receives current overrides for the changed operational files, including both
+  zeta firewall scripts, and binds the new receipt and records; the preserved r14 map is unchanged. The derived assurance-registry view
   needs no change. The current source-state manifest is regenerated last.
 - `AGENTS.md`, `CLAUDE.md`, the session handoff and the reader contract no longer describe the
   workflow update as open.

@@ -14596,8 +14596,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/x-link-redaction-2026-10-26.md",
-        "sha256": "414440355b4ba0d182fb24ab16fd28b6a02bf2f6216f3da066dc2aece9b22b2d",
-        "size_bytes": 15785
+        "sha256": "07c109f12ee0788a3db011abac4e5d153f811fad6986f8547f1051f0f2901873",
+        "size_bytes": 16376
       },
       {
         "git_mode": "100644",
@@ -32194,8 +32194,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "0a335a03215f28db359434ada8501df0a0c3884f32ec8b41124ce3b7d924f309",
-        "size_bytes": 139415
+        "sha256": "7ba194a566b5e4ae90edcd01745de954976a82b7b71153a0d10a809db4599634",
+        "size_bytes": 139663
       },
       {
         "git_mode": "100644",
@@ -32962,13 +32962,13 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-zeta-pid-transfer-firewall-self-test.py",
-        "sha256": "8803595bc5af615cf88215b9bdd40d7a8d227724b410c4b04802a63e81b0704e",
+        "sha256": "2526b89315ae8cf345398342ee7541cb38e7b2d36016b46fb5e8dee3196b3235",
         "size_bytes": 10684
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-zeta-pid-transfer-firewall.py",
-        "sha256": "97d45807f7b58b9fb8a62a2c4007e514adfdc5aeadf811daf590010cb313b65f",
+        "sha256": "a17d696adade39e6080628c666f95c7312cd308f8735183332f1aad1b5b5020e",
         "size_bytes": 19326
       },
       {
@@ -33164,7 +33164,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "d3785aacba69687de92d4120335230039f88fe7107b8b79f5a9cdcdcf0478e9b",
+    "entries_sha256": "fc74e2f55bbe486ff941057183e8de5a0790017701f01d9b0507b56a0e50ffa7",
     "entry_count": 5503
   },
   "subprojections": [
