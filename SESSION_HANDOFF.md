@@ -1,5 +1,13 @@
 # Session handoff — updated 2 October 2026
 
+## Terminology, 31 October 2026
+
+[TERMINOLOGY.md](TERMINOLOGY.md) lists the standard term for each name that earlier documents
+coined, and AGENTS.md now requires new and republished documents to use those terms. The open work
+is to migrate each published report at its next republication, with its own exact PDF check and a
+new visual review; the source-partition report, which also takes its addendum of 30 October and a
+corrected status sentence, is the first candidate. No theorem, estimator or evidence class changed.
+
 ## Review adjudication, 30 October 2026
 
 An AI-agent mathematical and statistical review of 28 October 2026 was checked claim by claim in

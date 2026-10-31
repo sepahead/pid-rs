@@ -7,6 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Add [TERMINOLOGY.md](TERMINOLOGY.md), which gives the standard term for each name that earlier
+  documents coined (law, anchor, cumulative, net atom, informative block, carrier, colouring, radius,
+  claim packet, route, gate, receipt, custody, council, lens, fixture, pinned, abstain, firewall), and
+  require new and republished documents to use the standard terms so that a junior mathematician
+  outside PID can follow them. Existing reports keep their words until their next republication.
+
 - Adjudicate an AI-agent mathematical and statistical review of 28 October 2026 and act on it.
   The source-partition runner now finds the raw recordings under the repository root, and the
   post-study bound check reads the published campaign and a published input manifest; both

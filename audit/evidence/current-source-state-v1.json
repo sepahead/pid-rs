@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "9fd0826d2daa3dfa3a5c2c00793309dc2a0e1dbe7185fe6bde93e4cd7d619679",
-        "size_bytes": 100433
+        "sha256": "b0c6131e0583371529f8d539186f1c153f3f54a63b027d157108a3e0c1203d6a",
+        "size_bytes": 100641
       },
       {
         "git_mode": "100644",
@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "3ad29d3a7b69e47c567c02af93c085be2c3241f83d9f3060f42dd851a7d5d603",
-        "size_bytes": 331321
+        "sha256": "fe1f877a0bb5e2864a985b5f0b5e8b13ed151043dad6b9acc0ea38896d5f17c0",
+        "size_bytes": 331818
       },
       {
         "git_mode": "100644",
@@ -562,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "b3b1d689cc09b582c0ac94f57e305aa6eaa3102acf65b497a700c0ebe5decfe2",
-        "size_bytes": 42231
+        "sha256": "e3bae4b56aa8a320168546586d3c4b6f84cd3039babcb904c583a208c479ae24",
+        "size_bytes": 42754
       },
       {
         "git_mode": "100644",
@@ -576,6 +576,12 @@
         "path": "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md",
         "sha256": "be8119533280aea5aec165de4a3e2b3b6b30102d630f3169057174b591a8f7b6",
         "size_bytes": 57755
+      },
+      {
+        "git_mode": "100644",
+        "path": "TERMINOLOGY.md",
+        "sha256": "97d6829eec97d74261c96f748304b6aa5926240fca673ac97d7c2268755b78e9",
+        "size_bytes": 6198
       },
       {
         "git_mode": "100644",
@@ -32194,7 +32200,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "7ba194a566b5e4ae90edcd01745de954976a82b7b71153a0d10a809db4599634",
+        "sha256": "f9f57da856e94efbbd9e72edca55e02cb53dd0a022b52f778faba4d918e5f570",
         "size_bytes": 139663
       },
       {
@@ -33164,8 +33170,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "fc74e2f55bbe486ff941057183e8de5a0790017701f01d9b0507b56a0e50ffa7",
-    "entry_count": 5503
+    "entries_sha256": "9a85eb4f68be1517adc10f23831548ed5fd64dfc86ba92da916a7c27cf779d43",
+    "entry_count": 5504
   },
   "subprojections": [
     {
@@ -33193,7 +33199,7 @@
       ]
     },
     {
-      "entries_sha256": "28794cc0a615f7f8e8dd90a83083fcb099766cefdc1f8bd56306d305f3fe844c",
+      "entries_sha256": "908a1c52a21ae48d454bf05f3ebbae4ad69e17ac1e14970e9c536205d3ee1388",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

@@ -199,7 +199,9 @@ under a new visual review; this extension grants no scientific or formal accepta
 
 Scientific documents must state the exact research question, why it matters and the useful advance
 sought. Before the first formula, provide a compact cited glossary and symbol key; define technical
-terms, abbreviations and symbols needed for the argument before use. Give each central equation's
+terms, abbreviations and symbols needed for the argument before use. Use the standard terms of
+[TERMINOLOGY.md](TERMINOLOGY.md) instead of the project's earlier coined names; a republished
+document adopts them, and a junior mathematician outside PID must be able to follow it. Give each central equation's
 local meanings, domains, index ranges, units and assumptions. Show physical-to-mathematical inputs
 and outputs, include a recomputable worked example where useful, and distinguish pointwise,
 averaged, empirical and population quantities. Report estimator, sampling, numerical, resource and
