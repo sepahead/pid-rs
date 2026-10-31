@@ -7,6 +7,19 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Republish the [source-partition report](audit/research/source-coupling-compression/EXPOSITION.md)
+  and its PDF with the results of its 30 October addendum: the identity $D=L+2R$ for every
+  recoding, the closed-form best lower bound from the seven changes of mutual information with
+  its proof and 48 exact dual certificates, the target form of the coupling bound, the exploratory
+  polytope refinement of the range bound, a third saved bound that is uninformative, and the
+  limits of the recorded-data results (shifted evaluation days, in-sample scores, changed
+  smoothing, sparse cells). The report adopts the standard terms of TERMINOLOGY.md, corrects its
+  status statement, gives tested replay commands and changes no number of its first version. Three
+  figures take the new terms; the Pandoc filter turns every relative link into an absolute
+  repository URL; the PDF has 17 pages and passes its exact two-build check. A page-by-page visual
+  review in color and grayscale, with 300 dpi details, is recorded in the
+  [republication record](audit/evidence/source-partition-republication-2026-10-31.md).
+
 - Add [TERMINOLOGY.md](TERMINOLOGY.md), which gives the standard term for each name that earlier
   documents coined (law, anchor, cumulative, net atom, informative block, carrier, colouring, radius,
   claim packet, route, gate, receipt, custody, council, lens, fixture, pinned, abstain, firewall), and

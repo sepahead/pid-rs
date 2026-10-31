@@ -42,7 +42,8 @@ MAX_LOG_BYTES = 512 * 1024
 MAX_FILES = 1024
 MAX_CHILD_SECONDS = 45.0
 MAX_CAMPAIGN_SECONDS = 600.0
-PDF_PIN = {"bytes": 152907, "sha256": "4c83d8508d63d0a7098fb15fcbbed2b95731b9a2d6ba7c4f67c95074d138c481"}
+PAGES = 17
+PDF_PIN = {"bytes": 208911, "sha256": "96089c4c24647b8eb0895fd0b229135b672acd247c16662c3f9600d120763d63"}
 # Populated only from the reviewed public input packet before execution admission.
 INPUTS: dict[str, dict] = {
     "audit/formal/latex/source-coupling-compression/fonts/LICENSE-latin-modern-math.txt": {
@@ -130,28 +131,28 @@ INPUTS: dict[str, dict] = {
         "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
     },
     "audit/formal/latex/source-coupling-compression/publication.tex": {
-        "bytes": 1863,
-        "sha256": "9b67e0c5ae502e311528c84ddd7f3a643a200b1f222a0f794639840e104bbc7e"
+        "bytes": 1888,
+        "sha256": "f50d1e757dcbfbf1d370777060c0e39f231f47965d94de939a64b11bb1ced9d6"
     },
     "audit/formal/latex/source-coupling-compression/report-filter.lua": {
-        "bytes": 1161,
-        "sha256": "3bc546bd0a225c613fee7fd6c429a0eea9d9f7f4e698c150cf7761e0bc8a66bf"
+        "bytes": 1872,
+        "sha256": "bf5700ef7983285c498207ca5c7fa6b5fae674b247e85c0c6d9a8016c9352548"
     },
     "audit/research/source-coupling-compression/EXPOSITION.md": {
-        "bytes": 26928,
-        "sha256": "30d0de9c570bdc3741df89274fa27816b2104cfcab455b9dd9eacf9756021f08"
+        "bytes": 51372,
+        "sha256": "230b792f5280cdd6e7e096593f2e5bdba1138f1b86e333f8086a51b2b9d282cf"
     },
     "audit/research/source-coupling-compression/figures/allocation-comparison.pdf": {
-        "bytes": 10090,
-        "sha256": "1748b7748ea99381c565aea5d8e6aabb279ddde958b954548005ea67c49ae3de"
+        "bytes": 10508,
+        "sha256": "f5f14e96d13a5818f6f28ee12b70c7d33a119b75f8621fb2ef69be6aac132738"
     },
     "audit/research/source-coupling-compression/figures/allocation-comparison.svg": {
-        "bytes": 46933,
-        "sha256": "f15a4e9d83158e3dc9edeadc083963fb8734b84571d736a26b88b8e976984580"
+        "bytes": 50763,
+        "sha256": "e697b0c0dc862ae7a900b11ae52cef943859e86735836e30f2078a52d0fb9bea"
     },
     "audit/research/source-coupling-compression/figures/allocation-comparison.tex": {
-        "bytes": 762,
-        "sha256": "0e14173bcddeb7d3960c9722b26915e512469eecc655bf3c2ba4cf79ba821dfb"
+        "bytes": 766,
+        "sha256": "fab61281948e095f8da4a19e99460525c1caeafa566a216926736e4cd61eb70c"
     },
     "audit/research/source-coupling-compression/figures/allocation.dat": {
         "bytes": 127,
@@ -166,28 +167,28 @@ INPUTS: dict[str, dict] = {
         "sha256": "a0dce1eaeb088aac86863018b359d440f03296af3f254d768a51f2170d9d4d86"
     },
     "audit/research/source-coupling-compression/figures/office-recoding.pdf": {
-        "bytes": 13494,
-        "sha256": "6fb2c049f63e90504cef14a362c0e36dd46c02672aec50b1e175539ae8875871"
+        "bytes": 13284,
+        "sha256": "075f6400e982d5d9f2743b5213fd87c4e1d006b0f79c7a9742a7591e7d544207"
     },
     "audit/research/source-coupling-compression/figures/office-recoding.svg": {
-        "bytes": 74585,
-        "sha256": "b755e7779f41a830f012292eb1457333b2d78ed13629486de4ab261933c4a65d"
+        "bytes": 73554,
+        "sha256": "0ed1558d9b4f2eed7178380ef3960465f8568fdce763d14f863cc806638f8529"
     },
     "audit/research/source-coupling-compression/figures/office-recoding.tex": {
-        "bytes": 1230,
-        "sha256": "9655e4dffc0c9d46a4be74ab706eb92087776091c522971259b9023ed74e12e7"
+        "bytes": 1233,
+        "sha256": "e37163a1c9c87a0e18cfce603081857ab0ffe92325bdc2b9ed62bd2b75f6848f"
     },
     "audit/research/source-coupling-compression/figures/prediction-comparison-v2.pdf": {
-        "bytes": 7795,
-        "sha256": "19e2c7183e3e6027fac9ca885ce912bcaae6718d68394151a2605fd91026d1d9"
+        "bytes": 7642,
+        "sha256": "4dbbddfe957b8dfb858c5217b39e73ef5b6d18372e1c421236d9549874af9236"
     },
     "audit/research/source-coupling-compression/figures/prediction-comparison-v2.svg": {
-        "bytes": 44268,
-        "sha256": "7f4e04d9be992e09d5e5cad0625094c19ca1a4a3ef04587386a21fb428c594ca"
+        "bytes": 44073,
+        "sha256": "79089d3562d5847887024e22c89375375da718d97de48f760c2084c2c9ce4fc2"
     },
     "audit/research/source-coupling-compression/figures/prediction-comparison-v2.tex": {
-        "bytes": 779,
-        "sha256": "f842e7cbad8919424304878b9af3ca339ebbd0ac1a8f2132d822110f5c247955"
+        "bytes": 785,
+        "sha256": "3f6a262b6da40f6d9459b78b5e21b8c53cc36578c4522e0463f55439a97f7b41"
     },
     "audit/research/source-coupling-compression/figures/prediction.dat": {
         "bytes": 195,
@@ -636,15 +637,16 @@ PYPDF_PIN: dict = {
     "version": "6.16.1"
 }
 BODY_PIN: dict = {
-    "bytes": 31609,
-    "sha256": "5e3cfc5f9e0e27414ebfd05117c714685c04a75e91b8df230983c37b1174419c"
+    "bytes": 58097,
+    "sha256": "d9e024be10257b64a500ad12f3fb5c4965a807305c9f6f3fe39fdbaccf86ee60"
 }
 RELATIVE_URIS: frozenset[str] = frozenset()  # every PDF link is absolute
 SENTINELS = (
-    "Question, definitions and assumptions", "Main upper certificate",
-    "A cheaper lower certificate", "Exact invariance and a recoverable-tuple counterexample",
-    "A conditional exact eighteen-position comparison", "Recorded-data design and exact arithmetic",
-    "Results and limitations", "Evidence, failures and research process",
+    "Revision of 31 October 2026", "Question, definitions and assumptions", "Main upper bound",
+    "Lower bounds from mutual information", "Exact invariance and a recoverable-tuple counterexample",
+    "An exact comparison when the recoded pair takes two values",
+    "Recorded-data design and exact arithmetic", "Results and limitations",
+    "How to read the recorded-data results", "Evidence, failures and research process",
     "Rust implementation and computational cost", "Reproduction and citation",
 )
 DIAGNOSTIC = re.compile(
@@ -869,7 +871,7 @@ def validate_reader(reader) -> dict:
 
     require(not reader.is_encrypted, "encrypted PDF")
     require(reader.pdf_header == "%PDF-1.7", "PDF version differs")
-    require(len(reader.pages) == 11, "PDF page count differs")
+    require(len(reader.pages) == PAGES, "PDF page count differs")
     metadata = reader.metadata
     require(metadata is not None and metadata.get("/Author") == AUTHOR, "PDF author differs")
     require(metadata.get("/Title") == TITLE, "PDF title differs")
@@ -894,7 +896,7 @@ def validate_reader(reader) -> dict:
     page_ids = {page.indirect_reference.idnum for page in reader.pages}
     named = reader.named_destinations
     for destination in named.values():
-        require(reader.get_destination_page_number(destination) in range(11), "broken named destination")
+        require(reader.get_destination_page_number(destination) in range(PAGES), "broken named destination")
 
     def destination(value) -> None:
         value = value.get_object() if hasattr(value, "get_object") else value
@@ -990,7 +992,7 @@ def validate_reader(reader) -> dict:
             "PDF report sentinel is absent")
     require(not any(token in text for token in ("\ufffd", "/Users/", ".local/", "\\begin{", "\\frac{")),
             "PDF text has private paths, replacement glyphs or raw TeX")
-    return {"pages": 11, "fonts": fonts, "actions": actions, "nodes": nodes,
+    return {"pages": PAGES, "fonts": fonts, "actions": actions, "nodes": nodes,
             "text_sha256": sha256(text.encode()), "tagged": False}
 
 

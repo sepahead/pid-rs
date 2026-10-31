@@ -2,7 +2,7 @@
 function Pandoc(doc)
   local b = doc.blocks
   if b[1].t ~= "Header" or b[1].level ~= 1 then error("missing source title") end
-  if pandoc.utils.stringify(b[2]) ~= "Sepehr Mahmoudian · 24 October 2026" then
+  if pandoc.utils.stringify(b[2]) ~= "Sepehr Mahmoudian · 24 October 2026, revised 31 October 2026" then
     error("unexpected source byline")
   end
   b:remove(1)
@@ -13,13 +13,39 @@ function Pandoc(doc)
   doc.blocks = b
   return doc
 end
-function Link(el)
-  -- A PDF leaves the repository, so its links are absolute.
-  if el.target == "../../../CITATION.cff" then
-    el.target = "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff"
-  elseif el.target == "summary.csv" then
-    el.target = "https://github.com/sepahead/pid-rs/blob/main/audit/research/source-coupling-compression/summary.csv"
+-- A PDF leaves the repository, so every relative link becomes an absolute repository URL.
+-- The source lives in audit/research/source-coupling-compression; a link that would leave
+-- the repository root is an error.
+local BASE = {"audit", "research", "source-coupling-compression"}
+local REPOSITORY = "https://github.com/sepahead/pid-rs/blob/main/"
+
+local function absolute(target)
+  if target:match("^%a[%w+.-]*:") then
+    return target
   end
+  local path, fragment = target:match("^([^#]*)(#?.*)$")
+  if path == "" then
+    error("unexpected fragment-only link: " .. target)
+  end
+  local parts = {}
+  for _, part in ipairs(BASE) do
+    parts[#parts + 1] = part
+  end
+  for part in path:gmatch("[^/]+") do
+    if part == ".." then
+      if #parts == 0 then
+        error("relative link leaves the repository: " .. target)
+      end
+      table.remove(parts)
+    elseif part ~= "." then
+      parts[#parts + 1] = part
+    end
+  end
+  return REPOSITORY .. table.concat(parts, "/") .. fragment
+end
+
+function Link(el)
+  el.target = absolute(el.target)
   return el
 end
 

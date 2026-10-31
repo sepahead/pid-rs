@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "fe1f877a0bb5e2864a985b5f0b5e8b13ed151043dad6b9acc0ea38896d5f17c0",
-        "size_bytes": 331818
+        "sha256": "d03401e12ecc9e2b974a4e86b1047b32810cde40d990d8e1510562fa64b2bc77",
+        "size_bytes": 332934
       },
       {
         "git_mode": "100644",
@@ -496,8 +496,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "6fb96bc162efd4b8979ee4aa40ff2920138bed4c19e8375b253b599ddc914540",
-        "size_bytes": 93770
+        "sha256": "4f2562403a844d3ba4dc34f73e0a27ef7aea4002af15d5b9c069a8faf77a5804",
+        "size_bytes": 93872
       },
       {
         "git_mode": "100644",
@@ -562,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "e3bae4b56aa8a320168546586d3c4b6f84cd3039babcb904c583a208c479ae24",
-        "size_bytes": 42754
+        "sha256": "16b4032010799640b9b962c94372ba743fac0b86af4b770b80b5d3df57083e96",
+        "size_bytes": 43384
       },
       {
         "git_mode": "100644",
@@ -14421,6 +14421,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/source-partition-republication-2026-10-31.md",
+        "sha256": "ad7eeefa388cf08df66b546929c0dfd6e2d5b248ed0b8b686dcb8bdbc914f518",
+        "size_bytes": 16585
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/source-partition-script-guide-custody-20261024.json",
         "sha256": "33252abbc89b49067925fea20e06cd5f8429b416f70c1e63f7391528f35fb571",
         "size_bytes": 3357
@@ -16150,14 +16156,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/source-coupling-compression/publication.tex",
-        "sha256": "9b67e0c5ae502e311528c84ddd7f3a643a200b1f222a0f794639840e104bbc7e",
-        "size_bytes": 1863
+        "sha256": "f50d1e757dcbfbf1d370777060c0e39f231f47965d94de939a64b11bb1ced9d6",
+        "size_bytes": 1888
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/source-coupling-compression/report-filter.lua",
-        "sha256": "3bc546bd0a225c613fee7fd6c429a0eea9d9f7f4e698c150cf7761e0bc8a66bf",
-        "size_bytes": 1161
+        "sha256": "bf5700ef7983285c498207ca5c7fa6b5fae674b247e85c0c6d9a8016c9352548",
+        "size_bytes": 1872
       },
       {
         "git_mode": "100644",
@@ -27532,8 +27538,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/EXPOSITION.md",
-        "sha256": "30d0de9c570bdc3741df89274fa27816b2104cfcab455b9dd9eacf9756021f08",
-        "size_bytes": 26928
+        "sha256": "230b792f5280cdd6e7e096593f2e5bdba1138f1b86e333f8086a51b2b9d282cf",
+        "size_bytes": 51372
       },
       {
         "git_mode": "100644",
@@ -28486,20 +28492,20 @@
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/figures/allocation-comparison.pdf",
-        "sha256": "1748b7748ea99381c565aea5d8e6aabb279ddde958b954548005ea67c49ae3de",
-        "size_bytes": 10090
+        "sha256": "f5f14e96d13a5818f6f28ee12b70c7d33a119b75f8621fb2ef69be6aac132738",
+        "size_bytes": 10508
       },
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/figures/allocation-comparison.svg",
-        "sha256": "f15a4e9d83158e3dc9edeadc083963fb8734b84571d736a26b88b8e976984580",
-        "size_bytes": 46933
+        "sha256": "e697b0c0dc862ae7a900b11ae52cef943859e86735836e30f2078a52d0fb9bea",
+        "size_bytes": 50763
       },
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/figures/allocation-comparison.tex",
-        "sha256": "0e14173bcddeb7d3960c9722b26915e512469eecc655bf3c2ba4cf79ba821dfb",
-        "size_bytes": 762
+        "sha256": "fab61281948e095f8da4a19e99460525c1caeafa566a216926736e4cd61eb70c",
+        "size_bytes": 766
       },
       {
         "git_mode": "100644",
@@ -28522,38 +28528,38 @@
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/figures/office-recoding.pdf",
-        "sha256": "6fb2c049f63e90504cef14a362c0e36dd46c02672aec50b1e175539ae8875871",
-        "size_bytes": 13494
+        "sha256": "075f6400e982d5d9f2743b5213fd87c4e1d006b0f79c7a9742a7591e7d544207",
+        "size_bytes": 13284
       },
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/figures/office-recoding.svg",
-        "sha256": "b755e7779f41a830f012292eb1457333b2d78ed13629486de4ab261933c4a65d",
-        "size_bytes": 74585
+        "sha256": "0ed1558d9b4f2eed7178380ef3960465f8568fdce763d14f863cc806638f8529",
+        "size_bytes": 73554
       },
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/figures/office-recoding.tex",
-        "sha256": "9655e4dffc0c9d46a4be74ab706eb92087776091c522971259b9023ed74e12e7",
-        "size_bytes": 1230
+        "sha256": "e37163a1c9c87a0e18cfce603081857ab0ffe92325bdc2b9ed62bd2b75f6848f",
+        "size_bytes": 1233
       },
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/figures/prediction-comparison-v2.pdf",
-        "sha256": "19e2c7183e3e6027fac9ca885ce912bcaae6718d68394151a2605fd91026d1d9",
-        "size_bytes": 7795
+        "sha256": "4dbbddfe957b8dfb858c5217b39e73ef5b6d18372e1c421236d9549874af9236",
+        "size_bytes": 7642
       },
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/figures/prediction-comparison-v2.svg",
-        "sha256": "7f4e04d9be992e09d5e5cad0625094c19ca1a4a3ef04587386a21fb428c594ca",
-        "size_bytes": 44268
+        "sha256": "79089d3562d5847887024e22c89375375da718d97de48f760c2084c2c9ce4fc2",
+        "size_bytes": 44073
       },
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/figures/prediction-comparison-v2.tex",
-        "sha256": "f842e7cbad8919424304878b9af3ca339ebbd0ac1a8f2132d822110f5c247955",
-        "size_bytes": 779
+        "sha256": "3f6a262b6da40f6d9459b78b5e21b8c53cc36578c4522e0463f55439a97f7b41",
+        "size_bytes": 785
       },
       {
         "git_mode": "100644",
@@ -31276,8 +31282,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/source-coupling-compression.pdf",
-        "sha256": "4c83d8508d63d0a7098fb15fcbbed2b95731b9a2d6ba7c4f67c95074d138c481",
-        "size_bytes": 152907
+        "sha256": "96089c4c24647b8eb0895fd0b229135b672acd247c16662c3f9600d120763d63",
+        "size_bytes": 208911
       },
       {
         "git_mode": "100644",
@@ -31318,8 +31324,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "75e418cfb23edc61c6d3c23be7b0e71ec42a08acec45da7222249ea1e9fd3a58",
-        "size_bytes": 313439
+        "sha256": "b3b08b8db026a6991cd8185966868fba667a7100ba1f32b1b369fe59d8446415",
+        "size_bytes": 313692
       },
       {
         "git_mode": "100755",
@@ -31414,8 +31420,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/build-source-coupling-compression-pdf.py",
-        "sha256": "6c008296beaffd10128e0bd972eb6fd965ac2d9ce50b1f9623277292ceee4e78",
-        "size_bytes": 54910
+        "sha256": "2864091abf46219db1ac58bc215b3bc530df41fe8217b6f156eb1a67eb1ec897",
+        "size_bytes": 55019
       },
       {
         "git_mode": "100755",
@@ -31600,7 +31606,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "090d42aabb46facffb027030cc7714cb0ecb3bd090ae92acb986a022c2114a10",
+        "sha256": "b6357be0c7a1bdc647fe47b2c8d3835458b3385b576b65ec1b995d681a9042fa",
         "size_bytes": 90915
       },
       {
@@ -32200,7 +32206,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "f9f57da856e94efbbd9e72edca55e02cb53dd0a022b52f778faba4d918e5f570",
+        "sha256": "ad2280396b643bb69943e80cd0c0c19dab2ad3c62cf1a2f5e2b2bc731d2c1639",
         "size_bytes": 139663
       },
       {
@@ -33170,8 +33176,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "6d4b04230ebd7d84d7a4071d2d355ae428a6dc60b2309a705bbd00c98416c338",
-    "entry_count": 5504
+    "entries_sha256": "d0a9608d6666a2880578f67cb83f1bc38a37e8c99e6b99d6ab226186b76a4339",
+    "entry_count": 5505
   },
   "subprojections": [
     {
@@ -33183,7 +33189,7 @@
       ]
     },
     {
-      "entries_sha256": "dfa01de8df043fe9957152f45127dd160816e4b821ad51acab81fe6fd391d57d",
+      "entries_sha256": "2e7392e0ca2c75aba7083c4823f668a1b563d405c3d2b5d2102319e58ad10135",
       "entry_count": 2112,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -33191,7 +33197,7 @@
       ]
     },
     {
-      "entries_sha256": "aa5111cd342760b7762deaa2ee1693adf905f1c546173dfce9cc31b93d4f6b7f",
+      "entries_sha256": "44da32aed2a776fab7acb6e70b8e94d2d15fa5d01ae85cd1416a3a2050f336d4",
       "entry_count": 43,
       "name": "generated_pdf_set",
       "selectors": [
@@ -33199,7 +33205,7 @@
       ]
     },
     {
-      "entries_sha256": "908a1c52a21ae48d454bf05f3ebbae4ad69e17ac1e14970e9c536205d3ee1388",
+      "entries_sha256": "d334c0bff1e04a811183bac5ededb4f47d0b9eaa3cd914b84416a48170518b57",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

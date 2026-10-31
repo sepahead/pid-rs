@@ -1,12 +1,23 @@
 # Session handoff — updated 2 October 2026
 
+## Source-partition report republished, 31 October 2026
+
+The [source-partition report](audit/research/source-coupling-compression/EXPOSITION.md) and its
+[PDF](output/pdf/source-coupling-compression.pdf) were republished with the results of the
+30 October addendum, the standard terms of [TERMINOLOGY.md](TERMINOLOGY.md) and a corrected
+status statement, under a new page-by-page visual review recorded in the
+[republication record](audit/evidence/source-partition-republication-2026-10-31.md). No number
+of the first version changed. Open: the other reports migrate to the standard terms at their own
+next republication; a formal probability proof, source/Rust correspondence, calibration and the
+five three-source programmes stay open.
+
 ## Terminology, 31 October 2026
 
 [TERMINOLOGY.md](TERMINOLOGY.md) lists the standard term for each name that earlier documents
 coined, and AGENTS.md now requires new and republished documents to use those terms. The open work
 is to migrate each published report at its next republication, with its own exact PDF check and a
-new visual review; the source-partition report, which also takes its addendum of 30 October and a
-corrected status sentence, is the first candidate. No theorem, estimator or evidence class changed.
+new visual review. The source-partition report was the first, on 31 October 2026. No theorem,
+estimator or evidence class changed.
 
 ## Review adjudication, 30 October 2026
 
@@ -14,9 +25,9 @@ An AI-agent mathematical and statistical review of 28 October 2026 was checked c
 the [adjudication record](audit/evidence/math-stats-review-adjudication-2026-10-30.md). The
 source-partition [addendum](audit/research/source-coupling-compression/ADDENDUM-2026-10-30.md)
 carries the repaired replay commands, a closed-form exact lower bound, a tighter exploratory upper
-bound and corrected readings of the empirical results. Open: republish the source-partition
-report's Markdown and PDF with the addendum and a corrected status sentence, under a new visual
-review; the binary constant $K_\star$ stays in $[3,3+\beta]$.
+bound and corrected readings of the empirical results. The report's Markdown and PDF took the
+addendum and a corrected status sentence on 31 October 2026; the binary constant $K_\star$ stays
+in $[3,3+\beta]$.
 
 ## Reader/process checkpoint, 10 October 2026
 

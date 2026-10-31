@@ -3447,11 +3447,13 @@ exact-only route. It binds the canonical
 [`EXPOSITION.md`](../audit/research/source-coupling-compression/EXPOSITION.md), its selected
 figure bundle, the local wrapper/filter/styles and thirteen fonts with their license notices.
 The figure PDFs are pinned reviewed inputs; this leaf does not rerun their TeX/SVG/data
-production or the scientific experiments. Other research companions are outside its producer
+production or the scientific experiments. The filter turns every relative link of the report into
+an absolute repository URL, because the PDF admits only absolute URI actions; a link that would
+leave the repository root stops the build. Other research companions are outside its producer
 inventory. A change to a pinned producer input requires a reviewed binding update.
 
 The exact operation requires two new retained build directories. Each runs the pinned Pandoc
-projection and two stock LuaLaTeX passes, then checks the honestly untagged eleven-page A4,
+projection and two stock LuaLaTeX passes, then checks the honestly untagged seventeen-page A4,
 PDF 1.7 profile, author/title/producer metadata, searchable text, embedded fonts and ToUnicode,
 internal destinations and admitted URI actions. The fresh bodies must match the selected
 Pandoc projection; the fresh PDFs must match each other and the committed PDF byte for byte.
@@ -3503,9 +3505,10 @@ directory selects another raw-data location. Every output file except the timing
 `EXECUTION.json` must equal its counterpart in `evidence/campaign/`.
 `post_study_bound.py NEW_DIRECTORY` checks its published input manifest `POST_BOUND_INPUTS.json`,
 reads `evidence/campaign/` and writes `REPORT.json`, which must equal `evidence/coupling-bound.json`.
-`chain_lower_certificate.py` writes nothing; it checks 48 integer dual witnesses exactly and prints
-rational lower bounds on the allocation movement of all 30 distributions. These three scripts are
-reproduction aids for the [addendum of 30 October 2026](../audit/research/source-coupling-compression/ADDENDUM-2026-10-30.md);
+`chain_lower_certificate.py` writes nothing; it checks 48 integer dual certificates exactly and
+prints rational lower bounds on the total change of the atoms of all 30 distributions. These three
+scripts reproduce the results of the report, revised on 31 October 2026, and of its
+[addendum of 30 October 2026](../audit/research/source-coupling-compression/ADDENDUM-2026-10-30.md);
 a matching replay is not a population or calibration result.
 The PDF inventory compares sorted validated stems. Sorting full filenames before removing `.pdf`
 does not preserve stem order for a paper and its `-summary` companion; the first failed baseline
