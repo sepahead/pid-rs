@@ -139,8 +139,8 @@ INPUTS: dict[str, dict] = {
         "sha256": "bdcc61e4e0537f7568e4a50d8c91b0389f01495adc817920880ed6703b83484e"
     },
     "audit/research/source-coupling-compression/EXPOSITION.md": {
-        "bytes": 51372,
-        "sha256": "f368167d774718a58c840ad8ad0318e742b1cf31dc9376d211d89f8b9e9ab2cc"
+        "bytes": 51374,
+        "sha256": "f0fdd3c50e0d46dbd078bf9807adaf505807e6174933ddb9f7faa50761617685"
     },
     "audit/research/source-coupling-compression/figures/allocation-comparison.pdf": {
         "bytes": 10508,
@@ -637,8 +637,8 @@ PYPDF_PIN: dict = {
     "version": "6.16.1"
 }
 BODY_PIN: dict = {
-    "bytes": 58097,
-    "sha256": "d9e024be10257b64a500ad12f3fb5c4965a807305c9f6f3fe39fdbaccf86ee60"
+    "bytes": 58099,
+    "sha256": "30961d7060727291f03a451c5d32dc2a97f84697250dce0bac6f91c994d9d511"
 }
 RELATIVE_URIS: frozenset[str] = frozenset()  # every PDF link is absolute
 SENTINELS = (

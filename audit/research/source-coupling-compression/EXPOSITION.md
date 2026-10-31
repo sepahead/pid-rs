@@ -267,7 +267,7 @@ following recurrence $i,j,k$ index ordered nodes, not sources, and $\mathbf1_{i=
 $i=j$ and zero otherwise. The inverse $U=M^{-1}$, the Möbius matrix, satisfies
 
 $$
-U_{ij}=\mathbf1_{i=j}-\sum_{k<i}M_{ik}U_{kj}.\tag{7}
+U_{ij}=\mathbf1_{i=j}-\sum_{k < i}M_{ik}U_{kj}.\tag{7}
 $$
 
 A finite average commutes with this fixed linear map, so $\Pi=UC$ also for averaged values. Define

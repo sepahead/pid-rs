@@ -28,7 +28,7 @@ builder binds the new inputs, the 17-page count and the renamed section headings
 
 | File | Bytes | SHA-256 |
 |---|---:|---|
-| `audit/research/source-coupling-compression/EXPOSITION.md` | 51,372 | `f368167d774718a58c840ad8ad0318e742b1cf31dc9376d211d89f8b9e9ab2cc` |
+| `audit/research/source-coupling-compression/EXPOSITION.md` | 51,374 | `f0fdd3c50e0d46dbd078bf9807adaf505807e6174933ddb9f7faa50761617685` |
 | `output/pdf/source-coupling-compression.pdf` | 208,911 | `96089c4c24647b8eb0895fd0b229135b672acd247c16662c3f9600d120763d63` |
 | `audit/research/source-coupling-compression/figures/allocation-comparison.pdf` | 10,508 | `f5f14e96d13a5818f6f28ee12b70c7d33a119b75f8621fb2ef69be6aac132738` |
 | `audit/research/source-coupling-compression/figures/prediction-comparison-v2.pdf` | 7,642 | `4dbbddfe957b8dfb858c5217b39e73ef5b6d18372e1c421236d9549874af9236` |
@@ -38,7 +38,7 @@ builder binds the new inputs, the 17-page count and the renamed section headings
 | `audit/research/source-coupling-compression/figures/office-recoding.svg` | 73,624 | `23df3cce3037323b366122fc3b5468f5511e9c5b9168ce30078b6b3cd5d0b220` |
 | `audit/formal/latex/source-coupling-compression/report-filter.lua` | 2,276 | `bdcc61e4e0537f7568e4a50d8c91b0389f01495adc817920880ed6703b83484e` |
 | `audit/formal/latex/source-coupling-compression/publication.tex` | 1,888 | `f50d1e757dcbfbf1d370777060c0e39f231f47965d94de939a64b11bb1ced9d6` |
-| `scripts/build-source-coupling-compression-pdf.py` | 55,019 | `e76adcd2c74cc403f43f0aaa14b2b1380d10a7b4e320e50317f23b00ade04e25` |
+| `scripts/build-source-coupling-compression-pdf.py` | 55,019 | `b27f1c59a1b7ba50e73d4ce3d69480cacec11d25299800473c3c959a5e77f06a` |
 
 The figure sources were compiled with the exact profile of the report build. Before any change, the
 same procedure rebuilt all three committed figure PDFs byte for byte, and Poppler 26.06.0
@@ -190,7 +190,11 @@ The review found and fixed these defects before the PDF was bound:
   above, with every semantic predicate of the builder.
 - The report's full controls in ordinary and optimized Python, its dispatch-only controls in both
   modes, and the cross-toolchain refusal with status 2.
-- The Markdown math check.
+- The Markdown math check, and the Markdown view on GitHub at the branch commit: all three figures
+  load, and every one of the 449 math expressions renders. One display formula, the recurrence (7)
+  for the Möbius matrix, did not render because GitHub read `k<i` as the start of an HTML tag; the
+  first version had the same defect. It now reads `k < i`; TeX ignores the spaces, and the PDF is
+  byte for byte unchanged.
 - The three replay commands of Section 10 of the report, followed by the two comparisons, from a
   checkout of this branch with the raw recordings supplied by `--raw-dir`.
 - The repository checks named in the commit message that contains this record.

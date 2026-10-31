@@ -14422,8 +14422,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/source-partition-republication-2026-10-31.md",
-        "sha256": "cf09eb9010bdb7f0153ba84f52e418b28f0b6751a4725a98cdf6121804d2e5a2",
-        "size_bytes": 17986
+        "sha256": "007fadcae8de60a9b480c0dee935b41a06b51b4591f8bd38a5b69aa616e3306b",
+        "size_bytes": 18382
       },
       {
         "git_mode": "100644",
@@ -27538,8 +27538,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/EXPOSITION.md",
-        "sha256": "f368167d774718a58c840ad8ad0318e742b1cf31dc9376d211d89f8b9e9ab2cc",
-        "size_bytes": 51372
+        "sha256": "f0fdd3c50e0d46dbd078bf9807adaf505807e6174933ddb9f7faa50761617685",
+        "size_bytes": 51374
       },
       {
         "git_mode": "100644",
@@ -31420,7 +31420,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/build-source-coupling-compression-pdf.py",
-        "sha256": "e76adcd2c74cc403f43f0aaa14b2b1380d10a7b4e320e50317f23b00ade04e25",
+        "sha256": "b27f1c59a1b7ba50e73d4ce3d69480cacec11d25299800473c3c959a5e77f06a",
         "size_bytes": 55019
       },
       {
@@ -33176,7 +33176,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "146ed7254bd4bc224eaf4e7ab533b621111f916f5fea478c3be115392f548af5",
+    "entries_sha256": "8a459bda358a35f311c02a453fd8460dc9279da97374df2c497e834196afef6b",
     "entry_count": 5505
   },
   "subprojections": [
