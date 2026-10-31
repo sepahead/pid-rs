@@ -22,7 +22,7 @@ republication, which adopts this list. Code identifiers and file names keep thei
 | anchor | reference outcome; for the k-nearest-neighbour estimator, the query point | The one joint outcome at which a pointwise quantity is evaluated. In the KSG estimator it is the sample point whose neighbours are counted. |
 | cumulative | redundancy value | The value attached to a node of the redundancy lattice before Möbius inversion; it equals the sum of the atoms at and below that node. |
 | net atom, net cumulative, net value | signed atom, signed redundancy value, signed value | The informative quantity minus the misinformative one. It can be negative. |
-| informative block, misinformative block | informative part, misinformative part | The informative (misinformative) atoms of the whole decomposition taken together. Makkeh, Gutknecht and Wibral (2021) show that the informative part depends only on the joint distribution of the sources. |
+| informative block, misinformative block | informative part, misinformative part | The informative (misinformative) atoms of the whole decomposition taken together. Makkeh, Gutknecht and Wibral (2021) define the split; the informative part depends only on the joint distribution of the sources, because its events involve the sources alone. |
 | component atom | informative atom or misinformative atom | One of the two nonnegative atoms whose difference is a signed atom (MGW Theorem IV.3). |
 | carrier | redundancy lattice | The antichains of nonempty source sets ordered as by Williams and Beer (2010); 4, 18 and 166 nodes for two, three and four sources. |
 | collapse, constant-channel reduction | replacement by a constant | The distribution obtained by giving some inputs one fixed value in every outcome while the joint distribution of the other variables is kept. |
@@ -48,7 +48,7 @@ republication, which adopts this list. Code identifiers and file names keep thei
 | abstain, abstention | refuse, refusal | A function returns no value and states why. |
 | fails closed | refuses on failure | When a check cannot be completed, the step stops instead of passing a default or a guess. |
 | firewall | no-transfer rule | No result, proof or validity claim passes from one scientific object to another without a stated mapping theorem or a scoped comparison. |
-| evidence class | kind of evidence | Analytic result, comparison with independent code, formal proof, test against stored values, or internal consistency check; the kinds are not interchangeable. |
+| evidence class | kind of evidence | A label for what a piece of evidence establishes, such as a formal proof, an execution record or a review; [AGENTS.md](AGENTS.md) lists the kinds, which are not interchangeable. |
 
 ## Terms that keep their meaning
 
