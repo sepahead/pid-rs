@@ -64,7 +64,7 @@ separate sampling model, which this report does not supply.
 | Term | Meaning |
 |-----|---------------|
 | Source, target | The input variables $S=(S_1,\ldots,S_r)$ and the variable $T$ that they inform about. |
-| Recoding | A new representation $S'=(S'_1,\ldots,S'_r)$ of the sources with the same source indices. A deterministic recoding is a function $S'=f(S)$. |
+| Recoding | A new representation $S'=(S_1',\ldots,S_r')$ of the sources with the same source indices. A deterministic recoding is a function $S'=f(S)$. |
 | Coupling | One joint distribution of $(S,S',T)$ whose marginals are the given distributions of $(S,T)$ and $(S',T)$. |
 | Collection, antichain | A collection is a nonempty set of source indices. An antichain is a nonempty family of collections, none of which contains another; its members are its branches. |
 | Redundancy lattice | The antichains, ordered as by Williams and Beer (2010): $\beta\preceq\alpha$ when every branch of $\alpha$ contains a branch of $\beta$. Three sources give 18 nodes. |
@@ -72,14 +72,14 @@ separate sampling model, which this report does not supply.
 | Atom | Möbius inversion on the lattice turns the redundancy values into atoms. Each redundancy value is the sum of the atoms at and below its node. |
 | Informative and misinformative atoms | The atoms of the informative part and of the misinformative part. MGW Theorem IV.3 proves that they are never negative. A signed atom is their difference. |
 | Total change of the atoms | $D=\sum_\alpha\lvert\Delta_\alpha\rvert$, where $\Delta_\alpha$ is the old signed atom minus the new one at node $\alpha$. |
-| Variation of information | $V_B=H(S'_B\mid S_B)+H(S_B\mid S'_B)$, a distance between two partitions of the outcomes (Section 2). |
+| Variation of information | $V_B=H(S_B'\mid S_B)+H(S_B\mid S_B')$, a distance between two partitions of the outcomes (Section 2). |
 | Tail mass | The fraction of rows whose recoded pair is not one of the two pairs that the code keeps. |
 
 ### Symbols
 
 | Symbol | Meaning and domain |
 |-----|---------------|
-| $r,[r],i$ | Number of sources ($r\ge1$), the index set $\{1,\ldots,r\}$, one index |
+| $r,[r],i$ | Number of sources ($r\ge1$), the index set $\lbrace1,\ldots,r\rbrace$, one index |
 | $S,S',T$ | Old and new source vectors and the common finite target |
 | $P$ | A coupling of $(S,S',T)$ |
 | $B,S_B$ | A collection $B\subseteq[r]$ and the subvector $(S_i)_{i\in B}$ |
@@ -113,10 +113,10 @@ histograms that ignores the target is not enough. For each collection $B$, the v
 information
 
 $$
-V_B=H(S'_B\mid S_B)+H(S_B\mid S'_B)
+V_B=H(S_B'\mid S_B)+H(S_B\mid S_B')
 $$
 
-measures how much the partition of the outcomes by the values of $S'_B$ differs from the partition
+measures how much the partition of the outcomes by the values of $S_B'$ differs from the partition
 by the values of $S_B$ under the coupling; see
 [Meilă (2005)](https://doi.org/10.1145/1102351.1102424). It does not use the target, and it is not
 a distance between the marginal histograms.
@@ -132,14 +132,14 @@ $$
 Here $B\in\beta$ means that $B$ is a branch of $\beta$. Then
 
 $$
-\boxed{D\le\sum_{\varnothing\ne B\subseteq[r]}w_BV_B.}\tag{1}
+\boxed{D\le\sum_{\varnothing\ne B\subseteq[r]}w_BV_B.}\qquad(1)
 $$
 
 For three sources the exact coefficients give
 
 $$
-\boxed{D\le22\sum_{|B|\in\{1,2\}}V_B+V_{\{1,2,3\}}
-       \le67\sum_{i=1}^3V_{\{i\}}.}\tag{2}
+\boxed{D\le22\sum_{|B|\in\lbrace1,2\rbrace}V_B+V_{\lbrace1,2,3\rbrace}
+       \le67\sum_{i=1}^3V_{\lbrace i\rbrace}.}\qquad(2)
 $$
 
 The bound needs no positivity of any atoms, no factor for the number of target values and no lower
@@ -152,7 +152,7 @@ is not optimal.
 For a source value $s$ with $P(s)>0$, define the source event and the mean event surprise
 
 $$
-E_\beta^S(s)=\bigcup_{B\in\beta}\{u:u_i=s_i\text{ for all }i\in B\},\qquad
+E_\beta^S(s)=\bigcup_{B\in\beta}\lbrace u:u_i=s_i\text{ for all }i\in B\rbrace,\qquad
 G_\beta(S)=\sum_{s:P(s)>0}P(s)\bigl[-\ln P(E_\beta^S(s))\bigr].
 $$
 
@@ -163,7 +163,7 @@ in each target stratum $T=t$ with $P(T=t)>0$ and averaging with weights $P(T=t)$
 MGW logarithmic ratio gives
 
 $$
-C_\beta(S;T)=G_\beta(S)-G_\beta(S\mid T).\tag{3}
+C_\beta(S;T)=G_\beta(S)-G_\beta(S\mid T).\qquad(3)
 $$
 
 The first term is the informative part and the second the misinformative part. The first sums over
@@ -185,7 +185,7 @@ Because $c\ge c_j>0$,
 $$
 \frac dc\le1+\sum_j\frac{d_j-c_j}{c}
  \le1+\sum_j\left(\frac{d_j}{c_j}-1\right)
- \le\prod_j\frac{d_j}{c_j}.\tag{4}
+ \le\prod_j\frac{d_j}{c_j}.\qquad(4)
 $$
 
 For the last step expand the product of the factors $1+a_j$, where $a_j=d_j/c_j-1\ge0$; the cross
@@ -196,12 +196,12 @@ branches may overlap or depend on each other.
 
 Let a fine vector $F$ be coarsened coordinate by coordinate to $A$, with the same source indices:
 each $A_i$ is a function of $F_i$. At a value $f$ with $P(f)>0$, write $a$ for its coarse value. For
-a branch $B$, put $C_B=\{F_B=f_B\}\subseteq D_B=\{A_B=a_B\}$. Apply (4), take logarithms and average
+a branch $B$, put $C_B=\lbrace F_B=f_B\rbrace\subseteq D_B=\lbrace A_B=a_B\rbrace$. Apply (4), take logarithms and average
 over $f$:
 
 $$
 0\le G_\beta(F)-G_\beta(A)
- \le\sum_{B\in\beta}H(F_B\mid A_B).\tag{5}
+ \le\sum_{B\in\beta}H(F_B\mid A_B).\qquad(5)
 $$
 
 Indeed, the mean logarithmic ratio of one branch is
@@ -222,37 +222,37 @@ a stratum of zero probability.
 
 ### Proof 4: a common refinement
 
-Put $Z_i=(S_i,S'_i)$ at each source index $i$. The paired vector $Z$ still has $r$ sources, and it
+Put $Z_i=(S_i,S_i')$ at each source index $i$. The paired vector $Z$ still has $r$ sources, and it
 coarsens coordinate by coordinate both to $S$ and to $S'$. Set
 
 $$
-a_\beta=\sum_{B\in\beta}H(S'_B\mid S_B),\qquad
-b_\beta=\sum_{B\in\beta}H(S_B\mid S'_B).
+a_\beta=\sum_{B\in\beta}H(S_B'\mid S_B),\qquad
+b_\beta=\sum_{B\in\beta}H(S_B\mid S_B').
 $$
 
 By (5) with $F=Z$ and $A=S$, the increase $G_\beta(Z)-G_\beta(S)$ lies in $[0,a_\beta]$, because
-$H(Z_B\mid S_B)=H(S'_B\mid S_B)$; so does the increase of the misinformative part. By (3), the change
+$H(Z_B\mid S_B)=H(S_B'\mid S_B)$; so does the increase of the misinformative part. By (3), the change
 $C_\beta(Z;T)-C_\beta(S;T)$ is the difference of these two numbers. Two numbers in the same interval
 differ by at most its length, so the absolute value of the change is at most $a_\beta$; there is no
 extra factor two. The same argument with $S'$ gives $b_\beta$, so
 
 $$
 |C_\beta(S;T)-C_\beta(S';T)|
- \le a_\beta+b_\beta=\sum_{B\in\beta}V_B.\tag{6}
+ \le a_\beta+b_\beta=\sum_{B\in\beta}V_B.\qquad(6)
 $$
 
 Only conditional Shannon entropies were used; no monotonicity of the signed decomposition was
 assumed.
 
 **A form that uses the target.** The proof gives slightly more. Write
-$a_{\beta,T}=\sum_{B\in\beta}H(S'_B\mid S_B,T)$ and $b_{\beta,T}=\sum_{B\in\beta}H(S_B\mid S'_B,T)$.
+$a_{\beta,T}=\sum_{B\in\beta}H(S_B'\mid S_B,T)$ and $b_{\beta,T}=\sum_{B\in\beta}H(S_B\mid S_B',T)$.
 From $S$ to $Z$ the informative part rises by some $u\in[0,a_\beta]$ and the misinformative part by
 some $u_T\in[0,a_{\beta,T}]$. From $S'$ to $Z$ they rise by some $v\in[0,b_\beta]$ and
 $v_T\in[0,b_{\beta,T}]$. The difference $C_\beta(S;T)-C_\beta(S';T)$ equals
 $(v-v_T)-(u-u_T)$, so it lies in the interval $[-a_\beta-b_{\beta,T},\ b_\beta+a_{\beta,T}]$, and
 
 $$
-D\le\sum_\beta c_\beta\max\{a_\beta+b_{\beta,T},\ b_\beta+a_{\beta,T}\}.\tag{12}
+D\le\sum_\beta c_\beta\max(a_\beta+b_{\beta,T},\ b_\beta+a_{\beta,T}).\qquad(12)
 $$
 
 Conditioning cannot increase entropy, so $a_{\beta,T}\le a_\beta$ and $b_{\beta,T}\le b_\beta$:
@@ -267,7 +267,7 @@ following recurrence $i,j,k$ index ordered nodes, not sources, and $\mathbf1_{i=
 $i=j$ and zero otherwise. The inverse $U=M^{-1}$, the Möbius matrix, satisfies
 
 $$
-U_{ij}=\mathbf1_{i=j}-\sum_{k < i}M_{ik}U_{kj}.\tag{7}
+U_{ij}=\mathbf1_{i=j}-\sum_{k < i}M_{ik}U_{kj}.\qquad(7)
 $$
 
 A finite average commutes with this fixed linear map, so $\Pi=UC$ also for averaged values. Define
@@ -296,7 +296,7 @@ The three-source integer matrix was checked in both directions, $MU=UM=I$. Its c
 
 The weights sum to 65. A fixed singleton is a branch of nodes whose weights sum to
 $8+4+4+4+2=22$; the same holds for a fixed pair. The full collection is a branch only of the top
-node. By the chain rule, $V_B\le\sum_{i\in B}V_{\{i\}}$. Each source belongs to one singleton, two
+node. By the chain rule, $V_B\le\sum_{i\in B}V_{\lbrace i\rbrace}$. Each source belongs to one singleton, two
 pairs and the full collection, so its total weight is $22+22+22+1=67$; this proves (2).
 
 ## 3. Lower bounds from mutual information
@@ -304,14 +304,14 @@ pairs and the full collection, so its total weight is $22+22+22+1=67$; this prov
 For each collection $B$, define the changes
 
 $$
-L_B=I(S_B;T)-I(S'_B;T),\qquad L=L_{[r]},\qquad
+L_B=I(S_B;T)-I(S_B';T),\qquad L=L_{[r]},\qquad
 \Delta_\alpha=\Pi_\alpha(S;T)-\Pi_\alpha(S';T).
 $$
 
-Let $J_B=\{\alpha\in\mathcal L:\alpha\preceq\{B\}\}$ be the set of nodes at or below the node
-$\{B\}$, which has the single branch $B$. Its source event is $\{S_B=s_B\}$, so its redundancy
+Let $J_B=\lbrace\alpha\in\mathcal L:\alpha\preceq\lbrace B\rbrace\rbrace$ be the set of nodes at or below the node
+$\lbrace B\rbrace$, which has the single branch $B$. Its source event is $\lbrace S_B=s_B\rbrace$, so its redundancy
 value is $H(S_B)-H(S_B\mid T)=I(S_B;T)$. Each redundancy value is the sum of the atoms at and below
-its node, and every node lies at or below the top node $\{[r]\}$. Therefore
+its node, and every node lies at or below the top node $\lbrace[r]\rbrace$. Therefore
 
 $$
 L_B=\sum_{\alpha\in J_B}\Delta_\alpha,\qquad
@@ -322,7 +322,7 @@ The triangle inequality, applied to the two disjoint sums, proves
 
 $$
 \boxed{\max_{\varnothing\ne B\subseteq[r]}
- \bigl(|L_B|+|L-L_B|\bigr)\le D.}\tag{8}
+ \bigl(|L_B|+|L-L_B|\bigr)\le D.}\qquad(8)
 $$
 
 For three sources the seven collections give seven changes, from fourteen values of mutual
@@ -335,7 +335,7 @@ of the negative changes. The sum of all atom changes is the change of the top re
 $I(S;T)-I(S';T)=L$. Splitting the changes into positive and negative parts gives
 
 $$
-\sum_\alpha\Delta_\alpha=L,\qquad D=L+2R.\tag{9}
+\sum_\alpha\Delta_\alpha=L,\qquad D=L+2R.\qquad(9)
 $$
 
 This identity holds for every pair of distributions on the same lattice. The first version stated
@@ -350,20 +350,20 @@ Bound (8) splits the atoms into two groups. All seven changes together give a la
 its exact value has a closed form. Put $L_\varnothing=0$ and collect the seven equations
 $\sum_{\alpha\in J_B}\Delta_\alpha=L_B$ as $A\Delta=L$, where $A$ is the $7\times18$ matrix with
 $A_{B\alpha}=1$ when $\alpha\in J_B$ and $0$ otherwise. A maximal chain of collections is a
-sequence $\{i\}\subset\{i,j\}\subset\{1,2,3\}$ with $i\ne j$; there are six.
+sequence $\lbrace i\rbrace\subset\lbrace i,j\rbrace\subset[3]$ with $i\ne j$, where $[3]=\lbrace1,2,3\rbrace$; there are six.
 
 **Proposition.** For every vector $L\in\mathbb R^7$ of changes,
 
 $$
 \min_{d\in\mathbb R^{18}:\,Ad=L}\ \sum_\alpha|d_\alpha|
-=\max_{i\ne j}\bigl(|L_{\{i\}}|+|L_{\{i,j\}}-L_{\{i\}}|+|L_{\{1,2,3\}}-L_{\{i,j\}}|\bigr).\tag{13}
+=\max_{i\ne j}\bigl(|L_{\lbrace i\rbrace}|+|L_{\lbrace i,j\rbrace}-L_{\lbrace i\rbrace}|+|L-L_{\lbrace i,j\rbrace}|\bigr).\qquad(13)
 $$
 
 The true change vector satisfies $A\Delta=L$, so the right side is a lower bound on $D$.
 
 *Proof that the minimum is at least the maximum.* Along a maximal chain the node sets are nested,
-$J_{\{i\}}\subseteq J_{\{i,j\}}\subseteq J_{\{1,2,3\}}$, and the last one is the whole lattice. So
-$L_{\{i\}}$, $L_{\{i,j\}}-L_{\{i\}}$ and $L_{\{1,2,3\}}-L_{\{i,j\}}$ are sums of $d$ over three
+$J_{\lbrace i\rbrace}\subseteq J_{\lbrace i,j\rbrace}\subseteq J_{[3]}$, and the last one is the whole lattice. So
+$L_{\lbrace i\rbrace}$, $L_{\lbrace i,j\rbrace}-L_{\lbrace i\rbrace}$ and $L-L_{\lbrace i,j\rbrace}$ are sums of $d$ over three
 disjoint node sets. The triangle inequality bounds each absolute value by the sum of
 $|d_\alpha|$ over its set, and the three sets are disjoint.
 
@@ -371,7 +371,7 @@ $|d_\alpha|$ over its set, and the three sets are disjoint.
 indices, by increasing size: $v(\varnothing)=0$ and
 
 $$
-v(B)=\max_{C\subsetneq B}\bigl(v(C)+\max\{L_C-L_B,0\}\bigr).
+v(B)=\max_{C\subsetneq B}\bigl(v(C)+\max(L_C-L_B,0)\bigr).
 $$
 
 Put $u(B)=L_B+v(B)$.
@@ -386,35 +386,30 @@ Put $u(B)=L_B+v(B)$.
    contained in $B$, that is, exactly when $\alpha_x\in J_B$. Give each node $\alpha$ the weight
    $p_\alpha\ge0$ equal to the length of the set of levels $x$ with $\alpha_x=\alpha$. Then
    $\sum_{\alpha\in J_B}p_\alpha$ is the length of the levels below $f(B)$, which is $f(B)$, and
-   $\sum_\alpha p_\alpha=f(\{1,2,3\})$.
+   $\sum_\alpha p_\alpha=f([3])$.
 3. *A feasible vector of the right size.* Apply step 2 to $u$ and to $v$, and put $d=p(u)-p(v)$.
-   Then $Ad=u-v=L$, and
-
-   $$
-   \sum_\alpha|d_\alpha|\le u(\{1,2,3\})+v(\{1,2,3\})=L_{\{1,2,3\}}+2v(\{1,2,3\}).
-   $$
-
-4. *The value.* Unrolling the definition, $v(\{1,2,3\})$ is the largest total decrease of $L$ along a
-   chain of strictly increasing sets from $\varnothing$ to $\{1,2,3\}$. Inserting an intermediate
-   set never lowers a total decrease, because $\max\{x-z,0\}\le\max\{x-y,0\}+\max\{y-z,0\}$. So the
+   Then $Ad=u-v=L$ and $\sum_\alpha|d_\alpha|\le u([3])+v([3])=L+2v([3])$.
+4. *The value.* Unrolling the definition, $v([3])$ is the largest total decrease of $L$ along a
+   chain of strictly increasing sets from $\varnothing$ to $[3]$. Inserting an intermediate
+   set never lowers a total decrease, because $\max(x-z,0)\le\max(x-y,0)+\max(y-z,0)$. So the
    largest value occurs on a maximal chain. On any chain, the total variation of $L$ equals its net
-   change $L_{\{1,2,3\}}$ plus twice its total decrease. So the bound of step 3 equals the largest
+   change $L$ plus twice its total decrease. So the bound of step 3 equals the largest
    total variation over the six maximal chains, which is the right side of (13). This proves the
    proposition.
 
 The same proof holds for any number of sources, with the maximal chains of all sets of source
 indices.
 
-**Exact dual certificates.** For a chain $(i,j)$ and signs $s_1,s_2,s_3\in\{-1,1\}$, put
+**Exact dual certificates.** For a chain $(i,j)$ and signs $s_1,s_2,s_3\in\lbrace-1,1\rbrace$, put
 
 $$
-y=(s_1-s_2)\,e_{\{i\}}+(s_2-s_3)\,e_{\{i,j\}}+s_3\,e_{\{1,2,3\}}.
+y=(s_1-s_2)\,e_{\lbrace i\rbrace}+(s_2-s_3)\,e_{\lbrace i,j\rbrace}+s_3\,e_{[3]}.
 $$
 
-For a node in $J_{\{i\}}$, $(A^\top y)_\alpha=s_1$; for a node in $J_{\{i,j\}}$ but not in
-$J_{\{i\}}$ it is $s_2$; otherwise it is $s_3$. So $|(A^\top y)_\alpha|\le1$ for every node, and
-for every vector $d$ with $Ad=L$,
-$y^\top L=(A^\top y)^\top d\le\sum_\alpha|d_\alpha|$; with $d=\Delta$ this gives $y^\top L\le D$.
+Put $\eta=A^\top y$. For a node in $J_{\lbrace i\rbrace}$, $\eta_\alpha=s_1$; for a node in
+$J_{\lbrace i,j\rbrace}$ but not in $J_{\lbrace i\rbrace}$ it is $s_2$; otherwise it is $s_3$. So
+$|\eta_\alpha|\le1$ for every node, and for every vector $d$ with $Ad=L$,
+$y^\top L=\eta^\top d\le\sum_\alpha|d_\alpha|$; with $d=\Delta$ this gives $y^\top L\le D$.
 The program [`verification/chain_lower_certificate.py`](verification/chain_lower_certificate.py)
 checks all 48 such vectors exactly on the 18 nodes. It evaluates each vector at the saved outward
 interval endpoints of the seven changes and keeps the largest result. The bounds are rational
@@ -465,32 +460,32 @@ probability $1-\delta$, where $0<\delta<1$, and let $T=S_2$. Keep the pairs $00$
 to $00$, and keep $X$ and $T$. Training counts $00:50$, $11:49$, $01:1$ could select those kept
 pairs; they are not selected again on evaluation data.
 
-Before the recoding only $S_2$ varies, and $S_2=T$. After it, $S'_2=S'_3=T$. The pair stays
+Before the recoding only $S_2$ varies, and $S_2=T$. After it, $S_2'=S_3'=T$. The pair stays
 recoverable on this support: $H(Y\mid Y')=H(Y\mid X,Y')=L=0$. Before the recoding, the informative
-redundancy values are the incidence column of the node $\{\{2\}\}$ in the zeta matrix, times the
-target entropy; after it they use the node $\{\{2\},\{3\}\}$. Every misinformative value is zero,
+redundancy values are the incidence column of the node $\lbrace\lbrace2\rbrace\rbrace$ in the zeta matrix, times the
+target entropy; after it they use the node $\lbrace\lbrace2\rbrace,\lbrace3\rbrace\rbrace$. Every misinformative value is zero,
 because $T$ determines every source. Define $h_2(x)=-x\ln x-(1-x)\ln(1-x)$. Inversion gives
 
 $$
-\Pi_{\{\{2\}\}}=h_2(\delta),\qquad
-\Pi'_{\{\{2\},\{3\}\}}=h_2(\delta),\qquad
+\Pi_{\lbrace\lbrace2\rbrace\rbrace}=h_2(\delta),\qquad
+\Pi_{\lbrace\lbrace2\rbrace,\lbrace3\rbrace\rbrace}'=h_2(\delta),\qquad
 D=2h_2(\delta)>0.
 $$
 
-All other signed atoms are zero. Bound (8) for $B=\{3\}$ attains this value, because
-$L_{\{3\}}=-h_2(\delta)$ and $L-L_{\{3\}}=h_2(\delta)$. Exact checks covered
+All other signed atoms are zero. Bound (8) for $B=\lbrace3\rbrace$ attains this value, because
+$L_{\lbrace3\rbrace}=-h_2(\delta)$ and $L-L_{\lbrace3\rbrace}=h_2(\delta)$. Exact checks covered
 $\delta=1/2,1/100,1/10000$. A recoding that keeps the joint information therefore cannot
 guarantee that the atoms stay unchanged, even when the tail mass is arbitrarily small.
 
 ## 5. An exact comparison when the recoded pair takes two values
 
 Suppose the recoded pair $Y=(S_2,S_3)$ takes exactly two values with positive probability, and the
-code $g(Y)$ maps them to two different values, while $X=S_1$ and $T$ are kept. Let $J\subseteq\{2,3\}$
+code $g(Y)$ maps them to two different values, while $X=S_1$ and $T$ are kept. Let $J\subseteq\lbrace2,3\rbrace$
 be the set of coordinates in which the two old values differ, and $J'$ the same set for the two new
 values. Both sets are nonempty. At a reference outcome with positive probability, put
-$E=\{X=x\}$ and $F=\{Y=y\}$.
+$E=\lbrace X=x\rbrace$ and $F=\lbrace Y=y\rbrace$.
 
-For a coordinate $j$ in which the two values differ, the event $\{S_j=s_j\}$ equals $F$. For a
+For a coordinate $j$ in which the two values differ, the event $\lbrace S_j=s_j\rbrace$ equals $F$. For a
 constant coordinate the event is certain. No assumption that all four Boolean match patterns occur
 is used. So every node event is one of five events: the certain event, $E\cup F$, $E$, $F$ and
 $E\cap F$. Their redundancy values are $0,R_2,A,B,C$, with $A=I(X;T)$, $B=I(Y;T)$ and
@@ -501,8 +496,8 @@ estimand.
 Define the original nodes
 
 $$
-R_J=\{\{1\}\}\cup\{\{j\}:j\in J\},\quad X_0=\{\{1\}\},\quad
-C_J=\{\{j\}:j\in J\},\quad K_J=\{\{1,j\}:j\in J\}.
+R_J=\lbrace\lbrace1\rbrace\rbrace\cup\lbrace\lbrace j\rbrace:j\in J\rbrace,\quad X_0=\lbrace\lbrace1\rbrace\rbrace,\quad
+C_J=\lbrace\lbrace j\rbrace:j\in J\rbrace,\quad K_J=\lbrace\lbrace1,j\rbrace:j\in J\rbrace.
 $$
 
 In the order $R_J,X_0,C_J,K_J$, the five event forms have the incidence patterns
@@ -523,7 +518,7 @@ agree. Otherwise only the node $X_0$ is common, and the other three values move 
 original nodes, which proves
 
 $$
-\boxed{D=2(|R_2|+|U_Y|+|Q|),\quad J\ne J'.}\tag{10}
+\boxed{D=2(|R_2|+|U_Y|+|Q|),\quad J\ne J'.}\qquad(10)
 $$
 
 If the pair takes only one value, only the atom of the kept source is nonzero and $D=0$. A map that
@@ -641,12 +636,12 @@ information and bound (8) is the lower bound of Section 3.
 **A range bound.** A fair comparison uses one more published fact, MGW Theorem IV.3: the
 informative and misinformative atoms are nonnegative, and they sum to $H(S)$ and $H(S\mid T)$, the
 informative and misinformative values of the top node. Each signed change is
-$\Delta_\alpha=(\pi^+_\alpha-\pi^-_\alpha)-(\pi'^+_\alpha-\pi'^-_\alpha)$, so the triangle
+$\Delta_\alpha=(\pi_\alpha^+-\pi_\alpha^-)-(\pi_\alpha'^+-\pi_\alpha'^-)$, so the triangle
 inequality gives
 
 $$
 D\le H(S)+H(S\mid T)+H(S')+H(S'\mid T)
- \le2[H(S)+H(S')].\tag{11}
+ \le2[H(S)+H(S')].\qquad(11)
 $$
 
 | Recording and role | Upper bound (1) | Range bound (11) |
@@ -666,11 +661,11 @@ either bound is not shown. The target form (12) improves bound (1) strictly on 1
 distributions, by small amounts (room test: from 16.650 to 16.582 nats), and it stays above the
 range bound on every distribution with $D>0$.
 
-**A refinement from nonnegative atoms.** For the node $\{B\}$, the informative value is $H(S_B)$
+**A refinement from nonnegative atoms.** For the node $\lbrace B\rbrace$, the informative value is $H(S_B)$
 and the misinformative value is $H(S_B\mid T)$. The informative atoms $\pi^+$ and the
 misinformative atoms $\pi^-$ are nonnegative, so each of the four atom vectors of the old and the
-new distribution lies in a polytope $\{\pi\in\mathbb R^{18}:\pi\ge0,\ A\pi=h\}$, where $h_B$ is
-$H(S_B)$, $H(S_B\mid T)$, $H(S'_B)$ or $H(S'_B\mid T)$. Hence $D$ lies between the smallest and the
+new distribution lies in a polytope $\lbrace\pi\in\mathbb R^{18}:\pi\ge0,\ A\pi=h\rbrace$, where $h_B$ is
+$H(S_B)$, $H(S_B\mid T)$, $H(S_B')$ or $H(S_B'\mid T)$. Hence $D$ lies between the smallest and the
 largest value of $\sum_\alpha|\Delta_\alpha|$ over the product of the four polytopes. Only 28
 entropies of source sets are needed. The top row of $A$ is all ones, so the largest value is never
 above the range bound (11). The smallest value equalled bound (13) on all 30 distributions. The
@@ -694,7 +689,7 @@ it needs NumPy and SciPy and is not a repository command.
 
 **A third saved bound.** The study runner saves a third upper bound for each distribution, under
 the key `continuity_upper_interval`. It computes this bound as
-$130\min\{\ln8,\ \delta\ln(8/\delta)+8\delta\}$. Here $\delta$ is the tail mass, 8 is the number of
+$130\min(\ln8,\ \delta\ln(8/\delta)+8\delta)$. Here $\delta$ is the tail mass, 8 is the number of
 possible source tuples and 130 is twice the weight sum 65. It comes from an earlier unpublished
 note on rare-tuple compression, and this report does not derive it; the run only checks that it
 lies above $D$. On the 21 distributions with $D>0$ it lies between 49.3 and 270.3 nats, so it says
@@ -781,14 +776,14 @@ sources moves.
 
 ![The observed office test recoding. The light bit and the target stay unchanged; recovering the pair does not preserve the partitions of the individual sources.](figures/office-recoding.svg)
 
-In (10), $J=\{3\}$ changes to $J'=\{2,3\}$.
+In (10), $J=\lbrace3\rbrace$ changes to $J'=\lbrace2,3\rbrace$.
 
 | Quantity | Old node | New node | Signed value, nats |
 |---|---|---|---:|
-| $R_2$ | $\{\{1\},\{3\}\}$ | $\{\{1\},\{2\},\{3\}\}$ | 0.178414142 |
-| $U_X$ | $\{\{1\}\}$ | same | 0.069388796 |
-| $U_Y$ | $\{\{3\}\}$ | $\{\{2\},\{3\}\}$ | $-0.032706479$ |
-| $Q$ | $\{\{1,3\}\}$ | $\{\{1,2\},\{1,3\}\}$ | 0.080019167 |
+| $R_2$ | {{1}, {3}} | {{1}, {2}, {3}} | 0.178414142 |
+| $U_X$ | {{1}} | same | 0.069388796 |
+| $U_Y$ | {{3}} | {{2}, {3}} | $-0.032706479$ |
+| $Q$ | {{1, 3}} | {{1, 2}, {1, 3}} | 0.080019167 |
 
 All other signed atoms are zero. With the unrounded values, (10) gives $D\approx0.582279577$. The
 negative atom stays; it is not a causal importance of a sensor.

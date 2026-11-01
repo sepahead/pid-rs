@@ -60,6 +60,15 @@ function Image(el)
   return el
 end
 
+-- GitHub renders a display formula that carries \tag as a stacked table, so the Markdown writes
+-- an equation number as \qquad(N) at the end of the display; the PDF sets it as \tag{N}.
+function Math(el)
+  if el.mathtype == "DisplayMath" then
+    el.text = el.text:gsub("\\qquad%((%d+)%)(%s*)$", "\\tag{%1}%2")
+  end
+  return el
+end
+
 function Figure(fig)
   local image = pandoc.write(pandoc.Pandoc(fig.content), "latex")
   local caption = pandoc.write(pandoc.Pandoc(fig.caption.long), "latex")

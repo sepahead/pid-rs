@@ -43,7 +43,7 @@ MAX_FILES = 1024
 MAX_CHILD_SECONDS = 45.0
 MAX_CAMPAIGN_SECONDS = 600.0
 PAGES = 17
-PDF_PIN = {"bytes": 208911, "sha256": "96089c4c24647b8eb0895fd0b229135b672acd247c16662c3f9600d120763d63"}
+PDF_PIN = {"bytes": 209172, "sha256": "056dc531f5ec1cb6e73615733426b4bebf3da8e5f1412a6b93dbea569d5402f0"}
 # Populated only from the reviewed public input packet before execution admission.
 INPUTS: dict[str, dict] = {
     "audit/formal/latex/source-coupling-compression/fonts/LICENSE-latin-modern-math.txt": {
@@ -135,12 +135,12 @@ INPUTS: dict[str, dict] = {
         "sha256": "f50d1e757dcbfbf1d370777060c0e39f231f47965d94de939a64b11bb1ced9d6"
     },
     "audit/formal/latex/source-coupling-compression/report-filter.lua": {
-        "bytes": 2276,
-        "sha256": "bdcc61e4e0537f7568e4a50d8c91b0389f01495adc817920880ed6703b83484e"
+        "bytes": 2611,
+        "sha256": "bafe8fbeabdc361fff7670a1e80d61c07a071db64bb8c0687c0525fb117ee89e"
     },
     "audit/research/source-coupling-compression/EXPOSITION.md": {
-        "bytes": 51374,
-        "sha256": "f0fdd3c50e0d46dbd078bf9807adaf505807e6174933ddb9f7faa50761617685"
+        "bytes": 51913,
+        "sha256": "693c8847db767eccebb320b8cbfc84891006c842fb4510b789d3dce341ae8ce4"
     },
     "audit/research/source-coupling-compression/figures/allocation-comparison.pdf": {
         "bytes": 10508,
@@ -637,8 +637,8 @@ PYPDF_PIN: dict = {
     "version": "6.16.1"
 }
 BODY_PIN: dict = {
-    "bytes": 58099,
-    "sha256": "30961d7060727291f03a451c5d32dc2a97f84697250dce0bac6f91c994d9d511"
+    "bytes": 58655,
+    "sha256": "37d227de54e2aedd8e886154f944424e3f12a21a9a67cd9594df51a28b5a192c"
 }
 RELATIVE_URIS: frozenset[str] = frozenset()  # every PDF link is absolute
 SENTINELS = (

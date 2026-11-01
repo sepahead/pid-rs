@@ -18,7 +18,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   figures take the new terms, and the Markdown now shows them through their SVG companions on an
   opaque ivory background, which GitHub can display in light and dark mode; the Pandoc filter maps
   those images back to the vector PDFs and turns every relative link into an absolute repository
-  URL; the PDF has 17 pages and passes its exact two-build check. A page-by-page visual
+  URL; the PDF has 17 pages and passes its exact two-build check. The Markdown writes its
+  mathematics so that GitHub typesets every formula: braces as `\lbrace` and `\rbrace`, no
+  underscore after a punctuation mark, and equation numbers as `\qquad(N)`, which the filter sets
+  as `\tag{N}` in the PDF. A page-by-page visual
   review in color and grayscale, with 300 dpi details, is recorded in the
   [republication record](audit/evidence/source-partition-republication-2026-10-31.md).
 

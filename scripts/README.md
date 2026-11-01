@@ -3451,7 +3451,9 @@ production or the scientific experiments. The filter turns every relative link o
 an absolute repository URL, because the PDF admits only absolute URI actions; a link that would
 leave the repository root stops the build. The Markdown shows each figure through its SVG
 companion, which GitHub can display; the filter replaces each image `figures/NAME.svg` by the
-vector PDF `figures/NAME.pdf` before the LaTeX is written, so the PDF does not depend on the SVGs. Other research companions are outside its producer
+vector PDF `figures/NAME.pdf` before the LaTeX is written, so the PDF does not depend on the SVGs.
+It also turns an equation number written `\qquad(N)` at the end of a display formula into
+`\tag{N}`, because GitHub lays out a display formula that carries `\tag` as a stacked table. Other research companions are outside its producer
 inventory. A change to a pinned producer input requires a reviewed binding update.
 
 The exact operation requires two new retained build directories. Each runs the pinned Pandoc

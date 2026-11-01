@@ -28,17 +28,17 @@ builder binds the new inputs, the 17-page count and the renamed section headings
 
 | File | Bytes | SHA-256 |
 |---|---:|---|
-| `audit/research/source-coupling-compression/EXPOSITION.md` | 51,374 | `f0fdd3c50e0d46dbd078bf9807adaf505807e6174933ddb9f7faa50761617685` |
-| `output/pdf/source-coupling-compression.pdf` | 208,911 | `96089c4c24647b8eb0895fd0b229135b672acd247c16662c3f9600d120763d63` |
+| `audit/research/source-coupling-compression/EXPOSITION.md` | 51,913 | `693c8847db767eccebb320b8cbfc84891006c842fb4510b789d3dce341ae8ce4` |
+| `output/pdf/source-coupling-compression.pdf` | 209,172 | `056dc531f5ec1cb6e73615733426b4bebf3da8e5f1412a6b93dbea569d5402f0` |
 | `audit/research/source-coupling-compression/figures/allocation-comparison.pdf` | 10,508 | `f5f14e96d13a5818f6f28ee12b70c7d33a119b75f8621fb2ef69be6aac132738` |
 | `audit/research/source-coupling-compression/figures/prediction-comparison-v2.pdf` | 7,642 | `4dbbddfe957b8dfb858c5217b39e73ef5b6d18372e1c421236d9549874af9236` |
 | `audit/research/source-coupling-compression/figures/office-recoding.pdf` | 13,284 | `075f6400e982d5d9f2743b5213fd87c4e1d006b0f79c7a9742a7591e7d544207` |
 | `audit/research/source-coupling-compression/figures/allocation-comparison.svg` | 50,833 | `1d5ef3900729892346b31c8e47c589e06052eb58c3ae6108c0fcb4c28dac45ea` |
 | `audit/research/source-coupling-compression/figures/prediction-comparison-v2.svg` | 44,143 | `46e1c77ee397f231ad8d6f12cfcbc647619f239bb6696387d50aff5ccab51a0c` |
 | `audit/research/source-coupling-compression/figures/office-recoding.svg` | 73,624 | `23df3cce3037323b366122fc3b5468f5511e9c5b9168ce30078b6b3cd5d0b220` |
-| `audit/formal/latex/source-coupling-compression/report-filter.lua` | 2,276 | `bdcc61e4e0537f7568e4a50d8c91b0389f01495adc817920880ed6703b83484e` |
+| `audit/formal/latex/source-coupling-compression/report-filter.lua` | 2,611 | `bafe8fbeabdc361fff7670a1e80d61c07a071db64bb8c0687c0525fb117ee89e` |
 | `audit/formal/latex/source-coupling-compression/publication.tex` | 1,888 | `f50d1e757dcbfbf1d370777060c0e39f231f47965d94de939a64b11bb1ced9d6` |
-| `scripts/build-source-coupling-compression-pdf.py` | 55,019 | `b27f1c59a1b7ba50e73d4ce3d69480cacec11d25299800473c3c959a5e77f06a` |
+| `scripts/build-source-coupling-compression-pdf.py` | 55,019 | `452067d27d8bc28f626905a4da57aca2196b65de28c97667c08f5da1f2fa45cf` |
 
 The figure sources were compiled with the exact profile of the report build. Before any change, the
 same procedure rebuilt all three committed figure PDFs byte for byte, and Poppler 26.06.0
@@ -91,7 +91,7 @@ number is no evidence of correctness.
 | Dual certificates | The 48 vectors satisfy $\lvert A^\top y\rvert\le1$; the checker ran and reported six improved distributions. |
 | Identity $D=L+2R$ | Holds for every pair of distributions on the same lattice; the restricted first statement was corrected. |
 | Invariance theorem | Statement and both directions unchanged; the relabelling reading of statement 1 was checked. |
-| Counterexample | Atom values and the attaining lower bound for $B=\{3\}$ were re-derived. |
+| Counterexample | Atom values and the attaining lower bound for $B=\lbrace3\rbrace$ were re-derived. |
 | Two-value comparison | The meaning of the incidence digits was mis-stated in a draft and corrected before publication. |
 | Range bound | Uses MGW Theorem IV.3; the comparison with bound (1) now covers all 21 distributions with $D>0$. |
 | Polytope refinement | Labelled exploratory because it was solved in binary64. |
@@ -135,10 +135,12 @@ changed publication surface. Every page was inspected in color at 100 dpi while 
 were fixed. The 17 final pages were then inspected in color and in grayscale at 80 dpi, and a
 declared high-risk subset at 300 dpi: the title block (page 1), the proof of the closed-form bound
 (page 7), the legend of Figure 1 (page 12) and the command block (page 17). The colors of the accent
-rules of pages 1 and 3 were sampled at 300 dpi and are the same saffron. Two small text changes
-followed; for each, a pixel comparison of the grayscale renders found the changed pages (page 2,
-then pages 3 and 4), which were inspected again in color at 100 dpi. No 300 dpi detail lies on a
-page that those changes touched. The three SVG companions that the Markdown shows were rendered at
+rules of pages 1 and 3 were sampled at 300 dpi and are the same saffron. Three later changes
+followed; for each, a pixel comparison of the grayscale renders found the changed pages (page 2;
+pages 3 and 4; pages 5, 7, 8, 9, 13 and 15 after the mathematics was made portable to GitHub),
+which were inspected again in color at 100 dpi, the last six also in grayscale. The 300 dpi details
+of pages 1, 12 and 17 lie on pages that those changes did not touch; the proposition on page 7 was
+inspected again at 300 dpi after the last change. The three SVG companions that the Markdown shows were rendered at
 860 px wide on the dark page color of GitHub (`#0d1117`): each figure appears on an opaque ivory
 card with no dark pixel on its edges.
 
@@ -190,11 +192,19 @@ The review found and fixed these defects before the PDF was bound:
   above, with every semantic predicate of the builder.
 - The report's full controls in ordinary and optimized Python, its dispatch-only controls in both
   modes, and the cross-toolchain refusal with status 2.
-- The Markdown math check, and the Markdown view on GitHub at the branch commit: all three figures
-  load, and every one of the 449 math expressions renders. One display formula, the recurrence (7)
-  for the Möbius matrix, did not render because GitHub read `k<i` as the start of an HTML tag; the
-  first version had the same defect. It now reads `k < i`; TeX ignores the spaces, and the PDF is
-  byte for byte unchanged.
+- The Markdown math check, and the Markdown view on GitHub. A first check counted only the math
+  elements of the GitHub page and missed three kinds of defect, all present in the first version
+  too. An underscore after a punctuation mark, as in `S'_B` or `(A^\top y)_\alpha`, can open
+  Markdown emphasis, so the formula is never typeset. A brace written `\{` loses its backslash, so
+  a set such as $\lbrace1,2\rbrace$ is shown without braces. A display formula with `\tag` is laid
+  out as a stacked table. GitHub also read `k<i` as the start of an HTML tag and did not typeset a
+  display formula inside a numbered list. The Markdown now writes `S_B'` for `S'_B`, uses
+  $\eta=A^\top y$ and $[3]=\lbrace1,2,3\rbrace$, writes braces as `\lbrace` and `\rbrace`, the
+  maximum and minimum of two numbers with parentheses, `k < i`, and equation numbers as
+  `\qquad(N)`, which the filter sets as `\tag{N}` in the PDF; the formula in the list is now inline.
+  At the branch commit that contains this record, GitHub typesets every formula of the Markdown,
+  shows every brace, lays out every display at the height of its content and shows all three
+  figures.
 - The three replay commands of Section 10 of the report, followed by the two comparisons, from a
   checkout of this branch with the raw recordings supplied by `--raw-dir`.
 - The repository checks named in the commit message that contains this record.
