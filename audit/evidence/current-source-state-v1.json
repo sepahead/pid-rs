@@ -4570,8 +4570,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/math-stats-review-adjudication-2026-10-30.md",
-        "sha256": "0b01ee440ae7d21e74a5f65b9543ddc2ecaa59e722966c98c788ec090ed6caae",
-        "size_bytes": 11831
+        "sha256": "42f58067396ecc6a91ad7298d5ae2d301db22a14e8a4287881555c17eb944432",
+        "size_bytes": 12066
       },
       {
         "git_mode": "100644",
@@ -27532,8 +27532,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/ADDENDUM-2026-10-30.md",
-        "sha256": "68acc606e88865ef0b520ed6c6cd24a8fe748582b71cc03ccdf86e7404941690",
-        "size_bytes": 17799
+        "sha256": "a1caa608ede201dd670a0cfb1ee862cddf1a20f97aacb8d15f8b0a94a3c6693b",
+        "size_bytes": 18150
       },
       {
         "git_mode": "100644",
@@ -33176,7 +33176,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "c7fa544ea7d5e4fae71952874482980db187b78ce4622c238fb0c5083458cb27",
+    "entries_sha256": "7c9548e03343b089d71063f616afc9de2bfb53d893aebdfc0016ce9371241564",
     "entry_count": 5505
   },
   "subprojections": [

@@ -130,6 +130,9 @@ Every item below was recomputed from the published data for this record.
   search.
 - The report's Markdown and PDF are unchanged. Its status sentence (F3) and the addendum join the
   report when it is republished with a new visual review.
+  *Update, 31 October 2026:* the report was republished with the addendum, the corrected status
+  sentence and the standard terms of the terminology list; see the
+  [republication record](source-partition-republication-2026-10-31.md).
 
 ## 6. Limits
 
