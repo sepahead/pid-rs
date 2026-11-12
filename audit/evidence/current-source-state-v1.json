@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "49038869da16add69fc60b95047ec4fe18bc60442d89b0eb35c155d61079a5a9",
-        "size_bytes": 333365
+        "sha256": "ab10863590e3fa665f80e14b3483601d6964b2a47a4ef301f8742aea6975e7c3",
+        "size_bytes": 333794
       },
       {
         "git_mode": "100644",
@@ -562,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "16b4032010799640b9b962c94372ba743fac0b86af4b770b80b5d3df57083e96",
-        "size_bytes": 43384
+        "sha256": "e6bb48f3de10c39b4b638526bf4d4f2b4663827d605f832ab717d0fb7918d4f7",
+        "size_bytes": 44376
       },
       {
         "git_mode": "100644",
@@ -870,6 +870,54 @@
         "path": "audit/archive/advisory-councils-20260725-20260726/payload/fable5-pid2-represented-sum-review-prompt.md",
         "sha256": "8607fec9c789e7963e905c799880d1a0e0c97250f86b3373e7d29dec9d7f4ecb",
         "size_bytes": 5306
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/advisory-review-history-20260724-20260725/DISPOSITION.md",
+        "sha256": "63506cbfd41aed52f8e02c99748adc8e031fa7ef444d1a21d0eef2b41ec2ce3c",
+        "size_bytes": 3273
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/advisory-review-history-20260724-20260725/INDEX.json",
+        "sha256": "32e8917b436e837ac7d4b6cd29003713304b7b84044ade5ce34a1efad9da8e88",
+        "size_bytes": 3775
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/advisory-review-history-20260724-20260725/payload/fable5-mathematical-papers-adversarial-prompt.md",
+        "sha256": "67b88c8ba9a740b910ac4963867a3f7c10d03887b89af2a44c5982e115214270",
+        "size_bytes": 3701
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/advisory-review-history-20260724-20260725/payload/fable5-mathematical-papers-adversarial-retry-prompt.md",
+        "sha256": "0f033216ac9943898dcbd1ccce40d0e0bb995a40876faf155d21bc5a9cf75ac1",
+        "size_bytes": 701
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/advisory-review-history-20260724-20260725/payload/fable5-mathematical-papers-adversarial-review.md",
+        "sha256": "2ee4b8b5180e89d7d6e625d338b4d1848edea388f14b185fafcb88176d22ec7e",
+        "size_bytes": 6318
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/advisory-review-history-20260724-20260725/payload/fable5-mathematical-workflow-first-principles-prompt.md",
+        "sha256": "f39578279d91c4e6738fd87f5feda4af6c555ce9cb1f5761a996e7ce1dad109c",
+        "size_bytes": 4119
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/advisory-review-history-20260724-20260725/payload/gpt-5-6-pro-full-pid-first-principles-audit-prompt.md",
+        "sha256": "2fa89b7f38855f9db0fca5a7f29008ce27c63e7da9ee2d95081782d65c2bb5e9",
+        "size_bytes": 46681
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/advisory-review-history-20260724-20260725/payload/opus5-mathematical-workflow-assurance-prompt.md",
+        "sha256": "15a2d97697c645da522ec8c6bc389efb03f203f9cca82d8b3e9528e5536c46f4",
+        "size_bytes": 3415
       },
       {
         "git_mode": "100644",
@@ -3825,30 +3873,6 @@
       },
       {
         "git_mode": "100644",
-        "path": "audit/evidence/fable5-mathematical-papers-adversarial-prompt.md",
-        "sha256": "67b88c8ba9a740b910ac4963867a3f7c10d03887b89af2a44c5982e115214270",
-        "size_bytes": 3701
-      },
-      {
-        "git_mode": "100644",
-        "path": "audit/evidence/fable5-mathematical-papers-adversarial-retry-prompt.md",
-        "sha256": "0f033216ac9943898dcbd1ccce40d0e0bb995a40876faf155d21bc5a9cf75ac1",
-        "size_bytes": 701
-      },
-      {
-        "git_mode": "100644",
-        "path": "audit/evidence/fable5-mathematical-papers-adversarial-review.md",
-        "sha256": "2ee4b8b5180e89d7d6e625d338b4d1848edea388f14b185fafcb88176d22ec7e",
-        "size_bytes": 6318
-      },
-      {
-        "git_mode": "100644",
-        "path": "audit/evidence/fable5-mathematical-workflow-first-principles-prompt.md",
-        "sha256": "f39578279d91c4e6738fd87f5feda4af6c555ce9cb1f5761a996e7ce1dad109c",
-        "size_bytes": 4119
-      },
-      {
-        "git_mode": "100644",
         "path": "audit/evidence/finite-target-copy-mgw-synergy.md",
         "sha256": "caf8746947013ea37ff53f1e1821b8d5564b15c2d1419688d446d3c58cb6b26b",
         "size_bytes": 33501
@@ -3882,12 +3906,6 @@
         "path": "audit/evidence/foundational-sxpid-lcr-exact-audit.json",
         "sha256": "8654938507b5fcb75f217e25b2cec5e221c0eb3a11a7006c2c1b29a3eb49e114",
         "size_bytes": 37558
-      },
-      {
-        "git_mode": "100644",
-        "path": "audit/evidence/gpt-5-6-pro-full-pid-first-principles-audit-prompt.md",
-        "sha256": "2fa89b7f38855f9db0fca5a7f29008ce27c63e7da9ee2d95081782d65c2bb5e9",
-        "size_bytes": 46681
       },
       {
         "git_mode": "100644",
@@ -5016,12 +5034,6 @@
         "path": "audit/evidence/occupancy-freeze-pin-failure-2026-09-09.md",
         "sha256": "890b3b2d2320e1c10187a6fc113a02213cbb60ce40f300240c8bbd54f61fa32f",
         "size_bytes": 1774
-      },
-      {
-        "git_mode": "100644",
-        "path": "audit/evidence/opus5-mathematical-workflow-assurance-prompt.md",
-        "sha256": "15a2d97697c645da522ec8c6bc389efb03f203f9cca82d8b3e9528e5536c46f4",
-        "size_bytes": 3415
       },
       {
         "git_mode": "100644",
@@ -14586,6 +14598,12 @@
         "path": "audit/evidence/workflow-pdf-ubuntu-tex-script-portability-2026-08-05.md",
         "sha256": "0334b6c880d0f617e02fde9798a7e42158fb8b37d6df4a6593206b00fa861993",
         "size_bytes": 19343
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/working-tree-review-2026-11-12.md",
+        "sha256": "cffaf7450abbb98b535def8e43b3a593cbcdb8ef6bf3d0511ee69d970b98caba",
+        "size_bytes": 8593
       },
       {
         "git_mode": "100644",
@@ -32206,7 +32224,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "7a7e34411b295b7d0082b8952198fcd78c747aba97ded35abd6af0d40455ef4a",
+        "sha256": "d1c18ccedc6549c3165893f865a682758086ed44d4f1ee54c0cdea08208bb1c2",
         "size_bytes": 139663
       },
       {
@@ -33176,8 +33194,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "7c9548e03343b089d71063f616afc9de2bfb53d893aebdfc0016ce9371241564",
-    "entry_count": 5505
+    "entries_sha256": "5661dc51e598e24bfc9bbac6fad9a9bb4b51f009952f70ea79995d0e5b25564c",
+    "entry_count": 5508
   },
   "subprojections": [
     {
@@ -33205,7 +33223,7 @@
       ]
     },
     {
-      "entries_sha256": "b40c560fae0c3f6415991963e360a328770e0993a51de8252a6cc52eb1117225",
+      "entries_sha256": "d9f34fef6e87f355eeef7fa3f48b6cb37404f650c98d2389bf9a55219139c4e7",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

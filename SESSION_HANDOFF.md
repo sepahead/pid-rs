@@ -1,4 +1,17 @@
-# Session handoff — updated 2 October 2026
+# Session handoff — updated 12 November 2026
+
+## Working-tree review and advisory archive, 12 November 2026
+
+The [maintenance review](audit/evidence/working-tree-review-2026-11-12.md) records an exact
+226-path preservation/recovery check of the historical dirty primary checkout and the
+[six-document advisory archive](audit/archive/advisory-review-history-20260724-20260725/DISPOSITION.md).
+The old numerical work has current successors; the review found no missing production fix to
+port. Keep the primary checkout and the 25 withheld advisory companions: local recovery and
+public hash observations do not establish complete off-host custody or permit retirement.
+An unresolved historical prompt/receipt digest mismatch is preserved in the new archive.
+NCP is a separate project and was excluded. Read the ignored local handoff for exact checkout,
+validation, commit and recovery locations. Scientific programs, formal-integrity qualification,
+calibration and the remaining publication work below retain their existing open status.
 
 ## Source-partition report republished, 31 October 2026
 

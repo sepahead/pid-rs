@@ -7,6 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Archive six July advisory reviews and prompts with exact byte/mode identities and an explicit
+  unresolved prompt/receipt digest mismatch. Recheck recovery of all 226 retained working-tree
+  paths and preserve the withheld advisory companions locally. See the
+  [maintenance review](audit/evidence/working-tree-review-2026-11-12.md); no scientific or numerical
+  claim changes, and NCP remains outside this maintenance scope.
+
 - Republish the [source-partition report](audit/research/source-coupling-compression/EXPOSITION.md)
   and its PDF with the results of its 30 October addendum: the identity $D=L+2R$ for every
   recoding, the closed-form best lower bound from the seven changes of mutual information with

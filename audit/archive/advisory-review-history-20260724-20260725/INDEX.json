@@ -1,0 +1,67 @@
+{
+  "archive_date": "2026-11-12",
+  "authority": false,
+  "execution": "inert historical text; do not execute or use as a current work queue",
+  "format": "pid-rs/advisory-review-history",
+  "known_receipt_mismatch": {
+    "actual_prompt_sha256": "67b88c8ba9a740b910ac4963867a3f7c10d03887b89af2a44c5982e115214270",
+    "disposition": "unreconciled historical execution correspondence; original bytes retained unchanged",
+    "prompt_path": "audit/archive/advisory-review-history-20260724-20260725/payload/fable5-mathematical-papers-adversarial-prompt.md",
+    "recorded_prompt_sha256": "8645ed919ec4f8c04573121b571f7e9dd7ca95a286144013beb1fac45b8e128f",
+    "review_path": "audit/archive/advisory-review-history-20260724-20260725/payload/fable5-mathematical-papers-adversarial-review.md"
+  },
+  "payload_count": 6,
+  "records": [
+    {
+      "archive_path": "audit/archive/advisory-review-history-20260724-20260725/payload/fable5-mathematical-papers-adversarial-prompt.md",
+      "bytes": 3701,
+      "disposition": "historical advisory; not current instructions or scientific authority",
+      "git_mode": "100644",
+      "original_path": "audit/evidence/fable5-mathematical-papers-adversarial-prompt.md",
+      "sha256": "67b88c8ba9a740b910ac4963867a3f7c10d03887b89af2a44c5982e115214270"
+    },
+    {
+      "archive_path": "audit/archive/advisory-review-history-20260724-20260725/payload/fable5-mathematical-papers-adversarial-retry-prompt.md",
+      "bytes": 701,
+      "disposition": "historical advisory; not current instructions or scientific authority",
+      "git_mode": "100644",
+      "original_path": "audit/evidence/fable5-mathematical-papers-adversarial-retry-prompt.md",
+      "sha256": "0f033216ac9943898dcbd1ccce40d0e0bb995a40876faf155d21bc5a9cf75ac1"
+    },
+    {
+      "archive_path": "audit/archive/advisory-review-history-20260724-20260725/payload/fable5-mathematical-papers-adversarial-review.md",
+      "bytes": 6318,
+      "disposition": "historical advisory; not current instructions or scientific authority",
+      "git_mode": "100644",
+      "original_path": "audit/evidence/fable5-mathematical-papers-adversarial-review.md",
+      "sha256": "2ee4b8b5180e89d7d6e625d338b4d1848edea388f14b185fafcb88176d22ec7e"
+    },
+    {
+      "archive_path": "audit/archive/advisory-review-history-20260724-20260725/payload/fable5-mathematical-workflow-first-principles-prompt.md",
+      "bytes": 4119,
+      "disposition": "historical advisory; not current instructions or scientific authority",
+      "git_mode": "100644",
+      "original_path": "audit/evidence/fable5-mathematical-workflow-first-principles-prompt.md",
+      "sha256": "f39578279d91c4e6738fd87f5feda4af6c555ce9cb1f5761a996e7ce1dad109c"
+    },
+    {
+      "archive_path": "audit/archive/advisory-review-history-20260724-20260725/payload/opus5-mathematical-workflow-assurance-prompt.md",
+      "bytes": 3415,
+      "disposition": "historical advisory; not current instructions or scientific authority",
+      "git_mode": "100644",
+      "original_path": "audit/evidence/opus5-mathematical-workflow-assurance-prompt.md",
+      "sha256": "15a2d97697c645da522ec8c6bc389efb03f203f9cca82d8b3e9528e5536c46f4"
+    },
+    {
+      "archive_path": "audit/archive/advisory-review-history-20260724-20260725/payload/gpt-5-6-pro-full-pid-first-principles-audit-prompt.md",
+      "bytes": 46681,
+      "disposition": "historical advisory; not current instructions or scientific authority",
+      "git_mode": "100644",
+      "original_path": "audit/evidence/gpt-5-6-pro-full-pid-first-principles-audit-prompt.md",
+      "sha256": "2fa89b7f38855f9db0fca5a7f29008ce27c63e7da9ee2d95081782d65c2bb5e9"
+    }
+  ],
+  "revision": 1,
+  "source_commit": "802ed56dbaf44b7a0037fa8337065c1d55f6e2f1",
+  "total_bytes": 64935
+}
