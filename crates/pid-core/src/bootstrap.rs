@@ -24,11 +24,24 @@
 //! percentiles are not labelled as a standard error or confidence interval: those inferential
 //! interpretations require statistic-specific calibration that this generic module cannot prove.
 //!
-//! This implements the **moving-block bootstrap** (Künsch 1989): block starts are
-//! drawn uniformly over all `n − block_size + 1` positions (so every sample — head,
-//! interior, and tail — is reachable), and `⌈n / block_size⌉` blocks are
-//! concatenated and truncated to exactly `n`. Overlapping moving blocks avoid the
-//! tail-drop and grid-alignment bias of a fixed non-overlapping partition.
+//! This implements the **moving-block bootstrap** (Künsch 1989): for `n` rows and block size
+//! `b` with `1 <= b < n`, starts are drawn with replacement from `0..=n-b` using the seeded
+//! generator. The `ceil(n / b)` overlapping blocks are concatenated and truncated to exactly
+//! `n` rows. Every original row is reachable, but a particular replicate can omit rows. Starts
+//! are not restricted to a fixed grid, and no original tail is permanently excluded; this does
+//! not remove boundary weighting.
+//!
+//! Under an ideal independent uniform-start law, let `S = n-b+1`, `q = floor(n/b)` and
+//! `r = n % b`. For row index `i` in `0..n`, define `c_0(i) = 0` and, for `1 <= l <= b`,
+//! `c_l(i) = max(0, min(i, n-b) - max(0, i-l+1) + 1)`: the number of allowed starts whose
+//! length-`l` prefix contains that row. This count formula uses mathematical signed integers,
+//! not literal `usize` subtraction. Before truncation its expected multiplicity is
+//! `ceil(n/b) * c_b(i) / S`. After truncation it is `(q * c_b(i) + c_r(i)) / S`, because the
+//! final block contributes only its first `r` rows when `r > 0`. These expectations are
+//! generally nonuniform, and final-prefix truncation can make them asymmetric. For example,
+//! `n = 5, b = 3` gives pre-truncation multiplicities `(2, 4, 6, 4, 2) / 3` and final
+//! multiplicities `(2, 4, 5, 3, 1) / 3`. A fixed seed gives a deterministic schedule; these
+//! ideal-law counts are not a PRNG independence guarantee or a calibration result.
 //!
 //! [`crate::experimental::pipelines::bootstrap_rows_stats`] additionally supports random-origin
 //! circular block subsampling without repeated row indices for kNN diagnostics; that is the path
@@ -236,8 +249,9 @@ pub struct BootstrapConfig {
     pub block_size: usize,
     /// PRNG seed for reproducibility.
     pub seed: u64,
-    /// Two-sided tail mass for the raw percentile summary (e.g. 0.05 returns the empirical
-    /// 2.5th and 97.5th percentiles; it does not assert 95% confidence coverage).
+    /// Nominal two-sided tail-mass parameter for the raw percentile summary.
+    /// Endpoints use the binary64 equal-rank trim documented by
+    /// [`ResamplingDistributionSummary`]; no confidence coverage is asserted.
     pub alpha: f64,
     /// Explicit sampling/dependence and block-selection validity declaration.
     pub validity: ResamplingValidityDeclaration,
@@ -306,11 +320,15 @@ pub struct ResamplingDistributionSummary {
     /// Sample standard deviation of the resampling distribution. This is a descriptive spread,
     /// not a generic calibrated standard error.
     pub resample_standard_deviation: f64,
-    /// Lower raw empirical percentile at `alpha / 2`: the sorted replicate with zero-based index
-    /// `trim = floor((alpha / 2) * n_boot)`, evaluated in binary64.
+    /// Lower raw endpoint after sorting the complete finite replicates with `f64::total_cmp`.
+    /// For `B = n_boot`, its zero-based index is
+    /// `trim = min(floor((alpha / 2) * (B as f64)), (B - 1) / 2)`, with the division and
+    /// multiplication evaluated in binary64 and the clamp evaluated in integer arithmetic.
     pub percentile_lower: f64,
-    /// Upper raw empirical percentile at `1 - alpha / 2`: the sorted replicate with zero-based
-    /// index `n_boot - 1 - trim`, so both tails drop the same number of replicates.
+    /// Upper raw endpoint at zero-based index `n_boot - 1 - trim`, using the same `trim` as
+    /// [`Self::percentile_lower`]. Both ends discard the same number of rank positions;
+    /// ties need not give equal strict value-tail probabilities. This is a descriptive range,
+    /// not a generically conservative or calibrated confidence interval.
     pub percentile_upper: f64,
 }
 
@@ -535,17 +553,20 @@ pub fn block_bootstrap_paired_resource_estimate(
     bootstrap_resource_estimate_impl("block_bootstrap_paired", data_len, cfg, 2, budget, callback)
 }
 
-/// Zero-based order-statistic indices of the equal-tailed raw percentile range.
+/// Zero-based order-statistic indices of the equal-rank-trim raw percentile range.
 ///
 /// For `len` sorted values and a two-sided tail mass `alpha` in `(0, 1)`, this computes one tail
-/// count `trim = floor((alpha / 2) * len)` in binary64 and returns `(trim, len - 1 - trim)`. In
-/// exact arithmetic the usual pair `floor(len * alpha / 2)` and `ceil(len * (1 - alpha / 2)) - 1`
+/// count from `floor((alpha / 2) * (len as f64))` in binary64, clamps it to `(len - 1) / 2`,
+/// and returns `(trim, len - 1 - trim)`. In exact arithmetic the pair
+/// `floor(len * alpha / 2)` and `ceil(len * (1 - alpha / 2)) - 1`
 /// also drops `floor(len * alpha / 2)` values from each end, because `ceil(len - x) = len -
 /// floor(x)` for every real `x`. Evaluating the two expressions separately in binary64 can make
 /// them differ by one: `alpha = 0.29` with `len = 200` gave 28 values below and 29 above.
-/// Deriving the upper index from the same count keeps the tails equal by construction. The count
-/// is clamped to `(len - 1) / 2`, which exact arithmetic already implies for `alpha < 1`, so the
-/// range is never inverted by rounding.
+/// Deriving the upper index from the same count makes discarded rank counts equal; ties need not
+/// make strict value-tail probabilities equal. The integer clamp prevents an inverted range.
+/// Binary64 evaluation need not trim less than exact arithmetic on the represented `alpha`:
+/// `alpha = 0.6, len = 10` gives trim 3, while that exact represented-input floor is 2.
+/// This convention supplies no generic conservatism or confidence-coverage guarantee.
 pub(crate) fn equal_tail_percentile_indices(alpha: f64, len: usize) -> (usize, usize) {
     debug_assert!(len > 0, "percentile indices need at least one value");
     debug_assert!(alpha > 0.0 && alpha < 1.0, "alpha must lie in (0, 1)");
@@ -679,8 +700,8 @@ where
     cancellation.check(CONTEXT, 0, cfg.n_boot + 1)?;
 
     let n = data.len();
-    // Moving-block bootstrap: every position is a valid block start, and we draw
-    // enough blocks to cover n, then truncate — so no sample is ever dropped.
+    // Starts lie in 0..=n-block_size. Every row is reachable, but a replicate can omit rows.
+    // Concatenation and final-prefix truncation have the nonuniform weights documented above.
     let n_starts = n - cfg.block_size + 1;
     let blocks_needed = n.div_ceil(cfg.block_size);
     let resample_capacity =

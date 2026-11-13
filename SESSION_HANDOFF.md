@@ -1,5 +1,22 @@
 # Session handoff — updated 12 November 2026
 
+## Existing mathematical fragments recovered, 12 November 2026
+
+The retained shared-exclusions worktree contained 107 pending paths, including unported
+bootstrap documentation and PDF diagnostic controls; its older three-path inventory was stale.
+The older publication worktree contained 19 pending paths. Exact local archives and retrieval
+checks now preserve both declared pending-file sets. Their unpublished mathematical notes,
+negative results, unqualified PDFs and tooling proposals need separate dispositions before
+retirement; machine-specific paths and receipts remain in the ignored local handoff.
+
+An existing Fin3 candidate for the original nineteen targets and its nine-child execution
+record were recovered. They remain historical development evidence under the formal-integrity
+hold. Do not restart a duplicate candidate or weaken the original targets: general families
+include all 256 families, and several statements include invalid families. A core-mask theorem
+without the original typed transport does not close the original Finset targets. Qualify a
+patched stock tool and its necessary imports before new deductive acceptance. Full SxPID3
+Programs A–E remain open.
+
 ## Working-tree review and advisory archive, 12 November 2026
 
 The [maintenance review](audit/evidence/working-tree-review-2026-11-12.md) records an exact

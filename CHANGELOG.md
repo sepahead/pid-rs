@@ -7,6 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Finish retained documentation corrections for moving-block resampling: distinguish row
+  reachability from inclusion in every replicate, give the finite ideal-law boundary and
+  final-prefix weights, and describe the binary64 percentile convention as equal rank trimming
+  without a generic coverage guarantee. Correct the redundancy-order topological-sort comment.
+  Numerical execution and public signatures are unchanged.
+
 - Archive six July advisory reviews and prompts with exact byte/mode identities and an explicit
   unresolved prompt/receipt digest mismatch. Recheck recovery of all 226 retained working-tree
   paths and preserve the withheld advisory companions locally. See the

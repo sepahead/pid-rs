@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "ab10863590e3fa665f80e14b3483601d6964b2a47a4ef301f8742aea6975e7c3",
-        "size_bytes": 333794
+        "sha256": "ad319bf25a1a8bdbea8ac54fc7d680975120eedb38b750acd01ec602f6121727",
+        "size_bytes": 334222
       },
       {
         "git_mode": "100644",
@@ -562,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "e6bb48f3de10c39b4b638526bf4d4f2b4663827d605f832ab717d0fb7918d4f7",
-        "size_bytes": 44376
+        "sha256": "e7817c70cbfd3c741a7d338040cd8009e829f68185fc29d53ada7e221d743ece",
+        "size_bytes": 45566
       },
       {
         "git_mode": "100644",
@@ -30202,8 +30202,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/bootstrap.rs",
-        "sha256": "050c035d92274981450152443c8c1cb105743bf709b556744849e096b9565df2",
-        "size_bytes": 54478
+        "sha256": "ffdce4f95c69a7a2400b5427338e888838cec3a284fc6ede691917632d684b17",
+        "size_bytes": 56233
       },
       {
         "git_mode": "100644",
@@ -30214,8 +30214,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/discrete_pid.rs",
-        "sha256": "3136101f2d4f23c01ee87953291b501501512d4f55235f1c7c394bd838854e21",
-        "size_bytes": 112503
+        "sha256": "06ac893649a616011cb9d07657578a2d1a1a31b6bf3178a74d474ce5675c9b41",
+        "size_bytes": 112604
       },
       {
         "git_mode": "100644",
@@ -32224,7 +32224,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "d1c18ccedc6549c3165893f865a682758086ed44d4f1ee54c0cdea08208bb1c2",
+        "sha256": "3676ee53b619edbdd6fb6f1c846fdf3fb5dd90f8a1ecc9518bad20000f8aac8d",
         "size_bytes": 139663
       },
       {
@@ -33194,7 +33194,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "5661dc51e598e24bfc9bbac6fad9a9bb4b51f009952f70ea79995d0e5b25564c",
+    "entries_sha256": "d9a9ae3a45abdfb694851e4db9fa7f8ea0cd8287d3d318b3a82a232178c05f94",
     "entry_count": 5508
   },
   "subprojections": [
@@ -33223,7 +33223,7 @@
       ]
     },
     {
-      "entries_sha256": "d9f34fef6e87f355eeef7fa3f48b6cb37404f650c98d2389bf9a55219139c4e7",
+      "entries_sha256": "22a379c86bd0cd91f26c01066395e8c6e0814f618f995a98de976b144f01283d",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

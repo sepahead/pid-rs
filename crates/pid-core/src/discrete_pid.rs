@@ -2303,7 +2303,8 @@ pub(crate) fn discrete_mobius_inversion_3(
     let n = antichains.len();
     let mut atoms = vec![0.0f64; n];
 
-    // Topological order: start from minimal antichains (fewest sets, smallest masks).
+    // Start from minimal elements in the redundancy partial order, not the fewest sets.
+    // The sort selects nodes with no remaining strict predecessor, then the smallest input index.
     let topo = discrete_topo_order_3(antichains);
 
     for (pos, &idx) in topo.iter().enumerate() {
