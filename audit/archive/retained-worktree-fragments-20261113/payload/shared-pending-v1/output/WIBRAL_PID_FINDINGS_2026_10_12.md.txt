@@ -1,0 +1,161 @@
+# Wibral shared-exclusions PID: findings and evidence status
+
+Sepehr Mahmoudian · 12 October 2026
+
+No priority claim. SxPID3 A–E remain **0/5 closed**;
+continuous, angular and hyperbolic qualification remain open.
+
+## Measure and assumptions
+
+The measure is finite categorical shared-exclusions PID, defined by Makkeh,
+Gutknecht and Wibral (MGW), *Introducing a differentiable measure of
+pointwise shared information* (2021),
+[defining paper](https://doi.org/10.1103/PhysRevE.103.032149).
+PID means partial information decomposition: allocating information about
+a specified target among source groups. These results do not validate
+continuous shared exclusions or Williams–Beer I_min.
+
+Categorical variables take declared labels; empirical joint probabilities
+are counts divided by total count. Atoms are allocations from finite
+inversion; cumulatives sum lower-or-equal atoms. Plus/minus are informative/
+misinformative components; net is their signed difference. Nonnegative
+components can yield negative net atoms. Nats use natural logarithms.
+Finite arithmetic implies no sampling model.
+
+## 1. Sharp entropy error for collapsing inputs
+
+Fix a finite joint source/target law. Retain one source X; replace the
+tuple C of all other sources by a constant while preserving the entire
+joint law of X and the target. Do not filter rows where C is constant.
+
+Let H(C) be entropy of C: mean negative natural logarithm of its label
+probabilities, in nats. The largest absolute change over **all averaged
+atoms and cumulatives, plus/minus/net, equals H(C)**. Three sources give
+108 expressions. Net-only changes need not attain that maximum; local
+pointwise values are not covered.
+
+Positivity, entropy partitions and event inclusion bound changes;
+a nuisance-equality cumulative attains H(C). See [every step and
+worked controls](SXPID_CONSTANT_CHANNEL_ENTROPY_BOUND_2026_10_12.md).
+
+Use: screen allocation changes before collapsing nearly constant inputs.
+No predictive-utility guarantee. Hand-derived/source-reviewed;
+formal and implementation verification open.
+
+## 2. Cancellation-free numerical evaluation
+
+For an exact empirical law, multiply positive rational arguments with
+their integer cell multiplicities before taking logarithms. For one atom, let P and Q be the positive integer numerator/denominator,
+N the positive total row count and A the signed average, in nats:
+
+$$
+A=\ln(P/Q)/N.
+$$
+
+Here ln is the natural logarithm. Comparing P and Q decides sign or exact
+zero. For a nonzero value, range reduction expresses the magnitude as a
+sum of nonnegative logarithms; a finite positive series bounds its tail.
+
+With five terms and exact rational endpoints, midpoint relative error is
+at most **1/1,154,736**, below one part per million. Relative error means
+absolute midpoint error divided by |A|; exact zero has a separate branch.
+[The full tail proof and worked examples](CANCELLATION_FREE_SIGNED_AVERAGE_2026_10_11.md) include a one-term failure.
+
+Use: audit small signed averages harmed by subtracting rounded components.
+Conditional proposal; not formally accepted, implemented or timed.
+Flags stay unchanged. At N<=31,000, direct products have a 3,720,001-bit
+ceiling each; fixed terms do not imply fixed cost. Rounding/Rust proof and
+comparison with existing enclosing logarithms remain open.
+
+## 3. Complete finite structure checked in Lean
+
+The three-source carrier has 18 valid antichains: nonempty families of
+nonempty source groups with no group containing another. Binary masks
+encode source **positions**, not binary observed data.
+
+All 19 original statements compile/pass the unchanged Lean judge:
+coverage, reversible encoding, order/logical correspondence and all 324
+incidence entries. Both compiled modules pass fresh shipped Lean replay.
+No kernel, judge, limits or accepted-axiom policy changed.
+[The detailed proof and process](SXPID3_FINITE_STRUCTURE_VERIFICATION_2026_10_12.md) explain every variable,
+both implication directions, matrix orientation and failed revisions.
+
+Z3/cvc5 returned expected statuses for 39 cases: 22 UNSAT (no satisfying
+assignment), 16 altered SAT (an assignment exists), one nonvacuity SAT.
+All 117 children exited zero; ordinary/optimized audits rehashed 234 streams.
+
+Limits: binary count cells and one forward-only valid-family obligation,
+not Lean's general equivalence. SAT models/UNSAT certificates are unchecked.
+Same-kernel replay is not independent verification; wider formal-tool HOLD
+remains. Probability/log, Rust and calibration credit is not granted.
+
+## 4. Broader event/count bridge proposed
+
+A 22-theorem source proposes event/count statements for heterogeneous,
+even infinite, alphabets with finite weighted indices. Positive supported
+rows and nonempty families are explicit premises, not inferred from data.
+
+[Worked example and premises](SXPID3_ARBITRARY_ALPHABET_COUNT_PROPOSAL_2026_10_12.md).
+Reviewed, **uncompiled**. Constant-alphabet converse and off-support query
+failures remain; no log/parser/Rust/statistical closure.
+
+## 5. Real-data results and failures
+
+The [two-dataset numerical screen](EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md) uses fourteen overlapping
+empirical laws, not independent replications. Sources are training-fitted
+four-label light, carbon dioxide and temperature; the declared target is
+occupancy or occupant count.
+
+All 3,924 local and 504 averaged reference intervals were contained.
+The cheap bound met four-part-per-million precision for 313 of 2,085
+positive locals, but **none of 184 positive averages**. Enclosures establish no
+population coverage or prediction gains.
+
+[Exact integer signs](EXACT_EMPIRICAL_ATOM_SIGNS_2026_10_11.md) confirmed
+252 averaged atoms: 89 positive, 15 negative, 148 exact zero.
+The 55 cheap-bracket-unresolved signs were already known from references;
+they are confirmations, not newly discovered signs.
+
+The [recorded motion-collapse negative](CONSTANT_CHANNEL_OCCUPANCY_SCREEN_2026_10_12.md) retains 10,129 UCI864
+motion/target rows: 1,198 constant-tuple departures and 727 occupied rows
+without motion. Native counts plus analytic inequalities imply full-vector
+collapse error between one-third and 0.53 nats, and a net-atom change above
+0.01 nat for every compatible finite retained source. This is not executed
+full PID, population confidence or a prediction-loss comparison.
+
+Neural/imaging, embodied and world-model uses need justified variables,
+observed targets, dependence-aware uncertainty and task-loss comparators.
+No measured win; generated futures are not ground truth.
+
+## Workflow, trust and retained failures
+
+Independent-first critiques precede exposed review; arguments/receipts checked. Best-of-N retains failures/feedback. Fifty lenses are a
+checklist, not reviewers. Shared models/tools, absent external human
+adjudication and unmeasured workflow superiority remain limitations.
+
+Retained negatives: wrong weights reversing signs, one-term precision
+failure, cancellation, wide bounds, invalid converses, failed proofs and
+access-time audit failure. Reconsideration needs a missing premise or new
+justified algorithm, not weaker criteria. V2 finite-structure build failed:
+missing stock counter. V3 built with an inclusion warning missed by its
+checker. [PDF audit](FINITE_STRUCTURE_PDF_AUDIT_2026_10_12.md). Unqualified.
+
+## Rust implementation and computational cost
+
+No Rust API/kernel change; numerical proposal unimplemented.
+Integer bit lengths grow. Binary64 logs remain rounded; counts above 2^53
+are refused and resource checks cooperative. Proposed scans need encoding/
+outward-error contracts.
+[Source-derived costs and controls](../RUST_IMPLEMENTATION_AND_COST.md)
+remain authoritative; no timing, hard-memory or benchmark win is claimed.
+
+## Finalization boundary
+
+No research closure. [The result map/closure
+ledger](../RESEARCH_RESULTS_2026_10_10.md) retain formal, numerical,
+Rust/platform, calibration, application and qualified-PDF obligations.
+Mainline integration/retirement require preservation and verification.
+
+Citation: Sepehr Mahmoudian, *Wibral shared-exclusions PID: findings and
+evidence status* (2026). Include the exact accepted commit/release;
+see [CITATION.cff](../CITATION.cff).

@@ -1,0 +1,93 @@
+# Component-bound PDF: failed, unqualified draft
+
+11 October 2026. [Read the retained PDF](report.pdf), its
+[exact source-time Markdown bytes](CANONICAL_REPORT.md.txt) and
+[vector figure](component-cover-masses-20261011.pdf).
+The [active mathematical report](../../POSITIVE_CATEGORICAL_COMPONENT_BOUNDS_2026_10_11.md)
+contains the same canonical prose at this cutoff. This folder preserves useful
+exposition and a failed build, not an accepted formal publication.
+
+## Actual build result
+
+One frozen stock-tool attempt ran on 11 October, 16:13:08–16:13:22 UTC.
+Outer command and producer both exited **1**. All selected-input checks,
+adapter/font-selection checks, vector/Pandoc conversion, three TeX passes,
+artifact contracts and sampled per-pass resource checks returned zero.
+Raw second/third-pass PDF and aux comparisons passed. Required raw-log equality
+failed: reported font memory was 21,850,479 versus 21,850,359 bytes. Cause is
+unknown; this is not a 120-byte PDF difference or measured process-memory bound.
+No retry, log filtering, font-memory exception or changed acceptance criterion.
+
+Production stopped there. Its later fls, warning, metadata/page-profile and
+final source/roster/resource checks were unperformed. Separate postmortem
+observations below do not make those producer stages pass retroactively.
+
+The PDF is 311,995 bytes, 11 A4 pages; SHA-256
+`f4cf673dd39cbd267380b76d18de7a97d59a09443f5b18368f70d27a6c8b4c2a`.
+The exact canonical source is 28,476 bytes; SHA-256
+`830ef848e32d6c2b793eeeddb3997c63e6b2d4e88aafe4f65fdae075b0864a9d`.
+The frozen derived Markdown, converted body and wrapper/styles are adjacent.
+The canonical mirror is inert text: its original relative links are not
+navigation from this deeper folder. Use the active report for local navigation.
+Raw captures, producer and selected native environment retain separate local
+custody, including machine-specific locators. This is not a complete public
+replay bundle. No runnable public producer is supplied here.
+
+## Separate inspection
+
+Stock postmortem metadata/font/text/raster commands returned zero. The root
+read all 11 pages at color96 and grayscale96, pages 5, 8 and 9 at color180 and
+grayscale180, and the separate figure at normal/high resolution. The complete
+41,079-byte extracted text was read. Rendering alone was not counted as reading.
+The exact original PDF was unchanged after inspection. Selected input pins
+were rechecked unchanged; this is bounded observation, not an atomic snapshot.
+
+The metadata names Sepehr Mahmoudian and the report title; the file is untagged.
+Poppler reports all listed fonts embedded with Unicode mapping, including
+figure Type 3 fonts. This does not establish accessibility, licensing or print
+conformance. Listed URL annotations are HTTPS paper/repository navigation;
+this is not a full action-graph or hosted-link validation.
+
+A separate raw fls comparison returned zero. A selected diagnostic search
+found the expected first-pass label-rerun warning and no matches in later
+logs. It is not the unperformed full producer or publication checker suite.
+The sampled private lane had 232 regular files, 13 directories and 21,011,026
+logical bytes, including 9,242,192 PDF/raster bytes: below the declared sampled
+limits, not a continuous quota or RSS guarantee.
+
+Observed defects retained: headings repeat automatic and literal numbers;
+the figure's smallest labels are small at page width; its cell headings are
+crowded; a definition/equation crosses pages 1–2; and extracted mathematical
+limits/scripts do not always follow visual reading order. No silent source or
+PDF correction was made. Future presentation changes need a new exact source
+binding and build; the failed bytes stay preserved.
+
+## Twenty design lenses: advisory observations, not acceptance
+
+| Lens | Observation / limit |
+|---|---|
+| Hierarchy | Title and sections visible; duplicated numbering needs correction |
+| Typography | Body and math readable in the inspected views; small figure labels remain a risk |
+| Grid | Body stays within margins; figure is centered on its own page |
+| Spacing/rhythm | Generous figure-page space; some equation/prose breaks interrupt flow |
+| Narrative order | Definitions precede the integral, bounds, examples and limits; page 1–2 continuation needs care |
+| Motif provenance | Existing repository-local styles retained; no new decorative source claim |
+| Motif coherence | Low-contrast page motifs and title-band geometry are consistent |
+| Ornamental restraint | Decoration does not obscure inspected text |
+| Palette identity | Inspected source/style colors use the retained lapis/turquoise/ivory system |
+| Pattern/data separation | Figure labels state that cell areas are not probabilities |
+| Color-redundant labels | Covered/maximal/not-maximal cells have text labels; color is not the sole distinction |
+| Grayscale | All normal grayscale pages and declared high-risk views read; not a measured contrast certification |
+| Search/extraction | Real text is extractable; mathematical scripts/limits and diagram columns can reorder |
+| Print fidelity | Raster observations only; no physical print or print-standard qualification |
+| A4/fonts | Metadata shows A4; listed fonts embedded; small labels and Type 3/accessibility limits retained |
+| Link/action safety | Listed URL annotations inspected; complete action/link gates unperformed |
+| Deterministic reproduction | Raw PDF/aux match, but mandatory raw logs do not: failure remains |
+| Source/asset separation | Canonical, adapted, converted and rendered bytes remain distinct |
+| Portable dependencies | Styles/figure copied; exact native environment and private receipts are not a complete public bundle |
+| Normal/high-resolution reading | All pages read at normal color/grayscale; declared pages 5/8/9 read at high resolution |
+
+The derivations remain hand mathematics with selected finite checks. No fresh
+human verification, kernel theorem, compiled refinement, estimator calibration,
+dataset benefit, program closure or release acceptance follows from this draft.
+See the [result map](../../../RESEARCH_RESULTS_2026_10_10.md) for current claims.

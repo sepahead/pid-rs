@@ -1,0 +1,358 @@
+# Exact component bounds on two occupancy datasets
+
+Sepehr Mahmoudian · 11 October 2026
+
+## Result and question
+
+Can a cheap, hand-derived bracket give a tightly controlled approximation to
+categorical shared-exclusions components on real sensor count laws?
+
+The fixed screen completed. Every one of 3,924 local reference intervals and
+504 averaged reference intervals is contained in its bracket. Of 2,085 strictly
+positive local components, 313 meet a four-parts-per-million relative midpoint
+ceiling. The important negative result is that **none of the 184 strictly
+positive averaged components meets that ceiling**. Only 21 meet 1%.
+
+This identifies selective local numerical applicability, not a measured
+prediction, control or sensor-placement benefit. A wide bracket is a valid but
+unhelpful approximation; it is not a counterexample to the bracket theorem.
+The study is exposed and descriptive, not untouched confirmation or a
+scientific-priority claim. The [complete records and exact sources](data/component-bound-screen-20261011/STATUS.md)
+retain every zero and losing case. A matching qualified PDF remains open.
+
+## Defining measure and assumptions
+
+The defining measure is Makkeh–Gutknecht–Wibral (MGW) categorical pointwise
+shared exclusions, with its informative and misinformative components and
+signed difference. It is not I_min, continuous shared exclusions, or a new PID.
+The defining paper supplies the measure; the bounds and this screen are
+repository derivations/compositions, with no scientific-novelty claim.
+[MGW, 2021](https://doi.org/10.1103/PhysRevE.103.032149),
+[exact arXiv version](https://arxiv.org/abs/2002.03356v5).
+
+Here is the complete input/output contract:
+
+- A law is the finite empirical probability mass function from one frozen
+  evaluation partition. Its row count is $N$; each occupied joint state has
+  positive integer count $c$, and all such counts sum to $N$.
+- Source variables $X_1,X_2,X_3$ are the inherited, training-fitted equal-width
+  labels for light, carbon dioxide and temperature, in that order. Each alphabet
+  is $\{0,1,2,3\}$. These labels are not raw lux, ppm or degrees Celsius.
+- Target $T$ is occupancy absence/presence for UCI 357; occupant count
+  $0,1,2,3$ for UCI 864; or a separate transformed presence target
+  $1\{T>0\}$ for UCI 864. The latter means one when count is positive, zero
+  otherwise. Target transformation changes the estimand.
+- Joint support lies in at most 128 states for a binary target or 256 for a
+  four-label target. Only occupied cells are stored; zero cells are implicit.
+  There are 109 occupied anchors across fourteen overlapping evaluation laws.
+  Three training laws receive schema validation but are not studied.
+- Outputs are both nonnegative local components at all eighteen ordinary
+  three-source antichains, their within-law averages, and signed net intervals.
+  Natural logarithms give nats. No negative net atom is clamped.
+- Rows need not be independent for these count-law identities. No independent-
+  and-identically-distributed (IID),
+  stationarity, population-support or confidence-coverage assumption is asserted.
+  Temporal/day/block overlap prevents treating laws as independent replications.
+- No input, quantizer, partition or scientific criterion was refitted after the
+  computation. Historical raw-data processing and predictor/loss subtrees are
+  inherited, not freshly scientifically validated by this screen.
+
+The real problem is room occupancy estimation. UCI 357 describes timestamped
+binary occupancy ground truth and environmental sensors. UCI 864 describes
+manually recorded occupant counts and distributed sensor readings at thirty
+second intervals. Neither description validates this analysis's encodings or
+estimator. [UCI 357](https://archive.ics.uci.edu/dataset/357/occupancy%2Bdetection),
+[UCI 864](https://archive.ics.uci.edu/dataset/864/room%2Boccupancy%2Bestimation).
+
+## Events and the positive component
+
+Fix an occupied anchor $(x_1,x_2,x_3,t)$. Lowercase letters are its fixed source
+and target labels; uppercase letters are variables. For another row, the agreement set
+
+\[
+B=\{j\in\{1,2,3\}:X_j=x_j\}
+\]
+
+contains the source positions matching the anchor. An antichain \(\alpha\)
+is a nonempty family of nonempty source collections, none contained in another.
+Its event \(E\) occurs if **some** collection in \(\alpha\) has **all** of its
+positions in \(B\). Thus branches are joined by OR; positions inside a branch
+by AND. This avoids substituting a different redundancy event.
+
+For one component use a probability law \(Q\): either the source marginal
+\(P(X_1,X_2,X_3)\) for the informative component \(p^+\), or the target-conditioned
+law \(P(X_1,X_2,X_3\mid T=t)\) for the misinformative component \(p^-\).
+The signed atom is \(p^+-p^-\), not either nonnegative component alone.
+
+Define \(u=Q(E)>0\). The excluded agreement sets form a family closed under
+taking subsets. Its maximal members are \(m_1,\ldots,m_k\), where \(1\le k\le3\).
+Define \(a_i=Q(B=m_i)\): one exact agreement cell, **not** the mass of all its
+subsets. Positivity of the occupied anchor guarantees \(u>0\) in both laws.
+The [full derivation](POSITIVE_CATEGORICAL_COMPONENT_BOUNDS_2026_10_11.md)
+explains how these maximal cells localize the ordinary inverse row, including
+the bottom's virtual certain event. That virtual event is not a nineteenth
+ordinary atom.
+
+Let \(r_i=a_i/u\), \(S=\sum_{i=1}^k r_i\),
+\(V=\sum_{i=1}^k r_i^2/12\), and \(G=(k-1)!\prod_{i=1}^k r_i\).
+The symbol \(!\) denotes factorial. The exact component is \(p=\ln R\), where
+
+\[
+R=\frac{\prod_{D\subseteq\{1,\ldots,k\},\ |D|\text{ odd}}
+(1+\sum_{i\in D}r_i)}
+{\prod_{D\subseteq\{1,\ldots,k\},\ |D|\text{ even}}
+(1+\sum_{i\in D}r_i)}.
+\]
+
+Here \(D\) ranges over index subsets and \(|D|\) counts their members;
+the empty subset contributes the factor one. No logarithm is evaluated in
+binary64 to produce a certificate.
+
+## Bracket: all steps and the meaning of its error
+
+Introduce auxiliary independent uniform variables \(Y_1,\ldots,Y_k\) on
+\([0,1]\). They express an integral; they are not assumptions about the sensors.
+With \(Z=\sum_i r_iY_i\), the positive box-integral identity gives
+
+\[
+p=G\,\mathbb E[(1+Z)^{-k}],\qquad
+0\le Z\le S,\quad \mathbb EZ=S/2,\quad\operatorname{Var}(Z)=V.
+\]
+
+Expectation \(\mathbb E\) and variance here refer only to these auxiliary
+uniforms. For \(f(z)=(1+z)^{-k}\), direct differentiation gives
+
+\[
+\frac{k(k+1)}{(1+S)^{k+2}}\le f''(z)\le k(k+1),\qquad 0\le z\le S.
+\]
+
+Taylor expansion around \(S/2\) bounds its remainder between these curvature
+extremes times \((Z-S/2)^2/2\). The expected linear term vanishes. Multiply
+by \(G\), and define the midpoint-rule term \(J=G/(1+S/2)^k\). Then
+
+\[
+L=J+\frac{Gk(k+1)V}{2(1+S)^{k+2}},\qquad
+U=J+\frac{Gk(k+1)V}{2},\qquad L\le p\le U.
+\]
+
+If any \(a_i=0\), the box integral is exactly zero: \(L=U=p=0\).
+Otherwise \(L>0\). Define the reported approximation \(C=(L+U)/2\)
+and ceiling \(\varepsilon=(U-L)/(2L)\). Because \(p\ge L\) and
+\(|C-p|\le(U-L)/2\),
+
+\[
+\frac{|C-p|}{p}\le\varepsilon.
+\]
+
+The fixed, inclusive screens are \(\varepsilon\le1/100\) (1%) and
+\(\varepsilon\le1/250000\) (four parts per million). Four ppm implies
+1%, so there are only three possible positive-component outcomes: four ppm;
+1%-only; or too wide for 1%. A zero has no relative error denominator and is
+reported separately, not as a precision success. These intervals control
+numerical approximation of the empirical functional, not sampling error.
+
+For a law's average, weight each occupied anchor's endpoints by \(c/N\)
+and sum. Recompute the relative ceiling from those averaged endpoints; do
+not average local relative ceilings. Signed intervals cross-subtract:
+\([L_+-U_-,\ U_+-L_-]\), with subscripts identifying the two components.
+No signed relative-error screen is used because cancellation can make the
+net arbitrarily small or zero.
+
+## Independent-form reference computation
+
+The helper independently reconstructs the eighteen antichains, verifies both
+integer inverse products, and compares each exact maximal-cell product \(R\)
+with the whole ordinary inverse-row product. This is a distinct source route,
+not independent hardware, models, arithmetic or a Rust refinement.
+
+For the mathematical logarithm, write \(R=2^e h\), with integer
+\(e\ge0\) and rational \(1\le h<2\). For each argument \(b\in\{h,2\}\)
+set \(z=(b-1)/(b+1)\). Thus \(0\le z\le1/3\). Define
+
+\[
+\ell(z)=2\sum_{j=0}^{63}\frac{z^{2j+1}}{2j+1},\qquad
+d(z)=\frac{2z^{129}}{129(1-z^2)}.
+\]
+
+The summation index is \(j\); \(\ell\) is a finite rational sum and \(d\)
+its geometric upper-tail bound. Positive omitted terms establish
+\(\ln b\in[\ell(z),\ell(z)+d(z)]\). Combine the intervals using
+\(\ln R=e\ln2+\ln h\), then widen exactly by integer floor/ceiling to a
+grid with denominator \(2^{128}\). This encloses the mathematical logarithm;
+it does not certify floating-point outward rounding.
+
+Containment, disjoint conflict and unresolved overlap are separate outcomes.
+An overall completed status would allow unresolved overlap; root therefore
+recounted the actual flags. Here all local and averaged reference intervals
+are contained, with zero conflicts and zero unresolved reference overlaps.
+The general tail/box arguments remain hand/source reviewed, not newly
+kernel-verified by this computation.
+
+## All observed outcomes
+
+| Quantity | Strictly positive | Exact structural zero | Positive meeting 1% | Positive meeting four ppm |
+|---|---:|---:|---:|---:|
+| Local components | 2,085 | 1,839 | 957 | 313 |
+| Averaged components | 184 | 320 | 21 | 0 |
+
+Among positive locals, 644 meet 1% but not four ppm; 1,128 fail 1%.
+Among positive averages, 163 fail 1%. All cases remain in the exact output.
+The diagram normalizes strictly positive components only; zeros remain outside
+both bars.
+
+![Positive-only precision eligibility; structural zeros remain separate.](figures/empirical-component-bound-screen-20261011.svg)
+
+Of 252 signed averaged positions, the cheap midpoint-Taylor brackets are
+45 strictly positive, four strictly negative, 148 degenerate zero and 55
+sign-unresolved. A sign-unresolved bracket is not evidence of zero information
+or a failed arithmetic run. The higher-precision reference intervals already
+determine strict signs for those 55 cases. The later
+[integer-product diagnostic](EXACT_EMPIRICAL_ATOM_SIGNS_2026_10_11.md) agrees:
+44 positive and 11 negative, with no changed old interval or criterion.
+
+The table keeps original count targets and transformed presence targets apart.
+Each row has 36 components per occupied anchor and 36 averaged components.
+The numbers are descriptive counts, not independent trial success rates.
+
+| Dataset/target/partition | Rows \(N\) | Anchors | Positive locals | Zero locals | Local 1% | Local four ppm | Positive averages | Average 1% |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| 357/original/earlier exposed | 2,665 | 19 | 456 | 228 | 245 | 64 | 36 | 1 |
+| 357/original/later exposed | 9,752 | 38 | 1,151 | 217 | 506 | 185 | 36 | 0 |
+| 864/count/later block | 4,950 | 12 | 127 | 305 | 57 | 27 | 28 | 6 |
+| 864/count/2017-12-24 | 126 | 1 | 0 | 36 | 0 | 0 | 0 | 0 |
+| 864/count/2017-12-25 | 1,716 | 1 | 0 | 36 | 0 | 0 | 0 | 0 |
+| 864/count/2017-12-26 | 1,063 | 1 | 0 | 36 | 0 | 0 | 0 | 0 |
+| 864/count/2018-01-10 | 997 | 12 | 127 | 305 | 57 | 2 | 28 | 6 |
+| 864/count/2018-01-11 | 1,048 | 1 | 0 | 36 | 0 | 0 | 0 | 0 |
+| 864/presence/later block | 4,950 | 10 | 112 | 248 | 46 | 30 | 28 | 4 |
+| 864/presence/2017-12-24 | 126 | 1 | 0 | 36 | 0 | 0 | 0 | 0 |
+| 864/presence/2017-12-25 | 1,716 | 1 | 0 | 36 | 0 | 0 | 0 | 0 |
+| 864/presence/2017-12-26 | 1,063 | 1 | 0 | 36 | 0 | 0 | 0 | 0 |
+| 864/presence/2018-01-10 | 997 | 10 | 112 | 248 | 46 | 5 | 28 | 4 |
+| 864/presence/2018-01-11 | 1,048 | 1 | 0 | 36 | 0 | 0 | 0 | 0 |
+
+Eight single-anchor laws have lost all joint variation in the frozen labels.
+Their empirical components are zero; this neither establishes population zeros
+nor validates that encoding for detecting within-day changes. Days overlap the
+block, and presence is derived from count: fourteen laws are not fourteen
+independent datasets.
+
+## Worked pair: the target-conditioned ratio matters
+
+These explanatory cases were selected after observing the output. In the
+earlier UCI 357 law, \(N=2665\). The bottom antichain is
+\(\alpha=\{\{1\},\{2\},\{3\}\}\): at least one source matches. The only
+maximal excluded pattern is the empty agreement set. Hence \(k=1\), and
+for target-conditioned probabilities the misinformative component is
+\(p^-=\ln(1+r)\). Both examples have the same source labels \((0,0,1)\).
+
+For \(t=0\), the joint anchor count is 1303 and the target has 1693 rows.
+Of those, 1671 match at least one source and 22 match none. Thus
+
+\[
+u=1671/1693,\quad a_1=22/1693,\quad r=22/1671,\quad p^-=\ln(1693/1671).
+\]
+
+For \(k=1\), substitute \(G=S=r\) and \(V=r^2/12\) to obtain
+
+\[
+J=\frac r{1+r/2},\quad
+L=J+\frac{r^3}{12(1+r)^3},\quad U=J+\frac{r^3}{12}.
+\]
+
+Exact rational evaluation gives
+
+\[
+L=\frac{160136704123}{12243007762311},\quad
+U=\frac{153974784205}{11771900975853},\quad
+\varepsilon=\frac{19001307053806}{67924672054748201223}<\frac1{250000}.
+\]
+
+For \(t=1\), the joint anchor count is only two and the target has 972 rows.
+Now 204 match at least one source and 768 match none. Therefore
+
+\[
+u=204/972,\quad a_1=768/972,\quad r=64/17,\quad p^-=\ln(81/17),
+\]
+
+and the same formulas yield
+
+\[
+L=\frac{105247936}{78121827},\quad U=\frac{4154560}{722211},\quad
+\varepsilon=\frac{13209534464}{8079423587}>1.
+\]
+
+Both intervals contain the exact-reference interval. Only the first is a
+near-exact midpoint approximation. Small absolute counts do not guarantee
+small \(a_1/u\); target conditioning and event mass determine the useful
+regime. The second anchor's small averaging weight does not allow removing it
+or claiming that every averaged bound is narrow. These are components, not
+the signed bottom atom and not classifier error.
+
+## Rust implementation and computational cost
+
+The stable `pid_core::stable::categorical::discrete_sxpid3` route computes
+empirical categorical MGW atoms; it needs no experimental feature. The fitted
+quantized wrapper is a composition for the frozen quantized estimand. The
+current rational bound/reference screen is a Python research calculation,
+not an implemented Rust interval API or formally proven Rust refinement.
+No Rust estimator was executed in this screen. See the
+[implementation/cost baseline](../RUST_IMPLEMENTATION_AND_COST.md).
+
+Given \(u,a_1,\ldots,a_k\), the bracket takes \(O(k)\) rational arithmetic
+operations; the notation describes growth in \(k\), not fixed machine time.
+Extracting masses, building/checking the ordinary inverse, exact logarithm
+references and output serialization are additional costs. The observed census
+has 6,758 given-mass units, 14,388 cover factors, 7,194 odd/even factor pairs,
+6,903 source equality comparisons and 2,301 target equality comparisons.
+The carrier has eighteen nodes and its inverse 324 entries. Reference cache:
+1,411 misses and 2,513 hits under a 4,096-entry cap. Fraction numerator,
+denominator and greatest-common-divisor bit costs matter; no Rust or asymptotic
+speedup is measured by these counts.
+
+One stock CPython 3.14.6/Darwin execution in each mode recorded direct-child
+fork-to-wait4 times of 890,104,791 ns (normal) and 877,622,333 ns (optimized),
+and terminal direct-child resident-memory peaks of 42,696,704 and 42,762,240
+bytes. This includes initialization and serialization. It is not a repeated
+benchmark, authenticated hardware comparison or aggregate process-tree RSS.
+No preprocessing, training, inference or resampling was performed here.
+
+The unchanged helper's limits are 1 MiB input, 8 MiB stdout, 256 MiB observed
+RSS, 180 seconds, fourteen laws and at most 256 anchors. Native stage timeout
+is 185 seconds. Missing output, failed status, invalid schema and disjoint
+reference conflicts cannot pass. Checks use explicit refusals, not assertions,
+and remain active under `-O`. Cooperative resource checkpoints and captured
+direct-child usage are not hard memory quotas or universal signal safety.
+This is an offline screen; online or real-time suitability is unestablished.
+
+## Review, failure history and next decision
+
+Root inspected actual native controls, all stage receipts, typed normal/-O
+scientific comparisons, final selected hashes and resource censuses. Twelve
+separately observed capture faults test a finite engineering contract. Source
+review used one original-helper-author re-review and one independent-of-helper-
+author critique; initial conclusions preceded new numerical-output exposure.
+Earlier shared context, the model family, host, rational arithmetic and formulas
+remain common dependencies. Ten-route/fifty-lens council coverage is advisory,
+not fifty independent reviewers, a human check or kernel verification.
+
+The initial resource probe failed because the host refused `/usr/bin/time -l`'s
+query. Its receipt and original unrun runner remain preserved; the new route
+captures direct-child stock `wait4` usage, with its own prior authority and
+failure controls. The scientific helper, input and criteria were unchanged.
+The separate [component exposition PDF](pdf/component-bounds-20261011-draft/STATUS.md)
+failed its mandatory raw-log equality check; that failure is not waived here.
+
+Useful next work is a declared fallback from a wide cheap bracket to a more
+accurate certified evaluation, followed by a matched task comparator if the
+diagnostic is meant to inform sensor retention. Approximation accuracy alone
+does not demonstrate utility. Neural/imaging and embodied/world-model studies
+still require justified variable mappings, actual observed outcomes and
+dependent-sample uncertainty. The [world-model decision](WORLD_MODEL_PID_DECISION_2026_10_11.md)
+keeps generated forecasts separate from actual futures.
+
+SxPID3 A–E, original finite formal obligations, angular and hyperbolic
+qualification, statistical calibration, real task benefit and v1 remain open.
+This bounded numerical screen is complete; those programs are not. No new
+qualified formal result, qualified PDF, commit/push or storage deletion is
+claimed.

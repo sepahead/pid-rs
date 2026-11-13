@@ -1,0 +1,148 @@
+# Cli restored; verification remains open
+
+12 October 2026. Sepehr Mahmoudian.
+
+One ordinary stock build restored the missing Cli cache: 18 required artifacts,
+all nonempty. Original inputs match preserved copies. Only this prerequisite
+is restored.
+
+No PID theorem compiled. The generic 22-statement source remains uncompiled;
+stock formal acceptance HOLD; SxPID3 Programs A-E 0/5 fully closed.
+
+## Question, assumptions and terms
+
+Question: can stock compilation restore this dependency with unchanged
+Lean kernel, defaults and import-capture guard?
+
+Project-defined build operation, not PID: no probability law, alphabet,
+information unit or statistical sampling claim. Observations: bytes and statuses.
+
+Assume cooperative ownership and stable inputs during checks. Hashes are not
+authenticity; process snapshots do not prove past or future ownership.
+
+| Term | Meaning here |
+|---|---|
+| Cli | The declared Lean dependency, not pid-rs's command-line interface |
+| Lean | The installed theorem prover; its mathematical kernel is unchanged |
+| Lake | Lean's build tool |
+| Stock | Shipped tools and unchanged project configuration |
+| Artifact | Compiler-produced file, not proof by its presence |
+| Companion | A library file needed alongside the main object |
+| Standard output / error | Separate caller streams |
+| Exit status 0 | Observed normal caller completion, not scientific acceptance |
+| SHA-256 | Byte digest, not correctness or authenticity |
+| One-shot ledger | External record spent before syntax or execution |
+| HOLD | Acceptance unestablished, not a false theorem |
+
+## All observed steps
+
+1. Read the restart record; verify roots, revisions, dirty state and observed
+   ownership. Leave other owners' Rust edits untouched. Preserve prior proofs,
+   negative results, drafts and failed PDF records.
+2. Retain the [missing-cache preflight](FORMAL_IMPORT_PREFLIGHT_2026_10_12.md)
+   as a historical negative. An empty directory or omitted guard would not
+   restore valid objects. The original import-capture attempt stays unspent.
+3. Freeze criteria before the new full-source review. Read the main Cli
+   library's 1,628 lines, its 150 extension lines, root imports and configuration.
+   Recover truncated ranges with full reads. No top-level execution hook found.
+4. Inspect relevant installed Lake routing/defaults and local operating-system
+   documentation. Keep the shipped module option and target unchanged.
+   The manifest lists no dependencies. `--offline` is not an offline
+   guarantee for `lake build`; no such shortcut is added.
+5. Freeze the driver, operating-system profile and bounded packet. Two
+   oversized proposals are refused before writing. An independent-first
+   reviewer corrects the timeout description: it covers the whole driver,
+   including hash checks. Preserve both earlier packets before prose edits.
+   Executable source, commands and criteria remain fixed. The license check
+   is explicitly external to the driver's six input checks.
+6. Read the complete conditional code review; make a separate execution
+   decision. Shared model, host, sources and custody limit independence.
+   Ten routes/fifty lenses mean coverage, not proof or fifty reviewers.
+7. Recheck cache absence and observed owners. Copy all seven input files,
+   preserving paths and bytes; compare each copy and digest to its original.
+   Inputs total 79,139 bytes, including 1,062 license bytes. Create only the
+   owned temporary directory, not a fake cache.
+8. Consume the separate build ledger at 17:11:22 UTC, before syntax checking.
+   Any failure would stop this attempt without retry or unsupervised fallback.
+9. Run stock Bash syntax checking once, with a cleared environment and
+   separate streams. Terminal status 0; both streams empty; source unchanged.
+   Syntax checking executes no driver body.
+10. Observe actual installed versions, not directory names. Both callers
+    return 0. Lean reports 4.33.0, Release, ARM64; Lake reports
+    5.0.0-src+d8b1897 with Lean 4.33.0. The cache remains absent.
+    Lean's reported commit is
+    `d8b18978322de05a8f3dba51ef03cf5461676c17`.
+11. Run the ordinary absolute `lake build Cli` in the dependency package,
+    with cleared environment, null-device input and no added Lean flags or
+    home/cache override. The operating-system profile requests network denial
+    and new-write access only to the fresh cache, owned temporary directory
+    and null device. Preopened capture streams are deliberate exceptions.
+12. Preserve every caller's full separate streams. Poll the initial build
+    handle to terminal status 0; never restart it. The driver records
+    17:12:23-17:12:27 UTC and direct-chain status 0. Lake reports five jobs
+    and three successful library modules. Build output is 139 bytes;
+    build error output is empty. Driver and outer statuses are distinct.
+13. Check artifacts, not only the success message. Each of `Cli`,
+    `Cli/Basic` and `Cli/Extensions` has six regular, nonempty,
+    nonsymlink files under `.lake/build/lib/lean`: `.olean`,
+    `.olean.server`, `.olean.private`, `.ilean`, `.ir.sig`, `.ir`.
+    Thus 3 times 6 = 18 required objects. Retain generated C, setup, trace
+    and hash files too.
+14. Inventory 48 generated regular files, totaling 6,809,292 logical bytes.
+    Two complete file-digest inventories compare byte-identically.
+    Recompare seven inputs, selected executables, five selected Lean
+    libraries and package revision; no mismatch is observed. The dependency
+    checkout stays clean at the same revision.
+15. Inspect saved process/open-file observations. No selected build writer
+    is observed. The open-file query returns status 1 with empty streams.
+    The snapshot named "live" was taken after compilation finished, before
+    polling the handle. No peak compiler memory or CPU measurement follows.
+    The post-process query's standalone status was not recorded; aggregate
+    caller success cannot recover it.
+
+## Evidence and limits
+
+Dependency revision:
+`6130a47896ce867c6a4a55373441e59e565bad0f`.
+
+Full inputs, commands, statuses, streams, preimages and reviews remain in the
+ignored restart record; not portable end-to-end replay. Inventory SHA-256:
+
+```text
+0b2a8c504b1375072361d9313ca1a638f32a31123d3fa29a9e8e833e7aa86638
+```
+
+This identifies inventory bytes, not source-object equivalence or kernel trust.
+The operating-system profile was applied without a reported startup error,
+but network denial was not trialed. Universal containment remains unproved.
+EOF, absent processes and matching hashes cannot establish every past
+descendant or future writer. Lake internally processes compiler diagnostics:
+its caller streams are not each descendant Lean process's raw streams.
+
+Keep oversized proposals, the timeout correction, truncated reads, wrong-path
+lookup and original missing cache. None is erased or relabelled success.
+The single native build completed; no failed build is invented.
+
+### Rust implementation and computational cost
+
+No Rust estimator, binding, API or numerical result changed.
+The cache is below the 128 MiB / 1,024-file postcheck bounds. Raw local
+capture evidence totals 290,470 bytes, below 16 MiB; caller outputs alone
+total 298 bytes. These are postchecks, not hard resource quotas.
+
+Lake reports 3.4 seconds, 213 milliseconds and 144 milliseconds: diagnostics,
+not estimator/resource benchmarks. No dataset, calibration or application test.
+
+## Next step and publication
+
+Next: freshly review import routes and authority, then capture if guards hold.
+No inventory, generic count proof, Rust refinement or program closure follows.
+
+No matching PDF was rendered. Existing [PDF failures](pdf/allocation-norm-20261012-v2/STATUS.md)
+remain failures. The [allocation bound](SXPID_ALLOCATION_L1_BOUND_2026_10_12.md)
+and [occupancy contrast](ALLOCATION_STABILITY_OCCUPANCY_EXAMPLE_2026_10_12.md)
+retain their separate assumptions and verification limits.
+
+Complete pre-edit documentation copies were retained before updates.
+No branch, worktree or cloud folder was deleted. Local copies and hashes
+do not establish off-host backup or global recovery coverage.

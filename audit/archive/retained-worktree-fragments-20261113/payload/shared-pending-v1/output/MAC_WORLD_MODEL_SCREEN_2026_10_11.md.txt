@@ -1,0 +1,103 @@
+# Mac world-model application screen
+
+Sepehr Mahmoudian · 11 October 2026. Source screen; no inference executed.
+
+Assume the available machine is the stated M4 Max with 128 GB unified memory.
+Free memory, installed runtimes and thermal headroom still need measurement.
+A disk-space observation or model memory estimate is not execution evidence.
+This review covers sources available on 11 October, not later October releases.
+
+The [question-first decision and worked example](WORLD_MODEL_PID_DECISION_2026_10_11.md)
+select a compact controlled study first and Cosmos3-Edge as the broader
+conditional application arm. That role distinction is not a measured overall
+ranking; the independent council critiques and program-closure limits remain
+explicit. No model choice closes SxPID3 or the angular/hyperbolic obligations.
+
+## Which question does each model answer?
+
+A vision-language-action policy predicts actions from observations and text.
+An action-conditioned world model predicts future observations given actions.
+A passive video predictor forecasts without an explicit action input.
+These are different interfaces and require different tests.
+
+| Candidate | Documented Mac route | Suitable first question | Limitation |
+|---|---|---|---|
+| Cosmos3-Edge | Community Swift/MLX implementation in mere.run | Does a fixed observation and declared action trajectory produce a useful future prediction? | Source-documented support is not reproduced numerical or task evidence |
+| LingBot-World 2.0, 1.3B | Community PyTorch/MPS fork; optional MLX text encoder | Does the supported camera-action sequence predict useful future views? | Not a full MLX port; noncommercial license; source and numerical qualification remain open |
+| SANA-WM | Community MLX implementation, with CPU PyTorch input preparation | Does a prescribed camera trajectory produce consistent views? | Camera control is not a robot's actuator model; the port omits the optional large refiner |
+| Cosmos3-Nano | Community MLX text/image-to-video implementation | Does passive visual forecasting add useful information? | The inspected Mac interface does not establish action-conditioned or policy support |
+
+[NVIDIA's Cosmos3-Edge card](https://huggingface.co/nvidia/Cosmos3-Edge)
+lists a four-billion-parameter model, released 20 July 2026, with an announced
+25 August generator update. It accepts compatible action layouts; an arbitrary
+drone-control vector is not one of them merely because its length matches.
+NVIDIA's tested runtime is Linux/NVIDIA, not official Mac support.
+
+[mere.run's world-runtime documentation](https://github.com/sawfwair/mere-run/blob/main/docs/runtime/world.md)
+describes Swift/MLX Cosmos3-Edge camera conditioning and a DreamX causal route.
+Its exact inverse navigation can replay a stored edge. Such replay must not
+be scored as newly predicted scene consistency. Its camera translation field
+scales a normalized model trajectory; the field name does not establish meters.
+DreamX's added revisit-memory path is reconstructed, not parity with an
+unreleased memory-trained model. These distinctions remain in any comparison.
+
+[The LingBot Mac fork](https://huggingface.co/PandacatAI/lingbot-world-v2-mps/blob/main/README.md)
+dates its smaller checkpoint release to 10 September and Apple Silicon fork to
+13 September 2026. Its author reports 109 written frames at 480×832 in 14.4
+minutes, with 16.1 GB peak process footprint on an M4 Pro. These are not our
+measurements or the upstream real-time service's performance. The model runs
+on MPS; optional MLX handles text encoding. The license is noncommercial.
+The [upstream camera helper](https://github.com/robbyant/lingbot-world-v2/blob/main/wan/utils/cam_utils.py)
+normalizes translation magnitude. Direct fork correspondence remains unchecked;
+this is not a meter-calibrated drone-motion model.
+
+[The SANA-WM MLX port](https://github.com/AasthaShayla/sana-wm-mlx)
+reports roughly 40 GB peak memory and 24 minutes to generate a 10-second clip
+on an M4 Max with 128 GB. These are author-reported measurements, not our runs.
+The inference loop uses MLX; input preparation still uses CPU PyTorch.
+The [upstream model](https://nvlabs.github.io/Sana/WM/) conditions on a camera
+trajectory. Its May 2026 release is not an October release. Before execution,
+inspect the port's reference patches, shims and parity tests; retain numerical
+differences and unsupported inputs, rather than accepting plausible video.
+
+[The Cosmos3-Nano MLX port](https://github.com/lyonsno/cosmos3-mlx)
+documents visual generation and reference-component comparisons. It is a
+passive-forecast candidate here, not a verified substitute for Flux 3 Action.
+None of the candidates is established as equally accurate on Flux's benchmark.
+
+## Smallest useful experiment
+
+Start offline, with recorded input and no control connection. Freeze the exact
+code revision, model and encoder files, processor, precision, sampler, seed,
+action units, frame convention, temporal cadence and license record.
+Check component outputs against the unmodified reference where available.
+Set memory, disk and elapsed-time caps before downloading or measuring anything.
+
+Then compare future prediction against actual held-out future observations,
+a last-observation baseline and an appropriate passive predictor. Split by
+independent recording episode before fitting or selection; adjacent frames
+are not independent replications. Vary scenes and declared action conditions.
+Report all failures, missing outputs and losing comparisons. A coherent-looking
+video is neither physical ground truth nor a calibrated predictive distribution.
+
+## PrISOMA, Crebain and shared-exclusions separation
+
+PrISOMA should own experimental orchestration and evaluation. Crebain should
+own its existing simulation, observation and control interfaces. Keep model
+execution in a separate optional adapter that produces immutable records.
+An optional NCP transport is only appropriate after exact wire-contract and
+capture-role qualification. Do not make a read-only observer a controller.
+
+Partial information decomposition (PID) is a secondary question, not a reason
+to force an incompatible model into the experiment. A proposed categorical
+Makkeh–Gutknecht–Wibral shared-exclusions analysis must declare sources, target,
+training-fitted encoding, finite support, nats and sampling assumptions.
+Do not treat generated predictions as observed futures or inject the target
+into a source through an action-conditioned latent. No continuous PID or
+estimator validity follows from this source screen.
+
+Your PrISOMA write/push authorization is recorded. This session's sandbox
+does not permit writing that sibling checkout, and fresh terminal GitHub
+access failed. No sync, installation, model download, inference, branch removal
+or push occurred. The current [result map](../RESEARCH_RESULTS_2026_10_10.md)
+separates this application intake from mathematical and formal results.

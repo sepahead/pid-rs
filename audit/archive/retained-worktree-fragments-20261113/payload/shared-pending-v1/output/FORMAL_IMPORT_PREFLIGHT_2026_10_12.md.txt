@@ -1,0 +1,147 @@
+# Import-capture preflight: a missing dependency cache
+
+12 October 2026. Sepehr Mahmoudian.
+
+13 October: [capture failed](STOCK_TOOL_IMPORT_CAPTURE_FAILURE_2026_10_13.md); spent. Below is historical.
+
+The initial preflight stopped: its required Cli cache was absent. No import
+child ran or capture attempt was spent. A [separate stock build](FORMAL_CLI_RESTORATION_2026_10_12.md)
+later restored that cache. Capture still needs fresh review. This record
+retains the earlier negative; absence observations below are historical, not
+current. SxPID3 Programs A-E remain 0/5 fully closed.
+
+## Question and terms
+
+Question: can the frozen plan obtain stock-Lean import metadata without changing
+tools, losing a failure, or treating metadata as proof?
+
+| Term | Meaning here |
+|---|---|
+| ROOT | The lead agent responsible for this capture decision |
+| EOF | End of a captured stream, observed by an empty read; not proof all writers terminated |
+| SHA-256 | A digest identifying exact bytes, not authenticity or correctness |
+| Lean | The selected installed theorem-prover executable; not run in this step |
+| Cli | A declared dependency package, not the pid-rs command-line interface |
+| Cache route | A directory where compiled dependency objects are expected |
+| Supplier | The retained checkout providing the selected dependency sources and caches |
+| Controller | The frozen Python program checking inputs and capturing two planned Lean children |
+| Wrapper | The frozen Bash program recording controller-supervisor output |
+| External attempt ledger | ROOT must consume this record before capture preflight, even if no child starts |
+| Raw metadata | Observed import records; not a qualified graph, kernel proof or mathematical result |
+| HOLD | The acceptance predicate is unestablished; this does not mean a theorem is false |
+
+This project-defined operation has no PID functional, probability law, alphabet,
+information unit or statistical sampling claim. Observations concern bytes,
+elapsed seconds and process statuses. It does not substitute categorical Makkeh-Gutknecht-Wibral (MGW)
+PID for continuous Ehrlich PID, or either for another measure.
+
+## All observed steps
+
+1. Read the current preservation checkpoint and frozen source records; verify
+   integration HEAD and dirty state. Leave other owners' Rust edits untouched.
+   Earlier mathematical proofs, drafts and PDF failures remain.
+2. Freeze ROOT's launch criteria before reading the new council criteria.
+   One reviewer froze criteria before current source exposure; the prior source
+   author disclosed earlier exposure.
+3. Parse the exact wrapper with stock Bash `-n`, cleared environment, no script
+   arguments and separate stdout/stderr. Actual terminal exit0; both streams
+   empty. Bash, environment-launcher and wrapper hashes matched before/after.
+   No script body, Python controller or Lean executable ran. Syntax only.
+4. Freeze the materialization/caller proposal. An 8425-byte proposal exceeded
+   its 8192-byte cap and was refused **before writing**. The written proposal
+   is 7898 bytes, not launch permission.
+5. A reviewer found `.lake/packages/Cli/.lake/build/lib/lean` absent.
+   ROOT separately checked: the Cli package exists, but this cache path does
+   not. Read-only listing exited1: `No such file or directory`.
+6. ROOT also checked that Cli's entire `.lake` directory is absent.
+   Cli source, manifest and toolchain declaration remain present and unchanged.
+7. Read both complete council reports and inspect the source consequence.
+   Stop before materialization, external spending or capture execution.
+   Preserve the negative and the unspent attempt.
+
+The generic count source remains uncompiled. No native inventory, parser pass,
+new kernel proof, Rust refinement or release acceptance follows.
+
+## Why the initial preflight stopped
+
+The controller lists nine dependency packages. It requires each package and
+cache route to be a directory. Initialization calls that check **before** its
+internal start marker and either planned child: Lean version, then observer.
+
+If earlier guards pass, the absent Cli route therefore causes preflight failure
+before a Lean child starts. An earlier guard failure also cannot produce the
+requested inventory. This is a source implication under the observed filesystem
+state, **not an executed controller failure**. No invented native return code
+or terminal child receipt is reported.
+
+The wrapper requires the external ledger to be spent before preflight.
+Executing the known-broken plan would consume the attempt without the requested
+Lean output. Syntax success cannot repair the route; absence of the internal
+start marker would not permit retry.
+
+The other eight cache routes were observed by the reviewer, not independently
+enumerated by ROOT here. Directory availability does not prove all objects
+complete, matched to source, or selected by the future runtime.
+
+## Historical reconsideration plan
+
+A separate bounded plan can inspect exact Cli sources, ownership, dependencies
+and the stock build command, then produce genuine compiled objects. Preserve
+existing bytes/failures and bind source, toolchain and resulting objects.
+Build success would restore only that prerequisite.
+
+Cli's retained manifest lists no package dependencies. Its shipped configuration
+selects the Cli library and module option; its toolchain file names Lean4.33.0.
+These source facts do not establish the installed executable version, build
+success, absence of network activity or source/cache equivalence. No build
+is authorized or performed by this record.
+
+An explicit runtime-route model is another possible revision, not permission
+to silently omit this cache. Do not create an empty directory, remove a guard,
+alter the kernel/flags, substitute tools or relabel a failed attempt.
+
+After a valid capture, group disappearance, pipe EOF and stable hashes still
+do not prove exhaustive descendants or absence of future writers. State
+observed ownership and retain unknown closure as HOLD. Raw output can guide
+further work without qualification credit.
+
+## Evidence and review
+
+Exact preserved source SHA-256 values:
+
+- Observer: `a3bfb02f6c87154d8db12fcb640a9d9c07e548dbe8912fd823fa111c8322d7cf`, 6568 bytes.
+- Controller v2: `37f19c320752c0ba6cc54b178b435b963dc2311a1b1e7aead0b9f7507df1c2d3`, 12284 bytes.
+- Wrapper: `9628af93273b96963f33be7b3a556abe4eb37d9c92155ef17e7f9d0556c2ce25`, 3941 bytes.
+
+Full machine-specific sources/receipts remain in the ignored restart record.
+This public projection is not portable end-to-end replay. No defining paper
+is claimed for this operational design.
+
+AI assisted source/contract review and found the missing-route assumption.
+ROOT separately checked it and read the sources/reports. Ten routes and fifty
+named lenses are coverage lists, not proof or fifty independent reviewers.
+Shared models, host, sources and custody limit independence; no human scientific
+disposition or measured workflow-superiority claim.
+
+### Rust implementation and computational cost
+
+No Rust estimator, binding, API or numerical result changed. The selected six
+Cli source/configuration files total78077 bytes: input inventory, not memory,
+timing or complexity. No dependency-build or import-runtime benchmark ran.
+The syntax check is not an estimator benchmark.
+
+## Publication and preservation boundary
+
+Current source prose; no matching PDF rendered. Existing
+[PDF failures](pdf/allocation-norm-20261012-v2/STATUS.md) remain failures.
+The [allocation bound](SXPID_ALLOCATION_L1_BOUND_2026_10_12.md) retains separate
+finite-law assumptions, published-positivity dependency and hand-proof status.
+This tooling correction does not prove it.
+
+See the [worked occupancy contrast](ALLOCATION_STABILITY_OCCUPANCY_EXAMPLE_2026_10_12.md)
+for a separate retrospective calculation, not a new experiment or proof.
+
+Whole map/changelog/handoff preimages were copied and byte-compared before
+navigation changes. Local copies/hashes are not verified off-host backup,
+global recovery coverage, accepted mainline publication, or permission to
+delete any branch, worktree or cloud folder.

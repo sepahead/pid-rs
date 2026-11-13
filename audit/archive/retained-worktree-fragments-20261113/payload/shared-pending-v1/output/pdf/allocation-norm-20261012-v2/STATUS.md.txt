@@ -1,0 +1,112 @@
+# Failed / unqualified revised draft
+
+Sepehr Mahmoudian - 12 October 2026.
+
+[Seven-page PDF](report.pdf), [complete mathematical source](../../SXPID_ALLOCATION_L1_BOUND_2026_10_12.md)
+and [retained first draft](../allocation-norm-20261012/STATUS.md).
+Keep this status with detached copies. No publication, formal theorem or
+research-program closure is granted.
+
+Finite categorical Makkeh-Gutknecht-Wibral shared exclusions only: keep one
+original source, replace all others by constants, preserve the original
+retained-source/target law. Published component positivity is a premise of
+the sharp factor-four signed-average allocation bound. The source contains
+symbols, steps, witnesses, subclasses, counterexamples, statistical limits
+and implementation boundaries. No continuous-PID, changed-grouping,
+causal-loss or SOTA transfer is made.
+
+## Source and retained failure
+
+Markdown: 16,367 bytes, SHA-256
+`9512bd9c5a22595c12ac4dd1ed1690a5befcead54ad66937affa5eee417a0414`.
+PDF: seven A4 pages, 91,532 bytes, SHA-256
+`1875ee7a4cc94b9834a51a369478488fdb1b5cca9e86936f96b9ceb3dd65bed6`.
+[Template](publication.tex): 1,595 bytes, SHA-256
+`723ac00f9ff80638d3ebe45df554d275d04e5435feef8e08856c7d1dfcbe95d2`.
+[Filter](filter.lua): 700 bytes, SHA-256
+`e663274d4b3417d136a05d4c6c2869be41d15bdf4a1bdd759f2606b3dcf460b5`.
+
+One new stock Pandoc 3.10.2 / LuaHBTeX 1.18.0 (TeX Live 2024) build ran
+13:56:49-13:57:04 UTC. Conversion, three TeX passes and both selected
+18-input hash checks returned 0; all six stage stderr streams were empty.
+This was a cost-section revision, not a first-draft retry.
+
+The subsequent inspection **returned 1** at exact final-log equality.
+Both logs are 61,664 bytes. Their only observed textual difference is
+106-font reported memory: 30,448,379 to 30,448,227 bytes, minus 152.
+That is neither a log-length difference nor measured resident memory.
+Cause is unknown; no harmlessness claim or waiver is made.
+Pass-two log SHA-256:
+`904437507b9eca268397f24c49d1f94ce050258ed808239e716e8287d3e1056b`.
+Final log SHA-256:
+`a35ddd815016e0728c23ba2f6c814a14d1b0e82cdaf4205008454f34d2b66821`.
+
+The unchanged [log guard](../../../scripts/check-formal-pdf-log.sh)
+accepted the retained first-pass rerun warning under its intermediate policy
+and both strict final passes. Missing-small-caps informational messages and
+microtype notices remain. None overrides equality failure.
+No renderer retry, log filtering or tool/flag/guard/criterion change was used.
+A separate postmortem returned 0 while extracting inspection artifacts;
+it did not rerun or rescue the failed check. Final PDF bytes also differ;
+metadata dates are 13:57:00/13:57:02 UTC. Byte reproduction is unestablished.
+
+## Reader observations
+
+Root and an exposed model critique using separately frozen review criteria
+inspected all seven color/grayscale pages at 96 dpi and pages 3, 4 and 7 at
+180 dpi. Root read the body/text and complete final-log delta from the fully
+read first-draft log. Ten embedded Unicode fonts, human metadata and PDF 1.5
+were observed. Shared sources/runtime limit independence; this is not
+mathematical, human or formal verification.
+
+No lost equation/table sign was identified. A layout weakness remains:
+page 6 splits after 'rounding'; nearly empty page 7 starts 'remains unverified'.
+The source path wraps mid-token. Retain these defects until a separate
+revision updates source and PDF coherently.
+In the cost section, `n` counts aligned rows, `r` counts sources, `T` is the
+target, and `k` counts occupied joint states. The proposed scan assumes
+aligned atom vectors and fixed-cost scalar arithmetic, excluding both PID
+computations/storage and certification.
+
+Eight annotation rectangles represent seven distinct targets; the cost link
+has two rectangles. Five relative target files and the closure-ledger heading
+exist here; not every action, viewer or external destination is certified.
+The PDF is untagged; extraction can reorder indices or split path tokens.
+Accessibility, physical print, complete runtime/dependencies, independent
+rebuilding, whole-set/hostile checks and hosted evidence remain open.
+Hashes describe the captured snapshot, not later linked-file contents.
+Local receipts do not establish complete public replay or off-device backup.
+
+## Source-projection steps
+
+This recipe was not separately executed as a portable build. From the
+repository root, use the stated stock tools, unchanged local styles and a
+fresh directory. Retain failures; never overwrite either draft.
+The temporary variables name the root, source folder and working folder.
+
+```text
+task_report_root="$PWD"
+task_report_artifacts="$task_report_root/output/pdf/allocation-norm-20261012-v2"
+task_report_work="$(mktemp -d)"
+cp -p "$task_report_artifacts/publication.tex" "$task_report_work/publication.tex"
+cp -p "$task_report_artifacts/filter.lua" "$task_report_work/filter.lua"
+mkdir "$task_report_work/build"
+cd "$task_report_work/build"
+pandoc "$task_report_root/output/SXPID_ALLOCATION_L1_BOUND_2026_10_12.md" --from=markdown+tex_math_dollars --to=latex --lua-filter=../filter.lua --output=body.tex
+export TEXINPUTS="$task_report_root/audit/formal/latex:"
+lualatex --interaction=nonstopmode --halt-on-error --file-line-error --no-shell-escape --recorder --jobname=report ../publication.tex
+```
+
+Run the last command three times. Preserve each pass's streams/status/time/
+log/recorder/auxiliary/PDF. Check first/final logs with their declared modes,
+compare exact final logs, rehash inputs before/after, and inspect metadata/
+fonts/text/annotations/every page. Links target this report folder, not the
+temporary build. The captured driver also cleared its environment, used
+60-second stage/300-second outer limits, a 32-KiB body ceiling and 64-MiB
+post-stage disk refusal. These cooperative bounds are not hard memory,
+process-tree or crash guarantees.
+
+Formal probability/logarithm proof, certified evaluation, Rust refinement,
+calibration and matched multi-dataset task tests remain open.
+SxPID3 Programs A-E remain 0/5 closed; no priority, mainline integration or
+branch/worktree/cloud deletion clearance follows.

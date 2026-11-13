@@ -1,0 +1,433 @@
+# Positive component bounds for categorical shared exclusions
+
+Sepehr Mahmoudian · 11 October 2026. Mathematical report prepared for integration review.
+
+For a supported categorical observation, a shared-exclusions component atom can be written as a positive box integral. This gives an exact zero criterion, elementary bounds, symmetric midpoint refinements, and a convergent series for every finite vector of relative masses. None of these statements gives relative accuracy for the signed difference of two components, an outward floating-point certificate, or evidence of predictive benefit.
+
+The measure is due to Makkeh, Gutknecht and Wibral, [Physical Review E 103, 032149 (2021)](https://doi.org/10.1103/PhysRevE.103.032149), with [arXiv version 5](https://arxiv.org/abs/2002.03356v5). These define the measure, not bound priority. Correspondence uses the retained [source-correspondence record](../claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md); no fresh paper reading is claimed.
+
+## 1. Events, laws, components, and units
+
+Let $N=\{1,\ldots,n\}$ be a nonempty finite set of source indices. Each $X_i$ is a categorical source with a finite alphabet, and $T$ is a categorical target. Fix an anchor $(s_1,\ldots,s_n,t)$ with strictly positive joint probability under the declared law $\mathbb P$. Therefore $\mathbb P(T=t)>0$.
+
+An ordinary node $\alpha$ is a nonempty family of nonempty subsets of $N$, with no member containing another. Such a family is called an antichain. Its event is
+
+$$
+E_\alpha=\bigcup_{D\in\alpha}\ \bigcap_{i\in D}\{X_i=s_i\}.
+$$
+
+Thus a branch requires agreement at every source it names; the node accepts agreement with at least one branch. No independence assumption is made.
+
+There are two source laws: $Q_+$ is the unconditional law of $(X_i)_{i\in N}$, and $Q_-$ is its law conditional on $T=t$. For either law $Q$, a source row $y$ has agreement pattern $B(y)=\{i:y_i=s_i\}$. Write $q_B=Q(B(y)=B)$ for each $B\subseteq N$. These disjoint cell masses are nonnegative and sum to one. The supported anchor ensures $q_N>0$ under both laws.
+
+The covered patterns and their mass are
+
+$$
+U_\alpha=\{B\subseteq N:\text{some }D\in\alpha\text{ satisfies }D\subseteq B\},
+\qquad u=Q(E_\alpha)=\sum_{B\in U_\alpha}q_B>0.
+$$
+
+Set $F_Q(\alpha)=-\ln u$. All logarithms here are natural: quantities are in nats. A source statement in bits must be multiplied by $\ln 2$ before comparison.
+
+The redundancy order is $\alpha\le\beta$ when $U_\beta\subseteq U_\alpha$. Define component atoms by the finite inverse relation
+
+$$
+F_Q(\alpha)=\sum_{\beta\le\alpha}\pi_Q(\beta).
+$$
+
+Bayes' rule gives the signed shared-exclusions redundancy:
+$\ln[\mathbb P(T=t\mid E_\alpha)/\mathbb P(T=t)]
+=\ln[Q_-(E_\alpha)/Q_+(E_\alpha)]=F_{Q_+}(\alpha)-F_{Q_-}(\alpha)$.
+By linearity of the inverse, its signed atom is $\pi_{Q_+}(\alpha)-\pi_{Q_-}(\alpha)$. The two components are nonnegative below; their difference need not be.
+
+## 2. Why only maximal uncovered patterns enter the inverse
+
+Fix $\alpha$ and $Q$. Let $H_\alpha=2^N\setminus U_\alpha$, where $2^N$ denotes all subsets of $N$. This is downward closed: if a pattern is uncovered, every smaller pattern is uncovered. It contains $\varnothing$ but not $N$. Let $B_1,\ldots,B_k$ be its maximal members, meaning that no larger member of $H_\alpha$ contains them. Define
+
+$$
+k\ge1,\qquad a_i=q_{B_i}\ge0,\qquad A=\sum_{i=1}^k a_i,\qquad
+C=(k-1)!\prod_{i=1}^k a_i.
+$$
+
+The cells are distinct and outside $U_\alpha$, so $u+A\le1$.
+
+For the inverse proof, remove the two endpoint patterns and form
+$\mathcal K=2^N\setminus\{\varnothing,N\}$. An ideal of $\mathcal K$ is a subset containing every smaller member of $\mathcal K$ whenever it contains a member. The set $J_\alpha=H_\alpha\setminus\{\varnothing\}$ is an ideal.
+
+Conversely, from any ideal $J$, form $H=J\cup\{\varnothing\}$ and $U=2^N\setminus H$. The minimal members of $U$ are a nonempty antichain of nonempty subsets. Every member of $U$ contains a minimal member, by finite descent. This reconstructs the original covered family. Consequently ordinary nodes and ideals are in bijection, and $\alpha\le\beta$ exactly when $J_\alpha\subseteq J_\beta$.
+
+For any function $F$ on these ideals, define
+
+$$
+g(J)=\sum_{D\subseteq\operatorname{Max}(J)}(-1)^{|D|}F(J\setminus D).
+$$
+
+Deleting maximal members leaves an ideal. To prove $F(J)=\sum_{I\subseteq J,\ I\ {\rm ideal}}g(I)$, fix an ideal $L\subseteq J$ and collect the coefficient of $F(L)$. A contributing term has $I=L\cup D$ and $D\subseteq\operatorname{Max}(I)$. Such $D$ are exactly the subsets of $\operatorname{Min}(J\setminus L)$:
+
+- If $d\in D$ had a smaller member $x\in J\setminus L$, the ideal property would place $x$ in $D$, contradicting maximality of its members.
+- Conversely these minimal members are incomparable, all their predecessors in $J$ lie in $L$, and none can lie below a member of $L$; otherwise the ideal $L$ would already contain it. Adding any subset therefore gives an ideal with the added members maximal.
+
+For $L=J$ the coefficient is one. Otherwise the finite nonempty set $J\setminus L$ has $r\ge1$ minimal members, and its coefficient is $\sum_D(-1)^{|D|}=(1-1)^r=0$. This proves the inverse. It is unique by solving successively for ideals of increasing size.
+
+If $J_\alpha$ is nonempty, its maximal members equal those of $H_\alpha$. Deleting selected maximal uncovered patterns adds exactly their disjoint cells to the event. Applying the inverse to $F_Q$ gives the localized row
+
+$$
+\pi_Q(\alpha)=
+\sum_{D\subseteq\{1,\ldots,k\}}(-1)^{|D|}
+\left[-\ln\left(u+\sum_{i\in D}a_i\right)\right].
+\tag{1}
+$$
+
+The ordinary bottom node contains all singleton branches. Here $H_\alpha=\{\varnothing\}$, $J_\alpha$ is empty, and the ordinary inverse has just $-\ln(1-q_\varnothing)$. Formula (1) still works with $k=1$, $a_1=q_\varnothing$, $u=1-a_1$, because its additional term is $-\ln(u+a_1)=-\ln1=0$.
+
+That zero term corresponds to a virtual certain event, the family $\{\varnothing\}$ containing an empty branch. Its conjunction is true, its covered mass is one, and its cumulative value is zero. It is not an ordinary node in the bijection above. It is not the literal empty family $\varnothing$: an empty disjunction is false, has mass zero, and gives the nonfinite value $-\ln0$. For $n=1$, the sole ordinary atom is simply $-\ln q_N$.
+
+## 3. Turning alternating logarithms into a positive integral
+
+Let $f(x)=-\ln x$ for $x>0$. For a nonnegative width $a$ define the difference $D_a f(x)=f(x)-f(x+a)$. The fundamental theorem of calculus gives $D_a f(x)=-\int_0^a f'(x+w)\,dw$.
+
+The product of these commuting differences expands to the subset sum in (1). Applying the same identity $k$ times gives $(-1)^k$ times the box integral of $f^{(k)}(u+\sum_i w_i)$. Differentiating, or inducting from $f'(x)=-1/x$, gives $f^{(k)}(x)=(-1)^k(k-1)!x^{-k}$. Thus, writing $P=\pi_Q(\alpha)$,
+
+$$
+P=(k-1)!\int_0^{a_1}\cdots\int_0^{a_k}
+       (u+w_1+\cdots+w_k)^{-k}\,dw_k\cdots dw_1.
+\tag{2}
+$$
+
+The integrand is positive and bounded because $u>0$. At $u=0$, even $k=1$ with positive width gives a divergent integral; no extension is claimed. If some $a_i=0$, the box has zero volume and $P=0$. If all $a_i>0$, its volume is positive and $P>0$. Hence
+
+$$
+P=0\quad\Longleftrightarrow\quad
+\text{at least one maximal uncovered pattern has zero mass under }Q.
+\tag{3}
+$$
+
+This concerns the declared law; an unobserved sample cell does not imply a population zero. An event may have positive cumulative surprisal while this particular inverse component vanishes. The proof uses the full categorical antichain carrier and its ideal representation; an arbitrary event poset does not inherit it.
+
+## 4. Rectangle and one-pattern bounds; what rarity means
+
+Throughout the box, $u\le u+\sum_i w_i\le u+A$. Multiplying endpoint bounds by its volume gives
+
+$$
+\frac{C}{(u+A)^k}\le P\le\frac{C}{u^k}.
+\tag{4}
+$$
+
+Introduce relative masses $r_i=a_i/u$, their sum $R=A/u$, and $G=(k-1)!\prod_i r_i=C/u^k$. Then (4) reads $G/(1+R)^k\le P\le G$. These expressions are unchanged if $u$ and every $a_i$ are multiplied by the same positive number; scaled numerical variables need not themselves be probabilities.
+
+For a one-pattern bound, take $x>0$. Substitution followed by $k-1$ integrations by parts gives
+$\int_0^\infty z^{k-1}e^{-xz}\,dz=(k-1)!x^{-k}$.
+Insert this identity into (2). Nonnegative integrands allow the order of integration to be exchanged. Each box integral contributes $(1-e^{-a_i z})/z$, leaving
+
+$$
+P=\int_0^\infty e^{-uz}\prod_{i=1}^k(1-e^{-a_i z})\,\frac{dz}{z}.
+$$
+
+For any index $j$, dropping all factors except $j$ increases the integrand because each factor lies in $[0,1]$. Use
+$(1-e^{-a_j z})/z=\int_0^{a_j}e^{-wz}\,dw$ and integrate first in $z$:
+
+$$
+P\le\int_0^{a_j}\frac{dw}{u+w}
+   =\ln(1+a_j/u),\qquad
+P\le\min_j\ln(1+r_j).
+\tag{5}
+$$
+
+Therefore a relative mass $r_j\to0$ forces $P\to0$. Absolute rarity alone does not. For two binary sources at the top node $\{\{1,2\}\}$, assign
+$q_{\{1,2\}}=q_{\{1\}}=q_{\{2\}}=\varepsilon$ and
+$q_\varnothing=1-3\varepsilon$, with $0<\varepsilon<1/3$. Then $u=a_1=a_2=\varepsilon$, but
+
+$$
+P=\ln\frac{(u+a_1)(u+a_2)}{u(u+a_1+a_2)}=\ln(4/3).
+\tag{6}
+$$
+
+All three small masses tend to zero while $r_1=r_2=1$. In contrast, if $u\ge\eta>0$ for a fixed covered-mass floor $\eta$, then $a_j\to0$ implies $r_j\le a_j/\eta\to0$ and (5) applies.
+
+## 5. Auxiliary uniforms and the second-order midpoint interval
+
+Handle (3) first; suppose now all widths are positive. Introduce independent auxiliary variables $Z_i$ uniformly distributed on $[0,a_i]$, and set $W=\sum_i Z_i$ and $h(w)=(u+w)^{-k}$. Dividing the box integral by its volume gives
+
+$$
+P=C\,\mathbb E[h(W)].
+\tag{7}
+$$
+
+These uniforms are integration weights, not a model for the observed sources or sample rows. They do not require the $X_i$ to be independent or uniform.
+
+Direct integration gives $\mathbb E Z_i=a_i/2$ and $\mathbb E Z_i^2=a_i^2/3$, hence $\operatorname{Var}(Z_i)=a_i^2/12$. Auxiliary independence makes cross-covariances zero. Define
+
+$$
+\mu=A/2,\qquad \delta=W-\mu,\qquad
+\sigma^2=\mathbb E\delta^2=\sum_i a_i^2/12,\qquad \mathbb E\delta=0.
+$$
+
+The second derivative is $h''(w)=k(k+1)(u+w)^{-k-2}$, positive and decreasing on $[0,A]$. Taylor's formula with an integral remainder is
+
+$$
+h(\mu+\delta)=h(\mu)+h'(\mu)\delta+
+\delta^2\int_0^1(1-\lambda)h''(\mu+\lambda\delta)\,d\lambda.
+$$
+
+The entire interpolation segment lies in $[0,A]$. Bound the derivative by $h''(A)$ and $h''(0)$, take expectations, and use $\int_0^1(1-\lambda)\,d\lambda=1/2$. The linear term vanishes. Consequently
+
+$$
+L_2=C\left[h(\mu)+\frac{h''(A)\sigma^2}{2}\right]
+\le P\le
+U_2=C\left[h(\mu)+\frac{h''(0)\sigma^2}{2}\right].
+\tag{8}
+$$
+
+For any genuine interval $0<L\le P\le U$, define its relative full-width ceiling to be $(U-L)/L$. Then $(U-L)/P\le(U-L)/L$, and its midpoint has relative error at most $(U-L)/(2L)$. These are ceilings, not exact errors divided by $P$. Relative divisions are undefined at a structural zero.
+
+## 6. Symmetry and fourth-order refinements
+
+Each $Z_i-a_i/2$ is symmetric about zero. Independence makes their sum $\delta$ symmetric, so $\mathbb E\delta=\mathbb E\delta^3=0$. Write $m_4=\mathbb E\delta^4$. A centered uniform has fourth moment $a_i^4/80$. Expanding the fourth power of the sum, odd cross terms vanish and pairs have coefficient six. Therefore
+
+$$
+m_4=\sum_i\frac{a_i^4}{80}
++\sum_{i<j}\frac{a_i^2a_j^2}{24}
+=3(\sigma^2)^2-\sum_i\frac{a_i^4}{120}.
+$$
+
+Let $g(w)=h^{(4)}(w)=k(k+1)(k+2)(k+3)(u+w)^{-k-4}$ and
+$M_2=h(\mu)+h''(\mu)\sigma^2/2$.
+Taylor expansion through degree three has remainder
+$\delta^4\int_0^1(1-\lambda)^3g(\mu+\lambda\delta)\,d\lambda/6$.
+Its weight integrates to $1/24$. Since $g$ is decreasing, this gives the valid raw interval
+
+$$
+L_4=C[M_2+g(A)m_4/24]\le P\le
+U_4=C[M_2+g(0)m_4/24].
+\tag{9}
+$$
+
+Symmetry improves this interval further. The function $g$ is convex because $g''=h^{(6)}>0$. For $0\le z\le A/2$, convexity gives
+
+$$
+g(\mu)\le\frac{g(\mu-z)+g(\mu+z)}2
+\le\frac{g(0)+g(A)}2.
+$$
+
+The first inequality is the midpoint convexity inequality. For the second, bound both values by the chord between endpoints; their complementary chord weights add to one. Pair $\delta$ and $-\delta$ in the remainder and apply this inequality to $z=\lambda|\delta|$. The factor $\delta^4$ is unchanged. Thus
+
+$$
+L_{4s}=C[M_2+g(\mu)m_4/24]\le P\le
+U_{4s}=C[M_2+(g(0)+g(A))m_4/48].
+\tag{10}
+$$
+
+In particular $L_4\le L_{4s}\le P\le U_{4s}\le U_4$. The fourth-order lower endpoint improves the second-order lower endpoint, but a fourth-order upper endpoint need not improve $U_2$.
+
+Here is an admissible counterexample. Take two-source top-node masses $u=1/5$, $a_1=a_2=2/5$, and $q_\varnothing=0$. Multiply these three cover variables by five solely to calculate the scale-invariant expressions: $u'=1$, $a'_1=a'_2=2$. These primed variables are not a probability law. They give $A'=4$, $\mu'=2$, $\sigma'^2=2/3$, $m'_4=16/15$, $C'=4$. Equations (8) and (9) yield
+
+$$
+U_2=76/9,\qquad U_4=1772/81>76/9,\qquad P=\ln(9/5).
+\tag{11}
+$$
+
+Thus raw fourth order is not uniformly tighter. Valid intervals can instead be intersected: take the largest lower endpoint and smallest upper endpoint from (4), (5), (8), and (10), using exact or genuinely outward arithmetic.
+
+Symmetry is essential, not optional. Replacing the auxiliary law by a variable $V$ taking $0$ and $1/15$ with probabilities $1/4$ and $3/4$ gives mean $1/20$, variance $1/1200$, third centered moment $-1/36000$, and fourth centered moment $7/4320000$. For $h(w)=(1+w)^{-1}$, its exact expectation is $61/64$. Dropping the odd term as if this law were symmetric gives the false upper expression $4236807203/4445280000$, below the expectation by $100297/4445280000$. This is an outside-domain countermodel, not a failure of the integration uniforms.
+
+## 7. An even series for every finite relative mass vector
+
+Keep $u>0$, finite $a_i\ge0$, and handle zero volume separately. Set
+
+$$
+b=u+\mu,\quad v=\delta/b,\quad
+\rho=\frac{A}{2u+A}=\frac{R}{2+R}<1,\quad
+K=C b^{-k},\quad \nu_{2j}=\mathbb E[v^{2j}].
+$$
+
+Here $j$ is a nonnegative integer, $\nu_0=1$, and $|v|\le\rho$. Multiplying $k$ absolutely convergent geometric series gives
+$(1+v)^{-k}=\sum_{\ell\ge0}(-1)^\ell\binom{k+\ell-1}{\ell}v^\ell$.
+The coefficient counts ways to split $\ell$ among $k$ nonnegative integers, equivalently placements of $k-1$ separators. On $[-\rho,\rho]$ the absolute sum is bounded by $(1-\rho)^{-k}$. Uniform convergence therefore permits expectation term by term. Symmetry removes the odd powers:
+
+$$
+P=K\sum_{j=0}^\infty d_j\nu_{2j},
+\qquad d_j=\binom{k+2j-1}{2j}.
+\tag{12}
+$$
+
+Every term is nonnegative. For a finite order $m\ge0$, let
+$S_m=K\sum_{j=0}^m d_j\nu_{2j}$.
+These lower bounds increase to $P$. In particular $S_2=L_{4s}$.
+
+A finite closed tail bound follows from $\nu_{2j}\le\rho^{2j}$. The even part of the same geometric product has the exact sum
+
+$$
+E_k(\rho)=\frac{(1-\rho)^{-k}+(1+\rho)^{-k}}2,\qquad
+H_m=E_k(\rho)-\sum_{j=0}^m d_j\rho^{2j}\ge0.
+$$
+
+Hence, for every $\rho<1$,
+
+$$
+0\le P-S_m\le K H_m.
+\tag{13}
+$$
+
+This finite formula can lose precision by floating-point subtraction; exact algebra does not make its rounded evaluation outward.
+
+There is also a geometric tail. Define $\beta_j=d_j\rho^{2j}$. For $0<\rho<1$, successive ratios are
+
+$$
+\theta_j=\frac{\beta_{j+1}}{\beta_j}
+=\rho^2\left(1+\frac{k-1}{2j+1}\right)
+       \left(1+\frac{k-1}{2j+2}\right).
+$$
+
+They are nonincreasing and tend to $\rho^2<1$. If $\theta_{m+1}<1$, then
+
+$$
+P-S_m\le K\,\frac{\beta_{m+1}}{1-\theta_{m+1}}.
+\tag{14}
+$$
+
+If this early ratio is at least one, (14) must not be used. Choose an integer
+
+$$
+J\ge\max\left\{m+1,\
+\left\lceil\frac{(k-1)\rho}{2(1-\rho)}\right\rceil\right\}.
+$$
+
+Then $2J+1>(k-1)\rho/(1-\rho)$, so
+$\theta_J\le\rho^2[1+(k-1)/(2J+1)]^2<1$. A finite prefix plus a geometric tail gives
+
+$$
+P-S_m\le K\left[
+\sum_{j=m+1}^{J-1}\beta_j+\frac{\beta_J}{1-\theta_J}\right].
+\tag{15}
+$$
+
+An empty prefix is zero. For $\rho=0$ all widths vanish and the structural-zero branch applies; ratios need not be formed.
+
+Convergence is pointwise for each finite mass vector, not a uniform fixed-order accuracy guarantee. For $k=1$, write $r=a_1/u$. Then $\rho=r/(2+r)$ and
+$P=\ln(1+r)=2\sum_{j\ge0}\rho^{2j+1}/(2j+1)$.
+As $r\to\infty$, $\rho\to1$, the exact $P$ diverges, but each fixed $S_m$ tends to a finite sum. Its relative error tends to one. An admissible law has $u=1/(1+r)$ and $a_1=r/(1+r)$. Narrow intervals can require a large order or another route. Many small $r_i$ can still have a large sum $R$; eligibility is component-specific, not assumed for every dataset.
+
+## 8. Computing moments and counting the work
+
+Let $Y_i=Z_i-a_i/2$. Direct integration gives
+$\mathbb E Y_i^{2\ell}=(a_i/2)^{2\ell}/(2\ell+1)$ and zero odd moments. For a chosen order $m$, define factor coefficients
+$q_{i,\ell}=(a_i/2)^{2\ell}/(2\ell+1)!$ for $0\le\ell\le m$.
+The multinomial expansion and auxiliary independence give
+
+$$
+\mathbb E\delta^{2j}=(2j)!\,[z^j]\prod_{i=1}^k
+\left(\sum_{\ell=0}^m q_{i,\ell}z^\ell\right),\qquad 0\le j\le m,
+$$
+
+where $[z^j]$ means the coefficient of $z^j$ and $z$ is a formal variable, not an observation. Divide by $b^{2j}$ to obtain $\nu_{2j}$.
+
+For $m\ge1$, the recurrence
+$q_{i,0}=1$ and
+$q_{i,\ell+1}=q_{i,\ell}(a_i/2)^2/[(2\ell+2)(2\ell+3)]$
+generates all $k$ length-$(m+1)$ vectors in $O(km)$ elementary arithmetic operations. Moment-factorial generation costs $O(m)$; reading the masses and forming their prefactor costs $O(k)$. Naive sequential convolution truncated at degree $m$ costs $O(km^2)$ arithmetic operations and needs $O(m+k)$ stored scalar values if factors are generated one at a time. At $m=0$, only initialization is needed. This is not a rational bit-complexity or measured runtime bound.
+
+Once moments are available, (13) adds $O(m)$ operations and two integer powers, computable in $O(\log k)$ multiplications. Formula (15) adds $O(J-m)$ recurrence steps; $J$ can be large near $\rho=1$. Fixed second/fourth order needs $O(k)$ arithmetic from supplied masses. This excludes constructing masses, the carrier, and all anchors.
+
+## 9. Assigned count law: four parts per million and a much narrower interval
+
+Take two binary sources, anchor $(0,0)$, and a constant target $T=0$. Assign exactly these 100 rows:
+
+| Source row | Agreement pattern | Count |
+|---|---|---:|
+| $(0,0)$ | $\{1,2\}$ | 80 |
+| $(0,1)$ | $\{1\}$ | 1 |
+| $(1,0)$ | $\{2\}$ | 1 |
+| $(1,1)$ | $\varnothing$ | 18 |
+
+At the top node $\alpha=\{\{1,2\}\}$, only full agreement is covered. The maximal uncovered patterns are the two singletons, not the empty pattern. Thus $u=80/100$, $a_1=a_2=1/100$, $k=2$, and
+
+$$
+P=-\ln(80/100)+2\ln(81/100)-\ln(82/100)
+=\ln\frac{81^2}{80\cdot82}=\ln(6561/6560).
+\tag{16}
+$$
+
+![Agreement cells and the four masses in the two-source inverse row. Cell areas do not represent probabilities.](figures/component-cover-masses-20261011.svg)
+
+Here $r_1=r_2=1/80$. The rectangle gives $1/6724\le P\le1/6400$. Its geometric midpoint is $1/6560$, with relative-error ceiling $1/40=2.5\%$: the largest endpoint-relative error is its ratio to the lower endpoint minus one.
+
+For sharper arithmetic, divide all three cover variables by $u$. The resulting $u'=1$, $a'_1=a'_2=1/80$ are normalized calculation variables, not a probability law. They give
+$A'=1/40$, $\mu'=1/80$, $b'=81/80$, $C'=1/6400$,
+$\sigma'^2=1/38400$, $m'_4=1/614400000$, and $\rho=1/81$.
+Equation (8) gives
+
+$$
+L_2=\frac1{6561}+\frac1{32\cdot41^4},\qquad
+U_2=\frac1{6561}+\frac1{81920000}.
+$$
+
+The midpoint relative-error ceiling is exactly
+
+$$
+\frac{U_2-L_2}{2L_2}
+=\frac{1743657921}{463006274560000}<4\cdot10^{-6}.
+\tag{17}
+$$
+
+The strict inequality is the integer comparison
+$1743657921\cdot250000=435914480250000<463006274560000$.
+This fixture concerns approximation error, not calibration.
+
+Equal widths give an especially useful exact moment law. Write $a=a'_1=a'_2$. The sum of the two centered uniforms has density $(a-|d|)/a^2$ for $|d|\le a$, obtained by the overlap length of their two uniform intervals. Therefore
+
+$$
+\mathbb E\delta^{2j}=\frac2{a^2}\int_0^a d^{2j}(a-d)\,dd
+=\frac{2a^{2j}}{(2j+1)(2j+2)}.
+$$
+
+For $k=2$, $d_j=2j+1$ in (12), $a/b'=\rho$, and $K=\rho^2$. Put $x=\rho^2=1/6561$. Cancellation of these factors in (12) gives
+
+$$
+P=\sum_{\ell=1}^{\infty}\frac{x^\ell}{\ell}=-\ln(1-x),\qquad
+L=S_2=x+x^2/2+x^3/3.
+$$
+
+Since $1/\ell\le1/4$ for $\ell\ge4$, the tail is at most
+$D=x^4/[4(1-x)]$. Set $U=L+D$. The positive lower endpoint satisfies $L\ge x$, so
+
+$$
+\frac{U-L}{P}\le\frac{U-L}{L}
+\le\frac{D}{x}
+=\frac1{4\cdot6561^2\cdot6560}
+=\frac1{1129545959040}<10^{-12}.
+\tag{18}
+$$
+
+The midpoint relative-error ceiling is half the displayed full-width ceiling. This sub-$10^{-12}$ derivation is exact hand mathematics; it is not a binary64 error estimate.
+
+Later finite checks support this transcription. The root ran the frozen rational helper once normally and once with Python optimization: both exited zero and produced identical 11,544-byte JSON, while both unexpected-argument controls exited one. Six fixed mass vectors check moments and tail expressions: the worked vector, broad equal widths, unequal three widths, zero volume, slow radius, and four widths with the early geometric ratio blocked. The skew replacement-law countermodel is an additional calculation, not a dataset. The blocked case has early ratio $5500/3087\ge1$ and admits cutoff 30 with ratio $832000/833931<1$.
+
+For (18), that finite output records the exact width divided by the lower endpoint, $(U-L)/L=3/3388896144320$, not the exact error divided by $P$. It also brackets $\ln(6561/6560)$ by the degree-eight and degree-nine alternating sums for $\ln(1+y)$ with $y=1/6560$: decreasing alternating terms make the even sum lower and odd sum upper. Both fit inside $[L,U]$. This is an algebraically distinct reference in the same helper and Fraction/interpreter route, not an independently implemented check or a categorical-estimator replay. The general proofs remain the arguments above, not an extrapolation from six cases.
+
+Finally, the target is constant, so $Q_+=Q_-$ at every supported anchor. Unique inversion gives equal components at every node, and every signed atom is zero. A positive value in (16) is not target synergy, fault-prediction gain, or permission to remove a source.
+
+## 10. Existing Rust surface and prospective numerical work
+
+The [public export map](../crates/pid-core/src/lib.rs) and [categorical implementation](../crates/pid-core/src/sxpid.rs) expose discrete_sxpid_n and its averaged, budgeted and cancellation-aware variants in stable::categorical. They accept DiscreteMatRef sources and target for two through four sources. The full ordinary carriers have 4, 18 and 166 nodes. The all-finite-$n$ derivation does not extend this runtime API.
+
+The inspected implementation constructs a joint count law, evaluates cumulative informative and misinformative terms at occupied anchors and carrier nodes, inverts each component separately, and averages weighted atoms. Its ExactBinary64Accumulator sums supplied rounded binary64 terms exactly; it does not undo earlier rounding of logarithms, products, or inverse subtraction. This API does not implement the new certificates.
+
+A separate private Rust prototype is prepared but UNEXECUTED. It accepts already constructed cover masses with $1\le k\le6$, not six observed sources. It contains one/two-cover closed log1p routes and a second-order Taylor-midpoint route, not the new fourth-order or series algorithm. Before its structural-zero branch, it validates finite nonnegative inputs, $u>0$, represented mass normalization, supported cover order, and the requested model budget. The normalization check uses a fixed 17-word integer accumulator for represented binary64 dyadics. Scale failures, overflow, positive underflow, and unmet approximation budgets are refusals, not silently zero atoms.
+
+Its lower/upper expressions and model ceiling are ordinary uncertified f64 evaluations. A zero truncation budget for a closed formula does not mean zero library-logarithm or rounding error. Real-input conversion, directed rounding, overflow/underflow behavior, compiler and platform behavior, and all-input refinement still need evidence. There is no compiled result, benchmark, or new kernel theorem here.
+
+Given a correct mass vector, a fixed-order component expression costs $O(k)$; the moment route above costs $O(km^2)$. For comparison, with $d$ encoded rows and total source-label width $w$, a naive one-anchor agreement scan costs $O(dw)$ comparisons; $w=n$ for scalar sources. Repeating it for $h$ supported anchors costs $O(hdw)$ before carrier work. These are scan counts, not current-implementation performance claims. Counting, conditioning, occupied support, maximal-pattern construction, complete carriers, and output storage remain separate costs. A localized alternating row has $2^k$ terms; avoiding that row does not make a complete PID linear-time.
+
+If genuinely outward intervals for the informative and misinformative components are $[L_+,U_+]$ and $[L_-,U_-]$, their signed difference lies in $[L_+-U_-,\,U_+-L_-]$. Near cancellation this is an absolute enclosure, not a relative signed-net guarantee. Never clamp the signed difference to restore positivity.
+
+## 11. Evidence boundaries and unfinished obligations
+
+Source correspondence, hand derivation, finite checks, Rust, formal proof and applications are separate obligations. The retained [Lean contract](../audit/formal/lean-prefix-mgw-mean/sources/PidMgwBridge/Contract.lean) and [candidate bridge](../audit/formal/lean-prefix-mgw-mean/sources/PidMgwBridge/Candidate.lean) concern their existing encoded finite-component propositions and their own source correspondence. This report does not replay them or claim that they mechanize (2), (8), (10), or (12)–(18). New formal qualification remains HOLD.
+
+The candidate was visible before this pass; this is not blind independent-first review. A root-exposed cost correction retains its prior text in private evidence. Critique-lens lists are advisory, not independent reviewers. Paper correspondence uses historical custody, not fresh complete review. Finite-check bytes were read after root execution; this is not an all-input native proof. Receipts remain private unless published; this report is not a complete public replay bundle. See the [research notes](RESEARCH_NOTES_2026_10_10.md) and [reader contract](../RESEARCH_READER_AND_VERIFICATION_CONTRACT.md) for publication boundaries.
+
+Rejected shortcuts remain rejected: absolute rarity without a covered-mass floor; substituting a false empty event for the certain virtual event; moving the proof to an arbitrary event poset; treating auxiliary uniforms as observed-source assumptions; dropping odd terms for a skew law; assuming every fourth-order upper endpoint is better; and demanding uniform accuracy from a fixed series order. Direct cancellation-prone log subtraction and unchecked quadrature are not numerical certificates. Retaining existing evaluation or taking no action is valid when bounds do not meet a declared need.
+
+The two-dataset UCI application screen remains PREPARED/UNRUN at this report's cutoff; no study metrics are supplied. A screen must freeze dataset bytes, categorical encodings, target, grouping, selection rule and thresholds before execution. Empirical component bounds do not establish population support, confidence coverage, calibration, causal importance, robustness to another encoding, or task benefit. MI/CMI, task loss, fixed-model and retrained ablation, and explicit failure utility remain simpler comparators with their own assumptions.
+
+Before upgrading claims, retain source and event correspondence, execute the separately reviewed Rust checks, build genuine outward arithmetic or refuse unsupported scales, qualify any new formal statements under the stock protocol, and report authorized application results with failures and comparators. No new runtime benchmark, human review, formal replay, release acceptance, scientific priority, or deployment value is claimed. The [method catalog](../method-catalog.json) and [known limitations](../KNOWN_LIMITATIONS.md) remain authorities for current implementation scope. A PDF projection and figure appearance still require a separately authorized build and visual inspection.

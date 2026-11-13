@@ -1,0 +1,252 @@
+# Three-source shared exclusions: arbitrary alphabets and weighted counts
+
+Sepehr Mahmoudian · 12 October 2026
+
+**Source-reviewed proposal, not a checked Lean result.** The 22 theorem sources
+have an independent-first critique. Compilation, imports, exact theorem types,
+axiom inspection and fresh replay remain pending. Matching qualified PDF is open.
+
+## Question and useful scope
+
+Can three-source equality events and weighted counts use different, possibly
+infinite alphabets? The proposed answer is yes for finite indexed observations
+with nonnegative integer weights. Boolean patterns encode equality tests, not
+binary source values. This supplies a proposed correspondence edge, not
+logarithms, PID atoms, estimator calibration or Rust refinement.
+
+Context: Makkeh, Gutknecht and Wibral, *Introducing a differentiable measure of
+pointwise shared information*, [arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5);
+journal version [Physical Review E 103, 032149](https://doi.org/10.1103/PhysRevE.103.032149).
+The logical structure is published in Gutknecht, Wibral and Makkeh,
+*Bits and Pieces: Understanding Information Decomposition from Part-whole
+Relationships and Formal Logic*, [arXiv:2008.09535v2](https://arxiv.org/abs/2008.09535v2).
+The typed count contract is project-defined, with no scientific novelty claim.
+No conclusion transfers to continuous Ehrlich PID or Williams–Beer I_min.
+
+## Inputs, symbols and assumptions
+
+An alphabet is a set of possible values; an event is a condition selecting rows.
+The [finite-structure note](SXPID3_FINITE_STRUCTURE_VERIFICATION_2026_10_12.md)
+defines the branch/family order used here. PID means partial information decomposition.
+
+| Symbol | Meaning and domain |
+|---|---|
+| $S$ | Three source labels $\{0,1,2\}$, not source values. |
+| $\mathcal A_i,\mathcal B$ | Alphabet of source $i\in S$, and target alphabet. |
+| $J,K$ | Any observation-index set, and a finite subset used for summation. |
+| $j,k$ | An observation index and fixed query index, in $J$. |
+| $s_i(j),t(j)$ | Source $i$'s value in $\mathcal A_i$, and target value in $\mathcal B$. |
+| $w_j$ | Nonnegative integer weight of index $j$. |
+| $a,A,B$ | A branch (subset of $S$), and two families (sets of branches). |
+| $A\preceq B$ | Every branch in $B$ contains a branch in $A$. |
+| $E_A(j;k)$ | Some branch in $A$ matches the query on all its sources. |
+| $q_i(j;k)$ | Boolean equality test $s_i(j)=s_i(k)$. |
+| $D(A,q)$ | OR between branches, AND within each branch's tests. |
+| $N,U,V,T$ | Total, source-event, joint source/target-event and target-event weights. |
+| $\mathbf1\{P\}$ | 1 if condition $P$ holds, 0 otherwise. |
+
+Weights are dimensionless counts. Alphabets may differ and may be infinite;
+only $K$ must be finite. Computational definitions require decidable equality:
+a procedure can decide whether two values are equal. No finite enumeration,
+Gaussian law or independent-row sampling is required for these identities.
+Population inference needs its own sampling model. Arbitrary real weights are
+not covered by this natural-number source.
+
+Positive-count bounds additionally require $k\in K$, $w_k>0$ and nonempty $A$.
+A query having values does not establish these premises. General definitions
+retain empty branches/families.
+
+## Step 1: equality event
+
+For fixed query $k$ and observation index $j$, define
+
+$$
+E_A(j;k)\iff\exists a\in A\;\forall i\in a:\;s_i(j)=s_i(k).
+$$
+
+Here $i$ is a source label. A branch needs every listed source to agree; a
+family needs at least one matching branch. Substituting the three equality
+tests into the Boolean definition gives
+
+$$
+D(A,q(j;k))\iff E_A(j;k).
+$$
+
+This is about equality patterns, not binary observed alphabets.
+An empty conjunction is true; an empty family's event is false.
+Every equality at the query itself holds, so $E_A(k;k)$ holds exactly when
+$A$ is nonempty.
+
+## Step 2: order implies reversed event inclusion
+
+Suppose $A\preceq B$ and $E_B(j;k)$ holds. Choose its matching branch
+$b\in B$. The order supplies $a\in A$ with $a\subseteq b$. Every equality
+required by $a$ is already true for $b$. Thus
+
+$$
+A\preceq B\Longrightarrow\bigl(E_B(j;k)\Longrightarrow E_A(j;k)\bigr).
+$$
+
+This holds for every index, without a sampling or richness assumption.
+The converse does not follow from observed rows alone.
+
+## Step 3: counts and all bounds
+
+All sums below run over the finite set $K$, with the same query $k$ and family $A$:
+
+$$
+\begin{aligned}
+N&=\sum_{j\in K}w_j,\\
+U&=\sum_{j\in K}w_j\mathbf1\{E_A(j;k)\},\\
+V&=\sum_{j\in K}w_j\mathbf1\{E_A(j;k)\text{ and }t(j)=t(k)\},\\
+T&=\sum_{j\in K}w_j\mathbf1\{t(j)=t(k)\}.
+\end{aligned}
+$$
+
+The joint event is a subset of the source event, so $V\le U$; it is also
+a subset of the target event, so $V\le T$. Every event is a subset of $K$,
+so $U\le N$ and $T\le N$. Nonnegative weights justify each comparison.
+
+If $k\in K$ and $A$ is nonempty, the query belongs to the joint event:
+its source and target values equal themselves. Its weight contributes to $V$.
+If also $w_k>0$, then
+
+$$
+0<w_k\le V\le U\le N,\qquad V\le T\le N.
+$$
+
+All four counts are therefore positive. This source does not yet verify a
+logarithmic formula or interval certificate.
+
+For $A\preceq B$, event inclusion also gives $U_B\le U_A$ and $V_B\le V_A$.
+The subscript identifies the family, with $K,w,s,t,k$ fixed. This is count
+monotonicity, not monotonicity of PID atoms after subtraction.
+
+## Step 4: heterogeneous worked example
+
+Use nonnegative integers, Booleans and integers for sources 0, 1 and 2,
+respectively; the target uses red/blue. Let $K=\{0,1,2\}$, query $k=0$,
+and $A=\{\{0\},\{1,2\}\}$.
+
+| Index $j$ | Sources $(s_0,s_1,s_2)$ | Target | Weight |
+|---|---|---|---|
+| 0 | $(7,\text{false},1)$ | red | 2 |
+| 1 | $(7,\text{true},1)$ | blue | 3 |
+| 2 | $(9,\text{false},-2)$ | red | 5 |
+
+Row 0 matches both branches and the target. Row 1 matches branch $\{0\}$,
+but not the target. Row 2 fails source 0; source 1 matches but source 2
+fails, so branch $\{1,2\}$ also fails. Its target nevertheless matches.
+
+Hence $N=2+3+5=10$, $U=2+3=5$, $V=2$ and $T=2+5=7$.
+The bounds read $2\le2\le5\le10$ and $2\le7\le10$.
+
+For $B=\{\{0,1\}\}$, the inclusion $\{0\}\subseteq\{0,1\}$ gives
+$A\preceq B$. Only row 0 matches both required sources, so $U_B=V_B=2$.
+This checks both reversed count inequalities. It is synthetic, not a dataset.
+
+## Two retained negative results
+
+**Observed event equality does not identify lattice order.**
+Let every source be constant, $A=\{\{0\}\}$ and $B=\{\{1\}\}$.
+Every row matches both events. Neither singleton contains the other,
+so neither order holds. The general Boolean equivalence requires all truth
+patterns; this dataset realizes only one.
+A converse needs an explicit sufficient pattern-richness premise.
+
+**Stored-row agreement does not preserve an off-support query.**
+Let $K=\{0\}$, query $k=1$ outside $K$, both weights 1,
+$A=\{\{0\}\}$ and constant target. Initially source 0 equals 0 at both
+indices. Change only its query value to 1. The stored row and weight remain
+unchanged. Initially $U=V=1$; afterwards $U=V=0$; always $T=N=1$.
+This also refutes $w_k\le V$ when $k\notin K$.
+
+The proposed invariance theorem requires weight, source and target agreement
+on $K$, and $k\in K$; query agreement then follows. An off-support version
+needs separately fixed query values. These conditions matter for cached query
+counts and sparse categorical observations; no deployment benefit is measured.
+
+## Verification and actual process
+
+The 22 source theorems cover equality-pattern correspondence, event inclusion,
+weighted-sum bounds, positive supported-query counts and count invariance.
+They import the original finite contract plus a new stock ordered finite-sum
+module; they do not import the checked 19-theorem Candidate.
+
+AI drafted the source. Another agent froze its initial reconstruction before
+reading the source, then reviewed every declaration through 53 named lenses
+and ten routes. The primary agent read source and review. Models, tools and
+specification are shared; no human verification receipt exists.
+No semantic counterexample to the stated propositions was found; actual
+compiler/import/axiom/replay acceptance remains pending.
+
+Source SHA-256:
+319728df89562b964ca52a913ccdd1b111715739ffffa26dd63f1b6f0970aa4d.
+Portable source/evidence remains pending. A hash is not a public proof;
+do not inherit import/replay credit from the narrower finite result.
+
+## New judge review: source defects, not theorem failures
+
+The generic judge source compares nine independent definitions and 22 closed
+expected propositions, including symbolic universe parameters. A universe
+parameter permits data types at different type levels; it is not a data
+dimension. Closed means no unbound inputs, not absence of quantified inputs
+or hypotheses. Neither source compilation nor judge acceptance is recorded.
+
+Review found two defects in the proposed checker:
+
+1. It compares argument annotations only along the outer quantifier chain.
+   Lean's definitional equality ignores those annotations, so an explicit
+   argument changed to an implicit argument inside a hypothesis may escape
+   this contract check. A full expression-tree comparison is needed. This
+   source witness does not show a false theorem or a native false pass.
+2. It treats compiler-generated extra names as kernel declarations. Stock
+   metadata permits names with module ownership but no kernel declaration.
+   Such a name can cause an unrelated refusal. Its actual presence in the
+   proposed run is unknown; separate ownership and exact name records are
+   needed, without inventing a declaration or assigning it axioms.
+
+The retained judge contains refusal checks because import and declaration records
+are unset; it also ends in a production hold. Its refusing command prevents
+a compiled consumer artifact, so the 22 example consumers have no replay
+credit. An inert consumer module and operational judge need separate review.
+
+A ten-root import observer has been drafted without importing uncompiled
+local modules. It is unrun; its union graph would not itself qualify the
+eventual candidate/judge graph or source/object correspondence. A proposed
+six-companion file profile is stricter than stock loader requirements and
+must not be described as what Lean universally needs. Original 19-target
+proof sources, judges and tool settings remain unchanged.
+
+[Verification updates](VERIFICATION_GUARD_UPDATES_2026_10_12.md) separate these
+source findings from actual PDF-helper tests and synthetic Python tests.
+Formal, portable-evidence and qualified matching-PDF obligations stay open.
+
+An uncompiled v2 draft adds recursive comparison and separate extra-name records.
+
+## Rust implementation and computational cost
+
+The existing default API is stable::categorical::discrete_sxpid3 in
+crates/pid-core/src/sxpid.rs. It evaluates empirical categorical
+Makkeh–Gutknecht–Wibral shared exclusions in nats. No API changes or
+binary64/arithmetic/error-handling correspondence follows from this proposal.
+
+Let $h$ be the number of indices in $K$ and $\ell$ the largest number of
+branches in a family. A direct scan examines at most $3\ell h$ source
+equalities. This is a comparison count, not time: alphabet-value equality
+can have its own cost. Integer addition depends on weight bit length.
+Evaluating every supported query can require quadratically many row visits
+in $h$. No timing or implemented arbitrary-alphabet count kernel is reported.
+
+The [Rust cost reference](../RUST_IMPLEMENTATION_AND_COST.md) separately
+accounts for actual matrix widths, occupied support, sorting, event scans,
+inversion, memory, numerical limits, resource refusal and cancellation.
+This proposal is not an implemented online estimator or learner.
+No preprocessing, training, inference, resampling or held-out task run is
+reported. Formal count/log bridges, calibration, application value, Rust
+refinement and original SxPID3 A–E closure remain open.
+
+Suggested citation: Sepehr Mahmoudian, *Three-source shared exclusions:
+arbitrary alphabets and weighted counts* (2026). Cite the exact accepted
+repository commit or release when available; see [CITATION.cff](../CITATION.cff).
+

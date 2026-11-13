@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="240" viewBox="0 0 640 240" role="img" aria-labelledby="title desc">
+<title id="title">Family order and logical implication have reversed directions</title>
+<desc id="desc">For A with branches {0} and {1}, and B with branch {0,1}, A precedes B. Matching both sources in B implies matching at least one source in A. The reverse implication fails.</desc>
+<rect x="0" y="0" width="640" height="240" rx="8" fill="#F7F3E9"/>
+<g font-family="DejaVu Sans, sans-serif" fill="#2C3E50" text-anchor="middle">
+<text x="320" y="26" font-size="17" font-weight="bold">Order and implication run in opposite directions</text>
+<rect x="28" y="48" width="244" height="66" rx="6" fill="white" stroke="#1F3F60" stroke-width="2"/>
+<rect x="368" y="48" width="244" height="66" rx="6" fill="white" stroke="#1F3F60" stroke-width="2"/>
+<text x="150" y="73" font-size="17">A = {{0}, {1}}</text>
+<text x="150" y="96" font-size="13">two single-source branches</text>
+<text x="490" y="73" font-size="17">B = {{0, 1}}</text>
+<text x="490" y="96" font-size="13">one joint branch</text>
+<path d="M282 84 H350" fill="none" stroke="#1F3F60" stroke-width="2"/>
+<path d="M356 84 L346 79 L346 89 Z" fill="#1F3F60"/>
+<text x="320" y="65" font-size="12">order</text>
+<path d="M150 114 V144 M490 114 V144" fill="none" stroke="#916400" stroke-width="1.5" stroke-dasharray="4 3"/>
+<rect x="28" y="146" width="244" height="64" rx="6" fill="white" stroke="#1F6968" stroke-width="2"/>
+<rect x="368" y="146" width="244" height="64" rx="6" fill="white" stroke="#1F6968" stroke-width="2"/>
+<text x="150" y="171" font-size="17">D(A): match 0 OR 1</text>
+<text x="150" y="195" font-size="13">at least one test holds</text>
+<text x="490" y="171" font-size="17">D(B): match 0 AND 1</text>
+<text x="490" y="195" font-size="13">both tests hold</text>
+<path d="M358 180 H290" fill="none" stroke="#1F6968" stroke-width="2"/>
+<path d="M284 180 L294 175 L294 185 Z" fill="#1F6968"/>
+<text x="320" y="160" font-size="12">implies</text>
+<text x="320" y="229" font-size="12">Arrows are labelled; color carries no additional mathematical meaning.</text>
+</g>
+</svg>
+

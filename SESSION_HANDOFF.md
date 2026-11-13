@@ -1,4 +1,15 @@
-# Session handoff — updated 12 November 2026
+# Session handoff — updated 13 November 2026
+
+## Retained fragments archived, 13 November 2026
+
+The [inert worktree archive](audit/archive/retained-worktree-fragments-20261113/DISPOSITION.md)
+preserves 95 permitted pending-file byte images from the shared-exclusions and older publication
+worktrees, totaling 6,899,066 bytes. Its index records exact contents and original modes; every
+payload is non-executable text. Current code includes the moving-block, percentile and
+topological-sort documentation corrections. The PDF-log and publication-check proposals remain
+unadopted; the original nineteen finite targets remain held pending repaired-stock qualification.
+Twenty-two raw captures/PDFs and the July withheld companions remain outside this public packet.
+Whole dirty-worktree retirement and full SxPID3 Programs A–E remain open.
 
 ## Existing mathematical fragments recovered, 12 November 2026
 

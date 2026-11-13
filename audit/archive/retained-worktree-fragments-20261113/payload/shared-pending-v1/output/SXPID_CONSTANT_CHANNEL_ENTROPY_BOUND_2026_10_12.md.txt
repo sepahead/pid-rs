@@ -1,0 +1,356 @@
+# Constant-channel reduction and a sharp nuisance-entropy bound
+
+12 October 2026. Sepehr Mahmoudian.
+
+For finite categorical Makkeh–Gutknecht–Wibral (MGW) PID, collapse all but
+one source to constants. Every averaged atom/cumulative component changes
+by at most nuisance entropy; their full maximum equals that entropy.
+Three sources cover all 108 expressions, not just the 18 signed atoms.
+
+Status: reviewed hand corollary using published component positivity.
+Formal, certified-evaluation, Rust, application and qualified-PDF gates remain open.
+Categorical SxPID3 A–E remain 0/5 closed; continuous SxPID3 is not solved.
+
+## 1. Question, provenance and model
+
+Question: when several categorical inputs barely vary, can we bound their
+effect on the decomposition without computing the complete lattice?
+
+The PID is defined by [Makkeh, Gutknecht and Wibral (2021)](https://doi.org/10.1103/PhysRevE.103.032149).
+The [source version](https://arxiv.org/html/2002.03356v5) defines events, the
+component split and reconstruction; Theorem IV.3 proves component positivity.
+These are published dependencies. The entropy comparison is a repository-derived
+corollary; scientific priority is unestablished.
+See the [local correspondence](../claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md).
+
+Let \(r\ge2\) be the number of sources, with indices \(I=\{1,\ldots,r\}\).
+Write \(S_i\) for source \(i\).
+Let \(j\in I\) be the one retained index, \(X=S_j\) its categorical source,
+\(C=(S_i)_{i\ne j}\) the complete tuple of other source labels, and \(T\)
+the categorical target. “Nuisance” names this tuple; it does not assume
+irrelevance, independence or absence of useful information.
+
+All alphabets are fixed, nonempty and finite. Let \(p\) be their joint
+probability law; zero cells and arbitrary source/target dependence are allowed.
+For an empirical count table, \(p\) means that table's normalized law.
+A supplied law needs no row independence; Section 7 adds sampling assumptions. Units are **nats**, using natural logarithms.
+
+Choose a fixed possible tuple \(c\). Form law \(q\) by mapping
+\((C,X,T)\) to \((c,X,T)\) in every outcome. This preserves the entire
+\((X,T)\) marginal. It is not conditioning on rows where \(C=c\).
+
+Write \(p_U(u)=\Pr_p(U=u)\) for the marginal probability of value \(u\).
+Then \(H(U)=-\sum_u p_U(u)\ln p_U(u)\) is entropy of finite variable
+\(U\), with zero-mass summands defined as zero. Conditional entropy
+\(H(U\mid V)\) averages the entropies of the supported conditional laws.
+Mutual information is \(I(U;V)=H(U)-H(U\mid V)\).
+Unless marked \(q\), these quantities use law \(p\).
+
+## 2. Nodes, events, cumulatives and atoms
+
+A node \(\beta\) is a nonempty antichain of nonempty source-index subsets:
+no branch contains another. At a supported source/target realization \(z\),
+
+\[
+E_\beta(z)=\bigcup_{B\in\beta}\ \bigcap_{i\in B}\{S_i=s_i\}.
+\]
+
+Here \(s_i\) is the realized value of source \(i\). Equalities use AND
+inside a branch and OR across branches. At supported target value \(t\),
+the local cumulative components are
+\(-\ln p(E_\beta(z))\) and \(-\ln p(E_\beta(z)\mid T=t)\).
+They are evaluated only at positive-probability anchors.
+
+Let \(F_\beta^+\) and \(F_\beta^-\) denote their joint-law weighted averages.
+Their signed net is \(F_\beta=F_\beta^+-F_\beta^-\).
+Let \(\Pi_\alpha^+,\Pi_\alpha^-\) be the component atoms and
+\(\Pi_\alpha=\Pi_\alpha^+-\Pi_\alpha^-\) their signed net.
+Write \(F_\beta^{\mathrm{net}}=F_\beta\), \(\Pi_\alpha^{\mathrm{net}}=\Pi_\alpha\).
+
+The order is \(\alpha\preceq\beta\) when every branch of \(\beta\)
+contains some branch of \(\alpha\). Reconstruction is
+
+\[
+F_\beta^u=\sum_{\alpha\preceq\beta}\Pi_\alpha^u,\qquad u\in\{+,-\}.
+\]
+
+Thus cumulatives sum lower-or-equal atoms; the complete finite lattice
+makes inversion unique. Published component positivity means
+\(\Pi_\alpha^\pm\ge0\). It does **not** mean \(\Pi_\alpha\ge0\).
+
+## 3. Exact reduction when the other sources are constant
+
+Let \(a=\{\{j\}\}\), the retained-source singleton node.
+Under \(q\), a branch omitting \(j\) is true on the whole supported space.
+If any such branch is present, its OR event is certain.
+Otherwise every branch reduces to \(X=x\).
+
+Therefore \(F_\beta^u(q)\) is zero unless \(a\preceq\beta\).
+At selected nodes it equals \(H(X)\) for \(u=+\), or \(H(X\mid T)\) for \(u=-\).
+This vector is exactly the reconstruction column of atom \(a\).
+Unique inversion gives
+
+\[
+\begin{aligned}
+\Pi_a^+(q)&=H(X),& \Pi_a^-(q)&=H(X\mid T),&
+\Pi_a(q)&=I(X;T),\\
+\Pi_\alpha^\pm(q)&=0,&\Pi_\alpha(q)&=0&&(\alpha\ne a).
+\end{aligned}
+\]
+
+This comparison evaluates each law on its own supported anchors.
+It never evaluates a \(q\)-logarithm at a zero-\(q\)-mass \(p\) anchor.
+
+## 4. Atom bound: every step
+
+Define
+\(g=\{I\setminus\{j\},\{j\}\}\), a node with **two** branches.
+Let \(\operatorname{Down}(a)\) denote all nodes lower than or equal to \(a\).
+
+1. A node below \(a\) contains branch \(\{j\}\). If it is not \(a\)
+   itself, it has another branch. Antichainness forces that branch to omit
+   \(j\), so it is contained in \(I\setminus\{j\}\).
+2. This is exactly the condition for that node to be below \(g\).
+   Conversely \(g\prec a\), so every node below \(g\) is strictly below \(a\).
+   Hence \(\operatorname{Down}(a)\setminus\{a\}=\operatorname{Down}(g)\).
+3. Write \(C(z),X(z)\) for the nuisance tuple and retained value in anchor \(z\).
+   Set \(L^+=F_g^+(p)\), \(L^-=F_g^-(p)\). Its event is
+   \(\{C=C(z)\}\cup\{X=X(z)\}\), containing the complete nuisance equality.
+   Taking negative logarithms and averaging gives
+   \(0\le L^+\le H(C)\) and \(0\le L^-\le H(C\mid T)\).
+4. Self-redundancy at \(a\) and the partition give
+   \(\Pi_a^+=H(X)-L^+\) and \(\Pi_a^-=H(X\mid T)-L^-\).
+5. At the greatest node \(\{I\}\), total components are \(H(C,X)\)
+   and \(H(C,X\mid T)\). Subtract the down-set totals \(H(X)\),
+   \(H(X\mid T)\). The chain rule gives
+
+   \[
+   \sum_{\alpha\not\preceq a}\Pi_\alpha^+=H(C\mid X),\qquad
+   \sum_{\alpha\not\preceq a}\Pi_\alpha^-=H(C\mid X,T).
+   \]
+
+6. Partition off-\(a\) atoms into \(\operatorname{Down}(g)\) and
+   nodes outside \(\operatorname{Down}(a)\). Their component totals are
+   \(L^\pm\) and the conditional entropies in step 5.
+   Positivity bounds each atom by its group total, at most \(H(C)\).
+   At \(a\), component deviations are \(-L^+\), \(-L^-\).
+7. A difference of two numbers in \([0,H(C)]\) has absolute value at
+   most \(H(C)\), not automatically \(2H(C)\). This applies to every
+   signed-net deviation, including \(-L^++L^-\) at \(a\).
+
+For every node \(\alpha\),
+
+\[
+|\Pi_\alpha^u(p)-\Pi_\alpha^u(q)|\le H(C),\qquad u\in\{+,-,\mathrm{net}\}.
+\]
+
+## 5. Cumulative bound: no atom-positivity assumption needed
+
+If \(a\preceq\beta\), every branch contains \(j\). At a supported \(p\) anchor,
+
+\[
+\{X=x,C=C(z)\}\subseteq E_\beta(z)\subseteq\{X=x\}.
+\]
+
+The informative increment over the retained-source surprisal
+\(-\ln p_X(x)\) is nonnegative and at most
+\(-\ln p(C=C(z)\mid X=x)\). Its average is at most \(H(C\mid X)\).
+Condition on supported \(T=t\): the minus baseline is
+\(-\ln p(X=x\mid T=t)\); its nonnegative averaged increment is
+at most \(H(C\mid X,T)\).
+
+If \(a\not\preceq\beta\), some branch omits \(j\).
+Its event contains \(\{C=C(z)\}\). Its collapsed cumulative is zero,
+and its actual averaged plus/minus components are bounded by
+\(H(C)\) and \(H(C\mid T)\).
+
+In either case, the signed deviation is a difference of nonnegative
+increments individually bounded by \(H(C)\). Therefore
+
+\[
+|F_\beta^u(p)-F_\beta^u(q)|\le H(C),\qquad u\in\{+,-,\mathrm{net}\}.
+\]
+
+Three sources have 18 nodes. Two roles, cumulative and atom, each have
+three components: \(18\times2\times3=108\) bounded averaged expressions.
+Local pointwise values are not covered by this uniform entropy ceiling.
+
+### The full-vector maximum is exactly entropy
+
+Let \(E_{\rm full}\) be the largest absolute difference over all averaged
+atoms/cumulatives, plus, minus and net. At the one-branch node
+\(\beta_C=\{I\setminus\{j\}\}\), the event is complete nuisance equality.
+Its averaged plus cumulative is \(H(C)\) under \(p\), zero under \(q\).
+Thus \(E_{\rm full}\ge H(C)\); Sections 4–5 give the reverse inequality:
+\(E_{\rm full}=H(C)\) for every finite law. A net-only maximum need not
+equal entropy, as the constant-target example below shows.
+
+### Why the net coefficient one is sharp
+
+Set every source and \(T\) equal to the same nonconstant finite variable \(B\).
+Every source event is then the same equality. Only the least node
+\(b=\{\{1\},\ldots,\{r\}\}\) has informative/net atom \(H(B)\);
+its misinformative atom is zero.
+Collapse gives only the retained singleton atom \(a\) with value \(H(B)\).
+At \(a\), the signed deviation is \(-H(B)=-H(C)\).
+At the least atom it is \(+H(B)\). Thus no smaller uniform coefficient works.
+
+With constant \(T\), the same source construction has both plus and minus
+values \(H(B)\), but signed values zero. A positive component is not a
+positive target-information or task-gain result.
+
+## 6. Rare departures: a computable upper bound
+
+Let \(\varepsilon=p(C\ne c)\). Suppose a known integer \(m\ge2\)
+bounds the number of possible complete nuisance labels, including \(c\).
+Let \(D=1\{C\ne c\}\), the departure indicator. Entropy chain rules give
+
+\[
+H(C)=H(D)+H(C\mid D)
+\le h_2(\varepsilon)+\varepsilon\ln(m-1)=f_m(\varepsilon),
+\]
+
+Here \(v\in[0,1]\) is a binary probability and
+\(h_2(v)=-v\ln v-(1-v)\ln(1-v)\) is its entropy.
+The equality case \(D=0\) fixes \(C=c\); conditional on \(D=1\)
+there are at most \(m-1\) labels. Zero endpoint summands use \(0\ln0=0\).
+
+If only \(\varepsilon\le u\le1\) is known, use
+
+\[
+\Psi_m(u)=f_m\!\left(\min\{u,1-1/m\}\right).
+\]
+
+Indeed \(f_m'(v)=\ln((m-1)(1-v)/v)\); \(f_m\) increases up to
+\(v=1-1/m\), then decreases. Blind substitution can underbound:
+at \(m=4,u=1\), \(f_4(1)=\ln3<\ln4=f_4(3/4)\).
+For \(m=1\), \(C=c\) with certainty and the radius is zero.
+
+This bound depends on nuisance labels, not retained-source or target
+alphabet sizes or a lattice-inversion multiplier. Observed occupied labels alone
+do not establish a population value of \(m\).
+For a supplied empirical law, its observed departure fraction gives a
+deterministic empirical comparison, even for dependent rows.
+
+## 7. A narrow population procedure and exact worked threshold
+
+Assume \(n\ge1\) complete evaluation rows are IID from one fixed law \(p\).
+IID means independent rows with the same law, not independent source channels.
+Fix \(n,j\), source grouping, encoders, alphabets, \(c,m\) and \(\delta\in(0,1)\)
+before evaluation.
+If there are zero departures, report
+\(u_n=1-\delta^{1/n}\); otherwise abstain from this particular rule.
+
+If the true \(\varepsilon>u_n\), falsely issuing the upper bound has
+probability \((1-\varepsilon)^n<\delta\). If \(\varepsilon\le u_n\),
+the report is not false. This is a false-report guarantee, not a posterior
+probability conditional on the observed zero count.
+All expression bounds share this single event; no 108-fold union bound.
+
+Take \(m=4,n=10000,\delta=e^{-3}\), and zero observed departures.
+Since \(1-e^{-t}<t\) for \(t>0\), \(u_n< v=3/10000<3/4\).
+The envelope is monotone on this range. Also
+\(-(1-v)\ln(1-v)\le v\), from \(\ln(1+y)\le y\). Hence
+
+\[
+\Psi_4(u_n)\le f_4(v)\le v[1+\ln(3/v)]=v[1+\ln10000].
+\]
+
+The standard [exponential series](https://dlmf.nist.gov/4.2.E19) has positive
+terms. Its partial sums give
+\(e^3>1+3+9/2+27/6+81/24>16\) and
+\(e>1+1+1/2+1/6=8/3\).
+Thus \(e^{10}>16^3(8/3)=32768/3>10000\), implying \(\ln10000<10\).
+Consequently every averaged expression differs from collapse by
+**less than \(11v=0.0033\) nats** on a true report.
+
+This is an exact hand threshold, not floating certification or an executed dataset.
+It does not estimate the baseline population MI or provide confidence
+intervals for plug-in PID estimates. Same-data selection, dependent frames,
+drift, repeated testing and optional stopping require separate guarantees.
+
+## 8. Recomputable constant-channel example
+
+For three sources retain \(S_1=X\); set \(S_2=S_3=0\).
+Use joint \((X,T)\) counts \((0,0):3,(0,1):1,(1,0):1,(1,1):3\), total \(N=8\).
+Each marginal class has probability \(1/2\).
+
+Matching cells have local plus \(\ln2\), minus \(\ln(4/3)\), net \(\ln(3/2)\).
+Nonmatching cells have plus \(\ln2\), minus \(\ln4\), net \(-\ln2\).
+Their total weights are \(6/8\) and \(2/8\), not equal occupied-cell weights.
+The surviving atom at key \(01=\{\{1\}\}\) averages to
+
+\[
+H(X)=\ln2,\quad H(X\mid T)=2\ln2-\tfrac34\ln3,\quad
+I(X;T)=\tfrac34\ln3-\ln2>0.
+\]
+
+The count products, whose logarithms are divided by \(N\), are
+\(256,\ 65536/729,\ 729/256\) for plus, minus and net.
+Masks \(01,03,05,07\) mean \(\{1\},\{1,2\},\{1,3\},\{1,2,3\}\).
+Selected nodes are \(01,03,05,07,03+05\); \(+\) separates branches.
+Each product occurs there and at atom 01: 18 nonunits, 90 units.
+This is an unexecuted expected-answer control.
+Uniformly averaging the four occupied cells instead gives net
+\(\frac12\ln3-\ln2<0\), the wrong estimand.
+
+## 9. What this can and cannot add
+
+Use: bound allocation changes or test constant-channel controls from nuisance
+counts alone, without full lattice enumeration.
+
+The classical comparator is
+\(I(C;T\mid X)=H(C\mid X)-H(C\mid X,T)\le H(C)\),
+which bounds added ideal conditional log-score information.
+That alone does not bound individual signed MGW allocations.
+This result adds a measure-specific allocation bound, not a better predictor.
+
+Limits: rarity with an increasing alphabet permits arbitrarily large entropy;
+local rare-label surprisal is unbounded; relative accuracy fails at zero MI.
+Even \(I(X;T)=\ln2\) does not rescue a forecast giving the true class probability
+\(1/4\): its log loss is \(\ln4\), worse than uniform \(\ln2\).
+
+[The occupancy report](CONSTANT_CHANNEL_OCCUPANCY_SCREEN_2026_10_12.md)
+retains UCI864's complete 10129-row motion/target table: 1198 departures,
+and \(1/3<H(C)<53/100\) nats by hand inequalities. Thus actual full-vector
+error exceeds 0.0033 nats; some signed-net atom changes by over 0.01 nat
+for every finite compatible retained source. The counter evaluates no PID.
+Prediction loss, population confidence and task gain are not established.
+UCI357 has no equivalent native PIR pair; neither temporal recording
+inherits Section 7's IID guarantee.
+
+## 10. Rust implementation and computational cost
+
+No API or numerical kernel changed. Stable categorical APIs support 2–4 sources;
+the mathematical arbitrary-\(r\) statement does not extend them.
+
+A proposed departure scan costs \(O(n d_C)\) equality work and \(O(1)\)
+counters plus fixed-label storage; \(d_C\) is represented nuisance-row width.
+Given \(n,\delta,m\), the scalar radius needs \(O(1)\) exp/log operations.
+Empirical nuisance entropy needs label counts. With tuple width \(d_C\),
+ordered maps cost \(O(n d_C\log(m+1))\) comparison work and
+\(O(m d_C)\) label payload. Counts need separate storage.
+The \(m+1\) avoids a false zero-work bound at one label.
+
+Baseline entropy/MI and PID cost extra.
+For the constant-law proposal, \(N\) is row count and \(k\) occupied joint cells.
+Constant-size \((X,T)\) keys give \(O(N\log(k+1))\) counting and \(O(k)\)
+storage, then entropy sums and coordinate filling; wider keys add their width.
+These are proposed source-level costs, not measured generic-API performance.
+Exact arithmetic requires bit-cost accounting; binary64 exp/log/subtraction,
+overflow, counter validation and outward error enclosure need separate checks.
+No hard time/heap bound or compiled refinement follows.
+
+## Evidence and remaining work
+
+Independent initial derivation was frozen before parent-candidate exposure.
+Fourteen routes and fifty hostile lenses were inspected, not counted as votes
+or executed experiments. Root and reviewer checked the entropy partition,
+event sandwich, sharpness and threshold.
+The weaker full-alphabet TV route and its 0.018-nat threshold are retained,
+along with wrong weighting, pointwise, unknown-alphabet and utility failures.
+
+Formal/toolchain, certified implementation, multi-dataset task tests, qualified
+PDF and original SxPID3 closure remain open. Flags, tolerances, kernels and
+control rosters are unchanged; see the [closure ledger](../RESEARCH_RESULTS_2026_10_10.md#closure-ledger--original-criteria-not-substitute-milestones).
+

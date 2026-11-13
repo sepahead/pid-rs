@@ -1,0 +1,352 @@
+# A uniform precision bound for finite-count components
+
+Sepehr Mahmoudian · 11 October 2026
+
+## What this resolves
+
+Under the exact finite-count assumptions below, the midpoint of the existing
+rational logarithm-reference interval approximates every strictly positive
+categorical shared-exclusions component with relative error below \(2^{-84}\).
+The same bound holds for its strictly positive count-weighted average.
+This is much tighter than four parts per million.
+
+This is a hand-derived, source-reviewed numerical guarantee, not a newly
+kernel-verified theorem, scientific-priority claim or population error bound.
+It resolves the analytic precision question for this bounded reference
+calculation. Formal admission, implementation refinement and application value
+remain separate open obligations. No research program is declared closed here.
+
+It does **not** rescue the [original cheap-bracket screen](EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md).
+That screen's midpoint is different: none of its 184 positive averaged
+components meets four ppm. All original flags, inputs, wide cases and criteria
+remain unchanged. The reference midpoint is an explicitly different, more
+expensive numerical choice, using intervals already produced by that run.
+
+The defining measure is Makkeh–Gutknecht–Wibral (MGW) categorical shared
+exclusions. The [2021 paper](https://doi.org/10.1103/PhysRevE.103.032149)
+defines the measure; the [versioned source](https://arxiv.org/abs/2002.03356v5)
+and [repository component derivation](POSITIVE_CATEGORICAL_COMPONENT_BOUNDS_2026_10_11.md)
+fix the event, localization and nonnegative-component identity used here.
+This is not I_min, Ehrlich's continuous functional, or a new PID definition.
+
+## Assumptions and variables
+
+There are exactly three categorical sources \(X_1,X_2,X_3\) and a categorical
+target \(T\). Their alphabets are finite; no Gaussian, angular, continuous,
+observed-source independence, independent-and-identically-distributed rows
+(IID) or stationarity assumption is needed.
+An occupied joint anchor \(s=(x_1,x_2,x_3,t)\) has positive integer count
+\(c_s\) in a law containing \(N\) rows. Lowercase entries are fixed labels.
+The empirical probabilities are these counts divided by their total.
+
+The maximum admitted row count is \(M=31000\), and \(1\le N\le M\).
+For one component the probability law \(Q\) is either the source marginal
+or the source law conditional on the anchor's target label \(t\).
+Its count denominator is \(D\): \(D=N\) for the marginal and \(D=C_t\)
+for the conditional law, where \(C_t\) counts rows with target \(t\).
+Thus \(1\le D\le N\le M\).
+
+Fix an ordinary antichain: a nonempty family of nonempty source collections
+with no collection contained in another. Its agreement event \(E\) joins
+collections by OR and positions inside each collection by AND. Set
+\(u=Q(E)>0\). Let \(m_1,\ldots,m_k\) be the maximal excluded agreement
+patterns; \(1\le k\le3\). Set \(a_i=Q(B=m_i)\), where \(B\) is the
+set of source positions agreeing with the anchor. These are exact equality-cell
+masses, not masses of all subpatterns. Event and cells are disjoint, so
+
+\[
+u+\sum_{i=1}^k a_i\le1.
+\]
+
+All nonzero masses are integer multiples of \(1/D\). Positive occupied anchors
+guarantee \(u\ge1/D\). We consider either nonnegative informative or
+misinformative component \(p\), measured in nats. Its signed difference is
+a different quantity. The existing positive integral and log-product identities
+are the analytic dependencies; neither is newly kernel-verified here.
+
+The reference uses exactly 64 rational series terms, power-of-two range
+reduction and outward integer rounding onto the grid of step \(b=2^{-128}\).
+All subsequent midpoint and averaging operations are exact rational operations.
+There is no new binary64 rounding of endpoints or averages.
+
+## Step 1: a positive component cannot be arbitrarily small
+
+The positive box-integral identity is
+
+\[
+p=(k-1)!\int_0^{a_1}\cdots\int_0^{a_k}
+\frac{d\eta_1\cdots d\eta_k}{(u+\eta_1+\cdots+\eta_k)^k}.
+\]
+
+The integration variables \(\eta_i\) range over cell-mass intervals; they are
+not sensor readings. The exclamation mark denotes factorial, with \(0!=1\).
+If any \(a_i=0\), then \(p=0\) exactly. Conversely all \(a_i>0\) give \(p>0\).
+
+For \(p>0\), every \(a_i\ge1/D\). Throughout the box,
+\(u+\sum_i\eta_i\le u+\sum_i a_i\le1\), so the integrand is at least one.
+The box volume is \(\prod_i a_i\). Therefore
+
+\[
+p\ge (k-1)!\prod_i a_i\ge \frac{(k-1)!}{D^k}
+\ge \frac{(k-1)!}{M^k}.
+\]
+
+For \(k=1,2,3\) these last lower bounds are \(1/M,1/M^2,2/M^3\).
+Since \(M\ge2\), all are at least
+
+\[
+\delta=\frac{2}{M^3}>0.
+\]
+
+This gap comes from exact finite counts and at most three maximal excluded
+cells. Arbitrary real probability masses have no such uniform gap.
+
+## Step 2: the logarithm exponent is bounded
+
+Set \(r_i=a_i/u\) and \(S=\sum_i r_i\). The exact component is \(p=\ln R\).
+For one, two and three maximal excluded cells, respectively,
+
+\[
+R_1=1+r_1,\qquad
+R_2=\frac{(1+r_1)(1+r_2)}{1+r_1+r_2},
+\]
+
+\[
+R_3=
+\frac{(1+r_1)(1+r_2)(1+r_3)(1+S)}
+{(1+r_1+r_2)(1+r_1+r_3)(1+r_2+r_3)}.
+\]
+
+Subscripts indicate the case \(k\), not source or target labels. In case two,
+each numerator factor is at most \(1+S\), giving \(R_2\le1+S\).
+In case three, match the denominator factors to \(1+r_1\), \(1+r_3\)
+and \(1+r_2\), respectively; each dominates its matched factor.
+Thus \(R_3\le1+S\). Case one has equality. Consequently
+
+\[
+1\le R\le1+S=\frac{u+\sum_i a_i}{u}\le\frac1u\le D\le M.
+\]
+
+For \(p>0\), \(R>1\). Write \(R=2^e h\), where \(e\) is a nonnegative
+integer and \(1\le h<2\). Exact comparisons determine this decomposition.
+Because \(M=31000<32768=2^{15}\), \(e\le14\).
+
+## Step 3: the 64-term raw interval is narrower than one grid step
+
+For an argument \(v\in[1,2]\), define \(z=(v-1)/(v+1)\in[0,1/3]\).
+The letter \(v\) means the range-reduced logarithm argument, not variance
+or velocity. The geometric-series identity gives
+
+\[
+\ln v=2\sum_{j=0}^{\infty}\frac{z^{2j+1}}{2j+1}.
+\]
+
+Here \(j\) is a nonnegative integer term index. Keep \(j=0,\ldots,63\).
+Every omitted term is nonnegative; its denominator is at least 129.
+Summing the resulting geometric majorant bounds the omitted tail by
+
+\[
+\tau(z)=\frac{2z^{129}}{129(1-z^2)}
+\le \frac{1}{172\,3^{128}}.
+\]
+
+The symbol \(\tau\) denotes an upper bound on the omitted logarithm tail.
+Use this for both \(v=h\) and \(v=2\), and combine via
+\(\ln R=e\ln2+\ln h\). If \(w_{\rm raw}\) denotes the resulting raw
+interval width, then
+
+\[
+w_{\rm raw}\le\frac{e+1}{172\,3^{128}}
+\le\frac{15}{172\,3^{128}}<2^{-128}=b.
+\]
+
+The strict inequality follows from
+\((15/172)(2/3)^{128}<1\); it needs no floating logarithm or chosen data.
+
+## Step 4: outward grid rounding gives at most two grid steps
+
+Let \(l\) and \(h_{\rm raw}\) be the raw rational lower and upper endpoints.
+The latter is an endpoint, not the earlier range-reduced argument \(h\).
+The reference endpoints are
+
+\[
+L_{\rm ref}=b\lfloor l/b\rfloor,\qquad
+U_{\rm ref}=b\lceil h_{\rm raw}/b\rceil .
+\]
+
+Floor and ceiling mean rounding to the next integer down and up. Put
+\(n=\lfloor l/b\rfloor\), so \(l/b<n+1\).
+Since \(h_{\rm raw}-l<b\), \(h_{\rm raw}/b<n+2\).
+Hence \(\lceil h_{\rm raw}/b\rceil\le n+2\), and
+
+\[
+0\le U_{\rm ref}-L_{\rm ref}\le2b,\qquad
+L_{\rm ref}\le p\le U_{\rm ref}.
+\]
+
+It follows that \(L_{\rm ref}\ge p-2b\ge\delta-2b>0\).
+This argument uses the grid's integer structure: blindly adding two rounding
+errors would give a looser three-step bound. For \(p=0\), the unchanged
+reference returns exactly \([0,0]\), not a widened positive interval.
+
+## Step 5: the local relative guarantee
+
+Define the reference midpoint
+\(C_{\rm ref}=(L_{\rm ref}+U_{\rm ref})/2\).
+Then \(|C_{\rm ref}-p|\le(U_{\rm ref}-L_{\rm ref})/2\le b\).
+Because the lower endpoint is positive,
+
+\[
+\frac{|C_{\rm ref}-p|}{p}
+\le \frac{U_{\rm ref}-L_{\rm ref}}{2L_{\rm ref}}
+\le\frac{b}{\delta-2b}
+=\frac{M^3}{2(2^{128}-M^3)}<2^{-84}.
+\]
+
+The final comparison is equivalent to
+\(M^3(2^{84}+2)<2^{129}\). To check it with small integers,
+\(M^3=29791000000000\), and
+
+\[
+8M^3=238328000000000
+<246290604621824=7\cdot2^{45}.
+\]
+
+Also \(2^{84}+2<(8/7)2^{84}\), because \(14<2^{84}\).
+Multiplying these two strict inequalities yields the required comparison.
+This is hand-checkable exact arithmetic, not a fresh solver/kernel receipt.
+
+## Step 6: averaging does not lose precision to tiny anchor weights
+
+Fix a component position and side. For every occupied anchor \(s\), let
+\(w_s=c_s/N>0\), \(p_s\) its component and
+\([L_{{\rm ref},s},U_{{\rm ref},s}]\) its reference interval.
+The weights sum to one. Define the averaged component and endpoints by
+
+\[
+\bar p=\sum_s w_s p_s,\qquad
+\bar L_{\rm ref}=\sum_s w_s L_{{\rm ref},s},\qquad
+\bar U_{\rm ref}=\sum_s w_s U_{{\rm ref},s}.
+\]
+
+Bars mean count-weighted averaging within one law, not pooling datasets.
+Let \(\mathcal P=\{s:p_s>0\}\) and
+\(W=\sum_{s\in\mathcal P}w_s\), the total weight of positive local components.
+If \(\bar p>0\), nonnegativity implies \(W>0\).
+Zero components contribute exactly zero endpoints. Thus
+
+\[
+\bar L_{\rm ref}\ge W(\delta-2b),\qquad
+\bar U_{\rm ref}-\bar L_{\rm ref}\le2bW.
+\]
+
+The same factor \(W\) cancels in the relative ceiling:
+
+\[
+\frac{\bar U_{\rm ref}-\bar L_{\rm ref}}{2\bar L_{\rm ref}}
+\le\frac{2bW}{2W(\delta-2b)}
+=\frac{b}{\delta-2b}<2^{-84}.
+\]
+
+This is stronger than separately using \(\bar p\ge\delta/N\) and a
+weight-independent width bound. That cruder route unnecessarily loses a
+factor \(N\). The cancellation requires exact weighting, nonnegative
+components and exact zero references; extra rounding needs a new analysis.
+
+## Signed quantities, negative routes and scope limits
+
+The informative and misinformative components can nearly cancel. Their
+reference intervals give a signed net interval by cross-subtraction.
+Each component width is at most \(2b\), including averages, so a net interval
+has width at most \(4b\); its midpoint has absolute error at most \(2b\) nats.
+This does not give the same uniform relative bound for the net.
+At an exact zero the relative ratio is undefined. A nonzero local net has
+additional finite-rational structure that could supply a different, weaker
+gap; that is not the present screen or the argument above.
+
+For a constant target, informative and misinformative components can be equal
+and positive while their signed difference is zero. Reinterpreting positive
+component precision as relative net precision would therefore be wrong.
+Sparse empirical zeros do not establish population support or zero dependence.
+
+Other rejected transfers: arbitrary real masses with no positive-count gap;
+unbounded \(N\); more than three sources with the same \(\delta\); a reference
+with fewer terms or different precision; rounding the exact averages into
+binary64 without an outward-error analysis; generated forecasts used as real
+outcomes; approximation intervals treated as sampling confidence intervals.
+For a concrete out-of-contract failure, take a binary two-state source law
+and a constant target: the anchor has full-agreement count \(D-1\), and the
+other state matches none of its three source labels, with count one.
+At the bottom antichain, \(k=1\) and \(p=\ln(D/(D-1))>0\).
+For \(D=2^{131}\), the inequality \(\ln(1+x)<x\), \(x>0\), gives
+\(p<2/D=b/4\). The raw upper reference endpoint is at most
+\(p+1/(172\,3^{128})<b\);
+its positive lower endpoint is also below \(b\). Outward grid rounding gives
+\([0,b]\), whose midpoint has relative error greater than one. This is a
+hand-derived realizable example outside the count cap, not an executed control
+or a failure of the admitted helper, which refuses that pool size.
+
+The same formula could be generalized with new explicit count/dimension/tail
+conditions, but this document does not silently grant those extensions.
+Splitting, downsampling or refitting a larger law merely to enter the cap
+changes the empirical object; it is not an invisible precision repair.
+
+## Rust implementation and computational cost
+
+The stable categorical discrete_sxpid3 API implements MGW empirical atoms,
+without an experimental feature. It does not expose this exact-rational
+reference-midpoint certificate. The current reference is in the research
+helper preserved as [inert source text](data/component-bound-screen-20261011/screen_midpoint_bounds.py.txt).
+Neither a Rust interval implementation nor formal Rust refinement was run.
+The [implementation baseline](../RUST_IMPLEMENTATION_AND_COST.md) retains
+the broader API/resource boundaries.
+
+Inputs are finite count laws over three sources and a target, \(N\le31000\).
+The observed occupancy screen uses four labels per source and two/four target
+labels; the proof itself does not require those alphabet sizes. It needs
+exact occupied counts, anchor agreement events and \(k\le3\).
+No preprocessing, fitting, inference, resampling or row-independence repair
+is added. Offline numerical evaluation is intended; real-time suitability
+and prediction benefit remain unmeasured.
+
+Given masses, the cheap bracket uses order-\(k\) rational operations. The
+reference instead forms up to \(2^k\) factors, range-reduces an exact rational,
+uses 64 terms and an explicit tail, then floor/ceil and exact weighted sums.
+Large rational numerators/denominators and greatest-common-divisor work have
+nonconstant bit costs. Fixed term count is not constant elapsed time.
+Finite carrier, extraction, parser, resource and serialization costs remain.
+
+No new run or timing is claimed for this theorem. The existing screen's
+whole-route measurements and refusal limits remain [reported separately](EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md#rust-implementation-and-computational-cost).
+A future approximation API needs explicit cancellation, allocation and
+resource contracts; finite formulas do not supply them. The unchanged helper's
+cooperative checks are not hard memory quotas or universal signal handling.
+
+## Application meaning and closure status
+
+The real occupancy count laws already satisfy the stated count cap. Their
+existing reference intervals can therefore support a conditional near-exact
+component/average approximation even when the original cheap bracket is wide.
+This answers a numerical reliability question on those empirical laws.
+It does not prove that quantization is appropriate, that sensors should be
+removed, that a predictor improves or that population uncertainty is small.
+
+A defensible future diagnostic uses the cheap bracket when its declared error
+is acceptable, otherwise the separately identified rational reference, or
+abstains if resource/assumption checks fail. This is a proposed selection
+contract, not a modified executed benchmark. Simple direct prediction and
+task-loss baselines remain necessary for application claims.
+
+Two initial mathematical council conclusions preceded exchange of fresh
+proposals or new numerical outputs. One reviewer authored the original helper;
+the other authored related exposition, not that helper. Both share earlier
+context/model/host/formulas. Root checked the argument itself; advisory
+agreement is not proof, human verification or kernel acceptance.
+
+Analytic bounded precision: hand-derived under explicit dependencies.
+Executable instance arithmetic: the unchanged screen exists.
+New formal theorem, binary64/Rust refinement, statistical calibration,
+matched application benefit and qualified matching PDF: OPEN.
+SxPID3 A–E, original finite formal obligations, angular, hyperbolic and v1
+are not closed by this result. Negative evidence and all original screen
+criteria remain unchanged.

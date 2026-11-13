@@ -1,0 +1,743 @@
+#!/usr/bin/env python3
+"""Prepared exposed count-law screen; run only after approval of PROPOSAL.md.
+
+Exact rational count/bracket arithmetic and dyadic mathematical-log enclosures.
+No Rust route, general formal proof, float outward claim or application validation.
+The only writes from this helper are its bounded stdout and diagnostic stderr.
+"""
+
+from collections import Counter
+from datetime import datetime, timezone
+from decimal import Decimal, InvalidOperation
+from fractions import Fraction
+from functools import lru_cache
+from hashlib import sha256
+from itertools import combinations
+import json
+from math import factorial, isfinite
+from pathlib import Path
+import resource
+import signal
+import sys
+import time
+
+
+INPUT_SHA = "b9061eb4c84ff9d3a5372ce359df5b78524cb23b44e89177e4947ce7bfba633c"
+REFERENCE_SHA = "1a1712958a8835a05a4823a24087fb756726738160455d7f6552b4282ec9658e"
+MAX_INPUT = 1024 * 1024
+MAX_OUTPUT = 8 * 1024 * 1024
+MAX_RSS = 256 * 1024 * 1024
+MAX_SECONDS = 180
+MAX_LAWS, MAX_ANCHORS, MAX_COMPONENTS, MAX_COUNT = 14, 256, 20000, 31000
+TERMS, DYADIC_BITS = 64, 128
+ONE_PERCENT, FOUR_PPM = Fraction(1, 100), Fraction(4, 1000000)
+NODES = (
+    (1, 2, 4), (1, 2), (1, 4), (2, 4), (1, 6), (2, 5), (3, 4),
+    (1,), (2,), (4,), (3, 5, 6), (3, 5), (3, 6), (5, 6),
+    (3,), (5,), (6,), (7,),
+)
+PARTITIONS = (
+    ("earlier_exposed", "later_exposed"),
+    ("later_block", "later_day_2017-12-24", "later_day_2017-12-25",
+     "later_day_2017-12-26", "later_day_2018-01-10", "later_day_2018-01-11"),
+)
+ROOT_KEYS = set("864_split elapsed_seconds inputs nonclaims numerical_tolerance_nats peak_rss_bytes platform python results schema source_sha256 status".split())
+RESULT_KEYS = set("classes collection edge_rationals evaluations models source_order target training".split())
+EVAL_KEYS = set("conditional_information_additions daily_prediction_summaries diagnostics mgw model_scores mutual_information_by_mask_nats original_target_coarsening paired_mean_loss_differences partition target_entropy_nats".split())
+DIAG_KEYS = set("adjacent_same_target_fraction calendar_dates cells_below_five first gap_seconds_counts gap_seconds_min_max joint_counts last n nominal_joint_states observed_source_labels occupied_joint_states raw_adjacent_equal_counts raw_distinct_values rows_in_cells_below_five singleton_cells tails target_counts unobserved_joint_states".split())
+MGW_KEYS = set("event_count_digest max_float_decimal80_absolute_difference_rounded nodes scope sum_net_minus_joint_mi".split())
+NODE_KEYS = set("atom_minus atom_net atom_plus cumulative_minus cumulative_net cumulative_plus decimal80 key net_within_numerical_comparison_tolerance source_masks".split())
+MODEL_KEYS = set("class_counts histogram key mask naive_bayes training_count".split())
+START = None
+
+
+class Refusal(ValueError):
+    """A fixed input, checker, arithmetic or resource requirement failed."""
+
+
+def require(condition, message):
+    if not condition:
+        raise Refusal(message)
+
+
+def guard():
+    if START is not None:
+        require(time.monotonic() - START <= MAX_SECONDS, "elapsed work cap")
+    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    rss_bytes = rss if sys.platform == "darwin" else rss * 1024
+    require(rss_bytes <= MAX_RSS, "observed peak RSS cap")
+    return rss_bytes
+
+
+def integer(value, low, high, label):
+    require(type(value) is int and low <= value <= high, label + ": exact integer range")
+    return value
+
+
+def numeric(value, label):
+    require(type(value) in (int, float) and isfinite(value), label + ": finite numeric type")
+    return value
+
+
+def keys(value, expected, label):
+    require(type(value) is dict and set(value) == expected, label + ": closed schema keys")
+
+
+def array(value, size, label):
+    require(type(value) is list and len(value) == size, label + ": array arity")
+
+
+def strict_json(raw):
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            require(key not in result, "duplicate JSON key")
+            result[key] = value
+        return result
+
+    def invalid_constant(_token):
+        raise Refusal("nonfinite JSON token")
+
+    def parsed_integer(token):
+        require(len(token) <= 12, "JSON integer token length")
+        return int(token)
+
+    def parsed_float(token):
+        require(len(token) <= 64, "JSON numeric token length")
+        result = float(token)
+        require(isfinite(result), "nonfinite or overflow JSON number")
+        return result
+
+    try:
+        result = json.loads(raw.decode("utf-8", errors="strict"), object_pairs_hook=unique,
+                            parse_int=parsed_integer, parse_float=parsed_float,
+                            parse_constant=invalid_constant)
+    except (UnicodeError, json.JSONDecodeError, RecursionError) as error:
+        raise Refusal("JSON grammar/UTF8: " + str(error)) from error
+    visited = 0
+
+    def inspect(value, depth):
+        nonlocal visited
+        visited += 1
+        require(depth <= 32 and visited <= 100000, "JSON nesting/value cap")
+        kind = type(value)
+        require(kind in (dict, list, str, int, float, bool, type(None)), "JSON value type")
+        if kind is float:
+            require(isfinite(value), "nonfinite JSON value")
+        elif kind is str:
+            require(len(value) <= 4096 and "\x00" not in value, "JSON string length/NUL")
+        elif kind is dict:
+            for key, child in value.items():
+                require(type(key) is str and len(key) <= 128, "JSON key type/length")
+                inspect(child, depth + 1)
+        elif kind is list:
+            for child in value:
+                inspect(child, depth + 1)
+
+    inspect(result, 0)
+    return result
+
+
+def validate_cells(cells, n, classes):
+    integer(n, 1, MAX_COUNT, "law N")
+    require(type(cells) is list and 1 <= len(cells) <= 64 * classes, "count-cell list cap")
+    result, targets = {}, [0] * classes
+    previous = None
+    for row in cells:
+        array(row, 5, "count-cell")
+        require(all(type(label) is int for label in row[:4]), "cell labels must be exact integers")
+        require(all(0 <= label <= 3 for label in row[:3]) and 0 <= row[3] < classes,
+                "cell label outside alphabet")
+        count = integer(row[4], 1, n, "occupied cell count")
+        state = tuple(row[:4])
+        require(state not in result, "duplicate count state")
+        require(previous is None or previous < state, "unsorted count states")
+        result[state] = count
+        targets[state[3]] += count
+        previous = state
+    require(sum(result.values()) == n, "wrong count sum")
+    return result, targets
+
+
+def validate_diagnostics(value, classes):
+    keys(value, DIAG_KEYS, "diagnostics")
+    n = integer(value["n"], 1, MAX_COUNT, "diagnostic N")
+    counts, targets = validate_cells(value["joint_counts"], n, classes)
+    array(value["target_counts"], classes, "target counts")
+    require(all(type(c) is int and c >= 0 for c in value["target_counts"]), "target-count integer types")
+    require(value["target_counts"] == targets and sum(targets) == n, "target-count mismatch")
+    expected = {
+        "nominal_joint_states": 64 * classes, "occupied_joint_states": len(counts),
+        "unobserved_joint_states": 64 * classes - len(counts),
+        "singleton_cells": sum(c == 1 for c in counts.values()),
+        "cells_below_five": sum(c < 5 for c in counts.values()),
+        "rows_in_cells_below_five": sum(c for c in counts.values() if c < 5),
+    }
+    for field, wanted in expected.items():
+        integer(value[field], 0, MAX_COUNT, field)
+        require(value[field] == wanted, field + ": count-law mismatch")
+    array(value["observed_source_labels"], 3, "observed labels")
+    for i, labels in enumerate(value["observed_source_labels"]):
+        require(type(labels) is list and all(type(x) is int for x in labels), "observed label types")
+        require(labels == sorted({state[i] for state in counts}), "observed label mismatch")
+    for field in ("raw_distinct_values", "raw_adjacent_equal_counts"):
+        array(value[field], 3, field)
+        for item in value[field]:
+            integer(item, 0, n, field)
+    for field in ("first", "last"):
+        require(type(value[field]) is str and len(value[field]) == 19, "timestamp field shape")
+    require(type(value["calendar_dates"]) is list and all(type(x) is str and len(x) == 10 for x in value["calendar_dates"]),
+            "calendar date field shape")
+    require(type(value["gap_seconds_counts"]) is list, "gap list type")
+    gap_total = 0
+    for row in value["gap_seconds_counts"]:
+        array(row, 2, "gap count")
+        require(numeric(row[0], "gap") > 0, "gap positivity")
+        gap_total += integer(row[1], 1, n, "gap count")
+    require(gap_total == n - 1, "gap count total")
+    if n > 1:
+        array(value["gap_seconds_min_max"], 2, "gap min/max")
+        require(0 <= numeric(value["adjacent_same_target_fraction"], "adjacency") <= 1, "adjacency range")
+        require(all(numeric(x, "gap endpoint") > 0 for x in value["gap_seconds_min_max"]), "gap endpoint range")
+    else:
+        require(value["gap_seconds_min_max"] is None and value["adjacent_same_target_fraction"] is None,
+                "one-row diagnostic endpoints")
+    array(value["tails"], 3, "tails")
+    for tail in value["tails"]:
+        keys(tail, {"above", "below", "constant_train"}, "tail")
+        integer(tail["above"], 0, n, "above tail")
+        integer(tail["below"], 0, n, "below tail")
+        require(type(tail["constant_train"]) is bool, "constant-training flag type")
+    return n, counts, targets
+
+
+def event(alpha, mask):
+    return any(branch & mask == branch for branch in alpha)
+
+
+def leq(alpha, beta):
+    return all(any(a & b == a for a in alpha) for b in beta)
+
+
+def carrier():
+    generated = set()
+    for size in range(1, 8):
+        for node in combinations(range(1, 8), size):
+            if all(a & b not in (a, b) for a, b in combinations(node, 2)):
+                generated.add(node)
+    require(len(NODES) == 18 and set(NODES) == generated, "complete antichain census")
+    require(all(not leq(NODES[j], NODES[i]) for i in range(18) for j in range(i + 1, 18)),
+            "carrier topological order")
+    zeta = [[int(leq(NODES[j], NODES[i])) for j in range(18)] for i in range(18)]
+    inverse = []
+    for i in range(18):
+        row = [int(i == j) for j in range(18)]
+        for lower in range(i):
+            if zeta[i][lower]:
+                row = [row[j] - inverse[lower][j] for j in range(18)]
+        inverse.append(row)
+    validate_inverse(zeta, inverse)
+    layouts = []
+    event_sets = [frozenset(mask for mask in range(8) if event(alpha, mask)) for alpha in NODES]
+    by_event = {value: index for index, value in enumerate(event_sets)}
+    for i, accepted in enumerate(event_sets):
+        excluded = [mask for mask in range(8) if mask not in accepted]
+        maximal = tuple(mask for mask in excluded
+                        if not any(mask != other and mask & other == mask for other in excluded))
+        require(1 <= len(maximal) <= 3, "maximal excluded dimension")
+        localized = [0] * 18
+        for subset in range(1 << len(maximal)):
+            enlarged = accepted | frozenset(maximal[j] for j in range(len(maximal)) if subset & (1 << j))
+            coefficient = -1 if subset.bit_count() % 2 else 1
+            if enlarged == frozenset(range(8)):
+                require(i == 0 and coefficient == -1, "invalid virtual certain event")
+            else:
+                require(enlarged in by_event, "cover event lacks ordinary node")
+                localized[by_event[enlarged]] += coefficient
+        require(localized == inverse[i], "symbolic Mobius row mismatch")
+        layouts.append((tuple(sorted(accepted)), maximal))
+    return zeta, inverse, layouts
+
+
+def validate_inverse(zeta, inverse):
+    require(len(zeta) == len(inverse) == 18 and all(len(row) == 18 for row in zeta + inverse),
+            "integer inverse arity")
+    require(all(type(x) is int for row in zeta + inverse for x in row), "integer inverse coefficient types")
+    for i in range(18):
+        for j in range(18):
+            require(sum(zeta[i][k] * inverse[k][j] for k in range(18)) == int(i == j) and
+                    sum(inverse[i][k] * zeta[k][j] for k in range(18)) == int(i == j),
+                    "two-sided Mobius inverse mismatch")
+
+
+def validate_mgw(value):
+    keys(value, MGW_KEYS, "MGW header")
+    require(type(value["event_count_digest"]) is str and len(value["event_count_digest"]) == 64, "inherited event digest shape")
+    require(type(value["scope"]) is str, "inherited scope type")
+    numeric(value["max_float_decimal80_absolute_difference_rounded"], "inherited difference")
+    numeric(value["sum_net_minus_joint_mi"], "inherited residual")
+    array(value["nodes"], 18, "MGW nodes")
+    for alpha, node in zip(NODES, value["nodes"]):
+        keys(node, NODE_KEYS, "MGW node")
+        array(node["source_masks"], len(alpha), "source masks")
+        require(all(type(x) is int for x in node["source_masks"]) and tuple(node["source_masks"]) == alpha,
+                "inherited MGW node identity")
+        require(node["key"] == "+".join(f"{mask:02x}" for mask in alpha), "inherited node key")
+        require(type(node["net_within_numerical_comparison_tolerance"]) is bool, "inherited comparison flag type")
+        for field in ("atom_minus", "atom_net", "atom_plus", "cumulative_minus", "cumulative_net", "cumulative_plus"):
+            numeric(node[field], "inherited MGW scalar")
+        array(node["decimal80"], 6, "inherited Decimal list")
+        for text in node["decimal80"]:
+            require(type(text) is str and len(text) <= 256, "inherited Decimal text shape")
+            try:
+                require(Decimal(text).is_finite(), "nonfinite inherited Decimal text")
+            except InvalidOperation as error:
+                raise Refusal("invalid inherited Decimal text") from error
+
+
+def validate_input(value):
+    keys(value, ROOT_KEYS, "analysis root")
+    integer(value["schema"], 1, 1, "analysis schema")
+    require(value["status"] == "completed_descriptive_reference" and value["source_sha256"] == REFERENCE_SHA,
+            "inherited analysis/source identity")
+    for field in ("elapsed_seconds", "numerical_tolerance_nats"):
+        require(numeric(value[field], field) >= 0, "inherited scalar range")
+    integer(value["peak_rss_bytes"], 0, 100000000000, "inherited RSS")
+    require(type(value["python"]) is str and type(value["platform"]) is str, "inherited runtime fields")
+    require(type(value["nonclaims"]) is list and all(type(x) is str for x in value["nonclaims"]), "inherited nonclaim list")
+    array(value["inputs"], 4, "inherited inputs")
+    for record in value["inputs"]:
+        keys(record, {"bytes", "name", "sha256"}, "inherited input record")
+        integer(record["bytes"], 1, 2 * MAX_INPUT, "inherited raw bytes")
+        require(type(record["name"]) is str and type(record["sha256"]) is str and len(record["sha256"]) == 64,
+                "inherited raw locator/hash shape")
+    keys(value["864_split"], {"all_rows", "cutoff", "evaluation_rows", "gap_rows", "training_rows"}, "inherited split")
+    split = value["864_split"]
+    for field in ("all_rows", "evaluation_rows", "gap_rows", "training_rows"):
+        integer(split[field], 0, MAX_COUNT, "inherited split count")
+    require(split["all_rows"] == split["evaluation_rows"] + split["gap_rows"] + split["training_rows"] and
+            type(split["cutoff"]) is str, "inherited split shape/sum")
+    array(value["results"], 3, "result families")
+    laws, anchors = [], 0
+    identities = (("UCI357", "original", 2), ("UCI864", "original", 4), ("UCI864", "presence", 2))
+    for result_index, (result, identity) in enumerate(zip(value["results"], identities)):
+        keys(result, RESULT_KEYS, "result family")
+        collection, target, classes = identity
+        require(result["collection"] == collection and result["target"] == target, "result identity")
+        array(result["classes"], classes, "class labels")
+        require(all(type(x) is int for x in result["classes"]) and result["classes"] == list(range(classes)), "class identity/types")
+        require(result["source_order"] == ["light", "CO2", "temperature"], "source order identity")
+        array(result["edge_rationals"], 3, "inherited edges")
+        for edges in result["edge_rationals"]:
+            array(edges, 5, "inherited source edges")
+            require(all(type(x) is str and len(x) <= 128 for x in edges), "inherited edge text type")
+            parsed = [Fraction(x) for x in edges]
+            require(all(parsed[i] <= parsed[i + 1] for i in range(4)) and
+                    all(parsed[i] == parsed[0] + (parsed[4] - parsed[0]) * Fraction(i, 4) for i in range(5)),
+                    "inherited equal-width edge shape")
+        training_n, _training_counts, _training_targets = validate_diagnostics(result["training"], classes)
+        array(result["models"], 125, "inherited model census")
+        seen_models = set()
+        for model in result["models"]:
+            keys(model, MODEL_KEYS, "inherited model")
+            mask = integer(model["mask"], 0, 7, "model mask")
+            array(model["key"], mask.bit_count(), "model key")
+            require(all(type(x) is int and 0 <= x <= 3 for x in model["key"]), "model source labels")
+            model_id = (mask, tuple(model["key"]))
+            require(model_id not in seen_models, "duplicate model table key")
+            seen_models.add(model_id)
+            integer(model["training_count"], 0, training_n, "model training count")
+            array(model["class_counts"], classes, "model class counts")
+            require(all(type(x) is int and 0 <= x <= training_n for x in model["class_counts"]) and
+                    sum(model["class_counts"]) == model["training_count"], "model count types/sum")
+            for family in ("histogram", "naive_bayes"):
+                array(model[family], classes, "inherited model probability arity")
+                require(all(0 < numeric(x, "inherited model probability") < 1 for x in model[family]), "model probability range")
+        expected_partitions = PARTITIONS[0 if result_index == 0 else 1]
+        array(result["evaluations"], len(expected_partitions), "evaluation partitions")
+        for evaluation, partition in zip(result["evaluations"], expected_partitions):
+            keys(evaluation, EVAL_KEYS, "evaluation")
+            require(evaluation["partition"] == partition, "partition identity/order")
+            n, counts, targets = validate_diagnostics(evaluation["diagnostics"], classes)
+            validate_mgw(evaluation["mgw"])
+            anchors += len(counts)
+            laws.append({"id": collection + "/" + target + "/" + partition,
+                         "n": n, "counts": counts, "target_counts": targets, "classes": classes})
+    require(len(laws) == MAX_LAWS and anchors <= MAX_ANCHORS, "law/global anchor admission")
+    require(anchors * len(NODES) * 2 <= MAX_COMPONENTS, "component admission")
+    for fine, coarse in zip(laws[2:8], laws[8:14]):
+        regrouped = Counter()
+        for state, count in fine["counts"].items():
+            regrouped[state[:3] + (int(state[3] > 0),)] += count
+        require(dict(regrouped) == coarse["counts"] and fine["n"] == coarse["n"], "fixed target coarsening mismatch")
+    for group in (laws[2:8], laws[8:14]):
+        daily = Counter()
+        for law in group[1:]:
+            daily.update(law["counts"])
+        require(dict(daily) == group[0]["counts"], "fixed overlapping daily/block counts")
+    return laws, anchors
+
+
+def patterns(counts, anchor):
+    marginal, conditional = [0] * 8, [0] * 8
+    for state, count in counts.items():
+        mask = sum(1 << i for i in range(3) if state[i] == anchor[i])
+        marginal[mask] += count
+        if state[3] == anchor[3]:
+            conditional[mask] += count
+    require(marginal[7] > 0 and conditional[7] > 0, "positive full-agreement mass")
+    return marginal, conditional
+
+
+def exact_argument(ratios):
+    k = len(ratios)
+    require(1 <= k <= 3 and all(type(x) is Fraction and x >= 0 for x in ratios), "cover ratio domain")
+    result = Fraction(1)
+    for subset in range(1 << k):
+        factor = 1 + sum((ratios[j] for j in range(k) if subset & (1 << j)), Fraction(0))
+        result = result * factor if subset.bit_count() % 2 else result / factor
+    require(result >= 1, "negative component log argument")
+    return result
+
+
+def midpoint_bounds(ratios):
+    k = len(ratios)
+    require(1 <= k <= 3 and all(type(x) is Fraction and x >= 0 for x in ratios), "Taylor ratio domain")
+    g = Fraction(factorial(k - 1))
+    for ratio in ratios:
+        g *= ratio
+    if g == 0:
+        return Fraction(0), Fraction(0)
+    summed = sum(ratios, Fraction(0))
+    variance = sum((x * x for x in ratios), Fraction(0)) / 12
+    j = g / (1 + summed / 2) ** k
+    correction = g * k * (k + 1) * variance / 2
+    lower, upper = j + correction / (1 + summed) ** (k + 2), j + correction
+    require(0 < lower <= upper, "invalid midpoint bracket")
+    return lower, upper
+
+
+def relative_ceiling(lower, upper):
+    require(0 < lower <= upper, "relative screen requires positive lower endpoint")
+    return (upper - lower) / (2 * lower)
+
+
+def classify(lower, upper):
+    require(0 <= lower <= upper, "component interval ordering")
+    if lower == upper == 0:
+        return {"status": "structural_zero", "relative_midpoint_error_ceiling": None,
+                "one_percent": None, "four_ppm": None}
+    error = relative_ceiling(lower, upper)
+    return {"status": "positive", "relative_midpoint_error_ceiling": fraction_text(error),
+            "one_percent": error <= ONE_PERCENT, "four_ppm": error <= FOUR_PPM}
+
+
+def dyadic_enclosure(lower, upper):
+    scale = 1 << DYADIC_BITS
+    low_scaled, high_scaled = lower * scale, upper * scale
+    low_integer = low_scaled.numerator // low_scaled.denominator
+    high_integer = -((-high_scaled.numerator) // high_scaled.denominator)
+    return Fraction(low_integer, scale), Fraction(high_integer, scale)
+
+
+def series(argument):
+    require(type(argument) is Fraction and 1 <= argument <= 2, "range-reduced log argument")
+    z = (argument - 1) / (argument + 1)
+    z2, power, total = z * z, z, Fraction(0)
+    for term in range(TERMS):
+        if term % 8 == 0:
+            guard()
+        total += 2 * power / (2 * term + 1)
+        power *= z2
+    tail = 2 * power / ((2 * TERMS + 1) * (1 - z2))
+    return total, total + tail
+
+
+@lru_cache(maxsize=4096)
+def log_reference(argument):
+    require(type(argument) is Fraction and 1 <= argument <= MAX_COUNT, "bounded component reference argument")
+    if argument == 1:
+        return Fraction(0), Fraction(0)
+    exponent = max(0, argument.numerator.bit_length() - argument.denominator.bit_length())
+    while argument < (1 << exponent):
+        exponent -= 1
+    while argument >= (1 << (exponent + 1)):
+        exponent += 1
+    reduced = argument / (1 << exponent)
+    h_low, h_high = series(reduced)
+    if exponent:
+        two_low, two_high = log_two()
+        h_low += exponent * two_low
+        h_high += exponent * two_high
+    return dyadic_enclosure(h_low, h_high)
+
+
+@lru_cache(maxsize=1)
+def log_two():
+    return series(Fraction(2))
+
+
+def fraction_text(value):
+    return str(value.numerator) + "/" + str(value.denominator)
+
+
+def bracket_reference(lower, upper, ref_lower, ref_upper):
+    require(ref_lower <= ref_upper, "reference interval ordering")
+    if lower <= ref_lower and ref_upper <= upper:
+        return "contained"
+    if ref_upper < lower or upper < ref_lower:
+        return "conflict"
+    return "unresolved_overlap"
+
+
+def interval_record(lower, upper, reference):
+    return {"lower": fraction_text(lower), "upper": fraction_text(upper),
+            "absolute_width_nats": fraction_text(upper - lower),
+            "midpoint": fraction_text((lower + upper) / 2),
+            "reference_lower": fraction_text(reference[0]), "reference_upper": fraction_text(reference[1]),
+            "reference_status": bracket_reference(lower, upper, *reference), **classify(lower, upper)}
+
+
+def net_record(plus, minus):
+    lower, upper = plus[0] - minus[1], plus[1] - minus[0]
+    sign = "positive" if lower > 0 else "negative" if upper < 0 else "exact_zero" if lower == upper == 0 else "unresolved"
+    return {"lower": fraction_text(lower), "upper": fraction_text(upper),
+            "absolute_width_nats": fraction_text(upper - lower), "sign": sign,
+            "reference_lower": fraction_text(plus[2] - minus[3]),
+            "reference_upper": fraction_text(plus[3] - minus[2]), "relative_screen": None}
+
+
+def component(pattern_counts, denominator, inverse, layouts):
+    require(sum(pattern_counts) == denominator and denominator > 0, "pattern normalization")
+    masses = [Fraction(sum(pattern_counts[mask] for mask in accepted), denominator) for accepted, _ in layouts]
+    require(all(mass > 0 for mass in masses), "positive event masses")
+    values, records, product = [], [], Fraction(1)
+    for i, (accepted, maximal) in enumerate(layouts):
+        guard()
+        event_count = sum(pattern_counts[mask] for mask in accepted)
+        increments = [pattern_counts[mask] for mask in maximal]
+        ratios = [Fraction(count, event_count) for count in increments]
+        require(event_count + sum(increments) <= denominator, "event and maximal-cell disjointness")
+        argument = exact_argument(ratios)
+        ordinary_argument = Fraction(1)
+        for mass, coefficient in zip(masses, inverse[i]):
+            if coefficient:
+                ordinary_argument *= mass ** (-coefficient)
+        require(argument == ordinary_argument, "numeric cover/Mobius argument mismatch")
+        zero = any(count == 0 for count in increments)
+        require((argument == 1) == zero, "structural zero/log argument mismatch")
+        lower, upper = midpoint_bounds(ratios)
+        reference = log_reference(argument)
+        values.append((lower, upper, *reference))
+        record = interval_record(lower, upper, reference)
+        require((record["status"] == "structural_zero") == zero, "structural zero/bracket mismatch")
+        record.update({"event_count": event_count, "pattern_denominator": denominator,
+                       "maximal_pattern_counts": increments, "ratios": [fraction_text(x) for x in ratios],
+                       "exact_log_argument": fraction_text(argument)})
+        records.append(record)
+        product *= argument
+    require(product == Fraction(denominator, pattern_counts[7]), "component total log-product conservation")
+    return values, records
+
+
+def encode_output(value):
+    data = (json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False) + "\n").encode("utf-8")
+    require(len(data) <= MAX_OUTPUT, "stdout byte cap")
+    return data
+
+
+def controls():
+    done = []
+
+    def checked(name):
+        done.append(name)
+
+    def rejected(function, phrase):
+        try:
+            function()
+        except Refusal as error:
+            require(phrase in str(error), "control rejected for wrong reason: " + str(error))
+        else:
+            raise Refusal("negative control was accepted: " + phrase)
+
+    zeta, inverse, layouts = carrier()
+    checked("complete_18_node_carrier_two_sided_inverse_and_symbolic_cover_rows")
+    for alpha in NODES:
+        for mask in range(8):
+            independent = any(all(mask & (1 << i) for i in range(3) if branch & (1 << i)) for branch in alpha)
+            require(event(alpha, mask) == independent, "event truth-table correspondence")
+    checked("all_144_events_independent_bit_and_set_encoding")
+    require(event((1, 2), 2) and not all(2 & branch == branch for branch in (1, 2)), "AND mutation was not distinguished")
+    checked("wrong_event_AND_distinguishing_witness")
+    fixture = {(0, 0, 0, 0): 1, (1, 0, 0, 1): 1}
+    marginal, conditional = patterns(fixture, (0, 0, 0, 0))
+    require(marginal == [0, 0, 0, 0, 0, 0, 1, 1] and conditional == [0, 0, 0, 0, 0, 0, 0, 1], "target-drop witness law")
+    plus_values, plus = component(marginal, 2, inverse, layouts)
+    minus_values, minus = component(conditional, 1, inverse, layouts)
+    singleton_index = NODES.index((1,))
+    require(plus[singleton_index]["exact_log_argument"] == "2/1" and
+            minus[singleton_index]["exact_log_argument"] == "1/1" and plus_values != minus_values,
+            "dropped-target mutation was not distinguished")
+    checked("target_drop_changes_production_component_arguments")
+    corrupted = [row[:] for row in inverse]
+    corrupted[-1][0] += 1
+    rejected(lambda: validate_inverse(zeta, corrupted), "two-sided Mobius inverse mismatch")
+    checked("wrong_Mobius_row_rejected")
+    ratios = [Fraction(1, 80), Fraction(1, 80)]
+    require(exact_argument(ratios) == Fraction(6561, 6560), "worked rational argument")
+    lower, upper = midpoint_bounds(ratios)
+    require(relative_ceiling(lower, upper) == Fraction(1743657921, 463006274560000), "worked relative ceiling")
+    require(bracket_reference(lower, upper, *log_reference(exact_argument(ratios))) == "contained", "worked reference containment")
+    require(classify(lower, upper)["four_ppm"] is True, "worked four-ppm screen")
+    checked("root_worked_example_exact_argument_bracket_ceiling_and_enclosure")
+    for ratios in ([Fraction(1, 1000)], [Fraction(1)] * 3, [Fraction(10000), Fraction(1), Fraction(2)]):
+        low, high = midpoint_bounds(ratios)
+        require(bracket_reference(low, high, *log_reference(exact_argument(ratios))) == "contained", "fixed positive reference containment")
+    checked("fixed_small_balanced_large_ratio_brackets")
+    low, high = midpoint_bounds([Fraction(0), Fraction(1)])
+    require((low, high) == (0, 0) and exact_argument([Fraction(0), Fraction(1)]) == 1 and
+            classify(low, high)["relative_midpoint_error_ceiling"] is None, "zero component must avoid relative division")
+    rejected(lambda: relative_ceiling(low, high), "relative screen requires positive lower endpoint")
+    checked("structural_zero_and_wrong_relative_division_refusal")
+    for threshold in (ONE_PERCENT, FOUR_PPM):
+        require(relative_ceiling(Fraction(1), 1 + 2 * threshold) == threshold, "criterion endpoint arithmetic")
+    require(classify(Fraction(1), 1 + 2 * ONE_PERCENT)["one_percent"] is True and
+            classify(Fraction(1), 1 + 2 * FOUR_PPM)["four_ppm"] is True and
+            classify(Fraction(1), 1 + 2 * FOUR_PPM + Fraction(1, 10**15))["four_ppm"] is False,
+            "inclusive fixed criterion boundaries")
+    checked("inclusive_1_percent_and_4_ppm_endpoints")
+    valid = [[0, 0, 0, 0, 1], [1, 0, 0, 1, 1]]
+    validate_cells(valid, 2, 2)
+    for cells, n, phrase in (
+        (valid, 3, "wrong count sum"),
+        ([[0, 0, 0, 0]], 1, "array arity"),
+        ([[0, 0, 0, 0, 1], [0, 0, 0, 0, 1]], 2, "duplicate count state"),
+        ([[4, 0, 0, 0, 1]], 1, "outside alphabet"),
+        ([[False, 0, 0, 0, 1]], 1, "exact integers"),
+        ([[0, 0, 0, 0, True]], 1, "exact integer range"),
+        ([[0, 0, 0, 0, 0]], 1, "exact integer range"),
+        ([[0, 0, 0, 0, -1]], 1, "exact integer range"),
+    ):
+        rejected(lambda cells=cells, n=n: validate_cells(cells, n, 2), phrase)
+        checked("reject_count_" + phrase.replace(" ", "_"))
+    for raw, phrase in ((b'{"x":1,"x":2}', "duplicate JSON key"), (b'{"x":NaN}', "nonfinite JSON token"),
+                        (b'{"x":1e999}', "overflow JSON number")):
+        rejected(lambda raw=raw: strict_json(raw), phrase)
+        checked("reject_" + phrase.replace(" ", "_"))
+    rejected(lambda: keys({"extra": 1}, {"expected"}, "control"), "closed schema keys")
+    checked("unknown_missing_schema_keys_refused")
+    rejected(lambda: encode_output({"x": "y" * MAX_OUTPUT}), "stdout byte cap")
+    checked("output_cap_refusal_before_stdout")
+    return {"status": "prepared_controls_passed_on_actual_execution", "control_count": len(done), "checks": done}
+
+
+def analyse(raw):
+    require(0 < len(raw) <= MAX_INPUT, "stdin byte cap")
+    require(sha256(raw).hexdigest() == INPUT_SHA, "exact stdin SHA256 mismatch")
+    laws, anchors = validate_input(strict_json(raw))
+    _zeta, inverse, layouts = carrier()
+    records, totals = [], Counter()
+    comparisons = reference_factors = given_mass_k_units = 0
+    for law in laws:
+        guard()
+        averages = [[[Fraction(0)] * 4 for _ in NODES] for _ in range(2)]
+        anchor_records = []
+        for anchor, count in law["counts"].items():
+            guard()
+            marginal, conditional = patterns(law["counts"], anchor)
+            comparisons += len(law["counts"]) * 3
+            require(sum(conditional) == law["target_counts"][anchor[3]], "conditional pattern total")
+            plus_values, plus = component(marginal, law["n"], inverse, layouts)
+            minus_values, minus = component(conditional, law["target_counts"][anchor[3]], inverse, layouts)
+            weight = Fraction(count, law["n"])
+            for side, values in enumerate((plus_values, minus_values)):
+                for i, endpoints in enumerate(values):
+                    for endpoint in range(4):
+                        averages[side][i][endpoint] += weight * endpoints[endpoint]
+                    k = len(layouts[i][1])
+                    given_mass_k_units += k
+                    reference_factors += 1 << k
+            for result in plus + minus:
+                totals[result["status"]] += 1
+                totals["reference_" + result["reference_status"]] += 1
+                if result["status"] == "positive":
+                    totals["one_percent_pass" if result["one_percent"] else "one_percent_too_wide"] += 1
+                    totals["four_ppm_pass" if result["four_ppm"] else "four_ppm_too_wide"] += 1
+            anchor_records.append({"state": list(anchor), "count": count, "weight": fraction_text(weight),
+                                   "plus": plus, "minus": minus,
+                                   "net": [net_record(p, m) for p, m in zip(plus_values, minus_values)]})
+        averaged_nodes = []
+        for i, alpha in enumerate(NODES):
+            p, m = averages[0][i], averages[1][i]
+            averaged_nodes.append({"source_masks": list(alpha), "plus": interval_record(p[0], p[1], p[2:]),
+                                   "minus": interval_record(m[0], m[1], m[2:]), "net": net_record(p, m)})
+        records.append({"law": law["id"], "n": law["n"], "anchors": anchor_records, "averaged_nodes": averaged_nodes})
+    require(totals["positive"] + totals["structural_zero"] == anchors * 18 * 2, "complete component census")
+    averaged_conflicts = sum(node[side]["reference_status"] == "conflict" for law in records
+                             for node in law["averaged_nodes"] for side in ("plus", "minus"))
+    conflict_count = totals["reference_conflict"] + averaged_conflicts
+    status = "failed_midpoint_reference_conflict" if conflict_count else "completed_exposed_descriptive_screen"
+    return {"status": status, "reference_conflict_count": conflict_count, "input_sha256": INPUT_SHA,
+            "input_bytes": len(raw), "law_count": len(laws), "global_occupied_anchors": anchors,
+            "anchor_node_pairs": anchors * 18, "individual_components": anchors * 18 * 2,
+            "node_order": [{"source_masks": list(alpha), "maximal_excluded_masks": list(layouts[i][1])}
+                           for i, alpha in enumerate(NODES)],
+            "component_census": dict(sorted(totals.items())),
+            "cost_census": {"given_mass_sum_k_units": given_mass_k_units,
+                            "cover_reference_mass_factors": reference_factors,
+                            "odd_even_factor_pairs": reference_factors // 2,
+                            "whole_pattern_source_equality_comparisons": comparisons,
+                            "whole_pattern_target_equality_comparisons": comparisons // 3,
+                            "whole_pattern_state_visits": comparisons // 3,
+                            "carrier_nodes": 18, "carrier_inverse_entries": 324,
+                            "reference_cache": log_reference.cache_info()._asdict()},
+            "relative_midpoint_thresholds": {"one_percent": fraction_text(ONE_PERCENT), "four_ppm": fraction_text(FOUR_PPM)},
+            "reference_terms": TERMS, "reference_dyadic_bits": DYADIC_BITS,
+            "optional_bound_intersection": None, "results": records,
+            "nonclaims": ["independent experiments", "untouched confirmation", "raw-data provenance validation",
+                          "population inference", "general formal proof", "Rust verification", "binary64 outward enclosure",
+                          "classifier accuracy benefit", "causality", "deployment gain", "SOTA"]}
+
+
+def main():
+    global START
+    require(len(sys.argv) == 2 and sys.argv[1] in ("controls", "analyse"), "fixed mode invocation")
+    mode = sys.argv[1]
+    START = time.monotonic()
+    started = datetime.now(timezone.utc).isoformat()
+    usage_start = resource.getrusage(resource.RUSAGE_SELF)
+
+    def expired(_number, _frame):
+        raise Refusal("180-second work alarm")
+
+    signal.signal(signal.SIGALRM, expired)
+    signal.alarm(MAX_SECONDS)
+    source = Path(__file__).read_bytes()
+    source_digest = sha256(source).hexdigest()
+    result = controls() if mode == "controls" else analyse(sys.stdin.buffer.read(MAX_INPUT + 1))
+    guard()
+    require(sha256(Path(__file__).read_bytes()).hexdigest() == source_digest, "helper source drift")
+    usage = resource.getrusage(resource.RUSAGE_SELF)
+    result["schema"] = 1
+    result["helper_sha256"] = source_digest
+    result["process"] = {"started_utc": started, "pre_serialization_checkpoint_utc": datetime.now(timezone.utc).isoformat(),
+                         "elapsed_seconds_before_serialization": time.monotonic() - START,
+                         "cpu_seconds_before_serialization": usage.ru_utime + usage.ru_stime - usage_start.ru_utime - usage_start.ru_stime,
+                         "peak_rss_bytes_at_checkpoint": guard(), "python": sys.version, "platform": sys.platform,
+                         "optimized_mode": bool(sys.flags.optimize)}
+    encoded = encode_output(result)
+    guard()
+    sys.stdout.buffer.write(encoded)
+    sys.stdout.buffer.flush()
+    signal.alarm(0)
+    if result["status"] == "failed_midpoint_reference_conflict":
+        print("REFUSED: disjoint midpoint/reference conflict; full computed JSON retained on stdout", file=sys.stderr)
+        sys.exit(3)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (Refusal, ValueError, OverflowError, ZeroDivisionError, MemoryError, OSError) as error:
+        print("REFUSED: " + str(error), file=sys.stderr)
+        sys.exit(2)

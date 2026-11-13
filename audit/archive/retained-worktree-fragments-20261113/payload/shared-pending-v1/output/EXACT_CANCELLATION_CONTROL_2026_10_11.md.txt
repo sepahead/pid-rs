@@ -1,0 +1,295 @@
+# Exact cancellation does not mean absent information
+
+Sepehr Mahmoudian · 11 October 2026
+
+## Result, question and evidence
+
+Can an averaged categorical shared-exclusions atom be exactly zero while
+every occupied cell has a nonzero signed contribution? Yes, for the complete
+finite law below. Its full source tuple still determines the binary target.
+
+One bounded exact-count execution now checks four fixed tables and 144 family
+tables in normal and optimized modes. The general-family, minimum/gap, MI and
+forecast arguments remain hand/source-reviewed, not kernel or human verified.
+No priority or program closure is claimed. Separate exposed critiques check
+the family; no old fixture, alphabet, precision flag or kernel changed.
+
+Zero averaged shared information need not mean zero local terms or no
+prediction. This also tests whether a future exact-sign verifier recognizes
+cancellation across cells, rather than only all-local-zero cases.
+
+## Source, glossary and input contract
+
+Categorical Makkeh–Gutknecht–Wibral (MGW) shared exclusions is defined in
+*Introducing a differentiable measure of pointwise shared information*,
+[arXiv:2002.03356v5](https://arxiv.org/html/2002.03356v5),
+[Phys. Rev. E 103, 032149](https://doi.org/10.1103/PhysRevE.103.032149),
+Equations (1)–(3), (13)–(15) and (17). The
+[repository source map](../claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md)
+retains its correspondence limits. This construction/family is project-derived,
+not attributed to that paper.
+
+A probability mass function assigns normalized mass to categorical tuples;
+support means positive-mass tuples. An empirical law divides row counts by
+their total. An antichain contains source subsets, none contained in another.
+The bottom comprises three singleton subsets. Its atom equals its cumulative
+shared information because no ordinary node is lower. “Local” means at one
+supported tuple; “averaged” means complete-joint expectation. A nat is the
+unit for the natural logarithm, written \(\ln\). Logarithmic loss is minus
+the logarithm of a forecast's probability for the actual target.
+Mutual information (MI), defined below, is not this shared-exclusions atom.
+
+The three sources \(S_1,S_2,S_3\) have labels in \(\{0,1,2,3,4\}\).
+The target \(T\) has labels in \(\{0,1\}\). Labels have no physical units.
+Let \(c_z\) be the positive integer count of an occupied complete tuple \(z\);
+\(N\) is the total count. Each tuple's probability \(p(z)\) is \(c_z/N\).
+All other tuples of the 250-cell Cartesian alphabet have probability zero.
+No independence, continuous support, quantization, stationarity, causality or
+population inference is assumed. This is one law and one PID definition.
+
+## Complete 24-row law and event reconstruction
+
+Row names identify occupied cells, not additional variables.
+
+| Row | \(S_1\) | \(S_2\) | \(S_3\) | \(T\) | \(c_z\) |
+|---|---:|---:|---:|---:|---:|
+| n00 | 0 | 0 | 0 | 0 | 3 |
+| n01 | 0 | 1 | 1 | 1 | 3 |
+| n10 | 1 | 0 | 0 | 1 | 3 |
+| n11 | 1 | 1 | 1 | 0 | 3 |
+| a0 | 2 | 2 | 4 | 0 | 2 |
+| a1 | 2 | 4 | 2 | 0 | 2 |
+| a2 | 4 | 2 | 2 | 0 | 2 |
+| b0 | 3 | 3 | 4 | 1 | 2 |
+| b1 | 3 | 4 | 3 | 1 | 2 |
+| b2 | 4 | 3 | 3 | 1 | 2 |
+
+Ten cells have \(N=4\cdot3+6\cdot2=24\) rows.
+Each target has count twelve. No source globally duplicates another;
+\(S_3=S_2\) holds only in n rows.
+
+Fix a supported tuple \(z=(s_1,s_2,s_3,t)\). Its bottom-node event \(E_z\)
+means \(S_1=s_1\) OR \(S_2=s_2\) OR \(S_3=s_3\). Define \(U_z\) as its
+complete-row count, \(V_z\) as its count jointly with \(T=t\), and \(C_t\)
+as that target's count. The anchor itself ensures all three counts are positive.
+
+Every event's occupied members follow. Disjoint source labels prevent
+cross-block matches.
+
+| Anchor | Event members | \(U_z\) | \(V_z\) |
+|---|---|---:|---:|
+| n00 | n00,n01,n10 | 9 | 3 |
+| n01 | n00,n01,n11 | 9 | 3 |
+| n10 | n00,n10,n11 | 9 | 3 |
+| n11 | n01,n10,n11 | 9 | 3 |
+| a0 | a0,a1,a2,b0 | 8 | 6 |
+| a1 | a0,a1,a2,b1 | 8 | 6 |
+| a2 | a0,a1,a2,b2 | 8 | 6 |
+| b0 | b0,b1,b2,a0 | 8 | 6 |
+| b1 | b0,b1,b2,a1 | 8 | 6 |
+| b2 | b0,b1,b2,a2 | 8 | 6 |
+
+For example, a0 matches a1 through the first source, a2 through the second,
+and b0 through the third, as well as itself. Its event has four count-two
+cells, three with its target: \(U_{\mathrm{a0}}=8,V_{\mathrm{a0}}=6\).
+
+The informative argument \(R_z^+=N/U_z\) and misinformative argument
+\(R_z^-=C_t/V_z\) are both positive. Their superscripts identify components,
+not arithmetic signs. Define the net ratio \(q_z=R_z^+/R_z^-\). Then
+
+\[
+q_z=\frac{N V_z}{U_z C_t}
+=\frac{p(E_z\mid T=t)}{p(E_z)},\qquad
+\text{local signed atom}=\ln q_z.
+\]
+
+For n rows, \(R_z^+=24/9=8/3,R_z^-=12/3=4,q_z=2/3\).
+For a/b rows, \(R_z^+=24/8=3,R_z^-=12/6=2,q_z=3/2\).
+Thus every local net value is nonzero. Each separate component is positive.
+
+Let \(A\) denote the averaged signed bottom atom in nats. All steps are
+
+\[
+\begin{aligned}
+A
+&=\sum_z \frac{c_z}{24}\ln q_z\\
+&=\frac{4\cdot3}{24}\ln(2/3)
+ +\frac{6\cdot2}{24}\ln(3/2)\\
+&=\tfrac12\ln(2/3)+\tfrac12\ln(3/2)\\
+&=\tfrac12\ln\big((2/3)(3/2)\big)=\tfrac12\ln1=0.
+\end{aligned}
+\]
+
+Equivalently, the exact count product is
+\((2/3)^{12}(3/2)^{12}=1\). No tolerance or floating-point logarithm is needed.
+The informative and misinformative averages are separately
+\(\tfrac12\ln(8/3)+\tfrac12\ln3=\tfrac12\ln8\) and
+\(\tfrac12\ln4+\tfrac12\ln2=\tfrac12\ln8\).
+
+## A solved restricted family, not global minimality
+
+Keep the ten occupied tuples, but assign count \(a\) to every n row and count
+\(b\) to every a/b row, where \(a,b\) are positive integers.
+Now \(N=4a+6b\) and \(C_t=2a+3b=N/2\).
+For n rows \(U_z=3a,V_z=a\); for a/b rows \(U_z=4b,V_z=3b\).
+Substitution gives the SAME ratios \(2/3\) and \(3/2\), respectively.
+
+Therefore, since \(\ln(2/3)=-\ln(3/2)\),
+
+\[
+A=\frac{6b-4a}{4a+6b}\ln(3/2)
+=\frac{3b-2a}{2a+3b}\ln(3/2).
+\]
+
+The denominator and \(\ln(3/2)\) are positive. The atom's sign is precisely
+the sign of integer \(3b-2a\). It is zero exactly when \(3b=2a\).
+That equality makes \(a\) divisible by three: write \(a=3k\), where \(k\)
+is a positive integer. Substitution gives \(b=2k,N=24k\).
+Thus 24 is minimal ONLY in this block-constant family, not across all laws.
+
+If \(A\ne0\), the nonzero integer numerator has absolute value at least one,
+so
+
+\[
+|A|\ \ge\ \frac{\ln(3/2)}{2a+3b}
+=\frac{2\ln(3/2)}{N}.
+\]
+
+Equality holds for \(a=b=1\), with \(N=10,A=\ln(3/2)/5\), and for
+\(a=2,b=1\), with \(N=14,A=-\ln(3/2)/7\).
+This bound is family-specific; arbitrary empirical atoms need not have it.
+Increasing counts can make nonzero values arbitrarily small:
+\(a=3k+1,b=2k+1\) gives numerator one and denominator \(12k+5\).
+There is no count-independent positive gap. A relative error at exact zero
+is undefined; a zero decision and a nonzero-magnitude bound are separate tasks.
+
+## Prediction and MI are different questions
+
+Let \(S=(S_1,S_2,S_3)\) be the complete source tuple. Its Shannon MI with \(T\)
+is defined here by
+\(I(S;T)=\sum_z p(z)\ln[p(T=t\mid S=s)/p(T=t)]\), with \(s=(s_1,s_2,s_3)\).
+In the 24-row law, every source tuple has one target, so the conditional target
+probability in that ratio is one. The target prior is one half. Every term
+has log ratio \(\ln2\), and the weights sum to one: \(I(S;T)=\ln2>0\).
+
+A full-tuple finite-law forecast chooses that unique target and has zero
+classification error and zero logarithmic loss. A constant forecast has
+error one half. A prior probability forecast assigns one half to each target
+and has loss \(\ln2\). These are law calculations, not field benchmarks.
+
+For source tuple \(s\), define a different forecast
+\(g_s(u)=p(T=u\mid E_s)\), where \(u\) is either target label and \(E_s\) is its
+row-specific OR event. It assigns the actual target probability \(3/9=1/3\)
+in n rows and \(6/8=3/4\) in a/b rows. Hence its mean log loss is
+\(\tfrac12\ln3+\tfrac12\ln(4/3)=\ln2\), exactly the prior's loss.
+Its most likely label is wrong on every n row and right on every a/b row;
+its error is one half. The shared-exclusions average is thus not the MI of
+one fixed event channel. The event is reconstructed for each source tuple.
+
+For future neural, imaging or physical-intelligence audits, retain local signs
+and task comparators when an average is zero. This establishes no data benefit
+or harmful-source identification and does not justify source removal.
+
+## Preserved alternative and selection accounting
+
+Four complete handcrafted laws were explored: three worker layouts and one
+root law. Two primary notes were frozen before their authors saw each other's
+law. Other layouts were retrospectively recorded, not contemporaneously frozen.
+Selection was exploratory, not preregistered or empirically confirmatory.
+The selected law has fewer rows/cells, a binary target, no global source copy
+and an OR-event edge unique to each coordinate. Shared model, host, policy and
+source prevent claims of full independence.
+
+Both unselected worker layouts retain the four n cells/count3, and have six
+positive cells/count2. Layout C1 uses \((2,i,i;0),(3,i,i;1)\), for
+\(i\in\{2,3,4\}\): source triple then target. It has global \(S_3=S_2\).
+C2 uses \((2,2,2;0),(2,3,2;0),(2,4,4;0),(3,2,3;1),(3,3,3;1),(3,4,4;1)\).
+It has no global copy, but its third OR branch adds no event edge. Both retain
+the same \(2/3,3/2\) ratios and zero average. They are valid, not failed laws.
+
+The root's alternative has \(N=60\), fourteen occupied cells, source labels
+0–4 and target labels 0–2, with \(S_3=S_1\). Its COMPLETE grouped law below
+writes target:count pairs; omitted targets have zero count.
+
+| Source tuple | Target:count |
+|---|---|
+| 000 | 1:4, 2:4 |
+| 111 | 0:4, 2:4 |
+| 222 | 0:4, 1:4 |
+| 333 | 0:6, 2:3 |
+| 343 | 1:6, 2:3 |
+| 434 | 1:6, 2:3 |
+| 444 | 0:6, 2:3 |
+
+Each target has count twenty. The first three source tuples produce local
+ratio \(3/2\) on 24 rows. The last four give \(2/3\) on 24 rows and one on
+twelve target-two rows. Thus its bottom average is also zero, while
+\(I(S;T)=(2/5)\ln3>0\); its full-source optimal prediction rate is \(3/5\),
+versus \(1/3\) for a constant prediction. MI and prediction remain hand-derived;
+the exact bottom counts/product also passed the bounded execution below.
+This larger duplicate-source control is not an extra dataset.
+
+## Bounded exact execution
+
+The [complete outputs and run facts](data/exact-cancellation-control-20261011/STATUS.md)
+retain the one fixed audit. Each mode checked C1, C2, C3, root60 and every
+ordered \((a,b)\) in \(\{1,\ldots,12\}^2\): 148 evaluations and 147 distinct
+count tables, not independent samples or distinct probability laws.
+All exact products/signs matched: 44 negative, 8 zero and 96 positive.
+The eight zeros include four fixed tables and four family pairs.
+Thirty-five negative controls were refused for their assigned reason; four
+positive controls passed. An independent construction of integer powers of
+two and three checked every ordered scientific record without importing the
+event loops. Both modes agreed after removing only their optimization field.
+
+Native exits were zero, output was complete and stderr empty. Scientific
+invocations took 54,992,584 and 55,584,625 recorded nanoseconds, within the
+unchanged 15-second deadline; selected pins were unchanged. These are finite
+run facts, not a speedup, generic caller qualification, formal proof, statistical
+test or task benchmark. The run binds the preserved pre-execution report;
+this editorial update occurred after closing pin checks. Its private custody
+is not a portable public replay bundle. No future rerun inherits acceptance.
+
+## Rust implementation and computational cost
+
+The current public route is
+\(\texttt{pid\_core::stable::categorical::discrete\_sxpid3}\), implemented in
+[the categorical module](../crates/pid-core/src/sxpid.rs) without a research
+feature. It computes the empirical plug-in atoms, not an exact sign certificate.
+No API, method catalog, estimator or runtime code changed.
+
+Neither proposed law has run through that Rust route. The separate exact
+verifier above checks only bottom counts/products/signs, not all Rust atoms.
+Input: 24 rows, three source columns, one target column,
+five labels per source, two targets and ten occupied joint cells.
+Direct event reconstruction needs at most \(10\cdot10\cdot3=300\) coordinate
+comparisons plus integer additions for that direct scheme. Captured batch
+time/memory above describe a different bounded verifier, not this Rust route.
+No training,
+inference, resampling, preprocessing, hard limit, cancellation guarantee,
+certified logarithm, binary64 zero or online suitability is reported.
+Integer size grows with \(a,b\); comparison/addition are not constant-cost.
+
+Five source labels exceed the separate four-label occupancy-study contract.
+Do not change that frozen contract or credit its 27 controls to this example.
+Only the bottom atom is derived; neither full 18-node evaluation nor the
+original complete 108-expression acceptance target is certified here.
+
+## Review, failures and next evidence
+
+Model reviews recompute counts, not human or kernel evidence. Source-to-hand
+correspondence was inspected, without fresh primary-byte authentication.
+The bounded exact execution is complete; the general-family proof remains hand
+reviewed. Formal, compiled Rust and application connections remain open.
+SxPID3 A–E remain 0/5 closed.
+A matching qualified PDF is not produced.
+
+Retained losing routes include uniform cell weighting, negative clamping,
+logarithm of an averaged ratio, and zero acceptance only when every local
+ratio is one. The original empirical magnitude failure is unchanged.
+Next: original full-lattice formal/refinement and directed-magnitude work,
+with independently qualified tools and unchanged acceptance criteria.
+
+Cite: Sepehr Mahmoudian, *Exact cancellation does not mean absent information*
+(2026), including exact commit or release. Cite the defining MGW
+paper separately; see [software citation](../CITATION.cff).

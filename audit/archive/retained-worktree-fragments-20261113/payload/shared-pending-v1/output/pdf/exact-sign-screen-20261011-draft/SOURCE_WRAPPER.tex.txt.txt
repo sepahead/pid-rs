@@ -1,0 +1,39 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,array,longtable,calc,xcolor}
+\usepackage{microtype,ragged2e,enumitem,etoolbox,needspace,graphicx}
+\usepackage{pid-rs-report-tables,pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,
+pdftitle={Exact empirical atom signs on two occupancy datasets},
+pdfauthor={Sepehr Mahmoudian},
+pdfsubject={Finite categorical count-law signs; no magnitude accuracy, population sign or task-gain claim},
+pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Exact empirical atom signs}{Finite categorical laws}
+\PidWorkflowConfigureSections
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em plus 0.05em minus 0.03em}
+\setlength{\emergencystretch}{3em}
+\setlist{itemsep=0.15em,topsep=0.2em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\newcounter{none}
+\title{\PidReportTitle{Exact empirical atom signs on two occupancy datasets}
+{Integer comparison; no magnitude-accuracy rescue}}
+\author{Sepehr Mahmoudian}
+\date{11 October 2026}
+\begin{document}
+\PidMakeTitle
+{\small Repository main links are navigation, not historical provenance.\par}
+\input{../body.tex}
+\par\medskip
+{\small Suggested citation: Sepehr Mahmoudian,
+\emph{Exact empirical atom signs on two occupancy datasets} (2026).
+For an accepted publication, include the exact repository commit or release.
+Software citation: \href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{CITATION.cff}.\par}
+\end{document}

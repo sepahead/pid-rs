@@ -1,0 +1,312 @@
+Suggested citation: Mahmoudian (2026), ``Exact empirical atom signs on
+two occupancy datasets''; pid-rs code baseline
+\texttt{1f041a37086cda71bc65a860d1795613c7cd1003} (not the uncommitted
+report revision).
+
+\section{Result and scope}\label{result-and-scope}
+
+Question: can integer arithmetic determine finite-law atom signs?
+
+A completed integer-product diagnostic determines all 252 averaged atom
+signs for the fourteen exposed, overlapping empirical laws. Among the 55
+signs unresolved by the earlier cheap midpoint-Taylor brackets, 44 are
+positive and 11 negative. The earlier higher-precision reference
+intervals already gave these same strict signs. The new integer-product
+route confirms them without logarithm evaluation; it does not discover
+55 previously unavailable signs. The total is 89 positive, 15 negative
+and 148 exact zeros.
+
+This is a finite categorical shared-exclusions calculation, not
+continuous SxPID3, a population estimate, a new PID definition or
+research-program closure. The defining categorical measure is
+Makkeh--Gutknecht--Wibral (MGW):
+\href{https://doi.org/10.1103/PhysRevE.103.032149}{defining paper}. The
+product diagnostic is a repository composition with no
+scientific-priority claim. The
+\href{https://github.com/sepahead/pid-rs/blob/main/output/EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md}{original
+screen} retains its input contract, old intervals, references and all
+losing outcomes.
+
+\section{Input and output
+assumptions}\label{input-and-output-assumptions}
+
+Terms: an empirical probability mass function assigns each cell its
+observed count divided by the row count; quantization maps measurements
+to labels; an atom is a local or averaged term obtained by the defining
+lattice inversion. A bracket is an interval proved to contain a
+quantity. A nat is the information unit for the natural logarithm. Ppm
+means parts per million; RSS means resident set size, the process's
+resident memory. Source: the defining paper above and the linked
+component derivation. Symbols are defined locally before use. Write ln
+for the natural logarithm. A MiB is 1,048,576 bytes.
+
+Three source variables are training-fitted four-label versions of light,
+carbon dioxide and temperature, in that order; each alphabet is
+\(\{0,1,2,3\}\). They are not the original physical units. The target is
+binary occupancy for UCI 357, occupant count in \(\{0,1,2,3\}\) for UCI
+864, or a separately declared binary presence transformation of that
+count. Changing the target changes the estimand. The original screen
+documents the frozen partitions, encodings and dataset sources.
+
+Each evaluation law is its finite empirical joint probability mass
+function. Only occupied joint cells have positive counts. Each law has
+at most 31,000 rows. Across the laws, 109 occupied cell records are
+counted; the laws share rows or temporal partitions and are not
+independent replications. Independent-and-identically-distributed
+sampling is not needed for the finite arithmetic, and is not asserted.
+Population sign, confidence coverage, stationarity and causal relevance
+are not established.
+
+For each law, the output has eighteen averaged ordinary three-source
+shared-exclusions atoms. Natural logarithms give nats. Negative atoms
+are retained, not clamped. These 252 records do not cover the original
+complete 108 keyed expressions per law: eighteen nodes times
+cumulative/atom forms times informative/misinformative/net components.
+
+\section{Why exact integers can decide a
+sign}\label{why-exact-integers-can-decide-a-sign}
+
+Fix one law and one atom label \(\alpha\). The label identifies one of
+the eighteen source antichains; an antichain is a family of nonempty
+source collections with none contained in another. The measure's
+OR-between- collections and AND-within-collection event semantics are
+unchanged.
+
+Let \(m\) be the number of occupied joint cells, and let \(j\) run from
+one to \(m\). Cell \(j\) has positive integer count \(c_j\). Let \(N\)
+be the number of rows, so \(N=\sum_{j=1}^{m}c_j>0\).
+
+The prior
+\href{https://github.com/sepahead/pid-rs/blob/main/output/POSITIVE_CATEGORICAL_COMPONENT_BOUNDS_2026_10_11.md}{component
+derivation} expresses each local nonnegative component as a logarithm of
+a positive rational number. For this fixed atom and cell, call those
+rational arguments \(r_{\alpha,j}^{+}\) and \(r_{\alpha,j}^{-}\),
+respectively. The superscripts mean informative and misinformative
+components, not arithmetic signs. Define their positive rational ratio
+\(q_{\alpha,j}=r_{\alpha,j}^{+}/r_{\alpha,j}^{-}\).
+
+The local signed atom is therefore
+\(\ln r_{\alpha,j}^{+}-\ln r_{\alpha,j}^{-}=\ln q_{\alpha,j}\). The
+average \(A_\alpha\), weighted by the empirical cell probabilities, is
+
+\[
+A_\alpha
+=\sum_{j=1}^{m}\frac{c_j}{N}\ln q_{\alpha,j}
+=\frac{1}{N}\ln\!\left(\prod_{j=1}^{m}q_{\alpha,j}^{c_j}\right).
+\]
+
+Every step matters:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The weight is the joint cell probability \(c_j/N\), not an unweighted
+  average across occupied cells.
+\item
+  The logarithmic difference becomes a logarithm of a ratio because both
+  arguments are positive.
+\item
+  Multiplying a logarithm by the integer \(c_j\) gives the logarithm of
+  its \(c_j\)-th power.
+\item
+  Adding logarithms gives the logarithm of the product.
+\item
+  Write the exact positive rational product as \(P_\alpha/Q_\alpha\),
+  where \(P_\alpha,Q_\alpha\) are positive integers. Their common
+  factors may be cancelled without changing the ratio.
+\item
+  Since \(N>0\), division by \(N\) does not change a sign.
+\item
+  The natural logarithm is strictly increasing and \(\ln 1=0\). Thus
+  \(P_\alpha>Q_\alpha\) means positive, equality means exact zero, and
+  \(P_\alpha<Q_\alpha\) means negative.
+\end{enumerate}
+
+No floating-point logarithm or interval-overlap decision is needed for
+this sign. The argument assumes the supplied rational arguments
+faithfully represent the defining count-law atoms. Correct arithmetic on
+a wrong event or target would still answer the wrong question.
+
+This is a hand derivation plus bounded executable evidence, not a new
+stock-kernel theorem or a dependency-disjoint verified implementation.
+It gives no signed magnitude or relative-magnitude error guarantee.
+
+\section{Worked control: losing the counts reverses the
+sign}\label{worked-control-losing-the-counts-reverses-the-sign}
+
+This synthetic control is not an occupancy finding. Sources
+\(X_1,X_2,X_3\) and target \(T\) are binary labels. The complete
+occupied law is:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrrrr@{}}
+\toprule\noalign{}
+\(X_1\) & \(X_2\) & \(X_3\) & \(T\) & Count \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 0 & 0 & 0 & 3 \\
+0 & 0 & 1 & 0 & 1 \\
+0 & 1 & 0 & 0 & 1 \\
+0 & 1 & 1 & 0 & 1 \\
+1 & 0 & 0 & 1 & 1 \\
+1 & 0 & 1 & 1 & 1 \\
+1 & 1 & 0 & 1 & 1 \\
+1 & 1 & 1 & 0 & 3 \\
+\end{longtable}
+}
+
+There are \(m=8\) occupied cells and \(N=3+6+3=12\) rows. The
+target-zero count is nine; the target-one count is three. Choose the
+bottom antichain \(\alpha=\{\{1\},\{2\},\{3\}\}\): its event means at
+least one source matches the fixed cell. For binary sources, its only
+excluded source triple is the bitwise opposite of that cell.
+
+Write \(u^+\) for the event probability in the source marginal and
+\(u^-\) for its probability conditional on the cell's target. For this
+bottom atom, \(r^+=1/u^+\), \(r^-=1/u^-\), hence \(q=u^-/u^+\).
+
+For cell \((0,0,0,0)\), the opposite triple \((1,1,1)\) has count three
+and the same target. Thus \(u^+=1-3/12=3/4\), \(u^-=1-3/9=2/3\), and
+\(q=8/9\). Cell \((1,1,1,0)\) gives the same ratio and also has count
+three. For each other cell, the opposite has count one and a different
+target. Consequently \(u^+=1-1/12=11/12\), \(u^-=1\), and \(q=12/11\).
+Each of those six cells has count one.
+
+The correctly weighted product and average are therefore
+
+\[
+\frac{P_\alpha}{Q_\alpha}
+=(8/9)^{3+3}(12/11)^6
+=(32/33)^6<1,\qquad
+A_\alpha=\frac6{12}\ln(32/33)<0.
+\]
+
+Dropping counts assigns exponent one to every occupied cell, giving
+instead
+
+\[
+(8/9)^2(12/11)^6
+=\left(\frac{8\cdot12^3}{9\cdot11^3}\right)^2
+=(13824/11979)^2>1.
+\]
+
+Dividing its logarithm by eight cannot correct the positive sign: it
+averages cells rather than rows. The executed control retained both the
+correct negative result and this losing transformation. It illustrates
+why rare cells and unequal counts must remain explicit, not a new
+scientific theorem.
+
+\section{Observed results and retained
+negatives}\label{observed-results-and-retained-negatives}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2667}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2667}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Previous midpoint-Taylor bracket
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Exact positive
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Exact negative
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Exact zero
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Positive & 45 & 0 & 0 \\
+Negative & 0 & 4 & 0 \\
+Exact zero & 0 & 0 & 148 \\
+Unresolved & 44 & 11 & 0 \\
+Total & 89 & 15 & 148 \\
+\end{longtable}
+}
+
+\begin{center}
+\input{../classification-figure.tex}
+\end{center}
+
+Both normal and optimized runs produced this cross-tab and all 252
+records, with no contradiction of an earlier strict sign. All 27 fixed
+controls passed in each run, including losing transformations that drop
+count weights, use incorrect conditional weights or average ratios
+before taking a logarithm. These controls share implementation code;
+they are not all-input assurance.
+
+The old unresolved intervals remain unresolved under their original
+recipe. The new count-product diagnostic answers a different numerical
+question; no old label, precision flag, reference or threshold was
+altered. In particular, the original positive-component screen still has
+\textbf{zero of 184 positive averages meeting four ppm}. Exact signs do
+not rescue that magnitude-accuracy failure.
+
+A negative shared-exclusions atom is not negative mutual information, a
+harmful sensor, a causal effect or evidence of inferior prediction.
+These interpretations need their own target, loss, sampling and
+comparator study. No prediction or control benefit was measured here.
+
+\section{Rust implementation and computational
+cost}\label{rust-implementation-and-computational-cost}
+
+This diagnostic executed in Python with exact integers and rational
+arithmetic; no Rust implementation or refinement was executed. The
+existing public Rust API
+\texttt{pid\_core::stable::categorical::discrete\_sxpid3} computes
+empirical categorical atoms without an experimental feature; it is not
+this integer-sign certifier. The private diagnostic source is
+\texttt{exact\_signed\_diagnostic.py}, SHA-256
+\texttt{dc049a10a8c95911a036e4189b38ea1c419c6ab68c9c7c9dfa85cc9e7c77410a}.
+No preprocessing, training, inference or resampling was performed in
+this run. Online or real-time suitability is unestablished.
+
+The normal direct child took 20.888083375 seconds from fork to terminal
+wait4 and reached 72,286,208 bytes maximum resident memory. The
+optimized child took 20.652340500 seconds and reached 76,529,664 bytes.
+Both exited normally with status zero. These are actual direct-child
+observations, including startup, not isolated arithmetic-loop timings,
+process-tree bounds or a comparative benchmark.
+
+The count, factor and bit limits, 180-second direct-child deadline,
+256-MiB terminal maximum-RSS acceptance threshold (not a hard memory
+limit) and 8-MiB output limit were unchanged. The complete twenty-four
+stage captures passed normal and optimized custody audits. Both source
+manifests and selected runtime pins were unchanged before and after; the
+terminal generated-root census was 232 files, two directories and
+7,328,174 logical bytes.
+
+Integer powers, products and greatest-common-divisor reduction are not
+constant-cost operations. Their cost grows with count exponents and
+integer bit lengths. The result does not establish scaling to arbitrary
+sample sizes, source counts or alphabets.
+
+\section{Verification and publication
+status}\label{verification-and-publication-status}
+
+The single prospective run and its actual A0--A9 closure record are
+retained in ignored local durability storage: full native responses, all
+generated artifacts, source/draft pins, controls and failures. This note
+is not a public standalone replay package. Hash/custody checks assume a
+trusted stable host and correct source semantics; they are not an atomic
+snapshot, full runtime attestation, human verification or independent
+formal proof.
+
+The original 108-expression target, SxPID3 Programs A--E, formal routes,
+Rust refinement, population calibration, matched multi-dataset task
+tests, qualified matching PDF and release gates remain open. Closed
+original SxPID3 programs remain zero of five. At source freeze (11
+October 2026), no matching qualified PDF exists.
+
+An initial account did not distinguish the cheap brackets from the old
+reference intervals and called the 55 signs previously unresolved
+without that qualifier. Independent review caught this overstatement;
+the original bytes and correction record are retained. Source, outputs
+and criteria did not change. This is a corrected interpretation, not
+another scientific run.

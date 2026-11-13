@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="830" viewBox="0 0 1000 830" role="img" aria-labelledby="title desc">
+  <title id="title">Relative midpoint-error eligibility among positive empirical components</title>
+  <desc id="desc">Two bars each normalize only positive components to one hundred percent. Supplied pointwise counts: 3924 coordinates, 2085 positive and 1839 structural zeros. Of the positives, 313 meet four parts per million, 644 meet one percent but not four parts per million, and 1128 are too wide for one percent. Supplied averaged counts: fourteen laws times thirty-six coordinates equals 504, with 184 positive and 320 structural zeros. Of the positives, zero meet four parts per million, 21 meet one percent only, and 163 are too wide for one percent. Four parts per million is 0.000004 relative error; one percent is 0.01. Zeros are shown separately and are not positive-component relative-error tests. The fourteen laws overlap or reuse counts from two UCI datasets; they are not fourteen independent experiments. Numbers are supplied from the parent native empirical screen and are not independently recomputed by this graphic. Eligibility is not a confidence level, formal verification or task-gain evidence. Color, pattern and text redundantly distinguish the three categories. Geometry is rounded for display; counts and denominators are explicit.</desc>
+  <!-- Prepared SVG source only: rendering, grayscale, print and accessibility adjudication remain pending.
+       Rectangle positions are rounded display geometry, not numerical certificates. No external assets. -->
+  <defs>
+    <pattern id="one-percent-only" width="14" height="14" patternUnits="userSpaceOnUse">
+      <rect width="14" height="14" fill="#D2E0E2"/>
+      <path d="M-3 3L3-3M0 14L14 0M11 17L17 11" fill="none" stroke="#2C3E50" stroke-width="1" opacity="0.25"/>
+    </pattern>
+    <pattern id="too-wide" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="#F7F3E9"/>
+      <rect width="16" height="16" fill="#743E37" opacity="0.12"/>
+      <path d="M4 0V16M12 0V16" fill="none" stroke="#743E37" stroke-width="1" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <rect width="1000" height="830" fill="#F7F3E9"/>
+  <g font-family="DejaVu Sans, Arial, sans-serif" font-size="22" fill="#2C3E50">
+    <text x="50" y="45" fill="#1F3F60" font-size="32" font-weight="700">Relative midpoint-error eligibility</text>
+    <text x="50" y="81" fill="#1F6968">Pointwise versus averaged: each bar includes positive components only.</text>
+    <text x="50" y="116">4 ppm = 4 parts per million = 0.000004; 1% = 0.01 relative error.</text>
+
+    <rect x="50" y="142" width="24" height="24" fill="#1F6968" stroke="#2C3E50"/>
+    <text x="86" y="162">Meets 4 ppm</text>
+    <rect x="310" y="142" width="24" height="24" fill="url(#one-percent-only)" stroke="#2C3E50"/>
+    <text x="346" y="162">Meets 1% only</text>
+    <rect x="635" y="142" width="24" height="24" fill="url(#too-wide)" stroke="#2C3E50"/>
+    <text x="671" y="162">Too wide for 1%</text>
+
+    <text x="50" y="213" fill="#1F6968" font-size="27" font-weight="700">Pointwise components</text>
+    <text x="50" y="245">3,924 coordinates total; 2,085 positive (bar denominator).</text>
+    <rect x="50" y="262" width="135.108" height="68" fill="#1F6968"/>
+    <rect x="185.108" y="262" width="277.986" height="68" fill="url(#one-percent-only)"/>
+    <rect x="463.094" y="262" width="486.906" height="68" fill="url(#too-wide)"/>
+    <rect x="50" y="262" width="900" height="68" fill="none" stroke="#2C3E50" stroke-width="1.5"/>
+    <path d="M185.108 262V330M463.094 262V330" stroke="#2C3E50" stroke-width="1.5"/>
+    <g text-anchor="middle">
+      <text x="118" y="289" fill="#FFFFFF" font-size="26" font-weight="700">313</text>
+      <text x="118" y="318" fill="#FFFFFF">4 ppm</text>
+      <text x="324" y="289" font-size="26" font-weight="700">644</text>
+      <text x="324" y="318">1% only</text>
+      <text x="707" y="289" font-size="26" font-weight="700">1,128</text>
+      <text x="707" y="318">Too wide</text>
+    </g>
+    <text x="50" y="353">0%</text>
+    <text x="950" y="353" text-anchor="end">100% of 2,085 positives</text>
+    <rect x="50" y="368" width="900" height="42" rx="4" fill="#D2E0E2"/>
+    <text x="66" y="396">Structural zeros (outside bar): 1,839 of 3,924 coordinates.</text>
+
+    <text x="50" y="451" fill="#1F6968" font-size="27" font-weight="700">Averaged components</text>
+    <text x="950" y="451" text-anchor="end" font-weight="700">4 ppm eligible: 0</text>
+    <text x="50" y="484">14 laws × 36 = 504 coordinates; 184 positive (bar denominator).</text>
+    <!-- No zero-width 4-ppm rectangle or internal label: its zero count is above the bar. -->
+    <rect x="50" y="501" width="102.717" height="68" fill="url(#one-percent-only)"/>
+    <rect x="152.717" y="501" width="797.283" height="68" fill="url(#too-wide)"/>
+    <rect x="50" y="501" width="900" height="68" fill="none" stroke="#2C3E50" stroke-width="1.5"/>
+    <path d="M152.717 501V569" stroke="#2C3E50" stroke-width="1.5"/>
+    <g text-anchor="middle">
+      <text x="101" y="528" font-size="26" font-weight="700">21</text>
+      <text x="101" y="557">1% only</text>
+      <text x="551" y="528" font-size="26" font-weight="700">163</text>
+      <text x="551" y="557">Too wide</text>
+    </g>
+    <text x="50" y="592">0%</text>
+    <text x="950" y="592" text-anchor="end">100% of 184 positives</text>
+    <rect x="50" y="607" width="900" height="42" rx="4" fill="#D2E0E2"/>
+    <text x="66" y="635">Structural zeros (outside bar): 320 of 504 coordinates.</text>
+
+    <text x="50" y="685">14 overlapping/reused count laws from two UCI datasets.</text>
+    <text x="50" y="716">Not 14 independent experiments; eligibility is not confidence.</text>
+    <text x="50" y="747">Source: supplied native-screen counts; not independently recomputed.</text>
+    <text x="50" y="778">No formal-verification or task-gain evidence follows from this screen.</text>
+    <text x="50" y="809">Structural zeros are not positive-component relative-error tests.</text>
+  </g>
+</svg>
+

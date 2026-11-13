@@ -1,0 +1,52 @@
+# Unqualified review draft
+
+Sepehr Mahmoudian · 12 October 2026
+
+[Detailed PDF](report.pdf), not an accepted publication or complete SxPID3.
+Read this status with the PDF; detached copies can lose these caveats.
+
+Source: [finite-structure verification](../../SXPID3_FINITE_STRUCTURE_VERIFICATION_2026_10_12.md),
+16,381 bytes, SHA-256
+`b1cafa3e49e90e0e1f8454e8c1200ebeddaa301f58bd34f9eb31bbb4a68fb5f7`.
+PDF: seven A4 pages, 111,175 bytes, SHA-256
+`d42edcd53449897f9386642cd00d2eb603597f6e377f21149c3ab97f3da7ae3e`.
+
+The fifth local build used stock Pandoc 3.10.2, librsvg 2.62.3 and LuaLaTeX/
+TeX Live 2024. Conversion, three TeX passes and selected before/after pins
+returned 0. The diagram and report both declare PDF 1.5. No report header,
+engine, warning policy, proof statement, kernel, judge or acceptance limit
+was changed to hide a mismatch. The glossary correction permits bound inputs
+and hypotheses; the judge's complete-original-type rule is separate.
+
+Root read the complete body, final log, recorder, extracted text, fonts and
+URL annotations. All seven pages were viewed at 110 dpi; pages 1, 2, 3, 4
+and 7 at 220 dpi. No blocking rendering loss was observed. Sparse final-page
+layout and missing running headers on some pages remain minor limitations.
+The separate follow-up image review is in retained local records; off-host
+preservation and accepted-mainline publication remain open. It cannot establish
+scientific independence. PDF metadata names the human
+author; fonts are embedded. The PDF is untagged. Poppler's no-JavaScript/form
+report is not exhaustive action-safety or accessibility qualification.
+
+Full affected exact checks, hostile self-tests in required ordinary/optimized
+modes, formal-PDF-set and repository link checks, runtime qualification,
+portable proof receipts and hosted evidence remain open. Raw final-pass logs
+differ in font-memory accounting; no byte-identical reproduction is claimed.
+The [earlier build failures and warning-checker defect](../../FINITE_STRUCTURE_PDF_AUDIT_2026_10_12.md)
+are retained. A later bounded checker repair passed its regression controls;
+the audit records its scope. PDF and source bytes above are unchanged: this
+status update is not a rebuild or publication acceptance.
+
+The 19 original finite statements were checked with unchanged stock Lean
+and same-kernel replay. This does not prove probability/log formulas, Rust
+refinement, statistical calibration or application benefit. SxPID3 A–E remain
+0/5 closed; broader event/count source is uncompiled. No mainline or cleanup
+clearance follows from this draft.
+
+Later [verification updates](../../VERIFICATION_GUARD_UPDATES_2026_10_12.md)
+record synthetic profile tests and generic-judge source defects. They are not
+in this PDF; use the dated note for that follow-up. No new proof is granted.
+
+Citation: Sepehr Mahmoudian, *Three-source shared-exclusions PID: finite-structure
+verification* (2026). Include the exact accepted commit/release;
+see [CITATION.cff](../../../CITATION.cff).

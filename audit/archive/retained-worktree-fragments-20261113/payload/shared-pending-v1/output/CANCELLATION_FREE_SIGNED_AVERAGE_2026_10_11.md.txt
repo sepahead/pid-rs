@@ -1,0 +1,328 @@
+# A cancellation-free relative enclosure for signed empirical averages
+
+Sepehr Mahmoudian · 11 October 2026
+
+## Question, result and status
+
+Can a very small nonzero signed categorical shared-exclusions average be
+evaluated with a guaranteed relative error, rather than subtracting large
+nearly equal components?
+
+Under exact integer count weights and the MGW component/inverse identity,
+the answer is yes in exact rational arithmetic. First combine all terms
+into one rational ratio. Compare its integer numerator and denominator to
+decide sign or exact zero. Then evaluate the magnitude by a positive
+logarithm series. Five raw rational terms have a uniform midpoint relative
+ceiling of \(1/1154736\), below one part per million. This does not need a
+minimum nonzero magnitude or a count-cap separation gap.
+
+Two independent-first hand derivations agree; root has read the complete
+subsequent source critique. This is not an accepted formal theorem,
+implemented certificate, timed result, human verification or scientific-
+priority claim. It is a **different prospective numerical algorithm**
+from the existing Taylor screen and
+fixed absolute 128-bit references. All their original failures, flags and
+criteria stay unchanged. No research program is declared closed.
+
+The defining measure remains Makkeh–Gutknecht–Wibral (MGW) categorical
+shared exclusions: [defining paper](https://doi.org/10.1103/PhysRevE.103.032149),
+[exact arXiv version](https://arxiv.org/abs/2002.03356v5).
+The [component derivation](POSITIVE_CATEGORICAL_COMPONENT_BOUNDS_2026_10_11.md)
+and [count/sign argument](FINITE_COUNT_DIMENSION_AND_SIGN_2026_10_11.md)
+fix its event, inverse and integer-product correspondence. The elementary
+logarithm enclosure is useful beyond PID; it is not a new PID definition
+or a claim to have invented arbitrary-precision interval arithmetic.
+
+The product reduction and finite logarithm series already appear in the
+[frozen 108-coordinate conventions](../claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md).
+The relative term bound here does not make those primitives new. Those
+conventions write every cumulative and atom coordinate as an exact logarithm
+of a positive rational, divided by the same positive row count. The numerical
+argument applies to each such supplied ratio, including signed coordinates.
+It does not establish their complete reconstruction, canonical byte parsing,
+independent verification or compiled Rust refinement. The prepared sign-only
+diagnostic targets 18 averaged atoms per law, not all 108 coordinates.
+
+## 1. Assumptions and every input symbol
+
+Sources \(X_1,\ldots,X_n\) and target \(T\) have finite categorical
+alphabets; \(n\) is their finite source count. A finite law has occupied
+joint anchors indexed by \(s\), positive integer multiplicities \(c_s\),
+and row count \(N=\sum_s c_s>0\). Frequencies are these counts divided by
+their total, not rounded real probabilities. Fix an ordinary MGW antichain
+\(\alpha\): a nonempty family of nonempty source-position subsets with
+no subset contained in another. Its event uses AND within a branch and OR
+between branches, always relative to the chosen anchor's labels.
+
+Let \(R_s^+,R_s^-\) be that anchor/node's exact positive rational
+logarithm arguments for the informative and misinformative components.
+The first uses the source marginal; the second uses sources conditional
+on the anchor's target label. Occupied anchors ensure all required event
+probabilities are positive. Local signed atom is
+\(\sigma_s=\ln R_s^+-\ln R_s^-\), in nats. Both sides use the **same
+marginal anchor weight** \(c_s/N\) when averaged.
+
+No observed-source independence, Gaussian/continuous/angular support,
+independent and identically distributed rows, stationarity or population
+calibration assumption is needed for the finite arithmetic. The law,
+encoding, target conditioning, row alignment and ordinary inverse identity
+must nevertheless be correct. Exact arithmetic does not repair a wrong
+estimand. Irrational weights and binary64-only probabilities are outside
+this integer-count contract.
+
+## 2. Remove cancellation before logarithms
+
+Write each signed ratio as \(R_s^+/R_s^-=a_s/b_s\), with positive
+integers \(a_s,b_s\). Greatest-common-divisor reduction is optional for
+the identity, useful for cost. Define positive integer products
+
+\[
+P=\prod_s a_s^{c_s},\qquad Q=\prod_s b_s^{c_s}.
+\]
+
+The average, denoted \(A\), satisfies exactly
+
+\[
+A=\sum_s\frac{c_s}{N}\sigma_s
+=\frac1N\sum_s c_s\ln(a_s/b_s)
+=\frac1N\ln(P/Q).
+\]
+
+The last equality uses integer exponents and the logarithm product rule.
+Comparing \(P,Q\) decides the sign: positive for \(P>Q\), negative for
+\(P<Q\), exactly zero for equality. At equality return the exact interval
+\([0,0]\); relative error has no zero denominator and is not a success
+percentage. Do not confuse net zero with zero nonnegative components.
+
+For \(P\ne Q\), define \(R=\max(P,Q)/\min(P,Q)>1\), and retain the
+sign separately. Then \(|A|=\ln R/N\). Range-reduce using exact integer
+comparisons: find integer \(e\ge0\) with \(2^e\le R<2^{e+1}\), and
+put \(v=R/2^e\), so \(1\le v<2\). Thus
+
+\[
+\ln R=e\ln2+\ln v.
+\]
+
+The symbol \(v\) is a reduced logarithm argument, not variance or velocity.
+Every term on the right is nonnegative. There is no subtraction of large
+logarithms in this evaluation route.
+
+## 3. Finite logarithm identity and its tail
+
+For a rational argument \(v\in[1,2]\), put
+\(z=(v-1)/(v+1)\), so \(0\le z\le1/3\) and
+\(v=(1+z)/(1-z)\). Let \(q\ge1\) be the fixed integer term count and
+\(j\) a term index. Define the rational lower sum \(\ell_q\) and
+tail ceiling \(\tau_q\):
+
+\[
+\ell_q(z)=2\sum_{j=0}^{q-1}\frac{z^{2j+1}}{2j+1},\qquad
+\tau_q(z)=\frac{2z^{2q+1}}{(2q+1)(1-z^2)}.
+\]
+
+No infinite-series exchange is needed to prove the enclosure. The finite
+geometric identity, for integration coordinate \(t\in[0,z]\), is
+
+\[
+\frac1{1-t^2}=\sum_{j=0}^{q-1}t^{2j}+\frac{t^{2q}}{1-t^2}.
+\]
+
+Since \(\ln v=2\int_0^z(1-t^2)^{-1}dt\), integration gives
+
+\[
+\ln v=\ell_q(z)+2\int_0^z\frac{t^{2q}}{1-t^2}dt.
+\]
+
+The integrand is nonnegative, and \(1-t^2\ge1-z^2>0\). Integrating
+the majorant yields
+
+\[
+0\le\ln v-\ell_q(z)\le\tau_q(z).
+\]
+
+For \(z>0\), the first retained term gives \(\ell_q(z)\ge2z\).
+Consequently
+
+\[
+\frac{\tau_q(z)}{\ell_q(z)}
+\le\frac{z^{2q}}{(2q+1)(1-z^2)}
+\le\rho_q,\qquad
+\rho_q=\frac9{8(2q+1)3^{2q}}.
+\]
+
+The second inequality uses \(z\le1/3\): both \(z^{2q}\) and
+\(1/(1-z^2)\) increase with \(z\). At \(z=0\), both quantities are
+zero; use that exact branch, not division by zero. The symbol \(\rho_q\)
+is a uniform relative tail-to-lower-sum ceiling.
+
+## 4. Enclose the whole average, including negative signs
+
+For the reduced \(v\), use its \(z\); for \(\ln2\), use \(1/3\).
+Define raw exact rational endpoints
+
+\[
+L=e\ell_q(1/3)+\ell_q(z),\qquad
+U=L+e\tau_q(1/3)+\tau_q(z).
+\]
+
+Then \(L\le\ln R\le U\). Because \(R>1\), either \(e>0\) or
+\(z>0\), so \(L>0\). Each tail is at most \(\rho_q\) times its
+retained lower sum; multiplication by \(e\ge0\) and addition preserve
+that inequality. Therefore
+
+\[
+U-L\le\rho_q L.
+\]
+
+For a positive average return \([L/N,U/N]\); for a negative average
+return \([-U/N,-L/N]\). Let \(C\) be the returned interval's exact
+midpoint. Containment and \(|A|\ge L/N\) give
+
+\[
+\frac{|C-A|}{|A|}
+\le\frac{(U-L)/(2N)}{L/N}
+\le\frac{\rho_q}{2}
+=\frac9{16(2q+1)3^{2q}}.
+\]
+
+The factor \(N\) cancels. No lower bound on \(|A|\) enters the proof.
+For fixed term counts:
+
+| Terms \(q\) | Uniform midpoint relative ceiling | Declared threshold it meets |
+|---:|---:|---|
+| 1 | \(1/48\) | Not a universal 1% certificate |
+| 2 | \(1/720\) | 1% |
+| 5 | \(1/1154736\) | Four ppm; also below one ppm |
+| 64 | \(9/(2064\,3^{128})<2^{-199}\) | Much smaller, at extra bit cost |
+
+For the final strict comparison, \(3^{128}>2^{192}\) and
+\(9\cdot128<2064\). These are hand integer comparisons, not executed
+formal checks. Ppm here means relative numerical error, not confidence or
+sensor concentration.
+
+The one-term limitation has a realizable example, not just a loose bound.
+Take two rows, \((000,T=0)\) and \((111,T=1)\), each of count one,
+and ordinary bottom: at least one source matches the anchor. All three
+sources are identical binary labels.
+Each marginal event has probability \(1/2\); conditional on its target
+the event is certain. Thus each local signed atom is \(\ln2\), and
+\(A=\ln2\), \(N=2\), \(P=4\), \(Q=1\). Range reduction gives
+\(e=2,v=1,z=0\). For \(q=1\),
+\(\ell_1(1/3)=2/3\), \(\tau_1(1/3)=1/36\). Thus
+\(L=4/3\), \(U=25/18\); division by \(N=2\) returns
+\([2/3,25/36]\), whose midpoint is \(C=49/72\). Three retained terms give
+\(\ln2\ge2/3+2/81+2/1215=842/1215\). The exact comparison
+\(100\cdot49\cdot1215=5953500<6001776=99\cdot842\cdot72\)
+implies \(C<(99/100)\ln2\): its relative error exceeds 1%.
+This hand negative control leaves the uniform two- and five-term guarantees
+unchanged; it is not an executed new fixture.
+
+## 5. Fully specified losing-law worked example
+
+Use the earlier count-dropping control law: all eight binary source triples.
+At 000 and 111 the count is three and target zero. At 001,010,011 the count
+is one and target zero; at 110,101,100 it is one and target one. Then
+\(N=12\), target counts are nine and three. Use ordinary bottom: at least
+one source matches the anchor.
+
+At either high-count anchor, only its bitwise complement fails this event.
+The marginal accepted count is \(12-3=9\), so \(R^+=12/9=4/3\).
+Within its nine-row target pool the accepted count is \(9-3=6\), so
+\(R^-=9/6=3/2\). Its signed ratio is \((4/3)/(3/2)=8/9\).
+At each low-count anchor, the marginal accepted count is \(12-1=11\).
+Its complement has the other target label; the conditional event is certain.
+Thus \(R^+=12/11\), \(R^-=1\), and the signed ratio is \(12/11\).
+The two high-count anchors together supply exponent \(3+3=6\); the
+six low-count anchors together supply exponent six. Correct multiplicities give
+
+\[
+P/Q=(8/9)^6(12/11)^6=(32/33)^6,
+\qquad A=\tfrac12\ln(32/33)<0.
+\]
+
+Dropping multiplicities reverses the sign, and substituting conditional
+anchor weights also reverses it; those failures remain. For the correct
+negative average, \(R=(33/32)^6=1291467969/1073741824<2\), so \(e=0\).
+The reduced series argument is
+
+\[
+z=\frac{217726145}{2365209793}<\frac1{10}.
+\]
+
+With only one term, \(\ell_1=2z\) and
+\(\tau_1=2z^3/[3(1-z^2)]\). The returned interval is
+\([-(\ell_1+\tau_1)/12,-\ell_1/12]\). Its specific relative ceiling is
+
+\[
+\frac{\tau_1}{2\ell_1}
+=\frac{z^2}{6(1-z^2)}<\frac1{594}<1\%.
+\]
+
+This is a hand worked example, not an executed new native fixture. One
+term succeeds here without being a universal 1% choice. Five terms would
+give the preceding uniform ceiling without outcome-dependent selection.
+
+## 6. Rust implementation and computational cost
+
+No current Rust API or research sign producer implements this magnitude
+certificate. The sign producer is separately bounded and must not acquire
+this algorithm by an unnoticed source change. Its caps, old outputs and
+criteria remain fixed. Formal/tool qualification and numerical refinement
+are separate obligations. See the [implementation baseline](../RUST_IMPLEMENTATION_AND_COST.md).
+
+The exact products can be large. Under the three-source \(N\le31000\)
+contract, using the direct count-product representatives for \(a_s,b_s\)
+or their greatest-common-divisor reductions, their bit ceiling is
+\(120N+1\le3720001\) each. Enlarging both sides by arbitrary common
+factors preserves the ratio but invalidates this cost bound. A
+fixed small term count does not make arbitrary-precision operations
+constant-time. Series powers, rational additions and greatest-common-divisor
+reductions can retain multiples of those bit lengths. With 64 terms,
+degree-129 expressions can involve hundreds of millions of bits. Parsing,
+carrier reconstruction, product powers and output storage cost separately.
+No 180-second, 256-MiB or 8-MiB-output success follows from the theorem.
+
+Raw rational endpoints are essential to this statement. Rounding them onto
+the old fixed absolute grid can destroy relative precision near zero.
+Binary64 conversion, exponent underflow or compact outward serialization
+needs a separate error analysis; missing/out-of-budget results must abstain.
+Never silently round a nonzero average to an exact-zero result.
+
+Arbitrary-precision ball arithmetic is an established alternative, not an
+unbeaten baseline: [FLINT's Arb documentation](https://flintlib.org/doc/arb.html)
+describes enclosing arithmetic and a log1p function for arguments near zero.
+A prospective comparator should form the exact integer difference before
+approximating \((P-Q)/Q\), and use a qualified enclosing log1p route.
+No Arb benchmark, superiority, new dependency or refinement is claimed.
+
+## 7. Scientific meaning and open work
+
+The [occupancy screen](EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md)
+retains wide Taylor bounds and 55 sign-unresolved averages. This proposal
+addresses numerical evaluation of their exact empirical quantity, not
+population uncertainty or predictor quality. Exact signs and reliable
+magnitudes could be useful audit references for a future Rust method or
+for evaluating a justified diagnostic decision against direct task loss.
+That application benefit has not been measured.
+
+Neural, imaging and embodied studies require justified categorical variables,
+actual aligned outcomes and dependence-aware uncertainty. Generated forecasts
+are not observed future targets. Nothing here transfers categorical MGW to
+continuous shared exclusions, angular or hyperbolic estimators, or I_min.
+
+The earlier fixed-grid dimension obstruction and weak signed-average
+separation gap remain valid: they limit that absolute-grid route, not every
+possible representation. New source, exact arithmetic/refinement,
+stock formal acceptance, resource measurements, qualified matching
+PDF and application comparators remain open. SxPID3 A–E, original formal
+targets, angular, hyperbolic and v1 are not closed by this proposed route.
+
+Review order: root fixed its hand derivation before receiving the fresh
+independent conclusion; the second derivation then preceded its reading of
+the root note and report. Subsequent exposed review reproduced the finite
+tail proof, term choices and losing-law example, and supplied the one-term
+failure above. Root inspected the entire critique and adopted its explicit
+count-representation qualification. Shared model, prior formulas and host
+remain dependencies; neither derivation is independent human verification.
+Ten routes and fifty named review lenses are advisory questions, not fifty
+reviewers or a substitute for proof. No new code, formal or PDF gate passed.

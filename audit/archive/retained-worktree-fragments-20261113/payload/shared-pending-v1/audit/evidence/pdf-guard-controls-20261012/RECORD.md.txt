@@ -1,0 +1,59 @@
+# PDF diagnostic guard: bounded regression evidence
+
+Sepehr Mahmoudian · 12 October 2026
+
+This is an operational correction, not a PID or formal-mathematics result.
+The previous helper returned success on a real PDF-inclusion warning.
+The [unchanged V3 log](../finite-structure-publication-20261012/v3-final.log)
+retains that negative. All earlier build failures remain failed.
+
+## Bound sources and observations
+
+[Helper](../../../scripts/check-formal-pdf-log.sh), 2,822 bytes, SHA-256
+`2f64721eeec372206aba70b49da6f7627e945f25ca864f1736651acb093f70ba`.
+[Self-test](../../../scripts/check-formal-pdf-log-self-test.sh), 11,730 bytes,
+SHA-256 `2e6471560d2650f552e2284c2012c174e03c73dce223febc6a1cf70e150f7537`.
+These identify this captured revision; later source changes need new evidence.
+
+Eight terminal commands ran with `/bin/bash --noprofile --norc`, a clean
+environment and an unchanged 30-second outer timeout. Status 0 means the
+command succeeded; status 1 is the expected diagnostic rejection.
+
+| Check | Actual exit status |
+|---|---|
+| Bash syntax: helper and self-test, separately | 0, 0 |
+| Complete self-test | 0 |
+| V3 final log, strict | 1 |
+| [Detailed V5 final log](v5-final.log), strict | 0 |
+| [Overview final log](overview-final.log), strict | 0 |
+| Detailed V5 first-pass log, strict / intermediate | 1 / 0 |
+
+[Measured self-test output](self-test.stdout): 89 diagnostic rejection cases,
+26 clean/convergence controls and two interface controls passed.
+[Actual V3 rejection](v3-final.stderr) preserves the bare warning header.
+[First-pass strict rejection](v5-pass1-strict.stderr) preserves the rerun notice.
+All other captured streams were empty. Raw source/log hashes and complete
+private execution records are retained locally; this packet does
+not claim public end-to-end replay. Off-host preservation and accepted-mainline
+publication remain open.
+
+## Contract and limits
+
+Strict mode now rejects anchored bare warnings and generic TeX bang-error
+records. Intermediate mode allows only five complete, constrained reference
+convergence records. Same-line injections, mixed records, CRLF and missing
+final newline are covered. CRLF means carriage-return/line-feed line endings.
+
+Review caught an incorrect test oracle before execution: intermediate mode
+must omit an allowed rerun line while reporting the following warning. The
+corrected expected output preserves this behavior rather than changing it.
+The rejected test version and complete predecessors are retained.
+
+Caller exit-status checks and complete log reading remain necessary: generic
+file:line errors are not exhaustively recognized by this helper. Native
+success does not prove PDF correctness, portable runtime closure, accessibility,
+mathematical soundness or estimator calibration. Known exposed regressions
+are not a preregistered scientific test. No kernel, judge or numerical flags
+changed. Formal-PDF-set, affected leaf, hosted and publication gates stay open.
+The [active PDF audit](../../../output/FINITE_STRUCTURE_PDF_AUDIT_2026_10_12.md)
+and adjacent review-draft statuses retain these limits.

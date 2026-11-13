@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="610" viewBox="0 0 1100 610" role="img" aria-labelledby="title description">
+  <title id="title">Generated forecasts are separate from observed outcomes</title>
+  <desc id="description">The same complete pre-action inputs go to the forecaster and a matched baseline. The authoritative process supplies actual later outcomes separately. Forecasts and baseline outputs are committed before labels and evaluated against those labels. This is an experiment contract, not a proof of causal identification.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#2C3E50"/></marker>
+  </defs>
+  <rect width="1100" height="610" fill="#fff"/>
+  <g font-family="sans-serif" fill="#2C3E50" text-anchor="middle">
+    <text x="550" y="38" font-size="25" font-weight="bold">One input contract; separate prediction and observation</text>
+    <rect x="300" y="66" width="500" height="100" rx="12" fill="#D2E0E2" stroke="#1F3F60" stroke-width="2"/>
+    <text x="550" y="95" font-size="21" font-weight="bold">Complete pre-action inputs</text>
+    <text x="550" y="124" font-size="18">History, instruction, proposed actions</text>
+    <text x="550" y="148" font-size="18">Frozen model, preprocessing and memory</text>
+    <rect x="40" y="234" width="310" height="100" rx="12" fill="#F7F3E9" stroke="#1F3F60" stroke-width="2"/>
+    <text x="195" y="265" font-size="21" font-weight="bold">Forecaster</text>
+    <text x="195" y="294" font-size="18">Generated forecast; seed recorded</text>
+    <text x="195" y="318" font-size="18">Not an observed future</text>
+    <rect x="395" y="234" width="310" height="100" rx="12" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2"/>
+    <text x="550" y="265" font-size="21" font-weight="bold">Matched baseline</text>
+    <text x="550" y="294" font-size="18">Same declared input access</text>
+    <text x="550" y="318" font-size="18">Same action and deadline budget</text>
+    <rect x="750" y="234" width="310" height="100" rx="12" fill="#F7F3E9" stroke="#1F6968" stroke-width="2"/>
+    <text x="905" y="265" font-size="21" font-weight="bold">Authoritative process</text>
+    <text x="905" y="294" font-size="18">Executed actions recorded</text>
+    <text x="905" y="318" font-size="18">Actual later outcome observed</text>
+    <rect x="85" y="420" width="570" height="72" rx="12" fill="#F7F3E9" stroke="#916400" stroke-width="2"/>
+    <text x="370" y="449" font-size="21" font-weight="bold">Immutable prediction commitments</text>
+    <text x="370" y="477" font-size="18">Scores and abstentions recorded before future labels</text>
+    <rect x="745" y="420" width="320" height="72" rx="12" fill="#F7F3E9" stroke="#1F6968" stroke-width="2"/>
+    <text x="905" y="449" font-size="21" font-weight="bold">Authoritative label record</text>
+    <text x="905" y="477" font-size="18">Never replaced by generated video</text>
+    <rect x="270" y="541" width="560" height="52" rx="10" fill="#fff" stroke="#2C3E50" stroke-width="2"/>
+    <text x="550" y="574" font-size="21" font-weight="bold">Held-out loss and optional declared PID diagnosis</text>
+  </g>
+  <g fill="none" stroke="#2C3E50" stroke-width="2.5" marker-end="url(#arrow)">
+    <path d="M410 166 L195 222"/>
+    <path d="M550 166 L550 222"/>
+    <path d="M690 166 L1085 166 L1085 284 L1072 284"/>
+    <path d="M195 334 L195 408"/>
+    <path d="M550 334 L550 408"/>
+    <path d="M905 334 L905 408"/>
+    <path d="M370 492 L450 529"/>
+    <path d="M905 492 L750 529"/>
+  </g>
+  <text x="905" y="196" font-family="sans-serif" font-size="15" text-anchor="middle" fill="#2C3E50">Action proposal only</text>
+  <text x="905" y="216" font-family="sans-serif" font-size="15" text-anchor="middle" fill="#2C3E50">Valid reset; no generator output</text>
+</svg>

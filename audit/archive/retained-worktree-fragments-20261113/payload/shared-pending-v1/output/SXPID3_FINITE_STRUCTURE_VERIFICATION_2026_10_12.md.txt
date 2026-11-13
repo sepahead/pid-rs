@@ -1,0 +1,343 @@
+# Three-source shared-exclusions PID: finite-structure verification
+
+Sepehr Mahmoudian · 12 October 2026
+
+Finite milestone; PDF qualification and portable evidence pending.
+This is not a new PID or a completed SxPID3 program.
+
+## Research question and result
+
+Does the concrete three-source registry contain every valid antichain exactly
+once, with the intended order and all incidence entries? This prevents missing,
+duplicated or reversed bookkeeping entries; it does not improve prediction.
+
+All 19 statements pass the unchanged Lean judge and fresh shipped replay.
+This checks complete finite domains, not probability formulas, Rust or calibration.
+
+Context: Makkeh, Gutknecht and Wibral, *Introducing a differentiable measure
+of pointwise shared information* (2021), [arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5);
+journal version [Physical Review E 103, 032149](https://doi.org/10.1103/PhysRevE.103.032149).
+The antichain/logical-statement correspondence is published work:
+Gutknecht, Wibral and Makkeh, *Bits and Pieces: Understanding Information
+Decomposition from Part-whole Relationships and Formal Logic* (2021),
+[arXiv:2008.09535v2](https://arxiv.org/abs/2008.09535v2).
+Project-defined contract/workflow; no novelty claim. Continuous,
+mixed-support and Williams–Beer I_min (a different redundancy) receive no credit.
+
+## Terms, symbols and assumptions
+
+Source labels name input groups, not observed values. These terms follow the
+project's finite contract, with published logical context cited above.
+Three labels give $2^3=8$ branches and $2^8=256$ general families.
+
+| Symbol or term | Meaning and domain |
+| --- | --- |
+| $S$ | Source-label set $\{0,1,2\}$; Lean Fin 3. |
+| $a,b,c$ | Branches: subsets of $S$. General definitions include the empty subset. |
+| $A,B,C$ | Families: sets of branches. General families can be empty. |
+| Antichain | Distinct branches never contain one another. |
+| Valid family | A nonempty antichain with no empty branch. |
+| Carrier | The set of all valid families. |
+| $a\subseteq b$ | Every label in $a$ belongs to $b$. |
+| $A\preceq B$ | Every branch in $B$ contains some branch in $A$. |
+| $q$ | Truth pattern: a function $S\to\{\mathrm{false},\mathrm{true}\}$. |
+| $D(A,q)$ | Some branch in $A$ has every labelled test true. |
+| DNF | Disjunctive normal form: OR between branches, AND inside a branch. |
+| $u$ | A source label, from 0 through 2. |
+| $m$ | Branch mask: a natural number from 0 through 7. |
+| $i,j$ | Registry positions, from 0 through 17. |
+| $C_i$ | Family at position $i$; not an observed channel. |
+| $Z_{ij}$ | Incidence entry: 1 if $C_j\preceq C_i$, otherwise 0. |
+| Codec | Reversible branch-to-bit-mask representation. |
+| Zeta matrix | The incidence matrix $Z$, not the analytic zeta function. |
+| Kernel replay | Rechecking stored declarations with the shipped Lean checker. |
+| PID | Partial information decomposition. |
+| AI | Artificial intelligence; here, agents proposing and reviewing proof sources. |
+| MI | Mutual information. |
+| SMT | Satisfiability modulo theories: solver reasoning about encoded constraints. |
+| SAT / UNSAT | A satisfying assignment exists / none exists for the encoded constraints. |
+| Closed theorem | Variables are bound; quantified inputs and hypotheses are allowed. |
+| Axiom | An accepted foundational statement used by a proof. |
+
+Quantities are dimensionless finite sets, not probabilities or information.
+No sampling, independent-row or Gaussian model is assumed.
+
+General definitions keep empty branches/families visible. Validity excludes both.
+Raw duplicate handling requires a separate, unproved parser contract.
+
+## Step 1: branch encoding
+
+For each branch $a\subseteq S$,
+
+$$
+ \operatorname{encode}(a)=\sum_{u\in a}2^u.
+$$
+
+The sum runs over source labels in $a$. Labels 0, 1 and 2 contribute bits
+1, 2 and 4. Hence the empty branch has mask 0 and the full branch has mask 7.
+
+Decoding $m$ selects the labels whose bits are set. For example, $5=1+4$
+decodes to $\{0,2\}$. Both codec compositions return their input. Nonempty
+branches have nonzero masks. Bitwise AND of the masks of $a$ and $b$
+equals the mask of $a$ exactly when $a\subseteq b$.
+These binary masks encode labels, not binary observed values.
+
+## Step 2: derive all 18 families
+
+There are seven nonempty branches: three single-label, three two-label and one
+three-label branch. Each alone forms a valid family, giving seven families.
+
+Two-branch families have three cases:
+
+1. Two single-label branches: three choices.
+2. Two two-label branches: three choices; distinct equal-sized branches are incomparable.
+3. One of each size: the single label must be absent from the pair.
+   It is therefore the complementary label, giving three choices.
+
+The full three-label branch is comparable with every nonempty branch, so cannot
+occur in a larger family. The two-branch count is $3+3+3=9$.
+
+Only two three-branch families work: all three single-label branches, or all
+three two-label branches. A mixed triple cannot work. Two single-label branches
+exclude every two-label branch, since each pair contains at least one of those
+labels. One single-label branch permits just its complementary pair, not two
+distinct pairs. This also excludes any four-branch family.
+The total is therefore $7+9+2=18$.
+
+Positions are not lattice order.
+
+| $i$ | Masks | $C_i$ |
+| --- | --- | --- |
+| 0 | 1 | $\{\{0\}\}$ |
+| 1 | 2 | $\{\{1\}\}$ |
+| 2 | 3 | $\{\{0,1\}\}$ |
+| 3 | 4 | $\{\{2\}\}$ |
+| 4 | 5 | $\{\{0,2\}\}$ |
+| 5 | 6 | $\{\{1,2\}\}$ |
+| 6 | 7 | $\{\{0,1,2\}\}$ |
+| 7 | 1,2 | $\{\{0\},\{1\}\}$ |
+| 8 | 1,4 | $\{\{0\},\{2\}\}$ |
+| 9 | 1,6 | $\{\{0\},\{1,2\}\}$ |
+| 10 | 2,4 | $\{\{1\},\{2\}\}$ |
+| 11 | 2,5 | $\{\{1\},\{0,2\}\}$ |
+| 12 | 3,4 | $\{\{0,1\},\{2\}\}$ |
+| 13 | 3,5 | $\{\{0,1\},\{0,2\}\}$ |
+| 14 | 3,6 | $\{\{0,1\},\{1,2\}\}$ |
+| 15 | 5,6 | $\{\{0,2\},\{1,2\}\}$ |
+| 16 | 1,2,4 | $\{\{0\},\{1\},\{2\}\}$ |
+| 17 | 3,5,6 | $\{\{0,1\},\{0,2\},\{1,2\}\}$ |
+
+Coverage proves no omission; injectivity proves no duplication.
+A counted list alone proves neither.
+
+## Step 3: prove the order in both logical directions
+
+For arbitrary families $A,B$ and a truth pattern $q:S\to\{\mathrm{false},\mathrm{true}\}$:
+
+$$
+ A\preceq B\iff\forall b\in B\;\exists a\in A:\;a\subseteq b,
+ \qquad
+ D(A,q)\iff\exists a\in A\;\forall u\in a:\;q(u)=\mathrm{true}.
+$$
+
+Here $a,b$ are branches and $u$ is a source label. The correspondence is
+
+$$
+ A\preceq B\iff\forall q:\;D(B,q)\Rightarrow D(A,q).
+$$
+
+Implication runs from $B$ to $A$.
+
+Forward proof:
+
+1. Assume $A\preceq B$ and $D(B,q)$.
+2. The event supplies $b\in B$ whose tests are all true.
+3. The order supplies $a\in A$ with $a\subseteq b$.
+4. Every test in $a$ is among those true tests.
+5. Thus $D(A,q)$.
+
+Reverse proof:
+
+1. Assume the event implication holds for every $q$.
+2. Choose any $b\in B$.
+3. Set $q(u)$ true exactly when $u\in b$.
+4. Branch $b$ makes $D(B,q)$ true.
+5. The implication supplies $a\in A$ with all its tests true.
+6. The chosen pattern then forces every label of $a$ into $b$.
+7. Thus $a\subseteq b$. Since $b$ was arbitrary, $A\preceq B$.
+
+The proof includes invalid families. For empty $B$, both sides are true.
+An empty branch has a true conjunction. Validity is unnecessary here.
+
+Reflexivity takes the same branch. Transitivity composes
+$a\subseteq b\subseteq c$. For antisymmetry, $a'$ denotes another branch
+of $A$. Antisymmetry needs validity:
+from both orders, each $a\in A$ gives $a'\subseteq b\subseteq a$,
+with $a'\in A$, $b\in B$. The antichain property forces $a'=a$,
+then $b=a$. This proves $A\subseteq B$; symmetry proves $B\subseteq A$.
+
+## Step 4: worked example and matrix direction
+
+Let $A=C_7=\{\{0\},\{1\}\}$ and $B=C_2=\{\{0,1\}\}$.
+The branch of $B$ contains a branch of $A$, so $A\preceq B$.
+The reverse fails: $\{0,1\}$ is not contained in either singleton.
+
+For $q=(\mathrm{true},\mathrm{false},\mathrm{false})$,
+$D(A,q)$ is true but $D(B,q)$ is false. Yet for every $q$, true
+$D(B,q)$ implies true $D(A,q)$.
+
+A row of $Z$ is a cumulative position; a column is an atom position:
+$Z_{ij}=1$ exactly when $C_j\preceq C_i$.
+Consequently $Z_{2,7}=1$ and $Z_{7,2}=0$.
+
+![Order and event implication reverse direction.](figures/fin3-order-implication-20261012.svg)
+
+The entry theorem checks all $18\times18=324$ entries against frozen row
+strings. Row totals in registry order are
+
+$$
+ (5,5,13,5,13,13,18,\;2,2,4,2,4,4,10,10,10,\;1,8).
+$$
+
+The first seven sum to 72, the next nine to 48 and the last two to 9:
+$72+48+9=129$. This census alone cannot exclude a transpose or positional
+swap; entrywise checking is also needed.
+
+Position 16 is below every valid family because each nonempty branch contains
+a label. Position 6 is above every valid family because every branch lies
+inside the full three-label branch.
+
+## Exact formal scope
+
+| Original theorem names | Checked content |
+| --- | --- |
+| codec_range, decode_encode, encode_decode | All branch masks; both codec inverse directions. |
+| codec_nonempty, codec_subset, codec_anchors | Empty mask, subset test and label anchors. |
+| carrier_membership, carrier_cardinality | Exact validity and carrier size 18. |
+| registry_pointwise, registry_injective, registry_coverage | Exact rows, distinctness and completeness. |
+| reflexivity, transitivity, antisymmetry | General first two properties; valid-family antisymmetry. |
+| reverse_dnf | Both implications over general families and all truth patterns. |
+| row_shape, zeta_entries, zeta_census, extremes | Binary grammar, all 324 entries, census and extrema. |
+
+Stock Lean 4.33.0 and matching Mathlib v4.33.0 were used. The unchanged judge
+requires exactly 19 public theorems with complete original types, including
+their premises, and no added input or premise;
+no universe parameters and transitive axiom dependencies limited to
+propext, Classical.choice and Quot.sound. These standard foundations are
+described in Lean's [axioms reference](https://lean-lang.org/theorem_proving_in_lean4/Axioms-and-Computation/);
+they are not new PID assumptions. The wider stock Integral promotion
+[HOLD](../RESEARCH_READER_AND_VERIFICATION_CONTRACT.md#evidence-and-trust)
+remains: these bounded checks do not settle that toolchain qualification.
+
+Candidate and SemanticJudge fresh replay exit 0 (success). Replay uses the
+same kernel family, admits axioms and skips unsafe/partial definitions; this
+proof uses no such escape. Replay/compiler resource policies differ.
+No limits, warnings, statements, judges or kernels changed.
+
+Candidate source SHA-256:
+`a17818fb1f786e9de9ea800efe1d6fa0ab4b5a277ee22874bd04b4264017b211`.
+Portable evidence pending; a hash is not proof.
+
+## Process, adaptive selection and negative results
+
+AI proposed proofs/checks and drafted prose/conversion. Reviewers froze initial
+critiques before candidate exposure; the primary agent read source/receipts.
+Shared models, tools, specifications and feedback limit independence.
+No external human adjudication is recorded.
+
+Targets/judges stayed fixed. Symbolic proofs handle general sets;
+typed finite decomposition checks the registry under default limits.
+
+| Attempt | Actual result | Failure or correction |
+| --- | --- | --- |
+| v1 | Candidate failed. | Reduction/sequencing difficulties. |
+| v2 | Candidate failed. | Six ambiguous LE unfolds. |
+| v3 | Candidate compiled; judge rejected. | 14 additional simplifier exports. |
+| v4 | Candidate failed. | Whole-formula rewrites hit the default heartbeat limit. |
+| v5 | Semantic judge passed; fresh checker failed before replay. | PATH excluded stock lean required for tool resolution. |
+| New routing attempt | All nine stages passed. | Only controlled PATH and fresh output root changed. |
+
+Failures remain failed. Typed constructors and ordinary decide replace neither
+targets nor limits; no hidden exports, new axioms, sorry or native_decide.
+
+The frozen review compared ten routes: no action; manual non-PID semantics;
+ordinary finite decide; reversible-encoding transport; symbolic set lemmas
+with small checks; DNF truth tables; representing each family by all larger
+branches it admits; a second solver; a verified enumeration checker;
+and explicit per-case proof terms.
+Symbolic/small checks were refined after failures. SMT does not check all 19
+original statements. Fifty named lenses mean a checklist, not fifty reviewers.
+
+Five proof revisions and one routing repair reused the original judge.
+This is adaptive development, not blind preregistration or an AI success-rate
+experiment. Training-data exposure and originality were not established.
+
+## Application meaning
+
+This result checks bookkeeping, not target/source usefulness.
+
+For observations, each labelled test can mean “this source group matches the
+chosen observation.” Different source groups may have different alphabets.
+The proof applies to that pattern. A [22-theorem arbitrary-alphabet/count
+proposal](SXPID3_ARBITRARY_ALPHABET_COUNT_PROPOSAL_2026_10_12.md) has source
+review, not compiler acceptance; its two counterexamples remain visible.
+
+Neural recordings, brain imaging, sensor fusion and world-model outputs need
+explicit inputs, targets, encoding, dependence and decision objectives.
+Quantizing continuous embeddings changes the quantity studied.
+
+Existing [occupancy screening](CONSTANT_CHANNEL_OCCUPANCY_SCREEN_2026_10_12.md)
+and [component-bound screening](EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md)
+are separate finite-data studies, not datasets validating this proof.
+No prediction gain, training or state-of-the-art comparison is reported.
+Task loss, MI and controlled ablations remain simpler baselines.
+
+## Rust implementation and computational cost
+
+Default API: stable::categorical::discrete_sxpid3, crates/pid-core/src/sxpid.rs;
+empirical categorical shared exclusions, in nats. No API change or established
+registry/count/inversion/arithmetic refinement.
+
+Rust inputs are three categorical source matrices and a target with aligned
+rows. Let $N$ count rows, $D$ count all coordinates, and $K$ count distinct
+complete joint rows. Groups can contain several columns. The [source-derived
+cost baseline](../RUST_IMPLEMENTATION_AND_COST.md) gives the general three-source
+route time $O(ND\log(\max(2,N))+DK^2)$, averaged storage $O(ND)$ and
+pointwise output storage $O(K(18+D))$, including labels. These are bounds, not timings.
+Here $O$ bounds growth; log is natural; 1 GiB is $2^{30}$ bytes.
+The specialized API has a separate inversion path; no general exact visit
+count is assigned to it. Empty/mismatched inputs and counts above $2^{53}$
+are refused. Defaults guard estimated memory at 1 GiB and coarse work at
+$10^{10}$ units. Cancellation is cooperative, not a hard memory/deadline
+promise. Logarithms remain rounded binary64. No preprocessing, training,
+inference, resampling or online task benchmark is reported; offline diagnosis
+is the intended first use.
+
+Candidate compilation took 3.075696125 seconds; fresh replays took
+66.562871750 and 66.881076458 seconds on the current Apple Silicon host.
+These are proof-check timings, not estimator benchmarks or atomic snapshots.
+
+## Trust and remaining obligations
+
+Coverage, judges, axiom inspection and replay support the
+encoded statements. Paper transcription, shared dependencies, custody and
+absent external human adjudication remain separate limitations.
+
+At 05:44 UTC, 12 October, stock Z3/cvc5 returned expected statuses for
+39 encoded cases: 22 UNSAT, 16 altered SAT, one nonvacuity SAT. All 117
+children (39 generators, 78 solvers) exited 0. Case W12 is valid-family
+forward inclusion, not the all-family biconditional; raw count cells are binary.
+Later read-only screens passed in ordinary and -O modes: 117 receipts
+checked, 234 streams rehashed. Access-time failure retained.
+SAT models and UNSAT certificates remain unchecked; Lean hostile controls
+unexecuted.
+
+Arbitrary categorical events/counts, incidence inversion, logarithmic products,
+directed numerical bounds, canonical parsing, Rust refinement, complete
+coordinates, statistical calibration and matched applications remain open.
+Original SxPID3 programs A–E fully closed: 0/5. This milestone cannot replace
+their outstanding obligations.
+
+Suggested citation: Sepehr Mahmoudian, *Three-source shared-exclusions PID:
+finite-structure verification* (2026). Cite the exact accepted commit/release
+when available; see [CITATION.cff](../CITATION.cff).

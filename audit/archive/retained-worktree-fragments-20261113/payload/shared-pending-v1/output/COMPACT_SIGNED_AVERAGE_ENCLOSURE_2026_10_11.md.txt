@@ -1,0 +1,437 @@
+# Compact relative enclosures for exact empirical logarithms
+
+Sepehr Mahmoudian · 11 October 2026
+
+## Result, purpose and status
+
+An exact empirical shared-exclusions average can be extremely small because
+positive and negative local terms cancel. The [whole-ratio derivation](CANCELLATION_FREE_SIGNED_AVERAGE_2026_10_11.md)
+removes that cancellation before logarithms and gives a raw rational relative
+bound. Its remaining difficulty is computational: raising a huge denominator
+to high powers may consume substantial memory.
+
+The construction here avoids those powers. It rounds a reduced argument
+outward using exact integer division, then evaluates a five-term polynomial
+on small rational endpoints. A separate tiny-value branch keeps an exact
+integer exponent instead of expanding it. Every nonzero result has a hand
+midpoint relative ceiling below one part per million. Under the stated
+three-source count cap, polynomial endpoint coefficients have a conservative
+4,096-bit ceiling when formed by the specified common denominators.
+
+This is hand/source-reviewed mathematical progress, not an implementation,
+kernel theorem, runtime/RSS result, human verification, scientific-priority
+claim or program closure. A distinct independent-first 40-significant-bit
+proposal also exists; it is not silently substituted for this 26-fractional-
+grid-bit construction. Root read the complete frozen council note and its
+explicit cost/exposure limits. All old screen flags, failures, grids,
+thresholds and sources stay unchanged. No current Rust API or frozen sign
+producer implements this magnitude recipe; no matching qualified PDF exists.
+
+The PID remains categorical Makkeh–Gutknecht–Wibral (MGW)
+[shared exclusions](https://doi.org/10.1103/PhysRevE.103.032149), with
+[versioned source](https://arxiv.org/abs/2002.03356v5). This numerical kernel
+does not introduce a new PID or transfer the result to continuous, angular,
+hyperbolic or I_min quantities. Standard exact rational enclosure ideas are
+not claimed as inventions.
+
+## 1. Input and every starting symbol
+
+For finite categorical sources and target, fix an ordinary MGW antichain:
+a nonempty family of nonempty source-position subsets, with AND inside each
+subset and OR between subsets. Joint anchors indexed by \(s\) have positive
+integer counts \(c_s\); row count is \(N=\sum_s c_s>0\).
+For that anchor/node, the signed component ratio is \(a_s/b_s>0\), formed
+from its exact marginal and target-conditional component arguments. Both
+components use marginal averaging weights \(c_s/N\), not target-pool weights.
+Define positive integer products and signed average
+
+\[
+P=\prod_s a_s^{c_s},\qquad Q=\prod_s b_s^{c_s},\qquad
+A=\frac1N\ln(P/Q).
+\]
+
+The [complete count/component derivation](POSITIVE_CATEGORICAL_COMPONENT_BOUNDS_2026_10_11.md)
+supplies this correspondence; the numerical proof below assumes it is faithful.
+It also applies to other correctly supplied positive integer \(P,Q,N\),
+without asserting that arbitrary such inputs realize a categorical PID law.
+Units are nats: \(\ln\) is the natural logarithm.
+
+Exact input arithmetic assumes correct alphabets, encoding, support, alignment,
+target conditioning and integer multiplicities. It assumes neither independent
+sources nor independent/identically distributed rows, Gaussian data,
+stationarity, population calibration or task benefit. Real/irrational weights
+and floating-only probabilities are outside this count contract. A wrong
+estimand is not repaired by precise evaluation.
+
+## 2. Decide sign, then reduce without floating logarithms
+
+Compare \(P,Q\) exactly. Equality gives \(A=0\) and interval \([0,0]\),
+with no relative percentage. Otherwise retain the sign and let
+\(J=\max(P,Q)\), \(K=\min(P,Q)\), \(R=J/K>1\), and
+\(y=\ln R= N|A|>0\). The letters \(J,K\) denote integers, not data rows.
+
+Exact shifted-integer comparisons choose integer \(e\ge0\) such that
+\(2^eK\le J<2^{e+1}K\). Define the reduced argument
+\(v=R/2^e\in[1,2)\) and
+
+\[
+d=J-2^eK,\qquad f=J+2^eK,\qquad
+z=d/f=(v-1)/(v+1)\in[0,1/3).
+\]
+
+Here \(d\) is an integer difference, not dimension; \(f\) is its positive
+normalizing sum. The reduced argument \(v\) is not variance or velocity.
+These exact differences avoid loss from subtracting floating logarithms.
+Then \(y=e\ln2+\ln v\), a sum of nonnegative terms.
+
+Fix \(B=26\) fractional grid bits and \(\eta=2^{-B}\) before outputs.
+This is not a claim of 26-significant-bit output: a normalized integer below
+can have 27 significant bits and its upper neighbor can carry another bit.
+
+## 3. Small rational logarithm kernel and complete tail
+
+For rational \(x\in[0,1/3]\), define lower sum and tail ceiling
+
+\[
+\ell(x)=2\sum_{j=0}^{4}\frac{x^{2j+1}}{2j+1},\qquad
+\tau(x)=\frac{2x^{11}}{11(1-x^2)}.
+\]
+
+The index \(j\) labels the five retained terms. For integration coordinate
+\(t\in[0,x]\), the finite identity
+\((1-t^2)^{-1}=\sum_{j=0}^{4}t^{2j}+t^{10}/(1-t^2)\) gives
+
+\[
+\ln\frac{1+x}{1-x}=\ell(x)+2\int_0^x\frac{t^{10}}{1-t^2}\,dt.
+\]
+
+The remainder is nonnegative. Replacing its denominator by \(1-x^2\)
+and integrating proves containment in \([\ell(x),\ell(x)+\tau(x)]\).
+For \(x>0\), \(\ell(x)\ge2x\), so
+
+\[
+\tau(x)/\ell(x)\le\frac{x^{10}}{11(1-x^2)}
+\le\rho,\qquad \rho=\frac1{577368}.
+\]
+
+The last bound uses \(x\le1/3\). At zero both quantities are zero;
+use that branch, not a zero denominator. Differentiating the finite sum gives
+\(\ell'(x)=2\sum_{j=0}^{4}x^{2j}\le2/(1-x^2)\le9/4\).
+Consequently increasing \(x\) by \(h\) within the domain increases
+\(\ell\) by at most \(9h/4\). This includes rounding error in the proof.
+
+## 4. Branch I: the range exponent is positive
+
+When \(e\ge1\), let grid step \(h=2^{-B}\), integer
+\(t_0=\lfloor z/h\rfloor\), and endpoints
+\(z_0=t_0h\), \(z_1=\min((t_0+1)h,1/3)\).
+Floor means rounding down. The upper cap is the exact domain endpoint, not
+an observed-outcome adjustment. Then \(z_0\le z\le z_1\) and
+\(z_1-z_0\le h\). Define positive logarithm endpoints
+
+\[
+L=e\ell(1/3)+\ell(z_0),\qquad
+U=e[\ell(1/3)+\tau(1/3)]+\ell(z_1)+\tau(z_1).
+\]
+
+Monotonicity and the preceding tail give \(L\le y\le U\) and
+\(L\ge2e/3\ge2/3\). Let \(\Delta=\ell(z_1)-\ell(z_0)\).
+It obeys \(0\le\Delta\le9h/4\). Applying each tail bound gives
+
+\[
+U-L\le\rho L+(1+\rho)\Delta,
+\qquad \frac{U-L}{2L}\le\frac\rho2+(1+\rho)\frac{27\eta}{16}.
+\]
+
+This remains valid when \(z_0=0\): the positive \(e\ln2\) term
+supplies a positive lower sum. A tiny residual is not divided by itself.
+
+## 5. Branch II: zero exponent, moderate reduced argument
+
+If \(e=0\), then \(R>1\) forces \(z>0\). Exact comparisons choose
+integer \(m\) with \(2^m\le z<2^{m+1}\), so \(m\le-2\).
+No floating log2 is required. Set
+\(h=2^{m-B}\), \(t_0=\lfloor z/h\rfloor\),
+\(z_0=t_0h\), \(z_1=\min((t_0+1)h,1/3)\).
+Now \(t_0\ge2^B\), \(z_0>0\), and \(h/z_0\le\eta\).
+
+Use this polynomial branch only when \(z_1>2^{-12}\). Set
+\(L=\ell(z_0)\), \(U=\ell(z_1)+\tau(z_1)\).
+Containment follows as before. Since \(L\ge2z_0\),
+
+\[
+\frac{U-L}{2L}\le\frac\rho2+(1+\rho)\frac{9\eta}{16}.
+\]
+
+Also \(z_1\le z_0+h\le z_0(1+\eta)<2z_0\), hence
+\(z_0>2^{-13}\). Therefore \(m\ge-13\): the dyadic endpoints
+have at most \(B-m\le39\) fractional bits, or the exact cap \(1/3\).
+Polynomial powers use these small rationals, not the original huge denominator.
+
+## 6. Branch III: zero exponent and tiny reduced argument
+
+When \(e=0\) and \(z_1\le2^{-12}\), do not expand the huge scale.
+Direct integration gives
+
+\[
+2z\le\ln v\le\frac{2z}{1-z^2}.
+\]
+
+Because \(z_1^2\le2^{-24}\) and
+\((1-u)^{-1}\le1+2u\) for \(0\le u\le1/2\), where \(u\)
+is the temporary squared argument, this implies
+\(y\in[2z_0,2z_1(1+2^{-23})]\). The cap \(1/3\) is inactive.
+The width divided by twice the positive lower endpoint is at most
+
+\[
+\frac{(1+\eta)(1+2^{-23})-1}{2}
+<2^{-22}<\frac1{1000000}.
+\]
+
+For the first strict comparison, expand the numerator: the ceiling is
+\(\eta/2+2^{-24}+\eta2^{-24}<2^{-27}+2^{-23}<2^{-22}\).
+The final inequality uses \(2^{22}=4194304>1000000\).
+
+Store common scale \(k=m-B+1\) as an exact signed integer and return
+
+\[
+\left[\frac{t_0}{N},\frac{(t_0+1)(1+2^{-23})}{N}\right]2^k.
+\]
+
+This means two exact small rational coefficients and an integer exponent,
+not two flattened binary64/decimal values. Never materialize \(2^k\)
+just for serialization. Reflect and reverse endpoints for a negative average.
+Unreported conversion/underflow would invalidate this contract.
+
+## 7. Uniform relative ceiling and returned signs
+
+For both polynomial branches, \(\rho/2=1/1154736<9/10000000\).
+Since \(1+\rho<2\) and \(2^{26}=67108864\),
+
+\[
+(1+\rho)27\eta/16<\frac{27}{8\cdot67108864}<\frac1{10000000}.
+\]
+
+The last exact comparison is \(270000000<536870912\).
+The Branch II addend is smaller. Thus each branch has
+\((U-L)/(2L)<1/1000000\). If \(C\) is an enclosing interval's
+midpoint and its positive true value is \(y\ge L\), containment gives
+\(|C-y|/y\le(U-L)/(2L)\). Division by exact \(N\) and sign
+reflection preserve this relative bound. Exact zero remains its separate
+branch without a percentage. Ppm means numerical relative error, not confidence.
+
+This is an openly different numerical algorithm. The old absolute-grid
+obstruction, cheap Taylor widths and unresolved labels remain valid evidence.
+The preset branches/grid/cutoff were not tuned to dataset outcomes.
+
+## 8. Hand tiny-value example — numerical kernel only
+
+Take \(P=2^{100}+1\), \(Q=2^{100}\), \(N=100\). These are numerical
+kernel inputs; no realization as a categorical count law is claimed.
+Then \(A=\ln(1+2^{-100})/100>0\), \(e=0\), and
+\(z=1/(2^{101}+1)\). Since \(2^{101}<2^{101}+1<2^{102}\),
+\(m=-102\), \(h=2^{-128}\). Exact integer division gives
+\(t_0=2^{27}-1\): multiplying that integer by the denominator gives
+\(2^{128}-2^{101}+2^{27}-1<2^{128}\), whereas multiplying the next
+integer gives \(2^{128}+2^{27}>2^{128}\).
+
+Consequently \(z_0=(2^{27}-1)2^{-128}\), \(z_1=2^{-101}\),
+so the tiny branch applies. Store exponent \(k=-127\) and coefficients
+\((2^{27}-1)/100\) and \(2^{27}(1+2^{-23})/100\). Their interval
+contains the stated average and meets the uniform relative bound by the
+previous proof. No floating subtraction, tiny decimal, gigantic polynomial
+denominator or native example run is needed. Exact shifted division still
+needs enough integer bits; a wrapping u128 implementation would not be justified.
+
+## 9. Rust implementation and computational cost
+
+The current Rust API and sign-only producer do not implement this recipe.
+A new typed research companion would need checked arbitrary integers,
+bounded parsing/product plans, exact outward division, coefficient/scale
+serialization, cancellation/resource refusal and implementation refinement.
+The [Rust cost baseline](../RUST_IMPLEMENTATION_AND_COST.md) stays unchanged.
+
+Let \(H=\max(\operatorname{bits}(P),\operatorname{bits}(Q))\), where
+bits counts binary digits. Range reduction, integer differences and scaled
+division use operands of at most \(H+B+3\) bits. To see the relative
+branch bound, numerator and denominator leading bits first determine a
+candidate \(m\); one exact shifted comparison confirms it. Scaling a tiny
+numerator by \(2^{B-m}\) aligns it with the denominator plus the fixed
+grid bits, rather than raising the whole denominator to degree eleven.
+The number of such large operations is fixed after \(P,Q\) are formed;
+their time, memory and division workspace remain nonconstant in \(H\).
+This operand bound covers argument extraction, not every output operation.
+Endpoint coefficients also depend on the binary digit counts of \(N\)
+and \(e\); the count-cap calculation below includes them. Arbitrarily large
+\(N\) cannot be omitted from a general serialization budget.
+
+For each small kernel argument write \(x=a/b\), positive integer \(b\),
+\(0\le a/b\le1/3\), with \(b\le2^{39}\) or \(b=3\).
+Use the direct common denominator \(315b^9\) for \(\ell\), since
+315 is the least common multiple of 1,3,5,7,9. Use
+\(11b^9(b^2-a^2)\) for \(\tau\). The lower-sum numerator is
+\(2\sum_{j=0}^{4}[315/(2j+1)]a^{2j+1}b^{8-2j}\).
+Since \(a\le b\), it is at most \(3150b^9<2^{363}\);
+its denominator is below \(2^{360}\). The tail numerator is
+\(2a^{11}\le2b^{11}\le2^{430}\), and its positive denominator
+is at most \(11b^{11}<2^{433}\). Thus each base numerator/denominator
+is below \(2^{512}\). Do not multiply an
+equivalent fraction by arbitrary common factors and retain this cost claim.
+
+Under three sources, \(N\le M=31000\) and direct count-product
+representatives/reductions give \(H\le120N+1\le3720001\).
+Then \(e\le H<2^{22}\), \(N<2^{15}\). Combining at most four
+specified base terms gives endpoint numerator below \(2^{2072}\)
+and denominator below \(2^{2063}\): four denominator factors cost at most
+2048 bits, multiplication by \(e\) adds 22, summing four adds two,
+and division by \(N\) adds 15 to the denominator. A 4,096-bit coefficient
+ceiling is therefore deliberately conservative. Greatest-common-divisor
+reduction can shrink it. Tiny-branch coefficients are smaller, while their
+exact scale remains a separate integer.
+
+This count bound is not a measured memory, deadline or output-size result.
+Constructing \(P,Q\), carrier enumeration and reading earlier records still
+cost separately. No existing 180-second, 256-MiB or 8-MiB admission transfers.
+For unbounded counts, coefficient/exponent/input budgets must be separately
+declared. Missing, overflowed, timed-out or out-of-budget work must abstain.
+
+## 10. Meaning, alternatives and remaining acceptance
+
+The [two-dataset occupancy screen](EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md)
+contains actual categorical laws and wide/unresolved cheap intervals. A
+qualified implementation could separate numerical ambiguity from empirical
+sign/magnitude before any justified diagnostic decision is compared with
+direct task-loss baselines. No prediction, causal, calibration or deployment
+advantage is measured here. Neural/imaging and embodied/world-model studies
+still need justified variables, aligned observed targets and sampling rules.
+
+The kernel works for a correctly supplied integer logarithm expression; it
+does not reconstruct all 108 SxPID3 audit expressions, supply their canonical
+parser, build a dependency-disjoint verifier or refine compiled Rust. Those
+original Program C/D requirements remain. All SxPID3 A–E, nineteen formal
+targets, angular, hyperbolic, formal qualification, statistical/application,
+qualified-PDF and v1 gates stay open.
+
+Root fixed the 26-grid-bit route before the fresh independent compact-route
+conclusion. The reviewer first fixed its distinct 40-significant-bit recipe,
+then read and critiqued the entire root note; it agrees with the above
+rounding bounds and supplied explicit common-denominator cost checks. Shared
+model/context/prior log proof remain dependencies, not independent human
+verification. Ten routes and fifty lenses are advisory questions, not votes
+or proof. Source implementation, stock formal admission, hostile controls,
+measured costs and qualified publication remain.
+
+## 11. Distinct 40-significant-bit outward-output alternative
+
+The independently fixed alternative has compact dyadic output rather than
+the preceding raw rational coefficients. Its constants and bound are distinct;
+do not mix the recipes. Set significant precision \(p=40\), relative rounding
+allowance \(u=2^{-39}\), absolute argument grid \(G=2^{40}\), and tiny
+cutoff \(2^{-10}\). The five-term \(\ell,\tau,\rho\) are as above.
+Here \(p\) denotes precision, not a probability or component value.
+
+For positive rational \(x\), exact comparisons choose integer \(j\) with
+\(2^j\le x<2^{j+1}\). Put \(r=j-39\) and define outward dyadics
+
+\[
+D_-(x)=\lfloor x2^{-r}\rfloor2^r,\qquad
+D_+(x)=\lceil x2^{-r}\rceil2^r.
+\]
+
+Ceiling rounds up. The retained integer coefficient is at least \(2^{39}\).
+If the upper coefficient equals \(2^{40}\), replace it by \(2^{39}\)
+and add one to the exponent; the represented value is unchanged. Hence each
+nonzero coefficient has 40 magnitude bits. A sign is separate, or the storage
+type needs at least 41 signed bits; a signed 40-bit integer is insufficient.
+Since the grid step is at most \(ux\),
+
+\[
+(1-u)x\le D_-(x)\le x\le D_+(x)\le(1+u)x.
+\]
+
+At zero use exact zero. Exponents stay exact integers, not expanded powers.
+
+If \(e=0\) and \(0<z<2^{-10}\), define
+\(\beta=1/[3(2^{20}-1)]<2^{-21}\). The finite one-term remainder gives
+\(2z\le\ln v\le2z[1+z^2/(3(1-z^2))]\le2z(1+\beta)\).
+Thus pre-output magnitude endpoints are
+
+\[
+l=2D_-(z)/N,\qquad t=2(1+\beta)D_+(z)/N.
+\]
+
+Here \(l,t\) are lower/upper magnitude endpoints, not target labels.
+Their relative width obeys
+\(t/l-1\le[\beta+2u+u\beta]/(1-u)<2^{-19}\):
+the numerator is below \(2^{-21}+3u<2^{-20}\), and
+\(1-u>1/2\). Only small coefficients and symbolic scale are formed.
+The tail uses the actual \(z\) cutoff, even if its outward upper neighbor
+slightly exceeds that cutoff.
+
+Otherwise \(e\ge1\) or \(z\ge2^{-10}\). Use
+\(z_0=\lfloor Gz\rfloor/G\),
+\(z_1=\min(1/3,\lceil Gz\rceil/G)\), and the Branch I formulas for
+\(L,U\), now with these 40-bit endpoints. They enclose \(y\).
+If \(e\ge1\), \(L\ge2/3\). If \(e=0\),
+\(z_0\ge2^{-10}-2^{-40}>2^{-11}\), so \(L>2^{-10}\).
+The change in \(\ell\) is at most \((9/4)2^{-40}\); therefore
+
+\[
+(U-L)/L<\Lambda,
+\qquad \Lambda=2^{-19}+2^{-27}.
+\]
+
+Indeed \(\rho<2^{-19}\), and the rounding addend is below
+\(2(9/4)2^{-30}<2^{-27}\). Set \(l=L/N,t=U/N\).
+Both branches have \(t/l-1<\Lambda\). Normalize the final endpoints
+outward once more: \(l_c=D_-(l)\), \(t_c=D_+(t)\).
+With exact midpoint \(C_{\mathrm{mag}}\), their relative ceiling is
+
+\[
+\frac{t_c-l_c}{2l_c}
+\le\frac{\Lambda+2u+u\Lambda}{2(1-u)}
+<2^{-19}+2^{-25}<2^{-18}
+=\frac1{262144}<\frac1{250000}.
+\]
+
+The numerator bound comes from \(t-l\le\Lambda l\) and outward
+rounding errors at most \(ut\) and \(ul\); the denominator is at least
+\(2(1-u)l\). For the strict comparison, \(\Lambda<1\),
+\(u<2^{-27}\) and \(2(1-u)>1\) give an upper bound
+\(\Lambda+3u<2^{-19}+4\cdot2^{-27}\).
+Reflect/reverse for a negative average; equality of \(P,Q\) alone gives
+exact zero. This alternative meets four ppm, without a magnitude gap.
+
+For the realizable two-copy-row law in the
+[raw report](CANCELLATION_FREE_SIGNED_AVERAGE_2026_10_11.md),
+\(P=4,Q=1,N=2,A=\ln2,e=2,z=0\). The normal branch has pre-output
+endpoints \(4297606/6200145\) and that lower value plus \(1/866052\).
+The formulas for \(D_-,D_+\) specify their exact compact outward output;
+these are hand numbers, not an executed new fixture.
+
+Cost is not just a function of product size. Let \(\nu=\operatorname{bits}(N)\)
+and \(E=\max(1,\operatorname{bits}(e))\). Argument extraction/quantization
+uses at most two large divisions on operands bounded by \(H+41\) bits.
+Final endpoint normalization uses additional divisions bounded by
+\(E+\nu+1024\) bits for the normal branch, or \(\nu+128\) for the
+tiny branch. Arbitrarily large \(N\) cannot be omitted from this accounting.
+
+For small arguments \(a/b\) with \(b\le2^{40}\), the same specified
+common forms bound \(\ell\)'s numerator/denominator below
+\(2^{372},2^{369}\), and \(\tau\)'s by \(2^{441},2^{444}\),
+respectively. Adding them gives bounds \(2^{817},2^{813}\);
+the corresponding constant at \(1/3\) is below \(2^{50},2^{46}\).
+Combining \(e\) and dividing by \(N\) gives numerator below
+\(2^{E+864}\), denominator below \(2^{\nu+859}\). Normalization's
+extra shifts/divisions are covered by \(E+\nu+1024\).
+Under the stated count cap, \(E\le22,\nu\le15\), so these operands
+are at most 1,061 bits; product extraction still reaches millions of bits.
+Exact exponent magnitude has the conservative ceiling \(H+\nu+1024\).
+None of these hand arithmetic counts establishes runtime or memory admission.
+
+Root read all 274 lines of the frozen independent proposal before promoting
+this alternative. Its initial route preceded fresh root-note exposure;
+subsequent critique of the 26-bit route is explicitly exposed. Root's cost
+objection about arbitrary \(N\) is included rather than hidden. No old
+source/flag/kernel or current sign producer changed; code, parser/refinement,
+formal, resource, matched-task and qualified-PDF requirements remain open.

@@ -1,0 +1,149 @@
+# Stock-tool import capture: two retained verification failures
+
+Sepehr Mahmoudian · 13 October 2026.
+
+Status: observed operational negative; source draft, not an accepted repair.
+Matching PDF, independent review and mainline integration remain pending.
+No PID theorem, estimator or research program is closed by this report.
+
+## Question and terms
+
+The question was whether an unchanged stock-Lean command could supply the
+import metadata needed to prepare later proof checking. The capture did not
+compile the local PID proof candidates. It imported ten fixed library roots
+and tried to print their combined dependency inventory.
+
+- **Native status** is the exit code reported for the actual Lean child.
+- **Supervisor status** is the timed command's status saved by the wrapper.
+- **Caller status** is the outer shell status returned to the invoking tool.
+- **Trust level** is a Lean environment setting. A requirement for zero is
+  distinct from merely invoking the shipped command without arguments.
+- **Inventory** describes loaded modules. It is not a kernel proof, a proof of
+  source/object correspondence, or scientific verification.
+- **One-shot attempt** means this registered invocation cannot be repeated to
+  replace its failed result. A future changed route needs a new packet.
+
+Zero usually denotes successful process termination. It does not by itself
+establish that the intended operation succeeded. The decisive records below
+must be read together.
+
+## Assumptions and actual procedure
+
+The route fixed the stock Lean 4.33.0 executable and selected library hashes,
+nine package-cache paths, source files, interpreter, environment and arguments.
+It changed no proof kernel, compiler defaults, flags, tolerance or PID code.
+Each child used a closed input stream and separate complete output streams.
+The limits were 180 seconds per child, 600 seconds for the timed controller,
+8 MiB per child stream, 16 MiB combined streams and 96 MiB generated output.
+These were the existing bounded-capture contract, not a hard memory guarantee.
+
+The former missing-cache blocker was removed by a separately completed genuine
+stock Cli package build. The root rechecked all nine directories and their
+parents, original source/tool hashes and unused output paths. No cache was
+fabricated, no missing-path guard was removed, and the old missing-path result
+remains valid for its earlier observation.
+
+The root then copied the unchanged sources, wrote the exact launch grant,
+consumed the external attempt before preflight, and invoked the original wrapper
+once. Execution ran from 18:09:37 to 18:09:44 UTC. The attempt is now spent.
+
+## Failure 1: the declared trust premise was not met
+
+The version child exited zero and reported Lean 4.33.0 at commit
+`d8b18978322de05a8f3dba51ef03cf5461676c17`.
+The projection child exited one and produced this complete diagnostic:
+
+```text
+PROJECTION.lean:154:0: error: COUNT_GRAPH_NONZERO_TRUST
+```
+
+Its output was 56 bytes; its error stream was empty. The error appeared on
+standard output, so checking only standard error would have missed it.
+No dependency rows or end-of-inventory record were produced.
+
+The observer required the environment's trust level to equal zero. The frozen
+command did not request a trust-level argument. These premises do not match:
+the [upstream shell source at the exact reported commit](https://raw.githubusercontent.com/leanprover/lean4/d8b18978322de05a8f3dba51ef03cf5461676c17/src/Lean/Shell.lean)
+sets its command-line default through `defaultTrustLevel` and describes a
+separate zero-trust option. A default parameter of zero in an environment
+constructor must not be transferred to the command-line invocation.
+
+The observation establishes refusal of this exact command, not the actual
+nonzero value. A version string and selected source excerpts do not authenticate
+the binary or prove complete source/binary correspondence. No guard was removed
+and no argument was changed to make the spent attempt pass.
+
+## Failure 2: outer zero concealed an inner failure
+
+The retained records disagree in a way that matters operationally:
+
+| Layer | Actual recorded result |
+|---|---|
+| Lean version child | Exit 0; complete version output |
+| Lean projection child | Exit 1; nonzero-trust diagnostic |
+| Controller record | `failed`; `RuntimeError: capture failed` |
+| Timed supervisor | Saved shell status 1 |
+| Outer caller | Exit 0; empty caller output streams |
+
+The wrapper also reached its final `raw_unqualified` marker. Neither that marker
+nor caller zero can override the native failure and failed controller record.
+
+The root tested the unchanged stock Bash 3.2.57 executable using three fixed
+controls. Each test used `set -euo pipefail` before the shown commands:
+
+| Control | Commands | Exit | Output |
+|---|---|---:|---|
+| Failed compound condition | `[[ 1 == 0 ]]; printf 'survived\n'` | 0 | `survived` |
+| Failed simple command | `false; printf 'survived\n'` | 1 | Empty |
+| Explicit refusal | `if ! [[ 1 == 0 ]]; then exit 7; fi; printf 'survived\n'` | 7 | Empty |
+
+All three error streams were empty. Thus, on this exact shell, automatic
+error-exit did not stop execution at the failed compound condition. The original
+wrapper used a bare `[[ $rc == 0 ]]`, where `rc` held the supervisor status.
+This identifies a mechanism for its misleading caller zero. It is not a claim
+about every shell, every conditional context or every repository script.
+The explicit-refusal control is not an adopted wrapper repair.
+
+## Evidence and preservation
+
+The complete projection diagnostic has SHA-256
+`f2e23260030b9dff262f664f151d2e32f24ef55ca725b4eaf67ab15540da2e7a`.
+The 9,903-byte controller record has SHA-256
+`46c542c55a6b8c40722f08581b0abd1dc3eb10ad477a98d0453766a34776bc92`.
+The original wrapper and controller remain unchanged. Full permitted native
+streams, grants, ledger, timings, statuses, hashes and local locators are retained
+in ignored operational records. These identifiers bind bytes, not truth,
+authenticity, off-host durability or permanent publication.
+
+Post-run snapshots found neither recorded direct child and no open handles in
+the three inspected capture directories. Those bounded snapshots do not prove
+absence of escaped historical descendants or future writers. Overall closure
+qualification remains on hold. No worktree, branch, cache or cloud folder was
+deleted.
+
+## Rust implementation and computational cost
+
+This was publication/proof-preparation tooling, not a Rust estimator. There is
+no new Rust API, numerical kernel, data benchmark or application model.
+The controller observed 0.131 seconds for the version child and 6.593 seconds
+for the projection child on this host. These are elapsed observations for one
+failed metadata attempt, not performance bounds or proof-checking throughput.
+No peak-memory measurement or successful graph size is available.
+
+## Path forward and nonclaims
+
+Keep the failure permanent. Before another route, distinguish shipped-default
+metadata observation from a separately specified strict proof-checking route.
+Review the exact semantics, tool/source correspondence and required trust
+premises; retain refusal controls and test error propagation on the selected
+shell. A changed packet must not replace this attempt's evidence.
+
+Do not rerun the old identifier, suppress the trust guard, change compiler
+defaults, loosen resource limits or accept a final marker as success. Independent
+review of any repair, strict graph parsing, source/object and private-code
+correspondence, actual theorem checking and Rust refinement remain open.
+These failures do not refute the hand-derived binary PID bound. They also do not
+formally verify it. SxPID3 programs remain open.
+
+Suggested citation: Sepehr Mahmoudian, *Stock-tool import capture: two retained
+verification failures* (2026). Include the exact repository commit or release.

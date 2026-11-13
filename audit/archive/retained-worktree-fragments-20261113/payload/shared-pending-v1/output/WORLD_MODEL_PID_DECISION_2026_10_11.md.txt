@@ -1,0 +1,494 @@
+# World models for shared-exclusions research: a question-first decision
+
+Sepehr Mahmoudian · 11 October 2026.
+
+**Decision:** use a compact controlled PrISOMA experiment first; qualify
+Cosmos3-Edge as the broader recent Mac application arm. These are different
+roles, not a measured overall ranking. LingBot and SANA remain camera-study
+alternatives. None is admitted for physical control or a PID application yet.
+
+This is a source-based design note, not a completed experiment, preregistration,
+formal proof or research-program closure. It covers material available by
+11 October 2026, not later October releases. The machine is assumed to be the
+user-stated M4 Max with 128 GB unified memory; available memory, runtime and
+thermal headroom are not established. No model was installed or run here.
+
+## 1. The real problem and the proposed contribution
+
+Good-looking generated video need not follow the requested action or predict a
+failure. The authors of [MiraBench](https://arxiv.org/abs/2605.29360v1) report
+this mismatch, including optimistic predictions under failing actions.
+Those are their observations, not a pid-rs reproduction. Our proposed question
+is narrower: can a declared shared-exclusions diagnostic reveal useful
+input combinations or misleading forecasts **beyond simpler diagnostics**,
+on later observed outcomes and held-out episodes?
+
+There are three separate possible benefits:
+
+- Better forecasting: lower loss against the actual later outcome.
+- Better diagnosis: an additional, reproducible description of information
+  carried by particular input combinations or a computational summary.
+- Better decisions: a complete policy improves a declared task outcome under
+  the same action access, deadlines and resource budget.
+
+None implies the next. A precise PID calculation can lose to a simpler
+diagnostic. A forecast can improve prediction without improving control.
+Useful negative results include no incremental benefit, unsupported actions,
+unstable representations and accurate arithmetic with poor population inference.
+
+## 2. Candidate choice by experimental role
+
+| Role | Candidate and reason | Admission still needed |
+|---|---|---|
+| Engineering reference | PrISOMA's small exact-fork reference: known transitions and forecast-before-label records | Confirm the exact current protocol and receipts; a toy reference does not establish learned-model or physical performance |
+| First learned controlled study | Pinned compact LeWM PushT: supplied-action rollouts and task-cost evaluation permit repeated matched resets | Exact dependencies, preprocessing, safe weight loading, action bounds, CPU/MPS comparisons and complete task replay; previous synthetic MPS checks are not end-to-end qualification |
+| Broader recent Mac application candidate | Cosmos3-Edge through the community mere.run Swift/MLX route: documented action-conditioned forward dynamics and several action-domain interfaces | Read and pin actual implementation and weights; verify each selected domain, preprocessing, raw outputs, numerical comparisons, rights and resources |
+| Recent camera alternative | LingBot-World 2.0 1.3B through the MPS fork; optional MLX text encoder | Full fork/camera/cache/cut/dependency review, numerical comparisons and a bounded actual Mac run; noncommercial terms |
+| Camera comparison | SANA-WM community MLX route, with CPU input preparation | Exact patch, precision, camera and reference comparison; the optional large refiner is omitted |
+| Passive comparison only | Cosmos3-Nano community MLX route | The inspected interface does not establish an externally supplied action trajectory; do not relabel passive generation as action-conditioned forecasting |
+
+The [pinned LeWM implementation](https://github.com/Mengarr/lewm/tree/8a2c595813d0eee85b2dbffa6f58ff0842f9e673)
+and [PushT checkpoint card](https://huggingface.co/quentinll/lewm-pusht/blob/22b330c28c27ead4bfd1888615af1340e3fe9052/README.md)
+motivate the compact route, not its current Mac readiness. Its evaluation-data
+scaling and exact planner/model dependency correspondence need review before
+an inferential study. Reproducing an upstream evaluation protocol and conducting
+a training-fitted held-out study are different claims; retain both identities.
+
+[NVIDIA's Cosmos3-Edge card](https://huggingface.co/nvidia/Cosmos3-Edge)
+describes a four-billion-parameter model and compatible embodiment layouts.
+The official tested runtime is Linux/NVIDIA. The community
+[mere.run CLI documentation](https://github.com/sawfwair/mere-run/blob/main/docs/cli.md)
+advertises broader forward-dynamics modes, including PushT, while the official
+card's action list does not independently establish that particular route.
+The CLI section was retrieved through an indexed primary-source view after
+direct retrieval failed. This is a documentation lead, not an implementation
+audit, checkpoint identity or demonstrated Mac capability.
+
+Edge's breadth makes it the broad application candidate, not the winner of a
+matched accuracy, speed or usefulness benchmark. One advertised mode can fail
+admission without invalidating every other mode. A nine-coordinate camera
+layout is not a drone actuator layout just because both are numeric vectors.
+The separate DROID policy checkpoint is not interchangeable with the base
+world generator. Inverse-navigation replay, a stored graph edge and inserted
+handoff frames must be distinguishable from newly generated raw prediction.
+
+The [LingBot Mac fork](https://huggingface.co/PandacatAI/lingbot-world-v2-mps/blob/main/README.md)
+documents a September release and an author-run Mac example, not our run.
+The inspected [upstream camera helper](https://github.com/robbyant/lingbot-world-v2/blob/main/wan/utils/cam_utils.py)
+normalizes translation magnitude. Correspondence to the full Mac fork remains
+unchecked. Therefore neither metric translation nor drone dynamics is admitted.
+Its recorded dependency mismatch, finite conditioning-tail optimization and
+size/time-based cache identity are review obligations, not universal numerical
+or stale-cache guarantees. The [SANA port](https://github.com/AasthaShayla/sana-wm-mlx)
+and [Nano port](https://github.com/lyonsno/cosmos3-mlx) have separate interfaces
+and numerical boundaries. The [Mac screen](MAC_WORLD_MODEL_SCREEN_2026_10_11.md)
+retains these candidate-specific facts and author-reported resource figures.
+
+## 3. Which PID, which variables, which population?
+
+The first proposed analysis is the **finite categorical shared-exclusions
+measure of Makkeh, Gutknecht and Wibral (MGW)**, not another PID with a similar
+name. Its defining source is [Physical Review E 103, 032149](https://doi.org/10.1103/PhysRevE.103.032149),
+with the retained [version-5 source correspondence](../claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md).
+An event means AND within a source collection and OR between collections.
+Local net information is informative minus misinformative information;
+negative net atoms are retained. Information units are **nats**: logarithms
+are natural logarithms.
+
+Mutual information (MI) measures average source-target information; conditional
+MI (CMI) measures what remains after a conditioning variable is known. A lattice
+node is a nonempty family of nonempty source-index subsets, none containing another.
+
+The [Ehrlich continuous functional](https://arxiv.org/abs/2311.06373v3)
+has a different definition and support/gauge requirements. Quantizing an
+embedding creates a categorical estimand; it does not validate that continuous
+functional. Neither a Gaussian-looking embedding, a camera angle nor a named
+hyperbolic latent establishes the corresponding population assumptions.
+
+The following meanings are fixed before using any formula:
+
+| Symbol | Meaning, timing and units |
+|---|---|
+| `H` | Complete observation history available at the pre-action landmark, including its time ordering; recorded sensor units |
+| `L` | Instruction or goal already available at that landmark; text or declared goal units, never the held-out future label |
+| `A` | Proposed action sequence, with declared embodiment, units, cadence and conversion identity |
+| `E` | Action actually resolved and executed by the authoritative controller; not inferred from `A` |
+| `M` | Frozen model, weights and preprocessing identity; no held-out future is supplied during fitting or querying |
+| `B` | Any additional pre-action memory, cache or context used by the forecaster |
+| `C` | Complete shared pre-action input tuple `(H,L,A,M,B)` |
+| `R` | Model-generation randomness; its distribution and seed role are declared |
+| `F` | Generated forecast from `C` and `R`; pixels, latent values or predictive probabilities as declared |
+| `Y` | Later outcome from the authoritative reference process or a physical recording; never substituted by `F` |
+| `Q` | Fixed target encoding, fitted only on training data if fitting is needed |
+| `T` | Finite categorical target `Q(Y)`; alphabet and units of the original outcome are retained |
+| `X1` | Fixed categorical summary of available observations; specify whether it includes instruction/history |
+| `X2` | Fixed categorical representation of the proposed action |
+| `X3` | A separately declared third source: for example earlier history, another view, or a summary of `F` |
+
+These are design placeholders, not a ready dataset schema. Choose one meaning
+for `X3` per study. A second camera, earlier history and a descendant forecast
+are not interchangeable sources. A constant instruction is not an informative
+third source. Source vectors may be correlated; “three sources” does not mean
+three independent modalities.
+
+For a finite categorical law, write `P` for its complete joint probability
+law over `(X1,X2,X3,T)`. An empirical law assigns each recorded state its count
+divided by the total row count. Computing that empirical PID needs no Gaussian
+or row-independence premise. Interpreting it as population evidence does need
+a separately justified sampling design. Structural zero means zero under the
+declared population law; an unobserved sample cell does not establish it.
+
+Every experiment must distinguish simulator-reference `Y` from physically
+observed `Y`; a renderer-only target is a visual proxy. Retain proposal,
+controller and executed-action records. Unsupported proposals, missing futures
+and abstentions stay in the denominator and failure record.
+
+![Separate generated forecasts, observed outcomes and matched evaluation](figures/world-model-pid-evidence-20261011.svg)
+
+The diagram is a forecast-only contract, not an identification proof.
+The generator does not own the reference transition. Outputs are committed
+before future labels are available. The baseline has the same declared input
+and action access; using a privileged forecast against a weaker baseline is
+not evidence of PID's incremental value.
+
+## 4. A negative control: computation is not an additional sensor
+
+This is an elementary conditional-independence argument, not a new theorem or
+a newly kernel-verified result. Assume:
+
+1. The complete generator input `C` includes all its deterministic ancestors,
+   fixed parameters and retained memory. The generator uses no later label.
+2. Its forecast is a fixed function, `F=f(C,R)`.
+3. Conditional on `C`, model randomness `R` is independent of actual outcome
+   `Y`. Sampling a prediction does not advance or alter the authoritative world.
+4. The comparison conditions on that same complete input. A coarser summary
+   is a different conditioning variable.
+
+Here `f` is the declared generator function. For clarity, take finite variables
+in the derivation. Let `c`, `r`, `z` and `y` be particular values of `C`, `R`,
+`F` and `Y`. Let `1{...}` be one when its enclosed statement is true and zero
+otherwise. For each input value with positive probability:
+
+$$
+\begin{aligned}
+P(F=z,Y=y\mid C=c)
+ &= \sum_r 1\{f(c,r)=z\}\,P(R=r,Y=y\mid C=c)\\
+ &= \sum_r 1\{f(c,r)=z\}\,P(R=r\mid C=c)P(Y=y\mid C=c)\\
+ &= P(F=z\mid C=c)P(Y=y\mid C=c).
+\end{aligned}
+$$
+
+The first step enumerates generator seeds. The second uses the independence
+premise; the third groups seeds producing the same forecast. Thus the
+conditional law factors. Define `I(F;Y|C)` as conditional mutual information:
+the average logarithm of this joint conditional probability divided by the
+product of its conditional marginals. At every positive-probability term the
+ratio is one, its logarithm is zero, and therefore
+
+$$ I(F;Y\mid C)=0. $$
+
+This does **not** say `F` cannot predict `Y`, nor that a model is useless.
+It says the forecast supplies no additional outcome information once its
+complete available input is already conditioned on. A restricted decoder can
+benefit greatly from a useful computed representation. An observed positive
+conditional MI after replacing `C` with `(X1,X2)` can reflect discarded input,
+additional history or a different memory path. It is not automatically new
+physical information. Hidden target inputs, altered world state, seed coupling
+and future-contaminated caches violate the premises; test them rather than
+declaring the theorem proved by a numerical zero.
+
+This control is for forecast-only evaluation. In a feedback policy, `F` can
+alter executed actions and hence `Y`; premise 3 needs a different analysis.
+
+There is also a specifically MGW three-source control. Suppose `X3` is a
+deterministic function of the **complete** `(X1,X2)`, not merely correlated with
+them. Define `H3=H(X3|X1,X2)` as conditional entropy, the remaining uncertainty
+of `X3` after those sources are known. Then `H3=0`. The
+[five-position component budget](RESEARCH_NOTES_2026_10_10.md#repeated-inputs-which-categorical-positions-can-change)
+uses MGW's nonnegative informative and misinformative component atoms. The
+five positions outside the pair-`{12}` availability ideal are `{3}`, `{13}`,
+`{23}`, `{13;23}`, `{123}`: braces group joint sources; semicolons separate
+alternative collections. Their joint-law averaged component sums
+are respectively `H(X3|X1,X2)` and `H(X3|X1,X2,T)`. Both are zero here.
+A nonnegative sum is zero only when every term is zero. At all five positions,
+both averaged components and their signed differences vanish; positive weights force their
+nonnegative local components to vanish too. Positions inside the ideal can
+still change, including positions naming source 3.
+This is a conditional hand derivation using the cited component theorem, not
+an implementation or continuous-PID conclusion. Observed sample determinism
+does not prove population determinism. Small conditional MI alone also does
+not establish small components: informative and misinformative contributions
+can cancel in net atoms, and signed net atoms can cancel in their sum.
+
+## 5. Four-row worked example, including a losing comparator
+
+This assigned finite law is an illustration, not robot data or a model run.
+Let `V` be a binary observed state and `A` a binary action. They are independent
+fair bits. Let `T=V XOR A`: XOR is one exactly when its two inputs differ.
+Let `F` be the same result computed from the available inputs. Each row has
+probability `1/4`:
+
+| `V` | `A` | Later category `T` | Computed forecast `F` |
+|---:|---:|---:|---:|
+| 0 | 0 | 0 | 0 |
+| 0 | 1 | 1 | 1 |
+| 1 | 0 | 1 | 1 |
+| 1 | 1 | 0 | 0 |
+
+The target is fair, so its entropy is `ln2`. Knowing either input alone leaves
+a fair target; its individual MI is zero. Knowing both determines the target;
+their joint MI is `ln2`. These are measure-independent Shannon facts, not yet
+a PID allocation.
+
+For the **MGW two-source** redundancy at anchor `(V,A)=(0,0)`, the OR event
+“`V=0` or `A=0`” contains three rows. Its probability is `3/4`. Conditional on
+the observed `T=0`, two rows remain and only the anchor belongs to the OR event;
+the conditional event probability is `1/2`. The same counts hold at each
+anchor by symmetry. Let `r+` and `r-` be the informative and misinformative
+redundancy components, and `r` their net difference. Then
+
+$$
+r^+=-\ln(3/4)=\ln(4/3),\qquad
+r^-=-\ln(1/2)=\ln2,\qquad
+r=r^+-r^-=\ln(2/3).
+$$
+
+The net redundancy is negative; do not clamp it. Let `uV` and `uA` denote
+the two unique net atoms and `s` the synergistic net atom. The two-source PID
+identities give every step:
+
+$$
+\begin{aligned}
+u_V &= I(V;T)-r=0-\ln(2/3)=\ln(3/2),\\
+u_A &= I(A;T)-r=\ln(3/2),\\
+s &= I(V,A;T)-I(V;T)-I(A;T)+r\\
+  &= \ln2+\ln(2/3)=\ln(4/3).
+\end{aligned}
+$$
+
+Here `I` is mutual information. Checking the total,
+`r+uV+uA+s=ln2`. Calling the entire `ln2` “synergy” would conflate MGW with
+another allocation. Since `F` is computed from `(V,A)`, its conditional MI
+with `T` given both inputs is zero. Taking `(X1,X2,X3)=(V,A,F)` also satisfies
+the deterministic-source premise of the preceding five-position control.
+
+For a prediction comparison, let `p` be the reported probability that `T=1`.
+The binary Brier loss is `(p-T)^2`, a dimensionless squared error. A constant
+`p=1/2` has loss `1/4` in every row. The computed forecast `p=F` has zero
+loss. However, a matched direct XOR rule also has zero loss, so the forecast
+does not beat that comparator. `F` alone carries `ln2` target information; its
+additional information given `(V,A)` is zero. This illustrates representation
+value relative to a restricted predictor, not a world-model breakthrough,
+PID superiority or practical task gain.
+
+## 6. Proposed applications and two distinct collections
+
+These are collection designs, not frozen registrations, downloaded datasets
+or reported results. Each needs exact source and protocol qualification.
+
+### Collection A: controlled pushing with actual reference outcomes
+
+Start with the compact reference and then qualified LeWM PushT. At each valid
+reset, randomize among supported action proposals before observing the future.
+Commit each forecast, score and abstention first. Restore the exact same state
+for each reference branch; retain actual executed actions and task outcomes.
+Declare the outcome horizon, units and task loss. Include no-op, reversed,
+contact and failing actions rather than selecting attractive videos.
+
+Use current-only, current-plus-action, direct kinematic/task-cost, passive and
+prediction-disabled comparators where each is meaningful. Proposal counts,
+controller access, histories and deadlines must match. A shuffled-action
+control needs its own exchangeability justification; it is not a physical
+intervention merely because rows were shuffled. Edge can join this collection
+only if its documented PushT route is actually implemented and qualified with
+the same action and outcome semantics. Do not manufacture an adapter by vector
+padding or reinterpret a camera trajectory as a pushing command.
+
+Randomizing proposed `A` identifies assignment effects under a fixed controller,
+not arbitrary interventions on executed `E` when execution differs from proposal.
+
+Rows sharing a reset, episode or dependent scene share a split and uncertainty cluster.
+Model seeds on one reset measure generation variability, not independent worlds.
+A complete-policy comparison subsequently randomizes independent episodes;
+better fork ranking is not itself better episode utility.
+
+### Collection B: held-out recorded manipulation
+
+The [DROID project's primary dataset description](https://droid-dataset.github.io/)
+provides recorded images, actions and instructions, with later frames and a
+multi-camera robot setup. It is a plausible second collection, not already
+admitted here. Verify the precise action convention, calibration revision,
+timestamps, target annotation, rights and train/evaluation provenance before use.
+The model's DROID-related training or post-training creates an overlap risk:
+a dataset name and random row split do not establish held-out episodes or tasks.
+
+Keep forecasts and actual later frames separate. A physical success label needs
+an authoritative label definition; attractive predicted RGB is not one.
+Recorded actions are not randomized interventions, and missing counterfactual
+outcomes cannot be filled with generated video. This collection can assess
+predictive association and robustness within its declared population, not
+identify arbitrary policy effects. Stop if compatible action semantics or
+held-out provenance cannot be established; choose a separately justified
+collection instead of weakening the claim.
+
+### What other applications remain possible?
+
+Earlier categorical bounds can describe coarse task-defined neural/imaging,
+multi-sensor, medical or industrial variables without any world model.
+Require an actual outcome, meaningful sources and a justified sampling design;
+do not force every application through Edge. Camera geometry can support a
+view-prediction question but not automatically calibrated flight dynamics.
+Angular and hyperbolic research requires its exact mathematical assumptions,
+not the presence of rotation angles or hierarchy in an application name.
+The [application alternatives guide](../PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md)
+keeps cases where MI, conditional MI, direct loss or an existing method is enough.
+
+## 7. Test incremental value, not attractive atoms
+
+Freeze transformations on training episodes. Declare each source/target
+alphabet, finite support, missingness rule and evaluation population before
+looking at test outcomes. Evaluate sensitivity to multiple justified encodings
+without selecting the best test result. Fixed encoding changes the estimand;
+coarser bins are not the original continuous variable.
+
+Compare a task-appropriate diagnostic containing PID features with the same
+diagnostic without them and with simpler MI, conditional MI, uncertainty,
+temporal or task-loss features. Separate exploratory feature search from the
+held-out comparison. Declare the useful improvement margin and uncertainty
+method before testing; no margin, confidence level or sample size is frozen
+by this note. A predictive distribution needs a proper distribution score;
+a point forecast needs a loss matching its stated prediction target.
+
+Adjacent frames, branches, seeds and repeated prompts are not independent
+episodes. Group-preserving training/test splits and uncertainty calculations
+must match the actual dependence. A block bootstrap wrapper does not prove
+coverage, and replacement duplicates can violate a continuous callback's tie
+contract. No confidence interval follows merely from running a resampler.
+Report missing-output rates, deadline refusals, occupancy and all losing arms.
+No state-of-the-art comparison is available from this design decision.
+
+The [positive categorical component bounds](POSITIVE_CATEGORICAL_COMPONENT_BOUNDS_2026_10_11.md)
+can be tested for arithmetic utility on an admitted count table. Their intervals
+do not address sampling bias or task calibration. If informative and
+misinformative component intervals are `[L+,U+]` and `[L-,U-]`, the net interval
+is `[L+-U-,U+-L-]`; retain all four endpoints. Near-zero signed nets need
+absolute widths and unresolved-sign reporting, not a false relative guarantee.
+A constant target can give positive equal components with zero net. Rarity
+and unobserved support remain visible; no unreported smoothing or pseudocounts.
+
+## 8. Rust implementation and computational cost
+
+This note adds no estimator, Mac adapter or training API. The current
+[exports](../crates/pid-core/src/lib.rs) expose categorical
+`stable::categorical::discrete_sxpid2/3/n` and averaged budget/cancellation
+variants; training-fitted quantization is a separate stable route. The current
+three-source calculation is not the unfinished independent PID3 certificate.
+Continuous Ehrlich PID2 and mixed-dimensional PID3 remain separate research
+surfaces. The [method catalog](../method-catalog.json) defines availability
+and provenance; bindings or feature flags do not establish application validity.
+
+For the general categorical engine, let `N` be the number of aligned rows,
+`K` the number of occupied complete source-target states, `D` the total number
+of categorical coordinates, and `m` the number of lattice nodes. For three
+sources `m=18`. The source-derived complete event scan visits `(2m+1)K^2`
+probability-table entries, hence `37K^2` here. This is not the exact specialized
+API's instruction count or an elapsed-time measurement. Row storage costs
+order `ND`; averaged output avoids retaining every anchor's atom table but
+still allocates temporary anchor vectors. Sorting, lattice inversion, fitting,
+model inference and uncertainty replications add separate costs. See the
+[implementation/cost reference](../RUST_IMPLEMENTATION_AND_COST.md) for the
+full source-derived accounting and its baseline identity.
+
+Existing defaults use estimated-memory and coarse-operation admission limits;
+they are not measured RAM, process survival or deadline guarantees. Some
+preflight uses `N` in place of unknown `K` and can refuse repeated-state data.
+Cooperative cancellation and explicit fallible reservations do not cover every
+allocation failure or a request after the final check. Counts above `2^53`
+are refused; represented-addend accumulation does not certify real logarithms
+or products. Preserve numerical refusals and unresolved signs.
+
+With eight categories in each of three scalar sources and a binary target,
+the complete state capacity is `8×8×8×2=1024`. This is a capacity, not a required
+sample size or assured occupancy. Binning every high-dimensional latent
+coordinate can make almost every row distinct, worsening cost and inference.
+Resampling multiplies full estimator work and any replicate-specific refitting.
+No model-size or memory-capacity claim proves that repeated, statistically
+useful experiments fit the available Mac time budget.
+
+## 9. Council record: ten routes, fifty hostile lenses
+
+Two non-root model reviewers reasoned separately before seeing a new parent
+ranking or draft. They had prior shared source/context exposure and use shared
+model/tools; this is not blind search, human independence or proof by consensus.
+Their first conclusions were preserved before the Edge preference was disclosed.
+Both favored a compact controlled scientific study. One separately ranked
+LingBot ahead of Edge for the recent camera-source audit. The parent accepts
+the compact-study advice, retains that camera-ranking disagreement, and selects
+Edge for the **broader conditional application role**, not measured superiority.
+
+The following distinct routes have five named challenge lenses each. The fifty
+names are review coverage, not fifty people, executions or passed tests.
+
+| Route | Five named lenses | Disposition |
+|---|---|---|
+| 1 Hold until a question is identifiable | Undefined outcome; prestige selection; comparator weakness; margin shopping; missing denominator | Refuse an experiment without a frozen outcome and useful comparison |
+| 2 Direct task loss and MI/conditional MI without PID | Objective mismatch; atom necessity; feature-access inequality; decoder restriction; multiplicity | Mandatory simpler comparison, not an inferior route |
+| 3 Exact-fork engineering reference | Oracle leakage; state alias; bridge bypass; pool drift; replay inflation | First contract reference, not learned or physical validation |
+| 4 Compact LeWM controlled study | Dependency drift; unsafe weights; scaler leakage; support escape; planner mismatch | First learned study after exact-stack and task qualification |
+| 5 Edge broad action-conditioned arm | Unread implementation; inverse replay; handoff overwrite; unit inflation; checkpoint conflation | Conditional broad candidate; qualify only the selected domain |
+| 6 LingBot camera study | Game-command inflation; translation-scale loss; tail-cut overreach; cache staleness; runtime mismatch | Retained recent camera alternative with unresolved source/parity gates |
+| 7 SANA camera comparison | Refiner omission; precision drift; CPU-prep omission; patch identity; geometric convention | Separate camera arm, not a manipulation or flight substitute |
+| 8 Nano passive comparison | Action-interface absence; marketing transfer; size prestige; target mismatch; unmatched input | Passive baseline only where it answers the same forecast question |
+| 9 Recorded-outcome application without new generation | Training overlap; observational confounding; calibration drift; frame pseudoreplication; label substitution | Useful independent application route after dataset/protocol admission |
+| 10 Conditional-law and formal research first | Carrier transfer; structural-zero conflation; cancellation; kernel hold; arithmetic-to-population leap | Continue mathematical programs independently of model choice |
+
+Common dependency failures can invalidate several routes. Count neither an
+agreement nor a finite exact check as population calibration or deployment
+evidence. Failed retrieval is not proof that a capability is absent.
+
+## 10. Program closure: what this milestone cannot replace
+
+The current [SxPID3 claim decision](../claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md)
+and [route obligations](../claims/SX-CERTIFIED-AVERAGED-PID3-001/routes.md)
+remain authoritative: Programs A–E are **0/5 closed**. Narrow conditional
+results can be useful, but do not close the original broader request by
+renaming it. The stock formal-tool qualification hold remains unchanged.
+
+| Program / gate | Required closure evidence | Role of a world-model study |
+|---|---|---|
+| A: categorical source correspondence | Complete defining-paper, concrete carrier/event/order/count and symmetry obligations | Supply declared application objects; cannot prove the semantic bridge |
+| B: formal finite-three-source structure | Concrete independent formal obligations, solver checks and accepted unchanged toolchain | No replacement by model results or agreement |
+| C: numerical certificate | Canonical parser, exact-expression/directed-enclosure obligations and all required coordinates | Supply retained count tables and cancellation failures, not universal arithmetic correctness |
+| D: Rust refinement | Required specialized/general, averaged/pointwise, feature/build and exhaustive comparisons | Profile admitted data later; cannot replace the compiled refinement suite |
+| E: independent replay and custody | Adversarial replay, exact provenance/refusal controls and the prescribed external-custody boundary | Produce immutable records only after capture admission; no human-reproduction credit here |
+| Angular work | Exact restricted-law assumptions, source correspondence, formal and certified evaluation/publication | Camera rotation does not establish the angular law |
+| Hyperbolic work | Exact geometric/support/model premises, unchanged formal qualification and numerical/statistical evidence | A hierarchical or curved latent does not supply those premises |
+| Statistical/application work | Justified sampling, calibrated uncertainty and held-out incremental value on multiple suitable collections | This is the proposed application route, not a result |
+| v1 release | Catalog/scope, numerical, package, platform, hosted and publication gates | No release completion follows from selecting Edge |
+
+Near-term order: finish the existing component-bound exposition and its strict
+PDF checks; qualify the frozen capture controls before the two-collection
+arithmetic screen; continue finite-three-source proof/certificate obligations;
+then admit a small controlled application arm. Model-source review can proceed
+in parallel. Retain positive and negative results and resume pointers after
+each coherent milestone. No flags, kernels, acceptance criteria or scientific
+tolerances are changed to manufacture closure.
+
+## 11. Evidence limits and publication status
+
+The PrISOMA source inspected for this decision is review revision
+`c13b89024271a74f6d9f4255ecd493d172347578`, not freshly synchronized remote main.
+Selected current question/method/frontier sections were read; this is not a
+full repository or dependency audit. Candidate source screens include retrieval
+failures and mutable web views, not downloaded weight hashes or runtime parity.
+The pid-rs integration baseline is `1f041a37086cda71bc65a860d1795613c7cd1003`
+with preserved local changes. See [CITATION.cff](../CITATION.cff) for software
+citation and the [result map](../RESEARCH_RESULTS_2026_10_10.md) for other evidence.
+
+This Markdown and SVG are a local documentation milestone. A current matching
+qualified PDF, formal replay, physical experiment, consumer integration and
+remote publication are still open. This sandbox permits no sibling-repository
+or common-Git writes. No model download, inference, simulation, control,
+PrISOMA modification, commit, push, worktree/branch removal or recovery-folder
+deletion occurred for this decision. Useful historical bytes and ongoing
+agents' work remain preserved.

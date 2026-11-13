@@ -1,0 +1,44 @@
+# Unqualified review draft
+
+Sepehr Mahmoudian · 12 October 2026
+
+[Findings PDF](report.pdf), not an accepted publication or research closure.
+Read this status with the PDF; detached copies can lose these caveats.
+
+Source: [findings and evidence status](../../WIBRAL_PID_FINDINGS_2026_10_12.md),
+8,191 bytes, SHA-256
+`f363ff78e29c400405990e43763782443230c86ce9036092ffb20f0b5fe7ca51`.
+PDF: four A4 pages, 52,628 bytes, SHA-256
+`2e5c4ce960d1712ca6ed765cb0e1e94482bf9d863751ee052408603ecbc0bdbd`.
+
+The captured build used stock Pandoc 3.10.2 and LuaLaTeX/TeX Live 2024;
+conversion, three TeX passes and selected before/after source pins returned 0.
+PDF version 1.5; human author metadata and embedded fonts were inspected.
+Root read the body, final log, extracted text and URL annotations, and viewed
+all four pages at 110 and 220 dpi. A separate pre-pixel critique and image
+review found no blocking visual loss. Shared models/tools limit independence.
+Sparse final-page layout and plain ASCII notation remain minor limitations.
+
+These observations do not complete the affected exact PDF checks, hostile
+self-tests, required ordinary/optimized modes, full formal-PDF-set checks,
+repository link checks, runtime qualification, portable proof receipts or
+hosted evidence. The PDF is untagged; no exhaustive action-safety or universal
+accessibility claim is made. Source pins describe the captured build, not later
+changes to linked reports. [Retained publication failures and corrections](../../FINITE_STRUCTURE_PDF_AUDIT_2026_10_12.md)
+remain authoritative. A later bounded guard repair passed its regression
+controls; the audit records its scope. PDF and source bytes above are unchanged:
+this status update is not a rebuild or publication acceptance.
+
+Scientific scope: finite categorical Wibral/MGW shared exclusions. The entropy
+and numerical bounds are conditional hand/source results; finite Lean checks
+do not prove probability formulas, executable refinement or calibration.
+SxPID3 A–E remain 0/5 closed; no application or state-of-the-art win is claimed.
+No mainline integration or cleanup clearance follows from this draft.
+
+Later [verification updates](../../VERIFICATION_GUARD_UPDATES_2026_10_12.md)
+record synthetic profile tests and generic-judge source defects. They are not
+in this PDF; use the dated note for that follow-up. No new proof is granted.
+
+Citation: Sepehr Mahmoudian, *Wibral shared-exclusions PID: findings and evidence
+status* (2026). Include the exact accepted commit/release;
+see [CITATION.cff](../../../CITATION.cff).

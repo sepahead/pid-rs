@@ -1,0 +1,183 @@
+# Categorical component bound: worked calculation and checks
+
+Sepehr Mahmoudian · 11 October 2026.
+
+The useful result is an explicit, very narrow interval for one positive
+shared-exclusions component. Exact rational checks support the worked case.
+This is not a formally verified general theorem, a floating-point certificate,
+a continuous SxPID3 solution or a demonstrated application gain.
+
+## Question and assumptions
+
+Can a positive component be bounded without subtracting nearly equal logarithms?
+We use the categorical Makkeh–Gutknecht–Wibral shared-exclusions construction.
+Its defining source is [Makkeh, Gutknecht and Wibral, 2021](https://doi.org/10.1103/PhysRevE.103.032149).
+The approximation and checking workflow here are project derivations, not claims
+that the defining paper contains these bounds. Scientific priority is unestablished.
+
+Let `S1` and `S2` be two binary source categories. Let `T` be a target category
+that always equals zero. The following synthetic table has `N=100` rows.
+The empirical probability of a row type is its count divided by `N`.
+Categories have no physical units. Information uses natural logarithms and nats.
+
+| S1 | S2 | T | Count |
+|---:|---:|---:|---:|
+| 1 | 1 | 0 | 80 |
+| 1 | 0 | 0 | 1 |
+| 0 | 1 | 0 | 1 |
+| 0 | 0 | 0 | 18 |
+
+The table defines the law being evaluated. No independence or uniformity of
+the sources is assumed. No independent-row, stationarity or population model
+is needed for this finite-law calculation. Such assumptions would be needed
+separately for suitable sampling guarantees. This is not measured detector data.
+
+## From events to the component
+
+Fix the source anchor `(S1,S2)=(1,1)`. Agreement means equality to that anchor.
+Both sources agree in 80 rows. Source 1 agrees in 81 rows. Source 2 agrees in
+81 rows. At least one source agrees in 82 rows.
+
+The ordinary top node requires both sources to agree. The two intermediate
+nodes require source 1 or source 2 separately. The ordinary bottom node accepts
+agreement at either source, so its event has probability `82/100`.
+A virtual certain event has probability one; it is separate and does not
+replace that ordinary bottom term in the following inverse calculation.
+
+For an event of probability `u>0`, its surprisal is `-ln(u)`.
+Here `u` is a dimensionless event probability and `ln` is the natural logarithm.
+The informative top component, denoted `P`, uses the ordinary two-source
+inclusion–exclusion row:
+
+\[
+\begin{aligned}
+P
+&=-\ln(80/100)+\ln(81/100)+\ln(81/100)-\ln(82/100)\\
+&=\ln\!\left(\frac{(81/100)^2}{(80/100)(82/100)}\right)\\
+&=\ln\!\left(\frac{81^2}{80\cdot82}\right)
+=\ln(6561/6560)>0.
+\end{aligned}
+\]
+
+`P` is one informative component at one lattice position and one anchor.
+It is not mutual information or the signed net atom.
+Because `T` is constant, the source law conditional on `T=0` is unchanged.
+The misinformative component therefore also equals `P`. The signed net atom
+subtracts them and equals zero. A positive component does not imply useful
+information about the target.
+
+## All steps of the narrow enclosure
+
+Define the dimensionless number `x=1/6561`. Then
+`6561/6560=1/(1-x)`, so `P=-ln(1-x)`.
+For a real integration variable `z` with `0<=z<=x<1`, the geometric series
+for `1/(1-z)` converges uniformly. Integrate its terms on `[0,x]`:
+
+\[
+P=\int_0^x\frac{dz}{1-z}
+=\sum_{j=0}^{\infty}\frac{x^{j+1}}{j+1}
+=\sum_{j=1}^{\infty}\frac{x^j}{j}.
+\]
+
+The first summation uses the integer index `j>=0`. The last reindexes it to
+positive integers. Every term is nonnegative because `0<x<1`.
+
+Let `L` be the sum of the first three terms. Let `w` be the upper bound on
+the omitted terms. Both are exact rational numbers with information units nats:
+
+\[
+L=x+\frac{x^2}{2}+\frac{x^3}{3},
+\qquad
+0\le P-L=\sum_{j=4}^{\infty}\frac{x^j}{j}
+\le\frac14\sum_{j=4}^{\infty}x^j
+=\frac{x^4}{4(1-x)}=:w.
+\]
+
+The inequality uses `1/j<=1/4` for every omitted index `j>=4`.
+Let `U=L+w` be the upper endpoint. Exact substitution gives
+
+\[
+L=\frac{258300011}{1694577218886},\qquad
+w=\frac{1}{7410951037261440},\qquad
+U=\frac{3388896144323}{22232853111784320}.
+\]
+
+We have `0<L<=P<=U`. The full interval width divided by the positive lower
+endpoint is exactly
+
+\[
+\frac{U-L}{L}=\frac{3}{3388896144320}
+\le\frac{1}{1129545959040}<10^{-12}.
+\]
+
+For the displayed conservative ceiling, use `L>=x` to obtain
+
+\[
+\frac{w}{L}\le\frac{w}{x}
+=\frac{x^3}{4(1-x)}
+=\frac{1}{4\cdot6561^2\cdot6560}
+=\frac{1}{1129545959040}.
+\]
+
+The denominator exceeds `10^12`, which proves the strict final inequality.
+The actual width divided by `P` is no greater because `P>=L`.
+Let `M=(L+U)/2` be the midpoint approximation. Then
+`|M-P|/P <= (U-L)/(2L) < 5*10^-13`.
+These are exact-real bounds. Evaluating the rational endpoints as ordinary
+machine decimals does not automatically produce outward-rounded endpoints.
+
+## What was actually checked
+
+One frozen rational-arithmetic helper ran once normally and once with Python
+optimization. Both exited zero and produced identical complete JavaScript Object
+Notation (JSON) records.
+It checked six fixed cases, including this case, unequal widths, a structural
+zero, slow convergence and a refused early geometric tail.
+Two unexpected-argument invocations also rejected input in both modes.
+These input refusals are not mathematical mutation tests.
+
+The worked logarithm was also enclosed by an alternating rational series.
+That is an algebraically distinct calculation in the same helper and
+interpreter. It is not an independent implementation or a proof-kernel result.
+AI-assisted derivation and source critiques do not count as human verification.
+No human-verification receipt is claimed.
+
+## Corrections and retained negative results
+
+- Higher order is not always tighter. One broad-width case gives a proposed
+  fourth-order upper endpoint `1772/81`, above the second-order endpoint `76/9`.
+  Their difference is `1088/81>0`. These are endpoint values, not the true component.
+- Discarding odd moments without symmetry can invalidate a fourth-order upper
+  bound. The retained skew law violates the raw endpoint upper expression by
+  `100297/4445280000`. That fraction is not the paired expression's violation.
+- Small absolute cell probabilities do not imply a small component. A retained
+  relative-mass counterexample keeps its component at `ln(4/3)` as those probabilities
+  approach zero. Relative masses and event probability must be compared.
+- Positive informative and misinformative bounds do not give relative accuracy
+  for their signed difference near zero. This table makes that difference exactly zero.
+- The resampling audit corrected unequal boundary-row weights, floating-point
+  percentile-rank wording and lattice-order wording. The source changes are comments
+  only, not a repaired estimator or new coverage guarantee.
+
+General cover and moment bounds require their own complete correspondence,
+implementation and formal evidence. Here `k` counts integration widths and
+`m>=1` is the retained even-moment order. Generating factor coefficients costs
+`O(k*m)` arithmetic operations; full naive moment convolution costs `O(k*m^2)`.
+Generating one factor at a time needs `O(k+m)` stored rational values.
+These counts exclude rational bit cost, mass extraction, lattice construction
+and data loading. No end-to-end runtime speedup is claimed.
+
+## Application and publication boundary
+
+The intended use is a numerical audit of categorical shared-exclusions
+components under an explicitly chosen encoding. A two-collection occupancy
+applicability screen is still unexecuted. Its overlapping subsets do not become
+independent datasets. No neural, robot, vision-language-action (VLA) or
+model-prediction benefit follows.
+
+This checkpoint is active Markdown, not a qualified PDF publication.
+The [current process PDF](pdf/research-process-evidence-20261011-draft/STATUS.md)
+has a separate retained build failure. Do not mistake it for this calculation.
+The [result map](../RESEARCH_RESULTS_2026_10_10.md) keeps wider obligations visible.
+SxPID3, hyperbolic qualification, numerical refinement, statistical validation
+and release obligations remain open.

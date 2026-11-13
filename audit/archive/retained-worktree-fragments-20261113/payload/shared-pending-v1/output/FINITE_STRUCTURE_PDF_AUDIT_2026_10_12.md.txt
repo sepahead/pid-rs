@@ -1,0 +1,144 @@
+# Finite-structure PDF: retained failures and audit status
+
+Sepehr Mahmoudian · 12 October 2026
+
+This is a publication-tooling audit, not mathematical verification.
+[The finite proof report](SXPID3_FINITE_STRUCTURE_VERIFICATION_2026_10_12.md)
+and [findings index](WIBRAL_PID_FINDINGS_2026_10_12.md) retain their scientific
+limits. Neither a rendered page nor a successful converter proves a theorem.
+
+## Definitions and assumptions
+
+PDF means Portable Document Format. A version identifies permitted document
+features. SVG means Scalable Vector Graphics; the report diagram is converted
+from SVG into a vector PDF before inclusion. A native exit status of 0 means
+that the observed command returned success; 1 means that it returned failure.
+Neither status implies that every diagnostic was checked. V2 and V3 name
+successive local build attempts, not versions of the mathematics.
+
+Source and selected tool bytes were assumed stable during each bounded build.
+Commands used shipped Pandoc, librsvg and LuaLaTeX with shell execution disabled
+inside the TeX engine. Timeouts and post-child disk screens were cooperative
+controls, not complete runtime-dependency or hard-memory qualification.
+All raw failures and differences remain intact; no warning was filtered away.
+
+## V2: missing standard table dependency
+
+Pandoc emitted four uncaptioned tables using the counter name `none`. The
+custom report wrapper omitted the standard declaration of that counter.
+The first LuaLaTeX pass returned 1; the later passes and final pin check were
+not run. No PDF was produced. This failed attempt remains failed.
+
+The diagnosis was checked against
+[Pandoc's shipped template dependency](https://github.com/jgm/pandoc/blob/3.10.2/data/templates/common.latex)
+and the [upstream explanation](https://github.com/jgm/pandoc/issues/11201).
+V3 restored exactly the stock `newcounter` declaration in the local wrapper.
+No scientific formula, proof source, acceptance limit or shipped tool changed.
+
+Portable evidence:
+
+- [V2 first-pass stdout](../audit/evidence/finite-structure-publication-20261012/v2-pass-1.stdout): 13,537 bytes;
+  SHA-256 `22c56e3ac8a08a89351cf57842fa5c9248110d7c1a1c2042b99da1337e3c0f02`.
+- [V2 raw log](../audit/evidence/finite-structure-publication-20261012/v2-final.log): 60,432 bytes;
+  SHA-256 `e5d877e8465811c6be45abafcc2eab71784937899e92ceb15487547db199371a`.
+
+## V3: build success, incomplete diagnostic detection
+
+The vector conversion, Pandoc conversion, three LuaLaTeX passes and selected
+before/after pin checks returned 0. The resulting report has seven A4 pages,
+111,125 bytes and author metadata naming Sepehr Mahmoudian. Its SHA-256 is
+`808cb91dd114ff1c02f75b6f77fa98bcb9beaee2a8c4eab51d1a80fbc508c0bb`.
+
+The converted diagram declares PDF 1.7, but the report declares PDF 1.5.
+The engine emitted a lower-case, unprefixed `warning` about this mismatch.
+The then-unrepaired [strict log helper](../scripts/check-formal-pdf-log.sh) returned
+0 because its engine-warning patterns require an engine-name prefix. Root's
+complete raw-log reading found the warning. The helper's successful status
+must not be reported as a clean log or complete warning detection.
+
+This is a false-green audit result, not evidence of a false theorem. A visible
+render does not establish format compatibility. Correction must genuinely
+match document formats and strengthen warning detection, not suppress the
+warning, edit recorded logs or relax the acceptance policy.
+
+The helper captured for V3 had SHA-256
+`52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da`.
+[The V3 raw log](../audit/evidence/finite-structure-publication-20261012/v3-final.log)
+has 62,012 bytes and SHA-256
+`dfc82fe3865f2dd9fe26a58bb36b20b884f369bc0b155dfef32f83437e9a8022`.
+[The complete generated body](../audit/evidence/finite-structure-publication-20261012/body-v2-v3.tex)
+is byte-identical in V2 and V3: 19,574 bytes, SHA-256
+`f66ff9dd904c3cdf7864ff602d32896db7c944ff2963a16d98fd04512a060bba`.
+
+## What has and has not been inspected
+
+Root read the complete final log, generated body, extracted text, auxiliary
+labels, selected pin outputs, metadata, font list and URL annotations. All
+seven pages were viewed at 110 dpi; pages 1, 2, 3, 4 and 7 were also viewed
+at 220 dpi. dpi means raster dots per inch, not a property of the vector PDF.
+An independent-first image review is separate from these native observations.
+
+Final-pass logs are not byte-identical: passes 2 and 3 differ in reported
+font-memory bytes. The raw difference is retained; normalization cannot be
+used to claim exact log reproduction. Earlier-pass differences also include
+font-cache creation and reference convergence. Selected source pins passed;
+this is not a complete runtime dependency or cross-platform reproduction test.
+
+The font report shows embedded fonts and character maps. Poppler reports no
+JavaScript, encryption or forms, but the inspection is not an exhaustive
+action-safety audit. The report is untagged; no universal accessibility claim
+is made. Complete publication checks, portable proof receipts and hosted
+evidence remain open. V3 is an unqualified draft.
+
+## Later local drafts: genuine compatibility and wording corrections
+
+V4 exported the unchanged SVG with the shipped converter's explicit PDF 1.5
+format. Both diagram and report then declared PDF 1.5; the inclusion warning
+was absent from the raw final-log comparison. No report header was edited,
+warning suppressed or vector replaced with a raster. V3 and its false-green
+checker result remain intact. At that build, the warning grammar was unrepaired.
+
+V5 separately corrected the definition of a closed theorem: all variables
+are bound, but quantified inputs and hypotheses are permitted. The judge's
+requirement to match the complete original type, without an added input or
+premise, is a separate rule. No formal statement or proof changed. The whole
+old article and V4 PDF were preserved. A temporary article draft exceeded its
+unchanged byte cap by one byte before correction; this is a retained workflow
+failure, not a pre-write rejection.
+
+The V5 captured conversion, three TeX passes and selected source-pin checks
+returned 0. Root read its complete generated body, final log, recorder and
+extracted text, then viewed all seven pages at 110 dpi and pages 1, 2, 3, 4
+and 7 at 220 dpi. The actual PDF is seven pages, 111,175 bytes, version 1.5.
+The separate findings PDF has four pages, 52,628 bytes, version 1.5. Their
+source hashes, PDF hashes, observed checks and open obligations are recorded
+with the [findings review draft](pdf/wibral-findings-20261012/STATUS.md) and
+[detailed review draft](pdf/finite-structure-verification-20261012/STATUS.md).
+These are local unqualified handoffs, not accepted publications. Earlier
+build pins describe their captured inputs, not later edits to linked reports.
+The full exact/self-test, formal-set, runtime, portable-proof and hosted
+publication obligations remain open.
+
+## Later bounded guard repair
+
+The helper now rejects V3's unchanged warning log. Eight observed checks
+returned their expected statuses; the complete self-test passed 89 rejection,
+26 clean/convergence and two interface controls. Corrected V5 and overview
+final logs passed. [Exact sources, captures and limits](../audit/evidence/pdf-guard-controls-20261012/RECORD.md)
+remain available. Review also caught a mixed-line test-oracle defect before
+execution; its predecessor is preserved.
+
+This fixes diagnostic selection, not PDF or mathematical acceptance.
+Caller exit-status checks remain necessary for generic file:line errors.
+Full affected-leaf, formal-set, runtime, portable and hosted gates remain open.
+
+## Rust implementation and computational cost
+
+No Rust API, numerical kernel or proof kernel changed. This audit adds no
+PID estimate. Text scanning is linear in log length; page rendering cost
+depends on page content and resolution. No hard-memory or timing claim is
+derived from successful diagnostic commands.
+
+Citation: Sepehr Mahmoudian, *Finite-structure PDF: retained failures and audit
+status* (2026). Include the exact accepted commit/release;
+see [CITATION.cff](../CITATION.cff).

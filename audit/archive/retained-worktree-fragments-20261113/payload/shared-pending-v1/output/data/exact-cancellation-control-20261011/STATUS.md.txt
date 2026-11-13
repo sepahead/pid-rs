@@ -1,0 +1,48 @@
+# Exact cancellation: bounded native outputs
+
+11 October 2026. One unchanged private audit completed with actual outer exit
+zero and complete output at 21:51:40 UTC. Normal and optimized CPython 3.14.6
+each checked four fixed count tables and all 144 ordered integer pairs
+1 <= a,b <= 12: 148 evaluations, 147 distinct count tables. These are not
+147 distinct probability laws or independent samples: replication repeats laws.
+
+Each scientific record stores [name,N,sign,numerator,denominator]. N is the
+total joint count; sign is -1,0,1 for a negative, zero or positive bottom
+averaged MGW atom. The last two entries are canonical positive decimal strings
+for the reduced exact count product. The atom is its natural logarithm divided
+by N, measured in nats. No logarithm was evaluated to decide the sign.
+The complete tuples and family formula are in the
+[worked report](../../EXACT_CANCELLATION_CONTROL_2026_10_11.md).
+
+Both modes yielded 44 negative, 8 zero and 96 positive records. All 35 named
+negative controls were refused for their assigned reason; four positive controls
+passed. The strict consumer reconstructed every ordered product/sign and all
+control fields, without importing the verifier's event loops. Normal/optimized
+objects matched after removing only optimize. Complete outputs:
+
+- [Normal](normal-science.json): 7,873 bytes; SHA-256
+  efd054fdb533d2272026bba952a010b023ff478edd2192a5b521d26ff09f5982.
+- [Optimized](optimized-science.json): 7,873 bytes; SHA-256
+  27ab091074a573fa806a094d2d3b1c1a505963f6ecaddc0c00170aa34cdc4a92.
+
+Both actual scientific wait statuses were zero, with complete EOF and empty
+stderr. Their recorded spawn-through-reap/EOF/fsync intervals were 54,992,584
+and 55,584,625 nanoseconds; maximum resident memory was 17,727,488 and 17,367,040
+bytes. These are captured run facts, not task benchmarks, hard quotas or a
+whole-call performance comparison. The tool's reported waiting duration is
+not the same interval as the controller's clock. Coarse UTC observations
+bracketed the whole call within one second under stable-clock/host assumptions.
+
+All selected source/runtime pins matched before and after execution. Scientific
+and exterior directories had seven regular single-link files each: 22,438 and
+8,650 logical bytes. Native wait records show all four recorded direct children
+reaped. A separate process-list check was denied by the environment; no successful
+host-wide process census or hostile-tree containment is claimed.
+
+Frozen code, caller, native receipts, source critiques and the executed report
+preimage remain in private custody. This public result projection is not a
+portable end-to-end replay bundle, runtime attestation, generic controller
+qualification, formal proof or compiled Rust refinement. General-family,
+minimum/gap, MI and forecast conclusions retain their hand-proof status.
+No population calibration, data-task gain, qualified PDF or original 108/19/
+SxPID3-program closure follows. Stock kernels and original limits were unchanged.

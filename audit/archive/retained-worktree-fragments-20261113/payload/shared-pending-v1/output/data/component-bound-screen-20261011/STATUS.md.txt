@@ -1,0 +1,46 @@
+# Empirical component screen: portable evidence
+
+Sepehr Mahmoudian · 11 October 2026
+
+Local output of one fixed, exposed descriptive computation. Not a qualified
+formal, population, prediction, deployment or release result. See the
+[active report](../../EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md).
+
+Verified exact, no-overwrite artifact copies:
+
+| Artifact | Purpose | Exact SHA-256 |
+|---|---|---|
+| `analysis-normal.json` | All 3,924 local and 504 averaged component intervals, wide cases, zeros, costs and process checkpoint | `975e3745b2b00aaef1367789ea2ea73d9a5d8c8de6897ee77f07faa849170b24` |
+| `input-analysis.json` | Exact inherited count-law input, including earlier predictor fields not revalidated here | `b9061eb4c84ff9d3a5372ce359df5b78524cb23b44e89177e4947ce7bfba633c` |
+| `screen_midpoint_bounds.py.txt` | Exact 743-line scientific helper as inert text, not newly registered executable authority | `7560eccb6e67d3a648667fc00150d0b7d0b748ee6f39f08219f56f6f2c2460c3` |
+| `METHOD.md.txt` | Unchanged prepared mathematical contract; its old UNRUN wording is historical | `08f62d2a6104b24210d42ea005858fe632e7ffcb99c4d98b4ac79947a8d12592` |
+| `PROPOSAL.md.txt` | Original exposed study selection/criteria | `9c032833aabb654a5f5acaae0c255113b0ff7fb3b542704054178bd8206e596e` |
+| `CRITERION_AMENDMENT.md.txt` | Preserved pre-measurement criterion correction | `769d688b6d8eea4d2beafaf497e5721c0aa6af591ada64752e428d764331884f` |
+
+The one preservation command exited zero. All six source/destination comparisons
+and six recorded hashes match; the copied payload totals 4,354,042 bytes, below
+the declared 5 MiB ceiling. Original files remain. Root verified current output
+and input string fields contain no private machine locators. Source bytes are
+assumed stable across the bounded copy/check; this is not an atomic snapshot,
+authenticity certificate, independent mirror or raw-data replay.
+The public scientific helper consumes exact input bytes from stdin and exposes
+`controls`/`analyse` modes. It reports variable process metadata, so replay is
+not expected to reproduce the whole stdout byte string. The observed normal
+and optimized runs had exactly equal typed scientific projections. This folder
+does not contain a portable reproduction of the private host-specific custody
+wrapper, its controlled malformed captures or the earlier raw-data fitting run.
+Never mistake copying the helper for its admission as a public executable.
+
+Input counts derive from Candanedo's [Occupancy Detection dataset](https://doi.org/10.24432/C5X01N)
+and Singh–Chaudhari's [Room Occupancy Estimation dataset](https://doi.org/10.24432/C5P605).
+Both UCI records identify CC BY 4.0. Retain their attribution and
+[license](https://creativecommons.org/licenses/by/4.0/); quantization,
+partitions, count aggregation and the presence-target transformation are
+repository processing, not unmodified raw data. New capture did not revalidate
+the historical transformations or raw measurement accuracy. Model-generated
+reports and code are project artifacts, not UCI-authored conclusions.
+
+All records concern categorical Makkeh–Gutknecht–Wibral shared exclusions.
+They are not Ehrlich's continuous functional, mixed-dimensional SxPID3, I_min,
+or a new PID definition. Current formal-tool holds remain. No commit/push,
+qualified PDF, public-action-graph verification or deletion clearance follows.

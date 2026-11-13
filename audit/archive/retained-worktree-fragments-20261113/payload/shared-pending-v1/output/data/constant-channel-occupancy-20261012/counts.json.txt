@@ -1,0 +1,235 @@
+{
+  "schema": "pid-rs-constant-channel-count-projection-v1",
+  "status": "descriptive_integer_counts_with_hand_bounds_separate",
+  "dataset": {
+    "name": "Room Occupancy Estimation",
+    "uci_id": 864,
+    "credit": "Singh and Chaudhari (2018)",
+    "url": "https://archive.ics.uci.edu/dataset/864/room%2Boccupancy%2Bestimation",
+    "doi": "10.24432/C5P605",
+    "license": "CC BY 4.0"
+  },
+  "source": {
+    "raw_csv_bytes": 931630,
+    "raw_csv_sha256": "c090ee5c94b61762bfec9d22767864490b51030f98cca030f02822468db25d9c",
+    "counter_bytes": 8183,
+    "counter_sha256": "e25f58fa54734e2a51048e1e1275e9715ffe73b7062e69623341ebb25f649542",
+    "native_json_bytes": 4719,
+    "native_json_sha256": "d295dee8a1b738ea3020716f20503722a629bf6aa4e261dd710c4dcf65d3ed82",
+    "original_native_artifacts": "retained locally; this projection is not their byte-identical replacement",
+    "projection_omission_examples": [
+      "machine-specific input path",
+      "filesystem stat identity"
+    ],
+    "csv_header": [
+      "Date",
+      "Time",
+      "S1_Temp",
+      "S2_Temp",
+      "S3_Temp",
+      "S4_Temp",
+      "S1_Light",
+      "S2_Light",
+      "S3_Light",
+      "S4_Light",
+      "S1_Sound",
+      "S2_Sound",
+      "S3_Sound",
+      "S4_Sound",
+      "S5_CO2",
+      "S5_CO2_Slope",
+      "S6_PIR",
+      "S7_PIR",
+      "Room_Occupancy_Count"
+    ]
+  },
+  "N": 10129,
+  "C": {
+    "columns": [
+      "S6_PIR",
+      "S7_PIR"
+    ],
+    "ordered_alphabet": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "baseline_tuple": [
+      0,
+      0
+    ],
+    "counts": [
+      8931,
+      285,
+      392,
+      521
+    ],
+    "departures_from_baseline": 1198,
+    "departure_semantics": "motion state, not equipment fault"
+  },
+  "T": {
+    "column": "Room_Occupancy_Count",
+    "alphabet": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "counts": [
+      8228,
+      459,
+      748,
+      694
+    ],
+    "transformation": "none"
+  },
+  "C_by_T": {
+    "integer_counts": [
+      [
+        8204,
+        297,
+        270,
+        160
+      ],
+      [
+        4,
+        4,
+        120,
+        157
+      ],
+      [
+        12,
+        143,
+        158,
+        79
+      ],
+      [
+        8,
+        15,
+        200,
+        298
+      ]
+    ],
+    "row_order": "C.ordered_alphabet",
+    "column_order": "T.alphabet"
+  },
+  "zero_motion_nonzero_occupancy_count": 727,
+  "row_date_provenance": {
+    "retention": "all rows; no date selection, fitting or holdout split",
+    "first_timestamp": "2017/12/22 10:49:41",
+    "last_timestamp": "2018/01/11 09:00:09",
+    "timestamp_timezone": "unknown; naive strings",
+    "strictly_increasing_timestamps": true,
+    "min_interval_seconds": 30,
+    "max_interval_seconds": 1318547,
+    "dates": [
+      {
+        "date": "2017/12/22",
+        "first_timestamp": "2017/12/22 10:49:41",
+        "last_timestamp": "2017/12/22 23:59:33",
+        "rows": 1462
+      },
+      {
+        "date": "2017/12/23",
+        "first_timestamp": "2017/12/23 00:00:34",
+        "last_timestamp": "2017/12/23 23:59:54",
+        "rows": 2779
+      },
+      {
+        "date": "2017/12/24",
+        "first_timestamp": "2017/12/24 00:00:56",
+        "last_timestamp": "2017/12/24 09:10:50",
+        "rows": 1064
+      },
+      {
+        "date": "2017/12/25",
+        "first_timestamp": "2017/12/25 09:11:42",
+        "last_timestamp": "2017/12/25 23:59:36",
+        "rows": 1716
+      },
+      {
+        "date": "2017/12/26",
+        "first_timestamp": "2017/12/26 00:00:37",
+        "last_timestamp": "2017/12/26 09:10:01",
+        "rows": 1063
+      },
+      {
+        "date": "2018/01/10",
+        "first_timestamp": "2018/01/10 15:25:48",
+        "last_timestamp": "2018/01/10 23:59:58",
+        "rows": 997
+      },
+      {
+        "date": "2018/01/11",
+        "first_timestamp": "2018/01/11 00:00:28",
+        "last_timestamp": "2018/01/11 09:00:09",
+        "rows": 1048
+      }
+    ]
+  },
+  "scope": {
+    "law": "complete empirical C,T law",
+    "remaining_X_encoding": "unbound",
+    "native_counter_scalar_entropy": "not evaluated",
+    "native_counter_PID": "not computed",
+    "population_or_heldout_or_causal_claim": "none",
+    "qualified_PDF": "pending"
+  },
+  "empirical_entropy": {
+    "definitions": {
+      "N": "all retained rows",
+      "ln": "natural logarithm; information unit nats",
+      "n_c": "integer C count"
+    },
+    "expression": "-sum_(c:n_c>0) (n_c/N)*ln(n_c/N)",
+    "status": "unevaluated_exact_formula",
+    "terms": [
+      {
+        "C": [
+          0,
+          0
+        ],
+        "denominator": 10129,
+        "numerator": 8931
+      },
+      {
+        "C": [
+          0,
+          1
+        ],
+        "denominator": 10129,
+        "numerator": 285
+      },
+      {
+        "C": [
+          1,
+          0
+        ],
+        "denominator": 10129,
+        "numerator": 392
+      },
+      {
+        "C": [
+          1,
+          1
+        ],
+        "denominator": 10129,
+        "numerator": 521
+      }
+    ],
+    "zero_convention": "0*ln(0)=0 by continuous extension"
+  }
+}

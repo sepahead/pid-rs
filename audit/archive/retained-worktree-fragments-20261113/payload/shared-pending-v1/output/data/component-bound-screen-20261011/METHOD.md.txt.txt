@@ -1,0 +1,112 @@
+# Exact method, checker obligations and hostile lenses
+
+Prepared, unexecuted. The object is the finite empirical categorical MGW component functional, not a fitted predictor, sampling theorem, continuous estimator or new PID definition. This is exposed descriptive applicability work.
+
+## Pattern law and ordinary carrier
+
+For occupied joint anchor `(a0,a1,a2,t)` of count c in a fixed law of N rows, form the agreement mask `B(x)=sum(2^i for i=0..2 if xi=ai)`. Accumulate all joint cells into eight source-marginal pattern counts and, separately, cells with target t into eight conditional pattern counts. Normalize by N and target count C_t, respectively. All counts and probabilities are exact integers/Fractions. Their full-agreement masses are positive; each of the 18 cumulative event masses is positive.
+
+For antichain alpha of nonempty masks 1–7, event E is `{B: any(A subset B for A in alpha)}`. It is OR across source collections and AND within each. Excluded masks H form a downset. M comprises every inclusion-maximal mask in H; 1<=k=|M|<=3. A maximal-mask mass is `Q(B=m)` exactly, not the mass of all submasks. At the bottom `(1,2,4)`, M=(0), and the additional certain-event term has mass one and logarithm zero. The certain-event node is the family containing the empty set, not the empty family; it is virtual and not an ordinary nineteenth node.
+
+The fixed 18-node order from the existing artifact is checked against a separately generated complete antichain set and topological order. With `alpha<=beta` iff every branch of beta contains a branch of alpha, construct incidence Z and inverse M_int by integer recurrence; require both `Z*M_int=I` and `M_int*Z=I`. For every node and component, compare the exact cover log argument below with `prod(u_j^(-M_int[i,j]))`, using the whole ordinary row. This does not execute the Rust implementation.
+
+## Taylor bracket and exact reference
+
+Let u=Q(E)>0 and a_i=Q(B=m_i) for maximal excluded masks m_i. Set r_i=a_i/u, S=sum r_i, V=sum r_i^2/12, and G=(k-1)!*prod r_i. For the localized component p,
+
+```text
+p = log R,
+R = product(1+sum(r_i for i in D), |D| odd)
+    / product(1+sum(r_i for i in D), |D| even),
+J = G/(1+S/2)^k,
+L = J + G*k*(k+1)*V/[2*(1+S)^(k+2)],
+U = J + G*k*(k+1)*V/2.
+```
+
+This is the normalized cover-integral formula `p=G*E[(1+sum(r_i Y_i))^-k]` for independent Uniform[0,1] integration variables Y_i, not assumptions on observed data rows. The integration sum has mean S/2 and variance V. Taylor's integral remainder for f(x)=(1+x)^-k, using `k(k+1)/(1+S)^(k+2) <= f''(x) <= k(k+1)` on [0,S], yields L and U after the linear expectation vanishes. This hand-derived analytic argument is not newly kernel-verified by the study.
+
+If any a_i=0, G=0, R=1 and `[L,U]=[0,0]`. Structural-zero authority is exact support, not a decimal tolerance. Otherwise require R>1 and 0<L<=U. Relative midpoint-error ceiling is `(U-L)/(2L)`. Both fixed thresholds, inclusive at equality, are 1/100 and 4/1,000,000. Record exact widths and all four combinations of screen flags; a 4-ppm pass implies a 1% pass for this shared definition. Do not omit too-wide cases.
+
+For each exact R>=1, reduce `R=2^e*h` with integer e>=0 and rational 1<=h<2. For h and for 2, z=(h-1)/(h+1) is in [0,1/3], and
+
+```text
+low64(z) = 2*sum(z^(2m+1)/(2m+1), m=0..63),
+tail64(z) = 2*z^129/[129*(1-z^2)].
+log h in [low64, low64+tail64].
+log R in [e*log2_low+logh_low, e*log2_high+logh_high].
+```
+
+The computation is rational throughout. To control certificate size, widen the result exactly to a dyadic interval with denominator 2^128 by integer floor/ceiling. This is an exact rational enclosure of mathematical log R, not a binary64 outward-rounding claim. Cache only those finite dyadic reference endpoints under the fixed cache cap. Classify the reference interval against `[L,U]` as contained, disjoint conflict, or unresolved overlap; never treat overlapping-but-not-contained as a confirmed bracket. Fixed 64 terms and range reduction apply to all admitted instances, with no observed-result adaptation.
+
+## Averages, nets and costs
+
+At each node, component-average endpoints are sums of `(c/N)*L` and `(c/N)*U` over all positive joint anchors of that law. Average the component reference endpoints with the same weights. Relative average ceilings are computed from the averaged bracket, not averaged pointwise ratios. Keep laws separate; overlapping day/block and target-coarsening instances are not independent samples.
+
+Pointwise and averaged signed net intervals are `[L_plus-U_minus, U_plus-L_minus]`. Report strict positive sign only if the lower endpoint is positive; strict negative sign only if the upper endpoint is negative; exact zero only for the degenerate exact interval `[0,0]`; otherwise sign unresolved. There is no signed-net relative-error screen. Retain reference net intervals and any structural support relationships without deriving deployment utility.
+
+Measure end-to-end time/RSS only on actual approved runs. Report given-mass k work separately from 2^k reference factors (2^(k-1) odd/even pairs) and whole-pattern/state comparisons. Fixed carrier reconstruction costs are not reduced by the O(k) midpoint formula. No wall-time speedup claim follows from an arithmetic-operation count or from the earlier unrelated fixture timings.
+
+## Validation and planned controls
+
+Reject strict-UTF8 JSON duplicate keys, NaN/Infinity or overflowed numeric tokens, booleans in integer fields, unknown/missing keys at the outer/result/evaluation/count-law/MGW-header/node boundary, wrong result identities/classes/source order/partition order, wrong count-row arity, unsorted or repeated states, out-of-alphabet labels, nonpositive occupied counts, wrong totals/target totals/support diagnostics and wrong 18-node identifiers. Validate all JSON values recursively for finite numeric types and bounded nesting/strings/tokens. Training count laws receive the same count-schema checks but are not studied. Preserved predictor/loss/coarsening subtrees are checked for finite JSON grammar and known outer keys; their scientific numerical meaning is not revalidated. Exact stream SHA binds these unconsumed bytes. Raw-data provenance and historical prediction calculations remain inherited, not newly established.
+
+Controls are prepared in the same helper source and exercise production functions, with explicit `require` refusals rather than assertions: all 144 event truth values in bit/set encodings; AND-instead-of-OR witness; target-drop witness; two-sided integer inverse and corrupted-row rejection; positive bracket/reference fixture; worked root example r=(1/80,1/80), R=6561/6560 and relative ceiling 1743657921/463006274560000; structural zero with relative ceiling absent; a deliberately divided-by-zero route rejected; malformed arity/duplicate state/out-of-range/boolean/negative/zero/count-sum rows rejected; duplicate JSON and nonfinite/overflow tokens rejected; criterion endpoints exact; output cap refuses before emission. Normal and optimized runs must enumerate identical controls. These are prepared obligations, not already passed checks.
+
+## Fifty named hostile lenses
+
+These are coverage questions with planned dispositions, not fifty independent reviewers or executed passes.
+
+| # | Lens | Required disposition |
+|---:|---|---|
+| 1 | Defining functional | Keep categorical MGW distinct from I_min, Shannon and continuous estimators. |
+| 2 | Empirical/population object | Exact current count laws only; no population estimate calibration. |
+| 3 | Counting reference measure | Finite categorical support; no density/gauge transfer. |
+| 4 | Units | Natural logs and nats; ppm means relative midpoint error. |
+| 5 | Source-position identity | Preserve light/CO2/temperature positions without field renames. |
+| 6 | Target identity | Keep original and presence laws distinct. |
+| 7 | Quantizer custody | Inherit training-fitted labels; no refit or raw reconstruction claim. |
+| 8 | Pool/partition identity | Every fixed evaluation law retained in order. |
+| 9 | Overlap/replication | Fourteen overlapping laws are not independent experiments. |
+| 10 | Exposure/selection | Initial choice and amendment retained; descriptive, not confirmation. |
+| 11 | Exact stream hash | Pin bytes read from stdin, not just the pathname. |
+| 12 | Duplicate-key JSON | Reject before accepting parsed meaning. |
+| 13 | Nonfinite/overflow tokens | Reject NaN, infinity and binary64 token overflow everywhere. |
+| 14 | Boolean integer coercion | Exact integer types only in acceptance-bearing fields. |
+| 15 | Arity/unknown fields | Closed consumed schemas; no truncating zip acceptance. |
+| 16 | Count positivity | Occupied count cells strictly positive. |
+| 17 | Count sums | Counts and target counts equal declared N. |
+| 18 | State uniqueness/order | Reject repeated/unsorted cells; preserve labels. |
+| 19 | Alphabet completeness | Four source labels, declared target classes; zero cells remain implicit. |
+| 20 | Positive-anchor support | Both full-agreement pattern masses positive. |
+| 21 | OR across branches | Wrong conjunction event has a distinguishing control. |
+| 22 | AND within branch | Independently encoded truth-table correspondence. |
+| 23 | Conditional target retention | Do not substitute the source marginal for the conditional law. |
+| 24 | Pattern versus subpattern mass | q_m is one exact equality-pattern cell. |
+| 25 | Maximal excluded masks | Complete inclusion maxima, no minimum/maximum reversal. |
+| 26 | Complete carrier | Independent 18-node census; no selected-node screen. |
+| 27 | Order orientation | Reverse event inclusion and valid topological node order. |
+| 28 | Ordinary inverse | Integer left/right inverse products, not merely row labels. |
+| 29 | Bottom augmentation | Virtual certain event, not an ordinary extra node. |
+| 30 | Log-product parity | Exact cover argument equals full ordinary inverse argument. |
+| 31 | Structural zero | Zero maximal-pattern mass, exact zero bracket and absent ratio. |
+| 32 | Zero denominator | Positive u and no division when L=0. |
+| 33 | Large ratios | No <=10 fixture limit falsely imposed on count laws. |
+| 34 | Taylor normalization | G,S,V,J and both remainder factors match prescribed equations. |
+| 35 | Relative versus absolute rarity | Small absolute masses do not imply small r_i. |
+| 36 | Range-reduced logarithm | Exact power-of-two decomposition, no float logarithm in certificates. |
+| 37 | Tail enclosure | Fixed 64 terms with rational geometric remainder. |
+| 38 | Directed dyadic widening | Exact floor/ceiling; not a binary64 outward claim. |
+| 39 | Unresolved reference | Overlap does not become containment; conflict rejects. |
+| 40 | Fixed screen thresholds | Inclusive 1%/4 ppm ceilings fixed before measurements. |
+| 41 | Averaging weights | c/N over all joint anchors of each law. |
+| 42 | Average-relative contract | Ceiling of averaged endpoints, not mean of ratios. |
+| 43 | Signed-net orientation | Plus-minus interval endpoints cross-subtract correctly. |
+| 44 | Near-zero sign | Retain unresolved sign and avoid all net-relative claims. |
+| 45 | Arithmetic/mass-extraction costs | Given-mass O(k) differs from factor/carrier/state work. |
+| 46 | Resource refusal | Time/RSS/output caps checked; killed or missing output does not pass. |
+| 47 | Optimization-mode acceptance | Explicit checks remain active under Python -O. |
+| 48 | Shared-model/checker cuts | Models, host, interpreter, input, hand formulas are disclosed dependencies. |
+| 49 | Formal/Rust boundary | No kernel replay, Rust sampler/refinement or API result. |
+| 50 | Decision/application comparator | No classifier gain, placement benefit, causality or SOTA inferred. |
+
+Root review of the full proposal/helper and explicit execution approval remain required. Source, parser or checker mistakes discovered then must be preserved with their effect before correction; do not erase failed approaches.

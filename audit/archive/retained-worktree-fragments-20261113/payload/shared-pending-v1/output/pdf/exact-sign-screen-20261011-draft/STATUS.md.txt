@@ -1,0 +1,51 @@
+# Exact-sign report: failed, unqualified draft
+
+11 October 2026. **FAILED / UNQUALIFIED**. This is not a matching qualified
+PDF of the current [active report](../../EXACT_EMPIRICAL_ATOM_SIGNS_2026_10_11.md).
+
+The [draft PDF](FAILED_UNQUALIFIED_DRAFT.pdf) preserves the first stock
+LuaLaTeX pass. Its log reports five pages; actual layout, extracted math,
+embedded fonts, actions and links are unqualified.
+
+The single prospective build ended with actual native status1.
+First TeX/artifact/resource checks passed; the first recorder checker
+refused an unlisted stock LibreBodoni-BoldItalic.otf input. This does not
+show font corruption or actual embedding. The first log also reports an
+80.98956pt overfull box and underfull badness1490 in the Rust API/hash
+paragraph. No visual clipping claim is made before viewing.
+
+Read-only source/log inference explains the broad font reads as stock
+font-name indexing in the fresh cache, not a proven rendering substitution.
+Source: `luaotfload-database.lua`, already in the used dependency roster,
+SHA256 `c56756516fac70070c7324bfba1a5b306119d9670a48c78db468aa3cd7f25e02`;
+log49–50, recorder97–104 and6197–6204. The stock missing-database path
+scans font metadata. Later cache-output/input records also conflict with
+the frozen checker, but its execution stopped before those branches.
+
+Passes2/3, raw equality, warning acceptance, metadata/A4 checks and final
+publication checks did not run. No retry, allowlist repair, log
+normalization, changed font/kernel/flag or tolerance waiver occurred.
+The separate earlier PDF failures remain failures too.
+
+Exact source companions retain this freeze: CANONICAL_REPORT.md.txt,
+PDF_REPORT.md.txt, SOURCE_WRAPPER.tex.txt and GENERATED_BODY.tex.txt.
+The current report can receive later editorial status/citation updates;
+this retained draft does not silently follow them.
+PDF71570 bytes, SHA256
+834ec3ce1a367b2899d2bd317c50e403ca674c51278a78e36ea7d93b20dc9981.
+Canonical12254 bytes, SHA256
+d77c33464eb4beff0f00f7079434370932aead99eb5f0df7a9096c811bee6328.
+Projection12330 bytes, SHA256
+28631a3c394be9290dc4109bcbc6420265bf69dbb1103566b5ddd22946d2eade.
+Wrapper1779 bytes, SHA256
+87d6e3b93b7b340815edfa718ed6ddd2754809bc4179c08cab7252648684d660.
+Generated body SHA256
+ef44c3324cde2357ca99b144274daabe722acf8e5fe405104c67d9f49b04bdbb.
+
+Full native responses, recorder/log/aux bytes, source/draft identities
+and checked terminal census remain in ignored local custody. This is not
+a public full replay package. The two-collection empirical sign result
+remains252/252; old references already had55 strict signs. Original
+magnitude failure0/184 and all broader formal/application/program gates
+remain unchanged. Report production adds no scientific result.
+

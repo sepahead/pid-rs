@@ -1,0 +1,80 @@
+# Empirical component screen — FAILED / UNQUALIFIED PDF
+
+The [eight-page draft](empirical-component-screen.draft.pdf) is retained
+for inspection, not accepted publication. Prefer the readable
+[current mathematical report](../../EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md)
+and [complete numerical records](../../data/component-bound-screen-20261011/STATUS.md).
+The screen's arithmetic result and this PDF's production result are
+different decisions.
+
+## What actually happened
+
+One production invocation on 11 October 2026 ran 17:42:55–17:43:04 UTC,
+exit 1. The first TeX pass exited 0. Its next dependency check refused the
+unapproved stock font CabinCondensed-SemiBoldCondensed.otf. The frozen
+roster was not widened, and the producer was not retried. Additional
+diagnostics were overfull table boxes, a PDF-inclusion version warning and
+a first-pass label warning. Second/third passes, mandatory raw PDF/aux/log/
+FLS equality and final publication/link/action/formal-PDF gates did not run.
+No font, kernel, flag or acceptance criterion was changed to obtain a pass.
+
+Separate postmortem extraction/render calls exited 0 at 17:46:42–17:46:46
+and 17:58:32–17:58:33 UTC. Root actually viewed all eight pages in normal
+color/grayscale, and pages 3–7 in high-resolution color/grayscale: 26 PDF
+page images. The later call covered the actual rational worked-example
+page missed by the source-chosen earlier high-risk roster. Complete plain
+and layout text were read. These observations do not qualify production.
+
+| Page | Actual visual finding |
+|---|---|
+| 1 | Readable title; redundant second date |
+| 2–3 | Assumptions, variable meanings and equations readable |
+| 4–5 | Law identifiers visibly clipped in the nine-column table |
+| 6 | Diagram readable without color; floating placement interrupts example |
+| 7 | Rational examples readable; implementation/cost text dense |
+| 8 | Negative results and open obligations readable |
+
+All reported fonts were embedded, but Type3 entries and untagged reading
+order remain accessibility concerns. Metadata inspection is not PDF
+link/action qualification. Twenty advisory visual lenses were applied by
+root, not twenty independent human reviewers. No mathematical, statistical,
+application, formal or program closure follows from rendering.
+
+## Exact copies
+
+Eight exclusive-create copies were made after source/hash review, exit 0,
+total 294,316 bytes. Every copied artifact matched its source byte-for-byte
+and by SHA-256. Original bytes remain. The vector PDF is the producer's
+actual figure, not the distinct earlier standalone preview. Hashes below
+are forensic identities, not signatures or authenticity claims.
+
+| Artifact | Bytes | SHA-256 |
+|---|---:|---|
+| [Draft PDF](empirical-component-screen.draft.pdf) | 159364 | `2b8391aa3cdad8a7728d6353287ca8e2a87c1e6e663c5b04ecbdae33e600e951` |
+| [Figure PDF](figure.draft.pdf) | 78112 | `51b252c09bad675b5a0cd9b9ef67aedbdf003dcda18c1d7c7ce4b2b055a34bd2` |
+| [Canonical source at build](CANONICAL_SOURCE.md) | 17962 | `7c3461d2143ceb4b09d3809d9e1ea48b24ab5ac58b92a109a96ce6e493326975` |
+| [PDF projection](PDF_REPORT.md) | 18144 | `bcb17406d77885b66e1bb32537794105b2b70a485698f64deeef3d6f72c90d3d` |
+| [SVG](figure.svg) | 6146 | `710cfde58c513755e9eae20f14fd2db223fe496f1f7b455a57ada186e1687687` |
+| [Wrapper](publication.tex) | 1930 | `8adcb3706cc2a4f09be6145dea30ffc5ae0fd8e1659b39cae919cf8e9058e3aa` |
+| [Table style](pid-rs-report-tables.sty) | 4051 | `90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6` |
+| [Publication style](pid-rs-workflow-publication.sty) | 8607 | `1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9` |
+
+The PDF projection adapts local mathematical notation and relative links
+for printing; it is not byte-identical to canonical Markdown. Current-main
+navigation inside the draft is not historical commit provenance. Raw FLS,
+logs, recorder stages, renderings, before/after selected pins, private
+locators and the complete producer authority remain in durable local
+records; they are not represented as a portable qualified replay package.
+
+## Next publication obligation
+
+A new version needs prior complete dependency custody, an accessible table
+layout, uninterrupted worked examples, reviewed source and separate native
+authority. It must retain this failed attempt and satisfy the unchanged
+publication checks; none is waived. A qualified matching PDF remains open.
+The current Markdown now distinguishes cheap midpoint-Taylor sign brackets
+from the already strict higher-precision reference signs and links the later
+integer-product check. This historical draft and its canonical-at-build
+source retain the earlier wording; neither is a PDF of that correction.
+SxPID3 A–E, the original nineteen formal obligations, angular/hyperbolic
+qualification, calibration, task benefit and v1 remain open.

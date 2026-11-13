@@ -1,0 +1,37 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox,fvextra}
+\usepackage{pid-rs-report-tables,pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\newcounter{none}
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,
+pdftitle={Total shared-exclusions allocation movement: a sharp entropy bound},
+pdfauthor={Sepehr Mahmoudian},
+pdfsubject={Conditional hand corollary, explicit assumptions and negative controls},
+pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Shared-exclusions allocation movement}{Conditional hand report}
+\PidWorkflowConfigureSections
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em plus 0.10em minus 0.06em}
+\setlength{\emergencystretch}{3em}
+\setlist{itemsep=0.2em,topsep=0.3em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\passthrough}[1]{#1}
+\let\PidSavedTexttt\texttt
+\renewcommand{\texttt}[1]{\PidSavedTexttt{\seqsplit{#1}}}
+\AtBeginEnvironment{longtable}{\footnotesize\RaggedRight\setlength{\tabcolsep}{3pt}}
+\title{\PidReportTitle{Total shared-exclusions allocation movement}{A sharp entropy bound}}
+\author{Sepehr Mahmoudian}
+\date{12 October 2026}
+\begin{document}
+\PidMakeTitle
+\input{body.tex}
+\end{document}

@@ -1,0 +1,113 @@
+# Verification updates: what passed and what remains open
+
+Sepehr Mahmoudian, 12 October 2026
+
+This is a project-defined verification/process result, not a mathematical
+breakthrough. The [findings](WIBRAL_PID_FINDINGS_2026_10_12.md) concern finite
+categorical Makkeh-Gutknecht-Wibral shared exclusions. This note grants no
+new theorem, calibration, application, scientific-priority or programme closure.
+
+## 1. PDF warning guard: actual bounded tests
+
+A previous PDF build contained an inclusion warning that the unchanged helper
+missed. Full raw-log reading caught it; the failed evidence remains in the
+[PDF audit](FINITE_STRUCTURE_PDF_AUDIT_2026_10_12.md).
+
+The repaired [helper](../scripts/check-formal-pdf-log.sh) recognizes anchored
+bare warnings and generic TeX error records beginning with an exclamation
+mark. Intermediate-pass exceptions match only five complete, constrained
+physical record forms. A permitted convergence warning cannot hide a later
+forbidden warning on the same or another line.
+
+The [self-test](../scripts/check-formal-pdf-log-self-test.sh) exited zero:
+89 rejected cases, 26 clean/convergence cases and two interface cases.
+Syntax checks also exited zero. The old warning log now returns one; both
+current final logs return zero; the earlier convergence log returns one in
+strict mode and zero in intermediate mode. These are actual native Bash
+checks, not an exhaustive LaTeX grammar or complete PDF qualification.
+
+[Portable raw-log and stream record](../audit/evidence/pdf-guard-controls-20261012/RECORD.md).
+Callers still need the actual compiler exit, full logs and publication gates.
+A generic file-and-line engine error need not match this helper on its own.
+
+## 2. Complete proof-error profiles: synthetic tests only
+
+An old, unrun proof-control controller could accept the expected first type
+error while ignoring a later unrelated failure. This is a source witness,
+not an observed Lean false pass.
+
+A separate pure Python predicate matches the complete ordered stdout/stderr
+bytes against a pre-bound diagnostic profile. It also checks typed exit
+status, recorded end-of-stream, source/context commitments and declared
+limits. A profile is an exact allowed diagnostic record, not a claim that
+any nonzero compiler exit is the intended rejection.
+
+Six unittest methods, with in-memory subcases, passed under ordinary and
+optimized Python execution. Extra, changed, duplicated, warning, resource,
+truncated and carriage-return records reject after receipt hashes are
+rebound, so the tests reach the intended profile gate. Ordinary and optimized
+runs share code and fixtures; they are not independent implementations.
+Optimization tests assertion independence, not changed Lean kernel settings.
+
+[Exact captured streams and source pins](../audit/evidence/proof-profile-controls-20261012/RECORD.md).
+The machine-bound source remains private; these public streams alone are not
+portable end-to-end replay. Source-time UNRUN labels describe preparation;
+the new record separately reports later synthetic execution.
+
+The production profile registry is empty. No actual native Lean profile has
+been frozen or adjudicated; the original controller is still unwired and
+unrepaired. Caller-owned freeze/review truth, current working directory,
+resource enforcement and native receipt authenticity are not proved by the
+pure predicate. Declared error counts are metadata, not parsed error rosters.
+
+## 3. Generic count judge: two source contract defects
+
+The [22-count proposal](SXPID3_ARBITRARY_ALPHABET_COUNT_PROPOSAL_2026_10_12.md)
+uses heterogeneous, possibly infinite alphabets and index set, but a finite
+summed subset with nonnegative integer weights. Count positivity separately
+needs a supported query of positive weight and a nonempty event family.
+Empty branches need not be excluded for the count bounds.
+
+Independent-first then exposed source review found two checker issues:
+
+- Outer quantifier annotations do not cover every nested argument annotation.
+  An explicit-to-implicit change inside a hypothesis can evade that contract.
+- Compiler-generated names may have module ownership without a kernel
+  declaration. Treating every such name as a declaration can reject valid
+  metadata for an unrelated reason.
+
+Neither finding is a counterexample to a count inequality or a recorded
+native run failure. All 22 sources remain uncompiled. Strict recursive type
+comparison, distinct kernel/extra-name records, replayable consumers and the
+new import closure remain work to verify. Original finite targets, judges,
+shipped tools, limits and accepted-axiom policy are unchanged.
+
+A source-only v2 draft traverses the full type-expression tree, preserving
+every argument annotation before an additional semantic comparison. Exact
+candidate-to-independent definition pairs are validated before use. Imported
+ownership keys are separated from kernel declarations. This draft is not
+compiled or control-tested; unknown import/declaration records still trigger
+refusal checks and the production hold remains. Old defects are not erased.
+
+## Process, cost and finalization
+
+Review freezes its initial reconstruction before exposed critique. Root
+inspects arguments and records; agreement is not proof. Shared models,
+libraries and specification, no external human adjudication and unmeasured
+workflow superiority remain limits. Negative evidence is retained.
+
+No Rust implementation or timing result is added. Complete-byte comparison
+reads both streams; source/profile custody and native execution have separate
+cost and trust obligations. Existing estimator costs remain in the
+[Rust cost guide](../RUST_IMPLEMENTATION_AND_COST.md).
+
+This dated note supplements existing PDF draft STATUS records; it is not a
+rebuild of those PDFs. A qualified matching PDF is open. The
+[result map and closure ledger](../RESEARCH_RESULTS_2026_10_10.md) remain
+authoritative: original categorical SxPID3 programmes are 0/5 closed; stock
+formal promotion, continuous, angular, hyperbolic, Rust, statistics,
+applications, mainline and retirement obligations remain open.
+
+Citation: Sepehr Mahmoudian, *Verification updates: what passed and what
+remains open* (2026). Include the exact accepted repository commit or release;
+see [CITATION.cff](../CITATION.cff).

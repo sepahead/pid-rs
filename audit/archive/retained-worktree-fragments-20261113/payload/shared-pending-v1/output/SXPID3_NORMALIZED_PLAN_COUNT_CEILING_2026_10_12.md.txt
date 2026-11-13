@@ -1,0 +1,230 @@
+# A sharp count ceiling for normalized SxPID3 certificate plans
+
+12 October 2026. Project-derived resource theorem; hand/source reviewed.
+Formal verification, implementation and a matching qualified PDF remain open.
+
+## Question and useful result
+
+Which empirical count tables can satisfy the existing exact-product policy
+before any large integer power is formed?
+
+If at least two complete source triples occur, this normalization requires
+**total count at most 87,380**. The bound is sharp for all 108 product plans.
+It is not a sample-size limit of PID or a statistical accuracy guarantee.
+
+## Object, assumptions and symbol key
+
+The defining information measure is categorical shared exclusions from
+[Makkeh, Gutknecht and Wibral (MGW), arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5).
+Use the repository's [source map](../claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md),
+[conventions](../claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md) and
+[resource policy](../claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md).
+The plan policy and ceiling below are project-specific, not a theorem claimed
+by that paper.
+
+| Symbol or term | Meaning and domain |
+|---|---|
+| \(S_1,S_2,S_3\) | Three ordered sources, each taking values in a nonempty finite categorical alphabet |
+| \(T\) | Target in a nonempty finite categorical alphabet |
+| \(z=(s_1,s_2,s_3,t)\) | One occupied complete source-target cell |
+| \(c_z\) | Positive integer count of cell \(z\); unlisted cells have count zero |
+| \(N\) | Positive total count, \(\sum_z c_z\) |
+| \(s\), \(n_s\) | Complete source triple and its count summed over all target values |
+| \(a/b\), \(e\) | Reduced positive rational base and its nonzero signed integer exponent |
+| \(\operatorname{bitlen}(a)\) | Number of binary digits of positive integer \(a\); for example, \(\operatorname{bitlen}(1)=1\), \(\operatorname{bitlen}(2)=2\) |
+| \(C\) | Projected cost of one normalized product plan |
+| \(Z,M\) | Frozen incidence matrix and its inverse; \(Z\) maps atom values to cumulative values and \(MZ=ZM\) is the identity matrix |
+| Unit product | Exact rational product equal to one; its logarithm is zero |
+| Antichain | A family of nonempty source subsets, with no distinct member containing another |
+
+Each count table defines the empirical probability \(c_z/N\). Computing this
+functional requires no independence, Gaussian, or population-sampling model.
+Information values use natural logarithms, in nats. No theorem transfers here
+to continuous Ehrlich PID, another PID, or confidence coverage.
+
+A source event requires agreement on every source in at least one antichain
+member: AND inside a member, OR across members. Hexadecimal keys identify
+subsets: \(\mathtt{01}=\{1\}\), \(\mathtt{03}=\{1,2\}\),
+\(\mathtt{05}=\{1,3\}\), and \(\mathtt{07}=\{1,2,3\}\).
+A plus sign between keys separates alternative members.
+
+There are 18 three-source lattice positions. The 108 expressions comprise
+cumulative and atom expressions, each split into informative, misinformative,
+and signed-net components: \(18\cdot2\cdot3=108\). They are not 108 independent
+atoms.
+
+## Normalization to which the theorem applies
+
+For every whole rational factor: reduce by greatest common divisor; discard
+units; orient the numerator above the denominator, negating the exponent for
+a reciprocal; combine equal oriented bases; remove zero exponents; then sort.
+
+Do not prime-factor, collapse the whole product first, divide the input counts
+by their common divisor, or cancel the final \(1/N\) averaging weight. Such a
+different representation needs its own declared policy and proof.
+
+For the remaining factors, the unchanged cost rule is
+
+\[
+C=2+\sum_{\text{factors }a/b}|e|
+  \bigl(\operatorname{bitlen}(a)+\operatorname{bitlen}(b)\bigr).
+\]
+
+The per-coordinate ceiling is 262,144; the aggregate ceiling over all 108
+coordinates is 8,388,608. Each plan also permits at most 8,192 factors and
+absolute exponent at most 1,048,576. These are admission rules, not measured
+instructions or memory bytes.
+
+## Proof of the necessary ceiling
+
+Let \(F\) denote the full-source informative cumulative at key \(\mathtt{07}\):
+
+\[
+F=\sum_z\frac{c_z}{N}\ln\frac{N}{n_{s(z)}}
+ =\frac1N\ln\prod_z\left(\frac{N}{n_{s(z)}}\right)^{c_z}.
+\]
+
+Here \(s(z)\) selects the three source values in cell \(z\); \(F\) is in nats.
+All bases and weights concern the same complete joint empirical law.
+
+1. If two distinct source triples occur, every occupied cell satisfies
+   \(0<n_{s(z)}<N\). Thus every displayed base exceeds one.
+2. After reduction, its numerator is at least two and its denominator at
+   least one. Their binary-digit sum is therefore at least three.
+3. Every exponent is positive. Orientation leaves it positive; merging equal
+   bases preserves the sum of exponents, which is \(\sum_zc_z=N\).
+4. Consequently this coordinate has \(C\ge2+3N\).
+5. Admission requires
+   \(2+3N\le262144\), hence
+   \[
+   N\le\left\lfloor\frac{262142}{3}\right\rfloor=87380.
+   \]
+
+At \(N=87381\), the lower cost is 262145, already too large.
+This gives a necessary refusal before powers. It does not guarantee admission
+below the ceiling: aggregate, parser, event-work, memory and interval checks
+remain separate.
+
+## Sharpness across all 108 plans
+
+Put \(K=43690\) and \(N=2K=87380\). Use two occupied source triples,
+\((0,0,0)\) and \((1,0,0)\), each with count \(K\).
+Only \(S_1\) varies; \(S_2,S_3\) are constant.
+
+Exactly five antichains require \(S_1\) in every member:
+
+\[
+\mathtt{01},\quad\mathtt{03},\quad\mathtt{05},\quad
+\mathtt{07},\quad\mathtt{03+05}.
+\]
+
+Their event count is \(K\), so each informative cumulative product is
+\((2/1)^N\). Every other antichain has a member omitting source 1.
+That member always holds, so its event count is \(N\) and its product is one.
+
+The five-event indicator vector is column \(\mathtt{01}\) of \(Z\).
+Applying \(M\) leaves only atom \(\mathtt{01}\), since \(MZ\) is the identity.
+All nonunit bases equal \(2/1\), so inverse coefficients cancel at the
+normalized-plan level, before powers.
+
+Two target choices give distinct checks:
+
+| Target law | Why the other component behaves this way | Nonunit coordinates |
+|---|---|---|
+| \(T=0\) on both rows | Target count is \(N\); target-restricted event counts equal source-event counts. Misinformative duplicates informative; signed net is zero. | Five informative and five misinformative cumulatives, plus their two atoms at \(\mathtt{01}\) |
+| \(T=S_1\) | Each target class has count \(K\) and fixes the source triple. Every event holds inside it, so all misinformative factors are one. Net duplicates informative. | Five informative and five net cumulatives, plus their two atoms at \(\mathtt{01}\) |
+
+Both laws have 12 nonunit and 96 unit plans. Each nonunit plan has one factor
+\(2/1\), exponent \(N\), and cost \(2+3N=262142\). A unit plan costs two.
+Therefore the aggregate is
+
+\[
+12(2+3N)+96\cdot2=216+36N=3145896<8388608.
+\]
+
+The term and exponent caps also hold. Two rows, five-digit counts and a
+17-bit total fit the count-format bounds. This proves sharpness of the
+**complete normalized product-plan policy**, not end-to-end certification.
+The first law has zero net information; the second has joint mutual
+information and signed atom \(\mathtt{01}\) equal to \(\ln2\) nats.
+Neither is evidence of predictive improvement.
+
+## Negative construction: the aggregate matters
+
+Let all three sources copy the same balanced bit, with constant target.
+Every antichain event has count \(N/2\). All 18 informative and 18
+misinformative cumulative products are nonunit; their two bottom atoms are
+also nonunit. All net products are one.
+
+There are 38 nonunit and 70 unit plans. At the same \(N=87380\),
+
+\[
+38(2+3N)+70\cdot2=216+114N=9961536>8388608.
+\]
+
+Each coordinate fits its ceiling, but the aggregate fails. Keep this negative
+control. Omitting components, raising the ceiling, or silently rescaling
+counts does not repair the original-policy failure.
+
+## Constant-source exception and practical meaning
+
+If the complete source triple is constant, every source event holds.
+Its count is \(N\); its target-restricted count equals the target count.
+All cumulative, atom and net products are one, even if the target varies.
+All 108 empty plans cost two each, giving aggregate 216. Other input and
+resource rules still apply; the nonconstant-source ceiling does not.
+
+Replicating all counts preserves the empirical probabilities and PID values,
+but scales nonunit exponents. It can therefore change certificate admission.
+This is a representation cost, not a limitation of the PID functional.
+
+The immediate use is an early refusal check and two exact boundary controls.
+For a real dataset, it warns that the current certification policy cannot
+admit a nonconstant table above the ceiling. It supplies no neural, robotic,
+world-model or deployment gain.
+
+## Rust implementation and computational cost
+
+The existing default-build APIs are
+`stable::categorical::discrete_sxpid3` and the general
+`discrete_sxpid_n` family. Their empirical-PMF, binary64
+implementation is not this exact-product certifier.
+See [Rust implementation and cost](../RUST_IMPLEMENTATION_AND_COST.md) and
+[the implementation](../crates/pid-core/src/sxpid.rs).
+
+The early ceiling guard is proposed, not implemented or compiled.
+For \(m\) occupied complete cells and at most \(W\) token/byte equality work
+per source triple, testing constancy against the first triple costs
+\(O(mW)\): at most a constant times \(mW\), with constant additional
+borrowed-anchor storage. This excludes
+input parsing, count summation, grouping and the later all-108 plans.
+It changes neither the PID nor its sampling assumptions. It must refuse
+without partial certification, before powers; cooperative cancellation and
+allocation handling still need an implementation contract.
+
+No training, model inference, preprocessing or resampling is performed.
+No timing or measured memory is reported. Projected product bits are not
+Python/Rust heap bounds or real-time guarantees.
+
+## Evidence, process and remaining work
+
+AI assisted direct count algebra and independent-first critique.
+A floating PID run or MI-only comparison cannot establish this policy ceiling;
+direct integer reasoning is simpler than a model benchmark for this question.
+There was no empirical best-of-N selection or held-out application test.
+
+The root derivation and an independent-first model critique separately
+obtained the ceiling and different sharpness laws. The subsequent exposed
+review checked both laws and the failed aggregate example. Eleven distinct
+routes and 55 hostile lenses were recorded as coverage, not correctness votes.
+They share the original MGW interpretation and project normalization policy.
+
+This is hand/source evidence, not external human review, a kernel proof,
+native execution, Rust refinement, scientific-priority or application evidence.
+The retained critique requested no mathematical correction.
+[All 18 component formulas](SXPID3_COMPONENT_COUNT_FACTORIZATION_2026_10_12.md)
+remain a separate hand/source result.
+
+Formalization, implementation, parser/resource/interval qualification and a
+matching qualified PDF remain open. The original SxPID3 Programs A-E remain
+0/5 closed under their unchanged [closure ledger](../RESEARCH_RESULTS_2026_10_10.md#closure-ledger--original-criteria-not-substitute-milestones).

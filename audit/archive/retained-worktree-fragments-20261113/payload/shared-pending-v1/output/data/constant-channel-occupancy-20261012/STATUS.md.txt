@@ -1,0 +1,104 @@
+# Execution and reproduction record
+
+12 October 2026. Sepehr Mahmoudian.
+
+## What was executed
+
+The fixed complete-recording counter ran once in each of stock CPython 3.14.6
+normal and optimized (-O) mode on Darwin arm64. Both recorded tool observations
+returned native exit 0 and the complete exposed sentence:
+
+> Integer counts only; entropy unevaluated; no PID/population claim.
+
+Both original scientific JSON files are 4,719 bytes and byte-identical:
+SHA-256 d295dee8a1b738ea3020716f20503722a629bf6aa4e261dd710c4dcf65d3ed82.
+The root read the complete artifacts, compared them and checked their
+conservation identities. These are two modes of the same implementation,
+not independent algorithms or datasets. No new counting run was performed
+when preparing this portable packet.
+
+The product's command supervision supplied native status and exposed output.
+It did not supply the separate research Runner's process-tree, peak-RSS,
+complete raw-channel/EOF or runtime-library qualification. Source caps are
+admission limits, not hard OS memory or deadline bounds. Do not transfer
+this evidence to SxPID3 Program C or qualified-publication acceptance.
+
+## Fixed input, source and estimand
+
+[UCI Room Occupancy Estimation](https://archive.ics.uci.edu/dataset/864/room%2Boccupancy%2Bestimation),
+Singh and Chaudhari (2018), DOI 10.24432/C5P605, CC BY 4.0.
+The provider describes binary PIR motion and manually recorded occupant count.
+
+- Exact CSV: 931,630 bytes; SHA-256
+  c090ee5c94b61762bfec9d22767864490b51030f98cca030f02822468db25d9c.
+- Byte-exact reference [count_pir.py](count_pir.py): 8,183 bytes; SHA-256
+  e25f58fa54734e2a51048e1e1275e9715ffe73b7062e69623341ebb25f649542.
+- Selected stock Python launcher: 52,448 bytes; SHA-256
+  b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf.
+  This identifies the recorded launcher bytes, not its complete loaded runtime.
+
+The counter retains all 10,129 rows and checks the exact 19-column header.
+C is the ordered pair (S6_PIR,S7_PIR), with labels 00,01,10,11.
+T is the unchanged Room_Occupancy_Count, with labels 0,1,2,3.
+Each complete-recording row has equal weight. No X encoder, date selection,
+fitting, target recoding or holdout split is introduced.
+
+It checks decimal spelling in the other numeric columns, not their binary64
+values. It checks monotone naive timestamps; timezone remains unknown.
+Seven date groups and the 30--1,318,547-second interval range are observations.
+They do not establish IID sampling or explain the provider's four-day description.
+
+The counter calculates integer counts and writes an unevaluated entropy formula.
+It does not calculate entropy, MI, any PID atom, population intervals or a
+prediction gain. Those distinctions also apply to its optimized execution.
+
+## Portable projection
+
+[counts.json](counts.json) is a root-prepared projection, not a byte-identical
+native artifact or an independent replay. It preserves the count table,
+marginals, symbolic entropy/zero convention, CSV header and date-group
+timestamps. Its omission examples include the original machine-specific
+input path and filesystem stat identity. Native envelope and some explanatory
+labels are reformatted; original complete native artifacts remain preserved locally.
+
+The source, raw-input and original-native pins bind distinct artifacts.
+A reproduction on a different filesystem normally changes path/stat fields,
+so comparing its entire JSON to the original hash is not a scientific
+count-equality test. Compare the complete scientific fields and retain the
+new native file unchanged. Never reseal a changed file as the old artifact.
+
+## Reproduction instructions, not a new grant
+
+Obtain Occupancy_Estimation.csv from the cited provider. Verify its size and
+SHA-256 above; a different byte image is a different input and the fixed
+counter refuses it. Use a canonical absolute path to a regular, non-symlink,
+single-link input. Choose an existing canonical output directory and a NEW
+output filename: the counter refuses an existing destination.
+
+For stock Python, the command shapes are:
+
+~~~text
+python3.14 -I -S -B count_pir.py --input /absolute/path/Occupancy_Estimation.csv --output /absolute/path/new-counts-normal.json
+python3.14 -I -S -B -O count_pir.py --input /absolute/path/Occupancy_Estimation.csv --output /absolute/path/new-counts-optimized.json
+~~~
+
+Replace both /absolute/path prefixes with your verified paths. These are
+reader instructions, not executions or permission to bypass local controls.
+The isolation/no-site/no-bytecode switches are the counter's unchanged
+contract; -O is the separately recorded comparison mode, not a repair.
+Input capture is checked before and after under a stable-host premise,
+not an atomic snapshot or full loader attestation. No network or subprocess
+is used by the counter.
+
+## Mathematical and application boundary
+
+The [complete report](../../CONSTANT_CHANNEL_OCCUPANCY_SCREEN_2026_10_12.md)
+derives rational entropy and MI bounds by hand from these counts.
+It rejects the proposed 0.0033-nat constant-channel reduction on the full
+averaged MGW vector and on all-net preservation, without computing the
+complete PID. The retained source is quantified over compatible finite laws,
+not selected or evaluated. Prediction loss is a separate conditional-MI question.
+
+Formal encoding, certified evaluation, Rust correspondence, sampling
+calibration, matched multi-dataset held-out task evidence, qualified PDF,
+independent public replay and accepted-mainline publication remain open.

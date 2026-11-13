@@ -1,0 +1,11 @@
+# Pre-execution criterion amendment
+
+Status: approved by the root agent before any study metric or helper/control execution. This amendment leaves `PARSING_CHOICE.md` unchanged.
+
+The initial choice used a relative full-width screen at 1% and an absolute full-width screen at 4/1,000,000 nats. After reading the root's `check_midpoint_bounds.py`, the author identified that its four-ppm criterion measures relative midpoint error, not absolute width. The root explicitly accepted the following replacement before measurements:
+
+For a strictly positive component interval `[L,U]`, use midpoint `C=(L+U)/2` and the certified relative-error ceiling `e=(U-L)/(2L)`. Independently report `e <= 1/100` and `e <= 4/1,000,000`. For every exact value `p` in the interval, `|C-p|/p <= e`. Equality at either threshold passes. Preserve `U-L` in nats as descriptive only. Apply the same rule separately to positively weighted component averages; it is not an average of pointwise relative errors.
+
+If a maximal excluded pattern has zero mass, label its component structural zero, return exact `[0,0]` and do not divide or treat it as an ordinary relative-screen success. Do not apply any relative screen to signed net intervals, including those whose sign is determined. Report unresolved signs and all too-wide outcomes.
+
+No data, pool, anchor, carrier, source ordering, target grouping or optional bound intersection changed. The criterion change was triggered by units/contract correspondence, not by computed applicability metrics. This remains exposed descriptive work, not a new confirmation claim. The numerical helper and controls still require the root agent to read the complete plan/source and explicitly authorize execution.

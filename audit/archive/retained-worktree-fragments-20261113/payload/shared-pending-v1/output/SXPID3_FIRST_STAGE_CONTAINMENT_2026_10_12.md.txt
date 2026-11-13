@@ -1,0 +1,329 @@
+# First-stage interval containment for the SxPID3 candidate checker
+
+Sepehr Mahmoudian - 12 October 2026.
+
+Project-derived conditional theorem. Independent-first hand/source review;
+not a formal proof, native result or complete SxPID3 certificate.
+A matching qualified PDF remains open.
+
+## Question, result and immediate use
+
+Does the independent logarithm checker need later precision stages for an
+actual output of the frozen producer?
+
+Under the assumptions below, **no**: its first stage contains the true value
+and lies inside the producer's interval. Across all 108 expressions, this
+bounds its series loops at **55,296 iterations**. It does not bound elapsed
+time, memory, or the work needed to form the exact products.
+
+This supports an invariant for checking the implementation. It does not
+supply a neural, imaging, robotic or world-model performance result. A
+runtime failure can still prevent a certificate. Original SxPID3 Programs
+A-E remain 0/5 closed.
+
+## Scientific object and notation
+
+The measure is the empirical categorical shared-exclusions construction of
+[Makkeh, Gutknecht and Wibral (MGW), arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5).
+Three ordered sources \(S_1,S_2,S_3\) and a target \(T\) take values in finite
+categorical alphabets. Positive joint-cell counts sum to \(N\); unlisted cells
+have count zero. Those counts define the empirical law. No Gaussian model,
+row independence or population-sampling guarantee is needed to evaluate it.
+
+The repository's [source correspondence](../claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md)
+and [binding rules](../claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md)
+remain authoritative. This candidate interval algorithm is project-defined.
+It is not the distinct continuous Ehrlich PID, another PID, or a calibrated
+population estimator.
+
+| Symbol or term | Meaning |
+|---|---|
+| \(A,B\) | Positive reduced integer numerator and denominator of one reconstructed exact count product |
+| \(N\) | The same positive total count used by both algorithms |
+| \(F\) | The exact expression value, \(\ln(A/B)/N\), in nats |
+| Enclosure | An interval known to contain the exact value, not merely an interval with small width |
+| \(L,U\) | Producer endpoints before rounding and padding, with \(L\le F\le U\) |
+| \(g=2^{-176}\) | Producer-grid spacing, in nats |
+| \(P_L,P_U\) | Producer's final lower and upper endpoints, in nats |
+| \(e,y\) | Integer exponent and rational mantissa in \(A/B=2^e y\) |
+| \(v\) | Rational series argument \((y-1)/(y+1)\), not a source, sample or vector |
+| \(p,m,k\) | Fractional-bit precision, number of series terms, and term index |
+| \(S_m(v),R_m(v)\) | Truncated logarithm series and its nonnegative exact remainder |
+| \(a,b,D\) | Verifier's final endpoints and width \(D=b-a\), in nats |
+| Dyadic grid | Numbers of the form integer times \(2^{-p}\) |
+| Subset containment | Both verifier endpoints lie inside the producer endpoints |
+
+All logarithms are natural. There are 18 three-source lattice positions.
+Cumulative and atom expressions each have informative, misinformative and
+signed-net components, giving \(18\cdot2\cdot3=108\) expressions.
+They are not 108 independent atoms.
+
+## Exact premises and frozen scope
+
+1. Both algorithms reconstruct the **same** \(A,B,N\) for each matched
+   expression. Each product integer has at most 262,144 binary digits.
+   This theorem assumes that correspondence; it does not prove event
+   extraction, averaging, lattice inversion or transport binding.
+2. The producer has a valid real enclosure \([L,U]\). Its stock Decimal
+   [logarithm contract](https://docs.python.org/3.14/library/decimal.html#decimal.Decimal.ln),
+   conversion to exact rationals, signed rounding and arithmetic
+   satisfy their specified contracts. Source reasoning is not an audit of
+   every host library dependency.
+3. The producer uses its unchanged grid and one-unit padding on both sides.
+   The verifier uses its unchanged first stage \(p=m=256\), exact rational
+   operations and outward rounding.
+4. Metadata, product, sign, source and resource checks needed to reach these
+   calculations succeed. Actual arithmetic finishes. Nominal heap guards
+   do not prove peak allocation, elapsed time or successful execution.
+5. The executed bytes and complete output are separately bound and captured.
+   A source hash or internally consistent receipt does not establish this.
+
+Frozen candidate producer: 375 lines, 16,325 bytes, SHA256
+`0483b76154ef5d6ffeea23caed876c377358a920dc6b1a13250ce04e8fd837ad`.
+Frozen independent checker: 468 lines, 16,381 bytes, SHA256
+`f7313b6a9fc6d3b62482e061008e57db563c276f448ba274ab470f8c4fb7d213`.
+These identify reviewed source, not an attested runtime or public replay.
+
+## Step 1: the producer leaves a margin on each side
+
+For positive spacing \(g\), floor rounds down to an integer and ceiling
+rounds up. The frozen producer outputs
+
+\[
+P_L=g\left(\left\lfloor L/g\right\rfloor-1\right),\qquad
+P_U=g\left(\left\lceil U/g\right\rceil+1\right).
+\]
+
+Because \(g\lfloor L/g\rfloor\le L\le F\) and
+\(g\lceil U/g\rceil\ge U\ge F\),
+
+\[
+P_L\le L-g\le F-g,\qquad P_U\ge U+g\ge F+g.
+\]
+
+Thus the final interval has at least one full grid spacing on **each**
+side of the true value. This holds at any successful original producer
+precision. Its output width alone would not imply this margin.
+
+## Step 2: bound the independent logarithm remainder
+
+Exact range reduction writes the same positive ratio as
+
+\[
+A/B=2^e y,\qquad 1\le y<2,\qquad |e|\le262144.
+\]
+
+The verifier corrects its initial bit-length estimate if needed.
+Define \(v=(y-1)/(y+1)\), so \(0\le v<1/3\).
+For \(\ln2\), the same formula uses \(v=1/3\).
+The classical [NIST logarithm series, equation 4.6.4](https://dlmf.nist.gov/4.6.E4)
+gives, for \(m\ge1\),
+
+\[
+\ln\frac{1+v}{1-v}
+ =S_m(v)+R_m(v),\qquad
+S_m(v)=2\sum_{k=0}^{m-1}\frac{v^{2k+1}}{2k+1}.
+\]
+
+The finite sum is the verifier's lower bound. To bound the remaining
+positive terms, use \(2k+1\ge2m+1\) whenever \(k\ge m\):
+
+\[
+\begin{aligned}
+0\le R_m(v)
+&=2\sum_{k=m}^{\infty}\frac{v^{2k+1}}{2k+1}\\
+&\le\frac{2}{2m+1}\sum_{k=m}^{\infty}v^{2k+1}\\
+&=\frac{2v^{2m+1}}{(2m+1)(1-v^2)}.
+\end{aligned}
+\]
+
+The last step is the geometric-series sum; \(v^2<1\).
+For \(v\le1/3\) and the unchanged choice \(m=p\), this tail bound is at most
+
+\[
+\frac{3}{4(2p+1)}\,9^{-p}<2^{-3p}.
+\]
+
+Indeed \(9>8\), so \(9^{-p}<8^{-p}=2^{-3p}\), and
+\(3/[4(2p+1)]<1\). This also covers the \(\ln2\) endpoint.
+The series is classical; the containment composition below is project-derived.
+
+## Step 3: combine, divide and round the bounds
+
+The desired logarithm is \(\ln y+e\ln2\).
+For \(e<0\), multiplying an interval swaps its endpoints and scales its
+width by \(|e|\), not by the negative number \(e\).
+The sum's width is therefore less than
+\((1+|e|)2^{-3p}\). Dividing by \(N>0\) preserves order.
+
+Each final outward rounding to the verifier's \(2^{-p}\) grid adds
+strictly less than \(2^{-p}\) to the width. Since
+\(1+|e|\le262145<2^{19}\), its final width satisfies
+
+\[
+D=b-a<
+\frac{2^{19-3p}}{N}+2^{1-p}.
+\]
+
+At the original first stage \(p=256\), use \(N\ge1\):
+
+\[
+D<2^{-749}/N+2^{-255}
+ \le2^{-749}+2^{-255}<2^{-254}<2^{-176}=g.
+\]
+
+These are exact inequalities, not computed binary64 approximations.
+
+## Step 4: small width plus producer margin proves nesting
+
+The independent construction gives \(a\le F\le b\).
+Each endpoint's distance from \(F\) is at most \(D\). Hence
+
+\[
+a\ge F-D>F-g\ge P_L,\qquad
+b\le F+D<F+g\le P_U.
+\]
+
+For a nonunit product, the independent interval is strictly inside the
+producer interval. The checker converts grids by multiplying producer
+integer coefficients by \(2^{256-176}=2^{80}\); signed integer shifts
+implement this exactly, including negative endpoints. No tolerance is used.
+
+If \(A=B\), reducedness gives \(A=B=1\), so \(F=0\).
+Both frozen algorithms return the exact interval \([0,0]\) at nominal
+stage 256. Equality suffices; no positive margin or series is needed.
+
+The same argument applies to negative signed-net values. Informative and
+misinformative positivity checks remain separate gates.
+
+## Recomputable two-row example
+
+Use source triples \((0,0,0)\) and \((1,0,0)\), with target \(T=S_1\)
+and count one for each row. Thus \(N=2\). For the full-source informative
+cumulative, each agreement event contains exactly one row. Its product is
+
+\[
+A/B=(2/1)^1(2/1)^1=4,\qquad
+F=\ln4/2=\ln2.
+\]
+
+Here \(e=2\), \(y=1\) and \(v=0\).
+The zero-\(v\) series is exact. The separate \(\ln2\) series supplies the
+only tail; the previous inequalities still prove first-stage nesting.
+This is a synthetic law, not a measured sensor or application gain.
+
+As shown in the [normalized-plan count study](SXPID3_NORMALIZED_PLAN_COUNT_CEILING_2026_10_12.md),
+this law has 12 nonunit and 96 unit expressions.
+To see the count, an antichain event is an OR of its members; each member
+requires agreement on all sources it contains. Only source 1 varies.
+Exactly five event keys require source 1 in every member:
+\(\mathtt{01},\mathtt{03},\mathtt{05},\mathtt{07},\mathtt{03+05}\).
+Here hexadecimal \(\mathtt{03}\) means sources \(\{1,2\}\), \(\mathtt{05}\)
+means \(\{1,3\}\), and a plus separates alternative members.
+The other events have a member omitting source 1, so they always hold.
+
+These five informative cumulative products equal four.
+Inside either target class, all sources are fixed, so every misinformative
+product is one. The net cumulative products duplicate the informative ones.
+Let \(Z\) be the frozen 18-by-18 matrix mapping atoms to cumulatives and
+\(M=Z^{-1}\) its inverse. The five-event indicator is column
+\(\mathtt{01}\) of \(Z\); applying \(M\) leaves only atom
+\(\mathtt{01}\), since \(MZ\) is the identity matrix.
+Thus five informative and five net cumulatives plus their two
+\(\mathtt{01}\) atoms are nonunit; the remaining \(108-12=96\) are units.
+This uses the cited, hand-reviewed lattice correspondence, not a new formal
+proof of the matrix.
+
+Each nonunit uses two 256-term loops, including the zero-\(v\) loop.
+The conditional total is \(12\cdot2\cdot256=6144\) iterations.
+No actual candidate run or measured timing is claimed here.
+
+## Negative result: arbitrary valid intervals need not pass first stage
+
+The theorem is about the **actual padded producer output**.
+It is false for an arbitrary narrow, valid candidate interval.
+
+For an arithmetic-only example, let
+\(A=2^{2048}-1\), \(B=2^{2048}\), \(N=1\), and \(x=2^{-2048}\).
+Then \(F=\ln(1-x)<0\), and
+
+\[
+0<-F=\int_0^x\frac{dt}{1-t}
+ \le\frac{x}{1-x}<2x=2^{-2047}<g.
+\]
+
+Here \(t\) is the integration variable; \(0\le t\le x<1/2\).
+The integrand is at most \(1/(1-x)\), and \(1/(1-x)<2\).
+
+The unpadded candidate \([-g,0]\) really contains \(F\).
+The verifier uses \(e=-1\), \(y=2-2^{-2047}\).
+Its upper real endpoint is at least \(F\) plus the true positive
+\(\ln2\) remainder. The first omitted term alone is
+
+\[
+2\,3^{-513}/513>2^{-1035}>|F|.
+\]
+
+For the first inequality, \(3<4\) gives \(3^{-513}>2^{-1026}\);
+\(513<1024=2^{10}\) gives \(1/513>2^{-10}\).
+Multiplying by two yields the stated \(2^{-1035}\) lower bound.
+
+Thus the independent upper endpoint is positive. Outward rounding makes
+it at least \(2^{-256}>0\), outside the candidate's upper endpoint.
+The strict first-stage subset test fails.
+
+This auxiliary example is **not** asserted realizable as an MGW count law
+with total count one. It rejects an overclaim about generic candidate
+intervals, not the theorem or an original-input condition.
+
+Wrong products, a different total count, false log enclosures, omitted
+padding, inward rounding, source drift, incomplete output or failed resource
+checks also fall outside the proof. Later original stages remain meaningful
+for other candidates; none has been removed or altered.
+
+## Rust implementation and computational cost
+
+The default-build Rust APIs
+`stable::categorical::discrete_sxpid3` and `discrete_sxpid_n`
+evaluate empirical binary64 PID values; they are not this exact-product
+candidate producer/checker. See [the implementation](../crates/pid-core/src/sxpid.rs)
+and [Rust cost baseline](../RUST_IMPLEMENTATION_AND_COST.md).
+No public Rust series certifier, new guard or proof refinement is implemented.
+
+Inputs are at most 1024 occupied categorical source-target rows, three
+ordered sources, finite token alphabets and the original count/resource
+limits. This theorem affects only the final logarithm-checking stage.
+Event extraction, lattice construction, normalized plans and exact powers
+retain their separate cost and memory obligations.
+
+Each nonunit coordinate executes two \(p=256\) loops. For all 108,
+the conditional ceiling is \(2\cdot108\cdot256=55296\) iterations;
+units bypass both loops. Fraction operations involve growing integers, so
+iteration count is not a bound on processor instructions, memory or latency.
+Allocation, cancellation, parser and process failure remain separate.
+This is intended for offline audit, not a real-time controller.
+No training, inference, preprocessing, resampling or timing is reported.
+
+## Evidence, strategy and open edges
+
+AI assisted direct algebra and independent-first source critique.
+Independent-first derivations used different bounds: one used a tighter
+total-width bound; the other bounded each endpoint separately.
+Subsequent exposed comparison found no mathematical correction.
+Both depend on the same MGW specification, source algorithms and arithmetic
+contracts; there is no external human verification receipt.
+
+Twelve alternative approaches were considered for adoption, including no action,
+direct inequalities, finite checks, enumeration, Lean, SMT, another interval
+library, repeated Decimal, binary64, width-only inference, changed settings
+and direct task loss. Direct margin-plus-tail algebra was selected for this
+question. Fifty named hostile lenses are coverage, not correctness votes.
+No empirical best-of-N selection or measured strategy advantage is claimed.
+
+The strongest supported statement is conditional first-stage enclosure
+containment. Semantic product correspondence, formal replay, actual
+source/runtime/dependency binding, heap safety, complete native capture,
+Rust refinement, statistical calibration, applications and a matching
+qualified PDF remain open. The original
+[closure ledger](../RESEARCH_RESULTS_2026_10_10.md#closure-ledger--original-criteria-not-substitute-milestones)
+is unchanged.

@@ -7,6 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve 95 permitted pending-file byte images from two retained worktrees in an
+  [inert text archive](audit/archive/retained-worktree-fragments-20261113/DISPOSITION.md), with
+  exact identities, original modes, license notices and explicit non-adoption boundaries.
+  Keep unqualified PDFs, raw captures and withheld advisory companions outside this public
+  packet. The archive grants no theorem, estimator, application or research-program acceptance.
+
 - Finish retained documentation corrections for moving-block resampling: distinguish row
   reachability from inclusion in every replicate, give the finite ideal-law boundary and
   final-prefix weights, and describe the binary64 percentile convention as equal rank trimming

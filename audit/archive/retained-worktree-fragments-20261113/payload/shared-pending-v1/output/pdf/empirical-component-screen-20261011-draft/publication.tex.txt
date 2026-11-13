@@ -1,0 +1,41 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,array,longtable,calc,xcolor}
+\usepackage{microtype,ragged2e,enumitem,etoolbox,needspace,graphicx}
+\usepackage{pid-rs-report-tables,pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,
+pdftitle={Exact component bounds on two occupancy datasets},
+pdfauthor={Sepehr Mahmoudian},
+pdfsubject={Exposed empirical component screen; no task gain, calibration or new formal qualification},
+pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Empirical component bounds}{Occupancy count laws}
+\PidWorkflowConfigureSections
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em plus 0.05em minus 0.03em}
+\setlength{\emergencystretch}{3em}
+\setlist{itemsep=0.15em,topsep=0.2em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+% The adapted Markdown declares its sole figure at 100 percent of line width.
+% This fallback does not rasterize or invoke an external command.
+\providecommand{\pandocbounded}[1]{#1}
+\newcounter{none}
+\title{\PidReportTitle{Exact component bounds on two occupancy datasets}
+{A fixed categorical screen with selective local precision}}
+\author{Sepehr Mahmoudian}
+\date{11 October 2026}
+\begin{document}
+\PidMakeTitle
+{\small Repository links point to current main for navigation, not historical provenance.\par}
+\input{../body.tex}
+\par\medskip
+{\small Suggested citation: Sepehr Mahmoudian,
+\emph{Exact component bounds on two occupancy datasets} (2026).
+For an accepted publication, include its exact repository commit or release.
+Software citation: \href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{CITATION.cff}.\par}
+\end{document}

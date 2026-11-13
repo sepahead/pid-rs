@@ -1,0 +1,453 @@
+# Finite-count precision: dimension, sign and explicit limits
+
+Sepehr Mahmoudian · 11 October 2026
+
+## Results and status
+
+Exact categorical counts make several numerical questions tractable. The
+positive-component guarantee extends to four sources. A nonzero local
+three-source signed atom also has a weaker, useful relative guarantee.
+Neither result silently transfers to signed averages or continuous data.
+
+| Question | Hand-derived answer | Remaining obligation |
+|---|---|---|
+| Smallest positive local component, fixed pool count | Sharp formulas for one, two and three maximal excluded cells | New formal admission/refinement |
+| Nonzero three-source local signed atom | Reference-midpoint relative error below \(1/128\); interval-based ceiling below \(1/126\) | Separate diagnostic implementation |
+| Four-source positive component or positive average | Same 64-term/128-bit reference ceiling below \(2^{-44}\) | Four-source reference implementation/checks |
+| Five sources with the same fixed 128-bit grid | A realizable positive example has midpoint error greater than 100% | Outside current helper; no executed failure |
+| Exact signed average | Integer products decide sign/zero without logarithms | Prospective executable packet remains unrun |
+| Prescribed positive-component precision, finite count cap | A declared adaptive grid/series choice suffices; 150 bits suffice for the stated five-source case | New implementation, resource admission and formal verification |
+
+These are hand proofs with explicit analytic dependencies, not new accepted
+kernel results, human verification, scientific-priority claims or deployment
+evidence. The dimensional/sign arguments received independent-first council
+review. The adaptive extension also received its distinct independent-first
+derivation and exposed full source critique; root inspected both. It remains
+unimplemented and unqualified. No original program closes here.
+
+The defining measure is Makkeh–Gutknecht–Wibral (MGW) categorical shared
+exclusions, not I_min or Ehrlich's continuous functional. The
+[defining paper](https://doi.org/10.1103/PhysRevE.103.032149) and
+[versioned source](https://arxiv.org/abs/2002.03356v5) define the measure.
+The [component derivation](POSITIVE_CATEGORICAL_COMPONENT_BOUNDS_2026_10_11.md)
+supplies the full categorical inverse/integral correspondence; the
+[three-source precision report](FINITE_COUNT_REFERENCE_PRECISION_2026_10_11.md)
+supplies the exact series/grid proof. Bounds here are repository derivations,
+not claims that those papers defined this numerical certificate.
+
+## 1. Input, output and symbols
+
+There are \(n\) categorical sources \(X_1,\ldots,X_n\) and a categorical
+target \(T\), each with a finite alphabet. Let \(I=\{1,\ldots,n\}\) be the
+source-position set. A finite count law contains \(N\) rows. Every occupied
+joint anchor \(s=(x_1,\ldots,x_n,t)\) has positive integer count \(c_s\),
+and \(\sum_s c_s=N\). Lowercase entries are fixed labels, not variables.
+The declared cap is the integer \(M=31000\), with \(1\le N\le M\), except
+where the adaptive section explicitly permits other integer \(M\ge2\).
+
+For another source row \(y\), its agreement pattern is
+\(B(y)=\{i\in I:y_i=x_i\}\). An ordinary antichain \(\alpha\) is a
+nonempty family of nonempty subsets of \(I\), with no subset containing
+another. Event \(E_\alpha\) accepts a row when all positions of at least
+one branch agree: AND inside a branch, OR between branches.
+Excluded agreement patterns form a downward-closed family. Its maximal
+members \(B_1,\ldots,B_k\) have no larger excluded member; \(k\ge1\).
+They are exact equality cells, not unions of smaller cells.
+
+For one nonnegative component choose law \(Q\): source marginal for the
+informative side, or source law conditional on the anchor target \(T=t\)
+for the misinformative side. Its count denominator is \(D=N\) or
+\(D=C_t\), respectively, where \(C_t\) counts rows with target label \(t\).
+Write \(u=Q(E_\alpha)>0\), \(a_i=Q(B(y)=B_i)\). All these masses are
+nonnegative multiples of \(1/D\), \(u\ge1/D\), and
+
+\[
+u+\sum_{i=1}^k a_i\le1,\qquad 1\le D\le N\le M.
+\]
+
+The output \(p\) is this component in nats, using natural logarithms.
+Superscripts \(+,-\) identify informative/misinformative components;
+their signed difference is \(\sigma=p^+-p^-\). Bars denote exact within-law
+averaging with weights \(c_s/N\), not averaging datasets.
+
+No source independence, Gaussian/continuous/angular support, independent
+and identically distributed rows, stationarity or confidence-coverage
+assumption is needed for count arithmetic. That does not establish
+population estimation, causal meaning or statistical calibration.
+Quantization, source choice, target definition and row alignment must be
+declared separately; changing any of them changes the empirical object.
+
+## 2. Analytic dependency and sharp local minima
+
+The full categorical inverse gives the positive box integral
+
+\[
+p_k(u;a_1,\ldots,a_k)
+=(k-1)!\int_0^{a_1}\cdots\int_0^{a_k}
+ (u+\eta_1+\cdots+\eta_k)^{-k}\,d\eta_k\cdots d\eta_1
+=\ln R.
+\]
+
+The integration coordinates \(\eta_i\) are mass coordinates, not measured
+data; \(!\) is factorial, with \(0!=1\). Subscript \(k\) identifies cover
+order, not source index. The exact positive rational argument is
+
+\[
+R=
+\frac{\prod_{J\subseteq\{1,\ldots,k\},\ |J|\text{ odd}}
+ (u+\sum_{i\in J}a_i)}
+{\prod_{J\subseteq\{1,\ldots,k\},\ |J|\text{ even}}
+ (u+\sum_{i\in J}a_i)}.
+\]
+
+Here \(J\) is an index subset and \(|J|\) its size; the even product
+includes the empty subset, contributing \(u\). Equal odd/even factor
+counts cancel the common count denominator. If any \(a_i=0\), then
+\(p=0\) exactly; otherwise it is positive. Ordinary bottom's extra
+term is the virtual certain event, whose cumulative value is zero.
+It is not an ordinary additional atom or the false empty antichain.
+
+Fix \(D,k\) and a positive component. Every \(a_i\ge1/D\), so
+\(u\le(D-k)/D\). Increasing a rectangle width increases the integral;
+decreasing \(u\) increases its positive integrand. Consequently the
+minimum is at \(a_i=1/D\) and \(u=(D-k)/D\). It exists only for
+\(D\ge k+1\); if \(D\le k\), there is no positive case. Substitution gives
+
+\[
+\begin{array}{c|c}
+k & \text{sharp local minimum}\\ \hline
+1&\ln\dfrac{D}{D-1}\\[3pt]
+2&\ln\dfrac{(D-1)^2}{D(D-2)}\\[3pt]
+3&\ln\dfrac{D(D-2)^3}{(D-3)(D-1)^3}.
+\end{array}
+\]
+
+Sharpness is realizable, not merely a relaxed mass optimization. Use binary
+sources, an all-zero anchor with \(D-k\) full-agreement rows, one row for
+each maximal excluded pattern, and a constant target. Agreeing positions
+are zero; other positions one. Three-source nodes for \(k=1,2,3\) are
+respectively \(\{\{1\},\{2\},\{3\}\}\),
+\(\{\{1,2\},\{1,3\}\}\), and \(\{\{1,2,3\}\}\).
+For the second node the excluded maxima are \(\{1\},\{2,3\}\); for the
+third they are the three pairs. Constant target makes the two components
+equal: their signed atom is zero despite these positive components.
+
+An easier, nonsharp bound suffices for numerical precision. Throughout
+the box \(u+\sum_i\eta_i\le1\), so
+
+\[
+p>0\quad\Longrightarrow\quad p\ge\frac{(k-1)!}{D^k}.
+\]
+
+## 3. Range and reference width do not depend on three sources
+
+Integrate the final coordinate for \(k\ge2\):
+
+\[
+p_k(u;a_1,\ldots,a_k)
+=p_{k-1}(u;a_1,\ldots,a_{k-1})
+-p_{k-1}(u+a_k;a_1,\ldots,a_{k-1}).
+\]
+
+Both right components are nonnegative. Iterating the upper inequality yields
+\(p_k\le p_1=\ln(1+a_1/u)\le\ln D\). Hence \(1\le R\le D\le M\).
+Write \(R=2^e v\), with integer exponent \(e\ge0\) and rational
+\(1\le v<2\). Here \(v\) is a reduced logarithm argument, not variance
+or velocity. Since \(M<2^{15}\), \(e\le14\).
+
+For the present 64-term reference, the combined raw logarithm interval
+width is at most \(15/(172\,3^{128})\). Set grid step \(h=2^{-128}\).
+That width is below \(h\). Integer outward floor/ceiling gives endpoints
+\(L,U\) with \(L\le p\le U\) and \(U-L\le2h\); its midpoint has
+absolute error at most \(h\). Structural zeros give exactly \([0,0]\).
+These are exact rational operations, not a binary64 directed-rounding claim.
+The [preceding report](FINITE_COUNT_REFERENCE_PRECISION_2026_10_11.md#step-3-the-64-term-raw-interval-is-narrower-than-one-grid-step)
+includes every series-tail and integer-grid step.
+
+If every positive local component is at least \(\delta>2h\), its
+computable relative ceiling is at most \(h/(\delta-2h)\). For a positive
+average let \(W\) be the sum of weights of positive local components.
+Average lower endpoint is at least \(W(\delta-2h)\), and width at most
+\(2hW\). Thus \(W>0\) cancels, giving the same ceiling. This requires
+nonnegative exact weights and exact zero references, not signed cancellation.
+
+## 4. Nonzero three-source local signed atoms
+
+Each count factor in \(R\) lies between one and its pool denominator.
+For \(k\le3\), each odd/even product has at most four factors.
+Write \(R^+=A^+/F^+\), \(R^-=A^-/F^-\), with positive integer
+numerators and denominators bounded by \(M^4\). The letters \(A,F\)
+here name integers, not events or probability laws. Cross-multiplication gives
+
+\[
+\sigma=\ln(C/F),\quad C=A^+F^-,\quad F=F^+A^-,
+\qquad 1\le C,F\le H=M^8.
+\]
+
+If \(C=F\), the signed atom is exactly zero. Otherwise integrate
+\(1/x\) between the two distinct positive integers:
+
+\[
+|\sigma|\ge\frac{|C-F|}{\max(C,F)}\ge\frac1H.
+\]
+
+The conditional and marginal counts are coupled; the bound respects that
+coupling but is not claimed sharp. Cross-subtract reference intervals to
+get \([L^+-U^-,U^+-L^-]\), width \(w\le4h\), midpoint error at most
+\(2h\). Because \(M<2^{15}\), \(H<2^{120}\), and therefore
+
+\[
+\frac{|\text{midpoint}-\sigma|}{|\sigma|}
+\le2hH<\frac1{128}<1\%\quad(\sigma\ne0).
+\]
+
+Also \(4h<1/H\). A valid local reference interval containing zero must
+represent an exact zero: otherwise it contains both zero and a value at
+least \(1/H\) away, contradicting its width. A nonzero interval therefore
+has the correct strict sign. Midpoint zero alone is not this argument.
+Exact integer comparison is a simpler zero test.
+
+For a strict interval let \(d\) be its endpoint closest to zero in absolute
+value. Then \(d\ge1/H-4h\), so the interval-based computable ceiling is
+
+\[
+\frac{w}{2d}\le\frac{2hH}{1-4hH}<\frac1{126}<1\%.
+\]
+
+This denominator is an interval endpoint, not the true value used in the
+\(1/128\) bound. When \(k\le2\), use \(H=M^4<2^{60}\) instead:
+the endpoint-based ceiling is below \(2^{-66}\), hence below four ppm.
+For \(k=3\), this proof establishes 1%, not uniform four-ppm signed
+accuracy. No actual four-ppm failure is claimed.
+
+The existing helper's signed labels are from its **Taylor** intervals,
+not the references. These new hand conclusions do not alter those labels,
+midpoints, thresholds or screen results; reference sign/relative diagnostics
+are not currently implemented by that helper.
+
+## 5. Four sources: positive precision and a signed boundary
+
+Maximal excluded patterns form an antichain of subsets of four positions.
+Every permutation gives a nested chain of subsets. A size-\(j\) pattern
+lies in \(j!(4-j)!\) of the \(4!=24\) chains, while an antichain meets
+each chain at most once. Dividing the count by 24 gives
+
+\[
+\sum_{i=1}^k\frac1{\binom4{|B_i|}}\le1.
+\]
+
+The binomial coefficient counts subsets of the stated size. Each is at
+most six, so \(k\le6\). This is the classical chain-count argument,
+not new mathematics: [Lubell's original proof, 1966](https://doi.org/10.1016/S0021-9800(66)80035-2),
+also available as a [one-page scan](https://sites.math.rutgers.edu/~zeilberg/akherim/lubell1966.pdf).
+The four-triple node, whose branches are all four subsets of size three,
+attains the bound: its excluded maxima are the six pairs.
+
+For \(k\le6\), successive \((k-1)!/M^k\) decrease because their
+ratio is \(k/M<1\). Set \(\delta_4=120/M^6\), valid for every positive
+component. Since \(M<2^{15}\), \(\delta_4>15\,2^{-87}\). The unchanged
+64-term/128-bit mathematical reference therefore has ceiling
+
+\[
+\frac{h}{\delta_4-2h}
+=\frac{M^6}{120\,2^{128}-2M^6}
+<\frac1{15\,2^{41}-2}<2^{-44}<\frac1{250000}.
+\]
+
+Exact positive averaging preserves this bound by Section 3. This is an
+extension of the analytic argument, not execution of a four-source reference:
+the current research helper fixes three sources/eighteen nodes and refuses
+four sources. The general identity does not supply its absent code refinement.
+
+Signed four-source cross-products can have height \(M^{64}\); the preceding
+width/gap proof no longer establishes a useful uniform 128-bit signed
+guarantee. This is a limitation of that proof, not an observed failure.
+A realizable sufficient case has the four-triple node, \(M-6\) full-agreement
+rows and one at each pair, with the anchor target assigned to all rows
+except one pair. The conditional component is exactly zero, so the positive
+net equals the marginal component and inherits its guarantee. If instead
+the target is constant, both positive components agree and the net is zero.
+
+## 6. Five-source obstruction under the same count cap
+
+Take five binary sources, all ten triple branches, one row at each of the
+ten pair patterns and \(D-10\) full-agreement rows, with \(D=M=31000\).
+Use a constant target. The anchor is supported, \(k=10\), and
+\(u=(D-10)/D\), \(a_i=1/D\). The positive integral gives
+
+\[
+0<p\le\frac{9!}{(D-10)^{10}}<\frac h4.
+\]
+
+The last inequality is exact: \(D-10>15\,2^{11}\), and
+\(9!\,2^{20}=380507258880<576650390625=15^{10}\).
+The combined 64-term tail is also below \(h/4\):
+\(3^{128}>2^{192}\), and \(15/172<1/8\) give raw width
+below \(2^{-195}<h/4\). Its raw lower is positive and its upper below
+\(h\). Hypothetical outward rounding to the fixed 128-bit grid gives
+\([0,h]\). The midpoint \(h/2\) has relative error
+\(h/(2p)-1>1\), greater than 100%.
+
+This is a realizable categorical law, outside the implemented three-source
+helper and current two-to-four-source Rust API. It is not an in-contract
+failure or executed benchmark. Constant target again makes its signed net
+zero; the obstruction concerns a positive component, not prediction gain.
+
+## 7. Adaptive positive precision — hand/source reviewed, unimplemented
+
+This section defines a **different prospective reference configuration**.
+It does not rewrite the fixed-grid counterexample, change old flags or
+waive their criteria. Let \(n\ge1\) be finite, \(M\ge2\) an integer
+row cap and \(\varepsilon>0\) a desired rational relative ceiling.
+The same chain count gives
+\(K=\binom n{\lfloor n/2\rfloor}\), a bound on excluded maxima.
+Floor means rounding down. A positive component has at least one count
+in each maximal cell and in the event, so \(k+1\le D\le M\).
+Define \(\kappa=\min(K,M-1)\), and
+
+\[
+\delta=\frac{(\kappa-1)!}{M^\kappa}>0.
+\]
+
+Monotonicity of the elementary bounds for \(k<M\) makes \(\delta\)
+a uniform positive gap. Choose integer grid bits \(B\ge1\) such that
+
+\[
+2^B\delta\ge\frac{1+2\varepsilon}{\varepsilon}.
+\]
+
+Now grid step is \(h_B=2^{-B}\). Rearrangement gives
+\(h_B/(\delta-2h_B)\le\varepsilon\), with positive denominator.
+Choose nonnegative integers \(E,L\) with \(M<2^{E+1}\) and
+\(2^L\ge E+1\). The range exponent is at most \(E\).
+Choose series term count \(q\ge1\) with \(3q\ge B+L\).
+For a reduced argument \(v\in[1,2]\), put \(z=(v-1)/(v+1)\le1/3\).
+Keeping indices \(0,\ldots,q-1\) bounds its omitted tail by
+
+\[
+\tau_q\le\frac{2z^{2q+1}}{(2q+1)(1-z^2)}
+\le\frac{3}{4(2q+1)3^{2q}}<2^{-3q}.
+\]
+
+The last inequality uses \(3^2>2^3\). Combined raw width is below
+\((E+1)2^{-3q}\le2^{-B}\). The exact grid proof therefore gives width
+at most \(2h_B\) and relative ceiling at most \(\varepsilon\), for
+every positive component and positive exact average. Structural zeros
+remain exact zeros. Negative weights or approximate mass conversion do not
+inherit this argument; signed-average relative precision is not established.
+
+For five sources and \(M=31000\), \(\kappa=10\). Since
+\(9!>2^{18}\) and \(M<2^{15}\), \(\delta>2^{-132}\).
+A separately declared 151-bit grid, still keeping 64 terms, has raw width
+below \(2^{-195}<2^{-151}\) as above. Its ceiling is therefore
+
+\[
+\frac{2^{-151}}{\delta-2\,2^{-151}}
+<\frac1{2^{19}-2}=\frac1{524286}<\frac1{250000}.
+\]
+
+The independent-first derivation gives a smaller sufficient choice, without
+claiming optimality. Since \(M^{10}<2^{150}\), the exact gap obeys
+\(\delta=9!/M^{10}>9!\,2^{-150}\). With a separately declared 150-bit
+grid and the same 64 terms, the raw width is still below the grid step;
+the relative ceiling is
+
+\[
+\frac{2^{-150}}{\delta-2\,2^{-150}}
+<\frac1{9!-2}=\frac1{362878}<\frac1{250000}.
+\]
+
+The original 151-bit proposal remains a valid, nonminimal choice. Neither
+alternative changes the old 128-bit obstruction. Root read the entire fresh
+adaptive critique; it agrees with the general rule and these sufficient
+choices. A new source contract, resource admission, numerical refinement
+and formal verification are required before accepting an executable
+certificate. No implementation or new run exists.
+
+## 8. Signed averages: exact sign is a different question
+
+For each occupied anchor write its exact local ratio as \(C_s/F_s\),
+positive integers. With marginal count weights on both components,
+
+\[
+\bar\sigma=\frac1N\ln(P/Q),\qquad
+P=\prod_s C_s^{c_s},\quad Q=\prod_s F_s^{c_s}.
+\]
+
+Here \(P,Q\) are integer products, not probability laws. Comparing them
+decides positive, negative or exact zero, without floating logarithms or
+a separation threshold. For three sources \(P,Q\le M^{8N}\), giving
+only the weak nonzero gap \(1/(NM^{8N})\). It does not transfer the useful
+local 128-bit relative guarantee to averages. No actual capped failure or
+sharpness claim follows from that conservative gap.
+
+The old screen retains 55 Taylor sign-unresolved averages. A new exact
+integer diagnostic may accompany them, but must not relabel their intervals
+or precision outcomes. Its source preparation is separate and unrun.
+Exact sign alone gives no magnitude, population uncertainty or task benefit.
+
+## 9. Rust implementation and computational cost
+
+The stable categorical Rust API supports two through four sources, with
+4, 18 and 166 ordinary nodes. It implements empirical MGW atoms, not these
+rational interval certificates. The existing helper evaluates three sources;
+no new Rust interval implementation/refinement or higher-source benchmark
+is claimed. See the [implementation baseline](../RUST_IMPLEMENTATION_AND_COST.md).
+
+Given correct masses, an alternating reference needs \(2^k\) count factors
+before logarithm work. Adaptive \(q,B\), rational numerator/denominator
+sizes and greatest-common-divisor work have nonconstant bit costs. The
+maximum antichain order grows combinatorially with \(n\); the positive-count
+cap \(\kappa\) does not bound the cost of enumerating the entire carrier.
+No universal practical runtime follows from finite mathematical existence.
+
+Three-source local cross-products are below \(2^{120}\), so a future u128
+comparison is plausible, not verified. Three-source average products have
+at most \(120N+1\le3720001\) bits each. Streaming one node limits retained
+payload, not powering/gcd workspace, total resident memory or deadline.
+Four-source averages have a much larger conservative bit bound. Missing,
+malformed, canceled, out-of-budget or timed-out computations must abstain,
+not return zero or a fabricated sign. No new timing or memory result exists.
+
+## 10. Uses, rejected transfers and closure
+
+The [two-UCI-dataset occupancy screen](EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md)
+addresses a real room-occupancy estimation problem and supplies count laws
+inside the cap. Its numerical/reference evidence is not measured classifier
+gain. The proposed reference/sign certificates could separate numerical
+ambiguity from an exact empirical negative or zero before testing a sensor
+retention decision against direct prediction/loss baselines.
+
+Four categorical sources may include a fourth independently measured stream;
+that is not permission to regard a generated forecast as a new observation.
+For embodied/world-model studies, keep declared context, forecasts and actual
+future outcomes distinct as in the [decision report](WORLD_MODEL_PID_DECISION_2026_10_11.md).
+Neural event labels or brain-image categories also require justified encoding,
+subjects/episodes and aligned outcomes. These are proposed mappings, not
+executed imaging, neural or robot results. Continuous volumes, angular data
+and hyperbolic embeddings require their own support/estimand contracts.
+
+Rejected shortcuts: positive-component precision implies signed precision;
+midpoint zero proves zero; fixed 128 bits covers every dimension; observed
+cells identify population support; absolute rarity controls relative ratios;
+count arithmetic supplies confidence coverage; higher precision repairs a
+wrong target/encoding; formal tool changes or relaxed thresholds establish
+proof. All original screen inputs, criteria, failures and labels remain.
+
+Independent-first review reproduced local minima, local signed separation,
+four-source positive bounds and dimensional/cancellation limits before fresh
+proposal exchange. Later exposed review checked source correspondence and
+the five-source construction. Root inspected the reasoning and full critique.
+Shared model/context/host and prior formulas remain dependencies. Ten routes
+and fifty named lenses are advisory, not independent human votes or proof.
+The distinct independent-first adaptive critique is now read and agrees;
+its subsequent source exposure is explicit, not a human/kernel acceptance.
+
+New kernel admission, exact implementation refinement, statistical calibration,
+matched task advantage and qualified matching PDF remain OPEN. SxPID3 A–E,
+original nineteen formal targets, angular, hyperbolic and v1 remain OPEN.
+A conditional numerical theorem is useful progress, not closure by renaming.
+
+Suggested citation: Sepehr Mahmoudian, Finite-count precision: dimension,
+sign and explicit limits (2026). Accepted publication needs the exact
+repository commit or release; software citation is [CITATION.cff](../CITATION.cff).

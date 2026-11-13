@@ -1,0 +1,130 @@
+# Small conditional MI need not mean stable PID allocation
+
+12 October 2026. Sepehr Mahmoudian.
+
+CO2 collapse changes an old occupancy PID allocation by about 0.9114 nats,
+despite conditional MI about 0.00156 nats: a rounded-data hand comparison,
+not a new experiment, certificate, recommendation or gain.
+
+## Question and assumptions
+
+Does little additional target information guarantee little change in the
+signed PID explanation after one input becomes constant?
+
+PID means partial information decomposition; MI means mutual information.
+Use categorical Makkeh-Gutknecht-Wibral (MGW) shared exclusions, not continuous
+Ehrlich PID or I_min. The [v5 definition, Section II](https://arxiv.org/html/2002.03356v5)
+uses inclusive-OR source agreement for redundancy. The
+[old study](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
+retains maps, counts, full results and negative predictors.
+
+[UCI357, Candanedo (2016)](https://archive.ics.uci.edu/dataset/357/occupancy%2Bdetection)
+records environmental inputs with photo-derived binary occupancy, CC BY 4.0.
+Keep its original target. No population, causal or replication inference.
+
+| Symbol | Meaning |
+|---|---|
+| X, C | Light and CO2 labels in {0,1,2,3}; raw units lux and ppm before binning |
+| T | Original occupancy bit, 0 or 1; x,c,t denote supported labels |
+| N | 9752 later datatest2.txt rows |
+| p | Complete empirical law of (X,C,T), each row weighted 1/N |
+| q | Replace C by label 0 on EVERY row; preserve (X,T) and weights |
+| R, U_X, U_C, S | Averaged signed redundancy, unique light, unique CO2 and synergy |
+| I_X, I_C, I_XC | Shannon MI I(X;T), I(C;T), I((X,C);T) |
+| D | Sum of absolute p-versus-q changes in the FOUR signed atoms |
+| CMI | Conditional MI I(C;T given X), equal to I_XC-I_X |
+| H(C), ln | Shannon source entropy and natural logarithm; information units nats |
+
+Four equal-width bins were fitted on 8143 training rows only, then held fixed.
+Interior ties go upward; boundary clamping retains out-of-range rows.
+The nominal alphabet is 4x4x2, with 16 occupied cells in this recording.
+No noise, scaling, filtering or target recoding. Zero cells and dependence
+are allowed. Empirical arithmetic needs no independent, identically distributed rows.
+
+## Every calculation step
+
+The existing two-source reconstruction, on the SAME law, is
+
+\[
+U_X=I_X-R,\quad U_C=I_C-R,\quad
+S=I_{XC}-I_X-I_C+R.
+\]
+
+At a supported q outcome, C=0 is certain. Its MGW event
+(X=x OR C=0) is certain, also conditional on the target t.
+The target probability stays unchanged, so its posterior/prior ratio is 1:
+local redundancy ln1=0.
+Averaging gives redundancy 0. The constant source has MI 0; appending it to
+X leaves I_X unchanged. Thus q's atoms in order (R,U_X,U_C,S) are
+(0,I_X,0,0).
+
+Subtract q from p: (R,U_X-I_X,U_C,S)=(R,-R,U_C,S). Hence
+
+\[
+\boxed{D=2|R|+|U_C|+|S|.}
+\]
+
+This exact finite-law identity concerns signed averaged atoms, not local
+values, all 108 three-source expressions, task loss or physical failure.
+
+Old displayed atoms:
+(0.276238458,0.204781420,-0.178691053,0.180249065) nats.
+Using ONLY these rounded decimals:
+
+1. I_X=R+U_X gives 0.481019878.
+2. 2|R| gives 0.552476916.
+3. Add |U_C|: 0.731167969.
+4. Add |S|: D approximately **0.911417034 nats**.
+5. CMI=U_C+S gives -0.178691053+0.180249065:
+   approximately **0.001558012 nats**.
+
+These rounded sums are not executed PID or an outward enclosure.
+Do not clamp the negative atom: cancellation is essential.
+
+Exact control under a DIFFERENT law: X=C=T copy a fair bit, assigning
+probability 1/2 to each of (0,0,0) and (1,1,1). Each agreement event has mass
+1/2 and conditional mass 1, so R=ln2. Each MI is ln2, giving
+p atoms (ln2,0,0,0), then q atoms (0,ln2,0,0).
+Thus D=2ln2 but CMI=0; X predicts T perfectly. Here ln2 means the natural
+logarithm of 2. This collapse keeps T fixed; physical removal may not.
+
+## Meaning, losing predictor and unrun follow-up
+
+CMI concerns extra target information; D concerns this measure's allocation.
+Neither determines sensor utility, acquisition cost, causal role or safety.
+The old trained pair lost on later log loss: 0.050762 versus light's 0.047443
+nats/row, lower better. Earlier results differ and remain in the full study.
+The MGW-OR-inspired forecast lost on all three exposed recordings.
+No new training, PID-guided selection or SOTA claim follows.
+
+The [conditional bound](SXPID_ALLOCATION_L1_BOUND_2026_10_12.md) D<=4H(C)
+gives an MGW allocation guarantee from entropy under published component
+positivity. This example did not evaluate that ceiling's tightness.
+
+An UNRUN three-source proposal retains light and collapses CO2/temperature as
+a JOINT tuple, not this example's single C. Keep each original target:
+357 binary; [864, Singh and Chaudhari (2018)](https://archive.ics.uci.edu/dataset/864/room%2Boccupancy%2Bestimation)
+manual counts 0-3, CC BY 4.0. Do not pool laws.
+[Recorded counts](data/constant-channel-occupancy-20261012/counts.json) show
+seven 864 dates, not the provider's four-day description: the old exactly-four-
+date protocol must refuse. Compare allocation/entropy/CMI with fixed and
+retrained predictor loss on both collections. Useful nonconstant passes are
+unobserved; no new experiment or qualified application.
+
+## Rust implementation and computational cost
+
+Existing stable categorical discrete_sxpid2_averaged_with_budget produced the
+old results. Optional continuous execution refuses binary-target support.
+Source SHA-256:
+fe94e21345ce0b367929e0bc5dd6ab50acd16efa0fd3bcde9d7802a6103f9995.
+No code, kernel, flag or tolerance changed in this milestone. Engine supports 2-4 sources;
+no new norm API, certified bound or timing benchmark. Full PID3 still needs
+resource preflight; daily laws change the estimand.
+
+## Evidence and publication status
+
+Model criteria preceded data exposure; the lead agent checked the derivation.
+Shared model/paper/data/custody; no human or formal verification.
+Reader drafting hit a service limit; no completed reader review.
+Matching PDF, certified arithmetic, two-dataset task evidence, consumer
+integration, accepted mainline publication and programme closure remain open.

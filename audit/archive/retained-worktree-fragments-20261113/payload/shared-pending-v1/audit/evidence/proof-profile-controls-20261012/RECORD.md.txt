@@ -1,0 +1,52 @@
+# Pure diagnostic-profile synthetic tests: partial portable record
+
+Sepehr Mahmoudian, 12 October 2026
+
+Scope: two actual synthetic Python runs, not a Lean launch, native proof-control
+campaign or production acceptance. Root copied all four captured streams into
+fresh destinations and compared every byte with the retained originals.
+
+| File | Bytes | SHA-256 |
+|---|---:|---|
+| normal.stdout | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| normal.stderr | 104 | 65378dcad145da2497120819bebfc3c46534dce9714ce064b3d809a56654aca2 |
+| optimized.stdout | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| optimized.stderr | 104 | 65378dcad145da2497120819bebfc3c46534dce9714ce064b3d809a56654aca2 |
+
+Both terminal native exits were zero. Both stderr records show six unittest
+methods passed, including their in-memory subcases; this is not six Lean
+proofs or six native semantic controls. Captured test timing is not a
+performance benchmark.
+
+Selected CPython 3.14.6 executable SHA-256:
+b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf.
+Both launches used isolated, no-site and no-bytecode modes; one additionally
+used optimization. Clean environment and unchanged 30-second outer deadline
+were declared in the private launch grant. Stream ceiling was 16,384 bytes
+each, combined 32,768; actual four-stream total is 208. No retry or timeout.
+
+Exact tested private source pins:
+
+- PROFILE_REFUSAL_SOURCE.py: 8,134 bytes,
+  60998078a20903accef516b4bfe03448301da46cfb9efe00d8b168c6edd980e8.
+- SELF_TEST_SOURCE.py: 8,192 bytes,
+  0cc807e48d6317ab11213bd5b59cea0a07e680639a814d945eef56c95ac1442a.
+
+Source-time UNRUN labels were preserved, not rewritten after testing.
+The helper contains a machine-specific root. No public source copy was
+produced: stripping it would change the tested bytes. Private launch, source
+and custody records remain retained. A reviewed portable successor and
+fresh replay remain open; this packet alone is not independently reproducible.
+
+Shared source/fixtures, caller-owned freeze/review/context truth, native
+receipt authenticity and resource enforcement remain trust obligations.
+The production profile registry is empty and the original source-only
+controller is unwired/unrepaired. No full native grammar, actual compiler
+error profile, runtime closure, stock qualification, proof, statistical,
+application, PDF or mainline admission is established by these streams.
+
+The [active verification note](../../../output/VERIFICATION_GUARD_UPDATES_2026_10_12.md)
+explains the causal mutations and remaining work. Capture limits for this
+public packet are unchanged: each stream at most 1,024 bytes, RECORD at most
+4,096, total at most 32,768. Hashes bind recorded bytes, not authenticity or
+an atomic snapshot. No shipped tool, kernel, flag or acceptance limit changed.

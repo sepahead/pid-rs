@@ -1,0 +1,69 @@
+# Exposed count-law midpoint-bound applicability screen
+
+Prepared 11 October 2026. Status: **awaiting root approval of this entire proposal and `screen_midpoint_bounds.py`; no helper, controls, syntax execution or applicability calculation has run.** This private lane supplies retrospective advisory model preparation. It adds no human review, kernel result, Rust verification, sampling calibration, application benefit or accepted publication.
+
+## Object and fixed selection
+
+Evaluate the prescribed midpoint Taylor brackets for empirical categorical Makkeh–Gutknecht–Wibral shared-exclusions component atoms. Counting reference measure; natural logarithms; nats. Use only the exact, previously exposed joint-count laws already in the existing analysis artifact. These are finite-law numerical bounds, not population confidence intervals. No IID, stationarity, mixing or generalization assumption is supplied or needed for the count-law arithmetic.
+
+The exact input is `../../../research-and-storage-20261005/application-benchmarks-v1/native-attempt-2/analysis.json` relative to this private lane, a machine-local locator only. Bind the actual stdin stream to SHA256 `b9061eb4c84ff9d3a5372ce359df5b78524cb23b44e89177e4947ce7bfba633c`, 892,830 bytes. Retain all 14 ordered evaluation laws, all 109 positively occupied anchors, all 18 ordinary three-source antichain nodes and both component laws. The 14 laws overlap: UCI864 daily laws partition its later block; presence coarsens the original target on the same rows. Do not count them as 14 independent experiments. Three training laws are validated as input metadata, not included in the screen.
+
+Source positions remain light, CO2, temperature, with four source labels each. Targets remain UCI357 original (two labels), UCI864 original (four), and UCI864 presence (two). The historical training-fitted exact-rational equal-width transform and its reconstructed provenance are inherited, not newly validated here. No refit, regrouping, new split, reacquisition or outcome-based filtering is authorized. Existing binary64 MGW values and Decimal comparisons are not the numerical oracle.
+
+See the preserved `PARSING_CHOICE.md` and root-approved `CRITERION_AMENDMENT.md`. Both screens now use the relative midpoint-error ceiling `(U-L)/(2L)`, at 1% and 4 ppm, only when `L>0`. Absolute interval width in nats is descriptive. Structural zero is a distinct status, not a ratio or ordinary pass. No net-relative division. No optional rectangle/log intersection is selected. All losing, too-wide, structural-zero, unresolved-reference and unresolved-net-sign outcomes must remain in output.
+
+## Planned acceptance and execution protocol
+
+1. Root reads the complete proposal, method and source. Any requested amendment receives a new pre-execution record; do not rewrite the initial choice or silently change criteria. Root explicitly approves execution, with the reviewed helper/proposal byte hashes.
+2. Native caller runs `python3 -I -S -B screen_midpoint_bounds.py controls` and the same with `-O`. Preserve each exit/stdout/stderr, command, interpreter, actual times, source/input hashes and resource observations in new files only. Controls must exit zero and enumerate all named checks. Wrong-event AND, dropped target, wrong Möbius row, zero division, wrong count sum and duplicate-key controls are built into the fixed source. Failures are not repaired by widening numerical criteria.
+3. If both control modes pass, run the pinned stdin input through `analyse` once normally and once optimized, within the declared per-process limits. No shell-authored input files or temporary mutant files are needed. The root's native capture mechanism owns output files. The helper itself reads stdin and its own source bytes and writes only stdout/stderr.
+4. Require zero exits, complete finite strict JSON, correct expected census, exact input/helper digests, no conflicting reference brackets, and no resource refusal. Compare the entire numerical JSON projections between normal and optimized runs, excluding measured runtime/process metadata. This is a replay/checker-dependence check, not independent replication. If a limit, refusal, conflict, truncation or missing result occurs, preserve it and stop before promoting conclusions.
+5. A 64-term reference enclosure too wide to be contained by the midpoint bracket is `unresolved_overlap`, not a midpoint failure or success. Disjoint intervals are `conflict`; they reject execution acceptance. The helper retains the complete computed JSON with status `failed_midpoint_reference_conflict` and exits three if conflicts occur, so counterexample content is not discarded. Successful execution would establish only the printed finite input instances, not the general theorem or a Rust implementation. No extra terms, alternate precision, favorable intersections or excluded laws may be chosen after outputs under this proposal.
+
+Prepared invocations, not executed:
+
+```text
+python3 -I -S -B screen_midpoint_bounds.py controls
+python3 -I -S -B -O screen_midpoint_bounds.py controls
+python3 -I -S -B screen_midpoint_bounds.py analyse < exact-pinned-analysis.json
+python3 -I -S -B -O screen_midpoint_bounds.py analyse < exact-pinned-analysis.json
+```
+
+The native caller must capture each full stdout/stderr and exit without overwriting existing files, measure rather than invent timing, and retain aborted attempts. Helper process fields explicitly describe the checkpoint before final JSON serialization/emission; they are not full process duration or final peak-RSS measurements. The caller must independently capture end-to-end duration and peak RSS (for example with the host's `/usr/bin/time -l` wrapper) if those quantities are reported. No standalone execution authority is implied by this listing.
+
+## Admission and costs
+
+Input at most 1 MiB; 14 evaluation laws; 256 occupied anchors globally; 18 nodes; at most three maximal excluded masks; at most 20,000 **individual components**, the stricter interpretation of the requested pair cap. The fixed input shape admits 1,962 anchor/node pairs and 3,924 components. Counts are integers, positive where occupied; per-law row count at most 31,000; no hidden unbounded count/ratio admission copied from the candidate's ratio<=10 fixtures.
+
+Per process: stdout at most 8 MiB, observed peak RSS at most 256 MiB, monotonic elapsed work at most 180 seconds. The helper installs a 180-second alarm and repeatedly checks elapsed time/RSS, including inside series work and before output. These are alarm plus cooperative observed-RSS refusals, not a claim of continuous kernel-enforced memory containment. The root should additionally use a bounded native timeout; a killed, refused or unobserved run does not pass. JSON is serialized and byte-capped before stdout emission. Timing includes the checks and reference work; no prior timing is asserted for this new helper.
+
+Distinguish: (a) O(k) exact midpoint arithmetic **given** event/maximal-pattern masses; (b) 2^k subset mass factors, or 2^(k-1) odd/even factor pairs, for the exact reference argument; (c) forming equality-pattern counts by comparing occupied states to each anchor (quadratic in occupied support, times three source positions); (d) generating/checking the 18-node carrier and its integer incidence inverse; (e) 64-term logarithm enclosure and serialization. This is fixed three-source work, not an end-to-end asymptotic speedup, Rust benchmark or free mass extraction. Output reports these distinct operation censuses and measured overall timing only.
+
+## Evidence custody and exposure
+
+Author read the complete current integration AGENTS.md earlier in the same work session; its exact current hash was rechecked unchanged as `b4189e12c9af044e0208fc77932b102f9b38db80e5e80006672f627924231f49`. Integration HEAD remains `1f041a37086cda71bc65a860d1795613c7cd1003`; existing source-comment and changelog changes were preserved. No Git metadata writes, Rust/formal/TeX execution, network or edits outside this new private lane are authorized.
+
+Before candidate exposure: complete 685-line existing reference source SHA256 `1a1712958a8835a05a4823a24087fb756726738160455d7f6552b4282ec9658e`, exact input hash/size and shape projections read. The first shape projection was overbroad and exposed historical descriptive fields; a later node-schema projection also exposed existing binary64/Decimal values. None was a computed midpoint screen. This is exposed descriptive work, never preregistered or selection-unbiased confirmation.
+
+After preserving the initial choice: personally read the complete 112-line `check_midpoint_bounds.py` (SHA256 `2dcd2010304ffe6c3f677ea1043cd7fce0fa8b801b2b9259b2207e057447fb5c`), complete 368-line `COVER_COUNCIL.md` (`7cecdf7923899fa3bca294dff5f451e3f4962c5cce07fce2a4b7142f73ea1227`), complete 403-line `BOUNDS_COUNCIL.md` (`beb16c12388ad2ab835322751bd29b3a2b92d8ee00712843136701665b2f6722`), and `MIDPOINT_CHECK_PLAN.md` (`6f3b3a8963652a54baf2cad4c5a2199147e476008a793485627f9f0c0af2bf49`). These are related model/source dependencies, not independent human acceptance. The criterion amendment arose from contract correspondence and was root-approved before calculations.
+
+Author used the numerical/scientific, testing and documentation references of the available Rust guidance for separation of mathematical, numerical, implementation and application evidence. That guidance does not authorize new Rust checks or change this task's preparation-only boundary.
+
+Shared dependency cut: parent/member models, same host/interpreter/tool surface, existing exposed artifact, earlier reference's node order, cover hand derivation, and root's Taylor candidate. Independently generated Boolean antichain census, integer two-sided inverse checks and log-product correspondence diversify calculations but share Python integers/Fractions and this source. No formal kernel, native Rust route, new human review or raw-data reconstruction removes those cuts.
+
+## Ten materially distinct routes
+
+| # | Route | Assumptions, disposition, and failure/reopen condition |
+|---:|---|---|
+| 1 | No new computation | Safe baseline when the published hand bounds suffice. Reopen for the explicit numerical applicability question; no execution before source/plan approval. |
+| 2 | Count-law/MI/CMI or task loss only | Appropriate if allocation is unnecessary. Distinct estimand; no new accuracy/deployment calculation in this screen. |
+| 3 | Existing binary64 full inversion | Inherited descriptive output only; cancellation and unchecked rounding prevent certified reference use. Reopen after a separate numerical contract. |
+| 4 | Existing 80-digit Decimal comparison | Useful historical discrepancy check, not outward enclosure. Do not silently convert it into exact-log evidence. |
+| 5 | Exact rational cover log product | Selected, for finite positive anchors and the complete carrier. Cross-check against independently reconstructed ordinary incidence rows; any argument mismatch refuses. |
+| 6 | Rational 64-term atanh enclosure | Selected with fixed power-of-two range reduction and explicit tail; retains unresolved overlaps. Extra adaptive terms require a new proposal, not post-result rescue. |
+| 7 | Midpoint Taylor bracket | Selected applicability object, given exact masses and prescribed k<=3. Correctness identity differs from useful width; all wide cases remain. |
+| 8 | Rectangle/log-bound intersection | Mathematically useful alternative, not selected. Any future combination must be fixed and reported separately before new outputs. |
+| 9 | Laplace or cubature reference | Possible alternate integral calculation, but needs a new certified tail/quadrature/resource contract. Not admitted here. |
+| 10 | Mechanized theorem or native Rust implementation | Needed for formal/refinement promotion. Explicitly outside scope; this finite Python screen supplies neither. |
+
+The fifty named hostile lenses, exact formulas, validation scope and planned controls are in `METHOD.md`. The root must judge the full source, not just this summary. Approval is still pending.

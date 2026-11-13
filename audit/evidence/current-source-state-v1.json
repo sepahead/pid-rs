@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "ad319bf25a1a8bdbea8ac54fc7d680975120eedb38b750acd01ec602f6121727",
-        "size_bytes": 334222
+        "sha256": "20f1fafe97bbc56e55578123f06f7716c016ff9983744abbd72a9889e5c138a6",
+        "size_bytes": 334679
       },
       {
         "git_mode": "100644",
@@ -562,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "e7817c70cbfd3c741a7d338040cd8009e829f68185fc29d53ada7e221d743ece",
-        "size_bytes": 45566
+        "sha256": "d385b29f130f9905a74516d97e3263e90fe3a6d30760dcbfcd8a4344a2ec024c",
+        "size_bytes": 46359
       },
       {
         "git_mode": "100644",
@@ -2154,6 +2154,594 @@
         "path": "audit/archive/python-verifier-custody-m0-recovery-20260919/e16a6915262e8bf2fac1752ff959d9d3733c7a7d.bundle",
         "sha256": "d9bf6f964ed404554ad227583e6b4ea6027b7028cee239e5892f40ccabeaebb6",
         "size_bytes": 895902
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/DISPOSITION.md",
+        "sha256": "636888b8fb07f5b207d2a52c5d688b617aaa2b8b60ec5205846d6353e67dfbe3",
+        "size_bytes": 6057
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/INDEX.json",
+        "sha256": "4472053752cbdd71dcc04a4b787f0aecc59ee08d5e2fe0473a3f2aaf65df270e",
+        "size_bytes": 90066
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/PANDOC-TEMPLATES-NOTICE.txt",
+        "sha256": "cf5b70694cf50403b51f3315f98d010de6435022ff984911819219034a088180",
+        "size_bytes": 2237
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/AGENTS.md.txt",
+        "sha256": "7ec871d948c91290c84df0b0b61e2e543c5280ba3eed9545b528a61761e4f034",
+        "size_bytes": 98843
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/CHANGELOG.md.txt",
+        "sha256": "0499e65198ac6d2652a81ce515edb140c823185ad86fd3677e5410c4107ba358",
+        "size_bytes": 322528
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/MATHEMATICAL_RESULTS_GUIDE.md.txt",
+        "sha256": "50d92468e05278ec452315ca2970d972be78de60e0a124e90a81e949956bab26",
+        "size_bytes": 77788
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/README.md.txt",
+        "sha256": "2d6cd44246f29de5e242cd9947cae56ed671cb7fe7a7ecc1038dfb069edbc249",
+        "size_bytes": 92564
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/SESSION_HANDOFF.md.txt",
+        "sha256": "fa78a9dbd8481da1d0682fd3986328189fbba6a431fb65c6b8e4463215d30238",
+        "size_bytes": 37571
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/audit/evidence/mathematical-results-guide-pandoc-3.10.2-v5-normalizer-input.tex.txt",
+        "sha256": "2e5d12d4355cbfa18b17632b7f66502354f77a81b41226c0278139af15c590a7",
+        "size_bytes": 105109
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v5.json.txt",
+        "sha256": "2674a647959ae5d04d6928ea1eeb3fd4c90e775d51b40062784d5b9ba90b2ce8",
+        "size_bytes": 18943
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/audit/formal/latex/mathematical-results-guide/linux-diagnostics-v5.json.txt",
+        "sha256": "1855001be37c0f4fc5943fbb524d75242580730904ccdc60f5f096f7bb2d5746",
+        "size_bytes": 18946
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/audit/formal/lean-stopped-prefix-probability/PUBLICATION.md.txt",
+        "sha256": "0380469a36d7f50d79c0d84cf325d7fbb3795ed2ed1ac6cb97837ce3eff18deb",
+        "size_bytes": 5780
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/scripts/README.md.txt",
+        "sha256": "c54f98e2dfd350aabbe66da04b140daa91033588cc1b3fcb5f3f103904c3adc4",
+        "size_bytes": 305146
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/scripts/build-mathematical-results-guide-pdf.sh.txt",
+        "sha256": "fcc074b1a6c26edcf4a7b6c41762b03fc40e6990e68233a8eee788351765094c",
+        "size_bytes": 44202
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/scripts/check-mathematical-results-guide-pdf-structure-v6-self-test.py.txt",
+        "sha256": "12317918fe23664959d128edb90ff33e138e3297372688c578a96802fa389bb1",
+        "size_bytes": 37915
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/scripts/check-mathematical-results-guide-pdf-structure-v6.py.txt",
+        "sha256": "f664f01338acd2d61921bee36239bae6ea4e1fce84834f33c99f6e531c4f90ae",
+        "size_bytes": 86466
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/scripts/check-mathematical-results-guide-prose.py.txt",
+        "sha256": "ca02a3d039e0ca7c78232ea89ccdf4cd21ff1a976139d6bdaf99414004bd4436",
+        "size_bytes": 25356
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/scripts/normalize-mathematical-results-guide-pandoc-tex-v5-self-test.py.txt",
+        "sha256": "448de5345077467c005c80f8d4171c64ca48478e54ad7c48995a564d45af9df3",
+        "size_bytes": 11135
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/older-integration-pending-v1/scripts/normalize-mathematical-results-guide-pandoc-tex-v5.py.txt",
+        "sha256": "70dbaaf38671e58c760612d47268825041be0afbb7007ea83dcafca97ffd9c14",
+        "size_bytes": 31989
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/CHANGELOG.md.txt",
+        "sha256": "1a64fa9ccee13ea527f24ca026d3fde47ebb6ef44fc122f1a2700b36f0196786",
+        "size_bytes": 327675
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/RESEARCH_RESULTS_2026_10_10.md.txt",
+        "sha256": "eb3f00e8adec0db1b0d39a90748f684f4c9aaa43fb7cc52c8679a3fb49456a79",
+        "size_bytes": 20574
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/audit/evidence/finite-structure-publication-20261012/body-v2-v3.tex.txt",
+        "sha256": "f66ff9dd904c3cdf7864ff602d32896db7c944ff2963a16d98fd04512a060bba",
+        "size_bytes": 19574
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/audit/evidence/pdf-guard-controls-20261012/RECORD.md.txt",
+        "sha256": "bc9a87ede6683e691cd8afe6efad4acf836a3e1d17d424ded508500e2e04dbfc",
+        "size_bytes": 3095
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/audit/evidence/proof-profile-controls-20261012/RECORD.md.txt",
+        "sha256": "ad1490792b2f127ae122a8937fcbdec25381e20913d8f387ae78eff42120ef97",
+        "size_bytes": 2854
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/crates/pid-core/src/bootstrap.rs.txt",
+        "sha256": "ffdce4f95c69a7a2400b5427338e888838cec3a284fc6ede691917632d684b17",
+        "size_bytes": 56233
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/crates/pid-core/src/discrete_pid.rs.txt",
+        "sha256": "06ac893649a616011cb9d07657578a2d1a1a31b6bf3178a74d474ce5675c9b41",
+        "size_bytes": 112604
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/ALLOCATION_STABILITY_OCCUPANCY_EXAMPLE_2026_10_12.md.txt",
+        "sha256": "184756017fe367d79a5b173382e1aebe9eba1565927dead386f4580bd8a07b01",
+        "size_bytes": 6137
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/BINARY_SXPID_ALLOCATION_BOUND_2026_10_13.md.txt",
+        "sha256": "fc3bce0a7337f35dafa3a1104d8872fd17f6189c15720a58a804cd5f4a053011",
+        "size_bytes": 15458
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/CANCELLATION_FREE_SIGNED_AVERAGE_2026_10_11.md.txt",
+        "sha256": "ed7b263eb275dce7ab89c3f24e1c0e80af4cf65fe13aa69ad511c0cb2f26c7d1",
+        "size_bytes": 14711
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/COMPACT_SIGNED_AVERAGE_ENCLOSURE_2026_10_11.md.txt",
+        "sha256": "e9663ccf100e583da34df8f317844fe49ecc67b00ad68429b565a0051bc272ac",
+        "size_bytes": 20191
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/COMPONENT_BOUND_CHECKPOINT_2026_10_11.md.txt",
+        "sha256": "2341bb93a195d5a5d04bc52052b3df6009d24b2c86afee855ab757564aedc7bb",
+        "size_bytes": 8140
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/CONSTANT_CHANNEL_OCCUPANCY_SCREEN_2026_10_12.md.txt",
+        "sha256": "f80ce815ac954bedad6e1885ca5676839afabb2d2f41084543379c6910d9c65d",
+        "size_bytes": 20185
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/EMPIRICAL_COMPONENT_BOUND_SCREEN_2026_10_11.md.txt",
+        "sha256": "146af10540d40d30a8055b9cca950d465b97e603654da28d65432488973129f7",
+        "size_bytes": 18239
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/EXACT_CANCELLATION_CONTROL_2026_10_11.md.txt",
+        "sha256": "172fec7fbf29ce525f4e4c5f87d673ed9a4ede221217be1b09463b20c488c22a",
+        "size_bytes": 13986
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/EXACT_EMPIRICAL_ATOM_SIGNS_2026_10_11.md.txt",
+        "sha256": "c0bb1171ad628181c0250cfd2f83039c22ec23ead468b67487d17580479725c1",
+        "size_bytes": 12269
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/FINITE_COUNT_DIMENSION_AND_SIGN_2026_10_11.md.txt",
+        "sha256": "fa53b6ad968f24fc1790131460434e9317e9dd7854699354e5e30c67f5c88696",
+        "size_bytes": 22095
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/FINITE_COUNT_REFERENCE_PRECISION_2026_10_11.md.txt",
+        "sha256": "794756ea0252ad8b627a0ec9b52bf1341697cc6e9871289e5d3e5f1023a5ac25",
+        "size_bytes": 15628
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/FINITE_STRUCTURE_PDF_AUDIT_2026_10_12.md.txt",
+        "sha256": "a731777e39e0dca4ab19d222f358a3705746f71632e48058d2cc8d0254c99eb5",
+        "size_bytes": 8161
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/FORMAL_CLI_RESTORATION_2026_10_12.md.txt",
+        "sha256": "fb6af5c2c6dbdb3ff5fb51cb796bc20155d654bd4d705268be69aff914e3112c",
+        "size_bytes": 8139
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/FORMAL_IMPORT_PREFLIGHT_2026_10_12.md.txt",
+        "sha256": "01b128ee8e92ac189c420ec164fbc05dba663ab209ece68cc28e0ab9077aae13",
+        "size_bytes": 8117
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/MAC_WORLD_MODEL_SCREEN_2026_10_11.md.txt",
+        "sha256": "12785fada9ac6b045cac0e6eab9da5c6db32c1043264abaa93f91a0a7f090fb3",
+        "size_bytes": 6958
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/POSITIVE_CATEGORICAL_COMPONENT_BOUNDS_2026_10_11.md.txt",
+        "sha256": "e59526bddcd8eb725363229642a5b02ebca1847aed2bf6270182ba493f68ef46",
+        "size_bytes": 28758
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/STOCK_TOOL_IMPORT_CAPTURE_FAILURE_2026_10_13.md.txt",
+        "sha256": "64e7bd90d650922bc3cb02c29170b3456687ff5c2b8e6b0bac6273ec1cf02dd2",
+        "size_bytes": 7870
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/SXPID3_ARBITRARY_ALPHABET_COUNT_PROPOSAL_2026_10_12.md.txt",
+        "sha256": "3b2ba29c390cc70337eb6a38d5553c5b4cd67e2e25f6f59e8703b660b02a2d8c",
+        "size_bytes": 12209
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/SXPID3_COMPONENT_COUNT_FACTORIZATION_2026_10_12.md.txt",
+        "sha256": "35de46ae51da4efbb89de191696fc8ac11423db98c25afad1445f03c20e3ee36",
+        "size_bytes": 12194
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/SXPID3_FINITE_STRUCTURE_VERIFICATION_2026_10_12.md.txt",
+        "sha256": "b1cafa3e49e90e0e1f8454e8c1200ebeddaa301f58bd34f9eb31bbb4a68fb5f7",
+        "size_bytes": 16381
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/SXPID3_FIRST_STAGE_CONTAINMENT_2026_10_12.md.txt",
+        "sha256": "3a8479b28c99cbd5618cb6fe40d787c8b10896a4ee9d1c6957ea290c37a942d6",
+        "size_bytes": 14421
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/SXPID3_NORMALIZED_PLAN_COUNT_CEILING_2026_10_12.md.txt",
+        "sha256": "70cd753ad6be1b846125084f19ea47e422fc435e4e72dd931563972446bc6f31",
+        "size_bytes": 11396
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/SXPID_ALLOCATION_L1_BOUND_2026_10_12.md.txt",
+        "sha256": "9512bd9c5a22595c12ac4dd1ed1690a5befcead54ad66937affa5eee417a0414",
+        "size_bytes": 16367
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/SXPID_CONSTANT_CHANNEL_ENTROPY_BOUND_2026_10_12.md.txt",
+        "sha256": "8c52aa66be3b98dcc236c6a6cca8d744073a5ed9290175605ccabaeb08005e5b",
+        "size_bytes": 16366
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/VERIFICATION_GUARD_UPDATES_2026_10_12.md.txt",
+        "sha256": "c7b151443f6f433e05b15bbd2d899167f4045f294fc28dcc79d1e3da3484a60c",
+        "size_bytes": 6278
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/WIBRAL_PID_FINDINGS_2026_10_12.md.txt",
+        "sha256": "f363ff78e29c400405990e43763782443230c86ce9036092ffb20f0b5fe7ca51",
+        "size_bytes": 8191
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/WORLD_MODEL_PID_DECISION_2026_10_11.md.txt",
+        "sha256": "8e698ad1928a455a5821334b5e2e3406624316a5388de1f35625cd2f70221454",
+        "size_bytes": 32767
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/component-bound-screen-20261011/CRITERION_AMENDMENT.md.txt.txt",
+        "sha256": "769d688b6d8eea4d2beafaf497e5721c0aa6af591ada64752e428d764331884f",
+        "size_bytes": 1724
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/component-bound-screen-20261011/METHOD.md.txt.txt",
+        "sha256": "08f62d2a6104b24210d42ea005858fe632e7ffcb99c4d98b4ac79947a8d12592",
+        "size_bytes": 11933
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/component-bound-screen-20261011/PROPOSAL.md.txt.txt",
+        "sha256": "9c032833aabb654a5f5acaae0c255113b0ff7fb3b542704054178bd8206e596e",
+        "size_bytes": 12097
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/component-bound-screen-20261011/STATUS.md.txt",
+        "sha256": "e52b6b26be200bf541279957e98c3364530490afcfb07021faecb6d0e7276cb4",
+        "size_bytes": 3395
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/component-bound-screen-20261011/analysis-normal.json.txt",
+        "sha256": "975e3745b2b00aaef1367789ea2ea73d9a5d8c8de6897ee77f07faa849170b24",
+        "size_bytes": 3396665
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/component-bound-screen-20261011/input-analysis.json.txt",
+        "sha256": "b9061eb4c84ff9d3a5372ce359df5b78524cb23b44e89177e4947ce7bfba633c",
+        "size_bytes": 892830
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/component-bound-screen-20261011/screen_midpoint_bounds.py.txt.txt",
+        "sha256": "7560eccb6e67d3a648667fc00150d0b7d0b748ee6f39f08219f56f6f2c2460c3",
+        "size_bytes": 38793
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/constant-channel-occupancy-20261012/README.md.txt",
+        "sha256": "6c999f395cd5f60214a16f69020d884b638a66c6cd1b1d0efb6e4a4e671f235c",
+        "size_bytes": 591
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/constant-channel-occupancy-20261012/STATUS.md.txt",
+        "sha256": "9d6f8eda2438a94c066bae3e2504d553113d2f7ad0e717be814184289ffa106c",
+        "size_bytes": 5515
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/constant-channel-occupancy-20261012/count_pir.py.txt",
+        "sha256": "e25f58fa54734e2a51048e1e1275e9715ffe73b7062e69623341ebb25f649542",
+        "size_bytes": 8183
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/constant-channel-occupancy-20261012/counts.json.txt",
+        "sha256": "eff65ef86ea3b77342f89ee716fa0e7907b374b8acdd1aa2bffbb65d73026e95",
+        "size_bytes": 5162
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/exact-cancellation-control-20261011/STATUS.md.txt",
+        "sha256": "d776454f8320caec31a7796b359d98f5672348e3be3fb5baecd80b7183694184",
+        "size_bytes": 3014
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/exact-cancellation-control-20261011/normal-science.json.txt",
+        "sha256": "efd054fdb533d2272026bba952a010b023ff478edd2192a5b521d26ff09f5982",
+        "size_bytes": 7873
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/data/exact-cancellation-control-20261011/optimized-science.json.txt",
+        "sha256": "27ab091074a573fa806a094d2d3b1c1a505963f6ecaddc0c00170aa34cdc4a92",
+        "size_bytes": 7873
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/figures/component-cover-masses-20261011.svg.txt",
+        "sha256": "607b0c96e61373502987a2fe90deca9c5b4f404b94a6bd3b4c1852bd179df79f",
+        "size_bytes": 6171
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/figures/empirical-component-bound-screen-20261011.svg.txt",
+        "sha256": "710cfde58c513755e9eae20f14fd2db223fe496f1f7b455a57ada186e1687687",
+        "size_bytes": 6146
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/figures/fin3-order-implication-20261012.svg.txt",
+        "sha256": "981a4a4ad95c83d4789e6b4328647f652dde0c9c01baed4c49390a9ea1b0820c",
+        "size_bytes": 2163
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/figures/world-model-pid-evidence-20261011.svg.txt",
+        "sha256": "f85449233c4370a4f457c511cf774c81202c4ff2745aaefe2768bed73345dbb6",
+        "size_bytes": 3863
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/allocation-norm-20261012-v2/STATUS.md.txt",
+        "sha256": "e6129ad3e09d71c08da4bca22293c04330b9fd491facf9fbb5261961268b38e6",
+        "size_bytes": 6112
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/allocation-norm-20261012-v2/filter.lua.txt",
+        "sha256": "e663274d4b3417d136a05d4c6c2869be41d15bdf4a1bdd759f2606b3dcf460b5",
+        "size_bytes": 700
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/allocation-norm-20261012-v2/publication.tex.txt",
+        "sha256": "723ac00f9ff80638d3ebe45df554d275d04e5435feef8e08856c7d1dfcbe95d2",
+        "size_bytes": 1595
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/allocation-norm-20261012/STATUS.md.txt",
+        "sha256": "7ec7f0bf5b075ad83a583af08d828a605bbe03fde6efee118930d931d9ec1576",
+        "size_bytes": 2804
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/allocation-norm-20261012/filter.lua.txt",
+        "sha256": "e663274d4b3417d136a05d4c6c2869be41d15bdf4a1bdd759f2606b3dcf460b5",
+        "size_bytes": 700
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/allocation-norm-20261012/publication.tex.txt",
+        "sha256": "723ac00f9ff80638d3ebe45df554d275d04e5435feef8e08856c7d1dfcbe95d2",
+        "size_bytes": 1595
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/allocation-norm-20261012/source-v1.md.txt.txt",
+        "sha256": "909cf27f344e6bfbe6e5a86c00c0c621f03d8d9cdec2d6ff7b92b750992e23a6",
+        "size_bytes": 15707
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/component-bounds-20261011-draft/CANONICAL_REPORT.md.txt.txt",
+        "sha256": "830ef848e32d6c2b793eeeddb3997c63e6b2d4e88aafe4f65fdae075b0864a9d",
+        "size_bytes": 28476
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/component-bounds-20261011-draft/PDF_REPORT.md.txt",
+        "sha256": "0e5abccc8ffa53d6497932cb59f304d76e5f8b96f10b3f96034f1ab0f2bfdea8",
+        "size_bytes": 28785
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/component-bounds-20261011-draft/SOURCE_WRAPPER.tex.txt",
+        "sha256": "8cf0a6922afd1ac5fcf6fa17a4ed0f56632ec4ab831c690fb234c4e1fd9efee6",
+        "size_bytes": 1976
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/component-bounds-20261011-draft/STATUS.md.txt",
+        "sha256": "ab42e7019045ce518e21dbb409cbef3fa3fc7b9b210c530fa05a3b20df9fa1e4",
+        "size_bytes": 6160
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/component-bounds-20261011-draft/body.tex.txt",
+        "sha256": "2d83fb25f9b23cb95e5bb3b88c2bab03057089d86ba50a5d0b722f14e1218b32",
+        "size_bytes": 30632
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/empirical-component-screen-20261011-draft/CANONICAL_SOURCE.md.txt",
+        "sha256": "7c3461d2143ceb4b09d3809d9e1ea48b24ab5ac58b92a109a96ce6e493326975",
+        "size_bytes": 17962
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/empirical-component-screen-20261011-draft/PDF_REPORT.md.txt",
+        "sha256": "bcb17406d77885b66e1bb32537794105b2b70a485698f64deeef3d6f72c90d3d",
+        "size_bytes": 18144
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/empirical-component-screen-20261011-draft/STATUS.md.txt",
+        "sha256": "4fce4ec505e42c8c7308e8baedacbb3af0de3f1dab5e1c31fab2b56b8ca6b9af",
+        "size_bytes": 4870
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/empirical-component-screen-20261011-draft/figure.svg.txt",
+        "sha256": "710cfde58c513755e9eae20f14fd2db223fe496f1f7b455a57ada186e1687687",
+        "size_bytes": 6146
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/empirical-component-screen-20261011-draft/publication.tex.txt",
+        "sha256": "8adcb3706cc2a4f09be6145dea30ffc5ae0fd8e1659b39cae919cf8e9058e3aa",
+        "size_bytes": 1930
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/exact-sign-screen-20261011-draft/CANONICAL_REPORT.md.txt.txt",
+        "sha256": "d77c33464eb4beff0f00f7079434370932aead99eb5f0df7a9096c811bee6328",
+        "size_bytes": 12254
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/exact-sign-screen-20261011-draft/GENERATED_BODY.tex.txt.txt",
+        "sha256": "ef44c3324cde2357ca99b144274daabe722acf8e5fe405104c67d9f49b04bdbb",
+        "size_bytes": 13671
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/exact-sign-screen-20261011-draft/PDF_REPORT.md.txt.txt",
+        "sha256": "28631a3c394be9290dc4109bcbc6420265bf69dbb1103566b5ddd22946d2eade",
+        "size_bytes": 12330
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/exact-sign-screen-20261011-draft/SOURCE_WRAPPER.tex.txt.txt",
+        "sha256": "87d6e3b93b7b340815edfa718ed6ddd2754809bc4179c08cab7252648684d660",
+        "size_bytes": 1779
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/exact-sign-screen-20261011-draft/STATUS.md.txt",
+        "sha256": "d03627de75d196abeb4517f4763615ff28bf379b2122b394dfb527a345a2f0e4",
+        "size_bytes": 2739
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/finite-structure-verification-20261012/STATUS.md.txt",
+        "sha256": "4d783b66d30f796a5362191629d19bcbe19bca14aedb70ff016d4573b05ef65a",
+        "size_bytes": 3012
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/research-process-evidence-20261011-draft/STATUS.md.txt",
+        "sha256": "1b261536df35af4752295e81be0cd28be0f7c027525e9f01620b8d32e95b7e05",
+        "size_bytes": 3390
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/pdf/wibral-findings-20261012/STATUS.md.txt",
+        "sha256": "f22712183c3bdced6b82f5c7a75c6e09b118eba231f8adccd5ac8304c7bfb01b",
+        "size_bytes": 2552
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/scripts/check-formal-pdf-log-self-test.sh.txt",
+        "sha256": "2e6471560d2650f552e2284c2012c174e03c73dce223febc6a1cf70e150f7537",
+        "size_bytes": 11730
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/scripts/check-formal-pdf-log.sh.txt",
+        "sha256": "2f64721eeec372206aba70b49da6f7627e945f25ca864f1736651acb093f70ba",
+        "size_bytes": 2822
       },
       {
         "git_mode": "100644",
@@ -32224,7 +32812,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "3676ee53b619edbdd6fb6f1c846fdf3fb5dd90f8a1ecc9518bad20000f8aac8d",
+        "sha256": "bb1504dfd5c65127c15b7917baa7c6429cd9262c77f8c7287751a1c989116e8a",
         "size_bytes": 139663
       },
       {
@@ -33194,8 +33782,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "d9a9ae3a45abdfb694851e4db9fa7f8ea0cd8287d3d318b3a82a232178c05f94",
-    "entry_count": 5508
+    "entries_sha256": "bec3b0f4d08a3e5be136714cccdff68cd3536af3595923663851e47cf739fa19",
+    "entry_count": 5606
   },
   "subprojections": [
     {
@@ -33223,7 +33811,7 @@
       ]
     },
     {
-      "entries_sha256": "22a379c86bd0cd91f26c01066395e8c6e0814f618f995a98de976b144f01283d",
+      "entries_sha256": "f194b932d01e1445fe5addd568fd44afe16d1abb7899e4c7423ebcf4725f4f29",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

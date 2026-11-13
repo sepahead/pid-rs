@@ -1,0 +1,284 @@
+# Exact count formulas for all 18 categorical SxPID3 component atoms
+
+12 October 2026. Source/HAND mathematical note.
+
+All 18 local informative or misinformative atoms have exact positive-rational
+logarithms: six one-pattern, nine two-pattern and two three-pattern difference
+rows, plus the bottom node. Here `log1p(x)` means $\ln(1+x)$.
+The three-pattern row has a single `log1p` expression
+without box-integral approximation. Rounded evaluation still needs error analysis.
+
+The functional is due to Makkeh, Gutknecht and Wibral,
+[Physical Review E 103, 032149 (2021)](https://doi.org/10.1103/PhysRevE.103.032149).
+The events, components, averaging and inverse follow the retained
+[MGW source correspondence](../claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md).
+This reformulation introduces no new PID or priority claim. The existing
+[positive component derivation](POSITIVE_CATEGORICAL_COMPONENT_BOUNDS_2026_10_11.md)
+already gives the ideal inverse, positive box integral and zero criterion.
+
+## Count law and source events
+
+Let $S_1,S_2,S_3$ be three ordered finite categorical sources and $T$ a finite
+categorical target. A complete joint cell is $\omega=(s_1,s_2,s_3,t)$, with
+integer count $c_\omega\ge0$. Set $N=\sum_\omega c_\omega>0$. The declared law
+is the empirical law $c_\omega/N$, not an inferred population distribution.
+Only anchors with $c_\omega>0$ are evaluated. No independence or sampling
+assumption is needed for the count identities. Information units are nats.
+
+Put $I=\{1,2,3\}$. A node $\alpha$ is a nonempty antichain of nonempty subsets
+of $I$: no distinct branch contains another. Its event at anchor $\omega$ is
+
+$$
+E_\alpha(\omega)=
+\bigcup_{A\in\alpha}\ \bigcap_{i\in A}\{S_i=s_i\}.
+$$
+
+Thus equalities are joined by AND inside a branch and OR across branches.
+Define $U_\alpha(\omega)$ as the count of this source event,
+$V_\alpha(\omega)$ as its count additionally restricted to $T=t$, and $N_t$
+as the count of $T=t$. Anchor membership gives
+
+$$
+0<c_\omega\le V_\alpha\le U_\alpha\le N,
+\qquad V_\alpha\le N_t\le N.
+$$
+
+The local cumulative components are
+$f_\alpha^+(\omega)=\ln(N/U_\alpha)$ and
+$f_\alpha^-(\omega)=\ln(N_t/V_\alpha)$, informative and misinformative
+respectively. The signed cumulative is $f_\alpha^+-f_\alpha^-$.
+Misinformative is a component name, not a negative sign.
+
+For comparison cell $\eta=(s'_1,s'_2,s'_3,t')$, define its agreement pattern
+$M(\eta;\omega)=\{i\in I:s'_i=s_i\}$. There are **eight** patterns, including
+$\varnothing$ and $I$. Let $n_M(\omega)$ sum cell counts $c_\eta$ in pattern
+$M$; $n_M^t(\omega)$ additionally restricts $t'=t$. Their sums over all eight
+patterns are $N$ and $N_t$, respectively.
+
+## Ideals and all 18 canonical keys
+
+Let $\mathcal H$ be the six proper nonempty subsets of $I$, ordered by inclusion.
+Write $1$ for $\{1\}$, $12$ for $\{1,2\}$, and similarly for the other pattern
+labels. Define the exclusion ideal
+
+$$
+J_\alpha=\{M\in\mathcal H:\text{no }A\in\alpha\text{ is a subset of }M\}.
+$$
+
+An ideal includes each member's predecessors. The event excludes exactly
+$\varnothing$ and $J_\alpha$; pattern $I$ is covered. Each ideal gives one node
+whose branches are the minimal covered patterns. There are eight ideals with
+no pair pattern, six with one pair, three with two pairs and one with three: 18.
+
+The redundancy order is $\alpha\preceq\beta$ iff every branch of $\beta$
+contains a branch of $\alpha$, equivalently $J_\alpha\subseteq J_\beta$.
+The cumulative at a node sums atoms at lower-or-equal nodes.
+
+Source masks `01`, `02`, `04` mean sources 1, 2, 3; other masks join selected bits.
+Keys are sorted mask families; `+` separates branches. In the ideal columns,
+`{1,2,3}` means three singleton patterns; the full agreement pattern is `123`.
+$\operatorname{Max}(J)$ denotes the maximal elements of the ideal, and
+$k=|\operatorname{Max}(J)|$.
+
+| Index | Key | Exclusion ideal $J$ | $\operatorname{Max}(J)$ | $k$ |
+|---|---|---|---|---|
+| 0 | `01` | {2,3,23} | {23} | 1 |
+| 1 | `02` | {1,3,13} | {13} | 1 |
+| 2 | `03` | {1,2,3,13,23} | {13,23} | 2 |
+| 3 | `04` | {1,2,12} | {12} | 1 |
+| 4 | `05` | {1,2,3,12,23} | {12,23} | 2 |
+| 5 | `06` | {1,2,3,12,13} | {12,13} | 2 |
+| 6 | `07` | {1,2,3,12,13,23} | {12,13,23} | 3 |
+| 7 | `01+02` | {3} | {3} | 1 |
+| 8 | `01+04` | {2} | {2} | 1 |
+| 9 | `01+06` | {2,3} | {2,3} | 2 |
+| 10 | `02+04` | {1} | {1} | 1 |
+| 11 | `02+05` | {1,3} | {1,3} | 2 |
+| 12 | `03+04` | {1,2} | {1,2} | 2 |
+| 13 | `03+05` | {1,2,3,23} | {1,23} | 2 |
+| 14 | `03+06` | {1,2,3,13} | {2,13} | 2 |
+| 15 | `05+06` | {1,2,3,12} | {3,12} | 2 |
+| 16 | `01+02+04` | {} | {} | 0 |
+| 17 | `03+05+06` | {1,2,3} | {1,2,3} | 3 |
+
+This [frozen 18-key convention](../claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md)
+is not Rust positional order. Source permutations must move data columns and
+masks together; inclusion preserves the map.
+
+## Local inverse and exact rational gaps
+
+At one anchor define
+
+$$
+u=N-n_\varnothing-\sum_{M\in J}n_M,
+\qquad
+v=N_t-n_\varnothing^t-\sum_{M\in J}n_M^t.
+$$
+
+Both are positive event counts. For a nonempty ideal, order its maximal
+patterns as $M_1,\ldots,M_k$. For the informative channel set $w=u$ and
+$x_j=n_{M_j}$; for the misinformative channel set $w=v$ and $x_j=n_{M_j}^t$.
+Here $w>0$ and every $x_j\ge0$ is an integer; $j=1,\ldots,k$.
+
+Deleting a subset of maximal patterns leaves an ideal and adds exactly their
+disjoint counts to the event. The inverse coefficient is $(-1)^{|D|}$ for
+each deleted set $D\subseteq\{1,\ldots,k\}$. Therefore the local component atom
+$\pi_\alpha$ in the chosen channel is
+
+$$
+\pi_\alpha=
+\sum_{D\subseteq\{1,\ldots,k\}}(-1)^{|D|}
+\ln\frac{L}{w+\sum_{j\in D}x_j},
+$$
+
+where $L=N$ for informative and $L=N_t$ for misinformative. Summing deletion
+rows over subideals gives zero off-diagonal: the coefficient alternates over
+subsets of a nonempty set of minimal missing elements. The diagonal is one.
+This proves inversion on this ideal poset, not arbitrary event posets.
+
+For $k\ge1$, the constant $\ln L$ cancels. Define the denominator $Q_k$ and
+nonnegative numerator gap $G_k$ by
+
+$$
+\begin{aligned}
+Q_1&=w,&G_1&=x_1,\\
+Q_2&=w(w+x_1+x_2),&G_2&=x_1x_2,\\
+Q_3&=w(w+x_1+x_2)(w+x_1+x_3)(w+x_2+x_3),&
+G_3&=x_1x_2x_3(2w+x_1+x_2+x_3).
+\end{aligned}
+$$
+
+Then every nonbottom component atom is exactly
+
+$$
+\pi_\alpha=\ln\left(1+\frac{G_k}{Q_k}\right).
+$$
+
+For $k=1$ this is $\ln[(w+x_1)/w]$. For $k=2$ it is
+$\ln[(w+x_1)(w+x_2)/(w(w+x_1+x_2))]$: the numerator minus denominator is
+$x_1x_2$. For $k=3$ the alternating row gives numerator
+$P_3=(w+x_1)(w+x_2)(w+x_3)(w+x_1+x_2+x_3)$ and denominator $Q_3$.
+
+To check the three-pattern gap explicitly, put
+$\sigma_1=x_1+x_2+x_3$, $\sigma_2=x_1x_2+x_1x_3+x_2x_3$, and
+$\sigma_3=x_1x_2x_3$. Direct expansion gives
+
+$$
+\begin{aligned}
+P_3&=w^4+2\sigma_1w^3+(\sigma_1^2+\sigma_2)w^2
+ +(\sigma_1\sigma_2+\sigma_3)w+\sigma_1\sigma_3,\\
+Q_3&=w^4+2\sigma_1w^3+(\sigma_1^2+\sigma_2)w^2
+ +(\sigma_1\sigma_2-\sigma_3)w.
+\end{aligned}
+$$
+
+Thus $P_3-Q_3=\sigma_3(2w+\sigma_1)=G_3$. Since $Q_k>0$, every component
+atom is nonnegative and, for a nonempty ideal, it vanishes exactly when at
+least one maximal-pattern count in that channel is zero.
+
+The bottom ideal is empty and its inverse row has only one term. Do not cancel
+$\ln L$ at $k=0$. Its informative and misinformative atoms are respectively
+
+$$
+\pi_{\rm bottom}^+=\ln(N/u)=\ln\left(1+\frac{N-u}{u}\right),
+\qquad
+\pi_{\rm bottom}^-=\ln(N_t/v)=\ln\left(1+\frac{N_t-v}{v}\right).
+$$
+
+They vanish exactly when $u=N$ or $v=N_t$, respectively. The signed atom is
+always $\pi_\alpha^+-\pi_\alpha^-$; positivity of the components does not
+give its sign, and subtraction may cancel exactly.
+
+## A realizable four row example
+
+Take binary source alphabets, a constant target, and exactly this occupied law.
+Every unlisted joint cell has count zero; total $N=N_t=4$.
+
+| Sources $(S_1,S_2,S_3)$ | Target | Count | Pattern relative to anchor `000` |
+|---|---|---|---|
+| `000` | 0 | 1 | 123 |
+| `001` | 0 | 1 | 12 |
+| `010` | 0 | 1 | 13 |
+| `100` | 0 | 1 | 23 |
+
+At anchor `000`, key `07` fixes all three sources. Its ideal is all of
+$\mathcal H$, so $u=v=w=1$ and the maximal-pattern increments are
+$x_1=x_2=x_3=1$. Consequently
+
+$$
+Q_3=1\cdot3\cdot3\cdot3=27,\qquad
+G_3=1\cdot1\cdot1\cdot(2+1+1+1)=5,
+$$
+
+and both local components equal $\ln(32/27)$ nats. Their signed difference
+is zero. At key `03+05+06`, the ideal contains only singleton patterns.
+All four occupied patterns are covered, so $w=4$ and all three singleton
+increments are zero; that local component is zero in both channels.
+
+These are local values at the named anchor, not averages. At each other
+anchor, key `07` has a missing maximal pair pattern and its component vanishes.
+The averaged `07` components are therefore $\tfrac14\ln(32/27)$ each.
+The constant target makes both channels identical at every anchor: all signed
+cumulatives and atoms, and source-target MI, are zero. This hand example checks
+component algebra, not predictive information or an executed implementation.
+
+## Averaging all 108 coordinates and counting the work
+
+Let $\rho_\alpha^+(\omega)=\exp(\pi_\alpha^+(\omega))$ and
+$\rho_\alpha^-(\omega)=\exp(\pi_\alpha^-(\omega))$ denote the explicit rational
+ratios above; no numerical exponential is needed. The averaged component atom is
+
+$$
+\overline\pi_\alpha^\pm=
+\frac1N\ln\left[\prod_{\omega:c_\omega>0}
+             (\rho_\alpha^\pm(\omega))^{c_\omega}\right].
+$$
+
+Weights are joint counts, not uniform occupied-cell weights. An averaged
+component is zero iff every occupied local component is zero. Averaged net
+sign and zero require comparing the two weighted rational products, not local
+positive gaps.
+
+Retain the 54 cumulative products: at each of 18 keys they are
+$\prod_{\omega:c_\omega>0}(N/U_\alpha(\omega))^{c_\omega}$,
+$\prod_{\omega:c_\omega>0}(N_t/V_\alpha(\omega))^{c_\omega}$, and their quotient.
+Together with the 54 atom products, these are the original **108** coordinates,
+not 18 signs or 108 independent atoms. Each reported average divides its
+logarithm by $N$. The `07` cumulatives are joint source entropy, conditional
+source entropy given $T$, and MI; each sums all 18 corresponding atoms.
+
+One scan per anchor builds all eight agreement counts. With $m$ occupied joint
+cells and $W$ bounding primitive state-comparison work per tuple, scanning costs
+$O(m^2W)$ comparisons. Counting, integer bit costs, normalization, weighted
+products, logarithms and output storage remain separate.
+
+Let $b=\operatorname{bitlen}(N)$ be the binary digit count of $N$.
+Raw weighted atom-component numerators and
+denominators each have loose ceiling $4Nb$ bits; atom net has $8Nb$ bits.
+Each ratio numerator or denominator has at most four event-count factors,
+each at most $N$.
+These are symbolic bounds, not runtime, heap or speedup measurements; $N$ can be
+enormous relative to $b$. The unchanged
+[revision 1 resource policy](../claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md)
+requires normalized per-coordinate and full 108 aggregate plans before powers;
+these limits and costs are unchanged.
+
+## Evidence boundary
+
+The prior [evidence matrix](../claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md)
+retains two bounded all 108 arithmetic routes: 20,348 labelled binary count
+vectors with totals 1 through 5, or 2,197,584 expressions per route.
+This is not their first representation or replay.
+
+These exact-real formulas do not certify binary64 `log1p`, rounding, conversion,
+underflow, native implementation or Rust refinement. No execution, formal result,
+measured speedup, calibration, population-support, continuous or application
+result is claimed. Retained correspondence is not a fresh complete primary-paper
+reading or independent external custody.
+
+The original [certificate claim](../claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md)
+still requires exact products, independent directed logarithm intervals and
+containment at every key, canonical parsing, source bindings, resource controls
+and the [remaining programs](../claims/SX-CERTIFIED-AVERAGED-PID3-001/routes.md).
+Original Programs A-E remain 0/5 closed. This note does not replace their gates
+or authorize a native run.

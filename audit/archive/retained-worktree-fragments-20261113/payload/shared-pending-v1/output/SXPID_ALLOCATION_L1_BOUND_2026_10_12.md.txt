@@ -1,0 +1,381 @@
+# Total shared-exclusions allocation movement: a sharp entropy bound
+
+Sepehr Mahmoudian - 12 October 2026.
+
+For categorical Makkeh-Gutknecht-Wibral (MGW) shared-exclusions partial
+information decomposition (PID), keep one source and replace all others by
+constants. Let $C$ denote the replaced tuple and $H(C)$ its joint entropy
+in nats. The sum of absolute changes in signed averaged MGW atoms is at most
+$4H(C)$. The uniform coefficient four is sharp; two subclasses have sharp
+coefficients two or three.
+
+Status: independently reviewed **conditional hand corollary**, relying on
+published component positivity. Formal proof, numerical certification,
+implementation and application qualification remain open. Scientific priority
+is unestablished; SxPID3 Programs A-E remain 0/5 closed.
+The [coordinate-maximum bound](SXPID_CONSTANT_CHANNEL_ENTROPY_BOUND_2026_10_12.md)
+remains correct. A maximum and a sum are different quantities.
+
+## 1. Definition, assumptions and symbols
+
+Use finite categorical shared exclusions from
+[Makkeh, Gutknecht and Wibral (2021)](https://doi.org/10.1103/PhysRevE.103.032149).
+The [v5 source](https://arxiv.org/html/2002.03356v5) supplies events, separate
+component inversion and Theorem IV.3 component positivity. These are published
+dependencies, not established here. Its base-two values become **nats** after
+multiplication by $\ln2$; $\ln$ means natural logarithm below.
+
+Let $r\ge2$ be the source count, $I=\{1,\ldots,r\}$ its index set, and $S_i$
+source $i$. Retain index $j$, so $X=S_j$. Write $C=(S_i)_{i\ne j}$ for the
+complete other-source tuple, and $T$ for the target.
+$H(C)$ is joint tuple entropy, not summed marginal entropies.
+
+All alphabets are fixed, nonempty and finite. Law $p$ is the normalized joint
+distribution of $(C,X,T)$; dependence and zero cells are allowed.
+For a count table, $p$ means that empirical law with count weights.
+A supplied law requires no independent-row assumption.
+
+Choose an allowed constant tuple $c_\star$. Law $q$ maps $(C,X,T)$ to
+$(c_\star,X,T)$ in every outcome, preserving the complete $(X,T)$ marginal.
+This is replacement, not conditioning on rows with $C=c_\star$.
+Original target labels stay unchanged, even if $T$ was computed from $C$.
+Evaluate each law on its own positive-probability outcomes.
+
+For a finite variable $U$, $p_U(u)$ is its marginal probability and
+$H(U)=-\sum_u p_U(u)\ln p_U(u)$, with zero summands zero.
+Conditional entropy $H(U\mid V)$ averages over supported laws given $V$.
+Define $I(U;V)=H(U)-H(U\mid V)$ and
+$I(C;T\mid X)=H(C\mid X)-H(C\mid X,T)$.
+Entropies and information use $p$ unless marked $q$.
+
+Exactly **one original source position** is retained. Its alphabet may be
+vector-valued if it was one source from the start.
+Retaining several indexed sources or regrouping them changes the problem.
+No continuous Ehrlich PID, $I_{\min}$, local-score or causal-loss transfer is made.
+
+## 2. Events, atoms and the norm
+
+The carrier $\mathcal L$ is the complete set of nonempty antichains of
+nonempty subsets of $I$. A node, written $\alpha$ or $\beta$, is a family
+of branches with no branch contained in another.
+
+At supported joint outcome $z=(s_1,\ldots,s_r,t)$, $s_i$ is source $i$'s
+realized label and $t$ the target label. Define
+
+$$
+E_\beta(z)=\bigcup_{B\in\beta}\ \bigcap_{i\in B}\{S_i=s_i\}.
+$$
+
+$B$ is a branch: AND inside, OR between branches. The anchor satisfies every
+branch, so unconditional and target-conditioned event probabilities are positive.
+Let $F_\beta^+$ be the mean of $-\ln p(E_\beta(z))$ and $F_\beta^-$ the mean of
+$-\ln p(E_\beta(z)\mid T=t)$. Each mean sums $p(z)$ times its expression
+over supported joint outcomes; occupied cells are not equally weighted.
+
+Order $\alpha\preceq\beta$ means every branch of $\beta$ contains some branch
+of $\alpha$. The component atoms $\Pi_\alpha^\pm$ uniquely reconstruct
+
+$$
+F_\beta^u=\sum_{\alpha\preceq\beta}\Pi_\alpha^u,\qquad u\in\{+,-\}.
+$$
+
+Finite inversion recursively subtracts already determined lower atoms.
+Define signed net $\Pi_\alpha=\Pi_\alpha^+-\Pi_\alpha^-$.
+The published premise is $\Pi_\alpha^\pm\ge0$, **not** $\Pi_\alpha\ge0$.
+
+Before-minus-after change is
+$\Delta_\alpha=\Pi_\alpha(p)-\Pi_\alpha(q)$; define
+
+$$
+D_{\rm net}=\sum_{\alpha\in\mathcal L}|\Delta_\alpha|.
+$$
+
+This $L^1$ norm is a sum of absolute values, not a maximum or average over
+nodes. At three sources it sums **18 signed averaged atoms**, not all 108
+expressions. Define $D_+$ and $D_-$ analogously for separate component changes.
+The earlier largest-coordinate error uses an $L^\infty$ norm, a maximum.
+
+## 3. Proof, step by step
+
+Put $a=\{\{j\}\}$ and $g=\{\{j\},I\setminus\{j\}\}$.
+The set difference removes index $j$.
+Define $L^+=F_g^+(p)$, $L^-=F_g^-(p)$,
+$A=H(C\mid X)$ and $B_0=H(C\mid X,T)$.
+The event at $g$ is $\{X=x\}\cup\{C=C(z)\}$, where $x$ is the realized
+$X$ label and $C(z)$ the realized nuisance tuple.
+
+### Step 1: one atom survives under collapse
+
+Under $q$, a branch omitting $j$ is certain. If one exists, both cumulatives
+are zero. Otherwise every branch becomes $X=x$, precisely when $a\preceq\beta$.
+The cumulative vector is the reconstruction column of $a$.
+Unique inversion therefore gives
+
+$$
+\Pi_a^+(q)=H(X),\quad\Pi_a^-(q)=H(X\mid T),\quad\Pi_a(q)=I(X;T),
+$$
+
+with all other atoms zero. No positivity premise is needed in this step.
+
+### Step 2: partition the lower atoms
+
+$\operatorname{Down}(v)=\{\alpha:\alpha\preceq v\}$ denotes all nodes below
+or equal to node $v$. Below $a$, the branch $\{j\}$ must occur.
+Any other branch omits $j$ by antichainness.
+Conversely, this characterizes nodes below $g$. Thus
+
+$$
+\operatorname{Down}(a)\setminus\{a\}=\operatorname{Down}(g).
+$$
+
+Reconstruction at $a$ yields
+$\Pi_a^+(p)=H(X)-L^+$ and $\Pi_a^-(p)=H(X\mid T)-L^-$.
+Changes at $a$ are $-L^+$ and $-L^-$; its net change is $L^--L^+$.
+
+### Step 3: obtain the off-singleton totals
+
+The greatest node, with single branch $I$, has totals $H(C,X)$ and
+$H(C,X\mid T)$. Subtract the atom at $a$ and use the entropy chain rule:
+
+$$
+\sum_{\alpha\ne a}\Pi_\alpha^+(p)=A+L^+,\qquad
+\sum_{\alpha\ne a}\Pi_\alpha^-(p)=B_0+L^-.
+$$
+
+These components are nonnegative, and their collapsed values are zero.
+Consequently the exact component norms are
+
+$$
+D_+=A+2L^+,\qquad D_-=B_0+2L^-.
+$$
+
+### Step 4: preserve central cancellation
+
+For nonnegative $x,y$, $|x-y|\le x+y$. Apply it outside $a$:
+
+$$
+\begin{aligned}
+D_{\rm net}
+&\le |L^--L^+|+A+B_0+L^++L^-\\
+&=A+B_0+2\max\{L^+,L^-\}.
+\end{aligned}
+$$
+
+The equality uses $x+y+|x-y|=2\max\{x,y\}$.
+Separately bounding entire plus and minus vectors would instead give $6H(C)$.
+
+For an exact identity define off-$a$ overlap
+$O=\sum_{\alpha\ne a}\min\{\Pi_\alpha^+(p),\Pi_\alpha^-(p)\}$.
+The identity $|x-y|=x+y-2\min\{x,y\}$ gives
+
+$$
+D_{\rm net}=A+B_0+2\max\{L^+,L^-\}-2O.
+$$
+
+$O\ge0$ generally needs full atoms. Dropping it gives a ceiling, not an equality.
+
+### Step 5: bound by entropy
+
+The OR event contains both complete $X$ and complete $C$ equalities.
+Taking negative logs and averaging gives
+
+$$
+0\le L^+\le\min\{H(X),H(C)\},\qquad
+0\le L^-\le\min\{H(X\mid T),H(C\mid T)\}.
+$$
+
+Conditioning cannot increase entropy, so
+
+$$
+\begin{aligned}
+D_{\rm net}
+&\le H(C\mid X)+H(C\mid X,T)+2\min\{H(X),H(C)\}\\
+&\le A+B_0+2H(C)\\
+&=4H(C)-2I(C;X)-I(C;T\mid X)\\
+&\le4H(C).
+\end{aligned}
+$$
+
+There is no atom-count multiplier. The middle equality rewrites an upper bound;
+it does not claim equality for actual movement.
+
+## 4. Exact sharpness witness
+
+Take two independent uniform sources $X,C$ on $\{0,\ldots,m-1\}$,
+integer $m\ge2$, and target $T=X$.
+For every $x,y\in\{0,\ldots,m-1\}$, supported probability is $1/m^2$
+for $(X=x,C=y,T=x)$, zero otherwise.
+Set $h=\ln m$ and $\rho=\ln(m^2/(2m-1))$.
+
+At every anchor,
+
+$$
+p(X=x\text{ OR }C=y)=\frac1m+\frac1m-\frac1{m^2}
+=\frac{2m-1}{m^2}.
+$$
+
+Given $T=x$, the OR event is certain; $C$ and joint equalities have probability
+$1/m$. Thus shared components are $(\rho,0)$.
+Single-source totals are $(h,0)$ for $X$, $(h,h)$ for $C$; joint totals $(2h,h)$.
+Subtracting on the four-node lattice gives:
+
+| Atom | $\Pi^+(p)$ | $\Pi^-(p)$ | $\Pi(p)$ | $\Pi(q)$ | $\Delta$ |
+|---|---:|---:|---:|---:|---:|
+| Redundancy | $\rho$ | $0$ | $\rho$ | $0$ | $\rho$ |
+| Unique $X$ | $h-\rho$ | $0$ | $h-\rho$ | $h$ | $-\rho$ |
+| Unique $C$ | $h-\rho$ | $h$ | $-\rho$ | $0$ | $-\rho$ |
+| Synergy | $\rho$ | $0$ | $\rho$ | $0$ | $\rho$ |
+
+Collapsed plus vector is $(0,h,0,0)$ and minus vector is all zero, in row order.
+Negative unique $C$ must not be clamped. Hence $D_{\rm net}=4\rho$, $H(C)=h$, and
+
+$$
+\frac{\rho}{h}=1-\frac{\ln(2-1/m)}{\ln m}\longrightarrow1.
+$$
+
+The correction fraction has numerator $\ln(2-1/m)\le\ln2$ and denominator
+$\ln m$, which diverges.
+No smaller uniform coefficient works over finite alphabets.
+Each comparison fixes its alphabets; the sequence increases their size.
+The displayed family approaches four, not attaining it at finite $m$.
+Already $m=16$ refutes three:
+$256/31>8$ implies $4\rho>4\ln8=3\ln16=3H(C)$, without floating arithmetic.
+
+Here $I(C;T)=I(C;T\mid X)=0$ and $X$ predicts the target perfectly before and
+after collapse. Compensating PID movements do not prove changed prediction
+or causal importance.
+
+### Embedding into the full three-source and larger carrier
+
+Keep indices 1 and 2 active, others constant; relabel the retained index to 1.
+Place the four atoms at $\{\{1\},\{2\}\}$, $\{\{1\}\}$, $\{\{2\}\}$,
+$\{\{1,2\}\}$.
+For every branch $B$ of a full node, set $U=B\cap\{1,2\}$, deleting constants.
+Their four lower-node indicators ask whether every $U$ is nonempty, contains
+1, contains 2, or equals $\{1,2\}$, respectively.
+
+An empty $U$ makes the event certain: both cumulatives and all indicators zero.
+Otherwise discard duplicate and superset projected branches.
+The reduced event is OR, $X$, $C$ or joint equality; indicator rows are
+$(1,0,0,0)$, $(1,1,0,0)$, $(1,0,1,0)$, $(1,1,1,1)$.
+These are exactly the two-source reconstruction rows, for both components,
+at every supported anchor. Unique inversion after averaging therefore forces
+all other full-carrier atoms to zero. Extra constants add no entropy.
+
+This proves sharpness for every fixed source count $r\ge2$, including the
+complete 18-node three-source carrier. It does not extend the Rust API.
+
+## 5. Sharp subclasses and rejected stronger claims
+
+**Determined by $X$.** If $C$ is a function of $X$ on the support,
+$A=B_0=0$ and $D_{\rm net}\le2H(C)$.
+For two copied sources $X=C=T=Z$, finite nonconstant $Z$, collapse moves
+$H(Z)$ from the shared atom to the retained singleton atom.
+Thus $D_{\rm net}=2H(C)$ exactly.
+Both conditional nuisance entropies and $I(C;T\mid X)$ are zero:
+a zero-at-zero radius using only those quantities cannot work.
+
+**Determined by $(X,T)$.** Here $B_0=0$ and $D_{\rm net}\le3H(C)$.
+For independent uniform $X,C$ with original target $T=(X,C)$, keep original
+target labels under $q$. All conditioned events are certain.
+Signed atoms are $(\rho,h-\rho,h-\rho,\rho)$, collapsing to $(0,h,0,0)$.
+Movement is $h+2\rho$, approaching $3H(C)$.
+Recomputing the target after collapse changes the estimand.
+
+**Two is not universal.** For independent uniform $X,C$ with two labels and
+$T=X+C$ modulo 2, put $h=\ln2$, $d=\ln(3/2)$, $\rho=\ln(4/3)$;
+$h=d+\rho$. Conditioned anchored equalities coincide with probability $1/2$.
+Signed atoms are $(-d,d,d,\rho)$ and collapsed net atoms all zero.
+Movement is $h+2d=\ln(9/2)>2H(C)$; shared information is negative.
+
+Other limits:
+
+- Constant $C$ gives zero movement, even under constant relabeling.
+- $T$ independent of all sources gives identical plus/minus averages and
+  $D_{\rm net}=0$, even when $H(C)$ is large.
+- With constant $T$ and independent uniform $X,C$, $D_++D_-=2h+4\rho$
+  approaches $6H(C)$. Factor four is not a combined-component bound.
+- For $X=C=T=Z$ with binary $Z$, one label of probability
+  $\varepsilon\in(0,1)$ has local movement $2\ln(1/\varepsilon)$.
+  Averaged entropy tends to zero as $\varepsilon$ tends to zero;
+  no analogous local bound follows.
+
+### Cumulative movement is a different norm
+
+For $S_1=S_2=S_3=T=Z$, every original equality event is $\{Z=z\}$;
+all 18 averaged net cumulatives equal $H(Z)$.
+Collapse sources 2 and 3. Exactly five nodes keep that value:
+single branches $\{1\},\{1,2\},\{1,3\},\{1,2,3\}$, and
+$\{\{1,2\},\{1,3\}\}$. All others have a branch omitting 1 and cumulative zero.
+
+The carrier has seven one-branch antichains, nine incomparable pairs and two
+triples. Therefore cumulative net $L^1$ movement is $13H(Z)$, while signed
+atom movement is $2H(Z)$. An all-108-expression sum includes those cumulatives
+and cannot inherit the factor-four bound. Its largest coordinate still equals
+$H(C)$, as in the earlier theorem.
+
+## 6. Application and statistical boundaries
+
+Use this as an allocation-sensitivity budget with **fixed categorical encoding
+and source grouping**, alongside a matched predictive comparison.
+Unchanged MI alone does not establish stable signed allocation.
+
+The [UCI864 motion/target screen](CONSTANT_CHANNEL_OCCUPANCY_SCREEN_2026_10_12.md)
+retains complete counts and data citations. Its empirical two-motion-label
+tuple has $1/3<H(C)<53/100$ nats.
+For every compatible finite retained-source law, this gives
+$D_{\rm net}<4(53/100)=53/25=2.12$ nats.
+It is an upper bound, not a measured PID norm, population confidence or
+prediction benefit. The screen's maximum-coordinate lower bound is separate.
+The temporal data do not inherit an IID guarantee.
+
+An independently justified entropy ceiling $H(C)\le b$, with $b\ge0$ in nats,
+gives $D_{\rm net}\le4b$.
+In the earlier fixed-IID zero-departure example, 10,000 evaluation rows,
+four nuisance labels and false-report level $e^{-3}$ give entropy ceiling
+below 0.0033 nats, hence total signed movement below 0.0132 nats on a true report.
+All coordinates share one event, not an 18-fold union bound.
+IID means independent identically distributed rows from fixed $p$, not
+independent source channels. Fixed encoders, $j,c_\star$, alphabet and sample
+size must precede evaluation.
+This is not plug-in PID calibration, baseline MI estimation or optional-stopping
+permission; the linked report gives the full sampling derivation.
+
+Neural/imaging, robotics and world-model uses first need justified categorical
+encodings, observed targets and a law. Generated futures are not observed
+ground truth. Raw continuous vectors and changed grouping/gauge need their
+own functional. No new model run, clinical/robotic benefit or SOTA win is claimed.
+
+## 7. Process and remaining evidence
+
+Two separately frozen hand derivations preceded cross-exposure; a separately
+frozen critic standard preceded candidate reading. Root checked the defining
+events, proof and exact laws; the critic checked full-carrier embedding and
+negative norms. Shared models and premises limit independence.
+This is exploratory derivation, not preregistered selection, independent
+human review or stock-kernel acceptance.
+
+Formal probability/logarithm proof, stock qualification, certified evaluation,
+Rust refinement, multiple-dataset task tests and qualified matching PDF remain
+open. Exact symbolic examples are not executed benchmarks.
+No tools, kernels, precision flags, tolerances or defining PID were changed.
+The Rust documentation guidance kept mathematical, executable, sampling and
+task guarantees separate; no Rust numerical code changed.
+See the [original closure ledger](../RESEARCH_RESULTS_2026_10_10.md#closure-ledger--original-criteria-not-substitute-milestones).
+
+Citation: Sepehr Mahmoudian, *Total shared-exclusions allocation movement:
+a sharp entropy bound* (2026). Include the exact accepted commit/release;
+see [CITATION.cff](../CITATION.cff).
+
+## 8. Rust implementation and computational cost
+
+No norm/bound API or timing is reported. For $n$ aligned categorical rows,
+$r$ sources and target $T$, $k$ is occupied joint support.
+Default `stable::categorical::discrete_sxpid_n` in
+`crates/pid-core/src/sxpid.rs` supports 2-4 sources, not certification.
+Given aligned atom vectors and fixed-cost scalar arithmetic, this proposed
+norm needs linear time in $|\mathcal L|$ and constant extra storage;
+rounding remains unverified.
+Offline count-law use adds no training/resampling guarantee.
+See [engine costs, budgets and cooperative failures](../RUST_IMPLEMENTATION_AND_COST.md);
+no real-time claim is made.

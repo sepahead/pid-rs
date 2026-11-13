@@ -1,0 +1,27 @@
+-- Faithful projection into output/pdf/allocation-norm-20261012/.
+function Header(h)
+  if h.level == 1 then return {} end
+  h.level = h.level - 1
+  return h
+end
+function Para(p)
+  if pandoc.utils.stringify(p):match("^Sepehr Mahmoudian %- 12 October 2026%.") then
+    return {}
+  end
+  return p
+end
+function Table(t)
+  assert(#t.colspecs == 6, "unexpected table shape")
+  local widths = {0.20,0.16,0.16,0.16,0.16,0.16}
+  for i=1,6 do t.colspecs[i][2]=widths[i] end
+  return t
+end
+function Link(l)
+  if not l.target:match("^[%a][%w+.-]*:") and not l.target:match("^#") then
+    l.target="../../"..l.target
+  end
+  return l
+end
+function Image(i)
+  error("no image stage authorized for this report")
+end

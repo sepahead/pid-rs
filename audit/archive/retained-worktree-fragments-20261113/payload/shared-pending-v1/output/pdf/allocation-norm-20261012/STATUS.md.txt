@@ -1,0 +1,48 @@
+# Retained unqualified first draft
+
+Sepehr Mahmoudian - 12 October 2026.
+
+[First-draft PDF](report.pdf), [exact first-draft source](source-v1.md.txt), and
+[revised report status](../allocation-norm-20261012-v2/STATUS.md).
+The current [mathematical note](../../SXPID_ALLOCATION_L1_BOUND_2026_10_12.md)
+has a later cost section; it is not the exact source of this PDF.
+
+The historical source is inert text: its original relative links resolve from
+`output/`, not this snapshot folder. Its former locator was `source-v1.md`;
+the renamed file has identical bytes, not rebased or corrected mathematics.
+
+This predecessor lacks the required section named **Rust implementation and
+computational cost**. Root found the omission after the initial source reviews.
+Clean native logs and readable pages do not cure that SOURCE-completeness gap.
+The revised source adds the section and explicit aligned-vector/fixed-cost
+arithmetic premises. This draft is retained without changing its bytes,
+warning history, definitions, examples or conditional theorem status.
+
+Exact Markdown: 15,707 bytes, SHA-256
+`909cf27f344e6bfbe6e5a86c00c0c621f03d8d9cdec2d6ff7b92b750992e23a6`.
+PDF: six A4 pages, 85,232 bytes, SHA-256
+`fb2c4353bfe41cd6377f67f92022bb11473b11e7a01e83d3667ec22581f6266c`.
+[Template](publication.tex) and [filter](filter.lua) retain their original bytes.
+
+One stock Pandoc 3.10.2 / LuaHBTeX 1.18.0 (TeX Live 2024) build ran
+13:27:06-13:27:22 UTC. Six captured stages returned 0 with empty stderr.
+The first-pass rerun warning is retained; the unchanged log guard accepted its
+named intermediate policy and both strict final passes. Final logs are
+byte-identical, but final PDF bytes differ from pass two; metadata dates differ.
+Exact byte reproducibility and all difference causes are unestablished.
+
+Root inspected the whole source/body/final log/extracted text, all six pages
+at 96 dpi, math pages 2-5 at 180 dpi, nine embedded Unicode fonts, metadata
+and six URL annotations. No blocking visual loss was observed in that scope.
+Text extraction reorders some mathematical subscripts; it is not a lossless
+formula serialization. Four relative target files and the closure-ledger
+heading exist at this location; no exhaustive action/viewer assurance follows.
+
+Finite categorical MGW shared exclusions only: published component positivity
+is a premise, not re-proved. No formal theorem, certified arithmetic, Rust
+norm API, sampling calibration, task gain, priority or publication acceptance
+is granted. The PDF is untagged; accessibility, physical printing, independent
+rebuild, complete runtime, whole-set hostile checks and hosted evidence remain
+open. SxPID3 Programs A-E remain 0/5 closed.
+This retention does not establish off-device backup, mainline integration or
+branch/worktree/cloud deletion safety.

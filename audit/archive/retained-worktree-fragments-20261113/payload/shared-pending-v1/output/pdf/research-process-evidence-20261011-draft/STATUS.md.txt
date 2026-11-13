@@ -1,0 +1,60 @@
+# Process evidence report — FAILED / UNQUALIFIED DRAFT
+
+Sepehr Mahmoudian · 11 October 2026.
+
+**FAILED / UNQUALIFIED DRAFT. No accepted production, deterministic replay,
+formal-set admission or qualified-publication credit.**
+
+[Exact failed draft with the evidence diagram](FAILED_UNQUALIFIED_DRAFT.pdf)
+contains five pages. It was not restamped after failure. Preserve the PDF,
+this status and [frozen canonical source](REPORT.md.txt) together.
+
+PDF: 77355 bytes; SHA-256
+`28f4760cba505a1ea46c799ad6fe94e76856c0834a5814680f8c0510eb781338`.
+Canonical source: 11540 bytes; SHA-256
+`a7cb2d8dcf45d7094d47139434e902eec15a1b41be3256ac7c66aee3ad256181`.
+The adapter changed title presentation, eleven repository-navigation links and
+one SVG reference to its vector-PDF projection; it preserved the source prose.
+The source is the 10 October [process evidence report](../../../RESEARCH_PROCESS_EVIDENCE_2026_10_10.md),
+not the separate [reader contract](../../../RESEARCH_READER_AND_VERIFICATION_CONTRACT.md).
+The PDF's date is its source date, not its build date. Current-main URLs are
+navigation, not immutable historical provenance.
+
+## Production outcome
+
+The sole recorded attempt ran on 11 October 2026, 13:06:35–13:06:48 UTC.
+Conversion, three stock TeX passes, per-pass resource checks and PDF/auxiliary
+comparisons succeeded. The required raw-log comparison exited 1; the runner
+stopped with exit 1. Later production comparisons, diagnostics, source-after
+checks and selected-input-after checks were **not run**.
+
+The complete observed log difference was TeX's reported font-memory usage:
+21323647 versus 21323687 bytes, a difference of 40 reported bytes. Cause
+unknown. This is not a 40-byte PDF difference or a measured memory bound.
+No log filtering, tolerance, tool pin, acceptance flag or proof kernel was
+changed to make the attempt pass. Matching PDF bytes do not overrule the failure.
+
+## Separate page inspection
+
+A bounded read-only postmortem completed. The integrator viewed all five pages
+in colour and grayscale at normal size and all five at higher resolution,
+then read the complete extracted text, font roster and URL list. This is model
+inspection, not human verification. The useful diagram is actually in the PDF.
+
+No clipping or missing glyph was observed in those views. Retained concerns:
+small diagram labels (about 6.7 points at A4 width), a float interrupting one
+sentence across pages, duplicated byline and a sparse fifth page. Actual
+Helvetica figure fonts differ from the preparation fontconfig prediction.
+All listed fonts are embedded; three are Type-3 fonts. The untagged PDF has
+no complete accessibility qualification. Metadata and seventeen HTTPS
+annotations are not a complete PDF-object/action-graph security audit.
+
+Postmortem success does not complete skipped production gates, qualify the
+publication or prove the scientific claims. Complete sources, pins, recipes,
+raw failed output and inspection receipts remain in durable local custody;
+this visible projection is **not a complete independent replay packet**.
+
+The earlier [failed reader predecessor](../research-reader-contract-v2-draft/STATUS.md)
+has a different source and failure record. Neither failure is erased. Qualified
+PDFs, independent reproduction, mathematical/formal correspondence, statistical
+calibration, application gains and research-programme closure remain separate.

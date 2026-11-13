@@ -1,0 +1,412 @@
+# Constant-channel occupancy reduction: exact error and a negative result
+
+12 October 2026. Sepehr Mahmoudian.
+
+Replacing the two motion channels by constants does **not** preserve this recording's
+categorical shared-exclusions PID within 0.0033 nats. The largest error among all
+108 averaged expressions is greater than one-third nat. At least one signed-net
+atom is more than 0.01 nat larger before collapse than after it. These conclusions hold for
+every finite retained-source encoding consistent with the same motion/target table.
+
+Status: native integer counts plus model-agent-reviewed hand derivations.
+No formal proof, complete three-source PID execution, population confidence,
+held-out prediction gain, Rust refinement or qualified PDF is claimed.
+Original SxPID3 Programs A–E remain 0/5 fully closed.
+
+## 1. Research question, data and glossary
+
+Question: can we replace a low-activity channel pair by constants and avoid a
+full three-source decomposition while guaranteeing small allocation error?
+We test that reduction, not whether motion sensors should be removed from a deployed
+system. A good predictor may tolerate a change that does not preserve PID allocations.
+
+The real problem is estimating room occupancy from non-intrusive measurements.
+[UCI 864](https://archive.ics.uci.edu/dataset/864/room%2Boccupancy%2Bestimation)
+documents binary passive-infrared motion signals and a manually recorded occupant count.
+Dataset credit: Singh and Chaudhari, *Room Occupancy Estimation* (2018),
+[DOI 10.24432/C5P605](https://doi.org/10.24432/C5P605), CC BY 4.0.
+
+This study uses the finite categorical shared-exclusions measure of
+[Makkeh, Gutknecht and Wibral (MGW), source v5](https://arxiv.org/html/2002.03356v5),
+especially its event definition, averaging and component reconstruction.
+It does not use continuous Ehrlich PID or Williams–Beer I_min. The
+[entropy-bound note](SXPID_CONSTANT_CHANNEL_ENTROPY_BOUND_2026_10_12.md)
+gives the complete upper-bound proof and its published component-positivity dependency.
+The exact-error identity below is a repository-derived corollary, not a priority claim.
+
+Before formulas:
+
+| Term or symbol | Meaning here |
+|---|---|
+| Categorical law | Probabilities on fixed finite labels, with no numerical distance between labels |
+| \(N,p_{CT}\) | \(N=10129\) rows; their complete empirical motion/target law gives each row weight \(1/N\) |
+| Joint law \(p\) | Any normalized finite law of \(X,C,T\) with marginal \(p_{CT}\); zero cells and arbitrary dependence allowed |
+| \(p_C,p_T\) | Motion-tuple and target marginal laws; \(c,t\) denote their labels |
+| \(P_6,P_7\) | Physical PIR columns S6_PIR and S7_PIR, each labeled 0 or 1 |
+| \(C=(P_6,P_7)\) | Joint motion tuple, with labels 00, 01, 10, 11 |
+| \(c_0=(0,0)\) | Fixed tuple used for collapse; 00 means no reported motion, not no people |
+| \(X\) | Retained finite source; its encoder is not fixed by this count-only screen |
+| \(T\) | Original Room_Occupancy_Count target, with labels 0, 1, 2, 3; no target recoding for PID |
+| \(q\) | Collapsed law: replace \(C\) by \(c_0\) in every row, preserving the full joint law of \(X,T\) |
+| \(H(C),H(C\mid T)\) | Joint motion entropy and its target-conditioned entropy |
+| \(I(C;T)\) | Motion/target mutual information; \(H(C)-H(C\mid T)\) |
+| \(F_\beta^+,F_\beta^-,F_\beta^{\rm net}\) | Averaged informative, misinformative and signed-net cumulative at node \(\beta\) |
+| \(\Pi_\alpha^u\) | Averaged atom at node \(\alpha\), component \(u\in\{+,-,\mathrm{net}\}\) |
+| Antichain/node \(\alpha,\beta\) | Nonempty family of nonempty source-index subsets (branches), none containing another |
+| \(E_{\rm full}\) | Largest absolute \(p\)-versus-\(q\) difference among all 108 averaged expressions |
+| \(M_{\rm net}\) | Largest absolute difference among the 18 signed-net atoms only |
+| Nats, \(\ln\) | Information unit using the natural logarithm |
+
+An encoder applied to the recording's rows gives one empirical extension \(p\).
+The proof also allows finite extensions not represented by those \(N\) rows;
+only their \(C,T\) marginal is fixed. No \(X\) encoder was selected or executed.
+Entropy uses \(H(C)=-\sum_c p_C(c)\ln p_C(c)\), with \(0\ln0=0\).
+
+The three mathematical sources are source 1=\(X\), source 2=\(P_6\), source 3=\(P_7\).
+Physical column numbers 6 and 7 are not lattice indices.
+There is no Gaussian assumption or independence assumption between channels.
+Row independence is unnecessary for a deterministic comparison of finite laws.
+Population or held-out conclusions require additional sampling assumptions.
+
+Collapse retains **all** rows. Filtering to 00 rows would instead change the
+\(X,T\) marginal and answer a different question.
+
+## 2. Complete empirical evidence
+
+The native counter retained all 10129 rows, without selecting a date or split.
+The original four-class target is unchanged.
+
+| Motion tuple \(C\) | \(T=0\) | \(T=1\) | \(T=2\) | \(T=3\) | Row total |
+|---|---:|---:|---:|---:|---:|
+| 00 | 8204 | 297 | 270 | 160 | 8931 |
+| 01 | 4 | 4 | 120 | 157 | 285 |
+| 10 | 12 | 143 | 158 | 79 | 392 |
+| 11 | 8 | 15 | 200 | 298 | 521 |
+| Column total | 8228 | 459 | 748 | 694 | 10129 |
+
+There are \(1198=285+392+521\) departures from 00. There are also
+\(727=297+270+160\) no-motion rows with recorded occupants.
+No-motion is therefore not a valid replacement for the occupancy label.
+
+The [portable count projection](data/constant-channel-occupancy-20261012/counts.json)
+contains these integer counts and date context. The
+[execution and reproduction record](data/constant-channel-occupancy-20261012/STATUS.md)
+separates actual normal/optimized executions from their narrower supervision limits.
+Both original complete JSON artifacts are byte-identical. The counter did not evaluate
+logarithms, entropy, PID or confidence intervals. New scalar bounds below are hand-derived.
+
+## 3. Why the full error is exactly joint nuisance entropy
+
+A shared-exclusions event requires agreement on every source within at least one
+branch of its node: AND inside a branch, OR across branches.
+
+Take the node \(\beta_C=\{\{2,3\}\}\): **one branch containing both motion sources**.
+Its anchor agreement event is exactly \(C=C(z)\), where \(z\) is the supported
+source/target realization being evaluated. It is not an OR of the two separate
+motion equalities.
+
+Let \(p_C(c)\) and \(p_T(t)\) be marginal probabilities of tuple \(c\) and target
+\(t\); \(p(c,t)\) is their joint probability. At a supported anchor, the local
+plus value is \(-\ln p_C(c)\) and the local minus value is
+\(-\ln[p(c,t)/p_T(t)]\). Averaging with the actual joint-law weights gives
+
+\[
+F_{\beta_C}^+(p)=H(C),\qquad
+F_{\beta_C}^-(p)=H(C\mid T),\qquad
+F_{\beta_C}^{\rm net}(p)=I(C;T).
+\]
+
+Under \(q\), the complete tuple is constant. Its agreement event has probability
+one, also conditional on every supported target. Thus all three cumulatives at
+this node are zero. The plus coordinate alone gives \(E_{\rm full}\ge H(C)\).
+
+The reviewed entropy theorem bounds every averaged component/net cumulative
+and atom difference by \(H(C)\). Combining the two inequalities yields
+
+\[
+\boxed{E_{\rm full}=H(C).}
+\]
+
+This is true for every finite compatible law of \(X,C,T\), not just a special
+sharpness example. There are 18 nodes, two roles (cumulative and atom), and
+three components: \(18\cdot2\cdot3=108\) expressions.
+The full maximum adds **no new scalar beyond Shannon entropy**; its contribution
+is a guarantee about the complete MGW allocation vector.
+
+This identity does not apply to \(M_{\rm net}\) alone. For example, let the two
+motion sources copy a fair bit, \(X\) be constant and \(T\) be constant. Four
+equally weighted rows, two at motion 00 and two at 11, give \(H(C)=\ln2\).
+All net cumulatives and atoms are zero before and after collapse, but
+\(E_{\rm full}=\ln2\). Plus and minus are not target information by themselves.
+
+## 4. An exact entropy enclosure without numerical logs
+
+Let \(\varepsilon=1198/10129\) be the empirical departure probability.
+The notation \(1[\text{condition}]\) is one when the condition is true, zero otherwise.
+Let \(D=1[C\ne00]\) be the departure indicator.
+For a binary probability \(0<v<1\), define
+\(h_2(v)=-v\ln v-(1-v)\ln(1-v)\), with zero at either endpoint.
+Because \(D\) is determined by \(C\), the entropy chain rule gives
+\(H(C)=h_2(\varepsilon)+\varepsilon H(C\mid D=1)\).
+Here \(H(C\mid D=0)=0\); the other conditional law has at most three labels,
+so its entropy is at most \(\ln3\). Therefore
+
+\[
+h_2(\varepsilon)\le H(C)\le h_2(\varepsilon)+\varepsilon\ln3.
+\]
+
+Here is a short rational enclosure, with every inequality direction explicit.
+
+1. \(8\cdot1198<10129<16\cdot1198\), so
+   \(1/16<\varepsilon<1/8\) and \(\ln(1/\varepsilon)>3\ln2\).
+2. The positive log series gives \(\ln2\ge2/3\).
+   Also \(-\ln(1-\varepsilon)\ge\varepsilon\).
+   Therefore \(H(C)\ge h_2(\varepsilon)>2\varepsilon+
+   \varepsilon(1-\varepsilon)=3\varepsilon-\varepsilon^2\).
+3. Exact substitution gives
+   \[
+   3\varepsilon-\varepsilon^2
+   =34968422/102596641>1/3,
+   \]
+   since \(3\cdot34968422=104905266>102596641\).
+4. For the upper side, \(-(1-\varepsilon)\ln(1-\varepsilon)\le\varepsilon\).
+   This follows from \(\ln x\le x-1\) at \(x=1/(1-\varepsilon)\).
+   Thus \(H(C)\le\varepsilon[1+\ln(3/\varepsilon)]\).
+5. \(3/\varepsilon=30387/1198<32\), so
+   \(\ln(3/\varepsilon)<5\ln2\).
+   With \(w=1/3\), the classical positive series is
+   \[
+   \ln2=2\sum_{k=0}^{\infty}\frac{w^{2k+1}}{2k+1}.
+   \]
+   Here \(k\) is the nonnegative series index. The terms after \(k=0\)
+   sum to at most \(2w^3/[3(1-w^2)]=1/36\). Hence \(\ln2\le25/36\).
+   See [DLMF 4.6.E4](https://dlmf.nist.gov/4.6.E4) for the series.
+6. Consequently \(H(C)<96439/182322<53/100\), with
+   \(100\cdot96439=9643900<53\cdot182322=9663066\).
+
+Therefore
+
+\[
+\boxed{1/3<E_{\rm full}=H(C)<53/100\ \text{nats}.}
+\]
+
+This is not merely a failed small-error certificate: the actual full-vector
+error exceeds the illustrative tolerance \(\tau=33/10000=0.0033\) nats.
+No numerical entropy value or outward-log implementation was executed.
+
+An easier independent check uses \(-\ln x\ge1-x\):
+\(H(C)\ge1-\sum_c p_C(c)^2=22327550/102596641>1/5\).
+The sum of squared counts is 80269091; \(N^2=102596641\).
+Both derivations reject the small-error proposal.
+
+## 5. A signed-net atom must also change: every step
+
+The full norm might seem irrelevant when only signed target-information atoms
+are wanted. This recording supplies a separate net-atom obstruction.
+
+Define two **proof-only** binary variables:
+\(A=1[C\ne00]\) indicates motion, \(B=1[T\ne0]\) indicates recorded presence.
+They do not replace the PID target \(T\).
+Their table is \((A=0,B=0):8204\), \((0,1):727\),
+\((1,0):24\), \((1,1):1174\).
+
+Let \(a=p(A=1)=1198/N\), \(b=p(B=1)=1901/N\), and
+\(d=p(A=1,B=1)-ab\), the binary covariance. Then
+
+\[
+d=\frac{1174N-1198\cdot1901}{N^2}
+ =\frac{9614048}{102596641}>\frac9{100},
+\]
+because \(961404800>923369769\). Also \(0<a<1/8\).
+
+### Grouping cannot increase relative entropy
+
+For positive finite laws \(L,K\), define relative entropy
+\(D_{\rm KL}(L\Vert K)=\sum_i L_i\ln(L_i/K_i)\), where \(i\) labels cells.
+For a nonempty cell group \(G\), write \(L_G=\sum_{i\in G}L_i\),
+\(K_G=\sum_{i\in G}K_i\), and normalized weights \(w_i=K_i/K_G\).
+Convexity of \(y\ln y\) gives
+
+\[
+\sum_{i\in G}L_i\ln(L_i/K_i)
+=K_G\sum_{i\in G}w_i (L_i/K_i)\ln(L_i/K_i)
+\ge L_G\ln(L_G/K_G).
+\]
+
+The variable \(y>0\) is the argument of the convex function.
+Its second derivative is \(1/y>0\), establishing convexity.
+Sum over groups. Apply this with \(L=p_{CT}\), \(K=p_Cp_T\), grouped by
+\(A,B\). All 16 cells here are positive. The product law groups to \(p_Ap_B\),
+so \(I(C;T)\ge I(A;B)\). These are classical log-sum/data-processing facts;
+the argument above states the needed positive-law case.
+
+### Binary curvature yields a rational lower bound
+
+For fixed \(0<b<1\), define the binary relative entropy
+
+\[
+f_b(x)=x\ln(x/b)+(1-x)\ln[(1-x)/(1-b)],\quad 0<x<1.
+\]
+
+Here \(x\) is a binary probability, not the retained source \(X\).
+Differentiate: \(f_b(b)=f_b'(b)=0\) and
+\(f_b''(x)=1/[x(1-x)]\ge4\), because \(x(1-x)\le1/4\).
+The function \(f_b(x)-2(x-b)^2\) is convex and has value and derivative zero
+at \(b\); hence \(f_b(x)\ge2(x-b)^2\) on **both** sides of \(b\).
+
+Let \(r_1=p(B=1\mid A=1)=1174/1198=b+d/a\) and
+\(r_0=p(B=1\mid A=0)=727/8931=b-d/(1-a)\).
+Both are strictly between zero and one. Expanding the binary joint relative
+entropy by its two \(A\) rows gives
+
+\[
+\begin{aligned}
+I(C;T)&\ge I(A;B)=a f_b(r_1)+(1-a)f_b(r_0)\\
+&\ge2d^2[1/a+1/(1-a)]
+ =\frac{2d^2}{a(1-a)}.
+\end{aligned}
+\]
+
+Since \(0<a<1/8\),
+\(7/64-a(1-a)=(1/8-a)(7/8-a)>0\).
+Therefore
+
+\[
+\boxed{I(C;T)>\frac{128}{7}(9/100)^2=\frac{648}{4375}\ \text{nats}.}
+\]
+
+This is a lower bound, not the exact MI or an optimal bound.
+A different diagonal-group argument gives the weaker \(I(C;T)>81/1250\);
+a normalized rational-tilt argument gives \(I(C;T)>1/40\).
+They share the same table, not independent datasets.
+No log was numerically evaluated and no statistical independence test was run.
+
+### Thirteen atoms reconstruct the nuisance cumulative
+
+The MGW order is \(\alpha\preceq\beta\) if every branch of \(\beta\)
+contains some branch of \(\alpha\). Reconstruction is
+\(F_\beta^{\rm net}=\sum_{\alpha\preceq\beta}\Pi_\alpha^{\rm net}\).
+
+For \(\beta_C=\{\{2,3\}\}\), failure of this condition means every branch
+of \(\alpha\) contains source 1. There are precisely five such nodes:
+\(\{\{1\}\}\), \(\{\{1,2\}\}\), \(\{\{1,3\}\}\),
+\(\{\{1,2,3\}\}\), and \(\{\{1,2\},\{1,3\}\}\).
+Thus 13 of the 18 nodes are below or equal to \(\beta_C\).
+The [complete keyed carrier](../claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md#the-complete-18-node-carrier)
+also permits a direct check; no implementation array order is assumed.
+
+Under \(q\), a branch omitting source 1 is certain; if all branches contain
+source 1, their OR event is just \(X=x\). Thus the cumulative vector is zero
+unless \(\{\{1\}\}\preceq\beta\), when it is \(I(X;T)\).
+This is exactly the reconstruction column for the retained-source atom
+\(\{\{1\}\}\); unique inversion leaves every other atom zero.
+The retained node is outside these 13. Subtracting the two reconstruction identities,
+
+\[
+\sum_{\alpha\preceq\beta_C}
+ [\Pi_\alpha^{\rm net}(p)-\Pi_\alpha^{\rm net}(q)]=I(C;T).
+\]
+
+At least one signed summand is at least the sum divided by 13.
+Each \(q\) summand is zero. It follows that, for some node in this set,
+
+\[
+\boxed{\Pi_\alpha^{\rm net}(p)-\Pi_\alpha^{\rm net}(q)
+ >\frac{648}{56875}>\frac1{100}\ \text{nat}.}
+\]
+
+The last comparison is exact: \(64800>56875\).
+Negative net atoms are allowed; none was clamped. Positivity of every signed atom
+is not a premise. This existence proof holds for **any** finite \(X\) compatible
+with the same empirical \(C,T\) table. It does not identify the failing node or
+calculate the complete three-source PID.
+
+## 6. Prediction loss is a different question
+
+The nuisance-node discrepancy is \(I(C;T)\).
+The loss of total source MI is instead
+\(I(X,C;T)-I(X;T)=I(C;T\mid X)\).
+These need not agree. A mathematical extension \(X=T\) makes the latter zero,
+while the nuisance-node and atom obstructions above remain.
+This is a counterexample to a prediction-loss inference, **not** a suggestion to
+leak the target into a deployable feature.
+
+Two simple in-record comparators show why direct task evaluation matters:
+
+- Predict presence iff any motion is reported: 9378/10129 binary labels match,
+  versus 8228/10129 for always-unoccupied. The motion rule misses 727/1901
+  occupied rows and gives 24 false positives among 8228 unoccupied rows.
+- For the original four-class target, table-fitted modal predictions
+  \(00\mapsto0,01\mapsto3,10\mapsto2,11\mapsto3\) match 8817/10129 labels.
+  Always predicting zero matches 8228/10129.
+
+These are descriptive same-recording comparisons, not held-out gains, calibration
+or state-of-the-art comparisons. The modal rule uses evaluation labels.
+Hard zero/one forecasts have infinite log loss on their errors, so their
+accuracy must not be described as finite proper-log-loss performance.
+
+The recording has seven calendar-date groups, spanning 2017/12/22 to 2018/01/11.
+Observed intervals range from 30 to 1318547 seconds; timezone is unknown.
+The provider's nominal cadence/four-day description does not establish IID rows
+or explain these date groups. Causes remain unadjudicated; no rows were trimmed.
+The fixed-IID zero-departure procedure in the entropy note must abstain here:
+1198 departures occur, and IID is not established.
+
+[UCI 357](https://archive.ics.uci.edu/dataset/357/occupancy%2Bdetection)
+has no matching native PIR pair. It is an applicability negative, not a second
+execution of this experiment. A separately fitted categorical encoding would
+define a different study. Neural/imaging, embodied and world-model applications
+still need justified inputs, multiple datasets, simple comparators and task evidence.
+
+## 7. Rust implementation and computational cost
+
+No Rust API, kernel, feature or tolerance changed. The default
+stable categorical discrete_sxpid2/3/n APIs in
+[the Rust source](../crates/pid-core/src/sxpid.rs) implement empirical MGW PID
+for two through four sources. No public collapse-norm helper, certified entropy
+engine or learner is asserted here. See the
+[engineering baseline](../RUST_IMPLEMENTATION_AND_COST.md).
+
+The reference counter scans \(N\) rows of 19 fields, counting a fixed 4-by-4 table.
+Parsing timestamps, hashing/capturing input twice and serializing output add work.
+Its 4 MiB raw-input and 16 KiB output caps are source admission checks, not hard
+OS memory/deadline guarantees. Raw, decoded and serialized buffers coexist;
+memory scales with input bytes plus fixed count/date records.
+Exact rational comparisons require integer bit costs growing with \(\log N\).
+
+For general nuisance tuple width \(d_C\) and \(k_C\) occupied labels, an ordered
+count map costs \(O(Nd_C\log(k_C+1))\) comparisons and \(O(k_Cd_C)\) label
+storage plus count storage. This assumes bounded-size label comparisons;
+arbitrary labels add their encoding/bit cost. These are source-level costs, not timings.
+The full-vector maximum needs only nuisance counts, not the complete PID lattice.
+The net obstruction needs the 16 \(C,T\) counts; it still does not recover all atoms.
+
+Full PID, preprocessing, held-out model inference, training and resampling have
+additional costs and their own resource/cancellation contracts. No latency,
+RSS benchmark, real-time deployment or formal executable refinement is reported.
+Python is used for reference counting, not a production runtime replacement.
+
+## 8. Review, corrections and remaining evidence
+
+Three model-agent lenses separately assessed vector scope, exact entropy and
+the MI lower bound. Initial artifacts were frozen before their stated exposure;
+later root hints and post-freeze critique were recorded. The root checked the
+actual tables, source, carrier, proof steps and integer arithmetic.
+The root derivation/data analysis is exploratory, not a repaired preregistration
+or candidate-inaccessible confirmation. Common paper/event/count dependencies
+remain; model agreement is neither a kernel proof nor independent human review.
+
+Earlier private drafts described only certificate failure and suggested actual
+PID error could be zero. That is false for the full 108-expression norm and false
+for preserving all 18 net atoms on this table. The preimages are retained with
+a rejection disposition. Constant-target zero-net examples remain valid;
+they cannot be transferred to the full-component norm.
+
+The original tolerances, flags, kernels and control rosters are unchanged.
+Stock formal qualification, exact theorem encoding, complete executable/Rust
+correspondence, population coverage, matched multi-dataset task tests,
+qualified PDF and accepted-mainline publication remain open.
+
+Suggested citation: Mahmoudian, S. (2026), *Constant-channel occupancy reduction:
+exact error and a negative result*, pid-rs; include the exact repository commit
+or release. Cite the dataset and MGW source separately; see [CITATION.cff](../CITATION.cff).

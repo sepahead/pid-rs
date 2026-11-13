@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="800" viewBox="0 0 1100 800" role="img" aria-labelledby="title desc">
+  <title id="title">Four agreement cells and the masses entering a two-source component atom</title>
+  <desc id="desc">Two binary detector values are compared with anchor zero zero. Full agreement has mass u, exactly source one agreeing has mass a, exactly source two agreeing has mass b, and neither agreeing has the remaining mass. At the top PID node only full agreement is covered. The two singleton patterns are maximal uncovered patterns. Adding these cells produces masses u, u+a, u+b and u+a+b. Counts eighty, one, one, eighteen give log of 6561 over 6560. Scaling u, a and b all to epsilon instead gives log of four thirds even as epsilon tends to zero. These are assigned laws; a constant target makes informative and misinformative components equal and their net zero.</desc>
+  <defs>
+    <pattern id="uncovered" width="12" height="12" patternUnits="userSpaceOnUse">
+      <rect width="12" height="12" fill="#D2E0E2"/>
+      <path d="M-3 3L3-3M0 12L12 0M9 15L15 9" stroke="#1F3F60" stroke-width="1" opacity="0.24"/>
+    </pattern>
+  </defs>
+  <rect width="1100" height="800" fill="#F7F3E9"/>
+  <g fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif">
+    <text x="36" y="46" font-size="30" font-weight="700">Which probability cells enter this atom?</text>
+    <text x="36" y="82" font-size="21">Two binary detectors · anchor (0,0) · top event: both agree</text>
+    <text x="36" y="116" font-size="19">Each cell is one agreement pattern. Areas are categorical cells, not probability-scaled areas.</text>
+
+    <text x="92" y="165" font-size="20" font-weight="700">X₁ agrees: 0</text>
+    <text x="317" y="165" font-size="20" font-weight="700">X₁ differs: 1</text>
+    <text transform="translate(34 332) rotate(-90)" font-size="20">X₂ agrees: 0</text>
+    <text transform="translate(34 563) rotate(-90)" font-size="20">X₂ differs: 1</text>
+
+    <rect x="66" y="184" width="220" height="198" fill="#1F6968" stroke="#2C3E50" stroke-width="2"/>
+    <g fill="#FFFFFF">
+      <text x="86" y="220" font-size="22" font-weight="700">Covered: B = {1,2}</text>
+      <text x="86" y="259" font-size="22">Detector row (0,0)</text>
+      <text x="86" y="300" font-size="26" font-weight="700">q_N = u</text>
+      <text x="86" y="343" font-size="21">Example: 80 / 100</text>
+    </g>
+
+    <rect x="286" y="184" width="220" height="198" fill="url(#uncovered)" stroke="#2C3E50" stroke-width="2"/>
+    <text x="305" y="219" font-size="22" font-weight="700">Uncovered: B = {2}</text>
+    <text x="305" y="257" font-size="22">Detector row (1,0)</text>
+    <text x="305" y="299" font-size="26" font-weight="700">q₂ = b</text>
+    <text x="305" y="340" font-size="21">Example: 1 / 100</text>
+    <text x="305" y="368" font-size="18">MAXIMAL uncovered</text>
+
+    <rect x="66" y="382" width="220" height="198" fill="url(#uncovered)" stroke="#2C3E50" stroke-width="2"/>
+    <text x="86" y="418" font-size="22" font-weight="700">Uncovered: B = {1}</text>
+    <text x="86" y="456" font-size="22">Detector row (0,1)</text>
+    <text x="86" y="498" font-size="26" font-weight="700">q₁ = a</text>
+    <text x="86" y="538" font-size="21">Example: 1 / 100</text>
+    <text x="86" y="566" font-size="18">MAXIMAL uncovered</text>
+
+    <rect x="286" y="382" width="220" height="198" fill="#E9E8E2" stroke="#2C3E50" stroke-width="2"/>
+    <text x="305" y="418" font-size="22" font-weight="700">Uncovered: B = ∅</text>
+    <text x="305" y="456" font-size="22">Detector row (1,1)</text>
+    <text x="305" y="498" font-size="22">q∅ = 1 − u − a − b</text>
+    <text x="305" y="538" font-size="21">Example: 18 / 100</text>
+    <text x="305" y="566" font-size="18">NOT maximal</text>
+
+    <text x="551" y="171" font-size="23" font-weight="700">Only these additions enter the row</text>
+    <rect x="548" y="186" width="516" height="251" rx="6" fill="#FFFFFF" stroke="#1F3F60" stroke-width="1.5"/>
+    <text x="569" y="222" font-size="20" font-weight="700">Pattern cells included</text>
+    <text x="944" y="222" font-size="20" font-weight="700">Mass</text>
+    <path d="M566 235H1044" stroke="#D2E0E2" stroke-width="2"/>
+    <text x="569" y="271" font-size="21">{1,2}</text>
+    <text x="944" y="271" font-size="21">u</text>
+    <text x="569" y="313" font-size="21">{1,2} plus {1}</text>
+    <text x="944" y="313" font-size="21">u + a</text>
+    <text x="569" y="355" font-size="21">{1,2} plus {2}</text>
+    <text x="944" y="355" font-size="21">u + b</text>
+    <text x="569" y="397" font-size="21">{1,2} plus {1} plus {2}</text>
+    <text x="944" y="397" font-size="21">u + a + b</text>
+    <text x="551" y="475" font-size="23" font-weight="700">The component is a log ratio</text>
+    <text x="569" y="517" font-size="24">π = ln[ (u+a)(u+b) / (u(u+a+b)) ]</text>
+    <text x="569" y="553" font-size="23">   = ln[ 1 + ab / (u(u+a+b)) ]</text>
+    <text x="551" y="592" font-size="19">The empty cell fills out the law, but not this row.</text>
+
+    <rect x="36" y="614" width="492" height="108" rx="5" fill="#FFFFFF" stroke="#1F6968" stroke-width="1.5"/>
+    <text x="53" y="645" font-size="21" font-weight="700">Small relative increments: assigned 100 rows</text>
+    <text x="53" y="676" font-size="22">u = 80/100, a = b = 1/100</text>
+    <text x="53" y="706" font-size="22">π = ln(6561/6560); a/u = b/u = 1/80</text>
+
+    <rect x="548" y="614" width="516" height="108" rx="5" fill="#FFFFFF" stroke="#743E37" stroke-width="1.5"/>
+    <text x="565" y="645" font-size="21" font-weight="700">Absolute rarity alone: 0 &lt; ε &lt; 1/3</text>
+    <text x="565" y="676" font-size="22">u = a = b = ε; q∅ = 1 − 3ε</text>
+    <text x="565" y="706" font-size="22">π = ln(4/3); a/u = b/u = 1 even as ε → 0</text>
+
+    <text x="36" y="759" font-size="20" font-weight="700">A constant target makes π⁺ = π⁻: the signed net is zero in both examples.</text>
+    <text x="36" y="788" font-size="18">Finite categorical component arithmetic in nats · assigned laws · no task-benefit or population-calibration claim</text>
+  </g>
+</svg>
