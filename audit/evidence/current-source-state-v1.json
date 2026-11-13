@@ -160,8 +160,8 @@
       {
         "git_mode": "100644",
         "path": ".gitattributes",
-        "sha256": "77858cac2974fcd240e589f3b176eacaab3e583660e1ffa630f04a5cab0ae758",
-        "size_bytes": 2943
+        "sha256": "b209925862c3c64efe1a3ab0a051051639e1c81729f513b466a46f4a7a4abab4",
+        "size_bytes": 3361
       },
       {
         "git_mode": "100644",
@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "20f1fafe97bbc56e55578123f06f7716c016ff9983744abbd72a9889e5c138a6",
-        "size_bytes": 334679
+        "sha256": "e975309ae06033f5b0b0936dde20cdd98977da34e96c8b134732b547764dd9eb",
+        "size_bytes": 335126
       },
       {
         "git_mode": "100644",
@@ -562,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "d385b29f130f9905a74516d97e3263e90fe3a6d30760dcbfcd8a4344a2ec024c",
-        "size_bytes": 46359
+        "sha256": "d2ae48e1ffd8606807c29f15c951568073a59e231a28fefde3f723c887573b10",
+        "size_bytes": 47167
       },
       {
         "git_mode": "100644",
@@ -586,8 +586,8 @@
       {
         "git_mode": "100644",
         "path": "THIRD_PARTY_NOTICES.md",
-        "sha256": "ae89a35053d73bef13cd28cfcc1249589ff1507e28e3dc417bf9702152a1dbd7",
-        "size_bytes": 8140
+        "sha256": "7fb347799caa8ae9d507fa23187b28cb06e352cb2b596d98c4f0816841fd512b",
+        "size_bytes": 8810
       },
       {
         "git_mode": "100644",
@@ -1200,6 +1200,180 @@
         "path": "audit/archive/exact-log-pid2-branches-20260919/recovery.md",
         "sha256": "fcd0259890b1ce1a0febce8e777201daff380f8461b71dcc2547691bc0998d05",
         "size_bytes": 3123
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/DISPOSITION.md",
+        "sha256": "58f048c8e71eac890ddf3c7472f6cfe49d6f5621245f7598f216cfd292d2ac70",
+        "size_bytes": 14099
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/FONT-LICENSE-latin-modern-math.txt",
+        "sha256": "2bd69affc3da00715116f713f57eab9707e96daf3562ad0215987b15b9c16f73",
+        "size_bytes": 1456
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/FONT-LICENSE-latin-modern.txt",
+        "sha256": "49ea6cb9257bbee0a3979c48a774cd221550ac1c20c95549efe45fc99cc18050",
+        "size_bytes": 1377
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/FONT-LICENSE-source-sans.txt",
+        "sha256": "4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9",
+        "size_bytes": 4529
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/INDEX.json",
+        "sha256": "47a19bad81dbd51c44b6af428f9711fcfee98c687c0752dbb0c1b75ef9f84ac1",
+        "size_bytes": 66140
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/figures-two-commits.bundle",
+        "sha256": "aad77bc6127a913b47bcd2e01ff41dc652499b31686ac3e97c25dfb6e03689c3",
+        "size_bytes": 1511526
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/predecessor-only/independent-label.svg.txt",
+        "sha256": "1c379c60d12e65a1474f813dc15a8654e2ec8b1d33ddec9b464cbf335b80da4e",
+        "size_bytes": 127497
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/predecessor-only/pipeline-and-refusals.svg.txt",
+        "sha256": "215dbb3529aba2e921f65533a233eb13e0c6e1a9e7cac5de5a86ae4865778e0a",
+        "size_bytes": 96476
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/predecessor-only/same-total-different-structure.svg.txt",
+        "sha256": "4d7e584edbf9de9d22c6861052bd1273b10733b3adfd33fc74cefecfa8619ff7",
+        "size_bytes": 101939
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/predecessor-only/what-shared-exclusions-is.svg.txt",
+        "sha256": "ced07223b6feee3dcbdf1ad03e653d0313843c44012b5e0bfcc835a08b0feff1",
+        "size_bytes": 86260
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/predecessor-only/worked-and-gate.svg.txt",
+        "sha256": "2c1553b4ab117a28e2d3b22fcacb5a58c3262942782c2a9649c7d213687888cf",
+        "size_bytes": 115939
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/continuity-routes.svg.txt",
+        "sha256": "69304d46eea9b335bcac0adbd9df38826911a6fcb284b16c300fd91ce9936da6",
+        "size_bytes": 114399
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/dependency-coloring-concentration.svg.txt",
+        "sha256": "da706e9b68e96ac6643cdcdb704e2192d07c0612aebc9932bcae15e565cac77e",
+        "size_bytes": 119275
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/event-to-atom-bounds.svg.txt",
+        "sha256": "34ebe58409a9f13fec69c110af6c1cd63a74be5c7a8d87e632159ed6f92bbbef",
+        "size_bytes": 358578
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/exact-accumulation-order-invariance.svg.txt",
+        "sha256": "21690f6770d6d6950a923b1c6e5ef70811478bd4783b018d6eef4b94502063d2",
+        "size_bytes": 94356
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/exact-atom-sign.svg.txt",
+        "sha256": "d594572b119d79a6824b2bdfbd2c61d0c92048f8b4beec4c0e3b2f001dea15cb",
+        "size_bytes": 96779
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/independent-label.svg.txt",
+        "sha256": "e8351c7e714e01a1900631a8832c04532582ed740d78e23fcac3b788886565ed",
+        "size_bytes": 127139
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/ksg-neighbor-geometry.svg.txt",
+        "sha256": "c65de28655f933ab806b7d6ab6266a871023244ee4a39dd64cd6d36addec7a39",
+        "size_bytes": 55517
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/ksg-term-exact-rational.svg.txt",
+        "sha256": "cc3e2fd7ebbd43bc34744e517f1b0fa529230ef0c7171cb41d4c7da4e6af381d",
+        "size_bytes": 109886
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/order-reverses-implication.svg.txt",
+        "sha256": "6d46b0cef06bcc54c50d8d64bd3df1ddf3985f2101347e3650dae6a718dd0d79",
+        "size_bytes": 65765
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/pipeline-and-refusals.svg.txt",
+        "sha256": "f1c0e492eba24de5df4ccf39f9655b91b66258dcfae343dee6be8c79d5e09149",
+        "size_bytes": 96512
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/plug-in-convergence.svg.txt",
+        "sha256": "b1dc836bdece7f93cbddbbf0e2d710a5662531440a50f11504ca9638c4a9ee8b",
+        "size_bytes": 126852
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/same-synergy-different-added-information.svg.txt",
+        "sha256": "02b09be0f50e474d90730106ef5f1b827c0bf5274442b097af2877968c454b07",
+        "size_bytes": 59930
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/same-total-different-structure.svg.txt",
+        "sha256": "9fe39b647ed36cab05101c31f06da4d33acd1992eed0062ac933a084d4b18a68",
+        "size_bytes": 101655
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/theorems-on-a-real-population.svg.txt",
+        "sha256": "63d4ae045ea7b24b68e1b34a18fd8ecc42fa32b7c967b2b9a12a26a5650f2a47",
+        "size_bytes": 94796
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/third-source-budget.svg.txt",
+        "sha256": "80496dfa26dd4bde20125706d39acee94f46354e8ff45f5177b8495cd84e74b6",
+        "size_bytes": 121788
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/two-source-lattice-events.svg.txt",
+        "sha256": "8d417a61b8fe2a761e7e4865538f5efe5e1d20679cb224d99a0b9bcd1fa5b5e2",
+        "size_bytes": 72487
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/what-shared-exclusions-is.svg.txt",
+        "sha256": "f83d8448eb470dd349599a928a10d5101666111368d4b85fb0b0c998031e6997",
+        "size_bytes": 85774
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/worked-and-gate.svg.txt",
+        "sha256": "192c99ad65c34a76a534e6096ef7a348bf5494bd4fba0f19bdb81449c928e16b",
+        "size_bytes": 115942
       },
       {
         "git_mode": "100644",
@@ -32812,7 +32986,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "bb1504dfd5c65127c15b7917baa7c6429cd9262c77f8c7287751a1c989116e8a",
+        "sha256": "9361e32ab72298504364b217f68c6717917009f6395a44bb8138a3517e683b70",
         "size_bytes": 139663
       },
       {
@@ -33782,8 +33956,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "bec3b0f4d08a3e5be136714cccdff68cd3536af3595923663851e47cf739fa19",
-    "entry_count": 5606
+    "entries_sha256": "31aa77126b6c0a9a50a1e8c5a23c14cbf7402f42220c50e1d9292839e9c2bdee",
+    "entry_count": 5635
   },
   "subprojections": [
     {
@@ -33811,7 +33985,7 @@
       ]
     },
     {
-      "entries_sha256": "f194b932d01e1445fe5addd568fd44afe16d1abb7899e4c7423ebcf4725f4f29",
+      "entries_sha256": "0bee3a9ed20c0ced4540038f4a9d7c193633569e27d4a4300b24d1798e2292e9",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

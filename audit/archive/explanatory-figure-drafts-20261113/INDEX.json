@@ -1,0 +1,1611 @@
+{
+  "format": 1,
+  "status": "historical-document-custody-only",
+  "source_commits": [
+    "312554705d43aa15671e666d17070534a9d190b0",
+    "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+  ],
+  "distinct_document_images": 23,
+  "tip_document_count": 18,
+  "predecessor_only_count": 5,
+  "payload_bytes": 2545541,
+  "payload": [
+    {
+      "path": "assets/figures/continuity-routes.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "b4f4a0476a1a96a5a125cb728bc77572f4b13521",
+      "bytes": 114399,
+      "sha256": "69304d46eea9b335bcac0adbd9df38826911a6fcb284b16c300fd91ce9936da6",
+      "archive_path": "payload/tip/continuity-routes.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/dependency-coloring-concentration.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "5d88690f04993fdfa0b3a076d1ff4aeb99d3ff18",
+      "bytes": 119275,
+      "sha256": "da706e9b68e96ac6643cdcdb704e2192d07c0612aebc9932bcae15e565cac77e",
+      "archive_path": "payload/tip/dependency-coloring-concentration.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/event-to-atom-bounds.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "2838e9aa4d67e5bf09c0dc2130eac600723433dc",
+      "bytes": 358578,
+      "sha256": "34ebe58409a9f13fec69c110af6c1cd63a74be5c7a8d87e632159ed6f92bbbef",
+      "archive_path": "payload/tip/event-to-atom-bounds.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/exact-accumulation-order-invariance.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "e984eedb446c3281b66089a766c4c05cd8b06d0f",
+      "bytes": 94356,
+      "sha256": "21690f6770d6d6950a923b1c6e5ef70811478bd4783b018d6eef4b94502063d2",
+      "archive_path": "payload/tip/exact-accumulation-order-invariance.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/exact-atom-sign.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "db4bfcb741237221996f6743a9b6d7ff197106a5",
+      "bytes": 96779,
+      "sha256": "d594572b119d79a6824b2bdfbd2c61d0c92048f8b4beec4c0e3b2f001dea15cb",
+      "archive_path": "payload/tip/exact-atom-sign.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/independent-label.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "dda2102e51c489fdda41a98faadca0e06c394e30",
+      "bytes": 127139,
+      "sha256": "e8351c7e714e01a1900631a8832c04532582ed740d78e23fcac3b788886565ed",
+      "archive_path": "payload/tip/independent-label.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/ksg-neighbor-geometry.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "2bf8d4e8c291fcd3917e3bafeb50b2053d2bdfce",
+      "bytes": 55517,
+      "sha256": "c65de28655f933ab806b7d6ab6266a871023244ee4a39dd64cd6d36addec7a39",
+      "archive_path": "payload/tip/ksg-neighbor-geometry.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/ksg-term-exact-rational.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "ad0584aa882aa06f9985ccad1de57d622e659d86",
+      "bytes": 109886,
+      "sha256": "cc3e2fd7ebbd43bc34744e517f1b0fa529230ef0c7171cb41d4c7da4e6af381d",
+      "archive_path": "payload/tip/ksg-term-exact-rational.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/order-reverses-implication.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "94b5a11d600cd1aeb68c55c4776d731a07371070",
+      "bytes": 65765,
+      "sha256": "6d46b0cef06bcc54c50d8d64bd3df1ddf3985f2101347e3650dae6a718dd0d79",
+      "archive_path": "payload/tip/order-reverses-implication.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/pipeline-and-refusals.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "2d2d1b6b010b89c7a93e110513895ca547e9c6c6",
+      "bytes": 96512,
+      "sha256": "f1c0e492eba24de5df4ccf39f9655b91b66258dcfae343dee6be8c79d5e09149",
+      "archive_path": "payload/tip/pipeline-and-refusals.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/plug-in-convergence.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "2a0b2d68f0eebb54baea24facc3f1aaaa4f9c717",
+      "bytes": 126852,
+      "sha256": "b1dc836bdece7f93cbddbbf0e2d710a5662531440a50f11504ca9638c4a9ee8b",
+      "archive_path": "payload/tip/plug-in-convergence.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/same-synergy-different-added-information.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "42802c2ab621433b75c26b03248d0025993f40d0",
+      "bytes": 59930,
+      "sha256": "02b09be0f50e474d90730106ef5f1b827c0bf5274442b097af2877968c454b07",
+      "archive_path": "payload/tip/same-synergy-different-added-information.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/same-total-different-structure.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "219c76c23e3ab15ba739c6a99fed419fa3ac8bd6",
+      "bytes": 101655,
+      "sha256": "9fe39b647ed36cab05101c31f06da4d33acd1992eed0062ac933a084d4b18a68",
+      "archive_path": "payload/tip/same-total-different-structure.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/theorems-on-a-real-population.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "5158c1947c42676617ab753711dea6dc3bb1218e",
+      "bytes": 94796,
+      "sha256": "63d4ae045ea7b24b68e1b34a18fd8ecc42fa32b7c967b2b9a12a26a5650f2a47",
+      "archive_path": "payload/tip/theorems-on-a-real-population.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/third-source-budget.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "48921b06efb4959acdb96cd806679e5b6f12ebf4",
+      "bytes": 121788,
+      "sha256": "80496dfa26dd4bde20125706d39acee94f46354e8ff45f5177b8495cd84e74b6",
+      "archive_path": "payload/tip/third-source-budget.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/two-source-lattice-events.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "828f9c9cf058a3887ef026d5ce3b194c8b8fc3a3",
+      "bytes": 72487,
+      "sha256": "8d417a61b8fe2a761e7e4865538f5efe5e1d20679cb224d99a0b9bcd1fa5b5e2",
+      "archive_path": "payload/tip/two-source-lattice-events.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0",
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/what-shared-exclusions-is.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "52d59f897347a68d260aade3ed5826a7c5403c34",
+      "bytes": 85774,
+      "sha256": "f83d8448eb470dd349599a928a10d5101666111368d4b85fb0b0c998031e6997",
+      "archive_path": "payload/tip/what-shared-exclusions-is.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/worked-and-gate.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "7b828d246ee9710995ace3d78e7561ce46569fd0",
+      "bytes": 115942,
+      "sha256": "192c99ad65c34a76a534e6096ef7a348bf5494bd4fba0f19bdb81449c928e16b",
+      "archive_path": "payload/tip/worked-and-gate.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+      ]
+    },
+    {
+      "path": "assets/figures/independent-label.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "a5ce9897dc2d6efb46f58c79f08190c75da704df",
+      "bytes": 127497,
+      "sha256": "1c379c60d12e65a1474f813dc15a8654e2ec8b1d33ddec9b464cbf335b80da4e",
+      "archive_path": "payload/predecessor-only/independent-label.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0"
+      ]
+    },
+    {
+      "path": "assets/figures/pipeline-and-refusals.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "6b2d69065e1977417b2a131fb270216edfbca863",
+      "bytes": 96476,
+      "sha256": "215dbb3529aba2e921f65533a233eb13e0c6e1a9e7cac5de5a86ae4865778e0a",
+      "archive_path": "payload/predecessor-only/pipeline-and-refusals.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0"
+      ]
+    },
+    {
+      "path": "assets/figures/same-total-different-structure.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "8f2e0bc04d5053540280a2cb56ed3f34199a5301",
+      "bytes": 101939,
+      "sha256": "4d7e584edbf9de9d22c6861052bd1273b10733b3adfd33fc74cefecfa8619ff7",
+      "archive_path": "payload/predecessor-only/same-total-different-structure.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0"
+      ]
+    },
+    {
+      "path": "assets/figures/what-shared-exclusions-is.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "c806d0c55be44bd9761fb30c52fb105f9b1babf6",
+      "bytes": 86260,
+      "sha256": "ced07223b6feee3dcbdf1ad03e653d0313843c44012b5e0bfcc835a08b0feff1",
+      "archive_path": "payload/predecessor-only/what-shared-exclusions-is.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0"
+      ]
+    },
+    {
+      "path": "assets/figures/worked-and-gate.svg",
+      "git_mode": "100644",
+      "git_blob_oid": "9cfe369fc8fbda96629f1f0b7753b6b587736a15",
+      "bytes": 115939,
+      "sha256": "2c1553b4ab117a28e2d3b22fcacb5a58c3262942782c2a9649c7d213687888cf",
+      "archive_path": "payload/predecessor-only/worked-and-gate.svg.txt",
+      "archive_git_mode": "100644",
+      "source_commits": [
+        "312554705d43aa15671e666d17070534a9d190b0"
+      ]
+    }
+  ],
+  "license_copies": [
+    {
+      "archive_path": "FONT-LICENSE-source-sans.txt",
+      "source_path": "audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt",
+      "bytes": 4529,
+      "sha256": "4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9",
+      "git_mode": "100644"
+    },
+    {
+      "archive_path": "FONT-LICENSE-latin-modern.txt",
+      "source_path": "audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt",
+      "bytes": 1377,
+      "sha256": "49ea6cb9257bbee0a3979c48a774cd221550ac1c20c95549efe45fc99cc18050",
+      "git_mode": "100644"
+    },
+    {
+      "archive_path": "FONT-LICENSE-latin-modern-math.txt",
+      "source_path": "audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/GUST-FONT-LICENSE.txt",
+      "bytes": 1456,
+      "sha256": "2bd69affc3da00715116f713f57eab9707e96daf3562ad0215987b15b9c16f73",
+      "git_mode": "100644"
+    }
+  ],
+  "bundle": {
+    "archive_path": "figures-two-commits.bundle",
+    "bytes": 1511526,
+    "sha256": "aad77bc6127a913b47bcd2e01ff41dc652499b31686ac3e97c25dfb6e03689c3",
+    "git_mode": "100644",
+    "prerequisite": "1f041a37086cda71bc65a860d1795613c7cd1003",
+    "heads": [
+      "c18ed486ef20e2d0a77c1174d00ebb42076dd09a refs/remotes/github/figures/explanatory-svgs"
+    ],
+    "included_unique_commits": [
+      "312554705d43aa15671e666d17070534a9d190b0",
+      "c18ed486ef20e2d0a77c1174d00ebb42076dd09a"
+    ],
+    "accepted_base_is_ancestor_of_observed_main": "63fddf76ddf255225d456498d101da281082692c",
+    "recovery": "isolated bare repository explicitly shallow at accepted base; both full recursive trees, raw commit objects and all23SVGbyteimages compared offline",
+    "nonclaims": [
+      "full-history clone",
+      "artifact authenticity",
+      "scientific adoption"
+    ]
+  },
+  "nonclaims": [
+    "current scientific adoption",
+    "original generator or plot input custody",
+    "complete history",
+    "formal proof",
+    "estimator calibration",
+    "deployment value",
+    "research program closure"
+  ],
+  "commits": [
+    {
+      "bytes": 285,
+      "message": "Document gradient-tail and finite fault-model controls [skip ci]\n",
+      "oid": "1f041a37086cda71bc65a860d1795613c7cd1003",
+      "parents": [
+        "d55d5481b6918de2057d66fc2dac5a201bd6ba7b"
+      ],
+      "sha256": "f717420efd5b28bcf58c7cff91e128990a2913e239446bb235dc1b7906f3fdf4",
+      "subject": "Document gradient-tail and finite fault-model controls [skip ci]",
+      "tree": "dca1c6e9aeb9eda76cc1a3ce48a8c474eabfc565",
+      "role": "prerequisite_metadata_not_included_commit"
+    },
+    {
+      "bytes": 994,
+      "message": "Add explanatory figures for the guides [skip ci]\n\nAdd eighteen self-contained SVG figures under assets/figures: why PID separates\nequal totals, the two-source lattice and its events, a worked AND gate, KSG\nneighbor geometry, the event order, what shared exclusions is and is not, equal\nsynergy with different added information, the third-source budget, the\nindependent label, plug-in convergence, DC-1 under a dependency coloring,\nevent-to-atom bounds, the two continuity routes, the theorems on a real\npopulation, the pipeline and its refusals, the exact atom sign, the exact local\nKSG term, and order-independent exact accumulation.\n\nEach file embeds subset fonts with their license metadata and has an opaque\nbackground, a title and a description. No other file changes.\n",
+      "oid": "312554705d43aa15671e666d17070534a9d190b0",
+      "parents": [
+        "1f041a37086cda71bc65a860d1795613c7cd1003"
+      ],
+      "sha256": "b1d6cf1698debb9ec0c839da8343fb40a4ed6929077bb0f67586103a5dec2af4",
+      "subject": "Add explanatory figures for the guides [skip ci]",
+      "tree": "20cc109045f93f7c306aa32cc28f7539552b8321",
+      "role": "included_unique_commit"
+    },
+    {
+      "bytes": 515,
+      "message": "Enlarge figure text and drop external file references [skip ci]\n\nRe-export five figures from their revised sources: larger text in the\noverview, AND-gate and pipeline figures, and no references to generator\nfiles that do not exist in this repository. Values and wording are\notherwise unchanged.\n",
+      "oid": "c18ed486ef20e2d0a77c1174d00ebb42076dd09a",
+      "parents": [
+        "312554705d43aa15671e666d17070534a9d190b0"
+      ],
+      "sha256": "c35777201581713f5e1f444423348c329dbb444abf3cd589ae85410f9e546f89",
+      "subject": "Enlarge figure text and drop external file references [skip ci]",
+      "tree": "567ac225e3318dc884eeaf263caf512e3c72436c",
+      "role": "included_unique_commit"
+    }
+  ],
+  "embedded_font_metadata": {
+    "scope": "Observed name-table and WOFF2 payload identities only; not exact complete upstream binary or generator correspondence",
+    "payload_count": 107,
+    "metadata_groups": [
+      {
+        "id": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80",
+        "names": {
+          "0": [
+            "Copyright 2012--2014 for Latin Modern Math OTF by B. Jackowski, P. Strzelczyk and P. Pianowski (on behalf of TeX users groups). This work is released under the GUST Font License -- see http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt for details."
+          ],
+          "1": [
+            "Latin Modern Math"
+          ],
+          "16": [
+            "Latin Modern Math"
+          ],
+          "17": [
+            "Regular"
+          ],
+          "2": [
+            "Regular"
+          ],
+          "3": [
+            "1.959"
+          ],
+          "4": [
+            "LatinModernMath-Regular"
+          ],
+          "5": [
+            "Version 1.959"
+          ],
+          "6": [
+            "LatinModernMath-Regular"
+          ],
+          "7": [
+            "Please refer to the Copyright section for the font trademark attribution notices."
+          ]
+        }
+      },
+      {
+        "id": "12bde3abca582711a884940553d638b8844dbed3714036243277a45845b85842",
+        "names": {
+          "0": [
+            "Copyright 2003, 2009 B. Jackowski and J. M. Nowacki (on behalf of TeX users groups). This work is released under the GUST Font License --  see http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt for details."
+          ],
+          "1": [
+            "LM Mono 10"
+          ],
+          "16": [
+            "Latin Modern Mono"
+          ],
+          "17": [
+            "10 Regular"
+          ],
+          "2": [
+            "Regular"
+          ],
+          "3": [
+            "2.004;UKWN;LMMono10-Regular"
+          ],
+          "4": [
+            "LMMono10-Regular"
+          ],
+          "5": [
+            "Version 2.004;PS 2.004;hotconv 1.0.49;makeotf.lib2.0.14853"
+          ],
+          "6": [
+            "LMMono10-Regular"
+          ],
+          "7": [
+            "Please refer to the Copyright section for the font trademark attribution notices."
+          ]
+        }
+      },
+      {
+        "id": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c",
+        "names": {
+          "0": [
+            "© 2010 - 2019 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name ‘Source’."
+          ],
+          "1": [
+            "Source Sans Pro"
+          ],
+          "11": [
+            "http://www.adobe.com/type"
+          ],
+          "13": [
+            "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL. This Font Software is distributed on an ‘AS IS’ BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the SIL Open Font License for the specific language, permissions and limitations governing your use of this Font Software."
+          ],
+          "14": [
+            "http://scripts.sil.org/OFL"
+          ],
+          "2": [
+            "Bold Italic"
+          ],
+          "3": [
+            "3.006;ADBO;SourceSansPro-BoldIt;ADOBE"
+          ],
+          "4": [
+            "Source Sans Pro Bold Italic"
+          ],
+          "5": [
+            "Version 3.006;hotconv 1.0.111;makeotfexe 2.5.65597"
+          ],
+          "6": [
+            "SourceSansPro-BoldIt"
+          ],
+          "7": [
+            "Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries."
+          ],
+          "8": [
+            "Adobe Systems Incorporated"
+          ],
+          "9": [
+            "Paul D. Hunt"
+          ]
+        }
+      },
+      {
+        "id": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199",
+        "names": {
+          "0": [
+            "© 2010 - 2019 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name ‘Source’."
+          ],
+          "1": [
+            "Source Sans Pro"
+          ],
+          "11": [
+            "http://www.adobe.com/type"
+          ],
+          "13": [
+            "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL. This Font Software is distributed on an ‘AS IS’ BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the SIL Open Font License for the specific language, permissions and limitations governing your use of this Font Software."
+          ],
+          "14": [
+            "http://scripts.sil.org/OFL"
+          ],
+          "2": [
+            "Italic"
+          ],
+          "3": [
+            "3.006;ADBO;SourceSansPro-It;ADOBE"
+          ],
+          "4": [
+            "Source Sans Pro Italic"
+          ],
+          "5": [
+            "Version 3.006;hotconv 1.0.111;makeotfexe 2.5.65597"
+          ],
+          "6": [
+            "SourceSansPro-It"
+          ],
+          "7": [
+            "Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries."
+          ],
+          "8": [
+            "Adobe Systems Incorporated"
+          ],
+          "9": [
+            "Paul D. Hunt"
+          ]
+        }
+      },
+      {
+        "id": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8",
+        "names": {
+          "0": [
+            "© 2010 - 2019 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name ‘Source’."
+          ],
+          "1": [
+            "Source Sans Pro"
+          ],
+          "11": [
+            "http://www.adobe.com/type"
+          ],
+          "13": [
+            "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL. This Font Software is distributed on an ‘AS IS’ BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the SIL Open Font License for the specific language, permissions and limitations governing your use of this Font Software."
+          ],
+          "14": [
+            "http://scripts.sil.org/OFL"
+          ],
+          "2": [
+            "Bold"
+          ],
+          "3": [
+            "3.006;ADBO;SourceSansPro-Bold;ADOBE"
+          ],
+          "4": [
+            "Source Sans Pro Bold"
+          ],
+          "5": [
+            "Version 3.006;hotconv 1.0.111;makeotfexe 2.5.65597"
+          ],
+          "6": [
+            "SourceSansPro-Bold"
+          ],
+          "7": [
+            "Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries."
+          ],
+          "8": [
+            "Adobe Systems Incorporated"
+          ],
+          "9": [
+            "Paul D. Hunt"
+          ]
+        }
+      },
+      {
+        "id": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56",
+        "names": {
+          "0": [
+            "© 2010 - 2019 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name ‘Source’."
+          ],
+          "1": [
+            "Source Sans Pro"
+          ],
+          "11": [
+            "http://www.adobe.com/type"
+          ],
+          "13": [
+            "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL. This Font Software is distributed on an ‘AS IS’ BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the SIL Open Font License for the specific language, permissions and limitations governing your use of this Font Software."
+          ],
+          "14": [
+            "http://scripts.sil.org/OFL"
+          ],
+          "2": [
+            "Regular"
+          ],
+          "3": [
+            "3.006;ADBO;SourceSansPro-Regular;ADOBE"
+          ],
+          "4": [
+            "Source Sans Pro"
+          ],
+          "5": [
+            "Version 3.006;hotconv 1.0.111;makeotfexe 2.5.65597"
+          ],
+          "6": [
+            "SourceSansPro-Regular"
+          ],
+          "7": [
+            "Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries."
+          ],
+          "8": [
+            "Adobe Systems Incorporated"
+          ],
+          "9": [
+            "Paul D. Hunt"
+          ]
+        }
+      }
+    ],
+    "payloads": [
+      {
+        "document": "payload/predecessor-only/independent-label.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 26216,
+        "sha256": "55ec40fcf1f0084f8de6dc4e5114775faa68c34fe758bace17676f4c648dbbf4",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/predecessor-only/independent-label.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 5076,
+        "sha256": "1e5980732c5d2ded2f15bea62f1b786fcf0bb620bfbbceef702580df5ccdbaeb",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/predecessor-only/independent-label.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 22088,
+        "sha256": "657246a957875861629886ccbae007ffc3299103296b81e73907c7bb5b565b25",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/predecessor-only/independent-label.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 3816,
+        "sha256": "ea7fb9e33bef21e85583ebe6f17a63b3c9218ebddc82aaccd9ccd90f422a2c6c",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/predecessor-only/independent-label.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 16572,
+        "sha256": "c9077b853d77e8d68db02723517712e74c53c804b788e3477184cb56cb1b8003",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/predecessor-only/pipeline-and-refusals.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 21852,
+        "sha256": "9268ea94aeb864b83c80cad9bf2a823ad31eacc0e52b3c70fbff21c0a6231682",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/predecessor-only/pipeline-and-refusals.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 1516,
+        "sha256": "44679296f14e81e1fd9d07264725b8914f126b18ee676f613cc7f11816788238",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/predecessor-only/pipeline-and-refusals.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 16420,
+        "sha256": "1d334be88337b0a4582750d8b30d23a8d74e3cf7c95a38851b3ac7b106c053fe",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/predecessor-only/pipeline-and-refusals.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 1604,
+        "sha256": "e9a8311d80035c1ac3d77470a0825e73e0937cbe89b6e03f2e1eb0936661cd8e",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/predecessor-only/pipeline-and-refusals.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 16828,
+        "sha256": "603c9ee6f8edaa5dcb5bdd0e1de97362d04a6f5454f749c1372cfcbc012240fe",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/predecessor-only/same-total-different-structure.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 22004,
+        "sha256": "238a9989f5e9be83a750a910e035e3705fd76b4957c758314c034c5734765c09",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/predecessor-only/same-total-different-structure.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2016,
+        "sha256": "cd58a64f9717245dd93c3490ea6d6b1bb60c1372fc77194271e557e433b8aeed",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/predecessor-only/same-total-different-structure.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 18728,
+        "sha256": "f3925a9b417f542c1e99f7edec2392293d838f5b3ebaa5fe660727b88ef1bfc1",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/predecessor-only/same-total-different-structure.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 1604,
+        "sha256": "92b056a0936f65a363032d8d721375a141988f875843e4a5ef10a09e3bda11b3",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/predecessor-only/same-total-different-structure.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 15712,
+        "sha256": "a20a4004bd2da0aab64d5cb925399d1266d32a356332e9b214f0565edfc76b4a",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/predecessor-only/what-shared-exclusions-is.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 22188,
+        "sha256": "a1fd603babc15fba3db9a71bf5c05199ad8b07ff4ae2fe2cdea4901440ae5d5e",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/predecessor-only/what-shared-exclusions-is.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2384,
+        "sha256": "0ef855c5ddb8284fb3d2180603dc24ed1b8ce455645c935e938eb8f770815226",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/predecessor-only/what-shared-exclusions-is.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 19136,
+        "sha256": "56d7f60aac1b75ef03a6b075098d35396bdd4c1ddce78040a92e98dc387fdbca",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/predecessor-only/what-shared-exclusions-is.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 13176,
+        "sha256": "e4ea2e9cd8e7ba9538a705604b9c8b4b0237ca1956d33d940b04a488032ed3e4",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/predecessor-only/worked-and-gate.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 24764,
+        "sha256": "a5fe8f3fa348d424f4fd5f7b8c8941b0d812077afea4d9214e24d3d3a1c274db",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/predecessor-only/worked-and-gate.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2908,
+        "sha256": "b26369f9e03d8726b50eac73dbaa4968eddc066b19c221328e7fffe6af3eee07",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/predecessor-only/worked-and-gate.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 17304,
+        "sha256": "29e14c1b0da832ade82401510e83d74d97553f0de98138b8d8c41314edd46059",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/predecessor-only/worked-and-gate.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 3296,
+        "sha256": "3ef0c0afebd60b9ca093667530e2eb896aee86a4f462edb732d84d4e928e6ce3",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/predecessor-only/worked-and-gate.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 20660,
+        "sha256": "eb0e5e506a334cbf419df9a8d2e543aaa12cfaa0a6eee2a3189fa85c98b96648",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/continuity-routes.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 21500,
+        "sha256": "e2c801d70632980014b2bc56dad12a5a60ba0ab29ffd595176ff1d05c57ae64e",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/continuity-routes.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 1732,
+        "sha256": "2b88dbaf11b60e717b76cc64bffb8e614093ee168dddd3ec784fc9f516a2daf1",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/continuity-routes.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 16532,
+        "sha256": "f43ec83c15a731490ecfd65ce342ce0689f9d5cdc2e84d7825f4f617e40c95c1",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/continuity-routes.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 1840,
+        "sha256": "9940a7929321b80ac07ba2d07edb53a6efc548c212827108bb319857c6e57a1c",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/tip/continuity-routes.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 16236,
+        "sha256": "3811f4b0e613d27329ffd72ff029f7fa38b22fc01e66460980c502518ec36185",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/dependency-coloring-concentration.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 26164,
+        "sha256": "6c302739162898adee41147bb02de34b4a828cd8047b41e763a36d7c823fa58b",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/dependency-coloring-concentration.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 5012,
+        "sha256": "1f649d6c2e439562387de328bb584b17dd45ef7e8861e7826169d6464c4d7b88",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/dependency-coloring-concentration.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 20504,
+        "sha256": "96b3b44de1114304c0b983f21d5e157ba3c02b637b9462272ebc22dfca65bea3",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/dependency-coloring-concentration.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 3484,
+        "sha256": "0d4f9a3341df84b2a963a32da4c66a29fa5851a2aea161d818713e74c9b5ed1a",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/tip/dependency-coloring-concentration.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 17600,
+        "sha256": "8f79e2ca4177b5f9266a9aad6c9a30f3e0ce5897e970f19ad1fd0083fab7bc14",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/event-to-atom-bounds.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 26292,
+        "sha256": "538a20432f8d61a5dd64db4db743fb3401151a5cbf309811f0806d8317fb67cd",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/event-to-atom-bounds.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 3764,
+        "sha256": "11d96ef460597e7bc0f5903b49cd0d72a1395b54a02a745d0100026e198702ac",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/event-to-atom-bounds.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 20748,
+        "sha256": "658d86e24617f297dfc309d726eb5ba6bd751dfe0ecf70e5e0797041a79d26b0",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/event-to-atom-bounds.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 3256,
+        "sha256": "8fc0af63433e00858807ca9174273a5f906e836433e25a819e4e70b8f2a8ba11",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/tip/event-to-atom-bounds.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 16956,
+        "sha256": "351fdb3df5f78bd8c517199050db19d1e5a10b70ea01e3243cd0816a63362c86",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/exact-accumulation-order-invariance.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 21584,
+        "sha256": "6fa7d2f076e41be1082dca9c6fdeddc85019587a7cf2860912b46c40107a7560",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/exact-accumulation-order-invariance.svg.txt",
+        "css_family": "'Latin Modern Mono'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 3380,
+        "sha256": "736f758a4b7d48c92b01b3f0ce570d77a9faa56113432ed3763a8f6dc46ae0b9",
+        "name_table_group": "12bde3abca582711a884940553d638b8844dbed3714036243277a45845b85842"
+      },
+      {
+        "document": "payload/tip/exact-accumulation-order-invariance.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 2184,
+        "sha256": "62c9cb2e307658b60ec9fd3a9f2c9c39bbb17617016f953ab587a99c369f3343",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/exact-accumulation-order-invariance.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 18356,
+        "sha256": "0218961ef1b5f6576733ce0e612caa983d0e4c0313c2992c8167ca612029dd46",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/exact-accumulation-order-invariance.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 14468,
+        "sha256": "6b908395a974fbc8ba3c8d490a026bb076609a86cb6e84bfe7418d37a87b1f2d",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/exact-atom-sign.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 23160,
+        "sha256": "f290e0cb3ad67114140ac790da13af2aec9d48888b97de2f0edc58ae4bf42664",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/exact-atom-sign.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2636,
+        "sha256": "f8cc1c240bf3c33b6ecc3be2f0439526f5d5c2d3afa0433c24f6c49e3901ff7b",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/exact-atom-sign.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 18204,
+        "sha256": "dba8bbf439260ea2439c16cc8d1a39f09e4ccd92fd7276401aadb83c0e306ebb",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/exact-atom-sign.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 1616,
+        "sha256": "4b9d34506b2496bcdb615df4adbfef7aa66cee14c846e8a9b94dfb1994196064",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/tip/exact-atom-sign.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 19220,
+        "sha256": "d76da6bc44edf6558c14af355675e9ae34f73bba9d2930e3b413d947a9393d51",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/independent-label.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 26036,
+        "sha256": "174d8b14c654844ac6e9d70f4bb6ab02d7ccf22aeacd56cc6d1a0fce01e58f43",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/independent-label.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 5060,
+        "sha256": "905a2b418492acddec9478cc6f9c94a8043ff113273b4b2d9a57348cb3ef9c2b",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/independent-label.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 21972,
+        "sha256": "b3a1bffeb42d1973e1e9457c6b2ab3e78fcfdf3130aba9cfd65c1c63c656938c",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/independent-label.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 3844,
+        "sha256": "f6ddb6ce675639e45b1b665890c19ef84f38f761d755b0a84fab04e671110ebf",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/tip/independent-label.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 16596,
+        "sha256": "d4aa4200c087ee0d83b5065466a9bcf019e8bfaf832ff556cceffb590211cf69",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/ksg-neighbor-geometry.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 18080,
+        "sha256": "030dac102aec6d72ed26b83e7d2a330d4f2992e5085cc9af8f8032e94654c675",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/ksg-neighbor-geometry.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2292,
+        "sha256": "75a5ed23573f6773ee4549dea79975594524a9c4379d6e4789306048a148eb19",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/ksg-neighbor-geometry.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 11060,
+        "sha256": "fbaac93797e2ef6fb69810ab91b861a94c98400df3b124485dc46fa799d9af82",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/ksg-neighbor-geometry.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 5404,
+        "sha256": "d892f2f9dfe2c1c29ac5e4657113e53a0d27ed0a18d83efd8910e91e88ad8132",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/ksg-term-exact-rational.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 23988,
+        "sha256": "d4b72495afc376b84db2ee13680e258280de1e29a3226a5e94ec3b877ff40a8f",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/ksg-term-exact-rational.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 3284,
+        "sha256": "4e0c7169bb825fbba9b409496e78a60c0353f5acddad62a701c6f07e4dab49af",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/ksg-term-exact-rational.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 18812,
+        "sha256": "e896d9ab940943e606ceed386fec0e401df1363320fe7359a5d706e50dd7e254",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/ksg-term-exact-rational.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 2612,
+        "sha256": "ddc293e09bb7c32b6dc326ac62d70e8975a78f7f379c0362e82803629b5e861a",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/tip/ksg-term-exact-rational.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 13192,
+        "sha256": "ccce8ea720abd26a543f58eaaaa76558a389a9d359624589facfcc88a7534344",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/order-reverses-implication.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 20056,
+        "sha256": "3642e0d75b91515cac5a03f2d5bb7c2eaeb5c1af6bea58be0383e31a14bb75a2",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/order-reverses-implication.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 3072,
+        "sha256": "df0ddd098aa643b181ea9d61381f2ee701e7c3671e4477cf39e875418873e71c",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/order-reverses-implication.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 16176,
+        "sha256": "7413584df0a9b7dfc0a1e2a6a4c8fefeffa73b663bc6d3efd9f2b3fa910adfe3",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/order-reverses-implication.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 4984,
+        "sha256": "9c9633e8208cb90d490272fac75ee96458991a2b82c579c709215a59b1eec46c",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/pipeline-and-refusals.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 21980,
+        "sha256": "be6c03c54766661ff0db4926cb84157b62c3d580b874230ba1f8b6ad4f6c9ede",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/pipeline-and-refusals.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 1516,
+        "sha256": "fd9a74aaa7b7ae4da8099a9d91106aefd9f297f688511508a762f8f5a87da52d",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/pipeline-and-refusals.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 16320,
+        "sha256": "88af3b38f8479f1d566026e2c96a75cac8c1817a736869520b3bafd1b6748e0f",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/pipeline-and-refusals.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 1604,
+        "sha256": "3b026ae71255a88924dcfd0d521499eb5df6d3c8eae33a29ad759a506013c6ed",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/tip/pipeline-and-refusals.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 16828,
+        "sha256": "aae568aaf1f4a233593fb35dcfc21db283fd0adcdf5635906e983b09b726d1a4",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/plug-in-convergence.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 22744,
+        "sha256": "512ca517bb6093612d12f107fa12c736b701623321e7b75bdf92b63f2addb4d2",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/plug-in-convergence.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2068,
+        "sha256": "7f75268bb3a801371530c6564f110d79fab2b0464b3f707d9cc1a62fd0206c8b",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/plug-in-convergence.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 19040,
+        "sha256": "d3690b62993846ffa4a69229055a1ef1fb359b49249da46626ca6a4a81298a67",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/plug-in-convergence.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 1848,
+        "sha256": "64075f0ba36cc3816ca105527bf105d20a1f00d43092786e61b6b9e4bdb079fc",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/tip/plug-in-convergence.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 14276,
+        "sha256": "a87d84d8ad99852de8223412b51ff147e1e85b6d61e83301fe0ddcb89a5bc0f2",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/same-synergy-different-added-information.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 18320,
+        "sha256": "dd83d5a09ccc6e54f1d997b66bc816306fd903197b65b9cc0c68f3e26d3f0234",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/same-synergy-different-added-information.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2580,
+        "sha256": "384e8975feaa52d37dfa08d1cb86c2ac84123cc706b3ef145554da4cda535435",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/same-synergy-different-added-information.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 14120,
+        "sha256": "5ec6e56b066b6b845b6ae93e46a6807a3e7973eec22163ed764be6236e0d54e6",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/same-synergy-different-added-information.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 5204,
+        "sha256": "f89d90c62d7077e0a90d95debdd2b92ea0129d91c5664e7d25050de8de7d9db6",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/same-total-different-structure.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 22044,
+        "sha256": "6ee1714d9b1fa95c04794e43f11bc7c5841a0e8adc028a58ff188beb84b7f409",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/same-total-different-structure.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2016,
+        "sha256": "f10cd2475c16cfcee4c99440b51c9d2a65a6cd43e0ef08bd90c6cc1a9b877071",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/same-total-different-structure.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 18892,
+        "sha256": "ab9c080ec32932c5cc4d0d715367531ba755f23caa906c3ce6db62f1be0e0c3a",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/same-total-different-structure.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 1604,
+        "sha256": "247afaa309dd63886df2f6a3a94a7a27dfda1c190d971a269d5f681419a16d90",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/tip/same-total-different-structure.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 15732,
+        "sha256": "31cce8e380aa4d5237b3e4ffd511409f7c2605aac71c70a4997a10fc3ac574a2",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/theorems-on-a-real-population.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 21936,
+        "sha256": "1334e815f1e8f01cdbbc606ee5a68476d89f03bb90aee1927238b412f660b5cc",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/theorems-on-a-real-population.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 1600,
+        "sha256": "25605a3b4c8d40922cf12b6101f65b59471b5115d855504d862e01886d40efd5",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/theorems-on-a-real-population.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 18552,
+        "sha256": "ef75af4be36073616951cc336bd093eee5518137f6cecec1977ee93dc1b5495d",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/theorems-on-a-real-population.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 15424,
+        "sha256": "7c1b2b11b0e355c9f9e2d07b6b8250b4154d7d15d38a2edce5dddc45e3ee6fd8",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/third-source-budget.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 22004,
+        "sha256": "f604f142da19fad79964d33be263f2325a294bd59231d28a3477a79ef2f85957",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/third-source-budget.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2580,
+        "sha256": "8749879e6dfbd777b05a3095793896cb49828e99f0be2dff48a025f617c8e583",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/third-source-budget.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 16856,
+        "sha256": "a7e6acdd11154dfac0841618b05cbc4e633eff7a1c5e102193aa45d26d9bb652",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/third-source-budget.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 15028,
+        "sha256": "63e0473fc623a3258ece63f25cc5ed84d69a89dfe2bec71d4f6839dd9dbb8984",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/two-source-lattice-events.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 21208,
+        "sha256": "9c4ad01fffc51bbe43da39d5ddf368891721debbc56eccfd0bbf9ce5a0f805e3",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/two-source-lattice-events.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2212,
+        "sha256": "2f63203634cc934695e5ed6306abb7166e5454bd34c75ddceb44fe69db78354e",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/two-source-lattice-events.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 14660,
+        "sha256": "32b30dc2dab9a7b3ea491447b726018c92f362bd6dc6f8b01b220d667a4d9f72",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/two-source-lattice-events.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 11536,
+        "sha256": "6d78ea7f8495043d9ca54634780e869a392401e9cb313d3a72de21c1c5a588da",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/what-shared-exclusions-is.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 22136,
+        "sha256": "c3cb8ae55565268b60a0f4eaf8c6318ad5e3f3d90059be53446d88e5fb127267",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/what-shared-exclusions-is.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2392,
+        "sha256": "20cc5063f310510a68b035d1a713ce3c70a49eb73413cb448d2e3e27a1262a0f",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/what-shared-exclusions-is.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 18940,
+        "sha256": "970a883c7b5c124ffffe80960a5b9183b1ac98d913f2c12ee40bd6c83b70a906",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/what-shared-exclusions-is.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 13068,
+        "sha256": "cb9f5e51141de4801e2bee17844b7b40ba83033bd517bdddcecfaa3fab7dd1fd",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      },
+      {
+        "document": "payload/tip/worked-and-gate.svg.txt",
+        "css_family": "'Latin Modern Math'",
+        "index": 0,
+        "mime": "font/woff2",
+        "bytes": 24792,
+        "sha256": "9896c8c364f9fcd485531b1a3cbd17d1665355f82f1ab10534da36e65313b6cd",
+        "name_table_group": "05779b4051f05fb9cb5c43fa3ed563dc5bf924ceacd77bf01820b053be754a80"
+      },
+      {
+        "document": "payload/tip/worked-and-gate.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 1,
+        "mime": "font/woff2",
+        "bytes": 2904,
+        "sha256": "848cba24f95a5415940fc744505eb60e1862c6ee81be3eebe8db7cad8a0796eb",
+        "name_table_group": "d0e44fbbd14baefcf98ca5d946bcb7058fb2c46eeadcbae335521e92204d0199"
+      },
+      {
+        "document": "payload/tip/worked-and-gate.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 2,
+        "mime": "font/woff2",
+        "bytes": 17284,
+        "sha256": "a73f2c3d88591b7d4286745d89d69112f6a306195e7565b1bcf376697398ada9",
+        "name_table_group": "f19ad651599cf5f2b1e8ceb98780ad5ed7c702423bcba118e0cd7c982d6d3d56"
+      },
+      {
+        "document": "payload/tip/worked-and-gate.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 3,
+        "mime": "font/woff2",
+        "bytes": 3296,
+        "sha256": "a58bafb40c36540694d21114feacfd487c2e422afb6641e9a8fc479b35ad4637",
+        "name_table_group": "5f59708b2836c10e51869c43a45033bd48a6b24e8d059bda9b5125db66c3be7c"
+      },
+      {
+        "document": "payload/tip/worked-and-gate.svg.txt",
+        "css_family": "'Source Sans Pro'",
+        "index": 4,
+        "mime": "font/woff2",
+        "bytes": 20716,
+        "sha256": "93fb69acd091150df894a5d07be65c6161c028c43d1d7b2a5961181d738492d4",
+        "name_table_group": "eee689b39385bf863655076408f6915b015149d9506c20b6bc9de8617ce6faf8"
+      }
+    ]
+  }
+}

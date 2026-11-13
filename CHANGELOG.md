@@ -7,6 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve 23 distinct explanatory SVG drafts and their two-commit Git recovery bundle in an
+  [inert document archive](audit/archive/explanatory-figure-drafts-20261113/DISPOSITION.md), with
+  exact byte identities and embedded-font notices. Record caption counterexamples, missing
+  computation records and visual limits before any current scientific adoption. Preserve the
+  archived document and license bytes without line-ending translation.
+
 - Preserve 95 permitted pending-file byte images from two retained worktrees in an
   [inert text archive](audit/archive/retained-worktree-fragments-20261113/DISPOSITION.md), with
   exact identities, original modes, license notices and explicit non-adoption boundaries.

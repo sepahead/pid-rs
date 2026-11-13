@@ -1,5 +1,16 @@
 # Session handoff — updated 13 November 2026
 
+## Explanatory drafts preserved, 13 November 2026
+
+The [figure-draft archive](audit/archive/explanatory-figure-drafts-20261113/DISPOSITION.md)
+preserves all 23 distinct SVG byte images from the unmerged two-commit figure branch and a
+bounded recovery bundle with its accepted-main prerequisite. The images remain inert text;
+the disposition corrects overbroad captions and records missing generators, computation records
+and visual qualification. Embedded-font identities and license notices are retained. No current
+figure, scientific claim, estimator or formal program is adopted by this preservation milestone.
+Retire the old figure pointer only after the archive is accepted on main and remote recovery is
+verified. Read the ignored local handoff for current hosted checks and separate proof-tool work.
+
 ## Retained fragments archived, 13 November 2026
 
 The [inert worktree archive](audit/archive/retained-worktree-fragments-20261113/DISPOSITION.md)

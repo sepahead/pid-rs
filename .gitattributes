@@ -38,6 +38,11 @@ audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-
 audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/** -text -whitespace
 audit/archive/numerical-claim-history-20260725/payload/** -text -whitespace
 audit/archive/sxpid3-s1-historical-checkers-v1/payload/** -text -whitespace
+audit/archive/retained-worktree-fragments-20261113/payload/** -text -whitespace
+audit/archive/retained-worktree-fragments-20261113/PANDOC-TEMPLATES-NOTICE.txt -text -whitespace
+audit/archive/explanatory-figure-drafts-20261113/payload/** -text -whitespace
+audit/archive/explanatory-figure-drafts-20261113/FONT-LICENSE-*.txt -text -whitespace
+audit/archive/explanatory-figure-drafts-20261113/*.bundle -text -diff -merge
 
 # Preserve the reviewed scanner patch's context-space line and the original council table's
 # trailing blank line. Their exact archived bytes are bound by the accompanying manifest.
