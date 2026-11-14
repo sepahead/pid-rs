@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Restore the mathematical results guide's exact font-notice input after an archive summary
+  changed its digest. Preserve the [failed CI and correction](audit/archive/explanatory-figure-notice-correction-20261114/RECORD.md),
+  keep archive-local font notices intact, and retain the original PDF receipts and mutation checks.
+
 - Preserve 23 distinct explanatory SVG drafts and their two-commit Git recovery bundle in an
   [inert document archive](audit/archive/explanatory-figure-drafts-20261113/DISPOSITION.md), with
   exact byte identities and embedded-font notices. Record caption counterexamples, missing

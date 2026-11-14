@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "e975309ae06033f5b0b0936dde20cdd98977da34e96c8b134732b547764dd9eb",
-        "size_bytes": 335126
+        "sha256": "46e6255519f4ebb00be44afbaaee2ae92dc3b0d5946405d951b978ef4e61e77b",
+        "size_bytes": 335453
       },
       {
         "git_mode": "100644",
@@ -562,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "d2ae48e1ffd8606807c29f15c951568073a59e231a28fefde3f723c887573b10",
-        "size_bytes": 47167
+        "sha256": "e407b65cd0e770daa413e8fa331365fca86c191b383113fdfeac13e919f8a13a",
+        "size_bytes": 47806
       },
       {
         "git_mode": "100644",
@@ -586,8 +586,8 @@
       {
         "git_mode": "100644",
         "path": "THIRD_PARTY_NOTICES.md",
-        "sha256": "7fb347799caa8ae9d507fa23187b28cb06e352cb2b596d98c4f0816841fd512b",
-        "size_bytes": 8810
+        "sha256": "ae89a35053d73bef13cd28cfcc1249589ff1507e28e3dc417bf9702152a1dbd7",
+        "size_bytes": 8140
       },
       {
         "git_mode": "100644",
@@ -1374,6 +1374,12 @@
         "path": "audit/archive/explanatory-figure-drafts-20261113/payload/tip/worked-and-gate.svg.txt",
         "sha256": "192c99ad65c34a76a534e6096ef7a348bf5494bd4fba0f19bdb81449c928e16b",
         "size_bytes": 115942
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/explanatory-figure-notice-correction-20261114/RECORD.md",
+        "sha256": "0213d777e44c3b834679b6eb50d2394c9be98e863ec429a543fb3bcc53973236",
+        "size_bytes": 2946
       },
       {
         "git_mode": "100644",
@@ -32986,7 +32992,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "9361e32ab72298504364b217f68c6717917009f6395a44bb8138a3517e683b70",
+        "sha256": "d207a1753a01ca23f1133dbf1d0fee5a5b48e92c2f79098f17830d9dd2531005",
         "size_bytes": 139663
       },
       {
@@ -33956,8 +33962,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "31aa77126b6c0a9a50a1e8c5a23c14cbf7402f42220c50e1d9292839e9c2bdee",
-    "entry_count": 5635
+    "entries_sha256": "293fe314d147414cee40ba35359c5fbd22343fd726fa1b14dcd56e987ca8f918",
+    "entry_count": 5636
   },
   "subprojections": [
     {
@@ -33985,7 +33991,7 @@
       ]
     },
     {
-      "entries_sha256": "0bee3a9ed20c0ced4540038f4a9d7c193633569e27d4a4300b24d1798e2292e9",
+      "entries_sha256": "f213d1b1c8efbca00f19607166e430fd9b619c8e7dfb1cd5b1fdc7800aec11b5",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

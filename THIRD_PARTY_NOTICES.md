@@ -6,14 +6,6 @@ results guide uses the Pandoc template projections described below. It, the sepa
 source-marginal audit, the numerical-assurance note, and the finite MGW paper use the embedded
 font subsets described below. The complete input font files are not stored in this repository.
 
-The [historical explanatory-figure archive](audit/archive/explanatory-figure-drafts-20261113/DISPOSITION.md)
-also preserves document-specific WOFF2 subsets inside inert SVG text and a Git recovery bundle.
-Its index records observed font identities and name-table metadata for Source Sans Pro 3.006,
-Latin Modern Math 1.959 and Latin Modern Mono 2.004. Source Sans Pro includes Regular, Bold,
-Italic and Bold Italic. The archive retains the applicable OFL and GUST license copies and
-copyright notices. Exact upstream font-binary correspondence and the original figure generators
-remain unrecorded; no standalone font distribution or current figure adoption is claimed.
-
 ## Pandoc 3.1.3 and 3.10.2 LaTeX projections
 
 `scripts/normalize-mathematical-results-guide-pandoc-tex.py` is distributed under the BSD

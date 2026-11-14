@@ -1,4 +1,14 @@
-# Session handoff — updated 13 November 2026
+# Session handoff — updated 14 November 2026
+
+## Archive notice input corrected, 14 November 2026
+
+The [correction record](audit/archive/explanatory-figure-notice-correction-20261114/RECORD.md)
+preserves the failed exact-commit CI observation and restores the root font notice to the
+8,140-byte input required by the current guide builder and figure checks. Archive-local font
+notices, licenses, payloads and historical PDF receipts retain their own bytes. This source
+correction grants no PDF, hosted-check, scientific or formal acceptance. Require fresh applicable
+checks for its resulting commit before main promotion; current execution receipts stay in the
+ignored local handoff.
 
 ## Explanatory drafts preserved, 13 November 2026
 
