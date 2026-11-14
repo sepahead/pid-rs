@@ -1,0 +1,384 @@
+{
+  "already_main_reachable_originals": [
+    {
+      "bytes": 3160,
+      "commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+      "path": "claims/SX-COUNT-EVENT-BRIDGE-001/conventions.md",
+      "role": "exact_primary_prose_counterpart",
+      "sha256": "344c78c61d017af3cf1b21d5585826e06ac4a4149f6e7b1b2b3c372df8155cb6"
+    },
+    {
+      "bytes": 2192,
+      "commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+      "path": "claims/SX-COUNT-EVENT-BRIDGE-001/failures/abandoned-native-decide-prototype.md",
+      "role": "exact_primary_negative_record_counterpart",
+      "sha256": "fb773a47d104476aaa896f6e2c80f6c09a5a7e7a8fdbc0296941929c4d19fe37"
+    },
+    {
+      "bytes": 24009,
+      "commit": "a28b2ef340095036c41ed1e8904ee84c88c28d9a",
+      "path": "audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean",
+      "role": "exact_original_Lean_at_main_reachable_history_not_identical_current_source",
+      "sha256": "c0c92e4f9974b2770b3033a6ebca1d16939417707301aac4531a102649b7a16c"
+    }
+  ],
+  "authority": "inert_historical_working_bytes_only",
+  "current_claim_authority": false,
+  "current_main_hosted_acceptance_claim": false,
+  "custody_assumption": "stable_cooperative_source_files_during_bounded_reads_not_atomic_or_authenticated",
+  "excluded": [
+    "other_primary_tracked_untracked_and_ignored_bytes",
+    "raw_local_review_captures",
+    "fresh_formal_or_executable_replay",
+    "current_claim_or_PDF_changes",
+    "stash CHANGELOG.md",
+    "stash audit/evidence/current-source-state-v1.json",
+    "stash scripts/check-lean-toolchain-freeze.py",
+    "stash apply or whole-stash merge"
+  ],
+  "existing_four_profile_archive_checker_coverage": false,
+  "license": {
+    "copyright_notice": "Copyright (c) 2025 Sepehr Mahmoudian",
+    "repository_licenses": [
+      "LICENSE-MIT",
+      "LICENSE-APACHE"
+    ],
+    "separately_licensed_payload_detected": false
+  },
+  "new_scientific_or_formal_acceptance": false,
+  "observed_corrected_main": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+  "observed_current_integration": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+  "original_proposal_metadata": {
+    "archive_bytes": 4533,
+    "archive_sha256": "f25dc3f50d018db57a87daea9962a24e4a4b1bd4e25062f28c10c556c8a80ee9",
+    "index_bytes": 6508,
+    "index_sha256": "355b8fa8e07f9b9d10d3ac1b8f051730c7eadd33dd7ca605c795d9d84f83f4b1",
+    "scope": "exact originals retained in private review custody; this public index records corrected current provenance and bounds"
+  },
+  "original_proposal_recorded_date": "2026-10-01",
+  "payload_bytes": 36045,
+  "payload_count": 12,
+  "payloads": [
+    {
+      "bytes": 4963,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 5448,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "762c6c36e7ea3b92b5e0165a9687952a7ecd35604d8d418a576bf999ef7cc69e",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v1.md",
+        "sha256": "762c6c36e7ea3b92b5e0165a9687952a7ecd35604d8d418a576bf999ef7cc69e"
+      },
+      "execution_authority": false,
+      "historical_role": "superseded_proposal",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v1.md",
+      "payload_relative_path": "payload/claim-v1.md.txt",
+      "sha256": "c84f6a1e99210535de11aa67c0c27a3cf9461060ae896404916f1621f5d3d3b1",
+      "source_capture": {
+        "git_blob_oid": "2ced27f2f497661e3e0fc687a99c8bb28e17faf3",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/claim-v1.md.txt",
+        "working_original_sha256": "c84f6a1e99210535de11aa67c0c27a3cf9461060ae896404916f1621f5d3d3b1"
+      }
+    },
+    {
+      "bytes": 6207,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 8556,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "4e8fc1dda680b5fdf0ffcdb3af7cbe97017fa6421a4cd3393983d4047a87ff7b",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md",
+        "sha256": "4e8fc1dda680b5fdf0ffcdb3af7cbe97017fa6421a4cd3393983d4047a87ff7b"
+      },
+      "execution_authority": false,
+      "historical_role": "historical_bounded_completion_assertion",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md",
+      "payload_relative_path": "payload/claim-v2.md.txt",
+      "sha256": "edaf8558a6bfebe3d1863f087747dbb91bf562068ddf02ec6e32ca8037da3a23",
+      "source_capture": {
+        "git_blob_oid": "8565e779dfe0cf170ed8921fb820bed27c9ca3ba",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/claim-v2.md.txt",
+        "working_original_sha256": "edaf8558a6bfebe3d1863f087747dbb91bf562068ddf02ec6e32ca8037da3a23"
+      }
+    },
+    {
+      "bytes": 3272,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 3927,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "663fc625c3ede8c1530aaad07d1446d01da022d5835650a489c7a9f0977b8445",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/decision-v2.md",
+        "sha256": "663fc625c3ede8c1530aaad07d1446d01da022d5835650a489c7a9f0977b8445"
+      },
+      "execution_authority": false,
+      "historical_role": "historical_decision",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/decision-v2.md",
+      "payload_relative_path": "payload/decision-v2.md.txt",
+      "sha256": "3c578f16e56c2feb1f375d1aa91ecf7d0027b7705dc51dc659125a0f916ff555",
+      "source_capture": {
+        "git_blob_oid": "2a13c29c69f5a8f70ed16949b9c4e9cb480f3206",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/decision-v2.md.txt",
+        "working_original_sha256": "3c578f16e56c2feb1f375d1aa91ecf7d0027b7705dc51dc659125a0f916ff555"
+      }
+    },
+    {
+      "bytes": 2523,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 3195,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "c2bc3f6a0fb551371c5385c79c5a272e9bd493eb37987108bc4193fc608c76df",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/evidence-matrix.md",
+        "sha256": "c2bc3f6a0fb551371c5385c79c5a272e9bd493eb37987108bc4193fc608c76df"
+      },
+      "execution_authority": false,
+      "historical_role": "historical_evidence_assertions",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/evidence-matrix.md",
+      "payload_relative_path": "payload/evidence-matrix.md.txt",
+      "sha256": "6e1fdb217f4052bb9ec1f9fdc5e0bcfe640fd531afaf2233f25108cf2034d69f",
+      "source_capture": {
+        "git_blob_oid": "b7f9c941a745f5d764865b48df9e8c8414145a50",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/evidence-matrix.md.txt",
+        "working_original_sha256": "6e1fdb217f4052bb9ec1f9fdc5e0bcfe640fd531afaf2233f25108cf2034d69f"
+      }
+    },
+    {
+      "bytes": 1532,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 1680,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "3c4a59adf8b3a055f945858c61b83b23eb0b0e643c3ddf98689c6363e6f2e5b9",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/failures/revision-1-nonzero-cell-quantifier.md",
+        "sha256": "3c4a59adf8b3a055f945858c61b83b23eb0b0e643c3ddf98689c6363e6f2e5b9"
+      },
+      "execution_authority": false,
+      "historical_role": "sparse_support_negative_result",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/failures/revision-1-nonzero-cell-quantifier.md",
+      "payload_relative_path": "payload/failures/revision-1-nonzero-cell-quantifier.md.txt",
+      "sha256": "aca9ce08d6ee7edda151444e63572b691880a753858915efaef7b20d0a82c8cc",
+      "source_capture": {
+        "git_blob_oid": "5e92b767ade28aefdb0325019f7a170c49a985b7",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/failures/revision-1-nonzero-cell-quantifier.md.txt",
+        "working_original_sha256": "aca9ce08d6ee7edda151444e63572b691880a753858915efaef7b20d0a82c8cc"
+      }
+    },
+    {
+      "bytes": 2721,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 3297,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "f765416999303ba151a51f9706053c8546b0fc02216b780b4e9523ea157f6994",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/formal/theorem-map.md",
+        "sha256": "f765416999303ba151a51f9706053c8546b0fc02216b780b4e9523ea157f6994"
+      },
+      "execution_authority": false,
+      "historical_role": "historical_declaration_map",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/formal/theorem-map.md",
+      "payload_relative_path": "payload/formal/theorem-map.md.txt",
+      "sha256": "6fe0dd8f168e9115773dcb86a4fec4c27c6692c281fc4022ac68f15f0da61b70",
+      "source_capture": {
+        "git_blob_oid": "08fa78a06aae9a7fe8322ba53473a7ca7f3b0944",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/formal/theorem-map.md.txt",
+        "working_original_sha256": "6fe0dd8f168e9115773dcb86a4fec4c27c6692c281fc4022ac68f15f0da61b70"
+      }
+    },
+    {
+      "bytes": 4220,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 4759,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "4257fbfc0af90d9a7d8247bc6d765b2348e618a5febcd9e37fb7cff8e0c057cc",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/obligations-v2.md",
+        "sha256": "4257fbfc0af90d9a7d8247bc6d765b2348e618a5febcd9e37fb7cff8e0c057cc"
+      },
+      "execution_authority": false,
+      "historical_role": "historical_closure_graph",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/obligations-v2.md",
+      "payload_relative_path": "payload/obligations-v2.md.txt",
+      "sha256": "4e9ef05ad5f646d4f1742a1a861a5203f97f721bffe4d8bf46e7ce2ff595cb26",
+      "source_capture": {
+        "git_blob_oid": "077ae52a26247af254771dfb862465cea5ddbf29",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/obligations-v2.md.txt",
+        "working_original_sha256": "4e9ef05ad5f646d4f1742a1a861a5203f97f721bffe4d8bf46e7ce2ff595cb26"
+      }
+    },
+    {
+      "bytes": 3432,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 3672,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "db956044eb05ae6b1458acb399bf5551b4add80b8fe35bac92eae336fa436a90",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/obligations.md",
+        "sha256": "db956044eb05ae6b1458acb399bf5551b4add80b8fe35bac92eae336fa436a90"
+      },
+      "execution_authority": false,
+      "historical_role": "superseded_planning_graph",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/obligations.md",
+      "payload_relative_path": "payload/obligations.md.txt",
+      "sha256": "75d11d844de73609cfcb1f552690a677e88d8159ee3a974eaf9a476e1a4be5e3",
+      "source_capture": {
+        "git_blob_oid": "f1546ead18b29b04487df3a9853628c3c7fea86b",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/obligations.md.txt",
+        "working_original_sha256": "75d11d844de73609cfcb1f552690a677e88d8159ee3a974eaf9a476e1a4be5e3"
+      }
+    },
+    {
+      "bytes": 3476,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 6612,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "19def113939240dbebb0305fbca6e21bf50c75cb84fa0ea522bd9cc4cbf80860",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/phase-a-verification-2026-07-25.md",
+        "sha256": "19def113939240dbebb0305fbca6e21bf50c75cb84fa0ea522bd9cc4cbf80860"
+      },
+      "execution_authority": false,
+      "historical_role": "historical_dirty_tree_verification_transcript",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/phase-a-verification-2026-07-25.md",
+      "payload_relative_path": "payload/phase-a-verification-2026-07-25.md.txt",
+      "sha256": "5ec2b42ea212e3491685db7d65b9ea8bb69f406e9a8709a0f316261964c7f2ff",
+      "source_capture": {
+        "git_blob_oid": "2d4dbcc9d1082dd557510ffc52733fb8311c2377",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/phase-a-verification-2026-07-25.md.txt",
+        "working_original_sha256": "5ec2b42ea212e3491685db7d65b9ea8bb69f406e9a8709a0f316261964c7f2ff"
+      }
+    },
+    {
+      "bytes": 576,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 1267,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "d80a0b14c62410eec360efe0670909affb8b62758ea661ff203f8456e274a141",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/revision-index.md",
+        "sha256": "d80a0b14c62410eec360efe0670909affb8b62758ea661ff203f8456e274a141"
+      },
+      "execution_authority": false,
+      "historical_role": "historical_revision_status",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/revision-index.md",
+      "payload_relative_path": "payload/revision-index.md.txt",
+      "sha256": "db8552ef69a5bf87058f4d769582408a0f50e7cf6b81ac9b26b6f83e7f1c8258",
+      "source_capture": {
+        "git_blob_oid": "2b81edfef272555bb5c27b7eb930855c40deafca",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/revision-index.md.txt",
+        "working_original_sha256": "db8552ef69a5bf87058f4d769582408a0f50e7cf6b81ac9b26b6f83e7f1c8258"
+      }
+    },
+    {
+      "bytes": 1796,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 2155,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "8a41fb691e76104ad6e28a8b439ca2de836ad2a2dd42fd39cace7d8a0e2a2c11",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/routes-v2.md",
+        "sha256": "8a41fb691e76104ad6e28a8b439ca2de836ad2a2dd42fd39cace7d8a0e2a2c11"
+      },
+      "execution_authority": false,
+      "historical_role": "historical_route_assertions",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/routes-v2.md",
+      "payload_relative_path": "payload/routes-v2.md.txt",
+      "sha256": "f466a0f5c376ce40e15ea02302c6f35a71131640bc5b90cfa93be7c4126441c2",
+      "source_capture": {
+        "git_blob_oid": "e4a90b408035dba36592aa3efab0dc015fad3061",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/routes-v2.md.txt",
+        "working_original_sha256": "f466a0f5c376ce40e15ea02302c6f35a71131640bc5b90cfa93be7c4126441c2"
+      }
+    },
+    {
+      "bytes": 1327,
+      "current_successor": {
+        "byte_identical_to_retained_payload": false,
+        "bytes": 1538,
+        "corrected_main_history_commit": "480cc6cdd3ebbd8225e089a83831fb02a9929ed0",
+        "corrected_snapshot_sha256": "aba092231e54d0f995b92072693b937217c508df520f92755482f4ce5b9a173b",
+        "observed_commit": "f119a2fda7c6f48754ceaa1760b4dd5e38fe20f9",
+        "path": "claims/SX-COUNT-EVENT-BRIDGE-001/routes.md",
+        "sha256": "aba092231e54d0f995b92072693b937217c508df520f92755482f4ce5b9a173b"
+      },
+      "execution_authority": false,
+      "historical_role": "superseded_route_plans",
+      "mode": "0644",
+      "original_relative_path": "claims/SX-COUNT-EVENT-BRIDGE-001/routes.md",
+      "payload_relative_path": "payload/routes.md.txt",
+      "sha256": "4475b62cf81ab701faf2e2052059a5e8a5b8f05ce8afe6f279e0a5910c3d4246",
+      "source_capture": {
+        "git_blob_oid": "8e27fe3cfe060df5a0c30bc5c464c8c035e2a30e",
+        "git_mode": "100644",
+        "source_attribution": "exact_uncommitted_primary_working_bytes_later_captured_by_stash_not_an_authored_claim_commit",
+        "stash_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+        "stash_path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/routes.md.txt",
+        "working_original_sha256": "4475b62cf81ab701faf2e2052059a5e8a5b8f05ce8afe6f279e0a5910c3d4246"
+      }
+    }
+  ],
+  "prepared_date": "2026-11-14",
+  "privacy_review": "all_12_complete_payloads_read; no machine path, credential, private capture, external URL or embedded active payload identified; this is bounded manual review, not a secrecy guarantee",
+  "public_delivery_or_offhost_custody_claim": false,
+  "recorded_date": "2026-10-01",
+  "schema": "pid-rs/historical-count-event-prose-archive/v2",
+  "source_capture_commit": "7fbd7f025f5b0cb0c870bb47819f711e97de1435",
+  "source_capture_tree": "e80ad7f5f12ce7f45c7a1057a9fdb13093a50a38",
+  "source_state": "exact_uncommitted_primary_working_bytes_captured_by_preserved_stash",
+  "whole_worktree_or_retirement_clearance": false
+}

@@ -39,6 +39,7 @@ audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/** -text -whit
 audit/archive/numerical-claim-history-20260725/payload/** -text -whitespace
 audit/archive/sxpid3-s1-historical-checkers-v1/payload/** -text -whitespace
 audit/archive/retained-worktree-fragments-20261113/payload/** -text -whitespace
+audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/** -text -whitespace
 audit/archive/retained-worktree-fragments-20261113/PANDOC-TEMPLATES-NOTICE.txt -text -whitespace
 audit/archive/explanatory-figure-drafts-20261113/payload/** -text -whitespace
 audit/archive/explanatory-figure-drafts-20261113/FONT-LICENSE-*.txt -text -whitespace

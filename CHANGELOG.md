@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve twelve superseded count-event prose variants (36,045 bytes) in an
+  [inert historical archive](audit/archive/sx-count-event-bridge-primary-prose-20261001/ARCHIVE.md), with exact source identities,
+  stash-capture provenance and links to corrected claims. Keep their old commands and completion
+  assertions historical; this preservation adds no scientific, formal or toolchain qualification.
+
 - Restore the mathematical results guide's exact font-notice input after an archive summary
   changed its digest. Preserve the [failed CI and correction](audit/archive/explanatory-figure-notice-correction-20261114/RECORD.md),
   keep archive-local font notices intact, and retain the original PDF receipts and mutation checks.

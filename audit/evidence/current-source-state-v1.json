@@ -160,8 +160,8 @@
       {
         "git_mode": "100644",
         "path": ".gitattributes",
-        "sha256": "b209925862c3c64efe1a3ab0a051051639e1c81729f513b466a46f4a7a4abab4",
-        "size_bytes": 3361
+        "sha256": "bb61df2463f2e217d8a20b6908cb3c6d4012bf8687491b0d87f375567874d4fd",
+        "size_bytes": 3449
       },
       {
         "git_mode": "100644",
@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "46e6255519f4ebb00be44afbaaee2ae92dc3b0d5946405d951b978ef4e61e77b",
-        "size_bytes": 335453
+        "sha256": "1765a53fc035ae826b827e27c645f21b827a35df9a61b285b55142219267ef99",
+        "size_bytes": 335857
       },
       {
         "git_mode": "100644",
@@ -562,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "e407b65cd0e770daa413e8fa331365fca86c191b383113fdfeac13e919f8a13a",
-        "size_bytes": 47806
+        "sha256": "07fbd7df54d6ce666564ebc8e2b16c9c4298aa0b5d16f465439414e4845b7412",
+        "size_bytes": 48723
       },
       {
         "git_mode": "100644",
@@ -3168,6 +3168,90 @@
         "path": "audit/archive/stopped-prefix-stage-a-v3/sources/PidStoppedPrefixStageA/RawTargets.lean.txt",
         "sha256": "09f6126e579ae618ff651579f3d0f9a7a945c89fae276815fccb610600216035",
         "size_bytes": 2680
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/ARCHIVE.md",
+        "sha256": "1e1ecabc4d01e09d4ee3cfa3a97b9ca96abd5d54452598e074d1a5066047c36e",
+        "size_bytes": 5724
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/INDEX.json",
+        "sha256": "703e00e9de884790e37e2fa5b9dab43370652890be9fdf6227bd7c16a79b7365",
+        "size_bytes": 20833
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/claim-v1.md.txt",
+        "sha256": "c84f6a1e99210535de11aa67c0c27a3cf9461060ae896404916f1621f5d3d3b1",
+        "size_bytes": 4963
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/claim-v2.md.txt",
+        "sha256": "edaf8558a6bfebe3d1863f087747dbb91bf562068ddf02ec6e32ca8037da3a23",
+        "size_bytes": 6207
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/decision-v2.md.txt",
+        "sha256": "3c578f16e56c2feb1f375d1aa91ecf7d0027b7705dc51dc659125a0f916ff555",
+        "size_bytes": 3272
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/evidence-matrix.md.txt",
+        "sha256": "6e1fdb217f4052bb9ec1f9fdc5e0bcfe640fd531afaf2233f25108cf2034d69f",
+        "size_bytes": 2523
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/failures/revision-1-nonzero-cell-quantifier.md.txt",
+        "sha256": "aca9ce08d6ee7edda151444e63572b691880a753858915efaef7b20d0a82c8cc",
+        "size_bytes": 1532
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/formal/theorem-map.md.txt",
+        "sha256": "6fe0dd8f168e9115773dcb86a4fec4c27c6692c281fc4022ac68f15f0da61b70",
+        "size_bytes": 2721
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/obligations-v2.md.txt",
+        "sha256": "4e9ef05ad5f646d4f1742a1a861a5203f97f721bffe4d8bf46e7ce2ff595cb26",
+        "size_bytes": 4220
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/obligations.md.txt",
+        "sha256": "75d11d844de73609cfcb1f552690a677e88d8159ee3a974eaf9a476e1a4be5e3",
+        "size_bytes": 3432
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/phase-a-verification-2026-07-25.md.txt",
+        "sha256": "5ec2b42ea212e3491685db7d65b9ea8bb69f406e9a8709a0f316261964c7f2ff",
+        "size_bytes": 3476
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/revision-index.md.txt",
+        "sha256": "db8552ef69a5bf87058f4d769582408a0f50e7cf6b81ac9b26b6f83e7f1c8258",
+        "size_bytes": 576
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/routes-v2.md.txt",
+        "sha256": "f466a0f5c376ce40e15ea02302c6f35a71131640bc5b90cfa93be7c4126441c2",
+        "size_bytes": 1796
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sx-count-event-bridge-primary-prose-20261001/payload/routes.md.txt",
+        "sha256": "4475b62cf81ab701faf2e2052059a5e8a5b8f05ce8afe6f279e0a5910c3d4246",
+        "size_bytes": 1327
       },
       {
         "git_mode": "100644",
@@ -32992,7 +33076,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "d207a1753a01ca23f1133dbf1d0fee5a5b48e92c2f79098f17830d9dd2531005",
+        "sha256": "bbb024ccf60645f3837f800cede978d34c4559f125144d4db4680bd26f1c4177",
         "size_bytes": 139663
       },
       {
@@ -33962,8 +34046,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "293fe314d147414cee40ba35359c5fbd22343fd726fa1b14dcd56e987ca8f918",
-    "entry_count": 5636
+    "entries_sha256": "f637240cf3db79c4ec8ef49e0179dafa3becb64d42f42938eb4c06d750988704",
+    "entry_count": 5650
   },
   "subprojections": [
     {
@@ -33991,7 +34075,7 @@
       ]
     },
     {
-      "entries_sha256": "f213d1b1c8efbca00f19607166e430fd9b619c8e7dfb1cd5b1fdc7800aec11b5",
+      "entries_sha256": "55d0e30565e1b02e3c0d3f70c544784770d6c31072fcff732a2ad80979893d60",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

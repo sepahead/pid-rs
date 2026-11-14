@@ -1,4 +1,16 @@
-# Session handoff — updated 14 November 2026
+# Session handoff — updated 15 November 2026
+
+## Historical count-event prose retained, 15 November 2026
+
+The [inert prose archive](audit/archive/sx-count-event-bridge-primary-prose-20261001/ARCHIVE.md) preserves twelve exact
+variants from the retained primary working tree and their later stash capture, totaling 36,045
+bytes. Its index separates that working-state provenance from the corrected successors already
+on main and keeps the original modes and blob identities. Current claim decisions remain the
+authority; former commands, completion labels and sparse-support assertions remain historical.
+This preservation gives no new scientific result, formal replay or toolchain qualification, and
+it does not authorize removal of the shared stash, dirty worktrees or private recovery bytes.
+Require fresh applicable checks and exact-commit hosted evidence before main promotion; current
+execution and custody observations remain in the ignored local handoff.
 
 ## Archive notice input corrected, 14 November 2026
 
