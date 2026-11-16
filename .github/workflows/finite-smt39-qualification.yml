@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - "audit/formal/finite-smt39-qualification-v1/**"
-      - ".github/workflows/finite-smt39-qualification.yml"
+      - audit/formal/finite-smt39-qualification-v1/**
+      - .github/workflows/finite-smt39-qualification.yml
   push:
     paths:
-      - "audit/formal/finite-smt39-qualification-v1/**"
-      - ".github/workflows/finite-smt39-qualification.yml"
+      - audit/formal/finite-smt39-qualification-v1/**
+      - .github/workflows/finite-smt39-qualification.yml
 
 permissions:
   contents: read
