@@ -45,6 +45,9 @@ audit/archive/explanatory-figure-drafts-20261113/payload/** -text -whitespace
 audit/archive/explanatory-figure-drafts-20261113/FONT-LICENSE-*.txt -text -whitespace
 audit/archive/explanatory-figure-drafts-20261113/*.bundle -text -diff -merge
 
+# This finite verification unit binds its source, raw streams and reports as exact bytes.
+audit/formal/finite-smt39-qualification-v1/** -text -whitespace
+
 # Preserve the reviewed scanner patch's context-space line and the original council table's
 # trailing blank line. Their exact archived bytes are bound by the accompanying manifest.
 audit/evidence/public-carrier-digest-scan-repair-2026-09-05/ci.yml.patch -text -whitespace

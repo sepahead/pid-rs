@@ -211,8 +211,8 @@ $$
 =\sum_{f_B}P(f_B)\bigl[-\ln P(F_B=f_B\mid A_B=a_B)\bigr].
 $$
 
-The coordinates outside $B$ sum out, and because $A_B$ is a function of $F_B$, the ratio inside the
-logarithm is a conditional probability. The right side is the conditional entropy
+The coordinates outside $B$ sum out, and because $A_B$ is a function of $F_B$, the logarithm of the
+ratio is the negative logarithm of the conditional probability. The right side is the conditional entropy
 $H(F_B\mid A_B)$.
 
 Repeat the argument in each target stratum $T=t$ with positive probability and average over $t$.

@@ -1,0 +1,271 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "capture_bounds": {
+    "combined_stream_bytes_per_command": 1048576,
+    "limits": "Qualified combined logical cap; no hard RSS/OS/preemption/atomicity guarantee.",
+    "per_workload_child_seconds": 15,
+    "stderr_postcondition_cap": 65536,
+    "total_capture_bytes": 16777216,
+    "whole_seconds": 120
+  },
+  "captured_bytes": 435036,
+  "commitments": {
+    "author_actual_readback_sha256": "7c8e386f017168f0f843cf61ef0900af3f75713ef7301210140bfd21bf133ca2",
+    "execution_pins_sha256": "b42a1b8444427983d49b59562189e9790a055dcb2bd09f8169a2d65cb1da8ca9",
+    "private_result_sha256": "afa25de4c9b3b82c3bd197a13dea70e4f10570256534d693f389a64fd2fbac6f",
+    "root_seal_sha256": "de1b203320d3ddef3c73ccfe0dc45f01a66df5647a00ead3dc51d5fe6b87ddc1",
+    "source_advisory_final_sha256": "a5fdf899d843ed4c78d2ed82c685eea270ad6634e05b872f94f8d031c4b289b3",
+    "source_advisory_first_sha256": "a23848d75f71fc9196be7b98f6eea54af327e234b08525db3d92c1f0a58c2bcf",
+    "task_sha256": "29e1977805f386c6b38c0167b398b1f05b7496eff0ed8f008ddbb145807d5186",
+    "tool_reported_outer_native_record_sha256": "f9b69339a2c983e7d3868325263a59e4b20e03ca4295a78621cb566082ae9935"
+  },
+  "completed_utc": "2026-11-15T23:12:41.782254+00:00",
+  "counts": {
+    "historical_protocol_records_per_mode": 78,
+    "new_adapter_accepts_per_mode": 3,
+    "new_adapter_controls_per_mode": 38,
+    "new_adapter_refusals_per_mode": 35,
+    "original_accepts_per_mode": 85,
+    "original_controls_per_mode": 454,
+    "original_refusals_per_mode": 369,
+    "semantic_sat_projections_per_mode": 34,
+    "trusted_historical_unsat_statuses_per_mode": 44,
+    "workload_children": 7
+  },
+  "elapsed_seconds": 4.822829999960959,
+  "input_boundary": {
+    "after_execution_changes": "Two new adapter-report byte copies, this selected execution projection, and publication narrative/manifest finalization were added after the fixed run; no executed Python source or original mathematical input/report changed.",
+    "all_pins_and_candidate_bytes_modes_unchanged_during_execution": true,
+    "candidate_files_at_execution": 251,
+    "pinned_files": 263
+  },
+  "limits": [
+    "No fresh solver, generator, Lean or original qualification controller execution.",
+    "34 SAT declared-variable projections and12get-value associations only;44 UNSAT answers remain trusted historical statuses without checked proof certificates.",
+    "Auxiliary Z3 helper bodies remain opaque; original Finset transport, original4.33SPEC12controls, H1, B-L, probability/log/Rust/calibration/application, Programs A-E and global hold remain open.",
+    "Logical stream/time guards are not hard OS/RSS/preemption/filesystem-atomicity guarantees.",
+    "The containing commit and hosted/mainline acceptance are resolved separately from Git and hosted checks; this file does not claim its own final commit."
+  ],
+  "normal_optimized_output_bytes_identical": true,
+  "omissions_and_retention": "Original private capture/controller/native receipts, host/user paths, process identifiers, process metadata and original runtime artifacts are omitted from this public projection and retained in restricted local records. Public permitted stream/source/report preimages are included. Local retention is not an off-host or permanent scholarly deposit. A commitment binds omitted bytes without reproducing them.",
+  "role": "Selected public execution facts from the later portable derivative validation; original private controller/native records remain unchanged.",
+  "runtime": {
+    "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "selected_binary_commitments": [
+      {
+        "bytes": 5851152,
+        "mode": 493,
+        "role": "CPython framework",
+        "sha256": "4be6916a10dc17699dbe1f29fdfb794f9828cf316741e74a980b9faa5e46566c"
+      },
+      {
+        "bytes": 34640,
+        "mode": 493,
+        "role": "CPython executable",
+        "sha256": "9520366c4a127326582aa17cbdcd95fe615ba8d2e6fc350af8dac328f204af2a"
+      }
+    ],
+    "trust_boundary": "Runtime version/hash facts, not authenticated software or complete dependency inventory.",
+    "version": "3.15.0 (main, Oct  9 2026, 11:16:41) [Clang 21.0.0 (clang-2100.3.34.2)]"
+  },
+  "schema": "finite-smt39-portable-validation-projection-v1",
+  "selection": {
+    "inputs_and_saved_reports_previously_exposed": true,
+    "retries": 0,
+    "scope": "Development/reproduction checking only; source-only preparations/corrections were retained and never scored as successful runs. No blind/preregistered/selection-unbiased scientific credit.",
+    "submitted_campaigns": 1
+  },
+  "started_utc": "2026-11-15T23:12:36.958879+00:00",
+  "status": "portable_derivative_validation_passed",
+  "workload_children": [
+    {
+      "argv": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "controls.py",
+        "--manifest"
+      ],
+      "direct_child_reaped": true,
+      "label": "manifest",
+      "native_exit": 0,
+      "owned_group_absent": true,
+      "registry_record_observed": true,
+      "seconds": 0.21544033312238753,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 183232,
+        "public_bytes": "PAYLOADS.json",
+        "sha256": "2ecb951a8b4daabbd720ec17e0f5b088a5dca4df3143fab6bef43498ee456c55"
+      },
+      "stdout_eof_and_stderr_eof": true,
+      "stop": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "controls.py",
+        "model_checker.py"
+      ],
+      "direct_child_reaped": true,
+      "label": "controls-normal",
+      "native_exit": 0,
+      "owned_group_absent": true,
+      "registry_record_observed": true,
+      "seconds": 0.6634730419609696,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 76330,
+        "public_bytes": "reports/controls-normal.json",
+        "sha256": "8c70d80491280786c56057ee0eecc036fc3831b3c5c1231d34d1d3aaf085b40b"
+      },
+      "stdout_eof_and_stderr_eof": true,
+      "stop": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "controls.py",
+        "model_checker.py"
+      ],
+      "direct_child_reaped": true,
+      "label": "controls-optimized",
+      "native_exit": 0,
+      "owned_group_absent": true,
+      "registry_record_observed": true,
+      "seconds": 0.6842337502166629,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 76330,
+        "public_bytes": "reports/controls-optimized.json",
+        "sha256": "8c70d80491280786c56057ee0eecc036fc3831b3c5c1231d34d1d3aaf085b40b"
+      },
+      "stdout_eof_and_stderr_eof": true,
+      "stop": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "qualify.py"
+      ],
+      "direct_child_reaped": true,
+      "label": "retained-normal",
+      "native_exit": 0,
+      "owned_group_absent": true,
+      "registry_record_observed": true,
+      "seconds": 0.27880995883606374,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 45106,
+        "public_bytes": "reports/retained-normal.json",
+        "sha256": "eab596f22f289451861f7c657c3fad0d6f4d7775453ff044e3ae3e2a2d22807d"
+      },
+      "stdout_eof_and_stderr_eof": true,
+      "stop": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "qualify.py"
+      ],
+      "direct_child_reaped": true,
+      "label": "retained-optimized",
+      "native_exit": 0,
+      "owned_group_absent": true,
+      "registry_record_observed": true,
+      "seconds": 0.27961391606368124,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 45106,
+        "public_bytes": "reports/retained-optimized.json",
+        "sha256": "eab596f22f289451861f7c657c3fad0d6f4d7775453ff044e3ae3e2a2d22807d"
+      },
+      "stdout_eof_and_stderr_eof": true,
+      "stop": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "adapter_self_test.py"
+      ],
+      "direct_child_reaped": true,
+      "label": "adapter-normal",
+      "native_exit": 0,
+      "owned_group_absent": true,
+      "registry_record_observed": true,
+      "seconds": 1.1156135420314968,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 4466,
+        "public_bytes": "reports/adapter-normal.json",
+        "sha256": "f953b03cf2ad1dce803d24cc8b4153432f3c2fdca9f7bd9db0931fcfab432261"
+      },
+      "stdout_eof_and_stderr_eof": true,
+      "stop": null
+    },
+    {
+      "argv": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "adapter_self_test.py"
+      ],
+      "direct_child_reaped": true,
+      "label": "adapter-optimized",
+      "native_exit": 0,
+      "owned_group_absent": true,
+      "registry_record_observed": true,
+      "seconds": 1.015451375162229,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 4466,
+        "public_bytes": "reports/adapter-optimized.json",
+        "sha256": "f953b03cf2ad1dce803d24cc8b4153432f3c2fdca9f7bd9db0931fcfab432261"
+      },
+      "stdout_eof_and_stderr_eof": true,
+      "stop": null
+    }
+  ],
+  "year": 2026
+}

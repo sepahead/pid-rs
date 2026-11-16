@@ -1,0 +1,124 @@
+M12-admit-duplicate-branch expect=sat
+sat
+(
+  (define-fun positive-table () Bool
+    (and (>= w0 0)
+     (>= w1 0)
+     (>= w2 0)
+     (>= w3 0)
+     (>= w4 0)
+     (>= w5 0)
+     (>= w6 0)
+     (>= w7 0)
+     (>= w8 0)
+     (>= w9 0)
+     (>= w10 0)
+     (>= w11 0)
+     (>= w12 0)
+     (>= w13 0)
+     (>= w14 0)
+     (>= w15 0)))
+  (define-fun h () (_ BitVec 3)
+    #b111)
+  (define-fun fixture () Bool
+    (let ((a!1 (bvor (ite (= ((_ extract 3 3) k) ((_ extract 3 3) r)) #b001 #b000)
+                 (ite (= ((_ extract 2 2) k) ((_ extract 2 2) r)) #b010 #b000)
+                 (ite (= ((_ extract 1 1) k) ((_ extract 1 1) r)) #b100 #b000)
+                 #b000))
+      (a!2 (= w0 (ite (or (= k #x0) (= r #x0)) 1 0)))
+      (a!3 (= w1 (ite (or (= k #x1) (= r #x1)) 1 0)))
+      (a!4 (= w2 (ite (or (= k #x2) (= r #x2)) 1 0)))
+      (a!5 (= w3 (ite (or (= k #x3) (= r #x3)) 1 0)))
+      (a!6 (= w4 (ite (or (= k #x4) (= r #x4)) 1 0)))
+      (a!7 (= w5 (ite (or (= k #x5) (= r #x5)) 1 0)))
+      (a!8 (= w6 (ite (or (= k #x6) (= r #x6)) 1 0)))
+      (a!9 (= w7 (ite (or (= k #x7) (= r #x7)) 1 0)))
+      (a!10 (= w8 (ite (or (= k #x8) (= r #x8)) 1 0)))
+      (a!11 (= w9 (ite (or (= k #x9) (= r #x9)) 1 0)))
+      (a!12 (= w10 (ite (or (= k #xa) (= r #xa)) 1 0)))
+      (a!13 (= w11 (ite (or (= k #xb) (= r #xb)) 1 0)))
+      (a!14 (= w12 (ite (or (= k #xc) (= r #xc)) 1 0)))
+      (a!15 (= w13 (ite (or (= k #xd) (= r #xd)) 1 0)))
+      (a!16 (= w14 (ite (or (= k #xe) (= r #xe)) 1 0)))
+      (a!17 (= w15 (ite (or (= k #xf) (= r #xf)) 1 0))))
+  (and (= x a!1)
+       (= tau (= ((_ extract 0 0) k) ((_ extract 0 0) r)))
+       a!2
+       a!3
+       a!4
+       a!5
+       a!6
+       a!7
+       a!8
+       a!9
+       a!10
+       a!11
+       a!12
+       a!13
+       a!14
+       a!15
+       a!16
+       a!17)))
+  (define-fun N () Int
+    (+ w0 w1 w2 w3 w4 w5 w6 w7 w8 w9 w10 w11 w12 w13 w14 w15))
+  (define-fun q () (_ BitVec 3)
+    #b111)
+  (define-fun w3 () Int
+    0)
+  (define-fun w10 () Int
+    0)
+  (define-fun w5 () Int
+    0)
+  (define-fun w8 () Int
+    0)
+  (define-fun w7 () Int
+    0)
+  (define-fun b () (_ BitVec 7)
+    #b0000000)
+  (define-fun w2 () Int
+    0)
+  (define-fun w9 () Int
+    0)
+  (define-fun w1 () Int
+    0)
+  (define-fun w6 () Int
+    0)
+  (define-fun w12 () Int
+    0)
+  (define-fun w0 () Int
+    0)
+  (define-fun w11 () Int
+    0)
+  (define-fun w15 () Int
+    0)
+  (define-fun k () (_ BitVec 4)
+    #x0)
+  (define-fun w13 () Int
+    0)
+  (define-fun a () (_ BitVec 7)
+    #b0000000)
+  (define-fun tau () Bool
+    false)
+  (define-fun w4 () Int
+    0)
+  (define-fun w14 () Int
+    0)
+  (define-fun c () (_ BitVec 7)
+    #b0000000)
+  (define-fun x () (_ BitVec 3)
+    #b000)
+  (define-fun r () (_ BitVec 4)
+    #x0)
+)
+((a #b0000000)
+ (b #b0000000)
+ (c #b0000000)
+ (q #b111)
+ (h #b111)
+ (x #b000)
+ (tau false)
+ (k #x0)
+ (r #x0)
+ ((U a k) 0)
+ ((V a k) 0)
+ (N 0))

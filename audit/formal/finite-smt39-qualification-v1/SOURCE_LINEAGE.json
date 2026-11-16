@@ -1,0 +1,37 @@
+{
+  "adapter_controls": {
+    "credit": "New portable reader controls only; do not add to original454controls or theorem counts.",
+    "positive": 3,
+    "refusal": 35,
+    "revision": 1,
+    "sha256": "29c955ed23b72d5a344d78f4af1674fe1b0a3c07da154cc5fb341a52ba12320e",
+    "total": 38
+  },
+  "checked_sat_projection_records": 34,
+  "checker": {
+    "bytes": 19902,
+    "change": "none",
+    "sha256": "d6e23bf5d329368cf9681c4b7ee069a2a30930c368c842514253c8d6a3476d2e"
+  },
+  "controls": {
+    "all_other_source_bytes_identical": true,
+    "cases_per_mode": 454,
+    "change": "Only the raw-root locator, historical case-index read and native-observation read are adapted.",
+    "normalized_source_sha256": "05827812efd8f2b3464731f934aef758098239bd8873fa50d2ee271bdce18293",
+    "original_private_source_sha256": "2cef4972a9b7430b5ad95910a0bee16bc08bc347ce196784547651578dfd0c01",
+    "payload_descriptors_sha256": "2ecb951a8b4daabbd720ec17e0f5b088a5dca4df3143fab6bef43498ee456c55",
+    "portable_source_sha256": "9da8a79a94620d48912e0b19bd28946a19c5cadf98312162969f913a95a0537b",
+    "qualification": "Portable storage adapter actually passed normal/optimized exact historical output comparisons; see PORTABLE_VALIDATION.json. No original control constructor or expected decision changed."
+  },
+  "limits": "No fresh solver, complete helper semantics, UNSAT certificate, old SPEC closure, scientific novelty, estimator calibration, authenticity or public custody claim.",
+  "observations_projection_sha256": "16d16a65130140688f88860bbba5824350813df0fbd3af897ff63f0fc55bc9a8",
+  "original_capture_receipts": "Retained privately as original bytes; public metadata is a separate selected projection.",
+  "portable_reader": {
+    "change": "Prospective wrapper strict duplicate-key/nonfinite JSON parsing and recursive shape/type/value acceptance checks. Original checker is unchanged.",
+    "revision": 2,
+    "sha256": "720d1d0214e11bbc0a540adce1d6ef70cc3d38790ee3abdbb03c822962bfffaa"
+  },
+  "portable_validation": "One sealed later portable campaign, all7commands native0/empty stderr/exact comparisons; original historical RESULT_PROJECTION preparation labels remain unchanged.",
+  "raw_stream_files": 234,
+  "schema": "smt39-public-source-lineage-v1"
+}

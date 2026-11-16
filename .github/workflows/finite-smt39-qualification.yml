@@ -1,0 +1,72 @@
+name: Finite SMT39 retained witness qualification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "audit/formal/finite-smt39-qualification-v1/**"
+      - ".github/workflows/finite-smt39-qualification.yml"
+  push:
+    paths:
+      - "audit/formal/finite-smt39-qualification-v1/**"
+      - ".github/workflows/finite-smt39-qualification.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: finite-smt39-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Exposed finite projections and portable reader controls
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out the exact event head
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+
+      - name: Install CPython
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.14"
+
+      - name: Require the exact event head
+        shell: bash
+        env:
+          EXPECTED_HEAD: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+
+      - name: Check retained bytes and normal/optimized parity
+        shell: bash
+        working-directory: audit/formal/finite-smt39-qualification-v1
+        run: |
+          set -euo pipefail
+          run_case() {
+            local label="$1"
+            shift
+            timeout 60s "$@" > "$RUNNER_TEMP/$label.stdout" 2> "$RUNNER_TEMP/$label.stderr"
+            test ! -s "$RUNNER_TEMP/$label.stderr"
+          }
+          run_case manifest python3 -I -S -B controls.py --manifest
+          cmp PAYLOADS.json "$RUNNER_TEMP/manifest.stdout"
+          run_case controls-normal python3 -I -S -B controls.py model_checker.py
+          run_case controls-optimized python3 -O -I -S -B controls.py model_checker.py
+          cmp reports/controls-normal.json "$RUNNER_TEMP/controls-normal.stdout"
+          cmp reports/controls-optimized.json "$RUNNER_TEMP/controls-optimized.stdout"
+          cmp "$RUNNER_TEMP/controls-normal.stdout" "$RUNNER_TEMP/controls-optimized.stdout"
+          run_case retained-normal python3 -I -S -B qualify.py
+          run_case retained-optimized python3 -O -I -S -B qualify.py
+          cmp reports/retained-normal.json "$RUNNER_TEMP/retained-normal.stdout"
+          cmp reports/retained-optimized.json "$RUNNER_TEMP/retained-optimized.stdout"
+          cmp "$RUNNER_TEMP/retained-normal.stdout" "$RUNNER_TEMP/retained-optimized.stdout"
+          run_case adapter-normal python3 -I -S -B adapter_self_test.py
+          run_case adapter-optimized python3 -O -I -S -B adapter_self_test.py
+          cmp "$RUNNER_TEMP/adapter-normal.stdout" "$RUNNER_TEMP/adapter-optimized.stdout"

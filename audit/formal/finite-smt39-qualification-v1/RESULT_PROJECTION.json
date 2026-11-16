@@ -1,0 +1,79 @@
+{
+  "completed_utc": "2026-11-15T14:59:28.340461+00:00",
+  "controls_per_mode": 454,
+  "elapsed_seconds": 0.947798417,
+  "historical_protocol_records_per_mode": 78,
+  "historical_v2_status": "finite_retained_model_qualification_passed",
+  "native_children": [
+    {
+      "direct_child_reaped": true,
+      "label": "controls-normal",
+      "native": 0,
+      "reason": null,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 76330,
+        "sha256": "8c70d80491280786c56057ee0eecc036fc3831b3c5c1231d34d1d3aaf085b40b"
+      }
+    },
+    {
+      "direct_child_reaped": true,
+      "label": "controls-optimized",
+      "native": 0,
+      "reason": null,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 76330,
+        "sha256": "8c70d80491280786c56057ee0eecc036fc3831b3c5c1231d34d1d3aaf085b40b"
+      }
+    },
+    {
+      "direct_child_reaped": true,
+      "label": "retained-normal",
+      "native": 0,
+      "reason": null,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 45106,
+        "sha256": "eab596f22f289451861f7c657c3fad0d6f4d7775453ff044e3ae3e2a2d22807d"
+      }
+    },
+    {
+      "direct_child_reaped": true,
+      "label": "retained-optimized",
+      "native": 0,
+      "reason": null,
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 45106,
+        "sha256": "eab596f22f289451861f7c657c3fad0d6f4d7775453ff044e3ae3e2a2d22807d"
+      }
+    }
+  ],
+  "normal_optimized_output_bytes_identical": true,
+  "original_independent_actual_audit_sha256": "f5d45d761fd87a6380777b61ffefe0fa917b8cc137d0bd0ac592f75a7ace7438",
+  "original_private_outer_native_sha256": "f23872d72b24e7cac6388a108fb1d0eaae36a9b44efc7a0ff775205a77dcf289",
+  "original_private_result_sha256": "b96bbd2c5bcb8f2c7bf2eb3193c6a975fc99d6eef78deebcede8c33b4c84ad89",
+  "original_private_terminal_sha256": "b63a3c2947f1f156d425ffe7aa8a60e8cccb1b14aedafa5e2720f0eff25baef0",
+  "positive_controls_per_mode": 85,
+  "prospective_portable_adapter_validation": "NOT_EXECUTED_DURING_PREPARATION",
+  "publication_status": "PRIVATE_REVIEW_CANDIDATE_NOT_PUBLISHED",
+  "refusals_per_mode": 369,
+  "role": "Selected historical result fields; original private receipts remain unchanged.",
+  "schema": "smt39-public-qualification-result-projection-v1",
+  "scientific_limits": "Finite exposed validation of25declared-variable projections/12get-values, original case premises and negated predicates of34retainedSAT witnesses, with independently enumerated set antichains and exact Fraction Gaussian inverse.44UNSAT responses are historical trusted solver observations only. AuxiliaryZ3helperbodies unvalidated; no fresh solver observation, UNSAT certificate, all256Finsettypedtransport, B-L/old4.33SPEC12preCandidate/ProgramA-E/H1/calibration/Rust closure.",
+  "semantic_sat_projections_per_mode": 34,
+  "started_utc": "2026-11-15T14:59:27.393395+00:00"
+}

@@ -7,6 +7,23 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Correct the source-partition report's Proof 3 explanation: the displayed logarithmic ratio
+  is the negative logarithm of a conditional probability. The equation, all 465 mathematical
+  spans and numerical results are unchanged. Regenerate the matching 17-page PDF and retain
+  the [dated correction and page review](audit/evidence/source-partition-conditional-probability-erratum-2026-11-15.md).
+
+- Publish a [portable finite witness-checking unit](audit/formal/finite-smt39-qualification-v1/README.md)
+  with the unchanged 34-witness checker, exact historical streams and reports, 454 original
+  controls and 38 portable-adapter controls per Python mode. Add exact-output hosted replay.
+  This is exposed finite reproduction evidence; UNSAT certificates, calibration, original
+  formal-protocol gaps and the five SxPID3 programs retain their existing boundaries.
+
+- Record [restricted local recovery and primary-checkout restoration](audit/evidence/private-retention-and-primary-disposition-2026-11-16.md),
+  with safe commitments to Git/admin and raw working-state recovery, 53.10 GB of admitted
+  worktree data, and all 226 preserved physical originals. Keep the failed initial transition
+  and its separate permission-only correction distinct. NCP and other-project data remain
+  outside cleanup; no off-host or scientific acceptance follows from these storage checks.
+
 - Preserve twelve superseded count-event prose variants (36,045 bytes) in an
   [inert historical archive](audit/archive/sx-count-event-bridge-primary-prose-20261001/ARCHIVE.md), with exact source identities,
   stash-capture provenance and links to corrected claims. Keep their old commands and completion

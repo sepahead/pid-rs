@@ -1,0 +1,86 @@
+{
+  "artifact_index": {
+    "bytes": 16388,
+    "sha256": "3e27edfa2a17985588654bf5956c50ea2376a702d9b5956649fe6e62b193d1e0"
+  },
+  "boundaries": [
+    "offhost storage",
+    "physical OS metadata or ACL replica",
+    "NCP or other-project content capture",
+    "scientific or formal acceptance",
+    "global filesystem inventory",
+    "permission to delete original sources"
+  ],
+  "format": "restricted-local-custody-aggregate-v1",
+  "indexed_objects": 79,
+  "observed_utc": "2026-11-15T22:31:22.393974+00:00",
+  "private_payload_published": false,
+  "retention": {
+    "access": "approved restricted owner-only local store",
+    "policy_object": "P001",
+    "same_device_loss_risk": true,
+    "term": "indefinite; no automatic cleanup; later disposal requires explicit maintainer decision and verified successors"
+  },
+  "scope_note": "Three admitted PID checkouts in two raw capture scopes. The separate-project container found in the later metadata census is excluded from content capture and retained in place; that census is not this payload scope. Earlier failures retain their failed status. Historical negative evidence remains inert under its original scientific boundaries.",
+  "scopes": [
+    {
+      "IPC_xattrs_not_read": 56,
+      "audit_object": "A010",
+      "data_manifest_object": "A006",
+      "directories": 58244,
+      "fifos": 42,
+      "id": "A",
+      "nodes": 446516,
+      "payload_shards": 50,
+      "regular_bytes": 51762582567,
+      "regular_files": 388099,
+      "retrieval_manifest_object": "A007",
+      "retrieved_raw_bytes": 51762582567,
+      "retrieved_raw_files": 388099,
+      "sockets": 14,
+      "symlinks": 117,
+      "tar_bytes": 52072202240,
+      "xattr_values_recorded": 446468
+    },
+    {
+      "IPC_xattrs_not_read": 0,
+      "audit_object": "B010",
+      "data_manifest_object": "B006",
+      "directories": 1564,
+      "fifos": 0,
+      "id": "B",
+      "nodes": 11382,
+      "payload_shards": 2,
+      "regular_bytes": 1342042988,
+      "regular_files": 9818,
+      "retrieval_manifest_object": "B007",
+      "retrieved_raw_bytes": 1342042988,
+      "retrieved_raw_files": 9818,
+      "sockets": 0,
+      "symlinks": 0,
+      "tar_bytes": 1349519360,
+      "xattr_values_recorded": 11384
+    }
+  ],
+  "shard_index": {
+    "bytes": 8636,
+    "sha256": "6cc6e0acb6ce3f5a0ce94719bace7b322ccf78f8d19ee87048168a1c27580d76"
+  },
+  "source_mutations": false,
+  "source_retirement_performed": false,
+  "totals": {
+    "IPC_xattrs_not_read": 56,
+    "directories": 59808,
+    "fifos": 42,
+    "nodes": 457898,
+    "payload_shards": 52,
+    "regular_bytes": 53104625555,
+    "regular_files": 397917,
+    "retrieved_raw_bytes": 53104625555,
+    "retrieved_raw_files": 397917,
+    "sockets": 14,
+    "symlinks": 117,
+    "tar_bytes": 53421721600,
+    "xattr_values_recorded": 457852
+  }
+}

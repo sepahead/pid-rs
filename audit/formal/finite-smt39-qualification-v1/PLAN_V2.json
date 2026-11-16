@@ -1,0 +1,316 @@
+{
+  "schema": "pid-rs-smt39-prospective-independent-controls-plan-v2",
+  "frozen_utc": "2026-11-15T08:08:08.542584+00:00",
+  "phase": "SOURCE_ONLY_NO_CHECKER_IMPORT_OR_CONTROL_EXECUTION",
+  "api": "validate(case, solver, stdout_bytes, stderr_bytes, native_int) -> explicit accepted/stage/reason record; unexpected exceptions fail campaign",
+  "harness_contract": "Python3.9 standardlibrary; CLI CHECKER_PATH; one boundedJSONstdout; no filewrites/subprocess/solver/generator imports; native0 only if every frozen expectation matches. Root executes normal/O only after reviewed source/pins/newseal.",
+  "positive_groups": [
+    {
+      "id": "P1-real-SAT",
+      "count": 34,
+      "expect": "accept; exact17SATcases×2solvers semantic projection"
+    },
+    {
+      "id": "P2-real-UNSAT",
+      "count": 44,
+      "expect": "accept44historicalstatuses; no semantic/proofcertificate credit"
+    },
+    {
+      "id": "P3-unconstrained-negative-Int",
+      "count": 2,
+      "expect": "acceptM01a64b32c0qh0x0taufalsek=r0,w0=-1other0,U=V=N=-1; twoformats"
+    },
+    {
+      "id": "P4-whitespace-equivalence",
+      "count": 2,
+      "expect": "acceptM01sexpressionmodel/get-value ASCIIspace/tab/LF rewrapping, exactecho/statusfixed"
+    },
+    {
+      "id": "P5-equivalent-BV-literals",
+      "count": 2,
+      "expect": "acceptM01groundBV alternatecanonical#b/#x/indexedwidth representations without value/type change"
+    },
+    {
+      "id": "P6-Z3-opaque-helper-boundary",
+      "count": 1,
+      "expect": "acceptdeclared25projection with knownnullaryBoolfixture helper body replacedtrue, markauxunchecked; originalcasepremises/getvaluesindependentlychecked"
+    }
+  ],
+  "negative_groups": [
+    {
+      "id": "N1-API-capture",
+      "per_solver": 12,
+      "count": 24,
+      "mutations": [
+        "nativeFalse",
+        "native1",
+        "native-1",
+        "native0.0",
+        "stdoutstr",
+        "stderrstr",
+        "unknowncase",
+        "unknownsolver",
+        "nonemptystderrwarning",
+        "embeddedNUL",
+        "nonASCIIbyte",
+        "UnicodeLS"
+      ]
+    },
+    {
+      "id": "N2-SAT-frame",
+      "per_solver": 16,
+      "count": 32,
+      "mutations": [
+        "wrongcaseecho",
+        "wrongexpectlabel",
+        "missingecho",
+        "duplicateecho",
+        "wrongsolverquoteecho",
+        "unsatstatus",
+        "duplicatestatus",
+        "missingmodelframe",
+        "missinggetvaluesframe",
+        "reversedframes",
+        "thirdframe",
+        "trailingerror",
+        "unbalancedframe",
+        "leadingblankline",
+        "SMTcommentinpayload",
+        "trailingbogusatom"
+      ]
+    },
+    {
+      "id": "N3-required-model-vars",
+      "count": 150,
+      "construction": "25variables×missing/duplicate/wrongdeclaredsort×2solvers. Invaliddeclaredsort uses a correspondingly validliteral in wrongsort so exactsort guard is tested."
+    },
+    {
+      "id": "N4-get-value-association",
+      "count": 72,
+      "construction": "12queries×missing/duplicate/changedwelltypedvalue×2solvers; leave declaredmodel unchanged. Queryidentity and U/V/N checked, no dictionarylastwins."
+    },
+    {
+      "id": "N5-semantic",
+      "count": 46,
+      "construction": "14neutralcaseassignments+9premiseonlyfailures, each×2solvers; all25typedvalues and12getvalues coherent. Exactsemantic reason must be no-counterexample or premise-false as below."
+    },
+    {
+      "id": "N6-ground-value-shapes",
+      "per_solver": 10,
+      "count": 20,
+      "mutations": [
+        "nonnullarycoredefinition",
+        "symboliccorevalue",
+        "indexedBVnoncanonicaloutofrange",
+        "BVwrongwidth",
+        "BVinvaliddigit",
+        "Intrealnumeral",
+        "Intrational",
+        "Intsymbol",
+        "Boolinteger",
+        "Booluppercase"
+      ]
+    },
+    {
+      "id": "N7-extra-helper-shape",
+      "count": 5,
+      "construction": "Z3unknownhelper/wronghelpersort/non-nullaryhelper/duplicatehelper; cvc5anyextrahelper. No opaquebodysemanticcertification."
+    },
+    {
+      "id": "N8-resource-boundaries",
+      "count": 8,
+      "construction": "stdoutcap+1, tokenbudget+1, nestingdepth+1, integerlexemedigits+1, each×2solvers. Caps taken from independently approved explicitresourcecontract, not observedcheckeroutcome; materialize/pin allpayloads beforeimport."
+    },
+    {
+      "id": "N9-UNSAT-frame",
+      "per_solver": 6,
+      "count": 12,
+      "mutations": [
+        "unknownstatus",
+        "native1",
+        "nonemptystderr",
+        "extramodel",
+        "wrongcaseecho",
+        "trailingerror"
+      ]
+    }
+  ],
+  "semantic_neutral_cases": [
+    "M01",
+    "M02",
+    "M03",
+    "M04",
+    "M05",
+    "M06",
+    "M07",
+    "M08",
+    "M09",
+    "M10",
+    "M11",
+    "M12",
+    "M14",
+    "M16"
+  ],
+  "semantic_neutral_construction": {
+    "M01/M02/M10/M14/M16": {
+      "a": 64,
+      "b": 64,
+      "k": 0,
+      "r": 0,
+      "allweights": 0
+    },
+    "M03/M11": {
+      "a": 64,
+      "k": 0,
+      "r": 0,
+      "allweights": 0
+    },
+    "M04-through-M09": {
+      "a": 64,
+      "k": 0,
+      "r": 0,
+      "x": 7,
+      "tau": true,
+      "w0": 1,
+      "otherweights": 0
+    },
+    "M12": {
+      "q": 0,
+      "h": 0,
+      "k": 0,
+      "r": 0,
+      "allweights": 0
+    },
+    "reason": "All originalcasepremises true and originalmutanttheorem true, so nottheorem false. Independently recompute query U/V/N and allsharedmodel/getvalues."
+  },
+  "semantic_premise_only_cases": [
+    {
+      "id": "C01-invalid-c",
+      "values": {
+        "a": 64,
+        "b": 64,
+        "c": 0,
+        "k": 0,
+        "r": 0,
+        "x": 7,
+        "tau": true,
+        "w0": 1
+      },
+      "reason": "validc false; otherC01premises and notfalse true"
+    },
+    {
+      "id": "C01-fixture-target",
+      "values": {
+        "a": 64,
+        "b": 64,
+        "c": 64,
+        "k": 0,
+        "r": 0,
+        "x": 7,
+        "tau": false,
+        "w0": 1
+      },
+      "reason": "fixture target binding false; allfamilyvalid and notfalse true"
+    },
+    {
+      "id": "M15-invalid-comparable",
+      "values": {
+        "a": 5,
+        "k": 0,
+        "r": 0
+      },
+      "reason": "family branches1/3 comparable invalid; leqself true/proper false keepsnegationtrue"
+    },
+    {
+      "id": "M04-fixture-pattern",
+      "values": {
+        "a": 64,
+        "k": 0,
+        "r": 0,
+        "x": 0,
+        "tau": true,
+        "w0": 1
+      },
+      "reason": "source false/zero-branch true; fixturepattern fails"
+    },
+    {
+      "id": "M05-fixture-pattern",
+      "values": {
+        "a": 3,
+        "k": 0,
+        "r": 0,
+        "x": 1,
+        "tau": true,
+        "w0": 1
+      },
+      "reason": "ORtrue/outerANDfalse; fixturepattern fails"
+    },
+    {
+      "id": "M06-fixture-pattern",
+      "values": {
+        "a": 64,
+        "k": 0,
+        "r": 0,
+        "x": 1,
+        "tau": true,
+        "w0": 1
+      },
+      "reason": "ANDfalse/innerORtrue; fixturepattern fails"
+    },
+    {
+      "id": "M07-fixture-pattern",
+      "values": {
+        "a": 64,
+        "k": 0,
+        "r": 1,
+        "x": 6,
+        "tau": false,
+        "w0": 1,
+        "w1": 1
+      },
+      "reason": "rawsource true/targetfalse; fixturepattern fails"
+    },
+    {
+      "id": "M08-fixture-pattern",
+      "values": {
+        "a": 64,
+        "k": 0,
+        "r": 2,
+        "x": 2,
+        "tau": true,
+        "w0": 1,
+        "w2": 1
+      },
+      "reason": "rawsource false/targettrue; fixturepattern fails"
+    },
+    {
+      "id": "M09-fixture-target",
+      "values": {
+        "a": 1,
+        "k": 0,
+        "r": 6,
+        "x": 1,
+        "tau": false,
+        "w0": 1,
+        "w6": 1
+      },
+      "reason": "sourcebit0 true/unpairedswap false; fixturetarget fails"
+    }
+  ],
+  "unfixed_fields": "Forsemantic constructors default25values a=b=c64,q=h=x=k=r0,taufalse,allweights0, then apply explicitoverrides; source-dependentcaseprefix resolves frozenfullcaseidentity. Derived12queries always independentlycomputed fromoriginalset/countdefinitions, never checker helpers.",
+  "causal_limits": [
+    "M13requiresa0, where itsnegation necessarilytrue. M15requiresvalidantichain, where proper-self mutantnecessarilyfalse. No premise-true neutral control is claimed for those two.",
+    "M12negation impliesq=h!=0, so no premise-false/negationtrue control exists for its equalitypremise.",
+    "NoncanonicalBVoverflow rejection is an intentionally strict literal-format boundary; indexedSMTbitvector numerals otherwise have modular semantics."
+  ],
+  "counts": {
+    "positive_per_mode": 85,
+    "negative_per_mode": 369,
+    "total_per_mode": 454,
+    "normal_plus_optimized_API_calls": 908
+  },
+  "implementation_binding_rule": "After source-onlyreview, materialize exactpayload/source/expectedaccepted-stage-reason pins in a separate frozenmanifest before any checkerimport or rootseal. Resolve documented reasonlabels by source/APIcontract without running or adapting to outcomes. Any actualconstructor/count/expectation change gets a newversion, never overwrite thisPLAN.",
+  "credit": "FinitePythonrecognition/causalcontrols only; no nativeSMTsolver execution or theorem/proofcertificate/newblindcredit.",
+  "parent_plan_sha256": "f9dde7d3988669e54d0bfef88af8ef7c8c721ac94cde4e929c6fbf2f57f91422",
+  "pre_execution_refinement": "Before reading/importing checker, replace nativeTrue by nativeFalse: False equals numeric0 inPython, so this isolates exactnativeint typing; True would also fail ordinary nonzero exit. Same454/mode908total counts. PLANv1bytes retained, no execution/qualification claimed."
+}

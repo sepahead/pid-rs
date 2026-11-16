@@ -1,0 +1,246 @@
+{
+  "Git_snapshot": {
+    "advertised_refs": [
+      62,
+      10
+    ],
+    "bundle_prerequisites": "none; separately verified empty-bare recoveries",
+    "object_counts": [
+      11778,
+      11442
+    ],
+    "only_permitted_differing_attribute": "com.apple.provenance",
+    "original_xattr_values_per_path": 251,
+    "physical_OS_metadata_replica": false,
+    "physical_differences": 39,
+    "raw_objects_and_administrative_files_retrieved": true,
+    "raw_xattr_sidecar_bytes": 33,
+    "stores": 2
+  },
+  "accepted_source_base": "22d971549749385bfec83a02448dc0de4a0a4fa1",
+  "evidence_class": "bounded local recovery observations and aggregate private-preimage commitments",
+  "finite_SMT_retention": {
+    "logical_source_bytes": 9110146,
+    "new_scientific_claim": false,
+    "source_and_retrieved_bytes_modes_verified": true,
+    "source_paths": 449
+  },
+  "independent_finite_review": {
+    "SAT_projections_checked_against_original_assertions": 34,
+    "family_pair_order_DNF_comparisons": 65536,
+    "new_solver_or_Lean_run": false,
+    "queried_values_checked": 408,
+    "raw_families_checked": 256,
+    "source_bytes": 2135344,
+    "source_permutations": 6,
+    "source_records_retained": 282,
+    "statistical_calibration_claim": false
+  },
+  "nonclaims": [
+    "No authenticity, atomic filesystem snapshot or complete OS/security-metadata replica",
+    "No NCP or other-project data capture or deletion authorization",
+    "No statistical calibration, Rust refinement, original formal-protocol completion or Program A-E closure",
+    "Git-only recovery does not preserve arbitrary ignored working-tree data; separate aggregate binds those admitted scopes",
+    "No blanket retirement authority; exact source, successor, owner, ref and post-removal gates still apply"
+  ],
+  "objects": [
+    {
+      "bytes": 1023,
+      "id": "R001",
+      "role": "policy",
+      "sha256": "2422f34f48ee401ed2e3b6b286467a5690040486cbb9f09e5543042d5f306375"
+    },
+    {
+      "bytes": 1818,
+      "id": "R002",
+      "role": "git-execution",
+      "sha256": "68bd7d6916ad2b733181051440c4c99757e244b9a2aa761de016dff8a0548ed8"
+    },
+    {
+      "bytes": 1075,
+      "id": "R003",
+      "role": "git-retrieval",
+      "sha256": "9ba7abc1f239d09476cc5e00a90943cdc8bafad345118984fc27fb8d7c1b9bf4"
+    },
+    {
+      "bytes": 3200,
+      "id": "R004",
+      "role": "git-terminal",
+      "sha256": "960676cd983849b142fec28f118f293e6fd209c6915bf3ec8d65f1552f7032a6"
+    },
+    {
+      "bytes": 59639,
+      "id": "R005",
+      "role": "git-P-source-metadata",
+      "sha256": "3217b6ba908b47ddfd4ef09cc6e685870d1f060995121b7bc1a6a32ed92147ee"
+    },
+    {
+      "bytes": 44552,
+      "id": "R006",
+      "role": "git-C-source-metadata",
+      "sha256": "31e38248d30a49d2a2805cdec1bec266077db4239a5b0e043a63d6c379214489"
+    },
+    {
+      "bytes": 12336,
+      "id": "R007",
+      "role": "git-P-ref-inventory",
+      "sha256": "97b30a7e1d862c67933f78ae8d2808255afc1ad5ac58a0e03da418364db0a4ae"
+    },
+    {
+      "bytes": 1830,
+      "id": "R008",
+      "role": "git-C-ref-inventory",
+      "sha256": "ab29b038c56a340f2c6075fcb0f877655ab800d0e0280e314d612e58034610b9"
+    },
+    {
+      "bytes": 81383965,
+      "id": "R009",
+      "role": "git-P-bundle",
+      "sha256": "8625a43d61867f25860b64a04034fe5769d42d41b8b445e5c29acd33db668a88"
+    },
+    {
+      "bytes": 78392297,
+      "id": "R010",
+      "role": "git-C-bundle",
+      "sha256": "6e8eaf79d03316a42bb91702c910151d3397c6eb8bb2d15efd3ddac781e7a05c"
+    },
+    {
+      "bytes": 72099,
+      "id": "R011",
+      "role": "git-original-xattrs",
+      "sha256": "1f801300c6c0e00720f7998e2ecc78db7fa1b8fd45c2631777d0695a29a00d75"
+    },
+    {
+      "bytes": 393749,
+      "id": "R012",
+      "role": "primary-raw-manifest",
+      "sha256": "427736808633060e36b6180d90d27c104013958e2ae78490269251b7733a19d7"
+    },
+    {
+      "bytes": 1219,
+      "id": "R013",
+      "role": "primary-raw-final",
+      "sha256": "333bea134c308b387d7b5bd93be8109ae8a6de586164221c1bd9d216d4d98d58"
+    },
+    {
+      "bytes": 3476,
+      "id": "R014",
+      "role": "primary-directory-correction",
+      "sha256": "74e4818fc932a6cbb17ff0689c73609906c55924cf85882e1e30c4ba87237f7b"
+    },
+    {
+      "bytes": 43422,
+      "id": "R015",
+      "role": "primary-transition-failed",
+      "sha256": "8efec73ebeb6d8259f850ba83e0d243901880baecc69ef8557e12e7c5be66d33"
+    },
+    {
+      "bytes": 6677,
+      "id": "R016",
+      "role": "primary-failure-diagnosis",
+      "sha256": "87c91edd278cfdfde998b875307d2425a7bf667a6584defbf75b1dcb108ba4bf"
+    },
+    {
+      "bytes": 6319,
+      "id": "R017",
+      "role": "primary-permission-repair",
+      "sha256": "c20bf30dda9c496d586637b8f0d84301fcb744f31f645452dfd4d12dbc185452"
+    },
+    {
+      "bytes": 4559,
+      "id": "R018",
+      "role": "primary-final-state",
+      "sha256": "4116eb485174cb15798ecfda088691f12ed7eb8fb922fada15deebc83b6c1647"
+    },
+    {
+      "bytes": 580,
+      "id": "R019",
+      "role": "primary-root-readback",
+      "sha256": "3519e1fc201aece8637765ce2e6770759034f922ae0a5d2dd2f109f7acda5747"
+    },
+    {
+      "bytes": 832,
+      "id": "R020",
+      "role": "finite-SMT-local-retention",
+      "sha256": "2f5ca7bfa6c4ef4a8217137086c9798faf80613971e6e935edef9617f7100778"
+    },
+    {
+      "bytes": 260276,
+      "id": "R021",
+      "role": "finite-SMT-retention-manifest",
+      "sha256": "ab697e2c706474cf9010d905201a2f1f72d99484ee864bfb3b773f70dd523fcd"
+    },
+    {
+      "bytes": 450,
+      "id": "R022",
+      "role": "finite-SMT-retention-root-readback",
+      "sha256": "cfebd5d234e1bd684247f87b2079f703436861c96b069125a95eba1d164a6bfb"
+    },
+    {
+      "bytes": 223948,
+      "id": "R023",
+      "role": "independent-math-review-retention",
+      "sha256": "51ecdd120d35ca52fd25b2a940a8a20f56eed2af728b5a4078bb85577845f1ba"
+    },
+    {
+      "bytes": 1352,
+      "id": "R024",
+      "role": "independent-math-review-receipts",
+      "sha256": "e6cb7b7d9e12d73f0fd94280b9c9ae4b877ab1057a0ee097664b172aa3da8566"
+    },
+    {
+      "bytes": 132967,
+      "id": "R025",
+      "role": "portable-preexecution-image",
+      "sha256": "1a75d2a0a5132f66c5aec4998a5814fead82ffb1fdf1a7fd5b045e1386b91195"
+    },
+    {
+      "bytes": 1060,
+      "id": "R026",
+      "role": "portable-preexecution-reconstruction-result",
+      "sha256": "87b2300858d0ac21d2b261926c0746f2eb625ad313010d11f0f6d5d5b66344d8"
+    }
+  ],
+  "portable_preexecution_retention": {
+    "earlier_storage_or_preregistration_credit": false,
+    "input_paths": 263,
+    "late_narrative_preimages_reconstructed": 3,
+    "logical_bytes": 8252280,
+    "pre_run_hashes_matched": true,
+    "purpose": "Retain exact former inputs after legitimate post-run publication finalization; executed code and scientific input bytes were unchanged."
+  },
+  "primary": {
+    "exclusive_old_HEAD_installs": 69,
+    "final_bytes_and_full_modes_match_accepted_source": true,
+    "final_tracked_files": 5651,
+    "initial_controller_native_exit": 1,
+    "initial_controller_result": "retained failed; one mode postcondition did not match",
+    "modified": 69,
+    "original_bytes": 10770880,
+    "original_pending_paths": 226,
+    "original_review_branch_retained": true,
+    "originals_physically_retained": true,
+    "separate_permission_repair": {
+      "bytes": 11041,
+      "data_changed": false,
+      "final_mode": "0644",
+      "native_exit": 0,
+      "original_mode": "0600",
+      "path": "audit/schemas/ecosystem-capabilities.schema.json",
+      "sha256": "9eb03f0035bc40cc33c8ccbca7681517c0f554ada7cceaa075888ce6a15c497f"
+    },
+    "source_refs_unchanged": true,
+    "untracked": 157
+  },
+  "prior_primary_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+  "recorded_utc": "2026-11-15T23:59:55.209050+00:00",
+  "retention": {
+    "access": "approved restricted local owner-only store",
+    "offhost": false,
+    "private_locators": "maintainer-controlled records; omitted from this public commitment",
+    "same_device_loss_boundary": true,
+    "scholarly_deposit": false,
+    "term": "indefinite; no automatic cleanup; later disposal requires explicit maintainer decision and verified successors"
+  },
+  "schema": "pid-rs-private-retention-and-primary-disposition-v1"
+}

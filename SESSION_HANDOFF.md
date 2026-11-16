@@ -1,4 +1,33 @@
-# Session handoff — updated 15 November 2026
+# Session handoff — updated 16 November 2026
+
+## Finite witness reproduction and local preservation, 16 November 2026
+
+The critical mathematics/statistics review found one explanatory error in source-partition
+Proof 3. The [dated paired correction](audit/evidence/source-partition-conditional-probability-erratum-2026-11-15.md)
+clarifies the negative logarithm of the conditional probability in both Markdown and PDF;
+all formulas and numerical results are unchanged. Exact rebuilt PDF and full-page visual checks
+are recorded without rewriting the original October publication receipt.
+
+The [finite SMT39 unit](audit/formal/finite-smt39-qualification-v1/README.md) exposes the exact
+historical streams, unchanged checker and saved results for 34 declared-variable projections.
+Its later portable reader passed the saved-output comparisons, normal/optimized controls and
+38 adapter cases per mode. The original 78 solver observations are historical, not fresh solver
+proofs; the 44 UNSAT observations remain uncertified and printed auxiliary model bodies remain
+opaque. This does not close original formal protocols, calibration, application qualification,
+the global hold or any SxPID3 Program A–E.
+
+The [new local-retention disposition](audit/evidence/private-retention-and-primary-disposition-2026-11-16.md)
+binds exact restricted Git/working-state recovery and the primary checkout's restoration to
+accepted main. All 226 original pending files are physically preserved. The initial transition's
+mode postcondition failure stays failed; a separately authorized permission-only repair and
+complete final-state checks followed. This new dated disposition supersedes the operational
+instruction to keep that primary working state dirty; the earlier records and negative evidence
+remain unchanged. Other worktree/ref retirement still requires fresh ownership and exact
+successor checks. NCP and the separate-project container under the common root remain untouched.
+
+Read the ignored local handoff for current checkout, native/hosted validation, retention locators
+and remaining operations. This source entry is not a fresh mainline acceptance receipt. Require
+applicable checks and exact resulting-commit hosted evidence before integration or retirement.
 
 ## Historical count-event prose retained, 15 November 2026
 
