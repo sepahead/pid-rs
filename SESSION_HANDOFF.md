@@ -1,4 +1,17 @@
-# Session handoff — updated 16 November 2026
+# Session handoff — updated 18 November 2026
+
+## Finite window count and three-source registry controls, 18 November 2026
+
+The concentration study now gives the exact probability of a stated subset of the
+eight-cell histogram tail for one sequence of overlapping fair-bit windows. Its strict
+lower bound disproves the independent-row substitution on this design. [Proof](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) · [Counter](scripts/count-majority-windows.py) · [Typeset study](output/pdf/dependency-colored-sxpid-concentration.pdf).
+
+The 4.34.1 finite-registry package contains the definitions, assumptions, proof terms
+and all twelve altered statements. The accepted third attempt and its fresh replay
+follow two recorded compilation failures. It checks the specified finite controls.
+The original pre-candidate protocol, heterogeneous-alphabet count theory, solver
+certificates, binary64 implementation correspondence and the three-source decision
+remain separate open obligations. [Finite controls and attempt dispositions](audit/research/finite-three-source-controls/README.md).
 
 ## Finite witness reproduction and local preservation, 16 November 2026
 

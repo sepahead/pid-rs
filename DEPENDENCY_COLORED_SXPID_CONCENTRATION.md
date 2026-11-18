@@ -1,5 +1,15 @@
 # Concentration for finite-alphabet SxPID under a dependency coloring
 
+**Sepehr Mahmoudian** · 23 July 2026 · Window supplement added 18 November 2026
+
+Cite this report as Mahmoudian, S. (2026), *Concentration for Finite-Alphabet Shared-Exclusions
+PID under a Dependency Coloring*. Include the exact repository commit or release. The software
+citation is in [CITATION.cff](CITATION.cff).
+
+The [window supplement](#supplement-counting-overlapping-three-bit-windows) gives an exact
+counterexample. At distance 0.30, the probability of a deviation under an overlapping-window
+design exceeds the independent-row bound even though every window has the same eight-cell distribution.
+
 Status: project-defined validation and proof composition. It is not a claim of scientific novelty.
 
 Primary scope: the categorical shared-exclusions PID of Makkeh, Gutknecht, and Wibral in
@@ -360,7 +370,8 @@ that $V_n$ is the best possible constant for every admissible joint law.
 2. **Width-three overlapping windows.** Let $Z_t=f(E_t,E_{t+1},E_{t+2})$ for i.i.d. innovations
    and one fixed finite-output map, and choose $\kappa(t)=t\bmod3$. Rows in a class use disjoint
    innovation triples. For $n=8$, the loads are $3,3,2$ and
-   $V_8=(2\sqrt3+\sqrt2)^2<24=3n$. In general $V_n\le3n$.
+   $V_8=(2\sqrt3+\sqrt2)^2<24=3n$. In general $V_n\le3n$. The
+   [supplement](#supplement-counting-overlapping-three-bit-windows) works out the case of 300 fair-bit triples.
 3. **Copied classes: why the color factor cannot generally be removed.** Let
    $X_1,\ldots,X_m$ be independent fair bits. Make $d$ classes, and put one copy of every $X_j$ in
    each class. Each class contains $m$ mutually independent rows, but the classes are exact copies.
@@ -1820,3 +1831,86 @@ This result does not assert that any consumer already meets these premises. Inte
 - Weissman, T., Ordentlich, E., Seroussi, G., Verdú, S., and Weinberger, M. J. (2003).
   “Inequalities for the L1 deviation of the empirical distribution.” HPL-2003-97 (R.1).
   <https://shiftleft.com/mirrors/www.hpl.hp.com/techreports/2003/HPL-2003-97R1.pdf>
+
+## Supplement. Counting overlapping three-bit windows
+
+Can the independent-row bound in DC-1 hold when adjacent rows share two of their three input
+bits? Each row still has the same distribution. The independent-row substitution underestimates
+the probability of a deviation at the fixed threshold below.
+
+**Terms and symbols.** An innovation is one independent input bit. A window is an ordered
+triple of consecutive innovations. The marginal distribution $P$ is the distribution of one
+window, and $\widehat P_n$ is the histogram of all $n$ windows divided by $n$. Their
+$L^1$ distance sums the eight absolute differences between corresponding cell probabilities.
+A color is a group of row indices within which the windows are mutually independent.
+Section 2 gives the Janson partition bound and the finite-alphabet subset argument of
+Weissman et al. All probabilities, counts of windows and distances in this supplement are
+dimensionless.
+
+Take 302 independent fair bits $X_1,\ldots,X_{302}$ and set $Z_i=(X_i,X_{i+1},X_{i+2})$
+for $1\le i\le n=300$. Every triple has probability $1/8$. Group the starting positions
+by their remainder modulo three. Each group uses disjoint triples and has 100 rows, giving
+$V_n=(3\sqrt{100})^2=900$. At $\varepsilon=3/10$, DC-1 gives
+$\min(1,254e^{-9/2})=1$. Here $e^{9/2}<e^5<3^5<254$. Replacing $V_n$ by $n$ would give
+$254e^{-27/2}$.
+
+Let $A$ be the four triples with at least two ones and let $M$ count the windows in $A$.
+Then $P(A)=1/2$ and $\widehat P_n(A)=M/n$. The deviations on $A$ and its complement have
+equal magnitudes and opposite signs. Applying the triangle inequality on each set gives
+
+$$
+\|\widehat P_n-P\|_1\ \ge\ 2|M/n-1/2|.
+$$
+
+Thus $M\le105$ or $M\ge195$ implies a distance of at least $3/10$, including equality.
+Write $C_j(a,b,m)$ for the number of strings of $j+2$ bits ending in $a,b$ with $m$ majority
+windows among their $j$ windows. For $a,b,c\in\{0,1\}$, initialize $C_0(a,b,0)=1$ and use
+zero outside the count range. Removing the last bit $c$ selects a unique predecessor, giving
+
+$$
+C_{j+1}(b,c,m)=\sum_{a=0}^1 C_j\bigl(a,b,m-\mathbf 1\{a+b+c\ge2\}\bigr).
+$$
+
+For one window there are four strings at each of $m=0,1$. For 300 windows let
+$N=\sum_{m=0}^{105}\sum_{a,b} C_{300}(a,b,m)$. The recurrence gives
+
+$$
+\begin{aligned}
+N &= u\,10^{44}+v,\\
+u &= 42882844851840474270483401524777017594376215,\\
+v &= 37863923451760804954350018293564334103605149.
+\end{aligned}
+$$
+
+Complementing every bit exchanges the two tails. All $2^{302}$ bit strings have equal
+probability. Integer comparison gives $1052/10^6<N/2^{301}<1053/10^6$ for the probability
+of their union. To bound the proposed independent-row expression, take the first 33 positive
+terms of the exponential series at $27/2$. Exact rational arithmetic gives
+
+$$
+254e^{-27/2}
+<\frac{254}{\sum_{j=0}^{32}(27/2)^j/j!}
+<\frac{349}{10^6}
+<\frac{1052}{10^6}
+<\Pr\bigl(\|\widehat P_{300}-P\|_1\ge3/10\bigr).
+$$
+
+The count gives the exact probability of the majority tails and a lower bound on the complete
+histogram tail. This is a project-derived finite counterexample at a threshold examined before
+the exact count. It concerns the empirical distribution itself. An atom-specific error or an
+inference for another process requires its own argument.
+
+### Rust implementation and computational cost
+
+The offline Python reference uses standard-library integers and rational numbers. Run
+`python3 scripts/count-majority-windows.py` from the repository root to print both integer
+tail counts, the total number of strings, the rational probability and strict rational bounds
+on the exponential expression. The script names the majority count $K$ in its output.
+The function `majority_histogram(n)` accepts a positive integer and returns $n+1$ counts.
+Each update uses four suffix states and two possible new bits. All $n$ steps require $O(n^2)$
+integer additions and $O(n)$ counters of at most $n+3$ bits, hence $O(n^3)$ bit operations and
+$O(n^2)$ working bits as conservative upper bounds. There is no public Rust API or feature
+gate for this exact counter. It uses a specified finite distribution with no training, fitting
+or resampling. Invalid window counts raise a value error. Larger inputs use the memory
+available to Python. No timing is reported. AI assistance was used to draft the counting
+code. The recurrence and integer comparison above specify what it computes.
