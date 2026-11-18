@@ -21,9 +21,10 @@
 //! Method catalog: pipelines.pid3-permutation
 //!
 //! **PAPER-DERIVED TESTING CODE.** Row permutation uses standard shuffle/block/shift transforms and
-//! the Phipson–Smyth add-one Monte Carlo correction. Full-row or whole-block outputs are p-values
-//! only under their declared exchangeability nulls; restricted circular-shift outputs are
-//! approximate stationary-surrogate scores.
+//! the Phipson–Smyth add-one correction. For full-row or whole-block shuffles, the reference
+//! p-value assumes invariance under permuting just the selected matrix and independent uniform
+//! group draws. The seeded schedule is deterministic. Restricted circular shifts yield surrogate
+//! scores. See [`PermutationScheme`] for the randomization assumptions.
 //!
 //! Method catalog: testing.row-permutation
 //!
@@ -499,21 +500,18 @@ pub fn bootstrap_pid3(
 
 /// How a resampling null rearranges the selected variable's rows.
 ///
-/// The choice decides which null hypothesis the test actually simulates:
+/// Each transformation moves only the selected matrix. All other matrices stay aligned and fixed.
+/// The null for a group of transformations requires the joint array of transformed statistics to
+/// have the same law after any group element acts on the input. Invariance of the joint data law
+/// under that action suffices. Exchangeability under simultaneous permutations of aligned rows
+/// alone does not give this symmetry. See Hemerik and Goeman, Definition 1 and Theorem 2
+/// ([DOI](https://doi.org/10.1007/s11749-017-0571-1)).
 ///
-/// - [`PermutationScheme::FullShuffle`] draws an independent Fisher–Yates permutation
-///   per resample. This gives the usual Monte Carlo permutation test when rows are
-///   **exchangeable (i.i.d.)**. On autocorrelated trajectory data it destroys the
-///   shuffled variable's *own* serial dependence, so the null is easier than the data
-///   and p-values can become **anti-conservative**.
-/// - [`PermutationScheme::BlockShuffle`] partitions the series into fixed, equal-sized,
-///   contiguous blocks and Fisher–Yates shuffles the blocks while preserving row order
-///   inside each block. Block permutations are sampled with replacement and form a
-///   finite transformation group, so the add-one result is a Monte Carlo permutation
-///   p-value when the **whole blocks are exchangeable** under the null. It is not exact
-///   when dependence remains between blocks or their positions are not exchangeable.
-///   The permutation APIs retain every transform failure and withhold the tail fraction, so they
-///   never select a transformation-dependent subset.
+/// - [`PermutationScheme::FullShuffle`] permutes the individual rows of the selected matrix.
+///   Arbitrary row permutations can destroy its serial dependence.
+/// - [`PermutationScheme::BlockShuffle`] permutes its fixed, equal-sized contiguous blocks and
+///   preserves order within each block. Dependence between blocks is compatible with the test
+///   only when the null still has the required symmetry under every block-position permutation.
 /// - [`PermutationScheme::CircularShift`] rotates the variable's rows by a seeded
 ///   pseudorandom offset `k ∈ [min_shift, n − min_shift]`. This preserves the
 ///   variable's internal autocorrelation exactly (up to the single wrap seam) while
@@ -523,20 +521,24 @@ pub fn bootstrap_pid3(
 ///   stationary-surrogate score**, not an exact randomization-test p-value. Offsets are sampled
 ///   with replacement, so the score's numerical floor is `1 / (n_perm + 1)`, not a
 ///   resolution bound derived from the number of distinct offsets.
+///
+/// For either group shuffle, the reference test includes the identity observation and draws
+/// independent uniform group elements with replacement, independently of the data. Counting ties
+/// in the selected tail gives conservative finite-sample level control under those premises.
+/// SplitMix64 reproduces a deterministic schedule from each seed. Rejection sampling removes
+/// modulo bias under independent uniform input words. A fixed seed supplies no such randomness.
+/// Every requested statistic must be finite for the report to include a tail fraction.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum PermutationScheme {
-    /// Independent full-row Fisher–Yates shuffle (exchangeable/i.i.d. rows only).
+    /// Fisher–Yates shuffle of the selected matrix rows while all other matrices stay fixed.
     FullShuffle,
     /// Fisher–Yates shuffle of fixed, contiguous blocks, preserving within-block order.
     ///
     /// Requires `block_size >= 1`, `n % block_size == 0`, and at least two blocks.
-    /// Draws are sampled with replacement and are uniform over the permutations of the
-    /// `n / block_size` block labels, including the identity. The add-one result is a
-    /// Monte Carlo permutation p-value under exchangeability of the whole blocks,
-    /// provided every transform evaluates successfully and finitely (otherwise the report
-    /// retains the failures and has no tail fraction). Choosing a block size does not itself make
-    /// dependent or nonstationary blocks exchangeable.
+    /// The reference group contains every permutation of the block labels, including the identity.
+    /// The seeded draws may repeat. The null and reference sampling law are given in
+    /// [`PermutationScheme`]. The report retains failures and withholds incomplete tail fractions.
     BlockShuffle {
         /// Number of consecutive rows in each fixed block.
         block_size: usize,
@@ -582,9 +584,9 @@ impl PermutationTail {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum PermutationNullAssumption {
-    /// Individual rows are exchangeable under the null.
+    /// The null is invariant under permuting the selected matrix rows relative to the fixed others.
     ExchangeableRows,
-    /// Fixed contiguous blocks of the recorded size are exchangeable under the null.
+    /// The null is invariant under permuting the selected matrix blocks relative to the fixed others.
     ExchangeableBlocks { block_size: usize },
     /// The aligned multivariate series is stationary enough for circular shifts to be meaningful.
     WeaklyStationarySeries { minimum_shift: usize },
@@ -594,7 +596,7 @@ pub enum PermutationNullAssumption {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum PermutationCalibration {
-    /// Add-one Monte Carlo p-value under the declared exchangeability null.
+    /// Add-one Monte Carlo p-value under the group invariance and ideal draws in [`PermutationScheme`].
     MonteCarloPValue,
     /// Restricted circular-shift tail fraction; a surrogate score, not an exact p-value.
     ApproximateSurrogateScore,
@@ -659,7 +661,8 @@ pub enum PermutationAlgorithmRevision {
 ///
 /// Inconsistent records return [`PidError::InvalidConfig`] before the observed statistic is
 /// evaluated. Construct a new record with [`Self::new`] when changing the transformation scheme.
-/// A coherent declaration does not establish exchangeability or stationarity of the supplied data.
+/// A coherent declaration records the assumed symmetry or stationarity. Its scientific validity
+/// and the ideal randomization model in [`PermutationScheme`] require separate justification.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct PermutationNull {
@@ -792,7 +795,7 @@ fn validate_permutation_scheme(
     Ok(())
 }
 
-/// Draw an unbiased integer from `0..upper_exclusive`.
+/// Rejection-sample a bounded index. Independent uniform input words give an unbiased index.
 fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
     debug_assert!(upper_exclusive > 0);
     let bound = upper_exclusive as u64;
@@ -807,9 +810,9 @@ fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
 
 /// Draw one row-index rearrangement under `scheme`.
 ///
-/// Full-row and block shuffles use rejection-sampled bounded draws, making every Fisher–Yates
-/// choice exactly uniform over the seeded 64-bit generator. Circular shifts use the same bounded
-/// draw for their admissible offset range.
+/// Fisher–Yates choices and shift offsets use rejection-sampled bounded indices from SplitMix64.
+/// The seed fixes the complete schedule. Independent uniform input words would give uniform
+/// Fisher–Yates permutations and uniform offsets over the eligible range.
 fn draw_permutation(
     scheme: PermutationScheme,
     n: usize,
@@ -993,10 +996,9 @@ pub fn permutation_pid3_resource_estimate(
 /// distribution; shared-exclusions atoms are not generally expected to be zero under an
 /// independent-source null.
 ///
-/// Uses [`PermutationScheme::FullShuffle`], which assumes **exchangeable (i.i.d.) rows**;
-/// use [`permutation_pid3_with`] with [`PermutationScheme::BlockShuffle`] when fixed,
-/// equal-sized whole blocks are exchangeable, or [`PermutationScheme::CircularShift`]
-/// for a stationary-series surrogate whose tail fraction is approximate.
+/// Uses [`PermutationScheme::FullShuffle`] on the selected source. Choose [`permutation_pid3_with`]
+/// for fixed-block permutations or a restricted stationary-series surrogate. The group action and
+/// reference sampling law for the add-one test are specified in [`PermutationScheme`].
 /// A tail fraction is reported only if every requested permutation produces a complete, finite
 /// PID decomposition; otherwise all failure reasons are retained in the returned report.
 ///
@@ -1067,8 +1069,8 @@ pub fn permutation_pid3_with_budget(
 ///
 /// With [`PermutationScheme::FullShuffle`] this is bit-identical to
 /// [`permutation_pid3`] at the same seed. [`PermutationScheme::BlockShuffle`] preserves
-/// order within fixed blocks and gives a Monte Carlo permutation p-value under
-/// whole-block exchangeability when every requested transform succeeds and is finite.
+/// order within the selected source's blocks. For the corresponding Monte Carlo p-value, the
+/// group-invariance and reference sampling assumptions in [`PermutationScheme`] must hold.
 /// [`PermutationScheme::CircularShift`] preserves the shuffled source's own
 /// autocorrelation by rotation, but its restricted shifts are not a permutation group,
 /// so the reported tail fraction is not an exact randomization-test p-value.
@@ -3199,12 +3201,10 @@ pub struct RowPermutationStat {
     /// `permutation >= observed`; [`PermutationTail::Lower`] counts
     /// `permutation <= observed`.
     ///
-    /// For [`PermutationScheme::FullShuffle`] this is the usual Monte Carlo permutation
-    /// p-value under row exchangeability. For [`PermutationScheme::BlockShuffle`] it is
-    /// a Monte Carlo permutation p-value under whole-block exchangeability. For
-    /// [`PermutationScheme::CircularShift`] it is an approximate stationary-surrogate
-    /// score, not an exact randomization-test p-value. `None` means at least one requested
-    /// transform failed; every reason is retained in [`Self::replicates`].
+    /// Row and block shuffles use the Monte Carlo p-value formula under the group invariance and
+    /// reference draws in [`PermutationScheme`]. Restricted circular shifts yield an approximate
+    /// stationary-surrogate score. Any failed transform withholds the fraction, with each reason
+    /// retained in [`Self::replicates`].
     pub tail_fraction: Option<f64>,
     /// Number of permutations attempted.
     pub n_attempted: usize,
@@ -3311,14 +3311,13 @@ pub fn permutation_rows_pvalue_resource_estimate(
 /// Upper-tail permutation test on a scalar statistic of several aligned matrices.
 ///
 /// Shuffles the rows of `mats[shuffled_index]` (Fisher–Yates, seeded) while keeping
-/// every other matrix fixed, re-evaluating `stat` on each permuted dataset. Under a null in which
-/// the selected rows/blocks are exchangeable relative to the aligned joint of
-/// all remaining matrices, the observed statistic is exchangeable with the permuted ones.
+/// every other matrix fixed, re-evaluating `stat` on each permuted dataset. The group-invariance
+/// null and reference sampling model are given in [`PermutationScheme`].
 ///
-/// Like [`permutation_pid3`], this helper counts `permutation >= observed` and uses the add-one
-/// Monte Carlo p-value `(b + 1) / (m + 1)` (Phipson & Smyth 2010). Under row exchangeability and
-/// [`PermutationScheme::FullShuffle`] it is the usual nonzero permutation p-value and
-/// is the convention the Experiment 0 gate relies on.
+/// Like [`permutation_pid3`], this helper counts `permutation >= observed` and reports
+/// `(b + 1) / (m + 1)` for `b` such draws among `m` completed draws. Ties count in the tail.
+/// The Experiment 0 diagnostic uses this convention.
+///
 ///
 /// A permutation preserves every individual matrix's row multiset, so the continuous-sample
 /// preflight outcome is unchanged. Re-pairing can nevertheless create ambiguous positive-distance
@@ -3327,10 +3326,9 @@ pub fn permutation_rows_pvalue_resource_estimate(
 /// adaptive transform, that fit must occur inside `stat` for every transform; passing already
 /// transformed matrices instead defines a conditional null with the transform held fixed.
 ///
-/// Uses [`PermutationScheme::FullShuffle`] (exchangeable/i.i.d. rows). Use
-/// [`permutation_rows_pvalue_with`] with [`PermutationScheme::BlockShuffle`] when
-/// fixed, equal-sized whole blocks are exchangeable, or
-/// [`PermutationScheme::CircularShift`] for a stationary-series surrogate.
+/// Uses [`PermutationScheme::FullShuffle`]. Use [`permutation_rows_pvalue_with`] for fixed-block
+/// permutations of the selected matrix or a restricted circular-shift surrogate.
+///
 ///
 /// # Errors
 ///
@@ -3391,8 +3389,9 @@ where
 /// With [`PermutationScheme::FullShuffle`] this is bit-identical to
 /// [`permutation_rows_pvalue`] at the same seed. With
 /// [`PermutationScheme::BlockShuffle`], the equal-sized block permutations form a
-/// finite group, and the add-one formula is a Monte Carlo permutation p-value under
-/// exchangeability of the whole blocks. With [`PermutationScheme::CircularShift`], the
+/// finite group acting on the selected matrix only. The reference Monte Carlo test requires
+/// invariance under that action and the sampling law in [`PermutationScheme`]. With
+/// [`PermutationScheme::CircularShift`], the
 /// same formula is only an approximate stationary-surrogate tail fraction because the
 /// restricted shifts do not form a transformation group and are sampled with replacement.
 /// Every transform must evaluate successfully and finitely for a tail fraction to be available;
@@ -5430,8 +5429,7 @@ mod tests {
             "p={signal_fraction}"
         );
 
-        // Independent pair: p should be large (deterministic for this seed; the
-        // statistical claim is uniformity, this is a regression pin).
+        // The observed tail fraction for this independent pair and fixed seed is a regression pin.
         let (x_a, _) = make_linear_pair(150, 0.3, 100);
         let (x_b, _) = make_linear_pair(150, 0.3, 200);
         let mats_null = [x_a.as_ref(), x_b.as_ref()];

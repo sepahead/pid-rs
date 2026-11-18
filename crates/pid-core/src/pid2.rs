@@ -6,8 +6,9 @@
 //! **PAPER-DEFINED CORE / PROJECT-DEFINED REPORT WORKFLOWS.** Ehrlich et al. define the
 //! two-source atom reconstruction from KSG MI and continuous shared exclusions. The code is
 //! available under `experimental-continuous`; pid-rs supplies no separate consistency theorem for
-//! the finite-sample assembly of separately estimated terms. Split-sample and cross-fit reports
-//! are project-defined wrappers and do not by themselves provide calibrated inference.
+//! the finite-sample assembly of separately estimated terms. The exact-real atoms reconstruct the
+//! supplied coordinates. Signed MI inputs preserve the raw KSG estimates. Split-sample and
+//! cross-fit reports are project-defined wrappers and do not by themselves provide calibrated inference.
 //!
 //! Method catalog: pid.continuous-pid2
 
@@ -1249,11 +1250,10 @@ fn pid2_isx_estimate_prevalidated(
     cfg: &Pid2Config,
     budget: ResourceBudget,
 ) -> PidResult<Pid2Estimate> {
-    // The MI terms feed algebraic identities (`Unq`/`Syn` are differences of MIs), so they must
-    // not be clamped: clamping a term before a subtraction would break the identity
-    // `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`. Force `Allow` regardless of the caller's config so
-    // the default path is correct. Keep the signed raw atoms: negative shared-exclusions atoms can
-    // be genuine, and any presentation transform must remain separate from the scientific result.
+    // Preserve the signed KSG coordinates of this estimate, regardless of scalar presentation
+    // policy. Before rounding, changing a marginal redistributes its unique atom and synergy,
+    // and the four atoms still sum to the supplied joint coordinate. Clamping an output atom
+    // alone can change that sum.
     let ksg = KsgConfig {
         negative_handling: NegativeHandling::Allow,
         ..cfg.ksg.clone()

@@ -225,7 +225,7 @@ impl StatisticCallbackDeclaration {
     }
 }
 
-/// Draw an unbiased integer from `0..upper_exclusive`.
+/// Rejection-sample a bounded index. Independent uniform input words give an unbiased index.
 fn uniform_index(rng: &mut SplitMix64, upper_exclusive: usize) -> usize {
     debug_assert!(upper_exclusive > 0);
     let bound = upper_exclusive as u64;

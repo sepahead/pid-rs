@@ -7,6 +7,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Document the null for permuting one selected matrix, the random sampling required by the
+  reference test, and the deterministic schedule produced by a recorded seed. Ties count in the
+  chosen tail and restricted circular shifts remain surrogate scores. [Permutation interpretation](audit/evidence/selected-matrix-permutation-null-2026-11-18.md).
+
+- Correct the explanation of signed inputs in two-source PID. Changing a marginal before
+  constructing the atoms redistributes its unique and synergy contributions. Editing a completed
+  atom can change their sum. The implementation continues to use raw signed estimates.
+  [Coordinate example and binary64 guard](audit/evidence/pid2-signed-input-reconstruction-2026-11-18.md).
+
 - Correct population and sample standard deviations for adjacent binary64 values whose mean
   rounds to an endpoint. Fitted standardizers retain the center for held-out rows and identify
   their parameters with the v2 hash domain. [Worked example and affected bootstrap summaries](audit/evidence/centered-binary64-moments-2026-11-18.md).

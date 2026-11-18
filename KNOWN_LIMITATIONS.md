@@ -321,8 +321,9 @@ information. A finite sample cannot prove that assertion.
 - A deterministic continuous map has singular joint support and can have infinite MI.
 - Bias and variance grow in high dimension, under strong dependence, and when neighbourhood radii
   are nonlocal. Passing a one-dimensional Gaussian oracle is not universal validation.
-- Finite-sample KSG values can be negative. Clamping changes downstream algebra and is presentation
-  only.
+- Finite-sample KSG values can be negative. Scalar clamping is a presentation policy. PID2 uses
+  the signed MI inputs. Replacing one before atom construction changes the supplied coordinates,
+  while the exact-real reconstruction still holds for those coordinates. [Worked example](audit/evidence/pid2-signed-input-reconstruction-2026-11-18.md).
 - The kd-tree backend has exact output parity with brute force but retains worst-case quadratic
   query behavior.
 
@@ -657,9 +658,14 @@ separation or scientific suitability. A standardizer mean displayed in binary64 
 an endpoint of two distinct training values. Use the fitted transform for held-out rows. Reconstructing
 scores from its rounded public mean and inverse scale can give different results. [Worked example](audit/evidence/centered-binary64-moments-2026-11-18.md).
 
-Moving-block bootstrap and permutation procedures are valid only under their stated dependence or
-exchangeability assumptions. Restricted circular shifts are approximate surrogate scores, not
-exact randomization p-values. Random-origin circular-grid kNN subsample percentile ranges are sensitivity
+Moving-block bootstrap requires the declared sampling and dependence assumptions. Full-row and
+fixed-block shuffles require invariance under the action on the selected matrix with all others
+held fixed. Joint exchangeability of aligned observations alone is insufficient. The reference
+p-value uses the identity and independent uniform group draws independent of the data. The
+recorded seed determines the actual schedule. Ties count in the chosen tail and restricted circular
+shifts return approximate stationary-surrogate scores. [Selected-matrix null](audit/evidence/selected-matrix-permutation-null-2026-11-18.md).
+
+Random-origin circular-grid kNN subsample percentile ranges are sensitivity
 diagnostics, not calibrated confidence intervals for the full-sample estimate. BH requires its
 dependence conditions; BY is more conservative but still assumes valid input p-values.
 Permutation execution checks the declared assumption and calibration against the selected

@@ -1093,7 +1093,7 @@
       "summary": "Paper-defined two-source PID atom reconstruction from KSG mutual information and continuous shared exclusions.",
       "title": "Continuous two-source shared-exclusions PID",
       "validation": {
-        "evidence_path_count": 34,
+        "evidence_path_count": 35,
         "level": "formal-and-property"
       }
     },
@@ -1233,7 +1233,7 @@
     {
       "category": "inference",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "project-defined",
       "depends_on": [
         "pid.mixed-dimension-pid3",
@@ -1257,7 +1257,7 @@
       "summary": "Seeded permutation procedure for research continuous PID3 atoms.",
       "title": "PID3 permutation workflow",
       "validation": {
-        "evidence_path_count": 12,
+        "evidence_path_count": 13,
         "level": "property-and-integration"
       }
     },
@@ -1665,7 +1665,7 @@
     {
       "category": "inference",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "project-defined",
       "depends_on": [],
       "feature_gates": [
@@ -1687,14 +1687,14 @@
       "summary": "Typed declarations for permutation and surrogate null procedures.",
       "title": "Permutation-null contracts",
       "validation": {
-        "evidence_path_count": 1,
+        "evidence_path_count": 2,
         "level": "property-and-integration"
       }
     },
     {
       "category": "inference",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "paper-derived",
       "depends_on": [
         "testing.permutation-contracts"
@@ -1717,7 +1717,7 @@
       "summary": "Callback-based row permutation and surrogate scoring procedure.",
       "title": "Row permutation procedure",
       "validation": {
-        "evidence_path_count": 1,
+        "evidence_path_count": 2,
         "level": "property-and-integration"
       }
     },
@@ -2273,6 +2273,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "57c8daa8bb2b0af6a0ad4bd5a9625d64267b1941964393a52ff4170eec1174ec"
+    "sha256": "e78977b239c34b2351dbed652ab2f03e0214e725ed23c055117a280223aeecf3"
   }
 }

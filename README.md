@@ -712,8 +712,10 @@ These estimators are not interchangeable with ground truth.
   establish one joint noise model for all sources and the target. `Jitter` remains an unreported
   migration primitive.
 - KSG returns signed finite-sample estimates by default. `NegativeHandling::ClampToZero` is an
-  opt-in presentation transform; do not apply it to terms entering PID/Shannon identities or
-  inferential procedures.
+  opt-in presentation transform. Keep it out of inferential calculations. PID2 uses the raw
+  estimates. Clamping a negative marginal
+  redistributes its unique and synergy atoms. Their exact-real total with the other two atoms still
+  equals the supplied joint coordinate. [Signed-coordinate example](audit/evidence/pid2-signed-input-reconstruction-2026-11-18.md).
 - High intrinsic dimension and distance concentration can invalidate nearest-neighbour geometry.
 - For real random vectors $X,Y$ of positive dimensions with $Y=f(X)$ almost surely and
   measurable $f$, a non-atomic target law (no point masses) gives infinite mutual information: the
@@ -792,17 +794,17 @@ These estimators are not interchangeable with ground truth.
   information, Williams--Beer $I_{\min}$, heuristics, or PID2 wrappers. A negative MGW net atom
   states only that its misinformative component exceeds its informative component at that lattice
   coordinate; it is not an intent, causal, fault, or responsibility finding.
-- `FullShuffle` permutation nulls require exchangeable rows. `BlockShuffle { block_size }` preserves
-  order inside equal, non-overlapping blocks and yields a permutation p-value only when whole blocks
-  are exchangeable; it requires `n % block_size == 0`. For a stationary autocorrelated series,
-  `CircularShift { min_shift }` preserves serial structure better, but its restricted offsets yield
-  an approximate stationary-surrogate score rather than an exact randomization-test p-value. Choose
-  the block or shift scale from the dependence length. Any failed or non-finite transformation
-  invalidates the complete result rather than merely reducing its reported count.
-- Permutation alternatives are explicitly signed `Upper` or `Lower` tails and should be chosen
-  before inspecting results. Shuffling one source defines an alignment/exchangeability null; it
-  does not generally test “this signed PID atom equals zero,” and no implicit absolute-value
-  two-sided test is applied.
+- A row or fixed-block permutation moves only the selected matrix. The null must preserve the
+  joint distribution of the transformed statistics under every allowed rearrangement, while the other
+  matrices stay fixed. IID aligned observations alone do not ensure this property. Fixed blocks
+  preserve internal order and must divide the row count exactly. The reference Monte Carlo test
+  includes the identity and draws independent uniform group elements independently of the data.
+  SplitMix64 produces a reproducible schedule for the recorded seed.
+- Choose the signed tail before inspection. Upper and lower counts include ties. Every requested
+  transform must succeed and be finite for a tail fraction to be reported. The tail fraction tests
+  alignment under the declared null. Testing that a PID atom equals zero requires additional
+  justification. Restricted circular shifts return stationary-surrogate scores.
+  [Null, source and seeded-execution limits](audit/evidence/selected-matrix-permutation-null-2026-11-18.md).
 - Generic resampling calls require a typed dependence and block-length-selection declaration,
   preserve every requested replicate/fold failure, and return raw empirical spread/percentiles only
   when the complete predeclared set succeeds. With-replacement block bootstrap can duplicate rows

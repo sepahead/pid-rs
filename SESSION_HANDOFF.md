@@ -1,5 +1,24 @@
 # Session handoff — updated 18 November 2026
 
+## Permutation inference and signed PID2 inputs, 18 November 2026
+
+The row and block permutation procedures rearrange one selected matrix while holding the others
+fixed. The reference test requires invariance of the transformed-statistic array under this action
+and independent uniform group draws independent of the data. The fixed seed identifies the actual
+schedule. The report keeps ties in the selected tail and treats restricted circular shifts as
+stationary-surrogate scores. [Source, assumptions and counterexample](audit/evidence/selected-matrix-permutation-null-2026-11-18.md).
+
+The existing exact-real Z3 reconstruction obligation covers every signed four-coordinate PID2
+input. Changing a marginal before atom construction preserves the supplied joint total while
+redistributing two atoms. Clipping an output atom alone can change the sum. Rust preserves the
+raw signed MI coordinates and checks the binary64 reconstruction against its existing guard.
+The revision-4 checker binds the corrected source comments and keeps its existing arithmetic
+and rejection criteria. [Worked example and proof scope](audit/evidence/pid2-signed-input-reconstruction-2026-11-18.md).
+
+The original explanations remain recoverable at `1479fc5e`. Reconsider the stated scope if the
+permutation action, randomization law, PID2 construction or rounding contract changes. Exact-commit
+hosted checks and mainline integration remain pending.
+
 ## Fitted centering and resampling spread, 18 November 2026
 
 The stable standardizer now retains the center between adjacent training values when the

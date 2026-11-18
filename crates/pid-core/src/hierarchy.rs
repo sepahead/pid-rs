@@ -241,7 +241,8 @@ pub fn hierarchical_pairwise_with_budget(
         hierarchical_pairwise_resource_estimate_for_threads(sources, target, cfg, threads)?;
     budget.check("hierarchical_pairwise", resource_estimate)?;
 
-    // Force `Allow`: clamping before the alternating co-information sum breaks its identity.
+    // Keep raw MI coordinates in the alternating co-information sum. Clipping a negative
+    // input changes its contribution to the reported co-information.
     let ksg = KsgConfig {
         negative_handling: NegativeHandling::Allow,
         ..cfg.ksg.clone()

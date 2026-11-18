@@ -234,7 +234,7 @@ fn normalized_invariant_outcome(
 /// Both `n_boot` and `n_perm` default to 0 (disabled), which keeps uncertainty
 /// computations and per-estimate uncertainty events absent from the default run. When enabled, the
 /// runner adds block-subsample diagnostic quantiles without repeated row indices and single-source
-/// permutation p-values on the d=`uncertainty_dim` cases and folds preregistered
+/// seeded permutation tail fractions on the d=`uncertainty_dim` cases and folds preregistered
 /// ground-truth checks into the scoped MI/coherence verdict.
 #[derive(Debug, Clone, Copy)]
 struct UncertaintyConfig {
@@ -809,9 +809,8 @@ const STRICT_BAND_GAUSS_GRID: [(f64, f64, f64); 3] =
 /// informativeness. A source is "marginally informative" iff `I(source; T) > 0` in
 /// the data-generating process — independent of any estimator.
 ///
-/// This table is the falsifiable contract the permutation null tests check:
-/// the KSG-based permutation test must call a source significant iff that source
-/// is marginally informative by construction.
+/// The fixture gate compares each seeded KSG permutation decision with this marginal truth.
+/// Statistical decisions on other realizations can disagree even under the declared data law.
 const SCENARIOS: [&str; 4] = [
     "independent_additive",
     "redundant_copy",
@@ -1912,11 +1911,9 @@ fn run(out: &mut dyn Write, args: Args) -> Result<(), Exp0Error> {
     let hash_project_to = Some(64usize);
     let seeds = make_seeds(args.seeds)?;
 
-    // `Allow`, not `ClampToZero`: these MI terms feed the inclusion–exclusion synergy atom
-    // (`syn_ehrlich = I12 - I1 - I2 + Red`), the co-information, and r̄/v̄ — the AGENTS.md
-    // convention forbids clamping a term before a subtraction (it breaks the PID identity and
-    // silently biases the diagnostics in the high-d breakdown regimes this sweep exists to
-    // expose). Negative marginal-MI estimates are honest estimator output, not errors.
+    // Keep the signed MI coordinates used for synergy, co-information, and r̄/v̄. Clamping a
+    // negative marginal would change the diagnostics and hide a finite-sample estimator output.
+    // The exact-real PID2 atom sum reconstructs whichever joint coordinate was supplied.
     let ksg_cfg = KsgConfig::assume_regular_full_dimensional()
         .with_k(k)
         .with_metric(Metric::Chebyshev)

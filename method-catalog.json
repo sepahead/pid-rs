@@ -1069,7 +1069,7 @@
       "category": "estimator",
       "code_availability": "local",
       "constraints": [
-        "PID identities require unclamped component MI values; the result inherits assumptions from KSG and continuous shared exclusions.",
+        "Signed KSG estimates are preserved as inputs. For any supplied real coordinates, the four atom definitions reconstruct the supplied joint value. Changing one marginal redistributes its unique atom and synergy. Changing the joint input changes that total. Clipping a completed atom alone can change the sum. Method interpretation inherits the assumptions of KSG and continuous shared exclusions.",
         "The synergy coordinate exactly reduces four already represented binary64 estimator terms and rounds once; this does not make those terms exact. The inherited inclusive 32-position ordered-binary64 reconstruction guard is a project compatibility policy, not a derived forward-error, conditioning, relative-accuracy, or representability theorem. Against reconstructed positive zero it accepts expected positive-subnormal payload 32 and rejects payload 33; because its ordering distinguishes signed zeros, it accepts negative payload 31 and rejects negative payload 32. The accepted boundaries permit complete relative loss.",
         "The experimental Python compute_pid2 and Ehrlich-only compute_pid2_report routes reach the same revised constructor. A seeded 96-row same-process test derives the expected unique and synergy payloads from the report's four represented terms through a separately implemented exact-rational ordered-payload encoder, then requires both routes to match all four atom fields bit-for-bit. This is bounded one-extension wrapper evidence, not cross-platform identity, independent estimation, external replication, or an all-input theorem.",
         "The two sources must have equal ambient dimension; this is only a necessary software condition and does not establish compatible intrinsic dimensions or reference measures.",
@@ -1132,6 +1132,7 @@
           "NUMERICAL_ASSURANCE.md",
           "PID2_REPRESENTED_COORDINATE_ASSURANCE.md",
           "audit/evidence/pid2-rev4-m1-hosted-run-33328609493-negative.md",
+          "audit/evidence/pid2-signed-input-reconstruction-2026-11-18.md",
           "audit/formal/latex/pid2-represented-coordinate-assurance/filter.lua",
           "audit/formal/latex/pid2-represented-coordinate-assurance/header.tex",
           "audit/formal/z3/pid2-reconstruction.smt2",
@@ -1142,11 +1143,11 @@
           "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
           "crates/pid-core/src/exact_binary64.rs",
-          "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
-          "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
           "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
           "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
           "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
+          "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
+          "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
           "crates/pid-core/tests/pid2.rs",
           "crates/pid-python/src/lib.rs",
           "crates/pid-python/tests/test_experimental_migration.py",
@@ -1729,7 +1730,8 @@
       "category": "inference",
       "code_availability": "local",
       "constraints": [
-        "Calibration depends on the declared permutation null and on the research-only pid.mixed-dimension-pid3 estimator."
+        "Calibration depends on the declared permutation null and on the research-only pid.mixed-dimension-pid3 estimator.",
+        "Full-row and fixed-block groups act only on the selected matrix. The reference p-value assumes invariance of the transformed-statistic array and independent uniform group draws independent of the data. The seeded schedule is deterministic. Upper and lower tails include ties, and all transforms must be finite. Restricted shifts yield surrogate scores."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1743,6 +1745,11 @@
       "new_in_pid_rs": "Composes typed null declarations, seeded row transforms, replicate outcomes, and PID3 atoms into one auditable procedure.",
       "python_entry_points": [],
       "reference_links": [
+        {
+          "locator": "Definition 1, Theorem 2 and Sections 3.2\u20133.4, finite-group randomization with the identity and uniform random group elements",
+          "reference_id": "hemerik-goeman-2018",
+          "role": "methodological-background"
+        },
         {
           "locator": "add-one Monte Carlo p-value correction",
           "reference_id": "phipson-smyth-2010",
@@ -1766,6 +1773,7 @@
       "title": "PID3 permutation workflow",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/selected-matrix-permutation-null-2026-11-18.md",
           "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
           "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
@@ -3908,7 +3916,8 @@
       "category": "inference",
       "code_availability": "local",
       "constraints": [
-        "Permutation entry points require the assumption and calibration implied by the selected scheme, with matching block size or minimum shift, before observed evaluation. This does not establish exchangeability or stationarity; restricted circular shifts remain approximate surrogate scores."
+        "Permutation entry points require the assumption and calibration implied by the selected scheme, with matching block size or minimum shift, before observed evaluation. This does not establish exchangeability or stationarity; restricted circular shifts remain approximate surrogate scores.",
+        "Full-row and fixed-block groups act only on the selected matrix. The reference p-value assumes invariance of the transformed-statistic array and independent uniform group draws independent of the data. The seeded schedule is deterministic. Upper and lower tails include ties, and all transforms must be finite. Restricted shifts yield surrogate scores."
       ],
       "definition_origin": "project-defined",
       "depends_on": [],
@@ -3919,6 +3928,11 @@
       "new_in_pid_rs": "Adds typed permutation schemes, tails, null assumptions, calibration labels, family identity, and replicate outcomes.",
       "python_entry_points": [],
       "reference_links": [
+        {
+          "locator": "Definition 1, Theorem 2 and Sections 3.2\u20133.4, finite-group randomization with the identity and uniform random group elements",
+          "reference_id": "hemerik-goeman-2018",
+          "role": "methodological-background"
+        },
         {
           "locator": "Monte Carlo permutation p-value correction",
           "reference_id": "phipson-smyth-2010",
@@ -3943,6 +3957,7 @@
       "title": "Permutation-null contracts",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/selected-matrix-permutation-null-2026-11-18.md",
           "crates/pid-core/tests/permutation_and_fdr.rs"
         ],
         "level": "property-and-integration",
@@ -3957,7 +3972,8 @@
       "category": "inference",
       "code_availability": "local",
       "constraints": [
-        "The callback statistic and null declaration determine validity; restricted circular shifts are not automatically calibrated p-values."
+        "The callback statistic and null declaration determine validity; restricted circular shifts are not automatically calibrated p-values.",
+        "Full-row and fixed-block groups act only on the selected matrix. The reference p-value assumes invariance of the transformed-statistic array and independent uniform group draws independent of the data. The seeded schedule is deterministic. Upper and lower tails include ties, and all transforms must be finite. Restricted shifts yield surrogate scores."
       ],
       "definition_origin": "paper-derived",
       "depends_on": [
@@ -3970,6 +3986,11 @@
       "new_in_pid_rs": "Adds a generic seeded row-permutation engine with add-one arithmetic, typed failures, resources, cancellation, and provenance.",
       "python_entry_points": [],
       "reference_links": [
+        {
+          "locator": "Definition 1, Theorem 2 and Sections 3.2\u20133.4, finite-group randomization with the identity and uniform random group elements",
+          "reference_id": "hemerik-goeman-2018",
+          "role": "methodological-background"
+        },
         {
           "locator": "nonzero add-one permutation p-values",
           "reference_id": "phipson-smyth-2010",
@@ -3993,6 +4014,7 @@
       "title": "Row permutation procedure",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/selected-matrix-permutation-null-2026-11-18.md",
           "crates/pid-core/tests/permutation_and_fdr.rs"
         ],
         "level": "property-and-integration",
@@ -5653,6 +5675,19 @@
       "type": "paper",
       "url": "https://doi.org/10.1103/PhysRevE.87.012130",
       "year": 2013
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Jesse Hemerik",
+        "Jelle Goeman"
+      ],
+      "doi": "10.1007/s11749-017-0571-1",
+      "id": "hemerik-goeman-2018",
+      "title": "Exact testing with random permutations",
+      "type": "paper",
+      "url": "https://doi.org/10.1007/s11749-017-0571-1",
+      "year": 2018
     },
     {
       "arxiv": null,

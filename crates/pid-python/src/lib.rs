@@ -982,9 +982,9 @@ fn compute_redundancy(
 
 /// Co-information I(S1;T) + I(S2;T) - I(S1,S2;T), in nats.
 ///
-/// The MI terms are always computed unclamped (the core forces `NegativeHandling::Allow`):
-/// clamping a term before the subtraction would silently break the identity. There is
-/// deliberately no `negative_handling` parameter here — it would be a no-op.
+/// The core uses `NegativeHandling::Allow` for each MI estimate. Clipping a negative input
+/// changes its contribution to the reported co-information. This function always uses the raw
+/// estimates and exposes no `negative_handling` option.
 #[pyfunction]
 #[pyo3(signature = (s1, s2, target, k=3, metric="chebyshev", tie_epsilon=0.0, support_contract="unspecified"))]
 fn compute_co_information(
@@ -1011,10 +1011,10 @@ fn compute_co_information(
 /// accepted method tokens instead compose project-defined, formula-labelled
 /// heuristic baselines and must not be interpreted as the Ehrlich functional.
 ///
-/// The MI terms feeding the atoms are always computed unclamped (the core forces
-/// `NegativeHandling::Allow`) so that `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)` holds by
-/// construction up to floating-point roundoff. There is deliberately no `negative_handling`
-/// parameter here — it would be a no-op.
+/// The core uses `NegativeHandling::Allow` to preserve the raw MI estimates. In exact
+/// arithmetic the atoms sum to the supplied joint coordinate, including after a marginal is
+/// changed before construction. The binary64 constructor checks the rounded atoms against
+/// all three supplied MI coordinates. This function exposes no `negative_handling` option.
 #[pyfunction]
 #[allow(clippy::too_many_arguments)]
 #[pyo3(signature = (s1, s2, target, k=3, method="ehrlich_ksg", metric="chebyshev", tie_epsilon=0.0, support_contract="unspecified"))]
@@ -1182,11 +1182,10 @@ fn compute_pid2_report(
 /// Shannon-invariant screening quantities, in nats: the three MI terms, co-information,
 /// and the r̄ / v̄ statistics.
 ///
-/// Every term is computed unclamped (`NegativeHandling::Allow`) so the returned dict is
-/// internally consistent: `co_information == mi_s1_t + mi_s2_t - mi_s1s2_t`, and r̄/v̄ are
-/// built from the same unclamped MI values. There is deliberately no `negative_handling`
-/// parameter here — mixing clamped MI terms with the identity-based quantities would make
-/// the dict incoherent.
+/// All MI estimates use `NegativeHandling::Allow`. Co-information uses compensated summation
+/// of the signed terms. Re-evaluating `mi_s1_t + mi_s2_t - mi_s1s2_t` with ordinary binary64
+/// operations can round differently. The r̄/v̄ statistics also use the raw estimates. This
+/// function exposes no `negative_handling` option.
 #[pyfunction]
 #[pyo3(signature = (s1, s2, target, k=3, metric="chebyshev", tie_epsilon=0.0, support_contract="unspecified"))]
 fn compute_invariants(

@@ -123,13 +123,11 @@ paper/code/origin boundary is [`METHODS.md`](METHODS.md), not a release-status i
 ## Numerical conventions (please preserve)
 
 - All information quantities are in **nats**.
-- MI terms that feed PID identities must be computed with `NegativeHandling::Allow`. Clamping a
-  term before a subtraction breaks this identity:
-
-  $$
-  \mathrm{Red}+\mathrm{Unq}_1+\mathrm{Unq}_2+\mathrm{Syn}
-  =I(S_1,S_2;T).
-  $$
+- Keep MI terms signed with `NegativeHandling::Allow` when building PID2 atoms. The exact-real sum
+  equals the supplied joint coordinate. Clamping a negative marginal before construction changes
+  its unique atom and synergy by opposite amounts. Clamping a negative joint input changes the
+  total relative to the raw joint estimate. Editing a negative output atom alone changes the sum.
+  [Worked example and binary64 limits](audit/evidence/pid2-signed-input-reconstruction-2026-11-18.md).
 - Accumulations over count maps must be **order-deterministic** (use `BTreeMap`/sorted keys, not
   `HashMap`) so results are bit-reproducible.
 - `exp0` is a **diagnostic gate**, not a pass/fail test: it reports a scoped `GO`/`NO-GO`

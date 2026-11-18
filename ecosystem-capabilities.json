@@ -1833,7 +1833,7 @@
       "id": "method-catalog",
       "path": "method-catalog.json",
       "role": "Method origin, implementation status, constraints, and evidence.",
-      "sha256": "57c8daa8bb2b0af6a0ad4bd5a9625d64267b1941964393a52ff4170eec1174ec"
+      "sha256": "e78977b239c34b2351dbed652ab2f03e0214e725ed23c055117a280223aeecf3"
     },
     {
       "id": "release-scope",

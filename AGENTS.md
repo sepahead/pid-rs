@@ -1046,8 +1046,10 @@ pytest crates/pid-python/tests -q
 ## Conventions to preserve
 
 - **Units:** all information quantities are in **nats** (natural log).
-- **PID identities:** MI terms that feed PID atoms must be computed with `NegativeHandling::Allow` —
-  clamping a term before a subtraction breaks `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`.
+- **PID2 input policy.** Use `NegativeHandling::Allow` to preserve the signed MI estimates.
+  In exact arithmetic the atoms sum to the supplied joint input for any four real coordinates.
+  Clamping a marginal changes its unique atom and synergy in opposite directions. Clamping a
+  negative output atom alone changes the sum. [Worked example](audit/evidence/pid2-signed-input-reconstruction-2026-11-18.md).
 - **PID2 represented coordinates are a separate numerical layer:** `Pid2Result::from_estimate`
   gives the four already represented inputs one exact-sum synergy meaning, then applies the
   project-defined inclusive 32-position reconstruction guard. Preserve its input/atom/identity
