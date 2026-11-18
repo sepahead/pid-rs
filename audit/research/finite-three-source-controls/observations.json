@@ -1,0 +1,193 @@
+{
+  "scope": "Known-source finite three-label registry and its 12 fixed semantic controls. Local run on 18 November 2026.",
+  "lean": {
+    "version": "4.34.1",
+    "revision": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "distribution": "darwin_aarch64",
+    "archive_sha256": "65f22a4f047738ec742667b3247e836a86ebf06eabc12655c3dee00637e37866"
+  },
+  "mathlib": {
+    "revision": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+    "lake_manifest_sha256": "8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67",
+    "dependencies": {
+      "plausible": "118aa17ee84656b8bd727fef7c458ee8c833385c",
+      "LeanSearchClient": "ddf04cf3949fa556442341e87d47f9f6e6074707",
+      "importGraph": "e928b72544873815af278d38681b31c0293588e3",
+      "proofwidgets": "106ff4fafc74ef4ac99d81dbf3ab399118f497a5",
+      "aesop": "355695d523e41d0554926416cba2a2b3544fbbc9",
+      "Qq": "6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259",
+      "batteries": "f2effa3d803fda822b1f97b806c47cf2adfbcbc2",
+      "Cli": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204"
+    }
+  },
+  "source_sha256": {
+    "Candidate.lean": "b14b664a8b808563fe4f34ccebdb31cbd0e2e19250028b16da8a7433b705d36b",
+    "Contract.lean": "61c8d92c30a934c91aa025c27d24468619f6974fdc9154edba57d5deb701a55e",
+    "Fault01.lean": "64c05ebb9674d4aa36779c24bdd8667223a4691ac12a413f65622fd48f2b2040",
+    "Fault02.lean": "e76767192c5ad45d87b2254e6d191d106e727dfbffca159f23397563c88c7b8b",
+    "Fault03.lean": "48e89f1ef537e49796b8d0060747ca0e4730179502fa9ee022c2f30e0d0eb08c",
+    "Fault04.lean": "d8371bd12d635159b1fc1d1da95562e4d7bac6356f97e4ae1a693f77a6888fa1",
+    "Fault05.lean": "f8ad7d9fca70417ec0cce6464fdca930194782632d232214147b49df15606e5c",
+    "Fault06.lean": "2763a1656c77dc4c890450f68e3f7fc06e2e9d5b6d0ac8bdab85766ea7e9c0d0",
+    "Fault07.lean": "1758de0419c8caf583b51a2a61e7b2173caedd932b38d58b4b3e730321b03a8f",
+    "Fault08.lean": "7d4f427ab73d83c2812ad73c190501bea1d60edb15eb54debf557ad9147f5296",
+    "Fault09.lean": "421b2ed436f97b7dfc9cb674d59983e71e4a3e3add745d4cebbef9a9473a42f8",
+    "Fault10.lean": "7fcf0aa6756d5b013b9534d8c11ced283524bce46d99b23b9b62db29e437e64b",
+    "Fault11.lean": "4750a9ede1161c2030cfbc69956ab62956f11b290e313a2ccb1c3ff3d6d20e93",
+    "Fault12.lean": "0ff177a08801833f9ce14c6a8e5d11ab6d3a1f333266fece494a0325a064d5f3",
+    "JudgeCore.lean": "b767858e3b99d3b2d033bce3b4faa7e7a56f8809a3e94e22719f2a4edd5b1e17",
+    "RawTargets.lean": "8ebde7af65614b1dbe4420402cb6148bde8dc70ff314405bd11792f378307832",
+    "SemanticFaults.lean": "22e419f6dad6cc66f4e1c03c659ac1958e2c48fc81fc3a2f306d3f572d275c40"
+  },
+  "failed_attempts": [
+    {
+      "attempt": 1,
+      "result_sha256": "bb0da2daaacb666ea7be5d839822f3af5aec1b1c84eca3a07e29fa6000ce4ef2",
+      "primary_steps_attempted": 1,
+      "accepted_exports": 0,
+      "failure": "Unresolved field notation for finite-set insertion in the first control definition."
+    },
+    {
+      "attempt": 2,
+      "result_sha256": "4d9269bed39b59954091082fb85dfeee4dfbca711734a95e3b6e029014ca68ff",
+      "primary_steps_attempted": 13,
+      "accepted_exports": 0,
+      "failure": "Failure to synthesize decidability for four closed witnesses. The proof guard rejected the elaborated placeholders."
+    }
+  ],
+  "accepted_attempt": {
+    "attempt": 3,
+    "task_sha256": "082e62acbd4334bb9556c40489d72738b2e92ecab7be048e638c8b9cb01eed6f",
+    "packet_manifest_sha256": "2cf098c7262df8bed0257795180ff54750a7f72c3ea3ec29b8ae8396246fecb5",
+    "terminal_result_sha256": "8d56b4714898cf885096cc0d243abf2db6383daec4f598dfe8a4b980d5aa6d72",
+    "exports_stdout_sha256": "0e9ab5e3e45c27a6e98001022603d55f9f871d3e3cb72537dffc148f9e9ebbc7",
+    "fresh_replay": {
+      "module": "SemanticFaults",
+      "verifier": "leanchecker --fresh",
+      "exit": 0,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    "primary_steps": 14,
+    "registry_observations": 15,
+    "checked_export_rows": 24,
+    "typed_examples": 48,
+    "distinct_original_targets": 8,
+    "allowed_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "backing_files_checked_before_and_after": 11060
+  },
+  "cases": [
+    {
+      "ordinal": 1,
+      "id": "empty_family_inclusion",
+      "reason": "An inserted empty family is not an original valid carrier node.",
+      "original_candidate_theorem": "PidFin3Candidate.carrier_membership",
+      "original_full_target": "PidFin3RawTargets.carrier_membership",
+      "mutant_full_target": "PidFin3Fault01.carrierMembershipTarget",
+      "mutant_rejected_witness": "¬ ((∅ : PidFin3Fault01.Family) ∈ PidFin3Fault01.carrier ↔ PidFin3Contract.Valid ∅)"
+    },
+    {
+      "ordinal": 2,
+      "id": "empty_branch_inclusion",
+      "reason": "A family containing the empty branch must remain outside the carrier, even though it is nonempty.",
+      "original_candidate_theorem": "PidFin3Candidate.carrier_membership",
+      "original_full_target": "PidFin3RawTargets.carrier_membership",
+      "mutant_full_target": "PidFin3Fault02.carrierMembershipTarget",
+      "mutant_rejected_witness": "¬ (({∅} : PidFin3Fault02.Family) ∈ PidFin3Fault02.carrier ↔ PidFin3Contract.Valid {∅})"
+    },
+    {
+      "ordinal": 3,
+      "id": "missing_valid_node",
+      "reason": "The generated carrier must contain the valid singleton family {{0}}; cardinality-only recognition is insufficient.",
+      "original_candidate_theorem": "PidFin3Candidate.carrier_membership",
+      "original_full_target": "PidFin3RawTargets.carrier_membership",
+      "mutant_full_target": "PidFin3Fault03.carrierMembershipTarget",
+      "mutant_rejected_witness": "¬ (({ {0} } : PidFin3Fault03.Family) ∈ PidFin3Fault03.carrier ↔ PidFin3Contract.Valid {{0}})"
+    },
+    {
+      "ordinal": 4,
+      "id": "comparable_family_inclusion",
+      "reason": "The comparable two-branch family is not an antichain.",
+      "original_candidate_theorem": "PidFin3Candidate.carrier_membership",
+      "original_full_target": "PidFin3RawTargets.carrier_membership",
+      "mutant_full_target": "PidFin3Fault04.carrierMembershipTarget",
+      "mutant_rejected_witness": "¬ (({ {0}, {0, 1} } : PidFin3Fault04.Family) ∈ PidFin3Fault04.carrier ↔ PidFin3Contract.Valid {{0}, {0, 1}})"
+    },
+    {
+      "ordinal": 5,
+      "id": "swapped_bit_positions",
+      "reason": "Coherently swapping encode/decode bit0 and bit1 preserves roundtrips but violates original singleton anchors.",
+      "original_candidate_theorem": "PidFin3Candidate.codec_anchors",
+      "original_full_target": "PidFin3RawTargets.codec_anchors",
+      "mutant_full_target": "PidFin3Fault05.codecAnchorsTarget",
+      "mutant_rejected_witness": "¬ (PidFin3Fault05.encode {0} = 1 ∧ PidFin3Fault05.encode {1} = 2)"
+    },
+    {
+      "ordinal": 6,
+      "id": "unrestricted_mask_roundtrip",
+      "reason": "Mask8 lies outside the three-bit roundtrip domain and decodes to the empty branch.",
+      "original_candidate_theorem": "PidFin3Candidate.encode_decode",
+      "original_full_target": "PidFin3RawTargets.encode_decode",
+      "mutant_full_target": "PidFin3Fault06.encodeDecodeTarget",
+      "mutant_rejected_witness": "¬ PidFin3Fault06.encodeDecodeTarget"
+    },
+    {
+      "ordinal": 7,
+      "id": "registry_reordering",
+      "reason": "Transpose registry indices0/1 while retaining registryMasks byte-exact as the external fixed index roster; the original pointwise correspondence fails at index0.",
+      "original_candidate_theorem": "PidFin3Candidate.registry_pointwise",
+      "original_full_target": "PidFin3RawTargets.registry_pointwise",
+      "mutant_full_target": "PidFin3Fault07.registryPointwiseTarget",
+      "mutant_rejected_witness": "¬ (PidFin3Fault07.registry (0 : Fin 18) = ({ {0} } : PidFin3Fault07.Family))"
+    },
+    {
+      "ordinal": 8,
+      "id": "duplicate_registry_member",
+      "reason": "Distinct fixed indices0 and1 must not decode to the same family.",
+      "original_candidate_theorem": "PidFin3Candidate.registry_injective",
+      "original_full_target": "PidFin3RawTargets.registry_injective",
+      "mutant_full_target": "PidFin3Fault08.registryInjectiveTarget",
+      "mutant_rejected_witness": "¬ (PidFin3Fault08.registry (0 : Fin 18) = PidFin3Fault08.registry 1 → (0 : Fin 18) = 1)"
+    },
+    {
+      "ordinal": 9,
+      "id": "reversed_order",
+      "reason": "The original strict valid-node witness is LE({{0}},{{0,1}}), not its reverse.",
+      "original_candidate_theorem": "PidFin3Candidate.extremes",
+      "original_full_target": "PidFin3RawTargets.extremes",
+      "mutant_full_target": "PidFin3Fault09.extremesTarget",
+      "mutant_rejected_witness": "¬ (PidFin3Fault09.LE (PidFin3Fault09.registry 0) (PidFin3Fault09.registry 2))"
+    },
+    {
+      "ordinal": 10,
+      "id": "zeta_transpose",
+      "reason": "Cell(0,2) distinguishes cumulative-row/atom-column orientation from its transpose.",
+      "original_candidate_theorem": "PidFin3Candidate.zeta_entries",
+      "original_full_target": "PidFin3RawTargets.zeta_entries",
+      "mutant_full_target": "PidFin3Fault10.zetaEntriesTarget",
+      "mutant_rejected_witness": "¬ (PidFin3Fault10.expectedZeta (0 : Fin 18) 2 = true ↔ PidFin3Fault10.LE (PidFin3Fault10.registry 2) (PidFin3Fault10.registry 0))"
+    },
+    {
+      "ordinal": 11,
+      "id": "one_altered_zeta_cell",
+      "reason": "One changed diagonal cell contradicts reflexivity, while row width remains18.",
+      "original_candidate_theorem": "PidFin3Candidate.zeta_entries",
+      "original_full_target": "PidFin3RawTargets.zeta_entries",
+      "mutant_full_target": "PidFin3Fault11.zetaEntriesTarget",
+      "mutant_rejected_witness": "¬ (PidFin3Fault11.expectedZeta (0 : Fin 18) 0 = true ↔ PidFin3Fault11.LE (PidFin3Fault11.registry 0) (PidFin3Fault11.registry 0))"
+    },
+    {
+      "ordinal": 12,
+      "id": "restricted_boolean_patterns",
+      "reason": "Restricting the comparison to all-false makes the implication vacuous on both valid nonempty nodes; the missing pattern with bit0 true separates them.",
+      "original_candidate_theorem": "PidFin3Candidate.reverse_dnf",
+      "original_full_target": "PidFin3RawTargets.reverse_dnf",
+      "mutant_full_target": "PidFin3Fault12.reverseDnfTarget",
+      "mutant_rejected_witness": "¬ (PidFin3Fault12.LE (PidFin3Fault12.registry 2) (PidFin3Fault12.registry 0) ↔ (PidFin3Fault12.DNF (PidFin3Fault12.registry 0) (fun _ => false) → PidFin3Fault12.DNF (PidFin3Fault12.registry 2) (fun _ => false)))"
+    }
+  ]
+}

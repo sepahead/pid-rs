@@ -26,6 +26,19 @@ trap 'rm -rf -- "$BUILD_DIR"' EXIT
 
 cd "$ROOT"
 python3 -I -S -B scripts/check-finite-convergence-document-semantics.py
+python3 -I -S -B scripts/count-majority-windows.py >"$BUILD_DIR/window-counts.txt"
+python3 -I -S -B -O scripts/count-majority-windows.py >"$BUILD_DIR/window-counts-optimized.txt"
+cmp "$BUILD_DIR/window-counts.txt" "$BUILD_DIR/window-counts-optimized.txt"
+window_tail="4288284485184047427048340152477701759437621537863923451760804954350018293564334103605149"
+for expected in \
+  "strings with K <= 105: $window_tail" \
+  "strings with K >= 195: $window_tail" \
+  "The majority-event probability exceeds the IID expression."; do
+  if ! grep -Fxq "$expected" "$BUILD_DIR/window-counts.txt"; then
+    echo "window supplement: the exact count or comparison changed" >&2
+    exit 1
+  fi
+done
 if ! lacheck "$SOURCE" >"$BUILD_DIR/lacheck.stdout" 2>&1; then
   cat "$BUILD_DIR/lacheck.stdout" >&2
   echo "dependency-colored SxPID PDF check: static LaTeX lint failed" >&2
@@ -65,6 +78,10 @@ fi
 
 pdftotext "$BUILT" "$BUILD_DIR/built.semantic.txt"
 required_text=(
+  "Counting overlapping three-bit windows"
+  "Exact comparison at the stated threshold"
+  "Rust implementation and computational cost"
+  "python3 scripts/count-majority-windows.py"
   "Why the color map exists"
   "The quantity denoted Vn is not new mathematics from pid-rs."
   "DC-D1: complete rows, one common row law, and predeclared coloring"

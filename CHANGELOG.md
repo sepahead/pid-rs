@@ -7,6 +7,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Add an exact overlapping-window counterexample to the finite-alphabet concentration report.
+  For 300 triples of independent fair bits, the probability of an empirical distribution
+  error of at least 0.30 in total absolute distance exceeds 0.001052. Substituting independent
+  rows in the bound gives less than 0.000349. [Proof and reproducible counts](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
+- Publish twelve checked changes to the finite three-source registry. Eight distinct original
+  targets and twelve negated altered targets occur among 24 exported declarations. The source
+  package records both earlier failures, the 4.34.1 kernel replay and the historical protocol
+  still open. [Formal statements, witnesses and replay](audit/research/finite-three-source-controls/README.md)
+
 - Document the null for permuting one selected matrix, the random sampling required by the
   reference test, and the deterministic schedule produced by a recorded seed. Ties count in the
   chosen tail and restricted circular shifts remain surrogate scores. [Permutation interpretation](audit/evidence/selected-matrix-permutation-null-2026-11-18.md).
