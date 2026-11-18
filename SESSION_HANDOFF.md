@@ -1,4 +1,18 @@
-# Session handoff — updated 16 November 2026
+# Session handoff — updated 18 November 2026
+
+## Source-partition bounds and scientific review, 18 November 2026
+
+The [correction record](audit/evidence/source-partition-bounds-correction-2026-11-18.md)
+binds the three outward decimal fields on all 30 empirical distributions, the qualified
+sampling and constant-source statements, and the paired 17-page report. The earlier
+nearest-decimal output remains recoverable at `1479fc5e`. The exact rational comparisons
+still give six improved bounds. A review of a population claim requires an explicit
+sampling distribution.
+
+The historical claim review starts at the initial source release and includes later proofs
+and current summaries. The private handoff records completed checks and the active work
+on numerical moments, finite formal predicates and outstanding three-source obligations.
+The complete three-source claim still awaits Programs A–E and external human review.
 
 ## Finite witness reproduction and local preservation, 16 November 2026
 

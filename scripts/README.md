@@ -3509,11 +3509,11 @@ directory selects another raw-data location. Every output file except the timing
 `EXECUTION.json` must equal its counterpart in `evidence/campaign/`.
 `post_study_bound.py NEW_DIRECTORY` checks its published input manifest `POST_BOUND_INPUTS.json`,
 reads `evidence/campaign/` and writes `REPORT.json`, which must equal `evidence/coupling-bound.json`.
-`chain_lower_certificate.py` writes nothing; it checks 48 integer dual certificates exactly and
-prints rational lower bounds on the total change of the atoms of all 30 distributions. These three
-scripts reproduce the results of the report, revised on 31 October 2026, and of its
-[addendum of 30 October 2026](../audit/research/source-coupling-compression/ADDENDUM-2026-10-30.md);
-a matching replay is not a population or calibration result.
+`chain_lower_certificate.py` checks 48 integer dual certificates and compares rational bounds
+on all 30 distributions without writing files. Its JSON rounds both lower endpoints down and
+the allocation upper endpoint up to twelve decimal places. These three scripts reproduce the
+finite-table results of the report and its [October addendum](../audit/research/source-coupling-compression/ADDENDUM-2026-10-30.md).
+Population inference and calibration require separate sampling evidence.
 The PDF inventory compares sorted validated stems. Sorting full filenames before removing `.pdf`
 does not preserve stem order for a paper and its `-summary` companion; the first failed baseline
 and its source preimage remain archived with the bias publication.

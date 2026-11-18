@@ -30,7 +30,7 @@ the first version changes.
 - Section 10 corrects the status statement. The report is on the main branch of the repository;
   the scientific questions that Section 8 lists stay open.
 
-The addendum remains the dated record of these changes and of two repaired replay scripts.
+The [18 November correction](../../evidence/source-partition-bounds-correction-2026-11-18.md) covers decimal bounds, constant pairs and sampling bias.
 
 ## 1. Question, definitions and assumptions
 
@@ -412,9 +412,9 @@ $|\eta_\alpha|\le1$ for every node, and for every vector $d$ with $Ad=L$,
 $y^\top L=\eta^\top d\le\sum_\alpha|d_\alpha|$; with $d=\Delta$ this gives $y^\top L\le D$.
 The program [`verification/chain_lower_certificate.py`](verification/chain_lower_certificate.py)
 checks all 48 such vectors exactly on the 18 nodes. It evaluates each vector at the saved outward
-interval endpoints of the seven changes and keeps the largest result. The bounds are rational
-numbers, and no floating-point number enters them. They exceed bound (8) on six of the 30
-distributions and equal it on the others:
+interval endpoints of the seven changes and keeps the largest result. It compares bounds as exact
+rationals. For JSON output it rounds lower bounds down and upper bounds up to twelve decimal
+places. Six chain bounds improve on (8) and the other 24 coincide. The table gives approximate values in nats.
 
 | Distribution | Bound (8) | Bound (13) | $D$ |
 |---|---:|---:|---:|
@@ -521,7 +521,8 @@ $$
 \boxed{D=2(|R_2|+|U_Y|+|Q|),\quad J\ne J'.}\qquad(10)
 $$
 
-If the pair takes only one value, only the atom of the kept source is nonzero and $D=0$. A map that
+If the pair takes only one value, the retained source's atom equals $I(X;T)$ and can be zero.
+All other signed atoms vanish, so $D=0$. A map that
 merges the two values, or a pair with three values, does not satisfy (10). Within target strata
 that contain one value of the pair, keep the complete lattice and average before taking absolute
 values. This is a written conditional result; the correspondence between the source paper and a
@@ -668,9 +669,9 @@ new distribution lies in a polytope $\lbrace\pi\in\mathbb R^{18}:\pi\ge0,\ A\pi=
 $H(S_B)$, $H(S_B\mid T)$, $H(S_B')$ or $H(S_B'\mid T)$. Hence $D$ lies between the smallest and the
 largest value of $\sum_\alpha|\Delta_\alpha|$ over the product of the four polytopes. Only 28
 entropies of source sets are needed. The top row of $A$ is all ones, so the largest value is never
-above the range bound (11). The smallest value equalled bound (13) on all 30 distributions. The
-largest value was computed as a mixed-integer linear program with the HiGHS solver in binary64
-arithmetic, so this polytope maximum is exploratory, not a certified bound:
+above the range bound (11). On all 30 distributions the numerical minima agreed with (13) at
+the reported precision. HiGHS computed the minima by linear programming and the maxima by
+mixed-integer linear programming, both in binary64. The table gives exploratory numerical maxima.
 
 | Pooled distribution | $D$ | Range bound (11) | Polytope maximum |
 |---|---:|---:|---:|
@@ -761,10 +762,11 @@ change from 0.0572 to 0.0941 to four decimal places.
 
 **Sparse cells.** The room training distribution occupies 21 of its 32 cells, and six cells hold at
 most five rows. The room test distribution occupies 12 cells, two of them with a single row, and
-the office test distribution occupies 7 of 16 cells, one with a single row. Atoms computed from
-such counts are exact for these finite distributions, but as estimates of a population they are
-biased. For two independent fair bits observed twice, for example, the expected empirical mutual
-information is $\tfrac14\ln2>0$, although the true value is zero.
+the office test distribution occupies 7 of 16 cells, one with a single row. These atoms describe
+the empirical distributions exactly. Their population bias depends on the repeated-sampling model
+and was not measured here. For two independent draws of a pair of independent fair bits, empirical
+mutual information is $\ln2$ when both bits switch and zero otherwise. Its mean is $\tfrac14\ln2$,
+although population mutual information is zero.
 
 ### A recorded example with two values of the pair
 

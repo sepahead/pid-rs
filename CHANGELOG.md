@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve certified bounds when formatting the source-partition results to twelve decimal
+  places. Across 30 recorded distributions the original printer rounded 39 of 90 endpoints
+  inward. The six rational improvements survive the correction. Clarify the sampling and
+  constant-source cases in the paired [report and correction record](audit/evidence/source-partition-bounds-correction-2026-11-18.md).
+
 - Correct the source-partition report's Proof 3 explanation: the displayed logarithmic ratio
   is the negative logarithm of a conditional probability. The equation, all 465 mathematical
   spans and numerical results are unchanged. Regenerate the matching 17-page PDF and retain

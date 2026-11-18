@@ -328,8 +328,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "6fa7001e6b8f83527c5d740896486237b9408dbf801ff316ab792df5c976f209",
-        "size_bytes": 337234
+        "sha256": "ce32e4e4bd067a53ced5bd11bef2ec4f342c0f8e35e2194a9310a59e5519f9ea",
+        "size_bytes": 337641
       },
       {
         "git_mode": "100644",
@@ -568,8 +568,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "7df6488ee1f92cb8b09eeb77834a3aca12b27ed448e08034897c4ca6abbf4723",
-        "size_bytes": 50936
+        "sha256": "8714a37f8ab3465ed8e7a5eab3c25c8d77cab683f8e4bf374aa0c75d1b36ca9f",
+        "size_bytes": 51818
       },
       {
         "git_mode": "100644",
@@ -15321,6 +15321,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/source-partition-bounds-correction-2026-11-18.md",
+        "sha256": "0e49eb7c3c2a6c3ca097864c0633727e09b5b961b04824ca41cbef81b3dd5842",
+        "size_bytes": 20275
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/source-partition-conditional-probability-erratum-2026-11-15.md",
         "sha256": "0630f005a1b0973e2c1b963e7d1be79f08069b15c6d7e7c37b8fd657bebe6180",
         "size_bytes": 13457
@@ -29974,8 +29980,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/EXPOSITION.md",
-        "sha256": "7022c82cdb583d055062e677bb5f3935050c2d5befb1030212c893b9e7010d4f",
-        "size_bytes": 51937
+        "sha256": "39d62f62b49d936eb897791992e60d0680f6ce43c8e375066f5ce5bb1b373902",
+        "size_bytes": 52219
       },
       {
         "git_mode": "100644",
@@ -31048,8 +31054,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/source-coupling-compression/verification/chain_lower_certificate.py",
-        "sha256": "8aa1b34c4e680422d25cef33740386c61f054f34549fcc010bcfa1a6bfa90056",
-        "size_bytes": 5753
+        "sha256": "ef00393160a598b8cdf54e1618d67ab25b2fff2ebc4bbca8a0c95b180069f926",
+        "size_bytes": 6221
       },
       {
         "git_mode": "100644",
@@ -33718,8 +33724,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/source-coupling-compression.pdf",
-        "sha256": "9f10034ea1cdc3bce62f2a47fa8affca26ca993b18ab697bcda151eb49de8f49",
-        "size_bytes": 209185
+        "sha256": "d325c30d30da0f150029b37e11068ef2cca665126c097008e9f235558260ff3f",
+        "size_bytes": 209448
       },
       {
         "git_mode": "100644",
@@ -33760,8 +33766,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "230c3591ff1fda8ec8c9093eab624910979c2c5724d19a108c3ef4f1b4e731c6",
-        "size_bytes": 314115
+        "sha256": "4af5e7d29963d972e7a46a310c581160bf17716d71c1578c68f511d41b44e3a4",
+        "size_bytes": 314160
       },
       {
         "git_mode": "100755",
@@ -33856,7 +33862,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/build-source-coupling-compression-pdf.py",
-        "sha256": "753995ee03f93b48dc2e9f3c537d5c0b6226d2de5f4aae4e403555f7da3aa138",
+        "sha256": "3da6eaf267b387f1813dfddac9a709c01d3b5a5a27aac83c4f4024469d24d80a",
         "size_bytes": 55019
       },
       {
@@ -35612,8 +35618,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "3ad9e97b826d60ef85a2bde4dafe732637ed8cd7b77f86ba021d51bd34995f91",
-    "entry_count": 5911
+    "entries_sha256": "c9fed63ff0f876c585bd1adcb3a2983f5c7262275b979da0a58fae9f1b192ed0",
+    "entry_count": 5912
   },
   "subprojections": [
     {
@@ -35633,7 +35639,7 @@
       ]
     },
     {
-      "entries_sha256": "67e3a62e6565f112250cf1ba3d31655b1a163111afd551763637fd08f3ee1116",
+      "entries_sha256": "f095b2262d9ffb8b94fc1e993dba67cd5a3d6b9d28f6f1d59a520fd5cd8bb52b",
       "entry_count": 43,
       "name": "generated_pdf_set",
       "selectors": [
@@ -35641,7 +35647,7 @@
       ]
     },
     {
-      "entries_sha256": "d6695a28f531ae8277e1210320f3dd4e32367d3b58df3fa53fb33e6f249675a1",
+      "entries_sha256": "9224069d17a145572d115a435cb405a968dfc617641c174de183db4f9477a8f1",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

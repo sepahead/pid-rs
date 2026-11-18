@@ -26,6 +26,17 @@ def require(condition, message):
         raise SystemExit(f'chain lower certificate: {message}')
 
 
+def decimal_endpoint(value: Fraction, *, upper: bool) -> str:
+    """Round a rational bound outward to twelve places without passing through a float."""
+    scale = 10**12
+    units, remainder = divmod(value.numerator * scale, value.denominator)
+    if upper and remainder:
+        units += 1
+    whole, fractional = divmod(abs(units), scale)
+    sign = '-' if units < 0 else ''
+    return f'{sign}{whole}.{fractional:012d}'
+
+
 def strict_json(raw):
     def pairs(items):
         result = {}
@@ -106,10 +117,10 @@ def main():
             saved_cut = Fraction(law['mi_cut_lower_nats'])
             require(best <= allocation[1], 'certified lower bound exceeds the saved allocation enclosure')
             rows.append({'recording': recording['metadata']['recording'], 'law': law['law'],
-                         'certified_chain_lower_nats': f'{float(best):.12f}',
-                         'saved_cut_lower_nats': f'{float(saved_cut):.12f}',
+                         'certified_chain_lower_nats': decimal_endpoint(best, upper=False),
+                         'saved_cut_lower_nats': decimal_endpoint(saved_cut, upper=False),
                          'improves_saved_cut': best > saved_cut,
-                         'allocation_upper_nats': f'{float(allocation[1]):.12f}'})
+                         'allocation_upper_nats': decimal_endpoint(allocation[1], upper=True)})
     require(len(rows) == 30, 'all-law roster')
     print(json.dumps({'status': 'PASS', 'scope': 'exact dual witnesses on saved outward intervals; '
                       'a lower bound on these 30 empirical laws, not a population or calibration claim',
