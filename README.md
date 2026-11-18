@@ -780,7 +780,9 @@ These estimators are not interchangeable with ground truth.
   variable-specific projectors and select every hyperparameter on training data, then keep each
   fitted transform fixed while evaluating held-out rows; do not mix independently rotated foldwise
   coordinates in one kNN sample. Fitted standardizers, PCA, and PLS projectors expose deterministic
-  training/parameter hashes; choose an explicit constant-column policy when fitting a standardizer.
+  training and parameter hashes. The standardizer records a column origin and a mean offset so a
+  center between adjacent binary64 values can be used on held-out rows. Its parameter hash uses
+  the v2 domain. Choose a constant-column policy at fit time. [Numerical example](audit/evidence/centered-binary64-moments-2026-11-18.md).
 - For finite-PMF MGW categorical SxPID, the exact-real informative and misinformative Möbius-
   component atoms are separately non-negative, while their signed-net atoms may be negative and are
   never clamped (Makkeh et al. 2021, Theorem IV.3). Binary64 output needs its own error bound or

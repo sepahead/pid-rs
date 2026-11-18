@@ -1867,7 +1867,8 @@
         "Percentile summaries are exploratory and require declared dependence, exchangeability, split, and target-use assumptions.",
         "Each typed summary identifies the original-point-plus-moving-block scope, signed-net component, descriptive resampling evidential limit, and empirical-PMF averaged SxPID estimand; extracting RowBootstrapStat alone discards that interpretation.",
         "The four percentile ranges are marginal summaries rather than a simultaneous region; their endpoints need not satisfy PID reconstruction, while retained aligned replicate vectors support joint analysis.",
-        "The categorical SxPID2 original-sample result and each bootstrap replicate inherit exact final empirical-PMF component averaging over already represented weighted pointwise terms; pointwise Mobius inversion remains compensated. This does not calibrate bootstrap coverage or make changing per-replicate transforms comparable population estimands."
+        "The categorical SxPID2 original-sample result and each bootstrap replicate inherit exact final empirical-PMF component averaging over already represented weighted pointwise terms; pointwise Mobius inversion remains compensated. This does not calibrate bootstrap coverage or make changing per-replicate transforms comparable population estimands.",
+        "Each reported spread uses the centered sample standard deviation of the complete replicate values with divisor B\u22121."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1907,7 +1908,8 @@
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
-        "crates/pid-core/src/pipeline.rs"
+        "crates/pid-core/src/pipeline.rs",
+        "crates/pid-core/src/stats.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/pipeline.rs"
@@ -1917,6 +1919,7 @@
       "validation": {
         "evidence_paths": [
           "NUMERICAL_ASSURANCE.md",
+          "audit/evidence/centered-binary64-moments-2026-11-18.md",
           "crates/pid-core/tests/sxpid_bootstrap.rs"
         ],
         "level": "property-and-integration",
@@ -1932,7 +1935,8 @@
       "code_availability": "local",
       "constraints": [
         "Callback-defined statistics retain their own validity requirements; raw percentile summaries are not generic confidence intervals.",
-        "Revision 2 keeps row-index schedules separate from optional perturbation draws and uses a distinct deterministic perturbation substream for each replicate and input-matrix position; this is not a claim of cryptographic independence."
+        "Revision 2 keeps row-index schedules separate from optional perturbation draws and uses a distinct deterministic perturbation substream for each replicate and input-matrix position; this is not a claim of cryptographic independence.",
+        "Each reported spread uses the centered sample standard deviation of the complete replicate values with divisor B\u22121."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1967,7 +1971,8 @@
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
-        "crates/pid-core/src/pipeline.rs"
+        "crates/pid-core/src/pipeline.rs",
+        "crates/pid-core/src/stats.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/pipeline.rs"
@@ -1976,6 +1981,7 @@
       "title": "Row bootstrap procedure",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/centered-binary64-moments-2026-11-18.md",
           "crates/pid-core/src/pipeline.rs"
         ],
         "level": "unit-and-integration",
@@ -2305,7 +2311,8 @@
       "category": "preprocessing",
       "code_availability": "local",
       "constraints": [
-        "Means and scales must be fitted on declared training data; constant-column policy changes the transform."
+        "Means and scales must be fitted on declared training data; constant-column policy changes the transform.",
+        "Population scaling uses a training-column origin and normalized mean offset. The public binary64 mean can round to a training value. Apply the fitted transform on held-out rows. The v2 parameter identity covers these coordinates, rounded means, retained columns and policy."
       ],
       "definition_origin": "project-defined",
       "depends_on": [],
@@ -2326,7 +2333,8 @@
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
-        "crates/pid-core/src/preprocess.rs"
+        "crates/pid-core/src/preprocess.rs",
+        "crates/pid-core/src/stats.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/preprocess.rs"
@@ -2335,11 +2343,13 @@
       "title": "Standardization",
       "validation": {
         "evidence_paths": [
+          "audit/evidence/centered-binary64-moments-2026-11-18.md",
+          "crates/pid-core/tests/centered_moments.rs",
           "crates/pid-core/tests/preprocess.rs"
         ],
         "level": "unit-and-integration",
-        "limitations": "A correct transform does not make a downstream estimator appropriate for the transformed data.",
-        "scope": "Fit/transform separation, constants, non-finite values, and determinism."
+        "limitations": "A correct transform does not make a downstream estimator appropriate for the transformed data. Represented-input regressions give no universal rounding-error bound.",
+        "scope": "Fit/transform separation, constants, non-finite values, and determinism. Public fits and held-out scores for adjacent binary64 integers of both signs."
       }
     },
     {
@@ -2513,7 +2523,8 @@
       "category": "resampling",
       "code_availability": "local",
       "constraints": [
-        "Block length and dependence declarations are application assumptions; percentile summaries are not automatically calibrated confidence intervals."
+        "Block length and dependence declarations are application assumptions; percentile summaries are not automatically calibrated confidence intervals.",
+        "Sample spreads center the represented complete replicates in offset coordinates and use the B\u22121 divisor."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [
@@ -2541,7 +2552,8 @@
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
-        "crates/pid-core/src/bootstrap.rs"
+        "crates/pid-core/src/bootstrap.rs",
+        "crates/pid-core/src/stats.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/bootstrap.rs"
@@ -2550,11 +2562,13 @@
       "title": "Moving-block bootstrap",
       "validation": {
         "evidence_paths": [
-          "crates/pid-core/src/bootstrap.rs"
+          "audit/evidence/centered-binary64-moments-2026-11-18.md",
+          "crates/pid-core/src/bootstrap.rs",
+          "crates/pid-core/tests/centered_moments.rs"
         ],
         "level": "property-and-integration",
         "limitations": "Index and summary tests do not establish coverage for a caller's process or statistic.",
-        "scope": "Block construction, original row count, seeds, paired alignment, failures, and resource bounds."
+        "scope": "Block construction, original row count, seeds, paired alignment, failures, and resource bounds. Public scalar bootstrap spread compared with the exact two-point multiplicity formula on retained outcomes."
       }
     },
     {

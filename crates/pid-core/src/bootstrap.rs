@@ -317,7 +317,8 @@ impl BootstrapConfig {
 pub struct ResamplingDistributionSummary {
     /// Arithmetic mean of the complete resampling distribution.
     pub resample_mean: f64,
-    /// Sample standard deviation of the resampling distribution. This is a descriptive spread,
+    /// Sample standard deviation of the complete replicates, with divisor `B - 1`. The
+    /// computation centers their represented values in offset coordinates. This is a descriptive spread,
     /// not a generic calibrated standard error.
     pub resample_standard_deviation: f64,
     /// Lower raw endpoint after sorting the complete finite replicates with `f64::total_cmp`.

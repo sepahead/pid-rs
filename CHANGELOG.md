@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Correct population and sample standard deviations for adjacent binary64 values whose mean
+  rounds to an endpoint. Fitted standardizers retain the center for held-out rows and identify
+  their parameters with the v2 hash domain. [Worked example and affected bootstrap summaries](audit/evidence/centered-binary64-moments-2026-11-18.md).
+
 - Preserve certified bounds when formatting the source-partition results to twelve decimal
   places. Across 30 recorded distributions the original printer rounded 39 of 90 endpoints
   inward. The six rational improvements survive the correction. Clarify the sampling and

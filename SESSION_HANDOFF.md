@@ -1,5 +1,17 @@
 # Session handoff — updated 18 November 2026
 
+## Fitted centering and resampling spread, 18 November 2026
+
+The stable standardizer now retains the center between adjacent training values when the
+displayed mean rounds to an endpoint. For the inputs $2^{53}-1$ and $2^{53}$ the fitted scores
+are $-1$ and $1$, and the held-out value $2^{53}+2$ has score $5$. The parameter identity uses
+the v2 hash domain. The same centered arithmetic supplies the sample spread of complete bootstrap
+replicates. The public fit and bootstrap tests retain the numerical counterexample and its
+scope. The earlier implementation remains available at `1479fc5e`. [Correction and reopen conditions](audit/evidence/centered-binary64-moments-2026-11-18.md).
+
+Exact-commit hosted checks and mainline integration remain pending. A universal binary64 error
+bound and statistical coverage for a user-supplied resampling procedure require separate evidence.
+
 ## Source-partition bounds and scientific review, 18 November 2026
 
 The [correction record](audit/evidence/source-partition-bounds-correction-2026-11-18.md)

@@ -34,7 +34,7 @@ use crate::matrix::{MatOwned, MatRef};
 #[cfg(feature = "experimental-pipelines")]
 use crate::resource::CancellationToken;
 use crate::resource::{try_vec_filled, try_vec_with_capacity, ResourceBudget, ResourceEstimate};
-use crate::stats::{finite_mean, finite_mean_std_population};
+use crate::stats::{finite_mean, CenteredMoments};
 
 fn zeroed_f64(len: usize, context: &'static str) -> PidResult<Vec<f64>> {
     try_vec_filled(context, len, 0.0, ResourceBudget::default())
@@ -305,14 +305,12 @@ fn update_f64_slice_hash(digest: &mut Sha256, values: &[f64]) {
 
 fn standardizer_parameter_hash(
     mean: &[f64],
-    column_scale: &[f64],
-    mean_scaled: &[f64],
-    std_scaled: &[f64],
+    moments: &[CenteredMoments],
     retained_columns: &[usize],
     policy: ConstantColumnPolicy,
 ) -> [u8; 32] {
     let mut digest = Sha256::new();
-    digest.update(b"pid-rs-standardizer-parameters-sha256-v1");
+    digest.update(b"pid-rs-standardizer-parameters-sha256-v2");
     digest.update([match policy {
         ConstantColumnPolicy::Drop => 0,
         ConstantColumnPolicy::Error => 1,
@@ -320,9 +318,17 @@ fn standardizer_parameter_hash(
         ConstantColumnPolicy::LeaveCentered => 3,
     }]);
     update_f64_slice_hash(&mut digest, mean);
-    update_f64_slice_hash(&mut digest, column_scale);
-    update_f64_slice_hash(&mut digest, mean_scaled);
-    update_f64_slice_hash(&mut digest, std_scaled);
+    digest.update((moments.len() as u128).to_le_bytes());
+    for column in moments {
+        for value in [
+            column.origin,
+            column.scale,
+            column.mean_offset,
+            column.std_scaled,
+        ] {
+            digest.update(value.to_bits().to_le_bytes());
+        }
+    }
     digest.update((retained_columns.len() as u128).to_le_bytes());
     for &column in retained_columns {
         digest.update((column as u128).to_le_bytes());
@@ -388,9 +394,7 @@ pub enum ConstantColumnPolicy {
 #[derive(Debug)]
 pub struct Standardizer {
     mean: Vec<f64>,
-    column_scale: Vec<f64>,
-    mean_scaled: Vec<f64>,
-    std_scaled: Vec<f64>,
+    moments: Vec<CenteredMoments>,
     retained_columns: Vec<usize>,
     constant_column_policy: ConstantColumnPolicy,
     training_data_hash_sha256: [u8; 32],
@@ -406,21 +410,15 @@ impl Standardizer {
         Self::fit_with_budget(x, constant_column_policy, ResourceBudget::default())
     }
 
-    /// Conservative peak state, scratch, and work estimate for fitting.
+    /// Conservative peak fitted state and work estimate. Each pass reads columns in place.
     pub fn fit_resource_estimate(x: MatRef<'_>) -> PidResult<ResourceEstimate> {
         let n = x.nrows() as u128;
         let d = x.ncols() as u128;
-        let state_bytes = d
-            .checked_mul(4)
-            .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
-            .and_then(|value| {
-                value.checked_add(d.checked_mul(std::mem::size_of::<usize>() as u128)?)
-            })
-            .ok_or(PidError::SizeOverflow {
-                operation: "Standardizer::fit",
-            })?;
-        let scratch_bytes =
-            n.checked_mul(std::mem::size_of::<f64>() as u128)
+        let bytes_per_column = std::mem::size_of::<CenteredMoments>()
+            + std::mem::size_of::<f64>()
+            + std::mem::size_of::<usize>();
+        let state_bytes =
+            d.checked_mul(bytes_per_column as u128)
                 .ok_or(PidError::SizeOverflow {
                     operation: "Standardizer::fit",
                 })?;
@@ -432,11 +430,7 @@ impl Standardizer {
                 operation: "Standardizer::fit",
             })?;
         Ok(ResourceEstimate {
-            estimated_bytes: state_bytes.checked_add(scratch_bytes).ok_or(
-                PidError::SizeOverflow {
-                    operation: "Standardizer::fit",
-                },
-            )?,
+            estimated_bytes: state_bytes,
             pairwise_distances: 0,
             operations_hint,
         })
@@ -458,38 +452,18 @@ impl Standardizer {
             });
         }
 
-        // Scale each column before forming its moments. Variance itself can overflow even when
-        // the standard deviation is representable (for example `[0, f64::MAX]`).
         budget.check("Standardizer::fit", Self::fit_resource_estimate(x)?)?;
-        let mut mean = zeroed_f64_with_budget(d, "Standardizer::fit mean", budget)?;
-        let mut column_scale = zeroed_f64_with_budget(d, "Standardizer::fit column scale", budget)?;
-        let mut mean_scaled = zeroed_f64_with_budget(d, "Standardizer::fit scaled mean", budget)?;
-        let mut std_scaled =
-            zeroed_f64_with_budget(d, "Standardizer::fit scaled standard deviation", budget)?;
-        let mut column = zeroed_f64_with_budget(n, "Standardizer::fit column scratch", budget)?;
-        for j in 0..d {
-            let scale = (0..n).map(|i| x.row(i)[j].abs()).fold(0.0_f64, f64::max);
-            column_scale[j] = scale;
-            if scale == 0.0 {
-                continue;
-            }
-
-            for (i, value) in column.iter_mut().enumerate() {
-                *value = x.row(i)[j] / scale;
-            }
-            let (scaled_mean, scaled_std) = finite_mean_std_population(
-                &column,
-                "Standardizer::fit: non-finite scaled column moments",
-            )?;
-            mean_scaled[j] = scaled_mean;
-            std_scaled[j] = scaled_std;
-            mean[j] = scaled_mean * scale;
-        }
-
+        let mut mean = try_vec_with_capacity("Standardizer::fit mean", d, budget)?;
+        let mut moments = try_vec_with_capacity("Standardizer::fit column moments", d, budget)?;
         let mut retained_columns =
             try_vec_with_capacity("Standardizer::fit retained columns", d, budget)?;
-        for (column_index, &scaled_std) in std_scaled.iter().enumerate() {
-            let is_constant = scaled_std == 0.0;
+        for column_index in 0..d {
+            let column = CenteredMoments::fit(
+                (0..n).map(|row| x.row(row)[column_index]),
+                0,
+                "Standardizer::fit: column moments",
+            )?;
+            let is_constant = column.scale == 0.0;
             if is_constant && constant_column_policy == ConstantColumnPolicy::Error {
                 return Err(PidError::InvalidConfig {
                     context: "Standardizer::fit",
@@ -499,22 +473,16 @@ impl Standardizer {
             if !is_constant || constant_column_policy != ConstantColumnPolicy::Drop {
                 retained_columns.push(column_index);
             }
+            mean.push(column.mean());
+            moments.push(column);
         }
         let training_data_hash_sha256 = preprocessing_matrix_hash(x);
-        let parameter_hash_sha256 = standardizer_parameter_hash(
-            &mean,
-            &column_scale,
-            &mean_scaled,
-            &std_scaled,
-            &retained_columns,
-            constant_column_policy,
-        );
+        let parameter_hash_sha256 =
+            standardizer_parameter_hash(&mean, &moments, &retained_columns, constant_column_policy);
 
         Ok(Self {
             mean,
-            column_scale,
-            mean_scaled,
-            std_scaled,
+            moments,
             retained_columns,
             constant_column_policy,
             training_data_hash_sha256,
@@ -561,10 +529,9 @@ impl Standardizer {
         for i in 0..n {
             for &j in &self.retained_columns {
                 let v = x.row(i)[j];
-                let standardized = if self.std_scaled[j] > 0.0 {
-                    // Standardize entirely in scaled coordinates. This avoids materializing an
-                    // underflowed standard deviation or its overflowing reciprocal.
-                    (v / self.column_scale[j] - self.mean_scaled[j]) / self.std_scaled[j]
+                let column = self.moments[j];
+                let standardized = if column.scale > 0.0 {
+                    column.standardize(v)
                 } else {
                     match self.constant_column_policy {
                         ConstantColumnPolicy::Zero => 0.0,
@@ -599,17 +566,6 @@ impl Standardizer {
     /// Conservative aggregate peak for the retained fitted state plus transformed output.
     pub fn fit_transform_resource_estimate(x: MatRef<'_>) -> PidResult<ResourceEstimate> {
         let fit = Self::fit_resource_estimate(x)?;
-        let state_bytes = (x.ncols() as u128)
-            .checked_mul(4)
-            .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
-            .and_then(|value| {
-                value.checked_add(
-                    (x.ncols() as u128).checked_mul(std::mem::size_of::<usize>() as u128)?,
-                )
-            })
-            .ok_or(PidError::SizeOverflow {
-                operation: "Standardizer::fit_transform",
-            })?;
         let output_bytes = (x.nrows() as u128)
             .checked_mul(x.ncols() as u128)
             .and_then(|value| value.checked_mul(std::mem::size_of::<f64>() as u128))
@@ -617,15 +573,11 @@ impl Standardizer {
                 operation: "Standardizer::fit_transform",
             })?;
         Ok(ResourceEstimate {
-            estimated_bytes: fit
-                .estimated_bytes
-                .max(
-                    state_bytes
-                        .checked_add(output_bytes)
-                        .ok_or(PidError::SizeOverflow {
-                            operation: "Standardizer::fit_transform",
-                        })?,
-                ),
+            estimated_bytes: fit.estimated_bytes.checked_add(output_bytes).ok_or(
+                PidError::SizeOverflow {
+                    operation: "Standardizer::fit_transform",
+                },
+            )?,
             pairwise_distances: 0,
             operations_hint: fit
                 .operations_hint
@@ -655,6 +607,8 @@ impl Standardizer {
         Ok((transformed, standardizer))
     }
 
+    /// Fitted means in the original units. The transform keeps its centered coordinates
+    /// so it can use a fractional offset that rounding these values would lose.
     pub fn mean(&self) -> &[f64] {
         &self.mean
     }
@@ -685,24 +639,30 @@ impl Standardizer {
 
     /// Derive the original-unit reciprocal standard deviations.
     ///
-    /// Constant columns return `1`, matching [`transform`](Self::transform)'s centered-but-unscaled
-    /// convention. A nonconstant subnormal column may still be transformed through the private
+    /// Constant columns return the conventional factor `1` for every policy. A nonconstant
+    /// subnormal column may still be transformed through the private
     /// scaled representation even when its standalone original-unit reciprocal is not representable;
     /// this accessor returns [`PidError::NumericalInstability`] in that case.
     pub fn inv_std(&self) -> PidResult<Vec<f64>> {
         let mut inverse_standard_deviations = try_vec_with_capacity(
             "Standardizer::inv_std",
-            self.column_scale.len(),
+            self.moments.len(),
             ResourceBudget::default(),
         )?;
-        for (&scale, &scaled_std) in self.column_scale.iter().zip(&self.std_scaled) {
-            if scaled_std == 0.0 {
+        for column in &self.moments {
+            if column.scale == 0.0 {
                 inverse_standard_deviations.push(1.0);
                 continue;
             }
-            let std = scale * scaled_std;
-            let inverse = 1.0 / std;
-            if std > 0.0 && inverse.is_finite() {
+            let std = column.std();
+            let inverse = if std < f64::MIN_POSITIVE {
+                // Preserve the fitted spread's precision when its original-unit product
+                // would round at a subnormal spacing before taking the reciprocal.
+                (1.0 / column.scale) / column.std_scaled
+            } else {
+                1.0 / std
+            };
+            if inverse.is_finite() {
                 inverse_standard_deviations.push(inverse);
             } else {
                 return Err(PidError::NumericalInstability {

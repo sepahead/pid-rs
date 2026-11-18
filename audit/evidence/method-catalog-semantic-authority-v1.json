@@ -45,7 +45,7 @@
   "authority_schema_sha256": "afc9bb89a704dce43a53f01117e068dde9984177446c9e6d2ff049e120a27f20",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "baf01802c727938006173f4afee37356c0a0733f9a9a890cad202cc49927c458",
+  "catalog_sha256": "57c8daa8bb2b0af6a0ad4bd5a9625d64267b1941964393a52ff4170eec1174ec",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -424,7 +424,7 @@
       },
       "method_id": "pipelines.quantized-sxpid-bootstrap",
       "observed_alias_families": [],
-      "payload_sha256": "4c4e8aa3f0cb053b3a7bba4785c372ad69db6d1da78d630b2358c45350d0e530"
+      "payload_sha256": "393db680fc40d49158cdc3f09f681f9a0e069ab3d80af2f9d55735f9637ee9e2"
     },
     {
       "facts": {
@@ -435,7 +435,7 @@
       },
       "method_id": "pipelines.row-bootstrap",
       "observed_alias_families": [],
-      "payload_sha256": "dbaca11b42c43bae06c66dd689946c2aea6a3dd14a9c1ae8cd3de0df29786202"
+      "payload_sha256": "052d286340e8824bce395865244e7d3cc6a480426526b8afc85afdb90216ecfb"
     },
     {
       "facts": {
@@ -514,7 +514,7 @@
       },
       "method_id": "preprocessing.standardization",
       "observed_alias_families": [],
-      "payload_sha256": "6415679410c9363bbe59bda46ae2984d6ae02b0e0c85f8d0d2ffcaeb98d93b10"
+      "payload_sha256": "8b30d7371b7c2040def67075e6b527356b66e68d0d509d68dc1e71b084cdd0c3"
     },
     {
       "facts": {
@@ -558,7 +558,7 @@
       },
       "method_id": "resampling.moving-block-bootstrap",
       "observed_alias_families": [],
-      "payload_sha256": "bb1e08602c6eefc2134022a78085f4d915f7deaf0a3cf83548c4409365ea445b"
+      "payload_sha256": "eb30db27e53e6345ac922f129a61c119ee364584d316bf30fbcdecfbf53c595a"
     },
     {
       "facts": {
@@ -999,7 +999,7 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "3dbbe79feef67b2fbe5c2f7c8ca7e4ba2e56ad207c31acc5386fe2261083e072",
+  "ordered_root_sha256": "f74d1fc69438e9a99be47a95b82cd04b9b4590d951ca498f874a21b955ec0f33",
   "reference_registry_sha256": "87a9a600ef866dc6dce6da60c514647c2e72c3e886b1cb3679d5c6c515b0e256",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1

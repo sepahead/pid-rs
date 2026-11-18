@@ -81,6 +81,10 @@ Empty data, zero-width variables, mismatched row counts and unsupported source c
 
 In particular, the four-source event component alone is $7,968N^2$ operation-hint units. At $N=1,121$ it already exceeds $10^{10}$, before histogram, inversion and averaging terms. This is a sufficient default-refusal condition, not the exact largest accepted row count. A repeated-state dataset can therefore be refused although its realized event scan would be much smaller. Raising the budget changes resource admission, not scientific validity; it must follow a workload measurement.
 
+## Fitted standardization
+
+The November 2026 numerical revision to the stable `Standardizer` uses three linear passes over each varying training column to retain its center in offset coordinates. Computing the training-data hash takes one more matrix pass. The fit takes $O(nd)$ work for $n$ rows and $d$ columns and budgets five binary64 values and one column index per input column (48 bytes on a 64-bit target). Applying the fit to $m$ held-out rows and $r$ retained columns costs $O(mr)$ work and $8mr$ output bytes. Fitting and transforming in one call budgets the fitted state and output together. No timing is reported for this revision. [Worked example and limits](audit/evidence/centered-binary64-moments-2026-11-18.md).
+
 ## Fitted quantization
 
 The [quantizer](crates/pid-core/src/quantizer.rs) separates fitting from transformation. For $N_{\rm train}$ training rows, $D$ scalar columns and $b$ bins per column, its numeric fit loops scan minima/maxima and construct edges in $O(N_{\rm train}D+bD)$ work, retaining $O(bD)$ edge storage. Metadata validation and optional training-data hashing add their own work. Bin fitting belongs on the training rows in an inferential workflow.

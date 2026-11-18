@@ -127,7 +127,7 @@ EXPECTED_CURRENT_KSG_AUTHORITY_SHA256 = {
         "355fb84902fb344657e04f36767ac3a0865f24539496b28e174f03eaf3789e51"
     ),
     "method-catalog": (
-        "baf01802c727938006173f4afee37356c0a0733f9a9a890cad202cc49927c458"
+        "57c8daa8bb2b0af6a0ad4bd5a9625d64267b1941964393a52ff4170eec1174ec"
     ),
     "release-scope": (
         "98473c97b3f49877e6231350c6a798c1a8745fa2c78eff9abf624b9a88f60ecf"

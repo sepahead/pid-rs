@@ -13,11 +13,105 @@ pub(crate) fn finite_mean(values: &[f64], context: &'static str) -> PidResult<f6
     }
 }
 
+/// Moments in the coordinate `(x - origin) / scale`. Keeping the mean in this coordinate
+/// preserves between-float centers when a column has a large offset and a small spread.
+#[derive(Clone, Copy, Debug)]
+pub(crate) struct CenteredMoments {
+    pub(crate) origin: f64,
+    pub(crate) scale: f64,
+    pub(crate) mean_offset: f64,
+    pub(crate) std_scaled: f64,
+}
+
+impl CenteredMoments {
+    pub(crate) fn fit(
+        values: impl ExactSizeIterator<Item = f64> + Clone,
+        ddof: usize,
+        context: &'static str,
+    ) -> PidResult<Self> {
+        let n = values.len();
+        if n <= ddof {
+            return Err(PidError::InvalidConfig {
+                context,
+                message: "not enough values for the requested variance degrees of freedom",
+            });
+        }
+        let mut min = f64::INFINITY;
+        let mut max = f64::NEG_INFINITY;
+        for value in values.clone() {
+            if !value.is_finite() {
+                return Err(PidError::NonFiniteInput { context });
+            }
+            min = min.min(value);
+            max = max.max(value);
+        }
+        // For one-sided data, subtract the endpoint closest to zero before scaling. Close
+        // same-sign values then retain their spacing. For mixed signs, zero is the origin,
+        // so even the pair [-MAX, MAX] has finite offsets.
+        let origin = 0.0_f64.clamp(min, max);
+        let scale = (max - origin).max(origin - min);
+        if scale == 0.0 {
+            return Ok(Self {
+                origin,
+                scale,
+                mean_offset: 0.0,
+                std_scaled: 0.0,
+            });
+        }
+        let offsets = values.map(|value| (value - origin) / scale);
+        let mean_offset = (compensated_sum(offsets.clone()) / n as f64).clamp(-1.0, 1.0);
+        let sum_squares = compensated_sum(offsets.map(|offset| {
+            let deviation = offset - mean_offset;
+            deviation * deviation
+        }));
+        // The population variance of values in [-1, 1] is at most one. Restore the
+        // roundoff-sized overshoot at this endpoint before multiplying by a possibly maximal
+        // scale. For sample moments the bound includes the degrees-of-freedom adjustment.
+        let denominator = (n - ddof) as f64;
+        let variance = sum_squares / denominator;
+        let bound = n as f64 / denominator;
+        if !variance.is_finite() || variance < 0.0 || variance > bound * (1.0 + 64.0 * f64::EPSILON)
+        {
+            return Err(PidError::NumericalInstability { context });
+        }
+        Ok(Self {
+            origin,
+            scale,
+            mean_offset,
+            std_scaled: variance.min(bound).sqrt(),
+        })
+    }
+
+    pub(crate) fn mean(self) -> f64 {
+        self.mean_offset
+            .mul_add(self.scale, self.origin)
+            .clamp(-f64::MAX, f64::MAX)
+    }
+
+    pub(crate) fn std(self) -> f64 {
+        self.scale * self.std_scaled
+    }
+
+    /// Standardize a value using the fitted center, which may fall between two binary64 values.
+    pub(crate) fn standardize(self, value: f64) -> f64 {
+        let difference = value - self.origin;
+        let offset = if difference.is_finite() {
+            difference / self.scale
+        } else {
+            // A held-out value can have the opposite sign to all the training values.
+            value / self.scale - self.origin / self.scale
+        };
+        // A tiny held-out displacement may underflow before division by the scaled spread.
+        // When both offsets are this small, carry out the centering in original units.
+        if difference != 0.0 && offset.abs().max(self.mean_offset.abs()) < f64::MIN_POSITIVE {
+            return (-self.mean_offset).mul_add(self.scale, difference) / self.std();
+        }
+        (offset - self.mean_offset) / self.std_scaled
+    }
+}
+
 /// Population mean and standard deviation of finite values.
-///
-/// Both passes operate after division by `max(abs(x))`. This matters for data such as
-/// `[0, f64::MAX]`: its mean and standard deviation are both finite, even though forming either
-/// the raw sum or the raw variance overflows.
+#[cfg(any(feature = "experimental-pipelines", test))]
 pub(crate) fn finite_mean_std_population(
     values: &[f64],
     context: &'static str,
@@ -34,38 +128,12 @@ pub(crate) fn finite_mean_std_sample(
     finite_mean_std(values, 1, context)
 }
 
+#[cfg(any(feature = "experimental-pipelines", test))]
 fn finite_mean_std(values: &[f64], ddof: usize, context: &'static str) -> PidResult<(f64, f64)> {
-    if values.len() <= ddof {
-        return Err(PidError::InvalidConfig {
-            context,
-            message: "not enough values for the requested variance degrees of freedom",
-        });
-    }
-    let (scale, mean_scaled) = scaled_mean_parts(values, context)?;
-    if scale == 0.0 {
-        return Ok((0.0, 0.0));
-    }
-
-    let sum_squared_scaled = compensated_sum(values.iter().map(|value| {
-        let deviation = value / scale - mean_scaled;
-        deviation * deviation
-    }));
-    let variance_scaled = sum_squared_scaled / (values.len() - ddof) as f64;
-    // For |x| <= scale, the exact population variance is <= scale^2. Permit a small floating
-    // tolerance, then restore that mathematical bound so `scale * sqrt(var)` cannot spuriously
-    // overflow at `f64::MAX`.
-    let variance_bound = values.len() as f64 / (values.len() - ddof) as f64;
-    let tolerance = 64.0 * f64::EPSILON * variance_bound;
-    if !variance_scaled.is_finite()
-        || variance_scaled < -tolerance
-        || variance_scaled > variance_bound + tolerance
-    {
-        return Err(PidError::NumericalInstability { context });
-    }
-    let std = scale * variance_scaled.clamp(0.0, variance_bound).sqrt();
-    let mean = scale * mean_scaled;
-    if mean.is_finite() && std.is_finite() {
-        Ok((mean, std))
+    let moments = CenteredMoments::fit(values.iter().copied(), ddof, context)?;
+    let std = moments.std();
+    if std.is_finite() {
+        Ok((moments.mean(), std))
     } else {
         Err(PidError::NumericalInstability { context })
     }

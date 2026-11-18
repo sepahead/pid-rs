@@ -653,7 +653,9 @@ Target-adaptive preprocessing fitted on evaluation rows leaks target information
 standardization/PCA/PLS/quantization on training data, freeze it, and estimate on held-out rows.
 Same-sample supervised PLS→PID is exploratory only. Constant columns require an explicit fitted
 policy; fitted parameter/training hashes establish identity but do not prove train/evaluation
-separation or scientific suitability.
+separation or scientific suitability. A standardizer mean displayed in binary64 can round to
+an endpoint of two distinct training values. Use the fitted transform for held-out rows. Reconstructing
+scores from its rounded public mean and inverse scale can give different results. [Worked example](audit/evidence/centered-binary64-moments-2026-11-18.md).
 
 Moving-block bootstrap and permutation procedures are valid only under their stated dependence or
 exchangeability assumptions. Restricted circular shifts are approximate surrogate scores, not

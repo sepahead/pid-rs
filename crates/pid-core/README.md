@@ -389,6 +389,11 @@ matrices, fitted transforms, and estimator reports deliberately do not implement
 `try_clone_with_budget` method (and its copy-resource estimate when provided), or share immutable
 state with `Arc` instead of duplicating it.
 
+The stable `Standardizer` stores its fitted column origins, scales and mean offsets. Transform held-out
+rows with the fitted object. Its displayed mean can round to an adjacent training value while the
+mathematical center lies halfway between them. Parameter hashes use the v2 domain and include
+these fitted coordinates. The fit estimate allows 48 bytes per input column on a 64-bit target.
+
 The default-off pipeline APIs follow the same convention for PLS/logistic fitting, cross-validation,
 pair screening, bootstrap, and permutation schedules. Generic callback estimates cover the known
 schedule, worker-stack, concurrent-resample, and retained-output costs; they cannot include work or

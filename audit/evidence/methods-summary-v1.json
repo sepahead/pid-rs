@@ -398,7 +398,7 @@
     {
       "category": "preprocessing",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "project-defined",
       "depends_on": [],
       "feature_gates": [],
@@ -419,7 +419,7 @@
       "summary": "Training-fitted centering and scaling with explicit constant-column handling.",
       "title": "Standardization",
       "validation": {
-        "evidence_path_count": 1,
+        "evidence_path_count": 3,
         "level": "unit-and-integration"
       }
     },
@@ -1298,7 +1298,7 @@
     {
       "category": "resampling",
       "code_availability": "local",
-      "constraint_count": 6,
+      "constraint_count": 7,
       "definition_origin": "project-defined",
       "depends_on": [
         "resampling.moving-block-bootstrap",
@@ -1325,14 +1325,14 @@
       "summary": "Exploratory moving-block summaries that recompute same-sample exact-significand quantization inside every SxPID2 replicate.",
       "title": "Quantized SxPID2 bootstrap workflow",
       "validation": {
-        "evidence_path_count": 2,
+        "evidence_path_count": 3,
         "level": "property-and-integration"
       }
     },
     {
       "category": "resampling",
       "code_availability": "local",
-      "constraint_count": 2,
+      "constraint_count": 3,
       "definition_origin": "project-defined",
       "depends_on": [
         "resampling.moving-block-bootstrap"
@@ -1356,7 +1356,7 @@
       "summary": "Callback-based row and block resampling procedure with raw distribution summaries.",
       "title": "Row bootstrap procedure",
       "validation": {
-        "evidence_path_count": 1,
+        "evidence_path_count": 2,
         "level": "unit-and-integration"
       }
     },
@@ -1536,7 +1536,7 @@
     {
       "category": "resampling",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "paper-defined",
       "depends_on": [
         "software.resource-cancellation-contracts"
@@ -1560,7 +1560,7 @@
       "summary": "Moving-block bootstrap mechanics for declared dependent observations.",
       "title": "Moving-block bootstrap",
       "validation": {
-        "evidence_path_count": 1,
+        "evidence_path_count": 3,
         "level": "property-and-integration"
       }
     },
@@ -2273,6 +2273,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "baf01802c727938006173f4afee37356c0a0733f9a9a890cad202cc49927c458"
+    "sha256": "57c8daa8bb2b0af6a0ad4bd5a9625d64267b1941964393a52ff4170eec1174ec"
   }
 }
