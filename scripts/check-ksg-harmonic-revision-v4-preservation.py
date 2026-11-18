@@ -59,7 +59,7 @@ EXPECTED_HISTORICAL_SOURCE_ROSTER_SHA256 = (
 
 EXPECTED_COMPONENT_SHA256 = {
     CURRENT_CATALOG_CHECKER_RELATIVE: (
-        "36c1f00512c13c8472759480d85ed32dcb3aeb2336103cb1334b12bff801ef08"
+        "4b963e5d17655a479123b962e343eab17e080a7d5e684892e4e4076377d6b45e"
     ),
     CURRENT_CATALOG_SELF_TEST_RELATIVE: (
         "6614f0424747d959a4ec1326f4bcacccd88569543a47e7b2ed06969ca4798aac"
@@ -78,7 +78,7 @@ EXPECTED_COMPONENT_SHA256 = {
     ),
 }
 EXPECTED_COMPONENT_ROSTER_SHA256 = (
-    "ed928c9bddc287f62d0927d9c158fbf28f441e1f146ce61389ef2dc72de69e11"
+    "aa8a0a54674af56d855acd250ba5e0da706449bdc2bd6f6e872bc455fc5c5326"
 )
 
 PYTHON_CHILD_FLAGS = ("-S", "-B")
@@ -133,7 +133,7 @@ EXPECTED_ROUTE_STDOUT = {
 }
 EXPECTED_CATALOG_STDOUT = {
     CURRENT_CATALOG_CHECKER_RELATIVE: (
-        b"OK: 75 method entries and 48 references are coherent\n"
+        b"OK: 75 method entries and 49 references are coherent\n"
     ),
     CURRENT_CATALOG_SELF_TEST_RELATIVE: (
         b"OK: 85 method-catalog mutations were rejected\n"

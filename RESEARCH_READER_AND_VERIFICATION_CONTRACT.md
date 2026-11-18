@@ -73,16 +73,15 @@ application credit.
 
 ## Cited glossary
 
-Use this compact process glossary alongside each study's own complete notation.
-Its definitions follow the linked existing repository contracts; no new method
-is introduced.
+Use this glossary with each study’s notation. The terminology guide gives plain-language
+wording for mathematical objects and project procedures. [Terminology](TERMINOLOGY.md)
 
 | Term | Meaning and defining reference |
 |---|---|
 | Estimand | The exact quantity a procedure aims to estimate; [method boundaries](AGENTS.md#method-provenance-and-novelty-claims) |
-| Functional | A map from a declared probability law to a quantity; [reading conventions](MATHEMATICAL_RESULTS_GUIDE.md#1-reading-conventions-and-semantic-firewall) |
-| Empirical law | Relative frequencies of complete observed categories; not automatically the population law; [finite-law contract](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md) |
-| Independent-first route | An initial reconstruction frozen before exposure to another candidate; not statistical or institutional independence; [route dependencies](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md) |
+| Functional | In this statistical context, a rule assigning a quantity to each probability distribution in a stated model. [Reading conventions](MATHEMATICAL_RESULTS_GUIDE.md#1-reading-conventions-and-semantic-firewall) |
+| Empirical law | For $n>0$ equally weighted observations, their empirical distribution assigns mass $1/n$ to each observation, adding the masses of repeated values. On a finite alphabet the mass of a category is its observed relative frequency. The population distribution describes the sampling model. [Finite-alphabet result](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md) |
+| Independent-first route | A reviewer records an initial reconstruction before seeing the other candidate or critique specified in the review plan. Record previous exposure, shared definitions, tools, data, custody and institutions when assessing independence. [Review procedure](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md) |
 | Shared cut | A dependency whose failure can defeat several nominally different routes; [evidence architecture](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md#layered-assurance-architecture) |
 | Semantic correspondence | The justified link between intended meaning and a formula, formal statement or executable; [formal boundaries](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md#formal-methods-as-bounded-instruments) |
 | Calibration | Agreement between stated statistical guarantees and performance under the declared repeated-sampling model; [sampling boundaries](KNOWN_LIMITATIONS.md) |

@@ -1,5 +1,14 @@
 # Session handoff — updated 18 November 2026
 
+## Mathematical and review terminology, 18 November 2026
+
+All 26 rows in the terminology tables were checked against their cited meanings. Seven
+definitions needed correction, eleven needed additional context, and eight retained
+their meaning and wording. The 39 labels include established terms and local shorthand.
+The reader contract now distinguishes the empirical distribution of equally weighted
+observations from the population distribution and describes what an independent-first
+review records. [Terminology](TERMINOLOGY.md) · [Reader contract](RESEARCH_READER_AND_VERIFICATION_CONTRACT.md#cited-glossary).
+
 ## Finite window count and three-source registry controls, 18 November 2026
 
 The concentration study now gives the exact probability of a stated subset of the

@@ -7,8 +7,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Correct seven glossary entries that conflated mathematical objects or review procedures.
+  Eleven further entries now specify where the preferred wording applies. The glossary
+  distinguishes a probability distribution from its finite table of masses, and a set of
+  nodes from the order imposed on it. [Terms and definitions](TERMINOLOGY.md)
+
 - Add an exact overlapping-window counterexample to the finite-alphabet concentration report.
-  For 300 triples of independent fair bits, the probability of an empirical distribution
+  For 300 overlapping triples from 302 independent fair bits, the probability of an empirical distribution
   error of at least 0.30 in total absolute distance exceeds 0.001052. Substituting independent
   rows in the bound gives less than 0.000349. [Proof and reproducible counts](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
 - Publish twelve checked changes to the finite three-source registry. Eight distinct original
