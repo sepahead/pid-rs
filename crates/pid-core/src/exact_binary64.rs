@@ -1,11 +1,11 @@
 //! Exact, order-independent reduction of already represented finite binary64 values.
 //!
 //! This private arithmetic module is deliberately isolated from estimator-specific arithmetic
-//! and custody packets. It supplies a correctly rounded sum of its binary64 inputs; it does not
-//! make upstream estimates exact or transfer semantics between PID measures.
+//! and custody packets. It rounds an exact sum, and optionally its ratio to a positive finite
+//! divisor, without changing the precision of any upstream estimate.
 
-// Every finite binary64 is an integer multiple of 2^-1074. The largest significand occupies
-// 2,098 bits at that scale; summing at most usize::MAX terms needs at most usize::BITS more.
+// Every finite binary64 is an integer multiple of 2^-1074. The largest finite magnitude
+// occupies 2,098 bits at that scale; at most usize::MAX terms need at most usize::BITS more.
 const FINITE_SUM_LIMBS: usize = (2_098 + usize::BITS as usize).div_ceil(64);
 // One add can propagate through the full accumulator in each of the significand's two limb
 // fragments. Finalization can scan once for sign comparison, once for subtraction, once for the
@@ -55,18 +55,11 @@ impl ExactBinary64Accumulator {
             return false;
         };
         let bits = term.to_bits();
-        let exponent = ((bits >> 52) & 0x7ff) as usize;
-        let fraction = bits & ((1_u64 << 52) - 1);
-        let significand = if exponent == 0 {
-            fraction
-        } else {
-            (1_u64 << 52) | fraction
-        };
+        let (significand, shift) = significand_and_shift(bits);
         if significand == 0 {
             self.terms = terms;
             return true;
         }
-        let shift = exponent.saturating_sub(1);
         let accumulator = if bits >> 63 == 0 {
             &mut self.positive
         } else {
@@ -80,17 +73,71 @@ impl ExactBinary64Accumulator {
     }
 
     pub(crate) fn total(&self) -> f64 {
-        match self.positive.iter().rev().cmp(self.negative.iter().rev()) {
-            std::cmp::Ordering::Equal => 0.0,
-            std::cmp::Ordering::Greater => {
-                let magnitude = subtract_finite_sum_limbs(&self.positive, &self.negative);
-                round_finite_sum(&magnitude, false)
-            }
-            std::cmp::Ordering::Less => {
-                let magnitude = subtract_finite_sum_limbs(&self.negative, &self.positive);
-                round_finite_sum(&magnitude, true)
-            }
+        self.signed_magnitude()
+            .map_or(0.0, |(negative, magnitude)| {
+                round_binary64(&magnitude, negative, 1074, false)
+            })
+    }
+
+    /// Independently round the sum (original units) and its ratio to a positive finite divisor.
+    /// The ratio must be finite. The separately rounded sum may overflow.
+    pub(crate) fn total_and_ratio(&self, divisor: f64) -> Option<(f64, f64)> {
+        if !divisor.is_finite() || divisor <= 0.0 {
+            return None;
         }
+        let Some((negative, magnitude)) = self.signed_magnitude() else {
+            return Some((0.0, 0.0));
+        };
+        let (significand, shift) = significand_and_shift(divisor.to_bits());
+
+        // In units of 2^-1074 the operands are A and significand * 2^shift. Since A >= 1
+        // and significand < 2^53, two extra low limbs retain at least 76 quotient bits.
+        const EXTRA_LIMBS: usize = 2;
+        let mut quotient = [0_u64; FINITE_SUM_LIMBS + EXTRA_LIMBS];
+        quotient[EXTRA_LIMBS..].copy_from_slice(&magnitude);
+        let divisor_word = u128::from(significand);
+        let mut remainder = 0_u128;
+        for limb in quotient.iter_mut().rev() {
+            let dividend = (remainder << 64) | u128::from(*limb);
+            *limb = (dividend / divisor_word) as u64;
+            remainder = dividend % divisor_word;
+        }
+        let ratio = round_binary64(
+            &quotient,
+            negative,
+            shift + 64 * EXTRA_LIMBS,
+            remainder != 0,
+        );
+        if !ratio.is_finite() {
+            return None;
+        }
+        Some((round_binary64(&magnitude, negative, 1074, false), ratio))
+    }
+
+    /// Return sign and magnitude in units of 2^-1074, with None denoting exact zero.
+    fn signed_magnitude(&self) -> Option<(bool, [u64; FINITE_SUM_LIMBS])> {
+        match self.positive.iter().rev().cmp(self.negative.iter().rev()) {
+            std::cmp::Ordering::Equal => None,
+            std::cmp::Ordering::Greater => Some((
+                false,
+                subtract_finite_sum_limbs(&self.positive, &self.negative),
+            )),
+            std::cmp::Ordering::Less => Some((
+                true,
+                subtract_finite_sum_limbs(&self.negative, &self.positive),
+            )),
+        }
+    }
+}
+
+/// A finite input's absolute value is its significand times 2^(shift - 1074).
+fn significand_and_shift(bits: u64) -> (u64, usize) {
+    let exponent = ((bits >> 52) & 0x7ff) as usize;
+    let fraction = bits & ((1_u64 << 52) - 1);
+    if exponent == 0 {
+        (fraction, 0)
+    } else {
+        (fraction | (1_u64 << 52), exponent - 1)
     }
 }
 
@@ -203,20 +250,20 @@ fn subtract_finite_sum_limbs(
     difference
 }
 
-fn highest_finite_sum_bit(value: &[u64; FINITE_SUM_LIMBS]) -> Option<usize> {
+fn highest_finite_sum_bit(value: &[u64]) -> Option<usize> {
     value
         .iter()
         .rposition(|&limb| limb != 0)
         .map(|index| index * 64 + (63 - value[index].leading_zeros() as usize))
 }
 
-fn finite_sum_bit(value: &[u64; FINITE_SUM_LIMBS], bit: usize) -> bool {
+fn finite_sum_bit(value: &[u64], bit: usize) -> bool {
     value
         .get(bit / 64)
         .is_some_and(|limb| limb & (1_u64 << (bit % 64)) != 0)
 }
 
-fn any_finite_sum_bits_below(value: &[u64; FINITE_SUM_LIMBS], bit_exclusive: usize) -> bool {
+fn any_finite_sum_bits_below(value: &[u64], bit_exclusive: usize) -> bool {
     let full_limbs = bit_exclusive / 64;
     if value[..full_limbs.min(value.len())]
         .iter()
@@ -230,7 +277,7 @@ fn any_finite_sum_bits_below(value: &[u64; FINITE_SUM_LIMBS], bit_exclusive: usi
         && value[full_limbs] & ((1_u64 << remaining) - 1) != 0
 }
 
-fn low_finite_sum_u64_after_shift(value: &[u64; FINITE_SUM_LIMBS], shift: usize) -> u64 {
+fn low_finite_sum_u64_after_shift(value: &[u64], shift: usize) -> u64 {
     let limb = shift / 64;
     let offset = shift % 64;
     let low = value.get(limb).copied().unwrap_or(0) >> offset;
@@ -241,27 +288,34 @@ fn low_finite_sum_u64_after_shift(value: &[u64; FINITE_SUM_LIMBS], shift: usize)
     }
 }
 
-/// Round an exact nonzero integer multiple of 2^-1074 to binary64, ties to even.
-fn round_finite_sum(magnitude: &[u64; FINITE_SUM_LIMBS], negative: bool) -> f64 {
-    let sign = if negative { 1_u64 << 63 } else { 0 };
+/// Round `(magnitude + tail) * 2^-fractional_bits`, with `0 <= tail < 1`.
+/// The inputs retain a guard bit whenever the division's tail is nonzero.
+fn round_binary64(
+    magnitude: &[u64],
+    negative: bool,
+    fractional_bits: usize,
+    tail_nonzero: bool,
+) -> f64 {
+    let sign = u64::from(negative) << 63;
     let Some(highest) = highest_finite_sum_bit(magnitude) else {
         return f64::from_bits(sign);
     };
-    if highest < 52 {
-        return f64::from_bits(sign | magnitude[0]);
-    }
-
-    let cutoff = highest - 52;
+    // Normal results retain 53 bits. Gradual underflow sets a minimum quantum of 2^-1074.
+    let cutoff = highest
+        .saturating_sub(52)
+        .max(fractional_bits.saturating_sub(1074));
     let mut significand = low_finite_sum_u64_after_shift(magnitude, cutoff);
     if cutoff > 0 {
         let halfway = finite_sum_bit(magnitude, cutoff - 1);
-        let sticky = any_finite_sum_bits_below(magnitude, cutoff - 1);
+        let sticky = tail_nonzero || any_finite_sum_bits_below(magnitude, cutoff - 1);
         if halfway && (sticky || significand & 1 != 0) {
             significand += 1;
         }
     }
-
-    let mut exponent = highest as i32 - 1074;
+    if significand < 1_u64 << 52 {
+        return f64::from_bits(sign | significand);
+    }
+    let mut exponent = cutoff as i32 - fractional_bits as i32 + 52;
     if significand == 1_u64 << 53 {
         significand >>= 1;
         exponent += 1;

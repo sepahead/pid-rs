@@ -51,6 +51,7 @@ use std::mem::size_of;
 
 use serde::Serialize;
 
+use crate::exact_binary64::ExactBinary64Accumulator;
 use crate::resource::{try_vec_with_capacity, ResourceBudget, ResourceEstimate};
 use crate::{PidError, PidResult};
 
@@ -478,9 +479,10 @@ pub enum NormalizedInvariantUnit {
 /// Typed result for a normalized Shannon-invariant analogue.
 ///
 /// `value` is present exactly when `status == Defined`. Invalid or unstable inputs never become
-/// an unexplained `NaN`, which keeps JSON/run-log handoff unambiguous. `numerator_nats` can be
-/// absent for a defined ratio when the original-unit numerator overflows even though the scaled
-/// ratio is representable.
+/// an unexplained `NaN`, which keeps JSON/run-log handoff unambiguous. For a defined report,
+/// `value` and `numerator_nats` are each rounded directly from arithmetic on the supplied
+/// binary64 values, to nearest with ties to even. A defined ratio can still have an overflowing
+/// original-unit numerator, in which case `numerator_nats` is absent.
 #[derive(Debug, Clone, PartialEq, Serialize)]
 #[non_exhaustive]
 pub struct NormalizedInvariantReport {
@@ -510,8 +512,9 @@ impl NormalizedInvariantReport {
 /// - `joint_mi`: I(T; S_1...S_n), which must be positive for the ratio to be meaningful.
 /// - Every input must describe the same target/source joint law, units, estimand, preprocessing,
 ///   and evaluation sample. This function cannot verify that semantic coherence.
-/// - Finite-sample MI estimates can violate population identities or bounds; the report
-///   records arithmetic/denominator status, not estimator calibration.
+/// - Exact mutual informations of one empirical distribution satisfy the Shannon inequalities.
+///   Separately estimated or rounded inputs can violate them and can be signed. The report
+///   evaluates the supplied numbers without testing their statistical coherence.
 /// - Undefined and policy-unstable cases are represented by [`NormalizedInvariantStatus`], never
 ///   by a floating-point sentinel.
 pub fn average_degree_of_redundancy(
@@ -532,28 +535,13 @@ pub fn average_degree_of_redundancy_with_policy(
     policy: NormalizedInvariantPolicy,
 ) -> NormalizedInvariantReport {
     const DEFINITION: &str = "sum_i I(T;S_i) / I(T;S_1,...,S_n)";
-    let status = normalized_invariant_input_status(marginal_mis, joint_mi, policy);
-    if status != NormalizedInvariantStatus::Defined {
-        return undefined_normalized_report(DEFINITION, joint_mi, status, policy);
-    }
-    let value = stable_ratio_sum(marginal_mis, joint_mi);
-    if !value.is_finite() {
-        return undefined_normalized_report(
-            DEFINITION,
-            joint_mi,
-            NormalizedInvariantStatus::NumericallyUnrepresentable,
-            policy,
-        );
-    }
-    NormalizedInvariantReport {
-        value: Some(value),
-        numerator_nats: finite_original_sum(marginal_mis),
-        denominator_nats: Some(joint_mi),
-        definition: DEFINITION,
-        unit: NormalizedInvariantUnit::Unitless,
-        status: NormalizedInvariantStatus::Defined,
+    normalized_invariant_report(
+        DEFINITION,
+        marginal_mis,
+        joint_mi,
         policy,
-    }
+        marginal_mis.iter().copied(),
+    )
 }
 
 /// Average Degree of Vulnerability (\bar{v}) for a target T and sources S_1, ..., S_n.
@@ -569,8 +557,9 @@ pub fn average_degree_of_redundancy_with_policy(
 ///   (For n=2, this is just [I(T;S_2), I(T;S_1)]).
 /// - Every input must describe the same target/source joint law, units, estimand, preprocessing,
 ///   and evaluation sample. This function cannot verify that semantic coherence.
-/// - Finite-sample MI estimates can violate population identities or bounds; the report
-///   records arithmetic/denominator status, not estimator calibration.
+/// - On one empirical distribution, an exact leave-one-out mutual information cannot exceed
+///   the joint mutual information. Separately estimated or rounded inputs can violate this
+///   bound and can be signed. The report evaluates their differences without clamping them.
 /// - Undefined and policy-unstable cases are represented by [`NormalizedInvariantStatus`], never
 ///   by a floating-point sentinel.
 pub fn average_degree_of_vulnerability(
@@ -591,26 +580,44 @@ pub fn average_degree_of_vulnerability_with_policy(
     policy: NormalizedInvariantPolicy,
 ) -> NormalizedInvariantReport {
     const DEFINITION: &str = "sum_i (I(T;S_1,...,S_n) - I(T;S_-i)) / I(T;S_1,...,S_n)";
-    let status = normalized_invariant_input_status(leave_one_out_mis, joint_mi, policy);
+    // Both terms enter the exact sum before subtraction or division can round.
+    let terms = leave_one_out_mis
+        .iter()
+        .flat_map(|&leave| [joint_mi, -leave]);
+    normalized_invariant_report(DEFINITION, leave_one_out_mis, joint_mi, policy, terms)
+}
+
+fn normalized_invariant_report(
+    definition: &'static str,
+    inputs: &[f64],
+    joint_mi: f64,
+    policy: NormalizedInvariantPolicy,
+    mut numerator_terms: impl Iterator<Item = f64>,
+) -> NormalizedInvariantReport {
+    let status = normalized_invariant_input_status(inputs, joint_mi, policy);
     if status != NormalizedInvariantStatus::Defined {
-        return undefined_normalized_report(DEFINITION, joint_mi, status, policy);
+        return undefined_normalized_report(definition, joint_mi, status, policy);
     }
-    let value = stable_conditional_ratio_sum(joint_mi, leave_one_out_mis);
-    if !value.is_finite() {
-        return undefined_normalized_report(
-            DEFINITION,
+    let unrepresentable = || {
+        undefined_normalized_report(
+            definition,
             joint_mi,
             NormalizedInvariantStatus::NumericallyUnrepresentable,
             policy,
-        );
+        )
+    };
+    let mut accumulator = ExactBinary64Accumulator::default();
+    if !numerator_terms.all(|term| accumulator.add(term)) {
+        return unrepresentable();
     }
-    let numerator = value * joint_mi;
-    let numerator_nats = numerator.is_finite().then_some(numerator);
+    let Some((numerator, value)) = accumulator.total_and_ratio(joint_mi) else {
+        return unrepresentable();
+    };
     NormalizedInvariantReport {
         value: Some(value),
-        numerator_nats,
+        numerator_nats: numerator.is_finite().then_some(numerator),
         denominator_nats: Some(joint_mi),
-        definition: DEFINITION,
+        definition,
         unit: NormalizedInvariantUnit::Unitless,
         status: NormalizedInvariantStatus::Defined,
         policy,
@@ -652,11 +659,6 @@ fn undefined_normalized_report(
         status,
         policy,
     }
-}
-
-fn finite_original_sum(values: &[f64]) -> Option<f64> {
-    let sum = compensated_sum(values.iter().copied());
-    sum.is_finite().then_some(sum)
 }
 
 fn validate_discrete_variables(context: &'static str, vars: &[&[u32]]) -> PidResult<usize> {
@@ -835,77 +837,6 @@ impl CompensatedAccumulator {
 
     fn finish(self) -> f64 {
         self.sum + self.correction
-    }
-}
-
-/// Sum `values` and divide by `divisor` without forcing either the raw sum or every termwise ratio
-/// through an overflowing intermediate.
-fn stable_ratio_sum(values: &[f64], divisor: f64) -> f64 {
-    let scale = values
-        .iter()
-        .fold(0.0_f64, |current, value| current.max(value.abs()));
-    if scale == 0.0 {
-        return 0.0;
-    }
-    let sum_scaled = compensated_sum(values.iter().map(|value| value / scale));
-    if sum_scaled == 0.0 {
-        return 0.0;
-    }
-
-    let ratio_by_scaled_divisor = sum_scaled * (scale / divisor);
-    if ratio_by_scaled_divisor.is_finite() {
-        return ratio_by_scaled_divisor;
-    }
-    let ratio_by_scaled_sum = (scale * sum_scaled) / divisor;
-    if ratio_by_scaled_sum.is_finite() {
-        ratio_by_scaled_sum
-    } else {
-        ratio_by_scaled_divisor
-    }
-}
-
-/// Evaluate `Σ_i (joint - leave_i) / joint` without first rounding either `n - Σ ratios` or an
-/// overflowing original-unit conditional difference.
-fn stable_conditional_ratio_sum(joint: f64, leave_one_out: &[f64]) -> f64 {
-    let max_magnitude = leave_one_out
-        .iter()
-        .fold(joint.abs(), |current, value| current.max(value.abs()));
-    let exponent = (max_magnitude.to_bits() >> 52) & 0x7ff;
-    let scale = if exponent == 0 {
-        f64::from_bits(1)
-    } else {
-        f64::from_bits(exponent << 52)
-    };
-    let joint_scaled = joint / scale;
-    let mut lost_nonzero_term = false;
-    let sum_scaled = compensated_sum(leave_one_out.iter().flat_map(|value| {
-        let leave_scaled = *value / scale;
-        if *value != 0.0 && leave_scaled == 0.0 {
-            lost_nonzero_term = true;
-        }
-        // TwoSum retains the conditional difference that rounds out of the leading term, such as
-        // `1 - next_down(1)` or the unit offset in `1 - f64::MAX`.
-        let rounded = joint_scaled - leave_scaled;
-        let leave_virtual = rounded - joint_scaled;
-        let error = (joint_scaled - (rounded - leave_virtual)) + (-leave_scaled - leave_virtual);
-        [rounded, error]
-    }));
-    if lost_nonzero_term {
-        return f64::NAN;
-    }
-    if sum_scaled == 0.0 {
-        return 0.0;
-    }
-
-    let ratio_by_scaled_divisor = sum_scaled * (scale / joint);
-    if ratio_by_scaled_divisor.is_finite() {
-        return ratio_by_scaled_divisor;
-    }
-    let ratio_by_scaled_sum = (scale * sum_scaled) / joint;
-    if ratio_by_scaled_sum.is_finite() {
-        ratio_by_scaled_sum
-    } else {
-        ratio_by_scaled_divisor
     }
 }
 
