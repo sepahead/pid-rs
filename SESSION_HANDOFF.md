@@ -6,7 +6,7 @@ A new hosted procedure tests whether a smaller finite calculation preserves both
 
 ## The original eighteen-family count test
 
-A source-bound stock Lean 4.34.1 proof now covers W02, one of 22 formulas with historical unsatisfiable solver responses. A valuation assigns a value of the declared type to each constant. Every valuation of this script evaluates its assertions to true followed by false, and at least one valuation exists. The proof, original solver streams and 34 separately checked satisfiable witness projections have different scopes. The other 21 reported unsatisfiable formulas still require their own derivations. [W02 statement, source and measured commands](audit/research/three-source-w02/README.md) · [Original corpus](audit/formal/finite-smt39-qualification-v1/README.md)
+A source-bound stock Lean 4.34.1 proof now covers W02, one of 22 formulas with historical unsatisfiable solver responses. A valuation assigns a value of the declared type to each constant. Every valuation of this script evaluates its assertions to true followed by false, and at least one valuation exists. The proof, original solver streams and 34 separately checked satisfiable witness projections have different scopes. The other 21 reported unsatisfiable formulas still require their own derivations. A second execution on hosted Linux compiled eight modules, replayed each in a fresh stock process and matched the eight complete named records at commit `d7c3354`. [Hosted execution receipt](audit/evidence/three-source-w02-hosted-2026-11-19.json) [W02 statement, source and measured commands](audit/research/three-source-w02/README.md) · [Original corpus](audit/formal/finite-smt39-qualification-v1/README.md)
 
 ## Statistical assumptions and defining sources
 

@@ -1,0 +1,31 @@
+{
+  "additional_mathematical_obligations": "W02 does not quantify membership of each of the eighteen listed codes. Its result does not decide the 21 other scripts with recorded unsatisfiable solver responses.",
+  "artifact_id": 14566419911,
+  "branch": "review/finite-studies-20261118",
+  "checked_assertions": 2,
+  "commit": "d7c335497b054c7c8b9348eed7e445a08a61a6b0",
+  "html_url": "https://github.com/sepahead/pid-rs/actions/runs/44599354939",
+  "mac_and_linux_full_provider_maps_identical": false,
+  "members": {
+    "counts.txt": "be12954a767404099d18ac5bf3ba99ee412b80ad3838520649888fe07098b131",
+    "counts/dependencies.json": "e868fe7bddde50eb8dd47c2f1c34c5bde7e0d81805058e279dfb210573327179",
+    "counts/receipt.json": "f8ef8145e684e7f143848b326931b173f11318c656b857030eaec70bf3a9df6b",
+    "host-and-source.txt": "6832ceeb6c7af738fe9bef2b0ba94b9f28c1054526de13cc72b7001924273ff5",
+    "registry.txt": "b50e34704f422f60d7f4314b55cfc40477465ceabd190b52bba38d014ca0a000",
+    "w02.txt": "7012213b9730a1bf144d969b0208f63a92988a8f2dbc4037e975238ea04b69dc"
+  },
+  "named_declaration_records_sha256": "0775085d902eb4a7abc205dc30c24bb430c1784846d8788f30dec29a5fafa83c",
+  "original_file_sha256": "e503d85f5b6fe842c0900043283147f23055a4c5f4cf19e2914080cfbab692a0",
+  "qualified": "Exact archived interpreter, finite proof/typed-use and dependency scopes only.",
+  "registry": "17 modules compiled; 24 declaration rows matched; fresh SemanticFaults replay passed.",
+  "run": 44599354939,
+  "scope": "At this revision, every full valuation of the exact W02 interpreter input has ordered assertion values [true, false]. Eight named theorem and typed-use records compared equal to the checked-in records. Independent execution on two platforms shares the same formalization, Lean source and reader.",
+  "w02": [
+    "89 commands and 29,795 lexical spans; 13 accepted and 12 rejected synthetic inputs; 12 altered Lean transcriptions rejected",
+    "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+    "Eight compiled modules and eight fresh replays passed; eight complete named type and proof records matched."
+  ],
+  "weighted_dependency_records": 86,
+  "weighted_provider_count": 16395,
+  "zip_sha256": "9d5c1dbcb3b7f2c8875bb1849d3ab8c55b933b346ab78e00cc1b32aede9f5586"
+}
