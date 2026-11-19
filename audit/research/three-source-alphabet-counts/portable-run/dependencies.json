@@ -1,0 +1,2373 @@
+[
+  {
+    "kind": "definition",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.sourceEventDecidable._aux_1",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "Decidable",
+      "DecidableEq",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Eq",
+      "Fin",
+      "Finset.decidableExistsAndFinsetCoe",
+      "Finset.decidableMem",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "Nat",
+      "Nat.decidableForallFin",
+      "OfNat.ofNat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "forall_prop_decidable",
+      "instDecidableEqFin",
+      "instOfNatNat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.sourceEventDecidable._aux_1",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "Decidable",
+      "DecidableEq",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.sourceEvent"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Eq",
+      "Fin",
+      "Finset.decidableExistsAndFinsetCoe",
+      "Finset.decidableMem",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "Nat",
+      "Nat.decidableForallFin",
+      "OfNat.ofNat",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "SetLike.instMembership",
+      "forall_prop_decidable",
+      "instDecidableEqFin",
+      "instOfNatNat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.Observation",
+    "transitive_axioms": [],
+    "type_constants": [
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "PidFin3Contract.Source"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.Observation",
+    "transitive_axioms": [],
+    "type_constants": [
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "PidFin3Contract.Source"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.sourceEvent",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "And",
+      "Eq",
+      "Exists",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.sourceEvent",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation"
+    ],
+    "value_constants": [
+      "And",
+      "Eq",
+      "Exists",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "SetLike.instMembership"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.eqPattern",
+    "transitive_axioms": [],
+    "type_constants": [
+      "Bool",
+      "DecidableEq",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "Decidable.decide",
+      "DecidableEq",
+      "Eq",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3Contract.Source"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.eqPattern",
+    "transitive_axioms": [],
+    "type_constants": [
+      "Bool",
+      "DecidableEq",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation"
+    ],
+    "value_constants": [
+      "Decidable.decide",
+      "DecidableEq",
+      "Eq",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.sourceEventDecidable",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "Decidable",
+      "DecidableEq",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEventDecidable._aux_1",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.sourceEventDecidable",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "Decidable",
+      "DecidableEq",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.sourceEvent"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.sourceEventDecidable._aux_1"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.mass",
+    "transitive_axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Nat"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Finset.filter",
+      "Finset.sum",
+      "Nat",
+      "Nat.instAddCommMonoid"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.mass",
+    "transitive_axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Nat"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Finset.filter",
+      "Finset.sum",
+      "Nat",
+      "Nat.instAddCommMonoid"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.N",
+    "transitive_axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "Nat"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "Finset.sum",
+      "Nat",
+      "Nat.instAddCommMonoid"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.N",
+    "transitive_axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "Nat"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "Finset.sum",
+      "Nat",
+      "Nat.instAddCommMonoid"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.U",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.mass",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.U",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "Nat",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "Nat",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.mass",
+      "PidFin3CountRaw.sourceEvent",
+      "PidFin3CountRaw.sourceEventDecidable"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.V",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "And",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.mass",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "instDecidableAnd"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.V",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "Nat",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation"
+    ],
+    "value_constants": [
+      "And",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Nat",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.mass",
+      "PidFin3CountRaw.sourceEvent",
+      "PidFin3CountRaw.sourceEventDecidable",
+      "instDecidableAnd"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.T",
+    "transitive_axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "Nat"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Nat",
+      "PidFin3AlphabetCounts.mass"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.T",
+    "transitive_axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "Nat"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Nat",
+      "PidFin3CountRaw.mass"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.sourceEvent_antitone",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.LE",
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "And",
+      "And.casesOn",
+      "And.intro",
+      "Eq",
+      "Exists",
+      "Exists.casesOn",
+      "Exists.intro",
+      "Finset.instPartialOrder",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "PartialOrder.toPreorder",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.LE",
+      "PidFin3Contract.Source",
+      "Preorder.toLE",
+      "SetLike.instMembership"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.sourceEvent_antitone",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "PidFin3Contract.Family",
+      "PidFin3Contract.LE",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.sourceEvent"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.sourceEvent_antitone",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.sourceEvent_antitone"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.sourceEvent_antitone"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.sourceEvent_key_iff",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "Finset.Nonempty",
+      "Iff",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "And",
+      "And.casesOn",
+      "And.intro",
+      "Eq",
+      "Exists.casesOn",
+      "Exists.intro",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.instSetLike",
+      "Iff.intro",
+      "Membership.mem",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "rfl"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.sourceEvent_key_iff",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "Finset.Nonempty",
+      "Iff",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.sourceEvent"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.sourceEvent_key_iff",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.sourceEvent_key_iff"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.sourceEvent_key_iff"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.sourceEvent_data_congr",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "Eq",
+      "Iff",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "And",
+      "And.casesOn",
+      "And.intro",
+      "Eq",
+      "Eq.symm",
+      "Eq.trans",
+      "Exists.casesOn",
+      "Exists.intro",
+      "Finset.instSetLike",
+      "Iff.intro",
+      "Membership.mem",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "congrArg"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.sourceEvent_data_congr",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "Eq",
+      "Iff",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.sourceEvent"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.sourceEvent_data_congr",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.sourceEvent_data_congr"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.sourceEvent_data_congr"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.dnf_eq_sourceEvent",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Iff",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.eqPattern",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3Contract.DNF",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source"
+    ],
+    "value_constants": [
+      "And",
+      "And.casesOn",
+      "And.intro",
+      "Bool",
+      "Bool.true",
+      "Decidable.decide",
+      "DecidableEq",
+      "Eq",
+      "Exists",
+      "Exists.casesOn",
+      "Exists.intro",
+      "Finset.instSetLike",
+      "Iff",
+      "Iff.intro",
+      "Membership.mem",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.eqPattern",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.DNF",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "decide_eq_true",
+      "id",
+      "of_decide_eq_true"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.dnf_eq_sourceEvent",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Iff",
+      "PidFin3Contract.DNF",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.eqPattern",
+      "PidFin3CountRaw.sourceEvent"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.dnf_eq_sourceEvent",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.dnf_eq_sourceEvent"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.dnf_eq_sourceEvent"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.mass_mono",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.mass",
+      "SetLike.instMembership",
+      "instLENat"
+    ],
+    "value_constants": [
+      "And",
+      "And.casesOn",
+      "And.intro",
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Finset.mem_filter",
+      "Finset.sum_le_sum_of_subset",
+      "Iff.mp",
+      "Iff.mpr",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "Nat.instAddCommMonoid",
+      "Nat.instCanonicallyOrderedAdd",
+      "Nat.instPreorder",
+      "PidFin3AlphabetCounts.mass",
+      "SetLike.instMembership",
+      "id",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.mass_mono",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3CountRaw.mass",
+      "SetLike.instMembership",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.mass_mono",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.mass_mono"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.mass_mono"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.mass_le_total",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.mass",
+      "instLENat"
+    ],
+    "value_constants": [
+      "And",
+      "And.left",
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Finset.mem_filter",
+      "Finset.sum",
+      "Finset.sum_le_sum_of_subset",
+      "Iff.mp",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "Nat.instAddCommMonoid",
+      "Nat.instCanonicallyOrderedAdd",
+      "Nat.instPreorder",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.mass",
+      "SetLike.instMembership",
+      "id",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.mass_le_total",
+    "transitive_axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3CountRaw.N",
+      "PidFin3CountRaw.mass",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.mass_le_total",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.mass_le_total"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.mass_le_total"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.key_weight_le_mass",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.mass",
+      "SetLike.instMembership",
+      "instLENat"
+    ],
+    "value_constants": [
+      "And",
+      "And.intro",
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Finset.mem_filter",
+      "Finset.single_le_sum",
+      "Iff.mpr",
+      "IsOrderedAddMonoid.toAddLeftMono",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "Nat.instAddCommMonoid",
+      "Nat.instIsOrderedAddMonoid",
+      "Nat.instPreorder",
+      "Nat.zero_le",
+      "PidFin3AlphabetCounts.mass",
+      "SetLike.instMembership",
+      "id",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.key_weight_le_mass",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Finset",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3CountRaw.mass",
+      "SetLike.instMembership",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.key_weight_le_mass",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.key_weight_le_mass"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.key_weight_le_mass"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.mass_congr",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Eq",
+      "Finset",
+      "Finset.instSetLike",
+      "Iff",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.mass",
+      "SetLike.instMembership"
+    ],
+    "value_constants": [
+      "And",
+      "And.casesOn",
+      "And.intro",
+      "And.left",
+      "DecidableEq",
+      "DecidablePred",
+      "Eq",
+      "Finset",
+      "Finset.ext",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Finset.mem_filter",
+      "Finset.sum_congr",
+      "Iff",
+      "Iff.intro",
+      "Iff.mp",
+      "Iff.mpr",
+      "Membership.mem",
+      "Nat",
+      "Nat.instAddCommMonoid",
+      "PidFin3AlphabetCounts.mass",
+      "SetLike.instMembership",
+      "id"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.mass_congr",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "DecidablePred",
+      "Eq",
+      "Finset",
+      "Finset.instSetLike",
+      "Iff",
+      "Membership.mem",
+      "Nat",
+      "PidFin3CountRaw.mass",
+      "SetLike.instMembership"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.mass_congr",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.mass_congr"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.mass_congr"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.total_congr",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.N",
+      "SetLike.instMembership"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.instSetLike",
+      "Finset.sum_congr",
+      "Membership.mem",
+      "Nat",
+      "Nat.instAddCommMonoid",
+      "PidFin3AlphabetCounts.N",
+      "SetLike.instMembership",
+      "id",
+      "rfl"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.total_congr",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "Nat",
+      "PidFin3CountRaw.N",
+      "SetLike.instMembership"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.total_congr",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.total_congr"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.total_congr"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.supported_key_source_mem",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership"
+    ],
+    "value_constants": [
+      "And",
+      "And.intro",
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Finset.mem_filter",
+      "Iff.mpr",
+      "Membership.mem",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3AlphabetCounts.sourceEvent_key_iff",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.supported_key_source_mem",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.sourceEvent",
+      "PidFin3CountRaw.sourceEventDecidable",
+      "SetLike.instMembership"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.supported_key_source_mem",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.supported_key_source_mem"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.supported_key_source_mem"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.supported_key_joint_mem",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "And",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "instDecidableAnd"
+    ],
+    "value_constants": [
+      "And",
+      "And.intro",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Finset.mem_filter",
+      "Iff.mpr",
+      "Membership.mem",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3AlphabetCounts.sourceEvent_key_iff",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "instDecidableAnd",
+      "rfl"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.supported_key_joint_mem",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "And",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.sourceEvent",
+      "PidFin3CountRaw.sourceEventDecidable",
+      "SetLike.instMembership",
+      "instDecidableAnd"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.supported_key_joint_mem",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.supported_key_joint_mem"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.supported_key_joint_mem"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.supported_key_target_mem",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "SetLike.instMembership"
+    ],
+    "value_constants": [
+      "And",
+      "And.intro",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Finset.mem_filter",
+      "Iff.mpr",
+      "Membership.mem",
+      "SetLike.instMembership",
+      "rfl"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.supported_key_target_mem",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.filter",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "SetLike.instMembership"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.supported_key_target_mem",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.supported_key_target_mem"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.supported_key_target_mem"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.V_le_U",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "instLENat"
+    ],
+    "value_constants": [
+      "And",
+      "And.left",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3AlphabetCounts.mass",
+      "PidFin3AlphabetCounts.mass_mono",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "id",
+      "instDecidableAnd",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.V_le_U",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.U",
+      "PidFin3CountRaw.V",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.V_le_U",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.V_le_U"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.V_le_U"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.U_le_N",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "instLENat"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3AlphabetCounts.mass_le_total",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "id",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.U_le_N",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.N",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.U",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.U_le_N",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.U_le_N"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.U_le_N"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.V_le_T",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.T",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "instLENat"
+    ],
+    "value_constants": [
+      "And",
+      "And.right",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.T",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3AlphabetCounts.mass",
+      "PidFin3AlphabetCounts.mass_mono",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "id",
+      "instDecidableAnd",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.V_le_T",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.T",
+      "PidFin3CountRaw.V",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.V_le_T",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.V_le_T"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.V_le_T"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.T_le_N",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.T",
+      "instLENat"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.T",
+      "PidFin3AlphabetCounts.mass_le_total",
+      "id",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.T_le_N",
+    "transitive_axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3CountRaw.N",
+      "PidFin3CountRaw.T",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.T_le_N",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.T_le_N"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.T_le_N"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.key_le_V",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "instLENat"
+    ],
+    "value_constants": [
+      "And",
+      "And.intro",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.instSetLike",
+      "Iff.mpr",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3AlphabetCounts.key_weight_le_mass",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3AlphabetCounts.sourceEvent_key_iff",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "id",
+      "instDecidableAnd",
+      "instLENat",
+      "rfl"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.key_le_V",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.V",
+      "SetLike.instMembership",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.key_le_V",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.key_le_V"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.key_le_V"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.supported_key_bounds",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "And",
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.instSetLike",
+      "LE.le",
+      "LT.lt",
+      "Membership.mem",
+      "Nat",
+      "OfNat.ofNat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.T",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "instLENat",
+      "instLTNat",
+      "instOfNatNat"
+    ],
+    "value_constants": [
+      "And",
+      "And.intro",
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.instSetLike",
+      "LE.le",
+      "LT.lt",
+      "Membership.mem",
+      "Nat",
+      "Nat.instTransLtLe",
+      "OfNat.ofNat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.T",
+      "PidFin3AlphabetCounts.T_le_N",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3AlphabetCounts.U_le_N",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3AlphabetCounts.V_le_T",
+      "PidFin3AlphabetCounts.V_le_U",
+      "PidFin3AlphabetCounts.key_le_V",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "Trans.trans",
+      "instLENat",
+      "instLTNat",
+      "instOfNatNat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.supported_key_bounds",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "And",
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.instSetLike",
+      "LE.le",
+      "LT.lt",
+      "Membership.mem",
+      "Nat",
+      "OfNat.ofNat",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.N",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.T",
+      "PidFin3CountRaw.U",
+      "PidFin3CountRaw.V",
+      "SetLike.instMembership",
+      "instLENat",
+      "instLTNat",
+      "instOfNatNat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.supported_key_bounds",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.supported_key_bounds"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.supported_key_bounds"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.counts_positive",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "And",
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.instSetLike",
+      "LT.lt",
+      "Membership.mem",
+      "Nat",
+      "OfNat.ofNat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.T",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "instLTNat",
+      "instOfNatNat"
+    ],
+    "value_constants": [
+      "And",
+      "And.intro",
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.instSetLike",
+      "LE.le",
+      "LT.lt",
+      "Membership.mem",
+      "Nat",
+      "Nat.instTransLtLe",
+      "OfNat.ofNat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.T",
+      "PidFin3AlphabetCounts.T_le_N",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3AlphabetCounts.V_le_T",
+      "PidFin3AlphabetCounts.V_le_U",
+      "PidFin3AlphabetCounts.key_le_V",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "Trans.trans",
+      "instLENat",
+      "instLTNat",
+      "instOfNatNat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.counts_positive",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "And",
+      "DecidableEq",
+      "Finset",
+      "Finset.Nonempty",
+      "Finset.instSetLike",
+      "LT.lt",
+      "Membership.mem",
+      "Nat",
+      "OfNat.ofNat",
+      "PidFin3Contract.Branch",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.N",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.T",
+      "PidFin3CountRaw.U",
+      "PidFin3CountRaw.V",
+      "SetLike.instMembership",
+      "instLTNat",
+      "instOfNatNat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.counts_positive",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.counts_positive"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.counts_positive"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.U_antitone",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.LE",
+      "PidFin3Contract.Source",
+      "instLENat"
+    ],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3AlphabetCounts.mass_mono",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3AlphabetCounts.sourceEvent_antitone",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.LE",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "id",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.U_antitone",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.LE",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.U",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.U_antitone",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.U_antitone"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.U_antitone"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.V_antitone",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.LE",
+      "PidFin3Contract.Source",
+      "instLENat"
+    ],
+    "value_constants": [
+      "And",
+      "And.intro",
+      "And.left",
+      "And.right",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.instSetLike",
+      "LE.le",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3AlphabetCounts.mass_mono",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3AlphabetCounts.sourceEvent_antitone",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.LE",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "id",
+      "instDecidableAnd",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.V_antitone",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "DecidableEq",
+      "Finset",
+      "LE.le",
+      "Nat",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.LE",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.V",
+      "instLENat"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.V_antitone",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.V_antitone"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.V_antitone"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "AlphabetCounts",
+    "name": "PidFin3AlphabetCounts.counts_congr_on_support",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "And",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.T",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership"
+    ],
+    "value_constants": [
+      "And",
+      "And.intro",
+      "And.left",
+      "And.right",
+      "DecidableEq",
+      "Eq",
+      "Eq.symm",
+      "Eq.trans",
+      "Finset",
+      "Finset.instSetLike",
+      "Iff",
+      "Iff.intro",
+      "Iff.mp",
+      "Iff.mpr",
+      "Membership.mem",
+      "Nat",
+      "PidFin3AlphabetCounts.N",
+      "PidFin3AlphabetCounts.Observation",
+      "PidFin3AlphabetCounts.T",
+      "PidFin3AlphabetCounts.U",
+      "PidFin3AlphabetCounts.V",
+      "PidFin3AlphabetCounts.mass_congr",
+      "PidFin3AlphabetCounts.sourceEvent",
+      "PidFin3AlphabetCounts.sourceEventDecidable",
+      "PidFin3AlphabetCounts.sourceEvent_data_congr",
+      "PidFin3AlphabetCounts.total_congr",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "SetLike.instMembership",
+      "id",
+      "instDecidableAnd"
+    ]
+  },
+  {
+    "kind": "definition",
+    "module": "CountRaw",
+    "name": "PidFin3CountRaw.counts_congr_on_support",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [],
+    "value_constants": [
+      "And",
+      "DecidableEq",
+      "Eq",
+      "Finset",
+      "Finset.instSetLike",
+      "Membership.mem",
+      "Nat",
+      "PidFin3Contract.Family",
+      "PidFin3Contract.Source",
+      "PidFin3CountRaw.N",
+      "PidFin3CountRaw.Observation",
+      "PidFin3CountRaw.T",
+      "PidFin3CountRaw.U",
+      "PidFin3CountRaw.V",
+      "SetLike.instMembership"
+    ]
+  },
+  {
+    "kind": "theorem",
+    "module": "CountEvidence",
+    "name": "PidFin3CountConsumers.counts_congr_on_support",
+    "transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "type_constants": [
+      "PidFin3CountRaw.counts_congr_on_support"
+    ],
+    "value_constants": [
+      "PidFin3AlphabetCounts.counts_congr_on_support"
+    ]
+  }
+]

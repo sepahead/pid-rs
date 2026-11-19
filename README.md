@@ -72,8 +72,8 @@ you interpret an estimate.
 | Assess continuous data | [Continuous quickstart](#continuous-quickstart), [scientific cautions](#scientific-cautions) | Support declarations, reports, geometry limits, and experimental PID boundaries |
 | Choose a method or API | [Methods summary](METHODS_SUMMARY.md), [full catalog](METHODS.md) | Defining sources, repository compositions, input domains, feature gates, and limitations |
 | Assess implementation and compute cost | [Rust implementation and cost](RUST_IMPLEMENTATION_AND_COST.md) | Current APIs, source-derived time and memory costs, resource limits, and unimplemented research routes |
-| Study the mathematics | [Mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) | Nine main result families and six companion packages, with motivation, assumptions, evidence and complete proof links |
-| Recompute the November 2026 finite results | [Dependent-window counterexample](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) and [three-source registry controls](audit/research/finite-three-source-controls/README.md) | Exact event counting for 300 overlapping triples and reproducible Lean checks of twelve specified changes to the finite registry |
+| Study the mathematics | [November results guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md) · [PDF](output/pdf/mathematical-results-guide-current.pdf) · [Foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) | New finite results and corrections, plus nine foundational result families and six earlier companion packages |
+| Recompute the November 2026 finite results | [Dependent-window counterexample](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [registry controls](audit/research/finite-three-source-controls/README.md) and [three-source weighted counts](audit/research/three-source-alphabet-counts/README.md) ([PDF](output/pdf/three-source-alphabet-counts.pdf)) | Exact counting for 300 overlapping triples, twelve finite-registry controls and 22 Lean theorems for heterogeneous labels and finite row weights |
 | Recover useful archived findings | [Current research notes in output](output/RESEARCH_NOTES_2026_10_10.md), [10 October map](RESEARCH_RESULTS_2026_10_10.md) | Categorical entropy bounds, signed-cancellation and predictor examples, stopped-gradient cost and uncertainty, fault-game controls, event logic, useful failures and unrun application plans; current qualified PDF remains open |
 | Study finite-prefix MGW means | [Standalone mean bridge](audit/formal/lean-prefix-mgw-mean/PUBLICATION.md), [PDF](output/pdf/prefix-mgw-mean.pdf) | Three separately verified formal results for a project-defined categorical statistic; no new estimator API or finite-sample coverage claim |
 | Bound finite-prefix MGW approximation error | [Bias overview](audit/formal/lean-prefix-mgw-bias/SUMMARY.md), [summary PDF](output/pdf/prefix-mgw-bias-summary.pdf), [full proof guide](audit/formal/lean-prefix-mgw-bias/EXPOSITION.md) | Five locally verified bias/support result families for finite categorical laws and IID complete rows; sampling uncertainty remains separate |
@@ -82,6 +82,7 @@ you interpret an estimate.
 | Check a derivative argument at changing support | [MI cusp derivation](audit/research/support-change-mi-cusp/EXPOSITION.md), [PDF](output/pdf/support-change-mi-cusp.pdf) | A handwritten counterexample: zero cell tangents do not imply a zero information derivative; explicit-path formal verification remains open |
 | Study finite MGW comparisons | [Finite comparison and derivation](audit/formal/lean-mgw-fixed-world/PUBLICATION.md), [PDF](output/pdf/mgw-fixed-world-added-information.pdf) | Equal synergy with different added information under a fixed target and baseline; corrected citation and preserved 21-target evidence, with public replay qualification open |
 | Understand target-copy models | [Standalone note](audit/evidence/finite-target-copy-mgw-synergy.md), [PDF](output/pdf/finite-target-copy-mgw-synergy.pdf) | Exact categorical MGW identities, named-PID comparisons and signed cancellation; eleven local Lean targets, with complete replay qualification open |
+| Read a three-source categorical count table | [Encoding, inverse and finite check](audit/research/categorical-count-table-encoding/README.md), [PDF](output/pdf/canonical-count-tables.pdf) | The written proof gives a two-sided inverse for the original grammar. The Python reference reproduces the bytes of 29,403 tables. Compiled-parser refinement and resource admission remain open. |
 | Check a claim | [Assurance registry](audit/evidence/assurance-registry.json), [known limitations](KNOWN_LIMITATIONS.md) | Scoped evidence and open obligations; follow each claim's current decision |
 | Re-check the estimators | [Cross-implementation re-verification](audit/evidence/cross-implementation-reverification-2026-09-26.md), [PDF](output/pdf/cross-implementation-reverification.pdf) | Bounded implementation comparisons, a separate four-noise-level Gaussian reference diagnostic and a statement-to-prose review; corrections, retained negative results and explicit verification limits |
 | Assess an application | [Ecosystem capabilities](ECOSYSTEM_CAPABILITIES.md), [sensor and Galadriel guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md) | Physical inputs, alphabets, targets, simpler comparators, resource limits, and qualification gaps |
@@ -117,8 +118,12 @@ from methods to papers, external reference code, Rust/Python entry points, featu
 contributions, and unsupported requests is [`METHODS.md`](METHODS.md). Its machine-readable source
 is [`method-catalog.json`](method-catalog.json).
 
-The scoped, reader-facing [mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) and its
-[human PDF](output/pdf/mathematical-results-guide.pdf) map nine foundational result families and six
+The [November mathematical results guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md) and its
+[PDF](output/pdf/mathematical-results-guide-current.pdf) cover the exact bootstrap example,
+fitted quantizers, source-partition optimization, count-table encoding and 22 checked count statements.
+
+The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its
+[28-page PDF](output/pdf/mathematical-results-guide.pdf) map nine foundational result families and six
 companion packages to their exact objects, assumptions, formulas, evidence, costs, uses, nonclaims,
 and governing sources. The guide
 keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions, Williams–Beer

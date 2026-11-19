@@ -1,0 +1,60 @@
+{
+  "scope": "ordinary portable replay of previously observed proof; separate from historical scored receipt",
+  "executing_version": "Lean (version 4.34.1, arm64-apple-darwin24.6.0, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+  "checks": {
+    "modules": 2292,
+    "reported_regions": 11448,
+    "file_mapped_regions": 11427,
+    "non_file_mapped_regions": 21,
+    "ordinary_trust_header": 1025
+  },
+  "source_sha256": {
+    "AlphabetCounts.lean": "ab340702db5e125c4d29d6446845325b16eb8ad5d3c0f5e1e976651f4cb2d9d0",
+    "Contract.lean": "61c8d92c30a934c91aa025c27d24468619f6974fdc9154edba57d5deb701a55e",
+    "CountEvidence.lean": "7974d99f28bf04af3c8f58afd0c9c59977e5f05674db8e3981e92ad786c4657a",
+    "CountRaw.lean": "2ac11744a833f75e2de5ec6f26f1e1def58d868341f9d6dd733d786029600eea"
+  },
+  "declarations_sha256": "70e5e8c6d673bf5244ba12660ae472a2d67f112d140d5e90ff23ead6f4c1131a",
+  "dependency_query_sha256": "90f9976b919b6ac191f88e94839f0f5c424a99669e2b3a7869ed179941024f2a",
+  "local_provider_count": 16395,
+  "complete_provider_file_map_equals_original": true,
+  "local_lean_and_leanchecker": {
+    "lean": [
+      49968,
+      "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    ],
+    "leanchecker": [
+      78224,
+      "cfde41cb11dde58c84e9c60c551fd104bb2fc1104ad44dca932a923120272a35"
+    ]
+  },
+  "two_tool_executables_equal_original": true,
+  "owned_products_equal_original": true,
+  "steps": [
+    {
+      "operation": "compile Contract",
+      "seconds": 0.834
+    },
+    {
+      "operation": "compile CountRaw",
+      "seconds": 0.805
+    },
+    {
+      "operation": "compile AlphabetCounts",
+      "seconds": 0.888
+    },
+    {
+      "operation": "compile CountEvidence",
+      "seconds": 4.238
+    },
+    {
+      "operation": "leanchecker --fresh CountEvidence",
+      "seconds": 57.651
+    },
+    {
+      "operation": "supplementary read-only dependency query",
+      "seconds": 1.176
+    }
+  ],
+  "dependencies_sha256": "e868fe7bddde50eb8dd47c2f1c34c5bde7e0d81805058e279dfb210573327179"
+}

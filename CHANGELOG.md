@@ -7,6 +7,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Publish the checked 22-statement weighted-count theory for three arbitrary source alphabets
+  and a finite set of observation indices. Name the proof assumptions, earlier failed attempts
+  and the stock kernel's replay scope. [Count definitions and proofs](audit/research/three-source-alphabet-counts/README.md)
+- Prove both inverse identities for the restricted integer-table grammar. Two original readers
+  recover all 29,403 tables in the stated finite check. [Encoding and examples](audit/research/categorical-count-table-encoding/README.md)
+- Publish a new four-page guide to the November results and their scope. The earlier nine
+  families and six companion packages have a separate foundation guide. [November results guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md)
+
 - Correct the sufficient sign constant in the exploratory source-partition optimizer. Exact rational
   intervals verify the archived constant on its 30 distributions. A four-symbol target copy
   exhibits the failure outside those data. [Argument and example](audit/evidence/source-partition-sign-margin-2026-11-19.md)

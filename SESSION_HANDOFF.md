@@ -1,5 +1,25 @@
 # Session handoff — updated 19 November 2026
 
+## Weighted counts and canonical input tables
+
+The current results guide links the categorical bootstrap example, fixed-alphabet theorem,
+source-partition sign correction, canonical table proof and fresh weighted-count replay.
+[November guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md) · [Typeset guide](output/pdf/mathematical-results-guide-current.pdf)
+
+Stock Lean 4.34.1 checked 22 statements and 22 matching typed uses for weighted events
+on three source alphabets. Nine definition pairs and one generated helper pair matched.
+The ordinary run and separate stock fresh replay have different trust contracts. The
+original three failed attempts retain their own outcomes. A dedicated Linux workflow compiles
+both the finite-registry and weighted-count studies at their fixed versions. Check the actual run
+on the commit of interest for its outcome. [Proof and rerun records](audit/research/three-source-alphabet-counts/README.md) · [Hosted procedure](.github/workflows/finite-three-source-stock-replay.yml)
+
+For the restricted integer-table grammar, the specified decoder and canonical writer
+are inverse in both directions. The two retained readers reproduced all 29,403 tables
+in the stated finite domain. These results cover integer counts and input bytes.
+The output certificate, full input-to-Rust correspondence and the five scientific
+acceptance programs still have their respective open obligations.
+[Grammar, inverse proof and finite check](audit/research/categorical-count-table-encoding/README.md)
+
 ## Source-partition bounds and Lean assumptions
 
 A missing factor of two in the sign constraints can change the numerical maximum outside the
@@ -41,9 +61,9 @@ lower bound disproves the independent-row substitution on this design. [Proof](D
 The 4.34.1 finite-registry package contains the definitions, assumptions, proof terms
 and all twelve altered statements. The accepted third attempt and its fresh replay
 follow two recorded compilation failures. It checks the specified finite controls.
-The original pre-candidate protocol, heterogeneous-alphabet count theory, solver
-certificates, binary64 implementation correspondence and the three-source decision
-remain separate open obligations. [Finite controls and attempt dispositions](audit/research/finite-three-source-controls/README.md).
+The original pre-candidate protocol, solver certificates, binary64 implementation
+correspondence and the three-source decision remain separate open obligations. The subsequent
+weighted-count proof above has its own statement and compiler record. [Finite controls and attempt dispositions](audit/research/finite-three-source-controls/README.md).
 
 ## Permutation inference and signed PID2 inputs, 18 November 2026
 
@@ -496,7 +516,7 @@ Use the current [AGENTS.md](AGENTS.md) in full. In particular:
 | Order | Read | Purpose |
 |---|---|---|
 | 1 | [README.md](README.md), [AGENTS.md](AGENTS.md) | Scientific overview, operating rules, feature/API boundaries, and required gates |
-| 2 | [MATHEMATICAL_RESULTS_GUIDE.md](MATHEMATICAL_RESULTS_GUIDE.md) | Concise map of nine result families, formulas, motivation, examples, and detailed proofs |
+| 2 | [November guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md), [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) | Current finite findings and the earlier nine result families, with assumptions and detailed proofs |
 | 3 | [method-catalog.json](method-catalog.json), [METHODS.md](METHODS.md), [assurance registry](audit/evidence/assurance-registry.json) | Method identity/provenance/availability and separately scoped assurance |
 | 4 | Current claim decision and evidence indexes in the lane table below | Exact acceptance status, open obligations, and immutable historical boundaries |
 | 5 | [MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md) | Mathematical workflow, attempt protocol, formal verification, counterexamples, durability, and continuity |

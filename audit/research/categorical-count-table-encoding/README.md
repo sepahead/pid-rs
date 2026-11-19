@@ -1,0 +1,65 @@
+# When does a three-source count table have unique bytes?
+
+**Sepehr Mahmoudian · 2026**
+
+A count table records which joint outcomes occurred and how many observations had each outcome. To reconstruct the original integer counts from a file, its bytes must identify the table unambiguously. This note gives an explicit inverse for the original three-source input grammar. A separate finite calculation covers 29,403 tables whose labels include prefixes and whose positive counts cross a decimal digit boundary. The result concerns the input to a proposed categorical shared-exclusions calculation. The encoding and proof are project-defined. [Original input specification](../../../claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md) · [Original claim](../../../claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md) · [PDF report](../../../output/pdf/canonical-count-tables.pdf) · [TeX source](../../formal/latex/canonical-count-tables.tex)
+
+## Objects and notation
+
+A **token** is an ASCII string of one to 128 bytes from the letters A–Z and a–z, digits 0–9, period, underscore, colon and hyphen. A **state** is an ordered array of one to 64 tokens. A **key** is an ordered quadruple consisting of the first, second and third source states and the target state. A **positive count** is the number of occurrences of a key. The **support** consists of the keys with positive counts. A **table** $T$ lists each such key once with its integer count. A **word** $B$ is a finite sequence of bytes. A **left inverse** recovers the input from its encoding. These definitions specialize the original input schema. JSON arrays preserve order. The JSON Canonicalization Scheme specifies the spelling and property order of the JSON object. [Input specification](../../../claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md) · [JSON, RFC 8259 §§4–7](https://datatracker.ietf.org/doc/html/rfc8259#section-4) · [JSON Canonicalization Scheme, RFC 8785 §3](https://datatracker.ietf.org/doc/html/rfc8785#section-3)
+
+Write $T=((k_1,c_1),\ldots,(k_s,c_s))$, where $k_i$ is a key and $c_i$ is a positive integer. Keys are strictly increasing. Compare tokens in ASCII byte order, token arrays lexicographically, then the four arrays in source and target order. A proper prefix precedes its extension. There are one to 1,024 occupied rows. The canonical decimal spelling of each count has at most 4,096 digits. The total $N=\sum_{i=1}^s c_i$ has at most 8,192 binary digits. The complete word has at most 4 MiB, including its line feed. The admitted mathematical domain consists of the tables satisfying these conditions. The counts and sizes carry no information units. The fixed metadata value “nats” names the units of the downstream information calculation.
+
+## The encoding and a worked example
+
+Let $E$ write the five fixed top-level members in order. Their names are `definition_revision`, `rows`, `schema`, `sources` and `units`. The first value is `makkeh-gutknecht-wibral-2021-empirical-sxpid3-nats-v1`. The last three values are `pid-rs/categorical-sxpid3-count-table/v1`, the JSON integer 3, and `nats`. Apart from the integer, the named identifiers are quoted strings. Every row has the fixed members `count`, `source_states` and `target_state`. The source member contains exactly three state arrays. The target member contains one state array. Each count is a **quoted** positive decimal string. Every token is quoted. Commas separate successive elements. Append one line-feed byte after the closing top-level brace and stop.
+
+For example, the following is the entire row for ten occurrences of the first source state `["A"]`, second state `["AA"]`, third state `["A","A"]` and target state `["A"]`. It occupies one place in the top-level `rows` array.
+
+```json
+{"count":"10","source_states":[["A"],["AA"],["A","A"]],"target_state":["A"]}
+```
+
+All field names and token characters lie in ASCII. The chosen field order is their required canonical order. These token characters need no JSON escapes. The three source slots, the target and the order of rows are arrays whose order is preserved. The project supplies the trailing line feed. The output is therefore the original restricted JSON spelling. A general JSON serializer requires further rules for arbitrary Unicode strings and numbers. [RFC 8785 §§3.2.1–3.2.4](https://datatracker.ietf.org/doc/html/rfc8785#section-3.2)
+
+## Unique readability
+
+**Theorem.** There is a deterministic, partial mathematical decoder $D$ for the literal grammar above. For each admitted table $T$, $D(E(T))=T$. For each word $B$ on which $D$ succeeds, $E(D(B))=B$. Consequently $E$ is injective on labeled integer count tables in the admitted domain, and its image consists exactly of the words accepted by $D$.
+
+**Positive decimal strings.** Read the nonzero first digit and the following digits up to the closing quote. Starting from zero, replace the accumulated value $v$ by $10v+d$ for digit $d$. For $m$ digits with a nonzero first digit, the resulting number lies between $10^{m-1}$ and $10^m-1$. The last digit is the remainder on division by ten. The quotient has precisely the preceding digits, unless the last digit was also the first. Repeating this step recovers every digit and its order. Conversely, successive division of any positive integer by ten terminates at zero and produces a unique sequence of remainders in reverse order, with a nonzero final remainder. Decimal reading and canonical printing are thus inverse in both directions. This step is on integers, with no floating-point conversion.
+
+**Tokens and states.** A literal reader consumes its exact prescribed bytes or fails. After a token’s opening quote it reads allowed characters up to the first closing quote. The token alphabet contains neither a quote nor a backslash, so a character that belongs to the token cannot masquerade as its end. An empty or overlong token fails. Inside a state, consume its opening bracket and one quoted token. Thereafter a comma requires another token and a closing bracket ends the state. These two next bytes differ. By induction on the number of tokens, reading a written state consumes exactly its spelling and leaves the remaining bytes untouched. Conversely, the accepted token spellings and separators reproduce every byte consumed by a successful state read. Checking both array bounds restricts this fact to the admitted states.
+
+**Rows and tables.** A row reader consumes the count member, three source states and one target state in the fixed positions, including the required literal keys, commas, brackets and braces. The preceding two steps recover the count and the four state arrays and leave the first byte following the row untouched. The same reasoning in reverse reproduces the original row spelling. Starting just inside the top-level row array, read one row. A comma requires another row, and the closing bracket starts the fixed top-level suffix. Induction on the number of rows gives the same two properties for the row list. Check strict key order and count and size bounds, consume the fixed suffix and line feed, and require end of input. Testing key order rejects a repeated joint key even when its two multiplicities differ. A repeated or unknown object member cannot occupy any accepted position in this fixed literal grammar.
+
+Combining these prefix-consumption statements proves the two displayed inverse identities. In particular, if $E(T)=E(T')$, applying $D$ on both sides gives $T=T'$. The row and token limits restrict the admissible domain without introducing alternative spellings. This is an ordinary mathematical proof for the stated decoder. A proof that a compiled program realizes this decoder, or enforces resource checks before its expensive operations, is a separate obligation. [D1 and the compiled-verifier obligations](../../../claims/SX-CERTIFIED-AVERAGED-PID3-001/obligations.md)
+
+## Two distinctions visible in a small table
+
+The state `["A"]` precedes `["A","A"]` under the required array order because it is a proper prefix. Comparing their **encoded bytes** after the common prefix `["A"` instead compares the closing bracket (ASCII 93) with the comma (ASCII 44). This reverses their order. A table sorted by the encoded state strings can therefore violate the required semantic order. This example explains why the encoder accepts already ordered keys and checks the four state arrays directly.
+
+A one-cell table with count 1 and the same cell with count 9 have identical normalized empirical probability laws. Their count strings and input bytes differ. Input identity preserves absolute multiplicities. The output certificate is a third object. A report may contain bounds, signs and source identities in addition to the input identifier. Uniqueness of the input cannot establish uniqueness or validity of any such report. [Claim statement and output bindings](../../../claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md)
+
+## Exact finite calculation
+
+Each of the four state positions ranges independently over `["A"]`, `["A","A"]` and `["AA"]`. This gives $3^4=81$ distinct keys. Choose one or two keys for the support and assign each a count of 1, 9 or 10. There are
+
+$$
+81\cdot 3 + \binom{81}{2}\cdot 3^2 = 243 + 29{,}160 = 29{,}403
+$$
+
+distinct tables on 3,321 supports. The largest total count is 20. The complete longest input in this domain has 341 bytes. The finite check compares actual words for equality and recovers the labeled table and multiplicities. The SHA-256 of the ordered stream is useful for reproducing this run. Frame each complete word with its four-byte, unsigned, big-endian length, visiting singleton supports first, then strictly increasing pairs, then count vectors in the listed order.
+
+```text
+29fcc1ccf5bce582b65acceb4989b63f79a425caa6393baecb21e7d7c222a876
+```
+
+Run `python3 wire.py` or `python3 -O wire.py` from `audit/research/categorical-count-table-encoding` to reproduce the finite calculation. The program reads its positive inputs from this finite construction. The two Python modes share the same interpreter and reference code. The two-sided mathematical argument above covers the literal grammar independently of finite enumeration. The computation establishes its exact finite predicate and leaves the compiled-parser correspondence open. [Portable reference](wire.py)
+
+## Rust implementation and computational cost
+
+The mathematical input is one ordered table of $s$ occupied four-state keys. This study adds a Python reference with `encode` and `decode`. The reference uses the standard JSON library with a duplicate-member hook, typed schema validation, decimal integer arithmetic and a byte-for-byte canonical re-encoding check. A manual proof for the consuming literal grammar does not prove the JSON library or its memory behavior. This study adds no Rust API or feature gate for this count-table transport. The repository’s existing categorical PID API operates on empirical data through a different route. [Method catalog](../../../METHODS.md) · [Rust implementation and cost reference](../../../RUST_IMPLEMENTATION_AND_COST.md)
+
+For an input of $L$ bytes and maximum decimal count length $d$, a forward cursor visits the bytes in order. Comparing adjacent semantic keys takes time linear in their examined characters, at most an additional constant number of passes over the key data across the table. Decimal reading and printing can take $O(d^2)$ elementary digit work per count in a simple positional implementation. Total-count additions also depend on the current integer width. The Python reference can materialize the parsed JSON tree, count table and canonical re-encoding at once. The finite census additionally holds every distinct encoded word in memory. It is an offline positive-example calculation. No Rust timing, process-wide memory guarantee, streaming refinement, resampling procedure or estimator calibration is claimed.
+
+The research process used model assistance for source comparison, code preparation and review of this proof. The prior sources, fixed grammar and finite examples were exposed. Human or institutional independence has not been established. Cite Sepehr Mahmoudian, *When does a three-source count table have unique bytes?* (2026), with the exact repository commit or release. Cite the software and defining specifications separately. [Software citation](../../../CITATION.cff) · [Original project grammar](../../../claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md)

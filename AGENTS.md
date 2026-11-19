@@ -37,7 +37,7 @@ handoff, then read this guide in full before you change the designated integrati
 | Need | Entry point | What governs the work |
 |---|---|---|
 | Project overview and use | [README.md](README.md) | Reading map, API boundaries, examples, and scientific cautions |
-| Mathematical results | [MATHEMATICAL_RESULTS_GUIDE.md](MATHEMATICAL_RESULTS_GUIDE.md) | Navigation to exact statements and proofs; claim decisions retain their authority |
+| Mathematical results | [Current results guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md), [PDF](output/pdf/mathematical-results-guide-current.pdf), and [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) | Navigation to exact statements and proofs; claim decisions retain their authority |
 | Method identity and availability | [method-catalog.json](method-catalog.json), [METHODS.md](METHODS.md), and the current claim decision | Defining source, estimand, implementation status, assumptions, and accepted evidence |
 | Mathematical workflow | [MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md) | Claim packets, proof routes, falsification, councils, and publication procedure |
 | Discovery and preservation | [PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) | Source-transfer review and proposed assurance design; it does not close claims |

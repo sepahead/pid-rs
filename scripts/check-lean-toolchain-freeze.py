@@ -668,8 +668,8 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ksg-m1a-composite-v12.yml": (
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
-    "AGENTS.md": "78782b417f9f8f406a5bd8b024eb6d39e836431537930b7839e79d9f0fc1bffc",
-    "CHANGELOG.md": "ae7d4e844611bff4baa68ad08cdde8534ed9e26938cd3d29154a2f52df78e7d9",
+    "AGENTS.md": "072961959b570a1bb25ad181418dce6481b2be4698485c61cb39b8ce269b9d78",
+    "CHANGELOG.md": "320f9ed0e30439e238d414ba6f96a1ace6c1633bda931dc249cbdcaa0f07b191",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f05845157268f3b875499ea683f2371198d703a99112992d973b0db842ae42a1"
     ),
@@ -702,12 +702,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
         "bc64dbbcd56e818e6f5d98d67635c54c2f31b4341f749ea4c4cf339398966d87"
     ),
-    "scripts/README.md": 'd4185a8daf269a2b55373ffde0b942a3845dd7aa3b7d0f15994647c65f0512ef',
+    "scripts/README.md": '9bf77aea1eff4b889946f8454d419e2841e35fef226db9cd9c62bbb391b44bbd',
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        'a822b95209cf5d70a0618f4700609bf41f68d558996390640fbdf8ac66fe2d0e'
+        '6f7dafa10a9c64e1a9f5198c6da46961d4e0d52d0fbb6f4123be633b0cf417e9'
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -716,13 +716,13 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
     ),
     "scripts/check-formal-pdf-set.sh": (
-        "3e3422d7deb724fd7861347f8564c0bc2a5035919f392e074bc1aa409fb7abf0"
+        "9a68def553c9ee1d1d0441a4b8f7b4b311dec9451b39357540da3a061d9292c8"
     ),
     "scripts/build-finite-target-copy-mgw-pdf.py": (
         "7aba9fdee6135a84ea68ebddef05d631aabcd47be92251e53380df1459d40af6"
     ),
     "scripts/check-formal-pdf-style.py": (
-        "e4d75e0c6b97432cfb4bb9e7ef5da82e4501e9178d9a786b9e2fbf93c840fdee"
+        "76edf2da60c67f543f7cf2e94816024571e0156677c20b897ea2577fac17ffe0"
     ),
     "scripts/check-ksg-m1a-composite-v12-terminal-self-test.py": (
         "fe64ef94c1776220dbd168b873e56c004c9b47c01f13ce4c135af900b11a2ee5"

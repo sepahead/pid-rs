@@ -65,10 +65,13 @@ LATEX_STANDALONE=(
   ksg-m1a-composite-v7-boundary
   mathematical-problem-solving-workflow
   support-change-tolerant-averaged-sxpid-continuity
+  canonical-count-tables
   two-source-sxpid-count-atom-bridge
 )
 MARKDOWN_SOURCES=(
+  MATHEMATICAL_RESULTS_GUIDE_CURRENT.md
   FINITE_COPY_BOOTSTRAP_COVERAGE.md
+  audit/research/three-source-alphabet-counts/README.md
   audit/research/embodied-sensor-utility/EXPOSITION.md
   audit/research/embodied-sensor-utility/OVERVIEW.md
   audit/evidence/cross-implementation-reverification-2026-09-26.md
@@ -91,7 +94,9 @@ MARKDOWN_SOURCES=(
   SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
 )
 STANDALONE=(
+  mathematical-results-guide-current
   finite-copy-bootstrap-coverage
+  three-source-alphabet-counts
   embodied-sensor-utility
   embodied-sensor-overview
   cross-implementation-reverification
@@ -125,6 +130,7 @@ STANDALONE=(
   recorded-office-sensors
   support-change-tolerant-averaged-sxpid-continuity
   sxpid3-source-marginal-and-bounded-audit
+  canonical-count-tables
   two-source-sxpid-count-atom-bridge
 )
 FRAGMENT=pid-discovery-verification-and-durability-blueprint-header
@@ -1569,13 +1575,25 @@ mv "$fixture/output/pdf/${STANDALONE[0]}.pdf" "$fixture/removed-paper.pdf"
 expect_failure "missing standalone-paper PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
+fixture="$TEST_ROOT/missing-canonical-count-pdf"
+make_fixture "$fixture"
+mv "$fixture/output/pdf/canonical-count-tables.pdf" "$fixture/removed-count-tables.pdf"
+expect_failure "missing canonical count-table PDF is rejected" "$fixture" \
+  "rendered PDF inventory differs"
+
+fixture="$TEST_ROOT/missing-canonical-count-tex"
+make_fixture "$fixture"
+mv "$fixture/audit/formal/latex/canonical-count-tables.tex" "$fixture/removed-count-tables.tex"
+expect_failure "missing canonical count-table TeX is rejected" "$fixture" \
+  "typed TeX source inventory differs"
+
 fixture="$TEST_ROOT/missing-finite-mgw-pdf"
 make_fixture "$fixture"
 mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed-finite-mgw.pdf"
 expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
-for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage; do
+for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage three-source-alphabet-counts mathematical-results-guide-current; do
   fixture="$TEST_ROOT/missing-$bias_stem-pdf"
   make_fixture "$fixture"
   mv "$fixture/output/pdf/$bias_stem.pdf" "$fixture/removed-bias-paper.pdf"

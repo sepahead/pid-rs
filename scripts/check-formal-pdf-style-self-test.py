@@ -64,6 +64,15 @@ def main() -> int:
                 f"baseline visual-system fixture failed\n{baseline.stdout}\n{baseline.stderr}"
             )
 
+        count_table = LATEX_RELATIVE / "canonical-count-tables.tex"
+        require_failure(
+            pristine,
+            "missing-count-table-sections",
+            count_table,
+            r"\PidWorkflowConfigureSections",
+            "",
+            "required command",
+        )
         finite = LATEX_RELATIVE / "finite-alphabet-plugin-convergence.tex"
         workflow = LATEX_RELATIVE / "mathematical-problem-solving-workflow.tex"
         style = LATEX_RELATIVE / "pid-rs-report-tables.sty"

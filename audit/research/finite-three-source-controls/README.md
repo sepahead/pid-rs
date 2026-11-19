@@ -60,4 +60,6 @@ Read the result against the simplest alternatives. Counting 18 nodes misses an e
 
 Review therefore distinguished carrier membership, antichain validity, empty family and empty branch, mask range, singleton anchors, external registry order, injectivity, strict order direction, matrix axes, diagonal reflexivity, pattern quantification, exact target binding, axiom collection, byte-level parsing, source custody and toolchain dependence. Reconsider this conclusion if a source or import differs, a type or axiom check changes, a witness survives its alteration, the emitted stream differs, or a relevant stock kernel issue affects these terms. Other source counts, unseen defect classes and scientific correspondence require their own evidence.
 
+The companion [weighted-count study](../three-source-alphabet-counts/README.md) uses the same three source positions to prove 22 statements about arbitrary coordinate labels and finite weighted observations.
+
 **Citation.** Sepehr Mahmoudian (2026), *Twelve controls for a finite three-source registry*. Include the exact repository commit or release. [Software citation](../../../CITATION.cff)

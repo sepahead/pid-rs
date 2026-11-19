@@ -23,6 +23,7 @@ LATEX_RELATIVE = Path("audit/formal/latex")
 STYLE_NAME = "pid-rs-report-tables.sty"
 WORKFLOW_NAME = "mathematical-problem-solving-workflow.tex"
 STANDALONE_DOCUMENTS = (
+    "canonical-count-tables.tex",
     "certified-sxpid2-executable-assurance.tex",
     "dependency-colored-sxpid-concentration.tex",
     "ecosystem-compatibility-audit.tex",
@@ -47,6 +48,15 @@ REQUIRED_DOCUMENT_COMMANDS = (
     r"\PidSetRunningHeads",
     r"\PidConfigureAbstract",
     r"\PidConfigureLinksAndListings",
+    r"\PidReportTitle",
+    r"\PidMakeTitle",
+)
+COUNT_TABLE_DOCUMENT_COMMANDS = (
+    r"\usepackage{pid-rs-report-tables}",
+    r"\usepackage{pid-rs-workflow-publication}",
+    r"\PidWorkflowConfigureSections",
+    r"\PidSetRunningHeads",
+    r"\hypersetup{",
     r"\PidReportTitle",
     r"\PidMakeTitle",
 )
@@ -127,7 +137,9 @@ def check_document(path: Path) -> list[Finding]:
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
 
-    for command in REQUIRED_DOCUMENT_COMMANDS:
+    commands = (COUNT_TABLE_DOCUMENT_COMMANDS if path.name == "canonical-count-tables.tex"
+                else REQUIRED_DOCUMENT_COMMANDS)
+    for command in commands:
         count = text.count(command)
         if count != 1:
             findings.append(

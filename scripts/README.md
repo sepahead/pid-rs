@@ -1992,6 +1992,15 @@ object checks. That fallback is a bounded text-and-geometry relation; it is not 
 PDF/UA, font/render equivalence, mathematical verification, benchmark comparability, estimator
 calibration, sensor-placement validity, or a real-time qualification.
 
+The [November mathematical results guide](../MATHEMATICAL_RESULTS_GUIDE_CURRENT.md) has a
+[separate PDF](../output/pdf/mathematical-results-guide-current.pdf). Run
+`python3 -I -S -B scripts/build-current-mathematical-results-guide.py --check` to rebuild and
+compare the canonical bytes. On a different typesetting installation, `--check-committed` verifies
+the tracked source and shipped artifact, including page text, authorship, fonts and link targets.
+The exact and cross-toolchain aggregate modes use these respective operations. The published
+[publication record](../audit/evidence/mathematical-results-guide-november-2026-11-19.md) describes the four-page November edition. The full 28-page foundation guide retains
+its previously qualified builder and stricter structural and hosted profiles.
+
 `build-mathematical-results-guide-pdf.sh` renders `MATHEMATICAL_RESULTS_GUIDE.md` through an
 isolated Pandoc/LuaLaTeX pipeline. Default `--exact` mode requires two isolated builds to be
 byte-identical. Explicit `--cross-toolchain` mode first attempts raw equality. Only raw comparison
@@ -2009,7 +2018,7 @@ exact page boxes, CFF resource shapes, admitted open-font names, and the limits 
 The builder's cross mode is a low-level candidate-generation relation. Publication admission comes
 only from the outer guide gate's selected, digest-pinned profile and its independent artifact checks.
 
-The current 28-page guide adds six companion packages to its nine-family foundation map.
+The 28-page foundation guide adds six companion packages to its nine-family foundation map.
 Its v5 strict profile retains 75 HTTPS targets, 285 navigation records, 80 named destinations,
 26 outline nodes, 147 link annotations and 1,273 structure elements. It changes the measured
 content digests for Sepehr Mahmoudian’s byline and footer. The v5 local Linux raw profile preserves

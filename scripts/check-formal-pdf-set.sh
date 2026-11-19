@@ -28,6 +28,7 @@ if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" \
 fi
 
 STANDALONE_LATEX_PAPERS=(
+  "canonical-count-tables"
   "certified-sxpid2-executable-assurance"
   "dependency-colored-sxpid-concentration"
   "ecosystem-compatibility-audit"
@@ -45,7 +46,9 @@ STANDALONE_LATEX_PAPERS=(
 )
 
 STANDALONE_MARKDOWN_PAPERS=(
+  "mathematical-results-guide-current"
   "finite-copy-bootstrap-coverage"
+  "three-source-alphabet-counts"
   "embodied-sensor-utility"
   "embodied-sensor-overview"
   "cross-implementation-reverification"
@@ -69,7 +72,9 @@ STANDALONE_MARKDOWN_PAPERS=(
 )
 
 STANDALONE_MARKDOWN_SOURCES=(
+  "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md"
   "FINITE_COPY_BOOTSTRAP_COVERAGE.md"
+  "audit/research/three-source-alphabet-counts/README.md"
   "audit/research/embodied-sensor-utility/EXPOSITION.md"
   "audit/research/embodied-sensor-utility/OVERVIEW.md"
   "audit/evidence/cross-implementation-reverification-2026-09-26.md"
@@ -279,11 +284,21 @@ python3 -O -I -B scripts/check-publication-links-self-test.py
 scripts/check-formal-pdf-set-self-test.sh
 python3 scripts/check-formal-pdf-style.py
 python3 scripts/check-formal-pdf-style-self-test.py
+if [[ "$MODE" == "--exact" ]]; then
+  python3 -I -S -B scripts/build-current-mathematical-results-guide.py --check
+else
+  python3 -I -S -B scripts/build-current-mathematical-results-guide.py --check-committed
+fi
+
 python3 -I -S -B audit/evidence/finite-copy-bootstrap-coverage/verify.py >/dev/null
 python3 -O -I -S -B audit/evidence/finite-copy-bootstrap-coverage/verify.py >/dev/null
+python3 -I -S -B audit/research/three-source-alphabet-counts/replay_checks.py >/dev/null
+python3 -O -I -S -B audit/research/three-source-alphabet-counts/replay_checks.py >/dev/null
 if [[ "$MODE" == "--exact" ]]; then
+  python3 -I -S -B audit/research/three-source-alphabet-counts/build_pdf.py --check
   python3 -I -S -B scripts/build-finite-copy-bootstrap-pdf.py --check
 else
+  python3 -I -S -B audit/research/three-source-alphabet-counts/build_pdf.py --check-committed
   python3 -I -S -B scripts/build-finite-copy-bootstrap-pdf.py --check-committed
 fi
 python3 -I -S scripts/sync-mathematical-workflow-tex.py --check
@@ -440,6 +455,7 @@ scripts/check-stopped-prefix-probability-pdf.sh "$MODE"
 scripts/check-fault-tolerant-shared-exclusions-pdf.sh "$MODE"
 scripts/check-sxpid3-source-marginal-audit-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
+scripts/check-canonical-count-tables-pdf.sh "$MODE"
 
 # The new mean exposition admits exact reviewed bytes only; retain fresh build evidence.
 if [[ "$MODE" == "--exact" ]]; then

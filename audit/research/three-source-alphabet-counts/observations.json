@@ -1,0 +1,351 @@
+{
+  "schema": "pid-rs/arbitrary-alphabet-weighted-count-observation/v1",
+  "stage": "original stock-4.34.1 scored observation",
+  "original_utc": "2026-11-19T00:22:48.600914+00:00",
+  "toolchain": {
+    "version": "4.34.1",
+    "revision": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "distribution": "darwin_aarch64",
+    "archive_sha256": "65f22a4f047738ec742667b3247e836a86ebf06eabc12655c3dee00637e37866"
+  },
+  "mathlib": {
+    "revision": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+    "lake_manifest_sha256": "8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67",
+    "dependencies": {
+      "plausible": "118aa17ee84656b8bd727fef7c458ee8c833385c",
+      "LeanSearchClient": "ddf04cf3949fa556442341e87d47f9f6e6074707",
+      "importGraph": "e928b72544873815af278d38681b31c0293588e3",
+      "proofwidgets": "106ff4fafc74ef4ac99d81dbf3ab399118f497a5",
+      "aesop": "355695d523e41d0554926416cba2a2b3544fbbc9",
+      "Qq": "6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259",
+      "batteries": "f2effa3d803fda822b1f97b806c47cf2adfbcbc2",
+      "Cli": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204"
+    }
+  },
+  "source_sha256": {
+    "AlphabetCounts.lean": "ab340702db5e125c4d29d6446845325b16eb8ad5d3c0f5e1e976651f4cb2d9d0",
+    "Contract.lean": "61c8d92c30a934c91aa025c27d24468619f6974fdc9154edba57d5deb701a55e",
+    "CountEvidence.lean": "7974d99f28bf04af3c8f58afd0c9c59977e5f05674db8e3981e92ad786c4657a",
+    "CountRaw.lean": "2ac11744a833f75e2de5ec6f26f1e1def58d868341f9d6dd733d786029600eea"
+  },
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "ordered_modules": [
+    "Contract",
+    "CountRaw",
+    "AlphabetCounts",
+    "CountEvidence"
+  ],
+  "definition_stems": [
+    "Observation",
+    "sourceEvent",
+    "eqPattern",
+    "sourceEventDecidable",
+    "mass",
+    "N",
+    "U",
+    "V",
+    "T"
+  ],
+  "theorem_stems": [
+    "sourceEvent_antitone",
+    "sourceEvent_key_iff",
+    "sourceEvent_data_congr",
+    "dnf_eq_sourceEvent",
+    "mass_mono",
+    "mass_le_total",
+    "key_weight_le_mass",
+    "mass_congr",
+    "total_congr",
+    "supported_key_source_mem",
+    "supported_key_joint_mem",
+    "supported_key_target_mem",
+    "V_le_U",
+    "U_le_N",
+    "V_le_T",
+    "T_le_N",
+    "key_le_V",
+    "supported_key_bounds",
+    "counts_positive",
+    "U_antitone",
+    "V_antitone",
+    "counts_congr_on_support"
+  ],
+  "original_direct_imports": [
+    {
+      "all": false,
+      "exported": true,
+      "meta": false,
+      "module": "Init"
+    },
+    {
+      "all": false,
+      "exported": true,
+      "meta": true,
+      "module": "Init"
+    },
+    {
+      "all": false,
+      "exported": true,
+      "meta": false,
+      "module": "CountRaw"
+    },
+    {
+      "all": false,
+      "exported": true,
+      "meta": false,
+      "module": "AlphabetCounts"
+    },
+    {
+      "all": false,
+      "exported": true,
+      "meta": false,
+      "module": "Lean.Elab.Command"
+    },
+    {
+      "all": false,
+      "exported": true,
+      "meta": false,
+      "module": "Lean.Elab.BuiltinEvalCommand"
+    },
+    {
+      "all": false,
+      "exported": true,
+      "meta": false,
+      "module": "Lean.Meta.ExprDefEq"
+    },
+    {
+      "all": false,
+      "exported": true,
+      "meta": false,
+      "module": "Lean.Meta.WHNF"
+    },
+    {
+      "all": false,
+      "exported": true,
+      "meta": false,
+      "module": "Lean.Util.CollectAxioms"
+    },
+    {
+      "all": false,
+      "exported": true,
+      "meta": false,
+      "module": "Lean.Util.CollectLevelParams"
+    },
+    {
+      "all": false,
+      "exported": true,
+      "meta": false,
+      "module": "Lean.Util.InstantiateLevelParams"
+    }
+  ],
+  "original_checks": {
+    "helper_definitions": 1,
+    "definitions": 9,
+    "theorems": 22,
+    "consumers": 22,
+    "modules": 2292,
+    "reported_regions": 11448,
+    "file_mapped_regions": 11430,
+    "non_file_mapped_regions": 18,
+    "trust_header_observed": 1025
+  },
+  "original_raw_result_sha256": "82c3bcdff3a64aa77da54a58b57f476b348ec32be803e613f23de7db16219bdd",
+  "scored_packet_inventory_sha256": "e74c7828ad20dd4a4f11c729f607e09cd8aa431824f49bbba5366df8f200e458",
+  "original_full_native_stdout_sha256": "b0765de8a3e63ec1d073cba75a2dc30b2e731ac327246616dca702e7bde12bfe",
+  "source_path_independent_declaration_bytes": 61834,
+  "declarations_sha256": "70e5e8c6d673bf5244ba12660ae472a2d67f112d140d5e90ff23ead6f4c1131a",
+  "disk_projection_sha256": "4ed2ff5c6b72cbfaaabb19d933e1f065ee48885a1cce92a909481064d12adabb",
+  "disk_projection_uncompressed_sha256": "dcab4f8a026279502305630572ae122a107acd9925d41e02da5ffb6dcdaa0b9e",
+  "original_provider_manifest_sha256": "1d688f11cd8dab1b079ffa6a196f6c075959feb5025084b75e5322ac622764a3",
+  "original_bound_provider_files": 16395,
+  "original_bound_runtime_files": 19,
+  "prior_failures": [
+    {
+      "revision": 1,
+      "terminal": "failed-stop",
+      "result_sha256": "886c8468c55235baa6ab31b70a6543695586f214996c3e7f5aebed08cca56d82",
+      "reason": "The warning-as-error compilation reported an unused DecidableEq J instance in the three supported-key membership theorem declarations. It stopped before CountEvidence.",
+      "steps": [
+        {
+          "label": "compile-Contract",
+          "status": 0,
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "label": "compile-CountRaw",
+          "status": 0,
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "label": "compile-AlphabetCounts",
+          "status": 1,
+          "stdout_bytes": 1202,
+          "stdout_sha256": "4d0067fcc5df64119dc383086187cf5b47a39b2e8f826da083451214cd458b1f",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "accepted_exports": 0
+    },
+    {
+      "revision": 2,
+      "terminal": "failed-stop",
+      "result_sha256": "757c5a07706223076402851b6250c478aacf92bf479d9501648c849869e4916b",
+      "reason": "The strict body comparison for sourceEventDecidable stopped on different fully qualified helper constants. The generated helpers had not yet been related by an audited pair.",
+      "steps": [
+        {
+          "label": "compile-Contract",
+          "status": 0,
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "label": "compile-CountRaw",
+          "status": 0,
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "label": "compile-AlphabetCounts",
+          "status": 0,
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "label": "compile-CountEvidence",
+          "status": 1,
+          "stdout_bytes": 3552653,
+          "stdout_sha256": "e2ef2b1999de78328a8f5878c2c4f13113d443cb05d7f379192e9c8744b57c85",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "accepted_exports": 0
+    },
+    {
+      "revision": 3,
+      "terminal": "failed-stop",
+      "result_sha256": "5e901aa8b4d5601d75f6052a2737d2647478a0b580b2441d89febc7c69f02e10",
+      "reason": "All 32 semantic rows were emitted. The outer rule required every reported region to be file-mapped; 21 of 11,448 regions had false backing flags. The fresh process did not run.",
+      "steps": [
+        {
+          "label": "compile-Contract",
+          "status": 0,
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "label": "compile-CountRaw",
+          "status": 0,
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "label": "compile-AlphabetCounts",
+          "status": 0,
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "label": "compile-CountEvidence",
+          "status": 0,
+          "stdout_bytes": 3614229,
+          "stdout_sha256": "864f29724548a6cc3464f802fd68fd729322624cb6c0021a71665005e2668ba0",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "accepted_exports": 0
+    }
+  ],
+  "original_steps": [
+    {
+      "label": "compile-Contract",
+      "status": 0,
+      "wall_s": 1.039,
+      "rss_sample_count": 2,
+      "max_sampled_group_rss_bytes": 1185759232,
+      "forced_stop": null,
+      "group_quiescent": true,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "compile-CountRaw",
+      "status": 0,
+      "wall_s": 1.068,
+      "rss_sample_count": 2,
+      "max_sampled_group_rss_bytes": 1299939328,
+      "forced_stop": null,
+      "group_quiescent": true,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "compile-AlphabetCounts",
+      "status": 0,
+      "wall_s": 1.063,
+      "rss_sample_count": 2,
+      "max_sampled_group_rss_bytes": 1295056896,
+      "forced_stop": null,
+      "group_quiescent": true,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "compile-CountEvidence",
+      "status": 0,
+      "wall_s": 4.724,
+      "rss_sample_count": 9,
+      "max_sampled_group_rss_bytes": 1516503040,
+      "forced_stop": null,
+      "group_quiescent": true,
+      "stdout_bytes": 3614226,
+      "stdout_sha256": "b0765de8a3e63ec1d073cba75a2dc30b2e731ac327246616dca702e7bde12bfe",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "fresh-CountEvidence",
+      "status": 0,
+      "wall_s": 59.788,
+      "rss_sample_count": 114,
+      "max_sampled_group_rss_bytes": 1486880768,
+      "forced_stop": null,
+      "group_quiescent": true,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "meaning": "Historic host and packet observation; project outputs and compiled provider identities are observations of disk bytes. No equality between relocated runtime values and disk contents is asserted. Portable replay is a separate execution."
+}

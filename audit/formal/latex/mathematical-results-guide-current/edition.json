@@ -1,0 +1,72 @@
+{
+  "edition": "2026-11-19",
+  "scope": "Local byte-exact reproduction and direct inspection of the shipped November PDF; foundation v4/v5 profiles retain their separate scope.",
+  "inputs": {
+    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "f6df17584cd66f29f16f6b4b220f778a96eaffb2eab85d4a47972db83fb03dd0",
+    "audit/formal/latex/mathematical-results-guide-current/publication.tex": "5bdd57edecf751900a52f6a56369478949fb439db47252cea7ff72b90e69bd76",
+    "audit/formal/latex/mathematical-results-guide-current/publication.lua": "c92077a00ae48f60ab562a359c1ec044baa04aae8d2cc5f3680e81bd44d19951",
+    "audit/formal/latex/pid-rs-report-tables.sty": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+    "audit/formal/latex/pid-rs-workflow-publication.sty": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+    "MATHEMATICAL_RESULTS_GUIDE.md": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b",
+    "output/pdf/mathematical-results-guide.pdf": "166dd75fc3f60b6f30feee8cbba46076bba28abc5aaaf3d33f8b1475e6ab15f1"
+  },
+  "pdf_sha256": "e81a9cb8d3c9e1ed07ba39c12b37588bbbf24db8d0ca6b2bdea26ede12405274",
+  "pdfinfo": {
+    "Title": "Mathematical results guide for November 2026",
+    "Author": "Sepehr Mahmoudian",
+    "Pages": "4",
+    "Page size": "595.276 x 841.89 pts (A4)",
+    "Encrypted": "no",
+    "JavaScript": "no",
+    "Tagged": "no"
+  },
+  "embedded_font_entries": 9,
+  "page_text": [
+    [
+      "Sepehr Mahmoudian",
+      "Why the nominal 95% range has coverage 64/81",
+      "64/81",
+      "all 14 other ordered samples cover"
+    ],
+    [
+      "What a fitted quantizer fixes",
+      "A declared rejection-sampling rule",
+      "When an absolute-value optimization clips its answer",
+      "four-symbol copy example"
+    ],
+    [
+      "Reconstructing integer counts from one byte string",
+      "decimal count has a nonzero leading digit",
+      "29,403",
+      "Certificate obligations",
+      "four mebibytes",
+      "this byte comparison reverses the intended order"
+    ],
+    [
+      "What the 22 checked count statements establish",
+      "fresh kernel-checker invocation passed",
+      "Rust implementation and computational cost",
+      "experimental::pipelines::block_bootstrap",
+      "Cargo feature experimental-pipelines",
+      "discrete_sxpid2_averaged",
+      "Software citation"
+    ]
+  ],
+  "uri_targets": [
+    "https://doi.org/10.1103/PhysRevE.103.032149",
+    "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
+    "https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+    "https://github.com/sepahead/pid-rs/blob/main/FINITE_COPY_BOOTSTRAP_COVERAGE.md",
+    "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
+    "https://github.com/sepahead/pid-rs/blob/main/METHODS.md",
+    "https://github.com/sepahead/pid-rs/blob/main/RUST_IMPLEMENTATION_AND_COST.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/finite-copy-bootstrap-coverage/README.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-count-table-encoding/README.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/source-coupling-compression/EXPOSITION.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-alphabet-counts/README.md",
+    "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md",
+    "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/obligations.md",
+    "https://github.com/sepahead/pid-rs/blob/main/output/pdf/mathematical-results-guide.pdf",
+    "https://www.rfc-editor.org/rfc/rfc8259"
+  ]
+}

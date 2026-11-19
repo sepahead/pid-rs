@@ -1,0 +1,101 @@
+name: Stock Lean replay of finite three-source studies
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/finite-three-source-stock-replay.yml
+      - audit/research/finite-three-source-controls/**
+      - audit/research/three-source-alphabet-counts/**
+  pull_request:
+    paths:
+      - .github/workflows/finite-three-source-stock-replay.yml
+      - audit/research/finite-three-source-controls/**
+      - audit/research/three-source-alphabet-counts/**
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    name: Registry counterexamples and weighted count identities
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: bash
+    env:
+      LEAN_RELEASE: https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst
+      LEAN_SHA256: 47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4
+      MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
+      MATHLIB_NO_CACHE_ON_UPDATE: "1"
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+
+      - name: Verify the official Linux release and the Mathlib source
+        run: |
+          set -euo pipefail
+          df -h "$RUNNER_TEMP"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          mkdir "$RUNNER_TEMP/stock-proof-logs"
+          curl --fail --location --retry 4 --proto '=https' --tlsv1.2 \
+            --output "$RUNNER_TEMP/lean.tar.zst" "$LEAN_RELEASE"
+          printf '%s  %s\n' "$LEAN_SHA256" "$RUNNER_TEMP/lean.tar.zst" | sha256sum --check --strict
+          tar --zstd -xf "$RUNNER_TEMP/lean.tar.zst" -C "$RUNNER_TEMP"
+          stock="$RUNNER_TEMP/lean-4.34.1-linux/bin"
+          test "$("$stock/lean" --githash)" = 5045d0056413266e57c625dcd7c365b10e377c52
+          printf '%s\n' "$stock" >> "$GITHUB_PATH"
+          git init -q "$RUNNER_TEMP/count-mathlib"
+          git -C "$RUNNER_TEMP/count-mathlib" remote add origin https://github.com/leanprover-community/mathlib4.git
+          git -C "$RUNNER_TEMP/count-mathlib" fetch --no-tags --depth 1 origin "$MATHLIB_REV"
+          git -C "$RUNNER_TEMP/count-mathlib" checkout --detach FETCH_HEAD
+          test "$(git -C "$RUNNER_TEMP/count-mathlib" rev-parse HEAD)" = "$MATHLIB_REV"
+          printf '%s  %s\n' 8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67 \
+            "$RUNNER_TEMP/count-mathlib/lake-manifest.json" | sha256sum --check --strict
+          {
+            git rev-parse HEAD
+            "$stock/lean" --version
+            sha256sum "$stock/lean" "$stock/leanchecker"
+            git -C "$RUNNER_TEMP/count-mathlib" rev-parse HEAD
+            uname -sm
+          } | tee "$RUNNER_TEMP/stock-proof-logs/host-and-source.txt"
+
+      - name: Build the four imported Mathlib modules at the pinned revision
+        id: imports
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/count-mathlib"
+          modules=(Mathlib.Algebra.BigOperators.Group.Finset.Defs Mathlib.Algebra.Order.BigOperators.Group.Finset
+                   Mathlib.Data.Fintype.Powerset Mathlib.Data.List.Defs)
+          if ! lake exe cache get --cache-from=master "${modules[@]}"; then
+            echo "Targeted cache acquisition failed. Building the selected source modules."
+          fi
+          targets=()
+          for module in "${modules[@]}"; do targets+=("+$module"); done
+          lake build "${targets[@]}"
+          df -h "$RUNNER_TEMP"
+
+      - name: Compile the registry counterexamples and run the stock fresh checker
+        run: |
+          set -euo pipefail
+          python3 -I -S -B audit/research/finite-three-source-controls/replay.py \
+            --lean-bin "$RUNNER_TEMP/lean-4.34.1-linux/bin" --mathlib "$RUNNER_TEMP/count-mathlib" \
+            | tee "$RUNNER_TEMP/stock-proof-logs/registry.txt"
+
+      - name: Compile the weighted count proofs and run the stock fresh checker
+        if: ${{ !cancelled() && steps.imports.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -I -S -B audit/research/three-source-alphabet-counts/replay.py \
+            --lean-bin "$RUNNER_TEMP/lean-4.34.1-linux/bin" --mathlib "$RUNNER_TEMP/count-mathlib" \
+            --output "$RUNNER_TEMP/stock-proof-logs/counts" | tee "$RUNNER_TEMP/stock-proof-logs/counts.txt"
+
+      - name: Retain the available source identities and native results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: finite-three-source-stock-${{ github.sha }}
+          path: ${{ runner.temp }}/stock-proof-logs
+          if-no-files-found: error
