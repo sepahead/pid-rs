@@ -1,5 +1,11 @@
 # Session handoff — updated 19 November 2026
 
+## Maximal uncovered agreement patterns
+
+The three-source bound is three. At four sources the exact maximum is six. The permutation
+argument proves the sharp middle binomial coefficient at every positive arity.
+[Definitions, proof and smallest counterexample to the linear bound](audit/research/finite-three-source-controls/README.md#how-many-agreement-patterns-can-remain-maximal)
+
 ## Weighted counts and canonical input tables
 
 The current results guide links the categorical bootstrap example, fixed-alphabet theorem,
@@ -11,7 +17,9 @@ on three source alphabets. Nine definition pairs and one generated helper pair m
 The ordinary run and separate stock fresh replay have different trust contracts. The
 original three failed attempts retain their own outcomes. A dedicated Linux workflow compiles
 both the finite-registry and weighted-count studies at their fixed versions. Check the actual run
-on the commit of interest for its outcome. [Proof and rerun records](audit/research/three-source-alphabet-counts/README.md) · [Hosted procedure](.github/workflows/finite-three-source-stock-replay.yml)
+on the commit of interest for its outcome. At `add8134a` the hosted run checked both
+packages. All 86 direct declaration-dependency records matched the local record byte for byte.
+[Verified Linux observation](audit/evidence/finite-three-source-hosted-2026-11-19.json) [Proof and rerun records](audit/research/three-source-alphabet-counts/README.md) · [Hosted procedure](.github/workflows/finite-three-source-stock-replay.yml)
 
 For the restricted integer-table grammar, the specified decoder and canonical writer
 are inverse in both directions. The two retained readers reproduced all 29,403 tables

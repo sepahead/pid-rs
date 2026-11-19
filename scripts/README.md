@@ -3493,7 +3493,9 @@ python3 -I -S -B scripts/build-source-coupling-compression-pdf.py --cross-toolch
 ```
 
 The full controls retain actual mutated source/PDF fixtures and exercise metadata, fonts,
-actions, process errors, limits and real shell dispatch. They require fresh output and deadline
+actions, process errors, limits and real shell dispatch. The nine wiring controls retain each
+complete mutated shell gate in a gzip file. They read it back, check the decoded bytes against
+the intended mutation and test those bytes. The controls require fresh output and deadline
 arguments and cap their fixture tree at 6 MiB. Dispatch-only controls need no parser or producer;
 their default fresh temporary directory is retained and they have a 60-second deadline. The
 cross command refuses before parser/tool/build prerequisites with status 2 and zero build credit.

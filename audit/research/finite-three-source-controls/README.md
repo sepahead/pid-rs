@@ -10,6 +10,14 @@ The three labels are 0, 1 and 2. A **branch** is a subset of the labels. A **fam
 
 Write $A\preceq B$ when every branch in $B$ contains some branch in $A$. The Boolean formula for a family is true if one of its branches has all its labels true. The original implication target compares these formulas on every Boolean pattern, in the direction from $B$ to $A$. The zeta matrix at row $i$, column $j$ records $\mathrm{registry}(j)\preceq\mathrm{registry}(i)$. There are eight masks, eight Boolean patterns and 18 registry entries. The propositions concern finite labels and truth values. They require no probability distribution, observed rows or units of information. [Definitions and complete targets](lean/Contract.lean) · [Original theorem statements](lean/RawTargets.lean)
 
+## How many agreement patterns can remain maximal?
+
+For $r\geq1$ source positions, an agreement pattern is the subset of positions where a row matches the reference. For a node with branch family $\alpha$, a pattern $B$ is covered precisely when some $a\in\alpha$ satisfies $a\subseteq B$. An uncovered pattern is maximal if all its strict supersets are covered. Distinct maximal uncovered patterns are incomparable under inclusion. These definitions concern all combinatorially possible patterns. Their observed probability can be zero.
+
+Their number is at most $\binom{r}{\lfloor r/2\rfloor}$. To see this, order the $r$ positions uniformly at random. The sets formed by taking successively longer prefixes are nested, so at most one maximal uncovered pattern appears. A fixed pattern of size $j$ occurs with probability $j!(r-j)!/r!=1/\binom rj$. The sum of these probabilities is at most one. Each is at least $1/\binom{r}{\lfloor r/2\rfloor}$, giving the bound. It is attained by the valid node whose branches are all subsets of size $\lfloor r/2\rfloor+1$. Its maximal uncovered patterns are exactly the subsets of size $\lfloor r/2\rfloor$. This is the classical permutation proof of Sperner's bound applied to the agreement patterns. [Sperner (1928)](https://doi.org/10.1007/BF01171114) · [Lubell (1966)](https://www.sciencedirect.com/science/article/pii/S0021980066800352)
+
+For the three positions in this registry, there are at most three such patterns. With four positions, the node with all four triples as branches leaves the six pairs maximal. Extending a bound of one pattern per source to four positions would give the wrong answer. The 24 exports in this study refer to the three-position registry. The general bound above follows from the written argument.
+
 ## The twelve comparisons
 
 The original theorem in each row has namespace PidFin3Candidate. The final column gives a witness to the failure of the **whole altered statement**. A changed definition is allowed to compile successfully. The negative result is the checked theorem about that definition. [Original proofs](lean/Candidate.lean) · [Control proofs and their typed examples](lean/SemanticFaults.lean)

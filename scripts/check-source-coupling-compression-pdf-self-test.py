@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import gzip
 import hashlib
 import io
 import json
@@ -200,9 +201,11 @@ def dispatch_controls(c: Controls, gate: str) -> None:
         ("wrong refusal comparison", '"$SOURCE_COUPLING_CROSS_STATUS" -ne 2', '"$SOURCE_COUPLING_CROSS_STATUS" -ne 1', "cross refusal"),
     ):
         require(old in gate, "missing mutation anchor: " + name)
-        changed = gate.replace(old, new, 1)
-        c.file("wiring-" + str(len(c.cases)) + ".sh", changed.encode())
-        c.reject(name, lambda changed=changed: wiring(changed), expected, RuntimeError)
+        changed = gate.replace(old, new, 1).encode()
+        fixture = c.file(f"wiring-{len(c.cases)}.sh.gz", gzip.compress(changed, mtime=0))
+        restored = gzip.decompress(fixture.read_bytes())
+        require(restored == changed, "retained wiring mutation differs: " + name)
+        c.reject(name, lambda restored=restored: wiring(restored.decode()), expected, RuntimeError)
     # Execute changed fragments as well: these controls do not rely only on spelling.
     c.reject("removed dispatch changes actual trace", lambda: c.exact_contract(EXACT.replace(EXACT.splitlines()[4], "  :")),
              "exact dispatch call count", RuntimeError)
