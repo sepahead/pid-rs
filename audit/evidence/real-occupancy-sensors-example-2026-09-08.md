@@ -287,8 +287,11 @@ it did not parse the raw sensors, refit the quantizers, or rerun Rust.
 | Earlier | 0.097773 | 0.089744 | 0.222431 | 0.024603 | 0.022241 | 0.061581 |
 | Later | 0.047443 | 0.050762 | 0.218677 | 0.011556 | 0.011683 | 0.061280 |
 
-Lower values are better. Log loss is in nats per row; binary Brier score is the mean
-squared difference between the predicted occupancy probability and the recorded bit.
+Lower values are better. Log loss is the mean negative natural logarithm of the probability
+assigned to the recorded outcome, in nats per row. Binary Brier score here is the mean squared
+difference between the predicted occupancy probability and the recorded bit. It is one-half of
+Brier's original sum over the two outcome categories. [Good (1952)](https://doi.org/10.1111/j.2517-6161.1952.tb00104.x),
+[Brier (1950)](https://journals.ametsoc.org/view/journals/mwre/78/1/1520-0493_1950_078_0001_vofeit_2_0_co_2.xml).
 OR matching loses to both light alone and joint matching on all three recordings under
 both scores. It beats the CO₂-only and smoothed-constant baselines. Full-precision
 results for all five rules are available as [CSV](real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/FIVE_RULE_RESULTS.csv) and in the [complete calculation record](real-occupancy-sensors-example-2026-09-08/or-event-development-2026-09-23/reference/RESULTS.json), including exact forecast fractions, union witnesses and every specified check.

@@ -103,6 +103,12 @@ $$
 
 The true law is $r$; the forecast is $q$. Require $q_y>0$ for every $y\in S$. Outside $S$, $q_y$ may be zero or positive. Neither full support nor a sampling or independence assumption is required. The [finite log-score formal package](../../formal/lean-finite-logscore/PUBLICATION.md) records the four foundational targets and the separate 13-target conditional continuation, with their individual proof sources and local replay limits. These are classical finite-law statements, not a new PID result.
 
+For a reported distribution $q$, the logarithmic score for the observed outcome $y$ is
+$\ln q_y$ up to a positive scale and an additive constant. This report uses its negative as
+a loss in nats. Good stated the scoring rule, and Gneiting and Raftery give its strict
+propriety under the usual prediction convention. [Good (1952)](https://doi.org/10.1111/j.2517-6161.1952.tb00104.x),
+[Gneiting and Raftery (2007)](https://doi.org/10.1198/016214506000001437).
+
 Define entropy, supported KL divergence and expected log loss by
 
 $$

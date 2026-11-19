@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Cite the defining statistical sources in five studies and state the sampling distribution, the forecast loss, and the role of each reference calculation. Distinguish source probabilities from probabilities conditional on the observed target. [Source-by-source corrections](audit/evidence/statistical-method-primary-sources-2026-11-19.md)
+
 - Publish the checked 22-statement weighted-count theory for three arbitrary source alphabets
   and a finite set of observation indices. Name the proof assumptions, earlier failed attempts
   and the stock kernel's replay scope. [Count definitions and proofs](audit/research/three-source-alphabet-counts/README.md)

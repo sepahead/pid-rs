@@ -23,7 +23,7 @@ import time
 from types import ModuleType
 
 BUILDER = "scripts/build-embodied-sensor-pdfs.py"
-MANIFEST = "audit/formal/latex/embodied-sensor-utility/publication-inputs-v1.json"
+MANIFEST = "audit/formal/latex/embodied-sensor-utility/publication-inputs-v2.json"
 FILTER = "audit/formal/latex/embodied-sensor-utility/layout/publication-filter.lua"
 ROSTER = "audit/formal/latex/embodied-sensor-utility/controls/roster-v1.json"
 

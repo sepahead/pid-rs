@@ -28,6 +28,7 @@ local external_links = {
   ["https://arxiv.org/abs/2311.06373v3"] = true,
   ["https://doi.org/10.1080/01621459.1963.10500830"] = true,
   ["https://doi.org/10.1103/PhysRevE.103.032149"] = true,
+  ["https://doi.org/10.1111/j.2517-6161.1952.tb00104.x"] = true,
   ["https://doi.org/10.1198/016214506000001437"] = true,
   ["https://proceedings.mlr.press/v270/skand25a.html"] = true,
   ["https://proceedings.mlr.press/v305/almuzairee25a.html"] = true,

@@ -468,7 +468,12 @@ Strict stationarity without ergodicity is not sufficient.
 \end{corollary}
 
 \begin{proof}
-Apply the strong law, or the pointwise ergodic theorem~\cite{keanepetersen2006}, to the indicator of each cell.  A finite
+For independent, identically distributed rows, the strong law applies to each bounded cell
+indicator. For strictly stationary rows, the time shift preserves the law. Ergodicity
+makes every shift-invariant event have probability zero or one. The pointwise ergodic
+theorem applied to the cell indicator then gives its one-time probability as the limiting
+frequency. Birkhoff's original formulation concerns invariant-volume dynamics.
+Keane and Petersen give the measure-preserving version used here~\cite{birkhoff1931,keanepetersen2006}. A finite
 intersection gives simultaneous coordinate convergence.  If $P(z)=0$, every time index has zero
 probability of that cell.  A countable union shows that no such cell occurs, almost surely.  Thus,
 the empirical support is always a subset of $S$ on one probability-one event.
@@ -1286,6 +1291,12 @@ method papers separately. The \href{https://github.com/sepahead/pid-rs/blob/main
 \begingroup
 \small
 \begin{thebibliography}{99}
+
+\bibitem{birkhoff1931}
+G. D. Birkhoff.
+\newblock Proof of the ergodic theorem.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 17(12):656--660, 1931.
+\newblock \url{https://doi.org/10.1073/pnas.17.2.656}.
 
 \bibitem{keanepetersen2006}
 M. Keane and K. Petersen.

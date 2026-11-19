@@ -1713,7 +1713,8 @@ duplicated in this prose.
 `check-finite-convergence-document-semantics.py` is a deliberately narrow semantic-drift guard for
 the two finite-convergence papers. It binds the named DC/FA definitions and theorems, the
 common-row-law/independence separation, Janson's exact $T^2=V_n$ provenance, the Weissman subset
-step, Rota's classical Möbius-inversion provenance, the conditional-transform target, retained
+step, Rota's classical Möbius-inversion provenance, the Birkhoff and Keane–Petersen source
+locators for the pointwise ergodic theorem, the conditional-transform target, retained
 counterexamples, and formal-evidence boundaries across Markdown, LaTeX, and the method catalog.
 Its isolated mutation suite runs under normal and optimized Python. The checker is a fail-closed
 change detector; exact phrases and catalog links cannot establish theorem truth, source
@@ -3301,7 +3302,7 @@ with status 2; no Linux reproduction relation is claimed.
 
 The [embodied-sensor report and overview](../audit/research/embodied-sensor-utility/PUBLICATION.md)
 use `build-embodied-sensor-pdfs.py --kind full|overview` and the source profile in
-`audit/formal/latex/embodied-sensor-utility/publication-inputs-v1.json`. Their authored sources
+`audit/formal/latex/embodied-sensor-utility/publication-inputs-v2.json`. The [source revision](../audit/evidence/statistical-method-primary-sources-2026-11-19.md) records the full paper's logarithmic-score citation and the overview replay. The v1 profile retains the preceding source and output identities. Their authored sources
 include citation guidance. The publication disposition records adoption, reproduction and visual
 review separately. These reports give handwritten finite-law application derivations and a proposed
 sensor experiment; PDF checks add no Lean theorem, estimator calibration or consumer qualification.
@@ -3346,7 +3347,7 @@ checks do not replace the external caller's custody or rendered-page review.
 
 The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
-`audit/formal/latex/real-occupancy-sensors/publication-inputs-v7.json`. Profiles v1–v6 remain historical.
+`audit/formal/latex/real-occupancy-sensors/publication-inputs-v8.json`. The v8 profile binds the source and typeset definition of the two forecast scores. Profiles v1–v7 retain the prior bindings.
 The v5 successor added the negative OR-forecast comparison, its portable reproduction
 evidence and the third figure. The v6 successor only pins the regenerated `METHODS.md` after the
 intrinsic-dimension provenance correction. The v7 successor pins the November revision of
@@ -3397,10 +3398,10 @@ bind the citation corrections and Sepehr Mahmoudian author header and byline. Se
 hashes bind each figure PDF. Citation controls retain the author header and change only the label
 or URL; separate Markdown controls reject a missing or changed author and unrelated source changes.
 The current input profile is
-`audit/formal/latex/mgw-fixed-world/publication-inputs-v10.json`. Profiles v1–v9 remain historical.
+`audit/formal/latex/mgw-fixed-world/publication-inputs-v11.json`. The v11 profile binds the cited office report's scoring-rule revision. Profiles v1–v10 retain the earlier source identities.
 The v8 profile was a dependency-only successor of v7. It pinned the revised recorded-office
 Markdown, which this paper's source map binds, and kept the v7 authored-paper references. The v9
-profile pinned the September revision of `METHODS.md`. The v10 profile pins its November revision.
+profile pinned the September revision of `METHODS.md`. The v10 profile pinned its November revision.
 The [November execution record](../audit/evidence/publication-input-profiles-2026-11-19.md)
 records the controls and exact reproduction of the existing paper. The
 [publication entry](../audit/formal/lean-mgw-fixed-world/PUBLICATION.md) separates the

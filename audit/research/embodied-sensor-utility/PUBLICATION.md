@@ -6,7 +6,7 @@ The two reports connect categorical Makkeh–Gutknecht–Wibral shared exclusion
 
 ## Current references and retained prior observation
 
-The current [input profile](../../formal/latex/embodied-sensor-utility/publication-inputs-v1.json) binds the selected PDF, generated TeX, figures and reader observations. Use the [SxPID3-purpose reproduction record](REPRODUCTION_SXPID3_PURPOSE.json) for this revision's source selection, exact-output checks and rendered-page review. The [conditional-Bayes reproduction record](REPRODUCTION_CONDITIONAL_BAYES.json) retains the preceding revision's evidence. Earlier records do not check the changed pages. The dated [initial reproduction record](REPRODUCTION.json) and the table below describe the earlier report revision, before the finite-PMF proof was added. They are historical evidence. The proof package carries its own formal evidence; a PDF build does not establish a theorem.
+The current [v2 input profile](../../formal/latex/embodied-sensor-utility/publication-inputs-v2.json) binds the PDF, generated TeX, figures and reader observations for both reports. The [19 November source and reproduction record](../../evidence/statistical-method-primary-sources-2026-11-19.md) identifies the added logarithmic-score source and the outcomes for the full paper and overview. The [SxPID3-purpose reproduction record](REPRODUCTION_SXPID3_PURPOSE.json) describes the preceding v1 selection and its rendered-page review. The [conditional-Bayes reproduction record](REPRODUCTION_CONDITIONAL_BAYES.json) retains the preceding revision's evidence. Earlier records do not check the changed pages. The dated [initial reproduction record](REPRODUCTION.json) and the table below describe the earlier report revision, before the finite-PMF proof was added. They are historical evidence. The proof package carries its own formal evidence; a PDF build does not establish a theorem.
 
 ### Three-source purpose clarification
 
@@ -41,7 +41,7 @@ The previous 23 September 2026 profile selected a 17-page [full paper](../../../
 | Full generated TeX | 59376 | `6ef7a0bf73022abffd7f0cc98ff5db1279a222a8e37ef2ea6a4b6b284af04cb4` |
 | Overview generated TeX | 10908 | `8b22f54f9b155f90445008d616decf7f5c3cc61b62f57b73411d9d8bd19c2090` |
 
-The [input profile](../../formal/latex/embodied-sensor-utility/publication-inputs-v1.json) records every source pin and the complete output observations. Reference selection is a publication decision, not proof of the scientific claims. Exact replay, repository integration and hosted checks have separate execution records.
+The historical [v1 input profile](../../formal/latex/embodied-sensor-utility/publication-inputs-v1.json) records the source pins and complete output observations for that profile. Reference selection is a publication decision, not proof of the scientific claims. Exact replay, repository integration and hosted checks have separate execution records.
 
 ## Production contract
 

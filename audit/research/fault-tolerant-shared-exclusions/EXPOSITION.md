@@ -20,7 +20,9 @@ The results are of four kinds.
 1. **Formal and exact results.** For an antichain $\alpha$ and a report $r$, the MGW source event
    around $r$ is the set of source states whose disagreement with $r$ is a fault set that
    $\alpha$ tolerates (Theorem 1). For the threshold antichain of all $(m-f)$-subsets of $m$
-   sources, the event is the Hamming ball of radius $f$ (Corollary 1). The forecast
+   sources, the event consists of the states whose values differ from $r$ in at most $f$
+   coordinates (Corollary 1). This is a Hamming ball. The coordinate distance extends the
+   distance Hamming defined for binary words. [Hamming (1950)](https://doi.org/10.1002/j.1538-7305.1950.tb00463.x). The forecast
    $q_\alpha(t\mid r)$, the target law inside that event, gives the true target at least the true
    joint probability whenever the actual faults are tolerated (Theorem 2). Lean 4 checks these
    three results and the counts of the parity example below, using only the standard axioms.
@@ -341,7 +343,11 @@ Faults are injected into the evaluation recordings only, on $k$ sensors of every
 The main conditions give the forecasts the correct budget, $f=k$. Section 7.4 also tests $f\ne k$
 and faults on only a fraction of rows. Random and stuck losses are averaged over 20 injection
 seeds. The score is the mean log loss in nats per row; lower is better. Intervals are 95% percentile
-intervals from a circular moving-block bootstrap over rows with 2,000 resamples. The tables show
+intervals from 2,000 circular moving-block resamples of the rows. Each replicate chooses
+starts uniformly, copies fixed-length blocks with wraparound, and truncates the concatenation to
+the recording length. This is the circular scheme of Politis and Romano. The moving-block
+bootstrap of Künsch uses contiguous blocks for stationary observations.
+[Künsch (1989)](https://doi.org/10.1214/aos/1176347265), [Politis and Romano (1991 technical report, published 1992)](https://purl.stanford.edu/xh812zd4638). The tables show
 blocks of 720 rows (about 12 hours); blocks of 60 and 360 rows are in the results file. The rows
 form a time series with daily cycles, and the earlier recording spans less than two days, so even
 long blocks describe only variation within these recordings. They are not population confidence

@@ -29,8 +29,8 @@
   },
   "files": {
     "EXPOSITION.md": {
-      "bytes": 47463,
-      "sha256": "5e036c26a0f4e1ceea83211a9129373b5eb3abe8726b10044a0c2aa8feadc670"
+      "bytes": 48114,
+      "sha256": "0d5b48a0dd4aa97b5535e80b6bc620f8b1fd952e366f695d20360fc2cc44db50"
     },
     "REVIEW.md": {
       "bytes": 7921,
@@ -121,6 +121,15 @@
     "unchanged_results_sha256": "0acf7a5714ca528cad28b239954f0abeb979ef1459644e083ee4164a23f7386d"
   },
   "note": "audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md",
+  "publication_citation_revision": {
+    "date": "2026-11-19",
+    "previous_commit": "c10708015a0205f2719f90885a06ebe71988e7d0",
+    "previous_exposition": {
+      "bytes": 47463,
+      "sha256": "5e036c26a0f4e1ceea83211a9129373b5eb3abe8726b10044a0c2aa8feadc670"
+    },
+    "scope": "Primary sources for Hamming coordinate distance and circular block resampling. The original study programs, recorded outputs and formal declarations retain their recorded identities."
+  },
   "schema": "pid-rs.fault-tolerant-shared-exclusions-manifest.v1",
   "status": "development evidence on previously examined recordings; no confirmation, deployment or novelty claim"
 }

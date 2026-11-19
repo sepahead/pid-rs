@@ -9,7 +9,7 @@ HEADER="$ROOT/audit/formal/latex/fault-tolerant-shared-exclusions/publication.te
 FILTER="$ROOT/audit/formal/latex/fault-tolerant-shared-exclusions/filter.lua"
 TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
 CHECK_NAME="Fault-tolerance research note PDF check"
-EXPECTED_PAGES="14"
+EXPECTED_PAGES="15"
 MODE="${1:---exact}"
 
 if [[ $# -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then
@@ -224,6 +224,12 @@ expected_repository_uris = {
     'https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/python/check_threshold_down_sets_self_test.py',
 }
 observed_repository_uris = set()
+expected_method_uris = {
+    "https://doi.org/10.1002/j.1538-7305.1950.tb00463.x",
+    "https://doi.org/10.1214/aos/1176347265",
+    "https://purl.stanford.edu/xh812zd4638",
+}
+observed_method_uris = set()
 form_xobjects = set()
 for page_index, page in enumerate(reader.pages):
     resources = dereference(page.get("/Resources"))
@@ -261,13 +267,17 @@ for page_index, page in enumerate(reader.pages):
             if parsed.scheme == "https" and parsed.netloc:
                 if uri.startswith("https://github.com/sepahead/pid-rs/blob/main/"):
                     observed_repository_uris.add(uri)
+                if uri in expected_method_uris:
+                    observed_method_uris.add(uri)
                 continue
             fail(f"page {page_index + 1} contains a non-HTTPS URI")
 if len(form_xobjects) != 1:
     fail(f"form XObject inventory changed: {len(form_xobjects)}")
 if observed_repository_uris != expected_repository_uris:
     fail(f"repository-navigation URI inventory changed: {sorted(observed_repository_uris)}")
-expected_action_counts = {"/GoTo": 0, "/GoToR": 0, "/URI": 32}
+if observed_method_uris != expected_method_uris:
+    fail("Hamming, moving-block, or circular-block source link missing")
+expected_action_counts = {"/GoTo": 0, "/GoToR": 0, "/URI": 36}
 if action_counts != expected_action_counts:
     fail(f"navigation inventory changed: {action_counts}")
 print(

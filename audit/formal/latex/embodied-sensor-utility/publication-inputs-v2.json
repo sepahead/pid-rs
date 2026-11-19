@@ -1,0 +1,949 @@
+{
+  "files": {
+    "audit/formal/latex/embodied-sensor-utility/layout/full.tex": {
+      "bytes": 2267,
+      "sha256": "40536bc4c350c274defbc952b8abfef98b4474d2f69c10b90916b68935213aa0"
+    },
+    "audit/formal/latex/embodied-sensor-utility/layout/overview.tex": {
+      "bytes": 2233,
+      "sha256": "254f3fda145c9bea0269013ab61703c83b4370d65dbec9d49c4b556b9bf42609"
+    },
+    "audit/formal/latex/embodied-sensor-utility/layout/publication-filter.lua": {
+      "bytes": 6944,
+      "sha256": "809c30104a1e506763fca5fa34ae97bc69f80a2fc04fb8717a702e263547769e"
+    },
+    "audit/formal/latex/embodied-sensor-utility/native-tools-v1.json": {
+      "bytes": 6362,
+      "sha256": "7e949fd664984b5eea355c63f6f3510b26c2d7e321234947ba295cb8f702bdd7"
+    },
+    "audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt": {
+      "bytes": 1377,
+      "sha256": "49ea6cb9257bbee0a3979c48a774cd221550ac1c20c95549efe45fc99cc18050"
+    },
+    "audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt": {
+      "bytes": 52635,
+      "sha256": "402c79f4ede8548a6fe6f82f42f0288cb0243ba2403dfdeeaadf55d189a46fae"
+    },
+    "audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt": {
+      "bytes": 4529,
+      "sha256": "4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9"
+    },
+    "audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/GUST-FONT-LICENSE.txt": {
+      "bytes": 1456,
+      "sha256": "2bd69affc3da00715116f713f57eab9707e96daf3562ad0215987b15b9c16f73"
+    },
+    "audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/MANIFEST-Latin-Modern-Math.txt": {
+      "bytes": 2186,
+      "sha256": "1daa729f7922c42ba5ce8da7dfe4ecdc9e5c878ad86217fd6f32c4671505b007"
+    },
+    "audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/README-Latin-Modern-Math.txt": {
+      "bytes": 4588,
+      "sha256": "e6fdd5fb44b656146fa988d191f58901c09a347d3f4fbaa3b45b24a6ad7ec30b"
+    },
+    "audit/formal/latex/pid-rs-report-tables.sty": {
+      "bytes": 4051,
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    "audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "bytes": 8607,
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    "audit/formal/latex/prefix-mgw-bias/reader-source-v2.json": {
+      "bytes": 8668,
+      "sha256": "5a0474ea26892b04b6ff1c931096ee115bdfdf68adc5945644a849bea064a378"
+    },
+    "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py": {
+      "bytes": 27277,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "audit/research/embodied-sensor-utility/EXPOSITION.md": {
+      "bytes": 89538,
+      "sha256": "4ac6b58f4a1a0f4a010f6b5fc8c1bc1610374b425ab68d106900adc8bdb7b96f"
+    },
+    "audit/research/embodied-sensor-utility/OVERVIEW.md": {
+      "bytes": 10989,
+      "sha256": "661b89a530e1bcc699fd6ba66c2290ac7a1ac90309556fb2a42e36da3d09299a"
+    },
+    "audit/research/embodied-sensor-utility/PUBLICATION.md": {
+      "bytes": 13617,
+      "sha256": "3fec662141fb6f4356d9c68a5d10fc675f22b08eec43e0c2ca5d9e9c1a3f50f1"
+    },
+    "audit/research/embodied-sensor-utility/SOURCE_OBSERVATIONS.json": {
+      "bytes": 28161,
+      "sha256": "2984c4549b03bf51cfb38eb005a9b4834ddb3d91b30eeeacfc69abc3fd058c88"
+    },
+    "audit/research/embodied-sensor-utility/figures/availability-weighted-gain.svg": {
+      "bytes": 5921,
+      "sha256": "e6f3e40d6eeb53c96f3deb501cf20914a925d16d05295679e363aa31cfdbc133"
+    },
+    "audit/research/embodied-sensor-utility/figures/loss-gap.svg": {
+      "bytes": 5741,
+      "sha256": "fef664de6f52f1f028605f4657af9e733a0cdfbbefde12cd15a4f8efa240c697"
+    },
+    "audit/research/embodied-sensor-utility/figures/sensor-data-to-evidence.svg": {
+      "bytes": 8790,
+      "sha256": "4141779858abf0cad6632d79bb5ec9de16f78f34a5b49fb371b6907e964b2815"
+    },
+    "audit/research/embodied-sensor-utility/figures/signed-atoms-and-sensor-value.svg": {
+      "bytes": 8259,
+      "sha256": "e74f2f0a29660d8388c68ee6ef2bd13171906993b5963fc6dbc8f652306120e4"
+    },
+    "scripts/check-formal-pdf-log.sh": {
+      "bytes": 2417,
+      "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da"
+    }
+  },
+  "outputs": {
+    "full": {
+      "figure_pdfs": {
+        "figures/availability-weighted-gain.pdf": {
+          "bytes": 47272,
+          "sha256": "5d6f39ed6e691240d8c4b4b3445da6a79ba7d7b6b332e52bfad42878276127cd"
+        },
+        "figures/loss-gap.pdf": {
+          "bytes": 42967,
+          "sha256": "ddafaaddcb542b5b1cef75c53e1aa5b9b9ba0da5083f647d50495fdfc1f65036"
+        },
+        "figures/sensor-data-to-evidence.pdf": {
+          "bytes": 48726,
+          "sha256": "5ceffd86575d9da2e852410899b6132e96ad3000777e6fe0908f8fa3424d9557"
+        },
+        "figures/signed-atoms-and-sensor-value.pdf": {
+          "bytes": 44338,
+          "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+        }
+      },
+      "observation": {
+        "first_page_fit": true,
+        "font_rows": [
+          "NEERHR+SourceSansPro-Semibold        CID Type 0C       Identity-H       yes yes yes     18  0",
+          "LHINJS+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     19  0",
+          "UFOQVA+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     20  0",
+          "KATMDG+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     21  0",
+          "VYBYQL+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes     26  0",
+          "PAMASM+LMMono10-Regular              CID Type 0C       Identity-H       yes yes yes     29  0",
+          "GXXUZH+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     37  0",
+          "BZPFCH+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     38  0",
+          "RKSFIJ+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     40  0",
+          "VPMJCR+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     64  0",
+          "KDNMOI+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     77  0",
+          "MXTYOV+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes     87  0",
+          "NUAKXB+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes     88  0",
+          "HZOILC+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     89  0",
+          "KXXNTT+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes     90  0",
+          "IVSZPL+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes    126  0",
+          "STVLCY+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes    127  0",
+          "GIOCCD+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes    128  0",
+          "MOAWQH+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes    129  0",
+          "NHJZOU+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes    130  0",
+          "VQHAYL+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes    170  0",
+          "RKKAEK+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes    171  0",
+          "BMZABT+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes    172  0",
+          "WFGEGQ+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes    173  0",
+          "UOTARH+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes    224  0",
+          "NEJSRB+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes    225  0",
+          "MPMCTI+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes    226  0",
+          "LMFKZZ+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes    227  0"
+        ],
+        "geometry": [
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ]
+        ],
+        "gotos": [
+          "section*.1",
+          "section*.10",
+          "section*.12",
+          "section*.14",
+          "section*.16",
+          "section*.18",
+          "section*.29",
+          "section*.3",
+          "section*.31",
+          "section*.33",
+          "section*.34",
+          "section*.35",
+          "section*.38",
+          "section*.6",
+          "subsection*.15",
+          "subsection*.17",
+          "subsection*.2",
+          "subsection*.20",
+          "subsection*.21",
+          "subsection*.22",
+          "subsection*.23",
+          "subsection*.24",
+          "subsection*.25",
+          "subsection*.26",
+          "subsection*.27",
+          "subsection*.28",
+          "subsection*.30",
+          "subsection*.32",
+          "subsection*.36",
+          "subsection*.37",
+          "subsection*.4",
+          "subsection*.5",
+          "subsection*.7",
+          "subsection*.8"
+        ],
+        "headings": [
+          {
+            "level": 0,
+            "name": "section*.1",
+            "page": 1,
+            "title": "1. The question and the named PID",
+            "x": 62.362,
+            "y": 335.329
+          },
+          {
+            "level": 1,
+            "name": "subsection*.2",
+            "page": 2,
+            "title": "Complete-data law and row meaning",
+            "x": 62.362,
+            "y": 739.136
+          },
+          {
+            "level": 0,
+            "name": "section*.3",
+            "page": 2,
+            "title": "2. Shared exclusions and signed atoms, from definitions",
+            "x": 62.362,
+            "y": 520.593
+          },
+          {
+            "level": 1,
+            "name": "subsection*.4",
+            "page": 3,
+            "title": "Entropy and the reconstruction link",
+            "x": 62.362,
+            "y": 739.267
+          },
+          {
+            "level": 1,
+            "name": "subsection*.5",
+            "page": 3,
+            "title": "Two sources",
+            "x": 62.362,
+            "y": 510.249
+          },
+          {
+            "level": 0,
+            "name": "section*.6",
+            "page": 3,
+            "title": "3. Why predictive log loss gives an information objective",
+            "x": 62.362,
+            "y": 267.661
+          },
+          {
+            "level": 1,
+            "name": "subsection*.7",
+            "page": 3,
+            "title": "The locally checked finite-law foundation",
+            "x": 62.362,
+            "y": 208.115
+          },
+          {
+            "level": 1,
+            "name": "subsection*.8",
+            "page": 5,
+            "title": "Conditional prediction and sensor information",
+            "x": 62.362,
+            "y": 231.658
+          },
+          {
+            "level": 0,
+            "name": "section*.10",
+            "page": 8,
+            "title": "4. Exactly which atoms matter when sensors are unavailable?",
+            "x": 62.362,
+            "y": 662.892
+          },
+          {
+            "level": 0,
+            "name": "section*.12",
+            "page": 9,
+            "title": "5. Same synergy, different value: a complete calculation",
+            "x": 62.362,
+            "y": 320.405
+          },
+          {
+            "level": 0,
+            "name": "section*.14",
+            "page": 11,
+            "title": "6. Natural occlusion changes the assumptions",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 1,
+            "name": "subsection*.15",
+            "page": 11,
+            "title": "Why separate independence checks are insufficient",
+            "x": 62.362,
+            "y": 417.818
+          },
+          {
+            "level": 0,
+            "name": "section*.16",
+            "page": 12,
+            "title": "7. Two to four sources: a useful limit of the objective",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 1,
+            "name": "subsection*.17",
+            "page": 12,
+            "title": "Why pursue a three-source MGW decomposition?",
+            "x": 62.362,
+            "y": 216.538
+          },
+          {
+            "level": 0,
+            "name": "section*.18",
+            "page": 13,
+            "title": "8. From recorded measurements to a valid row",
+            "x": 62.362,
+            "y": 344.462
+          },
+          {
+            "level": 1,
+            "name": "subsection*.20",
+            "page": 15,
+            "title": "Concrete source representation",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 1,
+            "name": "subsection*.21",
+            "page": 15,
+            "title": "Fit, evaluate and preserve the estimand",
+            "x": 62.362,
+            "y": 210.578
+          },
+          {
+            "level": 1,
+            "name": "subsection*.22",
+            "page": 16,
+            "title": "Exactly what enters PID for cameras and audio",
+            "x": 62.362,
+            "y": 679.714
+          },
+          {
+            "level": 1,
+            "name": "subsection*.23",
+            "page": 17,
+            "title": "An explicit illustrative row and fusion experiment",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 1,
+            "name": "subsection*.24",
+            "page": 18,
+            "title": "Where the offline analysis changes a decision",
+            "x": 62.362,
+            "y": 648.47
+          },
+          {
+            "level": 1,
+            "name": "subsection*.25",
+            "page": 19,
+            "title": "Label provenance is not statistical independence",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 1,
+            "name": "subsection*.26",
+            "page": 19,
+            "title": "Partial visibility and distorted observations",
+            "x": 62.362,
+            "y": 574.386
+          },
+          {
+            "level": 1,
+            "name": "subsection*.27",
+            "page": 20,
+            "title": "A complete preparation-to-decision sequence",
+            "x": 62.362,
+            "y": 498.458
+          },
+          {
+            "level": 1,
+            "name": "subsection*.28",
+            "page": 21,
+            "title": "Recorded measurements: information can increase while prediction gets worse",
+            "x": 62.362,
+            "y": 673.452
+          },
+          {
+            "level": 0,
+            "name": "section*.29",
+            "page": 22,
+            "title": "9. A falsifiable first study and its statistics",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 1,
+            "name": "subsection*.30",
+            "page": 22,
+            "title": "One conservative finite-sample rule",
+            "x": 62.362,
+            "y": 497.187
+          },
+          {
+            "level": 0,
+            "name": "section*.31",
+            "page": 23,
+            "title": "10. Learning, planning and physical intelligence",
+            "x": 62.362,
+            "y": 651.459
+          },
+          {
+            "level": 1,
+            "name": "subsection*.32",
+            "page": 24,
+            "title": "Training, placement and tuning: concrete follow-up studies",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 0,
+            "name": "section*.33",
+            "page": 25,
+            "title": "11. Comparison with established methods",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 0,
+            "name": "section*.34",
+            "page": 25,
+            "title": "12. Current project functions and the missing connections",
+            "x": 62.362,
+            "y": 344.461
+          },
+          {
+            "level": 0,
+            "name": "section*.35",
+            "page": 26,
+            "title": "13. Rust implementation and computational cost",
+            "x": 62.362,
+            "y": 459.61
+          },
+          {
+            "level": 1,
+            "name": "subsection*.36",
+            "page": 28,
+            "title": "Approximation and formal evidence",
+            "x": 62.362,
+            "y": 612.088
+          },
+          {
+            "level": 1,
+            "name": "subsection*.37",
+            "page": 28,
+            "title": "How verification supports the study",
+            "x": 62.362,
+            "y": 204.518
+          },
+          {
+            "level": 0,
+            "name": "section*.38",
+            "page": 29,
+            "title": "14. Findings and next acceptance criteria",
+            "x": 62.362,
+            "y": 433.741
+          }
+        ],
+        "https_uris": [
+          "https://arxiv.org/abs/1510.00831v1",
+          "https://arxiv.org/abs/1510.00831v1",
+          "https://arxiv.org/abs/1510.00831v1",
+          "https://arxiv.org/abs/2002.03356v5",
+          "https://arxiv.org/abs/2002.03356v5",
+          "https://arxiv.org/abs/2302.11813",
+          "https://arxiv.org/abs/2311.06373v3",
+          "https://doi.org/10.1080/01621459.1963.10500830",
+          "https://doi.org/10.1080/01621459.1963.10500830",
+          "https://doi.org/10.1103/PhysRevE.103.032149",
+          "https://doi.org/10.1103/PhysRevE.103.032149",
+          "https://doi.org/10.1111/j.2517-6161.1952.tb00104.x",
+          "https://doi.org/10.1198/016214506000001437",
+          "https://doi.org/10.1198/016214506000001437",
+          "https://doi.org/10.1198/016214506000001437",
+          "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
+          "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
+          "https://github.com/sepahead/pid-rs/blob/main/ECOSYSTEM_CAPABILITIES.md",
+          "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md",
+          "https://github.com/sepahead/pid-rs/blob/main/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/real-occupancy-sensors-example-2026-09-08.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/benches/estimators.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/lib.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/sxpid.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/sxpid.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/scripts/check-primegaps-to-pid-transfer-ledger.py",
+          "https://proceedings.mlr.press/v270/skand25a.html",
+          "https://proceedings.mlr.press/v270/skand25a.html",
+          "https://proceedings.mlr.press/v305/almuzairee25a.html",
+          "https://proceedings.mlr.press/v305/almuzairee25a.html"
+        ],
+        "named_destinations": [
+          "Doc-Start",
+          "Item.1",
+          "Item.10",
+          "Item.11",
+          "Item.12",
+          "Item.13",
+          "Item.2",
+          "Item.3",
+          "Item.4",
+          "Item.5",
+          "Item.6",
+          "Item.7",
+          "Item.8",
+          "Item.9",
+          "figure.caption.11",
+          "figure.caption.13",
+          "figure.caption.19",
+          "figure.caption.9",
+          "none.1",
+          "none.2",
+          "none.3",
+          "none.4",
+          "none.5",
+          "none.6",
+          "none.7",
+          "none.8",
+          "none.9",
+          "page.1",
+          "page.10",
+          "page.11",
+          "page.12",
+          "page.13",
+          "page.14",
+          "page.15",
+          "page.16",
+          "page.17",
+          "page.18",
+          "page.19",
+          "page.2",
+          "page.20",
+          "page.21",
+          "page.22",
+          "page.23",
+          "page.24",
+          "page.25",
+          "page.26",
+          "page.27",
+          "page.28",
+          "page.29",
+          "page.3",
+          "page.4",
+          "page.5",
+          "page.6",
+          "page.7",
+          "page.8",
+          "page.9",
+          "section*.1",
+          "section*.10",
+          "section*.12",
+          "section*.14",
+          "section*.16",
+          "section*.18",
+          "section*.29",
+          "section*.3",
+          "section*.31",
+          "section*.33",
+          "section*.34",
+          "section*.35",
+          "section*.38",
+          "section*.6",
+          "subsection*.15",
+          "subsection*.17",
+          "subsection*.2",
+          "subsection*.20",
+          "subsection*.21",
+          "subsection*.22",
+          "subsection*.23",
+          "subsection*.24",
+          "subsection*.25",
+          "subsection*.26",
+          "subsection*.27",
+          "subsection*.28",
+          "subsection*.30",
+          "subsection*.32",
+          "subsection*.36",
+          "subsection*.37",
+          "subsection*.4",
+          "subsection*.5",
+          "subsection*.7",
+          "subsection*.8"
+        ],
+        "pages": 29,
+        "poppler_bbox_sha256": "6da1c4dc66795c1bfc15bb296bdf6a8a3b7e86546b3458ec571023ded8e6419d",
+        "poppler_layout_sha256": "2be86211b2fa76b1e883f2b748a01588e251fd997d067451ff9e101a6edc348a",
+        "pypdf_text_sha256": [
+          "a7cedae5a2084ee9656142a6e26ad4922bed101d8e997a7375d12751deb8d343",
+          "1f0ae220ad292e4c81ba40edc9e258c5295bd81efcc731077762d77140e4d46e",
+          "2a6195a3d3afea97260bd7eedb9042f95579a41f076abf0459676780047349a9",
+          "257f83eb9a13bb0fdbe89784e68ced15ef2922cadbcac9b92be86090d6f14cbf",
+          "2111b14b28a831db0767ec029eb8ea6b9921a150bd6413defcbf6f88d48622a4",
+          "0a90418354d3b4ac471596df425b1d08524d88fd0dddc03245b6a8f0874c1c31",
+          "63c4e360cd2ba3ec8a04c0d5f9c9972537b0acc0b080b0db65ba56f3c74fb6e7",
+          "ff3f324ad157af1d9dd7af20afe17e7ca00db46c81be0914f0c8b892f29f9285",
+          "114bb48398b3740deb304fbb093dc575d34cd85396b47c219dcc0e9cfe8d876c",
+          "3886246ca6aa2367a3c069dcf176719cd479ec5b0992643c3d1eaa2525d61a4c",
+          "654b8eca494ab43282752da02272d3c1f9805653d85d26f18e4952205687bdc1",
+          "c13a2b59e022dc77ba2138a6b4e3c756aa7f2487fbc87617c36a15c473c499d6",
+          "b8aaab69f8003198475de8aa5fe75c4b132f0d08a221804a56edaacff848587c",
+          "21ca50bc2dee744aa0f3ad1e983d1b841fab52b78647bb54f189b3b41489ef8d",
+          "9df3ac3ce6ae281f1ec96dd541d9a08c247044373518aa1ffd2818a0de42f050",
+          "1a4762bb5c7dc85267446eab73a8f92867db79da6441a89acf74ed512142f825",
+          "1a314ef90a849fbd559d504d68e92c00f740357aa775d51fe39104e3fd9beca5",
+          "e090aa4953d646c3e8b4561b9dc866e2850575c1c9af3996edba62ce579f9580",
+          "c706730cf491587c6c52a7bc880f97dd81103db9fecf3830258aa7ff6711d4cc",
+          "f8ab7a77218fa8ce6710034ea582883af5540e4f60a8580703f07d1ed5e15117",
+          "6b4627466e67b611904ff36ad13f1fd2bc7ec44bff0b6d448ba71e7366c6f97f",
+          "89cba93aad7ae904b94dc7bb5a898d60bde2a47139a2c1cec303b161fb188c8b",
+          "a9e428469e1a8bdf9e550871777c29f8ba96ecc48a6d19aca0c3c81b7eb8a401",
+          "d3714774da1ab9a091b20a6632fd62d746858e4506259566209a364ca2fb5f9b",
+          "23560687830792d58e8f5bab171649ba696807e09b2dbe5571d6606b8f278c06",
+          "62f254dffa527d21c5d6058e0bc033810a041f98c841c8983dfe53c795500b8a",
+          "98d5dbb1e90f535a8f65653bad08aad23ac42bc585fdeebba4b4591fd7127290",
+          "edfce3d28a0d8ad6c434240aeb5e47222ff74e6a54a6d550088958bbb0cfcd4b",
+          "0ccdea0e9ba82063a7840b4da779ea7c7c0985343308b9fab215899629e2bff9"
+        ],
+        "root_keys": [
+          "/Lang",
+          "/Names",
+          "/OpenAction",
+          "/Outlines",
+          "/PageMode",
+          "/Pages",
+          "/Type",
+          "/ViewerPreferences"
+        ]
+      },
+      "pdf": {
+        "bytes": 397477,
+        "sha256": "2e4927b11acbf92dd1e8e8194075efa2c1249428987f1e883048496f568a6ed1"
+      },
+      "status": "reviewed-reference",
+      "tex": {
+        "bytes": 105019,
+        "sha256": "37ff9003f35b8fb2c9aafca191d62197615c19c822c08ca0f127523f7aea8fc4"
+      }
+    },
+    "overview": {
+      "figure_pdfs": {
+        "figures/signed-atoms-and-sensor-value.pdf": {
+          "bytes": 44338,
+          "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+        }
+      },
+      "observation": {
+        "first_page_fit": true,
+        "font_rows": [
+          "LEARLL+SourceSansPro-Semibold        CID Type 0C       Identity-H       yes yes yes     18  0",
+          "TBMNKA+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     19  0",
+          "EYODLN+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     20  0",
+          "GFGMOK+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     21  0",
+          "UMEWHN+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     23  0",
+          "EJTVBC+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     24  0",
+          "MSBLHP+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     25  0",
+          "VQHAYL+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes     34  0",
+          "RKKAEK+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes     35  0",
+          "BMZABT+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     36  0",
+          "WFGEGQ+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes     37  0",
+          "OPYHFL+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes     88  0"
+        ],
+        "geometry": [
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ]
+        ],
+        "gotos": [
+          "section*.1",
+          "section*.4",
+          "section*.5",
+          "section*.6",
+          "section*.7",
+          "section*.8",
+          "subsection*.3"
+        ],
+        "headings": [
+          {
+            "level": 0,
+            "name": "section*.1",
+            "page": 1,
+            "title": "The practical finding",
+            "x": 62.362,
+            "y": 489.607
+          },
+          {
+            "level": 1,
+            "name": "subsection*.3",
+            "page": 2,
+            "title": "Why three-source MGW still matters",
+            "x": 62.362,
+            "y": 342.463
+          },
+          {
+            "level": 0,
+            "name": "section*.4",
+            "page": 3,
+            "title": "What exists and what it supports",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 0,
+            "name": "section*.5",
+            "page": 3,
+            "title": "Rust implementation and computational cost",
+            "x": 62.362,
+            "y": 480.198
+          },
+          {
+            "level": 0,
+            "name": "section*.6",
+            "page": 3,
+            "title": "The ecosystem connection",
+            "x": 62.362,
+            "y": 287.998
+          },
+          {
+            "level": 0,
+            "name": "section*.7",
+            "page": 4,
+            "title": "Where the offline report is useful",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 0,
+            "name": "section*.8",
+            "page": 5,
+            "title": "How practical value will be tested",
+            "x": 62.362,
+            "y": 779.528
+          }
+        ],
+        "https_uris": [
+          "https://arxiv.org/abs/2002.03356v5",
+          "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
+          "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/embodied-sensor-utility/EXPOSITION.md#13-rust-implementation-and-computational-cost",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/lib.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/output/pdf/embodied-sensor-utility.pdf",
+          "https://proceedings.mlr.press/v270/skand25a.html",
+          "https://proceedings.mlr.press/v305/almuzairee25a.html",
+          "https://proceedings.mlr.press/v305/almuzairee25a.html"
+        ],
+        "named_destinations": [
+          "Doc-Start",
+          "figure.caption.2",
+          "none.1",
+          "none.2",
+          "page.1",
+          "page.2",
+          "page.3",
+          "page.4",
+          "page.5",
+          "section*.1",
+          "section*.4",
+          "section*.5",
+          "section*.6",
+          "section*.7",
+          "section*.8",
+          "subsection*.3"
+        ],
+        "pages": 5,
+        "poppler_bbox_sha256": "950a3d706b3f02226d2759a03b6a2ec5d398254e2e597c065a623b4ead0e664f",
+        "poppler_layout_sha256": "81bd0c916dcddd7d7213e0f6d18b935b998caa9d4d0193411dce7fb9b2b4eaee",
+        "pypdf_text_sha256": [
+          "8fed687ce75f09fe3cc4a9120459b9b0cc7d4642f90efd947347577072175f92",
+          "61f690b3fa775a65ae42cb087b4111fef40286d71c4359be6113c33e49a2015b",
+          "35dbf98fe6a62145901390e3a43235ff47a1f9548b5214a69c040bf65a5c8643",
+          "bd34774fcc1b9174ce2c70832495763197368d6472004c8bc4e94866a98ff192",
+          "e44c88a0e84bb3cc60bb3677ff0dff4164d7faf0bf78f3cc1f253e039f14759c"
+        ],
+        "root_keys": [
+          "/Lang",
+          "/Names",
+          "/OpenAction",
+          "/Outlines",
+          "/PageMode",
+          "/Pages",
+          "/Type",
+          "/ViewerPreferences"
+        ]
+      },
+      "pdf": {
+        "bytes": 99030,
+        "sha256": "e073a9f0b7e9ec6738c7caf9779e7f444caee55047f70121e9a49a307fcba4c5"
+      },
+      "status": "reviewed-reference",
+      "tex": {
+        "bytes": 15512,
+        "sha256": "a39bd959ddc85abf5463194bde05c697abb7654089746694fb92f8c65372c159"
+      }
+    }
+  },
+  "schema": "pid-rs/embodied-sensor-publication-inputs-v1"
+}

@@ -160,8 +160,13 @@ Strict stationarity without ergodicity is not sufficient.
 
 ### Proof
 
-For each fixed cell $z$, apply the strong law to the indicator $\mathbf 1\{Z_j=z\}$ in the i.i.d.
-case. Apply the pointwise ergodic theorem to the same indicator in the stationary ergodic case (Keane and Petersen, 2006). The
+For independent, identically distributed rows, the strong law applies to the bounded indicator
+of each cell $z$. For a strictly stationary row sequence, a time shift preserves every finite joint
+law. Ergodicity makes every shift-invariant event have probability zero or one. The pointwise
+ergodic theorem applied to the cell indicator then identifies its limiting frequency with $P(z)$.
+Birkhoff's original formulation treats invariant-volume dynamics. Keane and Petersen prove the
+measure-preserving form used here. [Birkhoff (1931)](https://doi.org/10.1073/pnas.17.2.656),
+[Keane and Petersen (2006)](https://arxiv.org/abs/math/0608251v1). The
 alphabet is finite. Therefore, one probability-one event gives simultaneous coordinate convergence
 for all cells.
 

@@ -177,6 +177,30 @@ def main() -> int:
             "the two policies must give different conditional categorical laws.",
         ),
         (
+            "finite-ergodic-premise",
+            Path("FINITE_ALPHABET_PLUGIN_CONVERGENCE.md"),
+            "Ergodicity makes every shift-invariant event have probability zero or one.",
+            "Stationarity makes every shift-invariant event have probability zero or one.",
+        ),
+        (
+            "finite-ergodic-source",
+            Path("FINITE_ALPHABET_PLUGIN_CONVERGENCE.md"),
+            "https://doi.org/10.1073/pnas.17.2.656",
+            "https://doi.org/10.1073/pnas.17.2.655",
+        ),
+        (
+            "finite-tex-ergodic-transfer",
+            Path("audit/formal/latex/finite-alphabet-plugin-convergence.tex"),
+            r"measure-preserving version used here~\cite{birkhoff1931,keanepetersen2006}",
+            r"measure-preserving version used here~\cite{birkhoff1931}",
+        ),
+        (
+            "finite-tex-ergodic-source",
+            Path("audit/formal/latex/finite-alphabet-plugin-convergence.tex"),
+            "https://arxiv.org/abs/math/0608251v1",
+            "https://arxiv.org/abs/math/0608250v1",
+        ),
+        (
             "finite-tex-wrapper-design",
             Path("audit/formal/latex/finite-alphabet-plugin-convergence.tex"),
             "The stable fitted-wrapper design requires independent training and held-out evaluation.",

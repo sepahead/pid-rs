@@ -1,5 +1,9 @@
 # Session handoff — updated 19 November 2026
 
+## Statistical assumptions and defining sources
+
+Five studies now identify their uses of the ergodic theorem, resampling methods, logarithmic and quadratic scores, and the assumptions behind the reported quantities. In categorical shared exclusions, the same source-agreement event has an unconditional probability for the informative part and a target-conditional probability for the misinformative part. [Five-study correction record](audit/evidence/statistical-method-primary-sources-2026-11-19.md) · [Terminology](TERMINOLOGY.md)
+
 ## Maximal uncovered agreement patterns
 
 The three-source bound is three. At four sources the exact maximum is six. The permutation

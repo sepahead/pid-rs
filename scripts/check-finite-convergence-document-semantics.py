@@ -61,6 +61,10 @@ REQUIRED_TEXT: dict[Path, tuple[str, ...]] = {
         ),
         "### Theorem FA-1 — Deterministic plug-in implication",
         "### Corollary FA-2 — i.i.d. or stationary ergodic sampling",
+        "Ergodicity makes every shift-invariant event have probability zero or one.",
+        "Birkhoff's original formulation treats invariant-volume dynamics.",
+        "[Birkhoff (1931)](https://doi.org/10.1073/pnas.17.2.656)",
+        "[Keane and Petersen (2006)](https://arxiv.org/abs/math/0608251v1)",
         "### Theorem FA-3 — time-uniform i.i.d. cumulative-prefix envelope",
         (
             "The labeled composition is project documentation; no mathematical priority "
@@ -104,6 +108,11 @@ REQUIRED_TEXT: dict[Path, tuple[str, ...]] = {
         ),
         r"\begin{theorem}[FA-1: Deterministic plug-in implication]",
         r"\begin{corollary}[FA-2: i.i.d.\ or stationary ergodic sampling]",
+        "makes every shift-invariant event have probability zero or one.",
+        "Birkhoff's original formulation concerns invariant-volume dynamics.",
+        r"measure-preserving version used here~\cite{birkhoff1931,keanepetersen2006}",
+        r"\url{https://doi.org/10.1073/pnas.17.2.656}",
+        r"\url{https://arxiv.org/abs/math/0608251v1}",
         r"\begin{theorem}[FA-3: time-uniform i.i.d.\ cumulative-prefix envelope]",
         (
             "The\nlabeled composition is project documentation; no mathematical priority "
