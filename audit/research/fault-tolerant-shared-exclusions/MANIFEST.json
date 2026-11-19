@@ -45,8 +45,12 @@
       "sha256": "ade4c1a8d4f87ec5320db1749dbb5faf2baca7847c8f921d6948d00c72338a25"
     },
     "python/check_lean.py": {
-      "bytes": 3263,
-      "sha256": "0eec7f33b6bba984a0a832bc667e508cde7ac1cac930a55826b944aeb8ffe092"
+      "bytes": 4253,
+      "sha256": "e6d1723b2ea6f8a47edf121b6b8a628da9367b836bc5533471c27be6aea3765a"
+    },
+    "python/check_lean_receipt_self_test.py": {
+      "bytes": 2607,
+      "sha256": "0ac1b5da0328698f18f667c7b4031aba35b7b0f988b18f11248dbff6c2af0fbd"
     },
     "python/check_threshold_down_sets.py": {
       "bytes": 6393,
@@ -108,6 +112,13 @@
       "bytes": 3143,
       "sha256": "e11dea878d48c9be81105ecbc537c7997daa07c5e5ee96876867f44b1c30d605"
     }
+  },
+  "lean_receipt_reader_revision": {
+    "date": "2026-11-19",
+    "prior_reader_sha256": "0eec7f33b6bba984a0a832bc667e508cde7ac1cac930a55826b944aeb8ffe092",
+    "prior_source_commit": "15d9bd89b4b41303fd18addb68b1e9d1995132eb",
+    "status": "The old and revised standalone readers emitted the original report for all twelve unchanged theorems using the stock 4.33.0 release. Synthetic reader controls exercise roster, version, output grammar and axiom checks.",
+    "unchanged_results_sha256": "0acf7a5714ca528cad28b239954f0abeb979ef1459644e083ee4164a23f7386d"
   },
   "note": "audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md",
   "schema": "pid-rs.fault-tolerant-shared-exclusions-manifest.v1",

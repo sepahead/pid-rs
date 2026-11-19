@@ -1562,10 +1562,11 @@ checker binds the full manifest bytes and all nine package revisions. It rejects
 It also checks each dependency checkout's root, revision, origin, and clean status. It disables
 global and system Git configuration and Git environment routing for these checks. It retains the
 checkout's local configuration so it can verify the recorded origin. Ignored build and cache files
-do not make a checkout dirty. The checker rejects the tokens `admit`, `axiom`, `constant`, `sorry`,
-and `sorryAx` in the Lean sources. It also rejects `native_decide` in executable Lean source. It
-builds the project with Lake and replays the declarations with Lean's bundled kernel checker using
-the cache-independent `leanchecker --fresh` route. It
+do not make a checkout dirty. The checker rejects `admit`, `axiom`, `constant`, `sorry`,
+`sorryAx` and `native_decide` in the executable source of the eleven bound Lean files. It
+builds the project with Lake. The bundled `leanchecker --fresh PidFiniteConvergence` reads the
+compiled module and imports, then replays loaded safe, nonpartial declarations into an empty
+kernel environment. The checker relies on the installed Lean kernel and built dependency objects. It
 enforces an exact ordered inventory of all 339 source-level declarations across eight imported
 modules and runs `collectAxioms` on all 246 named source theorems. The complete two-source
 count/event bridge and the complete two-source count-to-atom bridge are separately SHA-256
@@ -3336,12 +3337,12 @@ checks do not replace the external caller's custody or rendered-page review.
 
 The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
-`audit/formal/latex/real-occupancy-sensors/publication-inputs-v6.json`; v1–v5 remain historical.
+`audit/formal/latex/real-occupancy-sensors/publication-inputs-v7.json`. Profiles v1–v6 remain historical.
 The v5 successor added the negative OR-forecast comparison, its portable reproduction
 evidence and the third figure. The v6 successor only pins the regenerated `METHODS.md` after the
-intrinsic-dimension provenance correction; its PDF reference is unchanged. Profile selection
-supplies no execution or visual-review credit; each successor execution needs its own retained
-record. Discovery derives the pinned TeX body and retains raw commands/streams; it does not adopt
+intrinsic-dimension provenance correction. The v7 successor pins the November revision of
+`METHODS.md`. The [November execution record](../audit/evidence/publication-input-profiles-2026-11-19.md)
+records the controls and exact reproduction of the existing PDF. Discovery derives the pinned TeX body and retains raw commands/streams; it does not adopt
 its PDF. Exact mode refuses
 until the profile has an admitted reference, then compares fresh raw PDF bytes with that reference.
 `--check` makes two fresh builds. Supply a canonical TeX Live root explicitly; there is no `HOME`
@@ -3387,12 +3388,12 @@ bind the citation corrections and Sepehr Mahmoudian author header and byline. Se
 hashes bind each figure PDF. Citation controls retain the author header and change only the label
 or URL; separate Markdown controls reject a missing or changed author and unrelated source changes.
 The current input profile is
-`audit/formal/latex/mgw-fixed-world/publication-inputs-v9.json`; v1–v8 remain historical.
+`audit/formal/latex/mgw-fixed-world/publication-inputs-v10.json`. Profiles v1–v9 remain historical.
 The v8 profile was a dependency-only successor of v7. It pinned the revised recorded-office
 Markdown, which this paper's source map binds, and kept the v7 authored-paper references. The v9
-profile only pins the regenerated `METHODS.md`; every PDF, TeX and figure reference is unchanged.
-Predecessor observations do not establish execution or native-input custody under v9. Each
-successor execution needs its own exact checks and retained record. The
+profile pinned the September revision of `METHODS.md`. The v10 profile pins its November revision.
+The [November execution record](../audit/evidence/publication-input-profiles-2026-11-19.md)
+records the controls and exact reproduction of the existing paper. The
 [publication entry](../audit/formal/lean-mgw-fixed-world/PUBLICATION.md) separates the
 current reference from the earlier citation-only PDF and records the stale-control failure.
 The current reference is the authored nine-page paper. Its v7 profile recorded focused authorship
@@ -3418,7 +3419,7 @@ PDF equivalence. The aggregate runs the finite leaf controls in both Python mode
 `PID_RS_OCCUPANCY_TEX_ROOT` prerequisite. Keep actual outer statuses and retained result
 files for every run. Synthetic control results concern their specified mutations; publication
 admission, visual review, public replay-controller qualification and fresh hosted formal evidence
-require their own records. These command descriptions report no new successful execution.
+require their own records.
 
 `check-formal-pdf-set.sh` fails closed if the declared standalone LaTeX sources, declared
 Markdown sources, renderer fragments, and PDF basename inventory differ, if an unexpected paper

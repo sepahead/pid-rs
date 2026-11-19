@@ -669,7 +669,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "78782b417f9f8f406a5bd8b024eb6d39e836431537930b7839e79d9f0fc1bffc",
-    "CHANGELOG.md": "5c66bb465f9d074ade2685eb23e065bcb95ebaffffa1a0bda5cfb254c40ae14d",
+    "CHANGELOG.md": "ae7d4e844611bff4baa68ad08cdde8534ed9e26938cd3d29154a2f52df78e7d9",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f05845157268f3b875499ea683f2371198d703a99112992d973b0db842ae42a1"
     ),
@@ -687,7 +687,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ),
     C12_TERMINAL_RECORD_RELATIVE: C12_TERMINAL_RECORD_SHA256,
     "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": (
-        "70986cfe81e40c300a18b1e63bddaa6ba681ecf25a45bcc59acf6233e2285d03"
+        "15edd0fb396deeb294b621084c1c5fd336f6d0598ee027e079161dd739264c91"
     ),
     "audit/formal/latex/mathematical-problem-solving-workflow.tex": (
         "71825f25ebdd561202078c456ec5166dd19516f74edd48bb343ab753b34f2389"
@@ -702,12 +702,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
         "bc64dbbcd56e818e6f5d98d67635c54c2f31b4341f749ea4c4cf339398966d87"
     ),
-    "scripts/README.md": '4af5e7d29963d972e7a46a310c581160bf17716d71c1578c68f511d41b44e3a4',
+    "scripts/README.md": 'd4185a8daf269a2b55373ffde0b942a3845dd7aa3b7d0f15994647c65f0512ef',
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        'b607da3061e97e880af1b89ad3f2415391b5cf662ebfd7ecc07a5d746bd88aed'
+        'a822b95209cf5d70a0618f4700609bf41f68d558996390640fbdf8ac66fe2d0e'
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"

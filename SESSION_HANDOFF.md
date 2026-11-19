@@ -1,4 +1,14 @@
-# Session handoff — updated 18 November 2026
+# Session handoff — updated 19 November 2026
+
+## Source-partition bounds and Lean assumptions
+
+A missing factor of two in the sign constraints can change the numerical maximum outside the
+original study. All 30 original tables satisfy the stronger condition. The retained binary64
+maxima still lack exact optimality certificates. [Proof and counterexample](audit/evidence/source-partition-sign-margin-2026-11-19.md)
+
+The finite-convergence axiom report covers 246 named declarations. The separate fault-tolerance
+study checks twelve named responses and the actual tool version. Two publication profiles bind the
+revised method catalog and reproduce their original PDFs. [Axiom report](audit/evidence/lean-stock-axioms-2026-11-19/README.md) · [Publication profiles](audit/evidence/publication-input-profiles-2026-11-19.md)
 
 ## Finite bootstrap coverage and fitted quantization
 

@@ -287,8 +287,8 @@ The versioned receipt records the official Darwin archive size and digest, pinne
 path/digest snapshots and exact version output,
 a static exact inspection of the nine-package committed manifest closure, exact source digests, a
 project-build-clean `lake --quiet --wfail build PidFiniteConvergence` replay whose only accepted
-successful streams are empty, 11 direct unlimited-heartbeat compilations, cache-independent
-`leanchecker --fresh`, and the complete 246-name theorem-axiom audit. The generated axiom query is bound at exactly 18,200
+successful streams are empty, 11 direct unlimited-heartbeat compilations, a stock
+`leanchecker --fresh PidFiniteConvergence` replay, and the complete 246-name theorem-axiom audit. The generated axiom query is bound at exactly 18,200
 bytes with SHA-256 `30acaa1de98051b247a91b735eb8ab08f2870a7f6e23b81c18c362815681b2e4`;
 nonempty or ad hoc standard input receives no credit. Current companion Lean gates and their
 normal/optimized Python output pairs are also recorded. Every replayed Python command uses
@@ -301,6 +301,13 @@ environment is built from an
 exact 15-variable nonsecret allowlist with fixed locale/timezone and fresh empty `HOME` and
 `TMPDIR`; ambient Lean, Lake, Elan, Git, and Python routing is not inherited. Exact Lean and Lake
 identity output is checked before the clean build begins.
+
+The fresh checker reads the compiled module and its transitive imports, then replays the safe,
+nonpartial declarations in the loaded constant map into an empty kernel environment. Its input
+includes built dependency objects. The separate axiom inventory records which assumptions
+the named theorems use. This replay uses the installed Lean kernel and assumes the provenance
+of its binaries and compiled imports. [Stock 4.33 checker](https://github.com/leanprover/lean4/blob/d8b18978322de05a8f3dba51ef03cf5461676c17/src/LeanChecker.lean#L36-L38)
+and [replay selection](https://github.com/leanprover/lean4/blob/d8b18978322de05a8f3dba51ef03cf5461676c17/src/Lean/Replay.lean#L176-L189).
 
 The complete receipt-bound static surface is checked immediately before and after the ordered
 command sequence. This endpoint equality detects bounded concurrent drift but is not an atomic

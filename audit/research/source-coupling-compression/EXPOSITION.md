@@ -662,18 +662,18 @@ either bound is not shown. The target form (12) improves bound (1) strictly on 1
 distributions, by small amounts (room test: from 16.650 to 16.582 nats), and it stays above the
 range bound on every distribution with $D>0$.
 
-**A refinement from nonnegative atoms.** For the node $\lbrace B\rbrace$, the informative value is $H(S_B)$
-and the misinformative value is $H(S_B\mid T)$. The informative atoms $\pi^+$ and the
-misinformative atoms $\pi^-$ are nonnegative, so each of the four atom vectors of the old and the
-new distribution lies in a polytope $\lbrace\pi\in\mathbb R^{18}:\pi\ge0,\ A\pi=h\rbrace$, where $h_B$ is
-$H(S_B)$, $H(S_B\mid T)$, $H(S_B')$ or $H(S_B'\mid T)$. Hence $D$ lies between the smallest and the
-largest value of $\sum_\alpha|\Delta_\alpha|$ over the product of the four polytopes. Only 28
-entropies of source sets are needed. The top row of $A$ is all ones, so the largest value is never
-above the range bound (11). On all 30 distributions the numerical minima agreed with (13) at
-the reported precision. HiGHS computed the minima by linear programming and the maxima by
-mixed-integer linear programming, both in binary64. The table gives exploratory numerical maxima.
+**A refinement from nonnegative atoms.** The 28 coalition entropies $H(S_B)$, $H(S_B\mid T)$,
+$H(S'_B)$ and $H(S'_B\mid T)$ give the four systems $A\pi=h$, $\pi\ge0$ in $\mathbb R^{18}$.
+The observed vectors satisfy them, so the extrema of $\sum_\alpha|\Delta_\alpha|$ over
+their product bracket $D$. The all-ones top row bounds the sum by the four-entropy term $B$
+in (11). The two sign rows permit the magnitude $t=|d|$ of a signed coordinate $d$ exactly
+when $M\ge2|d|$. The component totals make $M=B+|L|$ sufficient throughout the product.
+All 30 laws have $|L|<0.106$ nat, so the historical choice $M=B+1$ in nats suffices.
+[Derivation and exact check](../../evidence/source-partition-sign-margin-2026-11-19.md).
+HiGHS used binary64 for the linear minima and mixed-integer maxima. The minima agreed
+with (13) at the reported precision. The table gives exploratory maxima.
 
-| Pooled distribution | $D$ | Range bound (11) | Polytope maximum |
+| Pooled distribution | $D$ | Range bound (11) | Numerical maximum |
 |---|---:|---:|---:|
 | Room training | 0.309875 | 3.408395 | 2.267403 |
 | Room validation | 0 | 1.911905 | 0 |
@@ -682,11 +682,12 @@ mixed-integer linear programming, both in binary64. The table gives exploratory 
 | Office validation | 1.336128 | 3.359736 | 3.281032 |
 | Office test | 0.582280 | 4.354175 | 3.747458 |
 
-On the 21 distributions with $D>0$ it is lower than the range bound by 0.5% (office training) to
-40% (office, 10 February 2015). The bound stays far above $D$: the entropies of source sets say
-nothing about which events the atoms share. The program is kept as
-[`verification/component-sandwich-exploratory.py.txt`](verification/component-sandwich-exploratory.py.txt);
-it needs NumPy and SciPy and is not a repository command.
+On the 21 distributions with $D>0$ the computed maximum is 0.5% (office training) to
+40% (office, 10 February 2015) below the range bound. It stays far above $D$. The four
+entropy vectors do not specify which events the atoms share. The retained
+[exploratory program](verification/component-sandwich-exploratory.py.txt) uses NumPy and SciPy.
+It also recomputes $D$ with floating-point logarithms. The rational enclosures for $D$ come
+from the separate log-product calculation in Section 6.
 
 **A third saved bound.** The study runner saves a third upper bound for each distribution, under
 the key `continuity_upper_interval`. It computes this bound as
@@ -858,8 +859,9 @@ $O(18Q_{\rm occ}^2\cdot3)$. Dense inversion needs quadratic storage and cubic ar
 powers, greatest common divisors and series have costs that depend on the number of bits, with a
 limit of 1,048,576 bits per integer. A failed preflight, an expired deadline or an unresolved
 interval stops the run; the accuracy is never relaxed. The 48 dual certificates of bound (13) need
-$48\times18$ exact sums and a comparison per distribution. The exploratory polytope program solves
-a mixed-integer linear program per distribution in binary64.
+$48\times18$ exact sums and a comparison per distribution. For each law the exploratory program
+solved one linear minimum and one mixed-integer maximum with 18 sign bits in binary64.
+The separate sign check uses rational interval endpoints.
 
 The variations of information and the seven changes of mutual information can bracket the total
 change of the atoms before the atoms are computed. Uses with neural, imaging or embodied data need
@@ -877,7 +879,7 @@ Section 8.
 
 **Replay.** Put the four raw recordings in the location that the
 [scripts guide](../../../scripts/README.md) names. From the repository root, the following commands
-replay the study, replay the saved upper-bound check and check the dual certificates of bound (13):
+replay the study, the saved upper bound, the dual certificates of (13) and the sign-margin check.
 
 ```
 V=audit/research/source-coupling-compression/verification
@@ -885,6 +887,7 @@ E=audit/research/source-coupling-compression/evidence
 python3 -I -B $V/run_study_v3.py NEW_DIRECTORY
 python3 -I -B $V/post_study_bound.py NEW_DIRECTORY_2
 python3 -I -B $V/chain_lower_certificate.py
+python3 -I -B $V/check_partition_sign_margin.py "$PWD/$E/campaign"
 diff -r -x EXECUTION.json NEW_DIRECTORY $E/campaign
 cmp NEW_DIRECTORY_2/REPORT.json $E/coupling-bound.json
 ```

@@ -7,6 +7,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Correct the sufficient sign constant in the exploratory source-partition optimizer. Exact rational
+  intervals verify the archived constant on its 30 distributions. A four-symbol target copy
+  exhibits the failure outside those data. [Argument and example](audit/evidence/source-partition-sign-margin-2026-11-19.md)
+- Report the actual axiom sets of 246 core declarations and twelve fault-tolerance theorems.
+  The standalone fault-tolerance check now verifies the executing Lean release and every named
+  response. [Stock checker and declared scope](audit/evidence/lean-stock-axioms-2026-11-19/README.md)
+
 - Measure the percentile range on every ordered sample of four independent binary copies
   with success probability one third. At seed 7 its exact population coverage is 64/81
   for a nominal 95% level. Both constant samples miss. [Proof, recorded values and rank check](FINITE_COPY_BOOTSTRAP_COVERAGE.md)

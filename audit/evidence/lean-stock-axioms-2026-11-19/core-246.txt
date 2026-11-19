@@ -1,0 +1,506 @@
+'PidFiniteConvergence.abs_component_average_change_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_component_linear_row_average_change_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.abs_component_residual_sub_le_max_entropy' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.abs_component_weight_change_le_half_range' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.abs_event_sum_le_half_l1' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_linear_row_le_abs_row_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_log_change_le_local_modulus' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_log_ratio_le_neg_log_one_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_mobius_row_change_le_abs_row_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_net_average_change_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_net_linear_row_average_change_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_net_weight_change_le_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_overlap_component_residual_sub_le_max_entropy' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.abs_overlap_signed_residual_sub_le_add_entropy' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.abs_residual_weighted_signed_value_le_entropy' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.abs_signed_residual_sub_le_add_entropy' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_sub_eq_left_add_right_residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_weight_change_against_bounded_values_le_half_range' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.abs_weighted_average_change_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.abs_weighted_average_change_le_pointwise_plus_half_range' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.abs_zero_sum_weighted_sum_le_half_oscillation' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.add_residual_entropy_le_balanced_ambient_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.add_residual_entropy_le_mass_mul_log_card_product_div_mass_sq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.all_24_averaged_coordinates_empirical_eq_count_expression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.all_24_averaged_coordinates_eq_scaled_log_product' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.all_24_averaged_coordinates_negative_iff_product_lt_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.all_24_averaged_coordinates_positive_iff_product_gt_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.all_24_averaged_coordinates_zero_iff_product_eq_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.all_24_count_expressions_eq_scaled_log_product' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.averaged_atom_component_empirical_eq_count_expression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.averaged_atom_count_expression_eq_scaled_log_product' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.averaged_atom_net_component_eq_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.averaged_cumulative_component_empirical_eq_count_expression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.averaged_cumulative_count_expression_eq_scaled_log_product' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.averaged_cumulative_net_component_eq_sub' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.averaged_pointwise_atom_eq_mobius_of_averaged_cumulatives' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.card_mul_card_le_balanced_ambient' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.card_mul_neg_mul_log_average_eq_mass_mul_log_card_div_mass' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.component_coordinate_bounds_of_nonnegative_top_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.component_weighted_average_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.concentration_radius_exponent_cancels' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_between_candidate_extrema' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_between_candidate_extrema_of_reciprocal_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_coordinate_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_diameter_of_reciprocal_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_exact_coordinate_diameter_attained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_exact_coordinate_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_lower_attained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_probability_domain_absolute_coordinate_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_probability_domain_coordinate_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_refined_bound_attained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_refined_bound_attained_ordered' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_refined_coordinate_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_refined_diameter_of_reciprocal_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_diamond_lifted_gradient_upper_attained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_between_candidate_extrema' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_between_candidate_extrema_of_reciprocal_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_candidate_diameter_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_candidate_diameter_eq_of_reciprocals' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_closed_form_coordinate_diameter_attained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_closed_form_coordinate_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_coordinate_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_diameter_of_reciprocal_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_exact_coordinate_diameter_attained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_exact_coordinate_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_lower_attained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_no_positive_uniform_subtraction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_upper_attained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_zero_side_mass_exact_diameter' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.conditioned_nested_lifted_gradient_zero_side_mass_witness' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.count_atom_real_product_eq_rational_cast' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.count_atom_real_product_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.count_component_argument_positive_on_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.count_coordinate_real_product_eq_rational_cast' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.count_coordinate_real_product_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.count_cumulative_real_product_eq_rational_cast' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.count_cumulative_real_product_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.count_net_argument_eq_informative_div_misinformative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.count_net_argument_positive_on_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.effective_color_factor_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.effective_color_numerator_le_card_mul_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.empirical_law_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.equivalence_class_cover_weight_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.equivalence_class_event_mass_positive_on_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.equivalence_class_neighborhood_anchor_mem' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.equivalence_class_neighborhood_eq_of_related' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.equivalence_class_overlap_load_le_total' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.equivalence_neighborhood_overlap_load_eq_cover_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.equivalence_neighborhood_overlap_load_nonnegative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.equivalence_union_common_modulus_closed_interval_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.equivalence_union_common_modulus_le_linear' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.equivalence_union_common_modulus_nonnegative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.equivalence_union_common_modulus_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.equivalence_union_common_modulus_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.event_count_positive_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.event_mass_empirical_law_eq_count_ratio' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.event_mass_eventually_positive_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.event_mass_positive_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.eventually_positive_of_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.finite_equivalence_union_anchor_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.finite_equivalence_union_event_mass_positive_on_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.finite_equivalence_union_fractional_cover_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.finite_equivalence_union_fractional_cover_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.finite_equivalence_union_overlap_load_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.finite_equivalence_union_overlap_load_le_of_nonempty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.finite_equivalence_union_ratio_le_branch_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.finite_event_mass_biUnion_le_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.finite_event_mass_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.finite_event_mass_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.finite_event_mass_union_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.intersection_pmi_gradient_diameter_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.joint_source_target_branch_eq_singleton' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.joint_source_target_restricted_event_count_eq_anchor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.left_or_right_residual_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.left_residual_le_of_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.left_residual_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.left_residual_sub_right_residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.left_right_positive_support_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.local_cumulative_component_empirical_eq_log_count_argument' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.local_cumulative_informative_empirical_eq_log_count_argument' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.local_cumulative_misinformative_empirical_eq_log_count_argument' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.local_cumulative_net_component_eq_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.local_cumulative_net_empirical_eq_log_count_net_argument' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.local_cumulative_net_eq_log_probability_argument' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.local_log_modulus_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.log_count_cumulative_real_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.mobius_row_sum_eq_ite_bot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.neg_log_one_sub_le_four_thirds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.neg_log_one_sub_le_ratio' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.negative_log_event_gradient_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.nested_log_ratio_gradient_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.nested_log_ratio_gradient_diameter_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.net_value_bounds_of_component_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.net_weighted_average_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_floor_log_ceiling_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_floor_radius_sub_twice_correction_nonnegative' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_gradient_coordinate_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_gradient_diameter_of_reciprocal_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_gradient_exact_coordinate_diameter_attained' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_gradient_exact_coordinate_diameter_attained_of_left_le_right' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_gradient_exact_coordinate_diameter_attained_of_right_le_left' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_gradient_exact_coordinate_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_gradient_exact_diameter_of_reciprocal_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_gradient_refined_coordinate_diameter_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_gradient_refined_diameter_of_reciprocal_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_gradient_signs_of_reciprocal_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_phi_floor_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_phi_le_floor_log_ceiling' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_phi_le_floor_radius_sub_twice_correction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_phi_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_ratio_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_ratio_cross_multiplication_bounds' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.ordinary_diamond_reciprocal_supermodular' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.overlap_add_left_residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.overlap_add_right_residual' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.overlap_residual_entropy_sum_le_balanced_ambient_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.positive_cell_of_half_l1_control' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.positive_mass_support_empirical_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.positive_support_card_positive_of_sum_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.positive_support_filter_event_sum_eq_event_mass' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.probability_net_argument_empirical_eq_count_net_argument' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.redundancy_source_event_count_eq_add_sub_joint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.redundancy_source_event_count_inclusion_exclusion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.redundancy_target_restricted_event_count_eq_add_sub_joint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.redundancy_target_restricted_event_count_inclusion_exclusion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.refined_log_modulus_linearized_chain' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.residual_entropy_le_card_mul_neg_mul_log_average' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.residual_entropy_le_mass_mul_log_card_div_mass' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.residual_entropy_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.residual_eq_zero_outside_positive_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.residual_weighted_component_between_zero_and_entropy' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.right_residual_le_of_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.right_residual_nonnegative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.segment_event_mass_lower_bound_factorized' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.segment_event_mass_positive_of_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.source_branch_anchor_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.source_branch_is_equivalence_class' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.source_collection_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.source_singleton_branch_inter_eq_joint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.source_target_branch_anchor_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.source_target_branch_event_eq_inter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.source_target_branch_is_equivalence_class' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.source_target_collection_equivalence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.source_target_singleton_branch_inter_eq_joint' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sum_abs_sub_eq_two_mul_sum_left_residual' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sum_empirical_law_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sum_le_effective_color_numerator' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sum_left_residual_eq_sum_right_residual' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sum_neg_mul_log_le_card_mul_neg_mul_log_average' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sum_overlap_eq_one_sub_sum_left_residual' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sum_positive_coordinate_event_eq_half_l1' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sum_positive_support_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_keyed_events_fixed_across_laws' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_pid2_atom_order_length' does not depend on any axioms
+'PidFiniteConvergence.sx_pid2_collections_nonempty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_pid2_component_order_length' does not depend on any axioms
+'PidFiniteConvergence.sx_pid2_coordinate_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_pid2_coordinate_order_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_pid2_coordinate_order_length' does not depend on any axioms
+'PidFiniteConvergence.sx_pid2_coordinate_order_nodup' does not depend on any axioms
+'PidFiniteConvergence.sx_pid2_empirical_event_masses_positive_on_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sx_pid2_event_counts_positive_on_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sx_pid2_joint_cumulative_eq_sum_atoms' depends on axioms: [propext]
+'PidFiniteConvergence.sx_pid2_mobius_after_zeta' depends on axioms: [propext]
+'PidFiniteConvergence.sx_pid2_mobius_coordinate_swap_equivariant' depends on axioms: [propext]
+'PidFiniteConvergence.sx_pid2_mobius_row_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_pid2_mobius_sub' depends on axioms: [propext]
+'PidFiniteConvergence.sx_pid2_mobius_transform_eq_integer_row_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sx_pid2_node_collection_semantics' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_pid2_node_order_length' does not depend on any axioms
+'PidFiniteConvergence.sx_pid2_redundancy_source_event_eq_union' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sx_pid2_redundancy_target_restricted_event_eq_union' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sx_pid2_source_one_cumulative_eq_unique_one_add_redundancy' depends on axioms: [propext]
+'PidFiniteConvergence.sx_pid2_source_two_cumulative_eq_unique_two_add_redundancy' depends on axioms: [propext]
+'PidFiniteConvergence.sx_pid2_swap_atom_involution' does not depend on any axioms
+'PidFiniteConvergence.sx_pid2_swap_node_involution' does not depend on any axioms
+'PidFiniteConvergence.sx_pid2_zeta_after_mobius' depends on axioms: [propext]
+'PidFiniteConvergence.sx_pid2_zeta_transform_eq_integer_row_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sx_source_event_anchor_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_source_event_equivalence_union' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_source_event_mass_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_source_fractional_cover_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_target_event_equivalence_union' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_target_event_mass_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_target_fractional_cover_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_target_restricted_event_anchor_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_target_restricted_event_eq_inter' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.sx_target_restricted_event_equivalence_union' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sx_target_restricted_event_mass_positive' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sx_target_restricted_fractional_cover_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.sxpid2_averaged_cumulative_net_count_expression' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.target_branch_anchor_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.target_branch_is_equivalence_class' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.target_equivalence' does not depend on any axioms
+'PidFiniteConvergence.telescoping_anytime_spending' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.telescoping_anytime_spending_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.tendsto_event_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.tendsto_finite_linear_combination' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.tendsto_finite_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.tendsto_finite_weighted_log_ratio_linear_combination' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PidFiniteConvergence.tendsto_finite_weighted_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.tendsto_log_of_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.tendsto_log_ratio_of_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.tendsto_neg_log_of_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.tendsto_neg_mul_log' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PidFiniteConvergence.tendsto_neg_mul_log_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
