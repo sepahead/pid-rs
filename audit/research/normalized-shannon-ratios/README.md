@@ -1,0 +1,31 @@
+# Checking normalized Shannon-invariant reports
+
+**Sepehr Mahmoudian · 2026**
+
+Can the normalized report lose a representable value while combining the finite numbers passed to its public API? The smallest positive binary64 number, $u=2^{-1074}$, gives a simple check. For two marginal values $u,u$ and joint value 2, the input numerator is $2u$ and the requested ratio equals $u$. Dividing $u$ by 2 before summing produces zero under round-to-nearest, ties-to-even. The test distinguishes the two results by their bit patterns.
+
+The two diagnostic functions take **mutual information**, a quantity describing statistical dependence, in **nats**, the information unit for natural logarithms. For target-conditioned average redundancy, the numerator is the sum of the supplied marginal mutual informations. For average vulnerability, each supplied value leaves out one source. The numerator sums the joint mutual information minus each leave-one-out value. Both functions divide by the supplied joint mutual information to obtain a dimensionless ratio. The API requires the caller to ensure that the inputs describe the intended common target, variables, units and estimand. Some artificial signed inputs here exercise numerical behavior outside exact nonnegative population mutual information. [Public Rust definitions](../../../crates/pid-core/src/invariants.rs) · [Method catalog](../../../METHODS.md) · [Gutknecht et al., Shannon-invariant formulation](https://arxiv.org/abs/2504.15779v1)
+
+For each admitted case, the reference decodes every finite input as its exact binary rational. It forms the exact numerator, divides by the exact denominator, and rounds the final ratio once to nearest binary64, choosing the even significand on a midpoint. The reported numerator is rounded separately. A finite ratio can have an overflowing numerator, for which the original-unit field is absent. Exact cancellation gives positive zero. A nonzero negative quotient that rounds to zero keeps its sign. Empty terms, nonfinite inputs, nonpositive denominators, denominators at or below the configured floor, and overflowing final ratios have separate status checks. A finite denominator keeps its original bits, including a negative zero. [Expected answers and integer-neighbor cross-check](oracle.py)
+
+The fixed fixture contains **184 public API calls**. It includes both default wrappers and explicit policies, signed cancellation, threshold equality, underflow, midpoint ties, the boundary between subnormal and normal numbers, carries and overflow. The finite suite checks the status, value, numerator, denominator, definition text, units and policy setting for every case. A second calculation independently brackets each rational between ordered binary64 encodings and compares exact distances. The first calculation uses Python's standard-library Fraction conversion. Both share the case list and report specification. [Full fixture](../../../crates/pid-core/tests/fixtures/normalized_shannon_ratio.json) · [Rust integration test](../../../crates/pid-core/tests/normalized_shannon_ratio.rs)
+
+From the repository root, the following commands regenerate the expectations in memory and compare all bytes, then check the public reports. The Cargo test uses the embedded fixture and existing package dependencies.
+
+```sh
+python3 -I -S -B audit/research/normalized-shannon-ratios/oracle.py --check
+python3 -I -S -B audit/research/normalized-shannon-ratios/judge.py self-test
+python3 -I -S -B -O audit/research/normalized-shannon-ratios/oracle.py --check
+python3 -I -S -B -O audit/research/normalized-shannon-ratios/judge.py self-test
+cargo test --locked -p pid-core --test normalized_shannon_ratio -- --test-threads=1
+```
+
+## Hosted comparison and interpretation
+
+The original implementation is commit `0f3122a96e48a099581ad4faf3e3d5d9138367f6`. A baseline verification branch has the form `review/normalized-shannon-baseline-<manifest-sha256>`. The commit directly follows the original and adds only the seven checker files. The workflow checks out the unchanged original in a new directory, supplies the frozen Rust test and fixture, and runs the ordinary Cargo test. A baseline observation must include all 184 reports and an actual assertion failure with the specified original values on six directed public calls. Every other disagreement is retained individually.
+
+A corrected-source verification branch has the form `review/normalized-shannon-fix-<judge-commit>-<manifest-sha256>`. Its single commit follows the previously published checker commit. The complete Git-tree diff must modify the two specified production modules, and all checker bytes must match the earlier external commitment. The workflow runs the original first, then runs exactly the same test on the corrected source with a separate Cargo target directory. On the corrected version all 184 reports must match and the ordinary test must exit successfully. Each tree must also pass the 16 pre-existing invariant integration tests. The ordinary release CI remains a separate requirement for integration. Manual dispatch uses the same verification-branch grammar when the workflow is available on the default branch. [Workflow](../../../.github/workflows/normalized-shannon-ratio.yml) · [Source checks and verdicts](judge.py) · [Checker file identities](manifest.json)
+
+The GitHub job uses an Ubuntu 24.04 x86-64 runner, Rust 1.99.1, the repository lockfile, two build workers, one test thread and a 35-minute job limit. It retains complete reports, all field differences, return codes, original and tested source identities, compiler metadata and Cargo logs. Qualification requires the corresponding workflow artifact at the cited repository commit. A baseline disposition records the expected failing implementation. A corrected disposition covers only all fields of the fixed calls. The runner, compiler, source, chosen cases and specification remain shared dependencies. No population estimator, broader floating-point theorem, human review or application validation follows from this test.
+
+Suggested citation: Sepehr Mahmoudian, *Checking normalized Shannon-invariant reports* (2026), with the exact pid-rs commit or release. [Software citation](../../../CITATION.cff)
