@@ -1,0 +1,11 @@
+{
+  "files": {
+    ".github/workflows/normalized-shannon-ratio.yml": "bfe31f056c9d3b4a530a874249960efc460c1dede2ba394a46144dc76f2d7a13",
+    "audit/research/normalized-shannon-ratios/README.md": "935ed1da8c3c7336a6693d042dd629ebefcfc2d6d47c986defdba08903338847",
+    "audit/research/normalized-shannon-ratios/judge.py": "39529a9bfe2ca469e4e6d6befcb649dc1ef02a8e46d59f64bf0333011e1f4a31",
+    "audit/research/normalized-shannon-ratios/oracle.py": "f2d0ebb3dd866533abfb2ace1d6ba5e100cddea0ef975dbbd806cc35558b6290",
+    "crates/pid-core/tests/fixtures/normalized_shannon_ratio.json": "8a2bfd810e74c29d2c3a38311777a3b1dc418fc3751b8ddad547249c216a2327",
+    "crates/pid-core/tests/normalized_shannon_ratio.rs": "57bce014e8764652a4a4aa4de77afcabdd8979a0941516c13fef8a8f368cf97f"
+  },
+  "schema": "normalized-shannon-judge-manifest-v1"
+}

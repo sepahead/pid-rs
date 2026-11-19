@@ -1,0 +1,70 @@
+name: Normalized Shannon ratio arithmetic
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'review/normalized-shannon-baseline-*'
+      - 'review/normalized-shannon-fix-*'
+    paths:
+      - '.github/workflows/normalized-shannon-ratio.yml'
+      - 'audit/research/normalized-shannon-ratios/**'
+      - 'crates/pid-core/tests/normalized_shannon_ratio.rs'
+      - 'crates/pid-core/tests/fixtures/normalized_shannon_ratio.json'
+      - 'crates/pid-core/src/invariants.rs'
+      - 'crates/pid-core/src/exact_binary64.rs'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: normalized-shannon-ratio-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CARGO_BUILD_JOBS: '2'
+      RUST_TEST_THREADS: '1'
+      CARGO_INCREMENTAL: '0'
+      PACKAGE: audit/research/normalized-shannon-ratios
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Recreate exact answers and exercise the observation checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/normalized-ratio-evidence"
+          for mode in normal optimized; do
+            flags=()
+            if [ "$mode" = optimized ]; then flags=(-O); fi
+            python3 -I -S -B "${flags[@]}" "$PACKAGE/oracle.py" --check >"$RUNNER_TEMP/normalized-ratio-evidence/oracle-$mode.txt"
+            python3 -I -S -B "${flags[@]}" "$PACKAGE/judge.py" self-test >"$RUNNER_TEMP/normalized-ratio-evidence/controls-$mode.json"
+          done
+          cmp "$RUNNER_TEMP/normalized-ratio-evidence/controls-normal.json" "$RUNNER_TEMP/normalized-ratio-evidence/controls-optimized.json"
+          cmp "$RUNNER_TEMP/normalized-ratio-evidence/oracle-normal.txt" "$RUNNER_TEMP/normalized-ratio-evidence/oracle-optimized.txt"
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: '1.99.1'
+      - name: Check source selection and compare complete native reports
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -S -B "$PACKAGE/judge.py" hosted \
+            --ref "$GITHUB_REF_NAME" --head "$GITHUB_SHA" \
+            --out "$RUNNER_TEMP/normalized-ratio-evidence/native" \
+            --temp "$RUNNER_TEMP/normalized-ratio-builds"
+      - name: Retain exact inputs, complete observations and build logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: normalized-ratios-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/normalized-ratio-evidence
+          if-no-files-found: error
+          compression-level: 1
