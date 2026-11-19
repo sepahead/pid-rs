@@ -1,0 +1,107 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "coverage": {
+    "denominator": "81",
+    "numerator": "64"
+  },
+  "date": "2026-11-18",
+  "files": {
+    "driver/Cargo.lock": {
+      "bytes": 9560,
+      "sha256": "059a6cb8838bc0496829c46cff3f61ebf95517d9b2ffafac5e8a4a29bd0edef7"
+    },
+    "driver/Cargo.toml": {
+      "bytes": 345,
+      "sha256": "811e097de2e1fefdc6f41a5a304dd31c6b673869cb0c50bf28631fa073549da1"
+    },
+    "driver/candidate/main.rs": {
+      "bytes": 7426,
+      "sha256": "bdce8611095ae2129c6cfce221b7f36df48d429209f2d3a3e7b296651b12e191"
+    },
+    "judge/historical/check.py": {
+      "bytes": 7302,
+      "sha256": "8c476b6414d16e44e1b0c17bc92162a8c5e16c749740e6add3794c8d85f42206"
+    },
+    "judge/observation.py": {
+      "bytes": 7558,
+      "sha256": "50603272cbc9f43a473f0f5477294117ee8893d40e0e75cd8bbdb5db135de644"
+    },
+    "judge/seed_oracle.py": {
+      "bytes": 2083,
+      "sha256": "fe57b070e34acec1eaf70625e78153a1421790922117e9de138c719e605b76a4"
+    },
+    "judgment.json": {
+      "bytes": 6529,
+      "sha256": "63bc5d4ba4adf1343f02177520a49556d3c6417fdb57eadd9bac9aba5b83e4d4"
+    },
+    "observation.json": {
+      "bytes": 161944,
+      "sha256": "6c34d13dc27a96400f2b4e154647e006b6d08398c5b7a49655ae0dd95fc0d8e6"
+    }
+  },
+  "interpretation": "The Git revision and artifact hashes bind the recorded observation. Runtime attestation, permanent registry access and cross-platform bit identity require separate evidence.",
+  "publication_build_check": {
+    "additional_scientific_invocations": 0,
+    "driver_sha256": "bdce8611095ae2129c6cfce221b7f36df48d429209f2d3a3e7b296651b12e191",
+    "exit": 0,
+    "fresh_executable_sha256": "2157ea64bc4be686e6a3af83cb36b5bcfebafde604b6018d46695c61a49e5166",
+    "interpretation": "Recompiling the identical published driver against a separate clean source checkout produced different executable bytes. The publication check consumed the archived observation and reproduced both numerical judgments.",
+    "source": "1479fc5e0ca15e5ef9c5521f8bc7aa36f2a98d20"
+  },
+  "run": {
+    "binary_bytes": 622304,
+    "binary_sha256": "6a326ba3e55a6ccffe6e391bb0d0d739e92b04886f3906baf8fae0861d454dbf",
+    "environment": {
+      "cargo": "1.99.1 (5f94df478 2026-08-27)",
+      "os": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+      "profile": "release, cargo --locked --offline -j1",
+      "python": "3.15.0",
+      "rustc": "1.99.1 (58cf8f9c3 2026-10-13)",
+      "target": "aarch64-apple-darwin"
+    },
+    "normal_and_optimized_judgment_sha256": "63bc5d4ba4adf1343f02177520a49556d3c6417fdb57eadd9bac9aba5b83e4d4",
+    "production_builds": 1,
+    "qualified_schedule_packed_sha256": "35a9adeae2ae0677c4e877d400e3481add987a0f1bff41dc9512e415603ddff2",
+    "scientific_process_invocations": 1,
+    "stages": {
+      "BUILD": {
+        "bounded_streams_complete": true,
+        "exit": 0,
+        "sampled_peak_group_rss_bytes": 544407552,
+        "wall_seconds": 39.91914949999773
+      },
+      "JUDGE_normal": {
+        "bounded_streams_complete": true,
+        "exit": 0,
+        "sampled_peak_group_rss_bytes": 4489216,
+        "wall_seconds": 0.07663508297991939
+      },
+      "JUDGE_optimized": {
+        "bounded_streams_complete": true,
+        "exit": 0,
+        "sampled_peak_group_rss_bytes": 4489216,
+        "wall_seconds": 0.07348887500120327
+      },
+      "SCIENCE": {
+        "bounded_streams_complete": true,
+        "exit": 0,
+        "sampled_peak_group_rss_bytes": 32768,
+        "wall_seconds": 3.1947526249859948
+      }
+    },
+    "status": "COMPLETE_FIXED_OBSERVATION"
+  },
+  "schema": "pid-rs-finite-copy-bootstrap-public-record-v1",
+  "source": {
+    "commit": "1479fc5e0ca15e5ef9c5521f8bc7aa36f2a98d20",
+    "local_packages": 2,
+    "registry_packages": 41,
+    "repository": "https://github.com/sepahead/pid-rs",
+    "runtime_source_and_vendor_checked_before_after": true,
+    "tree": "e91f4dfd9715ce1a2210536442c0811ac0422171"
+  },
+  "typed_api_failure_mass": {
+    "denominator": 81,
+    "numerator": 0
+  }
+}

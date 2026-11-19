@@ -23,9 +23,9 @@
 //! functional. It proves exact-real plug-in convergence for the fixed two- and three-source
 //! lattices on fixed finite alphabets. It allows minimum ties because a finite minimum is
 //! continuous, but it does not claim differentiability at a tie. The sampling result needs i.i.d.
-//! or strictly stationary and ergodic rows. A training artifact must be independent of the raw
-//! evaluation sequence. The frozen map must be measurable with respect to the training sigma-field
-//! and raw input. It must return a valid finite output with conditional probability one. Evaluation
+//! or strictly stationary and ergodic rows. The stable fitted-wrapper design requires independent
+//! training. The general theorem conditions on training. Its frozen map must be measurable
+//! with respect to the training sigma-field and raw input. It must return a valid finite output with conditional probability one. Evaluation
 //! rows must be conditionally i.i.d. given the training sigma-field. The result does not prove
 //! binary64 asymptotics, dependence-aware validity, or a new PID method. The method catalog
 //! records this evidence under `validation.finite-alphabet-plugin-convergence`.

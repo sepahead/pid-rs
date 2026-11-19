@@ -119,6 +119,11 @@ For $K$ canonical count-table rows, the main [event extraction](audit/tools/cert
 
 ## Statistical bounds and resampling
 
+The finite categorical copy study exhaustively measured four-row bootstrap coverage at one
+fixed seed. Its 3,216 categorical callback evaluations gave exact outer-law coverage 64/81.
+The measured release-stage times and locked standalone driver are in the
+[finite copy-law study](FINITE_COPY_BOOTSTRAP_COVERAGE.md).
+
 A scalar continuity modulus or a fixed-form confidence bound is usually cheap to evaluate once all required constants are supplied. Obtaining justified constants can be the difficult part. An observed minimum cell count does not establish a population mass floor. A declared dependence coloring does not establish independence within each color.
 
 Formula evaluation cost does not imply that a matching Rust helper exists. Each study must name its actual implementation or state that the formula remains a proposed implementation.

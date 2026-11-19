@@ -1,5 +1,9 @@
 # Finite-alphabet plug-in convergence
 
+**Sepehr Mahmoudian** · 2026
+
+A **plug-in estimate** evaluates a functional at observed relative frequencies. A **prefix** contains every row from the start through the row of interest. **Support** consists of cells with positive probability. An **i.i.d.** sequence has mutually independent, identically distributed rows. A **conditional law** specifies probabilities given the training information. The overview writes $P$ for the fixed population law, $S$ for its support, and $\widehat P_n$ for the empirical law of the first $n$ rows. Section 1 gives their precise definitions. The categorical SxPID and Williams–Beer definitions use different redundancies. [Makkeh, Gutknecht and Wibral](https://arxiv.org/abs/2002.03356v5), [Williams and Beer](https://arxiv.org/abs/1004.2515v1).
+
 ## Claim status
 
 This document is **new project analysis in pid-rs**. It is a theoretical-validation note. It is not
@@ -21,7 +25,7 @@ The method origins remain separate from this project analysis:
 | Discrete O-information | Paper-defined by Rosas et al. | `diagnostics::o_information_discrete` | Exact-real convergence as a fixed entropy combination |
 | Target-free $\mathrm{Red}^{\circ}$ and $\mathrm{Vul}^{\circ}$ | Project-defined analogues | `diagnostics::{red_degree_discrete, vul_degree_discrete}` | Ratio convergence when the population joint entropy is positive |
 | Target-based $\bar r$ and $\bar v$ reports | Paper-defined ratios with a project-defined report policy | `diagnostics::{average_degree_of_redundancy, average_degree_of_vulnerability}` | Ratio convergence when joint MI is positive; eventual report status needs separation from the policy threshold |
-| Fitted equal-width transform plus categorical PID | Project-defined composition; quantization has published background | `stable::quantized::{fitted_quantized_sxpid2, fitted_quantized_sxpid3, fitted_quantized_sxpid_n}` and `stable::imin::{imin_pid2_quantized, imin_pid3_quantized}` | Conditional corollary for one independent, frozen, almost-surely total finite-output transform |
+| Fitted equal-width transform plus categorical PID | Project-defined composition; quantization has published background | `stable::quantized::{fitted_quantized_sxpid2, fitted_quantized_sxpid3, fitted_quantized_sxpid_n}` and `stable::imin::{imin_pid2_quantized, imin_pid3_quantized}` | Conditional push-forward for one frozen, almost-surely total map. The cataloged wrapper design uses independent training. |
 
 The authoritative method and paper map is [METHODS.md](METHODS.md). The machine-readable source is
 [method-catalog.json](method-catalog.json).
@@ -157,7 +161,7 @@ Strict stationarity without ergodicity is not sufficient.
 ### Proof
 
 For each fixed cell $z$, apply the strong law to the indicator $\mathbf 1\{Z_j=z\}$ in the i.i.d.
-case. Apply the pointwise ergodic theorem to the same indicator in the stationary ergodic case. The
+case. Apply the pointwise ergodic theorem to the same indicator in the stationary ergodic case (Keane and Petersen, 2006). The
 alphabet is finite. Therefore, one probability-one event gives simultaneous coordinate convergence
 for all cells.
 
@@ -310,7 +314,7 @@ $\mathrm{supp}(q)=S$. Each supported cell retains mass at least $p_{\min}/2$.
 Assume $\mathrm{supp}(q)\subseteq S$ in addition to the section-wide condition
 $\delta\le p_{\min}/2$. For a supported target $t$, use the notation from FA-1. The
 conditional weights are $w=r/v$, where $r=q(s_a,t)$ and $v=q(t)$. The log term is
-$\ell=\log(r/(uv))$, where $u=q(s_a)$.
+$\ell=\log(r/(uv))$, where $u=q(s_a)$. Terms involving this logarithm are summed only over source values with positive joint mass at $t$.
 
 Marginalization contracts the joint $L^1$ distance. The positive marginal masses are at least
 $p_{\min}$ under $p$. Each of the three logarithm factors changes by at most
@@ -343,10 +347,10 @@ $$
 R_\alpha(t;Q)=\min_{a\in\alpha}J_a(t;Q).
 $$
 
-Define the target-averaged redundancy by
+In the following target average and its error bound, sum only over the common positive target support. Define the target-averaged redundancy by
 
 $$
-I^{\min}_{\cap}(\alpha;Q)=\sum_t Q(t)R_\alpha(t;Q).
+I^{\min}_{\cap}(\alpha;Q)=\sum_{t:Q(t)>0} Q(t)R_\alpha(t;Q).
 $$
 
 Each $J_a(t;p)$ is a Kullback--Leibler divergence, so it is nonnegative. Also,
@@ -426,10 +430,10 @@ joint MI. All target-based input MI
 terms must describe the same law, target, source order, units, preprocessing, evaluation sample,
 and estimand. For the convergence claim, each input sequence must be the corresponding exact-real
 finite-alphabet plug-in term formed from the same empirical law. A positive denominator alone does
-not establish this semantic coherence. Report status has an extra rule. If the fixed policy
+not establish this semantic coherence. For the exact-real denominator rule applied to coherent input terms, if the fixed policy
 threshold is $\tau$, a population denominator that is strictly larger than $\tau$ guarantees
 eventual `Defined` status. A population denominator below $\tau$ guarantees eventual non-defined
-status. Equality at the threshold gives no eventual status guarantee.
+status. Equality at the threshold gives no eventual status guarantee. The Rust report also checks input and result representability.
 
 ## 5. Time-uniform i.i.d. bound
 
@@ -446,7 +450,7 @@ $$
 \alpha_n=\frac{6\alpha}{\pi^2n^2}.
 $$
 
-For one fixed cell $z$ and one fixed $n$, two-sided Hoeffding gives
+For one fixed cell $z$, one fixed $n$, and $x>0$, two-sided Hoeffding gives
 
 $$
 \Pr\left(
@@ -530,6 +534,7 @@ Assume:
 An i.i.d. raw evaluation sequence independent of the training artifact is the important special
 case in which the common conditional row law does not depend on $\mathcal G$. Independence is not
 otherwise required once the full conditional-i.i.d. contract in item 6 has been proved.
+The common-bit process in Section 7 illustrates the distinction. If training records that bit, then conditional on training every evaluation row has the same point-mass law and the rows are conditionally independent. A raw evaluation row still reveals the training bit.
 
 The transformed categorical law is the random conditional push-forward law
 
@@ -547,18 +552,13 @@ $\eta=\eta(\mathcal G)$ be the conditional per-row failure probability. For each
 with $\eta>0$, conditional i.i.d. sampling gives success probability $(1-\eta)^n$ for the first
 $n$ rows, and the infinite prefix fails with conditional probability one. Unconditionally, the
 failure probability from this mechanism is $\Pr(\eta>0)$. It is one only when $\eta>0$ almost
-surely. Conditioning an accepted prefix on complete success does not preserve the original-law
-infinite-prefix claim. Explicit rejection sampling can produce rows that are conditionally i.i.d.
+surely. With positive conditional failure mass, a successful prefix gives no original-law guarantee for later rows. Explicit rejection sampling can produce rows that are conditionally i.i.d.
 given $\mathcal G$ from a conditional law when the success probability is positive. That law is a
-different estimand and needs a declared sampling contract.
+success-conditioned target and needs a declared sampling contract.
 
-`OutOfRangePolicy::ClampToBoundary` gives a total range map for otherwise valid finite inputs. It
-defines a tail-clamped categorical estimand. It is not the error-policy estimand.
+At identical fitted edges and block definitions, `OutOfRangePolicy::ClampToBoundary` and `Error` assign the same labels to every valid in-range row, including both endpoints. If those rows have conditional probability one, both policies give the same conditional categorical law and the same PID. For example, a constant evaluation row at a fitted endpoint receives the same label under both policies. A positive conditional probability of leaving the ranges makes `Error` partial on the evaluation law. Clamping assigns those rows boundary labels. Record the policy even when the resulting laws agree.
 
-The corollary excludes same-row fitting, changing transforms, arbitrary pooling across folds that
-use different transforms, and target-adaptive fitting on evaluation rows. Training-target-adaptive
-PLS is compatible only when it is fitted on the independent training artifact, frozen, and applied
-to disjoint conditionally i.i.d. evaluation rows.
+The stable fitted-wrapper design requires independent training and held-out evaluation. The general mathematical corollary requires the conditional-i.i.d. assumption above. Training-target-adaptive partial least squares must freeze its fitted map before evaluation. Reusing evaluation targets for fitting, changing the map between prefixes, or pooling fold-specific outputs requires a separate design.
 
 ## 7. Falsification lenses and retained counterexamples
 
@@ -570,11 +570,11 @@ The following checks are part of the result. They show why stronger statements a
 | Probability | Draw $C\sim\mathrm{Bernoulli}(1/2)$, then set $Z_j=C$ for every $j$. The process is stationary but not ergodic. | A path sees only one state although the one-time marginal support has two states. Stationarity alone is insufficient. |
 | Rare-state discovery | Give one state mass $\varepsilon$. It is absent after $n$ i.i.d. rows with probability $(1-\varepsilon)^n$. | No deterministic support-discovery time is uniform over all finite laws. |
 | $I_{\min}$ differentiability | Move through a law where two source-specific information values tie and exchange minimizer order. | The finite minimum stays continuous, but a generic derivative, delta-method CLT, or fixed minimizer does not follow. |
-| Transform design | Fit finite min/max ranges, then evaluate a nondegenerate continuous held-out law under the error policy. | Positive out-of-range mass usually remains. Infinite-prefix success then has probability zero. |
+| Transform design | Fit finite min/max ranges, then evaluate a held-out standard-normal law under the error policy. | Every finite range leaves positive out-of-range mass. Infinite-prefix success then has probability zero. |
 | Mixture target | Randomly select one of two fitted transforms, then average their push-forward laws before applying PID. | PID of the mixture need not equal the conditional PID or the average of conditional PIDs. |
 | Indexing | Append a rare state that is lexicographically earlier than all common states. | Pointwise vector positions shift. A realization key is required. |
 | Numerical refinement | Increase the prefix beyond the exact binary64 integer range, or change the platform `log` implementation. | The exact-real asymptotic theorem does not become a portable Rust-output theorem. |
-| Downstream dependence | Reuse overlapping temporal windows, drift the law, or reject full samples after inspecting their columns. | The i.i.d. proof and its Hoeffding envelope do not apply. A separate dependence or selection theorem is required. |
+| Downstream dependence | Reuse overlapping temporal windows, drift the law, or reject full samples after inspecting their columns. | These designs alone do not justify the i.i.d. Hoeffding envelope. Check the law of the complete rows and the selection rule. |
 
 ## 8. Invalidated stronger claims
 
@@ -588,8 +588,7 @@ These proposals were considered and rejected. Do not use them without a new proo
 4. **Rejected:** “A deterministic support-discovery time works for every finite law.” Rare cells
    rule it out.
 5. **Rejected:** “Conditioning on complete success preserves the original error-policy estimand.”
-   It does not. Explicit rejection sampling can define a different conditional-law estimand, but
-   it needs a separate contract.
+   A conditional failure probability strictly between zero and one changes the raw evaluation law on acceptance. A probability-one success event leaves that law unchanged.
 6. **Rejected:** “A conditional fitted-transform limit is the PID of the unconditional mixture.”
    Nonlinearity rules it out in general.
 7. **Rejected:** “Pool foldwise PMFs or atoms when each fold uses a different fitted map.” No such
@@ -635,7 +634,7 @@ invalid formulations and the reason for each correction.
    gives the unconditional probability.
 7. An early rejection statement did not distinguish complete-prefix selection from explicit
    rejection sampling. Rejection sampling can define an i.i.d. conditional-law sequence when its
-   success probability is positive. It does not preserve the original estimand. Section 6 now
+   success probability is positive. Its target conditions on acceptance. Section 6 now
    requires a new declared estimand and sampling contract.
 8. An early report-status sentence treated a population denominator above the threshold as a
    necessary condition for eventual `Defined` status. At threshold zero, start a binary table with
@@ -655,6 +654,8 @@ invalid formulations and the reason for each correction.
     declared alphabet size and $P$ has sparse support; one-cell support has $p_{\min}=1$. No
     accepted bound uses this claim. Section 4 treats alphabet size and supported-cell mass
     separately.
+
+The original July paper assumed independent training. The August proof made conditional i.i.d. sampling sufficient. The stable wrapper retains its independent-training design. The July wording also distinguished the two range policies by estimand even when their maps agree on the evaluation support. Section 6 now separates documented policy identity from equality of the conditional categorical laws. [Original study](https://github.com/sepahead/pid-rs/blob/7545930454b0e5336cce8497885d05dd4fe4ac2b/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md), [conditional-law revision](https://github.com/sepahead/pid-rs/commit/6cbf273c37fc05286aece53b544f14e9fe0de329).
 
 ## 9. Formal and numerical evidence boundary
 
@@ -723,8 +724,7 @@ code. Its digest-bound fixture covers:
 - two- and three-source $I_{\min}$ tables;
 - $I_{\min}$ left/tie/right minimizer crossings.
 
-The Rust test also checks same-process, bit-identical categorical equality for separately fitted
-error-policy and clamp-policy wrappers. For the committed Decimal fixture cases, it uses an
+The Rust test compares each fitted wrapper with direct categorical evaluation on that wrapper’s own labels, bit for bit in the same process. Its error-policy and clamp-policy cases use different evaluation rows. For the committed Decimal fixture cases, it uses an
 absolute acceptance envelope of $64\,\mathtt{f64::EPSILON}$ nats. This envelope is not a portable or
 global binary64 error bound.
 
@@ -737,11 +737,19 @@ population validation, or a global floating-point bound.
 |---|---|---|
 | Prisoma | Use conditionally i.i.d. cases or episodes from one common conditional law. Use one evaluation row per unit, or separately establish conditionally i.i.d. rows. Split independent units. Fit all transforms on the fit partition. Freeze them. Apply them to a disjoint evaluation partition. Then call categorical PID. | Independent but non-identically distributed units; multiple dependent rows from one episode; same-row fitting; pooling outputs from different fitted maps; other dependent evaluation units without a separate theorem. |
 | Galadriel | Direct categorical evaluation on i.i.d. rows with a fixed alphabet. | Continuous KSG on dependent temporal windows; same-window scaling; added-noise studies; circular delete-block analyses; complete-sample rejection after inspecting degeneracy. |
-| Haldir | I.i.d. or strictly stationary and ergodic fixed-law rows for finite-alphabet entropy, co-information, O-information, SxPID, and positive-denominator ratio limits. | A fixed one-time marginal without ergodicity; drift; CUSUM; alarms; overlapping windows; post-alarm re-estimation; calibration. These need sequential and dependence-aware theory. |
+| Haldir | I.i.d. or strictly stationary and ergodic fixed-law rows for finite-alphabet entropy, co-information, O-information, SxPID, and positive-denominator ratio limits. | A fixed marginal without ergodicity, moving fixed-width estimates, drift, CUSUM, alarms, post-alarm re-estimation and calibration require separate assumptions. |
 | Crebain | The stable categorical and fitted-transform contracts can be used after an explicit dependency and input-contract review. | No current compatibility or adapter claim is established by this theorem. |
+
+Rows may themselves be overlapping observation windows. FA-2 applies to their cumulative empirical law when that complete row process is strictly stationary and ergodic. Its target is the one-window marginal law. Overlap alone establishes neither that premise nor the independence required by FA-3. An estimate that retains only the latest fixed number of rows has a different sampling design.
 
 No downstream repository is a runtime dependency of pid-rs. This audit states mathematical
 preconditions. It does not claim downstream qualification.
+
+## Rust implementation and computational cost
+
+The default Rust build evaluates finite categorical SxPID and Williams–Beer `I_min` in batch. The public routes are listed above. For `N` aligned rows, let `D` count columns across all source blocks and target, `K` count cells in the declared product alphabet, and `U ≤ min(N,K)` count occupied joint cells. The general SxPID engine materializes and sorts row states. Its event scans visit exactly `(2L+1)U²` PMF entries for a complete pass over `L` lattice nodes. It also constructs subset MI terms and inverts the fixed lattice. Row storage scales with `ND`. Pointwise output retains additional data for every occupied state and node. The two- and three-source `I_min` routes form sorted marginal/joint histograms, compute each positive target’s specific information, then take the finite minimum. [Rust implementation and cost](RUST_IMPLEMENTATION_AND_COST.md), [categorical source](crates/pid-core/src/sxpid.rs), [Williams–Beer source](crates/pid-core/src/discrete_pid.rs).
+
+The fitted routes train their bin edges once, then classify the held-out rows before computing the categorical functional. Trying several fits or evaluating many prefixes requires accounting for each call. The theorem itself performs no resampling. Finite input shapes, binary64 logarithms, the exact-count limit and per-call resource checks govern successful execution. Budget or available cancellation errors end a call without an estimate. This study reports no timing, online latency, or binary64 asymptotic guarantee. [Quantizer source](crates/pid-core/src/quantizer.rs), [resource controls](crates/pid-core/src/resource.rs).
 
 ## 11. Reproduction
 
@@ -757,7 +765,7 @@ python3 scripts/check-method-catalog.py
 
 The following results remain open in pid-rs:
 
-1. A dependence-aware analogue for generic mixing or temporal processes that do not admit the
+1. A finite-sample concentration bound for generic mixing or temporal processes that do not admit the
    explicit independence coloring in the separate result under a dependency coloring.
 2. A sequential law that separates fixed-law monitoring from drift detection and post-alarm
    re-estimation.
@@ -769,6 +777,10 @@ The following results remain open in pid-rs:
    SxPID lattice beyond the fixed two-source supplied-count bridge, including its Möbius,
    component, cumulative, atom, and averaging composition, plus a separate formalization of the
    $I_{\min}$ definition.
+
+## Citation
+
+Sepehr Mahmoudian. *Finite-Alphabet Plug-In Convergence for Shared-Exclusions PID* (2026). Include the repository commit or release and cite the defining method papers separately. [Software citation](CITATION.cff).
 
 ## References
 
@@ -784,6 +796,7 @@ The following results remain open in pid-rs:
 - A. J. Gutknecht, F. E. Rosas, D. A. Ehrlich, A. Makkeh, P. A. M. Mediano, and M. Wibral,
   “Shannon Invariants: A Scalable Approach to Information Decomposition,” 2025,
   [doi:10.48550/arXiv.2504.15779](https://doi.org/10.48550/arXiv.2504.15779).
+- M. Keane and K. Petersen, “Easy and Nearly Simultaneous Proofs of the Ergodic Theorem and Maximal Ergodic Theorem,” 2006, [arXiv:math/0608251v1](https://arxiv.org/abs/math/0608251v1).
 - W. Hoeffding, “Probability Inequalities for Sums of Bounded Random Variables,” 1963,
   [doi:10.1080/01621459.1963.10500830](https://doi.org/10.1080/01621459.1963.10500830).
 - A. Makkeh, A. J. Gutknecht, and M. Wibral, “Introducing a Differentiable Measure of Pointwise

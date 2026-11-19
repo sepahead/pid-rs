@@ -7,6 +7,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Measure the percentile range on every ordered sample of four independent binary copies
+  with success probability one third. At seed 7 its exact population coverage is 64/81
+  for a nominal 95% level. Both constant samples miss. [Proof, recorded values and rank check](FINITE_COPY_BOOTSTRAP_COVERAGE.md)
+- Clarify the fixed-alphabet convergence theorem and stable quantization API. A fixed measurable
+  map preserves a common conditional IID distribution under its hypotheses. At fixed valid
+  edges, rejecting out-of-range observations and clamping them give the same categorical
+  distribution when all observations are in range almost surely. [Theorem and assumptions](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md)
+
 - Correct seven glossary entries that conflated mathematical objects or review procedures.
   Eleven further entries now specify where the preferred wording applies. The glossary
   distinguishes a probability distribution from its finite table of masses, and a set of

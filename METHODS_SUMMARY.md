@@ -91,4 +91,4 @@ Rows are ordered stable, experimental, research-only, external-validation-only, 
 - A dependency, shared citation, binding, or similar name does not transfer an estimand, theorem, support premise, or validation result.
 - Evidence counts and validation labels are inventory summaries; read the exhaustive row and exact artifacts before assigning credit.
 
-Source catalog SHA-256: `e78977b239c34b2351dbed652ab2f03e0214e725ed23c055117a280223aeecf3`.
+Source catalog SHA-256: `a583377d473444d492549bd22cef9aa3ccc98bdd9dd7c34793ed817ef9357dd5`.

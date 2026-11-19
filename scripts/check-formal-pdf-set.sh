@@ -45,6 +45,7 @@ STANDALONE_LATEX_PAPERS=(
 )
 
 STANDALONE_MARKDOWN_PAPERS=(
+  "finite-copy-bootstrap-coverage"
   "embodied-sensor-utility"
   "embodied-sensor-overview"
   "cross-implementation-reverification"
@@ -68,6 +69,7 @@ STANDALONE_MARKDOWN_PAPERS=(
 )
 
 STANDALONE_MARKDOWN_SOURCES=(
+  "FINITE_COPY_BOOTSTRAP_COVERAGE.md"
   "audit/research/embodied-sensor-utility/EXPOSITION.md"
   "audit/research/embodied-sensor-utility/OVERVIEW.md"
   "audit/evidence/cross-implementation-reverification-2026-09-26.md"
@@ -277,6 +279,13 @@ python3 -O -I -B scripts/check-publication-links-self-test.py
 scripts/check-formal-pdf-set-self-test.sh
 python3 scripts/check-formal-pdf-style.py
 python3 scripts/check-formal-pdf-style-self-test.py
+python3 -I -S -B audit/evidence/finite-copy-bootstrap-coverage/verify.py >/dev/null
+python3 -O -I -S -B audit/evidence/finite-copy-bootstrap-coverage/verify.py >/dev/null
+if [[ "$MODE" == "--exact" ]]; then
+  python3 -I -S -B scripts/build-finite-copy-bootstrap-pdf.py --check
+else
+  python3 -I -S -B scripts/build-finite-copy-bootstrap-pdf.py --check-committed
+fi
 python3 -I -S scripts/sync-mathematical-workflow-tex.py --check
 python3 -I -S scripts/sync-mathematical-workflow-tex-self-test.py
 python3 -O -I -S scripts/sync-mathematical-workflow-tex-self-test.py

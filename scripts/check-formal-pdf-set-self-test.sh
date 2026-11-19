@@ -68,6 +68,7 @@ LATEX_STANDALONE=(
   two-source-sxpid-count-atom-bridge
 )
 MARKDOWN_SOURCES=(
+  FINITE_COPY_BOOTSTRAP_COVERAGE.md
   audit/research/embodied-sensor-utility/EXPOSITION.md
   audit/research/embodied-sensor-utility/OVERVIEW.md
   audit/evidence/cross-implementation-reverification-2026-09-26.md
@@ -90,6 +91,7 @@ MARKDOWN_SOURCES=(
   SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
 )
 STANDALONE=(
+  finite-copy-bootstrap-coverage
   embodied-sensor-utility
   embodied-sensor-overview
   cross-implementation-reverification
@@ -1573,7 +1575,7 @@ mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed
 expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
-for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression; do
+for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage; do
   fixture="$TEST_ROOT/missing-$bias_stem-pdf"
   make_fixture "$fixture"
   mv "$fixture/output/pdf/$bias_stem.pdf" "$fixture/removed-bias-paper.pdf"

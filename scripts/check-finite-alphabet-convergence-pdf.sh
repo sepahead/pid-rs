@@ -72,7 +72,7 @@ required_text=(
   "FA-3: time-uniform i.i.d. cumulative-prefix envelope"
   "Deterministic plug-in implication"
   "A time-uniform i.i.d. envelope"
-  "Independent frozen transforms"
+  "evaluation of a frozen transform"
   "Conditional push-forward target"
   "Counterexamples and invalid stronger claims"
   "Formal and executable evidence boundary"

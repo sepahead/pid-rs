@@ -1177,7 +1177,7 @@
       "constraints": [
         "The fitted quantizers and their training/evaluation identities define the categorical variables; this is not continuous PID.",
         "All compared results must use compatible fixed edges and out-of-range policies.",
-        "The convergence corollary requires a training artifact that is independent of the raw evaluation sequence, and a frozen map that is measurable with respect to the training sigma-field and raw input, returns a valid finite output with conditional probability one, and is applied to conditionally i.i.d. evaluation rows; same-row fitting, transform changes, dependence, and drift are outside its scope."
+        "The stable fitted-wrapper design requires training independent of the raw evaluation sequence. The general convergence corollary requires conditionally i.i.d. evaluation rows given training and one frozen, jointly measurable map with valid finite output almost surely under that conditional law. With identical fitted edges and otherwise valid inputs in range almost surely, Error and ClampToBoundary give the same conditional categorical law. Same-row fitting, changing maps, and unmodeled drift require separate analysis."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -3220,7 +3220,7 @@
       "code_availability": "local",
       "constraints": [
         "The result is PID of declared quantized variables; fitted edges and held-out policies are part of the estimand.",
-        "The convergence corollary requires a training artifact that is independent of the raw evaluation sequence, and a frozen map that is measurable with respect to the training sigma-field and raw input, returns a valid finite output with conditional probability one, and is applied to conditionally i.i.d. evaluation rows; same-row fitting, transform changes, dependence, and drift are outside its scope."
+        "The stable fitted-wrapper design requires training independent of the raw evaluation sequence. The general convergence corollary requires conditionally i.i.d. evaluation rows given training and one frozen, jointly measurable map with valid finite output almost surely under that conditional law. With identical fitted edges and otherwise valid inputs in range almost surely, Error and ClampToBoundary give the same conditional categorical law. Same-row fitting, changing maps, and unmodeled drift require separate analysis."
       ],
       "definition_origin": "project-defined",
       "depends_on": [

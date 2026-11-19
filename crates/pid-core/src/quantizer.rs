@@ -18,16 +18,17 @@
 //!
 //! # New project validation
 //!
-//! The frozen-transform corollary in `FINITE_ALPHABET_PLUGIN_CONVERGENCE.md` applies only under the
-//! following conditions. A training artifact is independent of the raw evaluation sequence. The
-//! frozen map is measurable with respect to the training sigma-field and raw input. It returns a
+//! The stable fitted-wrapper design requires training independent of the raw evaluation sequence.
+//! The general corollary in `FINITE_ALPHABET_PLUGIN_CONVERGENCE.md` conditions on training.
+//! The frozen map is measurable with respect to the training sigma-field and raw input. It returns a
 //! valid finite output with conditional probability one. Evaluation rows are conditionally i.i.d.
 //! given the training sigma-field. Under `OutOfRangePolicy::Error`, the
 //! evaluation law must have conditional mass one inside all fitted ranges. On any fixed training
 //! outcome, a positive conditional per-row failure probability makes an infinite valid prefix fail
 //! with conditional probability one. `ClampToBoundary` supplies a total range map for otherwise
-//! valid finite inputs, but it defines a tail-clamped categorical estimand. Same-row fitting,
-//! changing transforms, dependence, and drift are outside this corollary. The method catalog
+//! valid finite inputs. With the same fitted edges and in-range inputs almost surely, both policies
+//! give the same conditional categorical law. Same-row fitting, changing maps, and unmodeled drift
+//! require separate analysis. The method catalog
 //! records the project analysis under
 //! `validation.finite-alphabet-plugin-convergence`.
 

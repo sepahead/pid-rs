@@ -164,7 +164,7 @@ empirical minimum cannot replace it because an unobserved rare state can have po
 mass. The envelope does not apply to dependent or sliding windows, drift, feedback that changes
 the law, or rejection-selected samples.
 
-A training artifact must be independent of the raw evaluation sequence. The frozen map must be
+The stable fitted-wrapper design requires independent training. The general theorem conditions on training. The frozen map must be
 measurable with respect to the training sigma-field and raw input. It must return a valid finite
 output with conditional probability one. Evaluation rows must be conditionally i.i.d. given the
 training sigma-field. The limit is the PID or

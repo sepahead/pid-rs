@@ -1,0 +1,15 @@
+[package]
+name = "pid-copy-bootstrap-calibration"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[[bin]]
+name = "pid-copy-bootstrap-calibration"
+path = "candidate/main.rs"
+
+[dependencies]
+pid-core = { path = "../source/crates/pid-core", default-features = false, features = ["experimental-pipelines"] }
+serde_json = "=1.0.150"

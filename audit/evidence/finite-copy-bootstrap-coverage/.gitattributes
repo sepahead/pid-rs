@@ -1,0 +1,3 @@
+# These two byte-pinned checker sources retain the original terminal blank line.
+judge/observation.py whitespace=-blank-at-eof
+judge/seed_oracle.py whitespace=-blank-at-eof

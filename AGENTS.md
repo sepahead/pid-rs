@@ -347,7 +347,12 @@ promotion needs candidate-inaccessible confirmation or a declared selection-awar
   institutional, or custody independence. Record the existing independence vector and require a
   separately scoped human disposition whenever human scientific review is claimed.
 - A kernel proof establishes only the exact formal statement under its inventoried imports, axioms,
-  kernel, and trust surface. A numerical certificate establishes only its declared finite
+  kernel, and trust surface. Bind the proof term and its full statement to the named declaration.
+  Check its transitive axioms and record what the stock replay actually sends to the kernel,
+  including its treatment of axioms, unsafe and partial declarations. Record separately the
+  trust used to load compiled imports and the trust used when rechecking declarations. Preserve
+  the outcome of each previous verification predicate when a checker changes.
+  A numerical certificate establishes only its declared finite
   arithmetic predicate and covered domain. Neither closes paper-to-definition correspondence,
   executable/binary64 refinement, estimator calibration or consistency, PID-functional identity,
   or an application edge. Apply these boundaries separately to every PID, estimator, evaluator,

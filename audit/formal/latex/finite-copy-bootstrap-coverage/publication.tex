@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=24mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math,amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\setmathfont{latinmodern-math.otf}
+\usepackage{microtype,ragged2e,etoolbox}
+\usepackage{pid-rs-report-tables,pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\pdfvariable minorversion=7
+\pdfvariable suppressoptionalinfo=767
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,citecolor=PidSecondary,
+  pdftitle={Coverage of a bootstrap percentile range on a four-row copy law},
+  pdfauthor={Sepehr Mahmoudian},pdfsubject={Exact finite coverage of the fixed-seed categorical bootstrap},
+  pdflang={en-US},pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Finite copy-law bootstrap coverage}{Four ordered categorical observations}
+\PidWorkflowConfigureSections
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em plus 0.08em minus 0.05em}
+\setlength{\emergencystretch}{2.6em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcounter{none}
+\AtBeginEnvironment{longtable}{\small\setlength{\tabcolsep}{4pt}}
+\title{\PidReportTitle{Coverage of a bootstrap percentile range\\on a four-row copy law}{An exact calculation for categorical shared redundancy}}
+\author{Sepehr Mahmoudian}
+\date{18 November 2026}
+\begin{document}
+\PidMakeTitle
+\input{body.tex}
+\end{document}

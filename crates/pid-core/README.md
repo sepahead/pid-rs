@@ -207,8 +207,7 @@ and a checked
 
 For i.i.d. data, the note gives a conservative time-uniform envelope from Hoeffding's inequality
 and union bounds. A usable support-stabilization time needs a known positive lower bound on
-p<sub>min</sub>, the smallest supported cell mass. A training artifact must be independent of the raw
-evaluation sequence. The frozen map must be measurable with respect to the training sigma-field
+p<sub>min</sub>, the smallest supported cell mass. The stable fitted-wrapper design requires independent training. The general theorem conditions on training. The frozen map must be measurable with respect to the training sigma-field
 and raw input. It must return a valid finite output with conditional probability one. Evaluation
 rows must be conditionally i.i.d. given the training sigma-field.
 

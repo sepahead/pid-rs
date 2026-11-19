@@ -1,5 +1,18 @@
 # Session handoff — updated 18 November 2026
 
+## Finite bootstrap coverage and fitted quantization
+
+The four-row categorical copy calculation enumerates all sixteen original samples. At seed 7 the
+recorded nominal 95% percentile range contains the population entropy on all fourteen nonconstant
+samples. Their probability is 64/81. The two constant samples both return zero-width ranges.
+The source, recorded Rust outputs and two arithmetic checks are available with the study.
+[Finite coverage](FINITE_COPY_BOOTSTRAP_COVERAGE.md)
+
+The fitted-quantization study distinguishes the stable API's independent-training design
+from the theorem's common conditional distribution and frozen measurable map. It also specifies
+when clamping and the error policy induce the same categorical distribution.
+[Statements, proofs and pointwise scope](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md)
+
 ## Mathematical and review terminology, 18 November 2026
 
 All 26 rows in the terminology tables were checked against their cited meanings. Seven

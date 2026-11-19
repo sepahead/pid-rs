@@ -326,8 +326,7 @@ and a checked [PDF rendering](output/pdf/finite-alphabet-plugin-convergence.pdf)
 
 For i.i.d. data, the note also gives a conservative time-uniform envelope from Hoeffding's
 inequality and union bounds. A usable support-stabilization time needs a known positive lower bound
-on the smallest supported cell mass, $p_{\min}$. A training artifact must be independent of the raw
-evaluation sequence. The frozen map must be measurable with respect to the training sigma-field
+on the smallest supported cell mass, $p_{\min}$. The stable fitted-wrapper design requires independent training. The general theorem conditions on training. The frozen map must be measurable with respect to the training sigma-field
 and raw input. It must return a valid finite output with conditional probability one. Evaluation
 rows must be conditionally i.i.d. given the training sigma-field.
 
@@ -814,6 +813,9 @@ These estimators are not interchangeable with ground truth.
   explicit noise-model/sensitivity-analysis contract above. Prefer `RowResampleScheme::Subsample`
   for KSG-based diagnostics and report the smaller subsample size; its raw m-sample quantiles are
   not calibrated confidence intervals for the full n-row estimate.
+  In a four-row categorical copy study, the nominal 95% raw bootstrap range covered the
+  population redundancy with exact probability 64/81 at Seed 7. All sixteen samples returned
+  complete ranges. [Finite coverage study](FINITE_COPY_BOOTSTRAP_COVERAGE.md).
 - Atom × source × window searches are multiple-testing problems. Use Benjamini–Hochberg only under
   its independence/positive-dependence assumptions; `benjamini_yekutieli` is the more conservative
   option when dependence within the predeclared family is unknown.

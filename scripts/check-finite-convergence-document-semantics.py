@@ -69,6 +69,8 @@ REQUIRED_TEXT: dict[Path, tuple[str, ...]] = {
         "## 6. Frozen-transform corollary",
         "Evaluation rows are conditionally i.i.d. given $\\mathcal G$.",
         "It is not generally the same as the quantity of the unconditional mixture.",
+        "both policies give the same conditional categorical law and the same PID.",
+        "The stable fitted-wrapper design requires independent training and held-out evaluation.",
         "## 7. Falsification lenses and retained counterexamples",
         "## 9. Formal and numerical evidence boundary",
     ),
@@ -107,9 +109,11 @@ REQUIRED_TEXT: dict[Path, tuple[str, ...]] = {
             "The\nlabeled composition is project documentation; no mathematical priority "
             "or scientific-novelty\nclaim is made."
         ),
-        r"\section{Independent frozen transforms}",
+        r"\section{Conditionally i.i.d.\ evaluation of a frozen transform}",
         "Let $W_1,W_2,\\ldots$ be conditionally i.i.d.\\ given $\\mathcal G$",
         "The limit is generally not the same functional evaluated at the unconditional mixture",
+        "If those rows have conditional probability one, both policies give the same conditional",
+        "The stable fitted-wrapper design requires independent training and held-out evaluation.",
         r"\section{Counterexamples and invalid stronger claims}",
         r"\section{Formal and executable evidence boundary}",
     ),

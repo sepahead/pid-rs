@@ -27,7 +27,7 @@ CURRENT_CATALOG_SCHEMA_HELPER_RELATIVE = "scripts/json_schema_subset.py"
 SOURCE_MATERIALIZER_RELATIVE = "scripts/materialize-public-api-source.sh"
 COMPONENT_SHA256 = {
     "scripts/check-method-catalog.py": (
-        "4b963e5d17655a479123b962e343eab17e080a7d5e684892e4e4076377d6b45e"
+        "f3a73565fc7a58da50ecdd12c7ac89b9614a5afb3cc1e7666ba1c297b7670bd9"
     ),
     "scripts/check-method-catalog-self-test.py": (
         "6614f0424747d959a4ec1326f4bcacccd88569543a47e7b2ed06969ca4798aac"
@@ -46,7 +46,7 @@ COMPONENT_SHA256 = {
     ),
 }
 COMPONENT_ROSTER_SHA256 = (
-    "aa8a0a54674af56d855acd250ba5e0da706449bdc2bd6f6e872bc455fc5c5326"
+    "f908d2b569f4948fcc51f98be0d67c566689b80fefd0477b9304f4ae098a6e5c"
 )
 SUCCESS_LINE = (
     "KSG revision-4 preservation check passed: 6 pinned components; "

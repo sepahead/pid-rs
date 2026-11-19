@@ -68,7 +68,7 @@
   {Exact-real theorem, local moduli, an anytime i.i.d.\ envelope,\\
    and a formal evidence boundary}}
 \author{Sepehr Mahmoudian}
-\date{22 July 2026}
+\date{22 July 2026, revised 18 November 2026}
 
 \begin{document}
 \PidMakeTitle
@@ -80,9 +80,9 @@ information decomposition (SxPID).  The paper-defined functional is not new.  Th
 exact-real plug-in convergence on fixed finite alphabets, gives explicit local continuity moduli,
 and composes them with a conservative time-uniform i.i.d.\ concentration event.  A secondary
 corollary covers the Williams--Beer $\imin$ functional and fixed Shannon combinations.  A
-frozen-transform corollary states explicit sufficient conditions under which an independently trained finite
-map preserves the argument.  The theorem does not prove convergence of binary64 program outputs,
-dependent-window validity, drift calibration, or scientific novelty.  Invalid stronger claims and
+frozen-transform corollary treats a fixed finite-output map under conditionally independent,
+identically distributed evaluation rows.  The rate requires i.i.d.\ complete rows.  Binary64
+convergence and drift calibration remain open.  Invalid stronger claims and
 counterexamples remain in the document.
 \end{abstract}
 
@@ -156,8 +156,11 @@ covered by the result are:
 
 \subsection*{What problem this note solves}
 
-An implementation can evaluate a published categorical functional at an empirical law, but code
-existence alone does not prove that the plug-in value approaches a population value.  Under
+A plug-in estimate evaluates a functional at observed relative frequencies.  A prefix contains
+all rows from the start of a sequence.  Support consists of cells with positive probability.
+Write $P$ for the population law and $\Phat_n$ for the law of the first $n$ rows.
+Do the plug-in values approach the corresponding population values for the functionals of
+Makkeh, Gutknecht and Wibral or of Williams and Beer~\cite{makkeh2021,williamsbeer2010}?  Under
 FA-1's support-containment premise, \(\supp(\Phat_n)\subseteq\supp(P)\) for every \(n\),
 the key mathematical chain is
 \begin{equation}\label{eq:finite-causal-chain}
@@ -465,7 +468,7 @@ Strict stationarity without ergodicity is not sufficient.
 \end{corollary}
 
 \begin{proof}
-Apply the strong law, or the pointwise ergodic theorem, to the indicator of each cell.  A finite
+Apply the strong law, or the pointwise ergodic theorem~\cite{keanepetersen2006}, to the indicator of each cell.  A finite
 intersection gives simultaneous coordinate convergence.  If $P(z)=0$, every time index has zero
 probability of that cell.  A countable union shows that no such cell occurs, almost surely.  Thus,
 the empirical support is always a subset of $S$ on one probability-one event.
@@ -588,7 +591,7 @@ paths reject sample counts above $2^{53}$.
 \section{Secondary \texorpdfstring{$\imin$}{I-min} modulus}
 
 This section is a secondary validation control.  It is not the research priority of the document.
-Assume $\supp(q)\subseteq S$ and $\delta\le p_{\min}/2$.  For a supported target $t$, let
+Assume $\supp(q)\subseteq S$ and $\delta\le p_{\min}/2$.  All target averages below sum over the common positive target support. Logarithms for a source and target pair use positive joint cells. For a supported target $t$, let
 \begin{equation}
   r=q(s_a,t),\qquad u=q(s_a),\qquad v=q(t),\qquad
   w=\frac{r}{v},\qquad \ell=\log\frac{r}{uv}.
@@ -636,7 +639,7 @@ A finite minimum is one-Lipschitz in the sup norm.  If $C_J$ is the coefficient 
 \eqref{eq:imin-bound}, define
 \begin{align}
   R_\alpha(t;Q)&=\min_{a\in\alpha}J_a(t;Q), \\
-  I^{\min}_{\cap}(\alpha;Q)&=\sum_t Q(t)R_\alpha(t;Q).
+  I^{\min}_{\cap}(\alpha;Q)&=\sum_{t:Q(t)>0} Q(t)R_\alpha(t;Q).
 \end{align}
 Each $J_a(t;p)$ is a Kullback--Leibler divergence, so it is nonnegative.  Also,
 \begin{equation}
@@ -848,10 +851,10 @@ sample, and estimand.  For the convergence claim, each input sequence must be th
 exact-real finite-alphabet plug-in term formed from the same empirical law.  A positive denominator
 alone does not establish this coherence.
 
-For a report threshold $\tau$, a population denominator strictly above $\tau$ guarantees eventual
+For coherent terms under the exact-real denominator rule with threshold $\tau$, a population denominator strictly above $\tau$ guarantees eventual
 \texttt{Defined} status.  A denominator below $\tau$ guarantees an eventual status other than
 \texttt{Defined}.
-Equality gives no eventual status guarantee.
+Equality gives no eventual status guarantee. Rust also checks input and result representability.
 
 \section{A time-uniform i.i.d.\ envelope}
 
@@ -874,7 +877,7 @@ With probability at least $1-\alpha$, simultaneously for every $n\ge1$,
 \end{theorem}
 
 \begin{proof}
-For one fixed cell $z$ and one fixed $n$, Hoeffding's inequality gives
+For one fixed cell $z$, one fixed $n$, and $x>0$, Hoeffding's inequality gives
 \begin{equation}
   \Prb\bigl(|\Phat_n(z)-P(z)|\ge x\bigr)\le2e^{-2nx^2}.
 \end{equation}
@@ -924,7 +927,7 @@ The theorem controls an exact-real empirical law.  It is not a confidence sequen
 output.  It does not include floating-point error, the platform logarithm, resource failure,
 dependence, drift, rejection selection, or the $2^{53}$ sample-count limit.
 
-\section{Independent frozen transforms}
+\section{Conditionally i.i.d.\ evaluation of a frozen transform}
 
 Let $(\Omega,\mathcal F,\Prb)$ be the underlying probability space and let
 $\mathcal G\subseteq\mathcal F$ be generated by the training artifact.  Let $\mathcal X$ be
@@ -937,7 +940,10 @@ $\Phi_\omega(x):=\Phi(\omega,x)$ is used for every evaluation row and every pref
 
 Let $W_1,W_2,\ldots$ be conditionally i.i.d.\ given $\mathcal G$, with common regular conditional
 law $\kappa_\omega$ on $\mathcal X$.  An i.i.d.\ raw sequence independent of the training artifact
-is the special case in which $\kappa_\omega$ is a fixed law.  Put
+is the special case in which $\kappa_\omega$ is a fixed law. Consider the common-bit process
+in the counterexample table below. If training records that bit, each evaluation row has the
+same point-mass law given training and the rows are conditionally independent. A raw row
+still reveals the training bit. Put
 \[
   Y_j(\omega):=\Phi(\omega,W_j(\omega))
 \]
@@ -997,18 +1003,23 @@ integrating the resulting conditional probability-one event proves the claim.
 	this failure mechanism has probability $\Prb(\eta>0)$.  It has probability one only when
 	$\eta>0$ almost surely.
 
-Conditioning a complete prefix on success does not preserve the original-law claim.  Explicit
+With positive failure mass, a successful prefix gives no original-law guarantee for later rows.  Explicit
 rejection sampling can produce a sequence that is conditionally i.i.d.\ given $\mathcal{G}$ from a
-conditional law when success has positive probability.  That sequence has a different estimand and
-needs a declared sampling contract.
-	\nolinkurl{OutOfRangePolicy::ClampToBoundary} supplies a total range map for otherwise valid
-	finite inputs, but it defines a tail-clamped categorical estimand.  It is not the error-policy
-	estimand.
+conditional law when success has positive probability.  Its target is conditional on success.
 
-	Same-row fitting, changing transforms, arbitrary pooling across different fitted maps, and
-	target-adaptive fitting on evaluation rows are outside the corollary.  Training-target-adaptive
-	partial least squares is compatible only when fitted on the independent training artifact,
-	frozen, and applied to disjoint conditionally i.i.d.\ evaluation rows.
+For identical fitted edges and block definitions, \nolinkurl{ClampToBoundary} and
+\nolinkurl{Error} label every valid in-range row identically, including both endpoints.
+If those rows have conditional probability one, both policies give the same conditional
+categorical law and PID\@.  A constant evaluation row at a fitted endpoint is one example.
+With positive conditional probability of leaving the ranges, \nolinkurl{Error} is partial on
+the evaluation law.  Clamping assigns those rows boundary labels.  Record the policy even
+when the resulting laws agree.
+
+The stable fitted-wrapper design requires independent training and held-out evaluation.
+The general corollary requires the conditional-i.i.d.\ assumption above.  Training-target-adaptive
+partial least squares must freeze its fitted map before evaluation.  Reusing evaluation targets
+for fitting, changing the map between prefixes, or pooling fold-specific outputs requires a
+separate design.
 
 \section{Counterexamples and invalid stronger claims}
 
@@ -1042,7 +1053,7 @@ shift; pointwise convergence requires realization keys. \\
 Numerics & Exceed exact binary64 integer counts or change the platform logarithm. & The exact-real
 theorem does not become a portable executable theorem. \\
 Downstream & Reuse overlapping windows, drift the law, or select complete samples after inspecting
-them. & The i.i.d.\ proof and its envelope do not apply. \\
+them. & These designs alone do not justify the i.i.d.\ envelope. Check the complete row law and selection rule. \\
 \bottomrule
 \end{longtable}
 
@@ -1056,9 +1067,7 @@ them. & The i.i.d.\ proof and its envelope do not apply. \\
 	    shifts later positions, so convergence is keyed by the realization.
 	  \item One deterministic support-discovery time works for every finite law.  A cell of
 	    arbitrarily small positive mass rules out a uniform time.
-	  \item Complete-success conditioning preserves the original error-policy estimand.  It does
-	    not; explicit rejection sampling can define a different conditional-law estimand only under
-	    its own declared sampling contract.
+	  \item Complete-success conditioning always preserves the original law. A conditional failure probability strictly between zero and one changes the raw evaluation law on acceptance. A probability-one success event leaves that law unchanged.
 	  \item The conditional fitted-transform limit equals the PID of the unconditional mixture.
 	    Nonlinearity of PID in the law rules this out in general.
 	  \item Foldwise PMFs or atoms can be pooled when each fold uses a different map.  No
@@ -1170,15 +1179,39 @@ dependent temporal windows, same-window scaling, added-noise studies, circular d
 or complete-sample rejection after a degeneracy check. \\
 Haldir & Use i.i.d.\ or strictly stationary and ergodic fixed-law rows for finite-alphabet entropy,
 co-information, O-information, SxPID, and positive-denominator ratio limits. & A fixed one-time
-marginal without ergodicity, drift, CUSUM, alarms, overlapping windows, post-alarm estimation, or
+marginal without ergodicity, moving fixed-width estimates, drift, CUSUM, alarms, post-alarm estimation, or
 calibration. \\
 Crebain & Use stable categorical and fitted-transform contracts after an explicit dependency and
 input-contract review. & No compatibility or adapter claim follows from this theorem. \\
 \bottomrule
 \end{longtable}
 
+Observation rows may themselves be overlapping windows. Corollary~\ref{cor:sampling} covers
+their cumulative empirical law when the complete row process is strictly stationary and ergodic.
+Its target is the one-window marginal. Overlap alone establishes neither this premise nor the
+independence required by FA-3. An estimate that retains only the latest fixed number of rows
+has a different sampling design.
+
 No downstream repository is a runtime dependency of \texttt{pid-rs}.  This audit states
 mathematical preconditions.  It does not claim downstream qualification.
+
+\section{Rust implementation and computational cost}
+
+The default Rust build evaluates categorical SxPID and Williams--Beer $\imin$ in batch using
+the public routes in Section~1.  Let $N$ count aligned rows, $D$ count source and target columns,
+$K$ count cells in the product alphabet, and $U\le\min(N,K)$ count occupied joint cells.
+The general SxPID engine materializes and sorts row states. Its event scans visit exactly
+$(2L+1)U^2$ probability-table entries for a complete pass over $L$ lattice nodes.
+It also computes subset mutual informations and inverts the lattice.  Row storage scales
+with $ND$.  Pointwise output also retains values for every occupied state and node.
+The two- and three-source $\imin$ routes build sorted marginal and joint histograms and
+take finite minima of target-specific information.
+
+The fitted routes train bin edges once, then classify held-out rows.  Repeated fits and prefix
+calls incur their own costs.  The theorem performs no resampling.  Finite input shape, binary64
+logarithms, the exact-count limit, per-call budgets and available cooperative cancellation govern
+execution.  A failed call returns no estimate.  This study reports no timing or online latency.
+See the repository's \href{https://github.com/sepahead/pid-rs/blob/main/RUST_IMPLEMENTATION_AND_COST.md}{Rust implementation and cost reference}.
 
 \section{Reproduction}
 
@@ -1223,11 +1256,14 @@ The review process corrected the following defects in the current reviewed draft
     accepted bound uses this claim.  Alphabet size and supported-cell mass remain separate.
 \end{enumerate}
 
+The \href{https://github.com/sepahead/pid-rs/blob/7545930454b0e5336cce8497885d05dd4fe4ac2b/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md}{July paper} assumed independent training. The
+\href{https://github.com/sepahead/pid-rs/commit/6cbf273c37fc05286aece53b544f14e9fe0de329}{August proof} made conditional i.i.d.\ sampling sufficient. The stable wrapper keeps its independent-training design. The July paper also distinguished range policies by estimand when their maps agree on the evaluation support. Section~8 distinguishes policy identity from equality of conditional laws.
+
 \section{Open Wibral-lineage work}
 
 The next research priority is shared-exclusions PID, not an extension of $\imin$.  Open work is:
 \begin{enumerate}
-  \item a dependence-aware SxPID result for generic mixing or temporal processes that do not admit
+  \item a finite-sample concentration bound for generic mixing or temporal processes that do not admit
     the explicit independence coloring in the separate result under a dependency coloring;
   \item a sequential contract that separates fixed-law monitoring from drift and post-alarm
     estimation;
@@ -1241,11 +1277,20 @@ The next research priority is shared-exclusions PID, not an extension of $\imin$
     consumers.
 \end{enumerate}
 
+Cite this study as Sepehr Mahmoudian, \emph{Finite-Alphabet Plug-In Convergence for
+Shared-Exclusions PID} (2026), with the exact repository commit or release. Cite the defining
+method papers separately. The \href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{software citation} is included in the repository.
+
 \phantomsection
 \addcontentsline{toc}{section}{References}
 \begingroup
 \small
 \begin{thebibliography}{99}
+
+\bibitem{keanepetersen2006}
+M. Keane and K. Petersen.
+\newblock Easy and nearly simultaneous proofs of the ergodic theorem and maximal ergodic theorem.
+\newblock 2006. \url{https://arxiv.org/abs/math/0608251v1}.
 
 \bibitem{audenaert2007}
 K. M. R. Audenaert.

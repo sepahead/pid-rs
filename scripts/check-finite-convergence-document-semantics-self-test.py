@@ -171,6 +171,18 @@ def main() -> int:
             "The labeled composition is a new concentration inequality.",
         ),
         (
+            "finite-clamp-in-range-law",
+            Path("FINITE_ALPHABET_PLUGIN_CONVERGENCE.md"),
+            "both policies give the same conditional categorical law and the same PID.",
+            "the two policies must give different conditional categorical laws.",
+        ),
+        (
+            "finite-tex-wrapper-design",
+            Path("audit/formal/latex/finite-alphabet-plugin-convergence.tex"),
+            "The stable fitted-wrapper design requires independent training and held-out evaluation.",
+            "The maintained wrapper permits fitting on the evaluation data.",
+        ),
+        (
             "finite-tex-conditional-target",
             Path("audit/formal/latex/finite-alphabet-plugin-convergence.tex"),
             "The limit is generally not the same functional evaluated at the unconditional mixture",

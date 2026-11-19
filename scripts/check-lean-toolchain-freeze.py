@@ -668,8 +668,8 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ksg-m1a-composite-v12.yml": (
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
-    "AGENTS.md": "1779ae83f5d0ff8f2cc6ec0ffa2c5e2d5b66746cd94c1290ec509dd722e6ebfd",
-    "CHANGELOG.md": "9f133d081008642ae726f9d3cfc97f932944d687be15c852cab688789a140f67",
+    "AGENTS.md": "78782b417f9f8f406a5bd8b024eb6d39e836431537930b7839e79d9f0fc1bffc",
+    "CHANGELOG.md": "5c66bb465f9d074ade2685eb23e065bcb95ebaffffa1a0bda5cfb254c40ae14d",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f05845157268f3b875499ea683f2371198d703a99112992d973b0db842ae42a1"
     ),
@@ -707,7 +707,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        '5ff3f4900211656bd6aeebea90df4659a63cb535fa12fe15b5f707851f9e6b53'
+        'b607da3061e97e880af1b89ad3f2415391b5cf662ebfd7ecc07a5d746bd88aed'
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -716,7 +716,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
     ),
     "scripts/check-formal-pdf-set.sh": (
-        "938a3052aff0eadb8427571893e159a355d008e7903179ec8cf0c08310e7184f"
+        "3e3422d7deb724fd7861347f8564c0bc2a5035919f392e074bc1aa409fb7abf0"
     ),
     "scripts/build-finite-target-copy-mgw-pdf.py": (
         "7aba9fdee6135a84ea68ebddef05d631aabcd47be92251e53380df1459d40af6"
