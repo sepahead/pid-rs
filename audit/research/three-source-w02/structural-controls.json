@@ -1,0 +1,311 @@
+{
+  "scope": "Prereview fixture proposal, not yet run; no original W formula or outcome evaluated. The 25 synthetic inputs have original hand-specified denotational expectations and native/AST transfer controls remain a separate layer.",
+  "fixtures": [
+    {
+      "id": "T01-equality-pair",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T01-equality-pair\")\n(declare-const x Int)\n(assert (= x x))\n(assert (not (= x x)))\n(check-sat)\n(exit)\n",
+      "bytes": 158,
+      "sha256": "830eee5ea6cd80892bb79a6e52124d58f0c330cf5eee19af7dbe5e342bdf266c",
+      "expected": {
+        "every_valuation": [
+          true,
+          false
+        ],
+        "model": false
+      },
+      "reason": "Reflexivity is independent of the unbounded integer."
+    },
+    {
+      "id": "T02-swapped-assertions",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T02-swapped-assertions\")\n(declare-const x Int)\n(assert (not (= x x)))\n(assert (= x x))\n(check-sat)\n(exit)\n",
+      "bytes": 163,
+      "sha256": "de6e1897434b8fa6c44840c3eae6731215975645aa813beeafb0262fea20b4d8",
+      "expected": {
+        "every_valuation": [
+          false,
+          true
+        ],
+        "model": false
+      },
+      "reason": "Same unsatisfiability as T01; exposes loss of assertion order."
+    },
+    {
+      "id": "T03-arbitrary-negative-model",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T03-arbitrary-negative-model\")\n(declare-const x Int)\n(assert (< x (- 10000000000000000000000)))\n(assert (<= x x))\n(check-sat)\n(exit)\n",
+      "bytes": 190,
+      "sha256": "125c1f34ae685e6a537257ae43e371fe392d060132be75b4be7816e9b62646ed",
+      "expected": {
+        "valuation": {
+          "x": "-10000000000000000000001"
+        },
+        "pair": [
+          true,
+          true
+        ],
+        "model": true
+      },
+      "reason": "The displayed negative integer is a satisfying value. No machine integer bound is allowed."
+    },
+    {
+      "id": "T04-three-way-distinct",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T04-three-way-distinct\")\n(assert true)\n(assert (distinct (_ bv0 3) (_ bv1 3) (_ bv0 3)))\n(check-sat)\n(exit)\n",
+      "bytes": 165,
+      "sha256": "a4c04e7f5df4bc5f9e53daa3ff3c88500f56ffa8902e4bc4cdc809a18f45272e",
+      "expected": {
+        "every_valuation": [
+          true,
+          false
+        ],
+        "model": false
+      },
+      "reason": "First and third three-bit values coincide."
+    },
+    {
+      "id": "T05-distinct-positive",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T05-distinct-positive\")\n(assert true)\n(assert (distinct (_ bv0 3) (_ bv1 3) (_ bv2 3)))\n(check-sat)\n(exit)\n",
+      "bytes": 164,
+      "sha256": "9bf48d425c7e0e15bfef19f6cad25ddd3268f0cca693242fcfacf43acdce73cb",
+      "expected": {
+        "every_valuation": [
+          true,
+          true
+        ],
+        "model": true
+      },
+      "reason": "All three fixed-width values differ."
+    },
+    {
+      "id": "T06-zero-extended-sub",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T06-zero-extended-sub\")\n(assert (= ((_ zero_extend 4) (bvsub (_ bv0 3) (_ bv1 3))) (_ bv7 7)))\n(assert (not (= (bvshl (_ bv1 7) (_ bv7 7)) (_ bv0 7))))\n(check-sat)\n(exit)\n",
+      "bytes": 228,
+      "sha256": "c004660ae550802517007066cc3cf9318a87b97cdf3339b03e8c7224fcc25589",
+      "expected": {
+        "every_valuation": [
+          true,
+          false
+        ],
+        "model": false
+      },
+      "reason": "Three-bit subtraction wraps to seven. A seven-bit word shifted by seven is zero."
+    },
+    {
+      "id": "T07-extract-and-or",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T07-extract-and-or\")\n(assert (= ((_ extract 3 1) (_ bv10 4)) (_ bv5 3)))\n(assert (= (bvor (bvand (_ bv5 3) (_ bv3 3)) (_ bv2 3)) (_ bv3 3)))\n(check-sat)\n(exit)\n",
+      "bytes": 217,
+      "sha256": "40521f6a9e187672e99847255697ce9204efd6dfc3be13a326c1db3dfc3b997e",
+      "expected": {
+        "every_valuation": [
+          true,
+          true
+        ],
+        "model": true
+      },
+      "reason": "Binary 1010 extracts 101; (101 AND 011) OR 010 is 011."
+    },
+    {
+      "id": "T08-param-scope",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T08-param-scope\")\n(declare-const x Int)\n(declare-const q Bool)\n(define-fun xplus () Int (+ x 1))\n(define-fun choose ((q Bool) (x Int) (y Int)) Int (ite q x y))\n(define-fun g ((x Int) (q Bool)) Int (choose q x xplus))\n(assert (= (g 8 true) 8))\n(assert (= (g 11 false) (+ x 1)))\n(check-sat)\n(exit)\n",
+      "bytes": 353,
+      "sha256": "01c4c52bc5afeb6ed2551d718305282c8bf48fb9e397387d9f4ee574feb10c20",
+      "expected": {
+        "every_valuation": [
+          true,
+          true
+        ],
+        "model": true
+      },
+      "reason": "Scoped local formals shadow the global x and q; xplus retains its free global x."
+    },
+    {
+      "id": "T09-unused-int",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T09-unused-int\")\n(declare-const w Int)\n(define-fun dead () Bool (> w 999999999999))\n(assert true)\n(assert false)\n(check-sat)\n(exit)\n",
+      "bytes": 189,
+      "sha256": "3a702b01c03a60672a35a48faea975a3046226984862a1a936cd5d55caf96949",
+      "expected": {
+        "every_valuation": [
+          true,
+          false
+        ],
+        "model": false
+      },
+      "reason": "The unused declared integer remains unrestricted."
+    },
+    {
+      "id": "T10-comments-whitespace",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T10-comments-whitespace\")\n; (assert false) in a comment has no semantics\n(assert\t(=> true true)) ; trailing comment including )\n(assert (= (ite false 7 4) 4))\n(check-sat)\n(exit)\n",
+      "bytes": 235,
+      "sha256": "ef7b0465c0ee95b582a88c992633d348b10a1d9ae8d0f318da41b8e0c311101e",
+      "expected": {
+        "every_valuation": [
+          true,
+          true
+        ],
+        "model": true
+      },
+      "reason": "Tabs and comments do not create terms or close lists."
+    },
+    {
+      "id": "T11-indicator-sum",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T11-indicator-sum\")\n(define-fun pred ((f (_ BitVec 2))) Bool (= (bvand f (_ bv1 2)) (_ bv1 2)))\n(assert (= (+ (ite (pred (_ bv0 2)) 1 0) (ite (pred (_ bv1 2)) 1 0)) 1))\n(assert (distinct (_ bv0 2) (_ bv1 2)))\n(check-sat)\n(exit)\n",
+      "bytes": 285,
+      "sha256": "eb4b785ef2c681d88019f2b1bb251771b63c18edfec5fac572870a97fc1c4945",
+      "expected": {
+        "every_valuation": [
+          true,
+          true
+        ],
+        "model": true
+      },
+      "reason": "The masks zero and one contribute zero and one; two supplied literals differ."
+    },
+    {
+      "id": "T12-different-count-conjunct",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T12-different-count-conjunct\")\n(assert true)\n(assert (not (and (= (+ 1 1) 3) (distinct (_ bv0 2) (_ bv1 2)))))\n(check-sat)\n(exit)\n",
+      "bytes": 187,
+      "sha256": "92d8b7fbbcf325565fabc76735ce631730481485e8cc837c157fe2ce7a329427",
+      "expected": {
+        "every_valuation": [
+          true,
+          true
+        ],
+        "model": true
+      },
+      "reason": "The count equality is false while distinctness is true."
+    },
+    {
+      "id": "T13-different-distinct-conjunct",
+      "kind": "valid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"T13-different-distinct-conjunct\")\n(assert true)\n(assert (not (and (= (+ 1 1) 2) (distinct (_ bv0 2) (_ bv0 2)))))\n(check-sat)\n(exit)\n",
+      "bytes": 190,
+      "sha256": "3880d36c95474f6115667774185795e9679602e60c1c29c691e7db3cadf35faa",
+      "expected": {
+        "every_valuation": [
+          true,
+          true
+        ],
+        "model": true
+      },
+      "reason": "The count equality is true while distinctness is false."
+    },
+    {
+      "id": "N01-assert-int",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N01-assert-int\")\n(assert true)\n(assert 0)\n(check-sat)\n(exit)\n",
+      "bytes": 118,
+      "sha256": "4a6597b814875a3fc5e3b0c728a6c56a1084bae610a647ac6e41dc6f631f1d9e",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "The second term is not Boolean."
+    },
+    {
+      "id": "N02-width-mismatch",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N02-width-mismatch\")\n(assert true)\n(assert (= (_ bv1 3) (_ bv1 4)))\n(check-sat)\n(exit)\n",
+      "bytes": 144,
+      "sha256": "34daf09cb508b1abe3f4ecddb074257d3c723fe175b33c81885770a0c58f7e1d",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "Equality inputs have different sorts."
+    },
+    {
+      "id": "N03-out-of-range-literal",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N03-out-of-range-literal\")\n(assert true)\n(assert (= (_ bv8 3) (_ bv0 3)))\n(check-sat)\n(exit)\n",
+      "bytes": 150,
+      "sha256": "9ceca487bc8acdd95f2a23a0ef6acf0896ab5a1be0e1337a96bb0f887e80391d",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "Three bits do not hold this numeral in the specified indexed spelling."
+    },
+    {
+      "id": "N04-invalid-extraction",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N04-invalid-extraction\")\n(assert true)\n(assert (= ((_ extract 4 3) (_ bv0 3)) (_ bv0 2)))\n(check-sat)\n(exit)\n",
+      "bytes": 166,
+      "sha256": "cac3118b7784e556b56854425fdb05521b891ea374f4203373e86adeada649c4",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "High extraction index exceeds the operand width."
+    },
+    {
+      "id": "N05-forward-definition",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N05-forward-definition\")\n(define-fun f () Bool g)\n(define-fun g () Bool true)\n(assert f)\n(assert g)\n(check-sat)\n(exit)\n",
+      "bytes": 176,
+      "sha256": "6fada1e4ca06322dbac499d0d1c0e1b29af4a25f3da8aaada59fda5cd6e77ae1",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "The earlier definition references a future symbol."
+    },
+    {
+      "id": "N06-duplicate-global",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N06-duplicate-global\")\n(declare-const f Bool)\n(define-fun f () Bool true)\n(assert true)\n(assert f)\n(check-sat)\n(exit)\n",
+      "bytes": 175,
+      "sha256": "ea31ee70d5e417792631b3724d2411d07d6d869e1e0ed50fc93e0f5fb6a00183",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "The declaration and later definition use the same global name."
+    },
+    {
+      "id": "N07-missing-second-assertion",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N07-missing-second-assertion\")\n(assert true)\n(check-sat)\n(exit)\n",
+      "bytes": 121,
+      "sha256": "83b3e45757354dcb647a2ba55126fd32544b3150aa1755915147790f9af6c8b0",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "Fails the two-assertion scientific contract independently of generic SMT validity."
+    },
+    {
+      "id": "N08-third-assertion",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N08-third-assertion\")\n(assert true)\n(assert true)\n(assert false)\n(check-sat)\n(exit)\n",
+      "bytes": 141,
+      "sha256": "4ce2e8317e194848b5dc9f81fd176fe2b9b1a5f50004d70593bcb6e72189b7cd",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "An extra subsequent false assertion cannot be ignored."
+    },
+    {
+      "id": "N09-unregistered-operation",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N09-unregistered-operation\")\n(declare-const x Int)\n(assert true)\n(assert (= (* x x) x))\n(check-sat)\n(exit)\n",
+      "bytes": 164,
+      "sha256": "c89604ae91aaf970077519def268304440548f3133bf8c1f5e28c9ed18666292",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "Multiplication is valid SMT but outside the frozen original operation fragment."
+    },
+    {
+      "id": "N10-unsupported-context",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N10-unsupported-context\")\n(push 1)\n(assert true)\n(assert false)\n(check-sat)\n(exit)\n",
+      "bytes": 140,
+      "sha256": "02c6023696fb1b4e4e3802a64061ea625305c2982b208684c2228d2795525165",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "Additional assertion contexts are outside this single-query fragment."
+    },
+    {
+      "id": "N11-extra-close",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N11-extra-close\")\n(assert true))\n(assert false)\n(check-sat)\n(exit)\n",
+      "bytes": 124,
+      "sha256": "655bb53611a700b6ea316f65e883d9264935d718a24931836969eeaa7c9d8350",
+      "expected": "typed/shape rejection with no successful assertion result",
+      "reason": "The delimiter structure is invalid."
+    },
+    {
+      "id": "N12-command-after-exit",
+      "kind": "invalid",
+      "source": "(set-logic ALL)\n(set-option :produce-models true)\n(echo \"N12-command-after-exit\")\n(assert true)\n(assert true)\n(check-sat)\n(exit)\n(assert false)\n",
+      "bytes": 144,
+      "sha256": "59a4fbe971d6178291c2f37fc8b27605a393f3e8200a80d7ff537a7db344686c",
+      "expected": "full-stream rejection",
+      "reason": "The scoped contract requires exit plus EOF."
+    }
+  ]
+}

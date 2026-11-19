@@ -1993,6 +1993,8 @@ object checks. That fallback is a bounded text-and-geometry relation; it is not 
 PDF/UA, font/render equivalence, mathematical verification, benchmark comparability, estimator
 calibration, sensor-placement validity, or a real-time qualification.
 
+The [eighteen-family study](../audit/research/three-source-w02/README.md) supplies two checks of the archived test W02. Run `python3 -I -S -B audit/research/three-source-w02/replay.py --check-sources` to compare both original-source readers, the Lean transcription and the named declaration records. Give the same script `--lean-bin PATH` in place of `--check-sources` to compile its eight modules and replay each with stock Lean 4.34.1. The dedicated hosted replay pins the official Linux distribution. The aggregate publication gate additionally checks the report and its PDF. [Public native workflow](../.github/workflows/finite-three-source-stock-replay.yml)
+
 The [November mathematical results guide](../MATHEMATICAL_RESULTS_GUIDE_CURRENT.md) has a
 [separate PDF](../output/pdf/mathematical-results-guide-current.pdf). Run
 `python3 -I -S -B scripts/build-current-mathematical-results-guide.py --check` to rebuild and

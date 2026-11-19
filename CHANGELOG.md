@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Give a stock Lean proof for the two assertions in the archived three-source count test W02. All assignments evaluate the assertions to true followed by false. The source counts eighteen valid families and tests distinctness of eighteen listed codes. Identifying the list with the valid families needs a separate membership check. [Report and proof](audit/research/three-source-w02/README.md)
+
 - Cite the defining statistical sources in five studies and state the sampling distribution, the forecast loss, and the role of each reference calculation. Distinguish source probabilities from probabilities conditional on the observed target. [Source-by-source corrections](audit/evidence/statistical-method-primary-sources-2026-11-19.md)
 
 - Publish the checked 22-statement weighted-count theory for three arbitrary source alphabets

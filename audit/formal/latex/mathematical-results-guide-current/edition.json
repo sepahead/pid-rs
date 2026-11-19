@@ -2,7 +2,7 @@
   "edition": "2026-11-19",
   "scope": "Local byte-exact reproduction and direct inspection of the shipped November PDF; foundation v4/v5 profiles retain their separate scope.",
   "inputs": {
-    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "f6df17584cd66f29f16f6b4b220f778a96eaffb2eab85d4a47972db83fb03dd0",
+    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "c92a9607ae7eb448d1f1b109fa832f2bf2ce13ed43b77ed45ea4f3275e1b99ff",
     "audit/formal/latex/mathematical-results-guide-current/publication.tex": "5bdd57edecf751900a52f6a56369478949fb439db47252cea7ff72b90e69bd76",
     "audit/formal/latex/mathematical-results-guide-current/publication.lua": "c92077a00ae48f60ab562a359c1ec044baa04aae8d2cc5f3680e81bd44d19951",
     "audit/formal/latex/pid-rs-report-tables.sty": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
@@ -10,7 +10,7 @@
     "MATHEMATICAL_RESULTS_GUIDE.md": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b",
     "output/pdf/mathematical-results-guide.pdf": "166dd75fc3f60b6f30feee8cbba46076bba28abc5aaaf3d33f8b1475e6ab15f1"
   },
-  "pdf_sha256": "e81a9cb8d3c9e1ed07ba39c12b37588bbbf24db8d0ca6b2bdea26ede12405274",
+  "pdf_sha256": "0556d73ae891eb5dbeaadf219433a057bf22b66b23a593b323937be66a619d3f",
   "pdfinfo": {
     "Title": "Mathematical results guide for November 2026",
     "Author": "Sepehr Mahmoudian",
@@ -44,7 +44,9 @@
     ],
     [
       "What the 22 checked count statements establish",
-      "fresh kernel-checker invocation passed",
+      "Stock Lean 4.34.1 compiled and replayed",
+      "Every assignment makes the first true and the second false.",
+      "eighteen listed codes are distinct.",
       "Rust implementation and computational cost",
       "experimental::pipelines::block_bootstrap",
       "Cargo feature experimental-pipelines",
@@ -64,6 +66,7 @@
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-count-table-encoding/README.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/source-coupling-compression/EXPOSITION.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-alphabet-counts/README.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-w02/README.md",
     "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md",
     "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/obligations.md",
     "https://github.com/sepahead/pid-rs/blob/main/output/pdf/mathematical-results-guide.pdf",

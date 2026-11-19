@@ -7,18 +7,22 @@ on:
       - .github/workflows/finite-three-source-stock-replay.yml
       - audit/research/finite-three-source-controls/**
       - audit/research/three-source-alphabet-counts/**
+      - audit/research/three-source-w02/**
+      - audit/formal/finite-smt39-qualification-v1/raw/W02-exactly-18-distinct/generator.stdout.smt2
   pull_request:
     paths:
       - .github/workflows/finite-three-source-stock-replay.yml
       - audit/research/finite-three-source-controls/**
       - audit/research/three-source-alphabet-counts/**
+      - audit/research/three-source-w02/**
+      - audit/formal/finite-smt39-qualification-v1/raw/W02-exactly-18-distinct/generator.stdout.smt2
 
 permissions:
   contents: read
 
 jobs:
   replay:
-    name: Registry counterexamples and weighted count identities
+    name: Registry counterexamples, weighted counts and the archived count test
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     defaults:
@@ -61,6 +65,12 @@ jobs:
             git -C "$RUNNER_TEMP/count-mathlib" rev-parse HEAD
             uname -sm
           } | tee "$RUNNER_TEMP/stock-proof-logs/host-and-source.txt"
+
+      - name: Check both assertions of the archived eighteen-family count test
+        run: |
+          set -euo pipefail
+          python3 -I -S -B audit/research/three-source-w02/replay.py \
+            --lean-bin "$RUNNER_TEMP/lean-4.34.1-linux/bin" | tee "$RUNNER_TEMP/stock-proof-logs/w02.txt"
 
       - name: Build the four imported Mathlib modules at the pinned revision
         id: imports

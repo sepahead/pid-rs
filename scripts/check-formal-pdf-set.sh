@@ -49,6 +49,7 @@ STANDALONE_MARKDOWN_PAPERS=(
   "mathematical-results-guide-current"
   "finite-copy-bootstrap-coverage"
   "three-source-alphabet-counts"
+  "three-source-w02"
   "embodied-sensor-utility"
   "embodied-sensor-overview"
   "cross-implementation-reverification"
@@ -75,6 +76,7 @@ STANDALONE_MARKDOWN_SOURCES=(
   "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md"
   "FINITE_COPY_BOOTSTRAP_COVERAGE.md"
   "audit/research/three-source-alphabet-counts/README.md"
+  "audit/research/three-source-w02/README.md"
   "audit/research/embodied-sensor-utility/EXPOSITION.md"
   "audit/research/embodied-sensor-utility/OVERVIEW.md"
   "audit/evidence/cross-implementation-reverification-2026-09-26.md"
@@ -292,13 +294,17 @@ fi
 
 python3 -I -S -B audit/evidence/finite-copy-bootstrap-coverage/verify.py >/dev/null
 python3 -O -I -S -B audit/evidence/finite-copy-bootstrap-coverage/verify.py >/dev/null
+python3 -I -S -B audit/research/three-source-w02/replay.py --check-sources >/dev/null
+python3 -O -I -S -B audit/research/three-source-w02/replay.py --check-sources >/dev/null
 python3 -I -S -B audit/research/three-source-alphabet-counts/replay_checks.py >/dev/null
 python3 -O -I -S -B audit/research/three-source-alphabet-counts/replay_checks.py >/dev/null
 if [[ "$MODE" == "--exact" ]]; then
   python3 -I -S -B audit/research/three-source-alphabet-counts/build_pdf.py --check
+  python3 -I -S -B audit/research/three-source-w02/build_pdf.py --check
   python3 -I -S -B scripts/build-finite-copy-bootstrap-pdf.py --check
 else
   python3 -I -S -B audit/research/three-source-alphabet-counts/build_pdf.py --check-committed
+  python3 -I -S -B audit/research/three-source-w02/build_pdf.py --check-committed
   python3 -I -S -B scripts/build-finite-copy-bootstrap-pdf.py --check-committed
 fi
 python3 -I -S scripts/sync-mathematical-workflow-tex.py --check

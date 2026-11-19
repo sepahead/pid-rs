@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=23mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math,amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\setmathfont{latinmodern-math.otf}
+\usepackage{microtype,ragged2e,etoolbox}
+\usepackage{pid-rs-report-tables,pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark,fancyvrb}
+\DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\small}
+\pdfvariable minorversion=7
+\pdfvariable suppressoptionalinfo=767
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,citecolor=PidSecondary,
+  pdftitle={The eighteen families in the original three-source count test},
+  pdfauthor={Sepehr Mahmoudian},pdfsubject={The source formula, its finite count and its stock Lean proof},
+  pdflang={en-US},pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Three-source families}{The original count test}
+\PidWorkflowConfigureSections
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em plus 0.08em minus 0.05em}
+\setlength{\emergencystretch}{2.6em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcounter{none}
+\AtBeginEnvironment{longtable}{\small\setlength{\tabcolsep}{4pt}}
+\title{\PidReportTitle{The eighteen families in the\\original three-source count test}{From the archived assertions to a checked theorem}}
+\author{Sepehr Mahmoudian}
+\date{19 November 2026}
+\begin{document}
+\PidMakeTitle
+\input{body.tex}
+\end{document}

@@ -78,7 +78,9 @@ $$
 V\le U\le N,\qquad V\le T\le N.
 $$
 
-A key in the table matches itself on every source and on the target. With a nonempty family its source event, target match and their intersection all contain it. If the key has positive weight, all three counts are positive. The formal package also checks order properties, equality of data on the counted support, and the correspondence between the Boolean and event descriptions. A stock Lean 4.34.1 compilation and a fresh kernel-checker invocation passed for the 22 theorem types. The definition comparison covered nine pairs and one auxiliary definition. The recorded run relies on its pinned imports and the ordinary Lean trust path. Paper correspondence, refinement of Rust or binary64 execution, the original Lean 4.33 protocol and independent human disposition remain open. [Exact checked scope](audit/research/three-source-alphabet-counts/README.md)
+A positive-weight key matches itself on all sources and the target. For a nonempty family all three counts are positive. Stock Lean 4.34.1 compiled and replayed 22 theorem types about counts, order and the Boolean representation. The definition comparison covered nine pairs and one auxiliary definition. Paper correspondence, Rust and floating-point refinement, the original Lean 4.33 protocol and human review remain open. [Exact checked scope](audit/research/three-source-alphabet-counts/README.md)
+
+A separate proof checks both assertions in the archived count test W02. Every assignment makes the first true and the second false. There are eighteen nonempty families of incomparable nonempty branches. The script checks that eighteen listed codes are distinct. It does not test that each listed code represents such a family. [Count, source and checked proof](audit/research/three-source-w02/README.md)
 
 ## Rust implementation and computational cost
 
