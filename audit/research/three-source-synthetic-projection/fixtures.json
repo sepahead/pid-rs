@@ -1,0 +1,46 @@
+{
+  "Pair": {
+    "annotated_sha256": "1e25a4fa8766873d50d40d3b544cfd86e6eec30f57615828955a44228f938804",
+    "commands": 12,
+    "evaluated": false,
+    "full_spans": 172,
+    "lean_sha256": "613e7ccab5fd8a9401f08a0cad749998e53aba836b2fbacb06d8713f6072ef5f",
+    "raw_bytes": 447,
+    "sha256": "884c92133a8ede474e36fefa6d727466f98023dc65d90bc069a63cc0d108bf3e",
+    "spans_sha256": "e06d17538d86500399b6d9047c48d98824b571bd34efc8be37473dca9351e0c5",
+    "tree_sha256": "eb38ed2aa796458a6871eeda4d1864ff3f32ad6331bc0dbc1e8ab6539c990daa"
+  },
+  "Sat": {
+    "annotated_sha256": "c4a3e352cdcb340cfae6262c734ba5b01ab269dd915fac663f02f680244178a9",
+    "commands": 11,
+    "evaluated": false,
+    "full_spans": 132,
+    "lean_sha256": "3f247b10cf306b3de56b0b9000e54b2ffc0bb7834fde80ec48480e3784d1ec28",
+    "raw_bytes": 343,
+    "sha256": "172046aa9f74277d7d06add3b5f23242ddc9073040d519a2224a74cf4a1d3e37",
+    "spans_sha256": "9d4839b3b743f95d79ac1ebadcdfdbfe3db92a82a5f19fdd318e8a10aa4a0b1c",
+    "tree_sha256": "9833da1f915580b7c2ddf510a3dc3dbbe57f9f5feec96721a37ee82626591db0"
+  },
+  "Scale": {
+    "annotated_sha256": "01aa9fab454ba21e39de1190123aa60ef344e68b5c44a414d677c1bcddb42fb6",
+    "commands": 89,
+    "evaluated": false,
+    "full_spans": 28200,
+    "lean_sha256": "e0b58ab78f07d6d62fd7195717914567b25cfa41e87541ac3a14418ce5eb6bef",
+    "raw_bytes": 44089,
+    "sha256": "1c1f7f0fe46f9d49097f0cbf970ab3ad59d8a1924d5cedc56a0cc6b92fed2e3f",
+    "spans_sha256": "319503bbd63d31e6edd2af3564ce1f6ca23232924c4a8599a10dbbf9c85d59b1",
+    "tree_sha256": "81996e650aee9aadf78aa6d821cff3c0544146a4f8e8983bab7acb4ca4ecb128"
+  },
+  "Unary": {
+    "annotated_sha256": "c2d111af2fac0561445e27533d3563a0f72edf8227185653981878b00041d494",
+    "commands": 11,
+    "evaluated": false,
+    "full_spans": 136,
+    "lean_sha256": "a5a2273acd881e9b6f9721f6e17c2a96e0e89f4f5cda5821c26689c3856b31bb",
+    "raw_bytes": 351,
+    "sha256": "37778ba7d2e91cacf52ffc883c7b2308650958049222bf0a8a419f39362ab16e",
+    "spans_sha256": "5ac55538a24ca87634445ee1f2b53cd42a5475a2964a205346542ea94764024f",
+    "tree_sha256": "b10153e5103234c2a92dbdef62e057e6473c9e19a201d112aae9615b3ed7422f"
+  }
+}

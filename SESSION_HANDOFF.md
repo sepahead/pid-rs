@@ -1,5 +1,9 @@
 # Session handoff — updated 19 November 2026
 
+## Hosted proof checks on four artificial scripts
+
+A new hosted procedure tests whether a smaller finite calculation preserves both assertion values for every full assignment. It runs one stock Lean command at a time, retains intermediate results and tests four intentionally false statements. The earlier 44,089-byte artificial example exceeded its 4 GiB limit. Each run records which checks completed. The 21 remaining original formulas keep their existing status. [Definitions, previous results and qualification procedure](audit/research/three-source-synthetic-projection/README.md)
+
 ## The original eighteen-family count test
 
 A source-bound stock Lean 4.34.1 proof now covers W02, one of 22 formulas with historical unsatisfiable solver responses. A valuation assigns a value of the declared type to each constant. Every valuation of this script evaluates its assertions to true followed by false, and at least one valuation exists. The proof, original solver streams and 34 separately checked satisfiable witness projections have different scopes. The other 21 reported unsatisfiable formulas still require their own derivations. [W02 statement, source and measured commands](audit/research/three-source-w02/README.md) · [Original corpus](audit/formal/finite-smt39-qualification-v1/README.md)

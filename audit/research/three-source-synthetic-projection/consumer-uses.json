@@ -1,0 +1,14 @@
+{
+  "PrepConsumerP.inhabited": "PrepPayloadP.inhabited",
+  "PrepConsumerP.noModel": "PrepPayloadP.noModel",
+  "PrepConsumerP.successful": "PrepPayloadP.successful",
+  "PrepConsumerP.wellFormed": "PrepPayloadP.wellFormed",
+  "PrepConsumerU.inhabited": "PrepPayloadU.inhabited",
+  "PrepConsumerU.noModel": "PrepPayloadU.noModel",
+  "PrepConsumerU.successful": "PrepPayloadU.successful",
+  "PrepConsumerU.wellFormed": "PrepPayloadU.wellFormed",
+  "ScaleConsumer.inhabited": "ScaleFinite.inhabited",
+  "ScaleConsumer.noModel": "ScaleFinite.noModel",
+  "ScaleConsumer.successful": "ScaleFinite.successful",
+  "ScaleConsumer.wellFormed": "ScaleStatic.valid"
+}

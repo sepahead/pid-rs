@@ -1995,6 +1995,8 @@ calibration, sensor-placement validity, or a real-time qualification.
 
 The [eighteen-family study](../audit/research/three-source-w02/README.md) supplies two checks of the archived test W02. Run `python3 -I -S -B audit/research/three-source-w02/replay.py --check-sources` to compare both original-source readers, the Lean transcription and the named declaration records. Give the same script `--lean-bin PATH` in place of `--check-sources` to compile its eight modules and replay each with stock Lean 4.34.1. The dedicated hosted replay pins the official Linux distribution. The aggregate publication gate additionally checks the report and its PDF. [Public native workflow](../.github/workflows/finite-three-source-stock-replay.yml)
 
+The [four-script experiment](../audit/research/three-source-synthetic-projection/README.md) tests a reduction from all typed variable assignments to a smaller finite input. Its source check regenerates 37 Lean modules. Its hosted Linux workflow separately compiles the proofs, checks four expected compiler refusals and runs the stock checker in fresh processes. It retains partial evidence when a time or memory limit stops a stage. The fixtures in this experiment are artificial. [Workflow and resource limits](../.github/workflows/three-source-synthetic-projection.yml)
+
 The [November mathematical results guide](../MATHEMATICAL_RESULTS_GUIDE_CURRENT.md) has a
 [separate PDF](../output/pdf/mathematical-results-guide-current.pdf). Run
 `python3 -I -S -B scripts/build-current-mathematical-results-guide.py --check` to rebuild and

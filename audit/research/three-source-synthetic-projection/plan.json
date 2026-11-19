@@ -1,0 +1,157 @@
+{
+  "campaign_seconds": 5400,
+  "group_rss_bytes": 4294967296,
+  "observer_stock_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "refusal_diagnostics": {
+    "ControlFalseOnFailure": {
+      "contains": [
+        "RefutesTwo none",
+        "is false"
+      ],
+      "line": 3,
+      "prefix": "Tactic `decide`"
+    },
+    "ControlFixedVector": {
+      "contains": [
+        "evaluate",
+        "true",
+        "false",
+        "not definitionally equal"
+      ],
+      "line": 3,
+      "prefix": "Tactic `rfl` failed"
+    },
+    "ControlSatWrongSource": {
+      "contains": [
+        "SyntheticUnaryProof.noModel",
+        "syntheticSat",
+        "expected"
+      ],
+      "line": 3,
+      "prefix": "Type mismatch"
+    },
+    "ControlWrongProjection": {
+      "contains": [
+        "evaluate",
+        "wrongPack",
+        "not definitionally equal"
+      ],
+      "line": 4,
+      "prefix": "Tactic `rfl` failed"
+    }
+  },
+  "release": {
+    "sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+    "stock_git": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "version": "4.34.1"
+  },
+  "retained_bytes": 1073741824,
+  "scale_observed_theorems": 107,
+  "small_observed_theorems": 62,
+  "stages": [
+    {
+      "compile": [
+        "W02Semantics",
+        "ProjectionCore",
+        "ProjectionReification",
+        "SyntheticUnaryData",
+        "SyntheticPairData",
+        "SyntheticSatData",
+        "SyntheticUnaryProof",
+        "SyntheticPairProof",
+        "SyntheticSatProof",
+        "SyntheticRefusalsProved",
+        "SyntheticAssembly",
+        "ConsumerSynthetic"
+      ],
+      "fresh": [
+        "ConsumerSynthetic",
+        "SyntheticRefusalsProved"
+      ],
+      "observer": null,
+      "refuse": [],
+      "stage": "small-proofs"
+    },
+    {
+      "compile": [],
+      "fresh": [],
+      "observer": null,
+      "refuse": [
+        "ControlWrongProjection",
+        "ControlFixedVector",
+        "ControlSatWrongSource",
+        "ControlFalseOnFailure"
+      ],
+      "stage": "small-native-refusals"
+    },
+    {
+      "compile": [],
+      "fresh": [],
+      "observer": "Small",
+      "refuse": [],
+      "stage": "small-closed-term-readback"
+    },
+    {
+      "compile": [
+        "SyntheticScaleData",
+        "ScalePrefix"
+      ],
+      "fresh": [
+        "ScalePrefix"
+      ],
+      "observer": null,
+      "refuse": [],
+      "stage": "scale-1-literal-and-prefix"
+    },
+    {
+      "compile": [
+        "ScaleStaticGroup00",
+        "ScaleStaticGroup01",
+        "ScaleStaticGroup02",
+        "ScaleStaticGroup03",
+        "ScaleStaticGroup04",
+        "ScaleStaticGroup05",
+        "ScaleStaticGroup06",
+        "ScaleStaticGroup07",
+        "ScaleStaticGroup08",
+        "ScaleStaticGroup09",
+        "ScaleStaticGroup10",
+        "ScaleStatic"
+      ],
+      "fresh": [
+        "ScaleStatic"
+      ],
+      "observer": null,
+      "refuse": [],
+      "stage": "scale-2-static-fold"
+    },
+    {
+      "compile": [
+        "ScaleDynamic"
+      ],
+      "fresh": [
+        "ScaleDynamic"
+      ],
+      "observer": null,
+      "refuse": [],
+      "stage": "scale-3-full-valuation-dynamic-bridge"
+    },
+    {
+      "compile": [
+        "ScaleFinite",
+        "ScaleConsumer"
+      ],
+      "fresh": [
+        "ScaleConsumer"
+      ],
+      "observer": "Scale",
+      "refuse": [],
+      "stage": "scale-4-finite-decision-and-consumers"
+    }
+  ],
+  "subprocess_seconds": 900
+}

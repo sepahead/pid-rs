@@ -1,0 +1,73 @@
+name: Synthetic full-valuation proof qualification
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/three-source-synthetic-projection.yml
+      - audit/research/three-source-synthetic-projection/**
+      - audit/research/three-source-w02/source_reader.py
+      - audit/research/three-source-w02/source_writer.py
+      - audit/research/three-source-w02/lean_literals.py
+      - audit/research/three-source-w02/lean/W02Semantics.lean
+      - audit/research/three-source-w02/lean/W02Inspect.lean
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    name: Stock Lean 4.34.1, four artificial scripts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    defaults:
+      run:
+        shell: bash
+    env:
+      PACKAGE: audit/research/three-source-synthetic-projection
+      EXPECTED_MANIFEST: 45db526d9121411f1d946154747813adb1d1dd704a398af5cf0876417967d152
+      RELEASE: https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst
+      ARCHIVE_SHA256: 47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4
+    steps:
+      - name: Start the campaign clock
+        run: |
+          set -euo pipefail
+          started=$(python3 -I -S -c 'import time; print(time.monotonic())')
+          printf 'CAMPAIGN_STARTED=%s\n' "$started" >> "$GITHUB_ENV"
+          mkdir "$RUNNER_TEMP/synthetic-evidence"
+          printf 'commit=%s\nrun=%s\nattempt=%s\nstarted=%s\n' \
+            "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$started" \
+            > "$RUNNER_TEMP/synthetic-evidence/host.txt"
+
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+
+      - name: Acquire the pinned official Linux archive
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          printf '%s  %s\n' "$EXPECTED_MANIFEST" "$PACKAGE/manifest.json" | sha256sum --check --strict
+          timeout 850s curl --fail --location --proto '=https' --tlsv1.2 \
+            --retry 2 --retry-max-time 650 --max-time 420 \
+            --output "$RUNNER_TEMP/synthetic-lean.tar.zst" "$RELEASE"
+          printf '%s  %s\n' "$ARCHIVE_SHA256" "$RUNNER_TEMP/synthetic-lean.tar.zst" \
+            | sha256sum --check --strict
+
+      - name: Check the fixed small proofs, four refusals and four large stages
+        run: |
+          set -euo pipefail
+          python3 -I -S -B "$PACKAGE/run.py" --native \
+            --expected-manifest "$EXPECTED_MANIFEST" --commit "$GITHUB_SHA" \
+            --started "$CAMPAIGN_STARTED" --archive "$RUNNER_TEMP/synthetic-lean.tar.zst" \
+            --stock-root "$RUNNER_TEMP/synthetic-lean-stock" \
+            --output "$RUNNER_TEMP/synthetic-evidence/qualification"
+
+      - name: Retain completed checkpoints and failure evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: synthetic-projection-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/synthetic-evidence
+          if-no-files-found: error
+          compression-level: 1
