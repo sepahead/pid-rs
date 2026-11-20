@@ -6,6 +6,10 @@ The normalized Shannon reports round their exact represented-input numerators an
 
 The six original three-source categorical count tables and their 648 output coordinates are available together. Their exact rational products, signed logarithm enclosures, 360 specified relations and 20 adverse controls can be recomputed. The full producer dependency record, a universal guarantee for accepted output records and the other 21 original solver formulas remain open. [Six-table study](audit/research/three-source-six-certificate-observations/README.md) · [Three-source claim decision](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md) · [Original formula archive](audit/formal/finite-smt39-qualification-v1/README.md)
 
+## Lean source and proof coverage
+
+At `8709ee545c9cec9f29f66129bda48aef49adedcd`, all 301 previously inventoried Lean paths retain their Git modes and bytes. The 29 additions concern weighted counts, artificial formulas and the original eighteen-family count. The source inventory identifies all 37 uses of the interpreter constructor named `constant` in the additions. The theorem records separately bind the named propositions, proof terms, assumptions and stock checker. [Source review and how to reproduce the inventory](audit/evidence/lean-source-inventory-2026-11-20.md)
+
 ## Hosted proof checks on four artificial scripts
 
 A new hosted procedure tests whether a smaller finite calculation preserves both assertion values for every full assignment. It runs one stock Lean command at a time, retains intermediate results and tests four intentionally false statements. The earlier 44,089-byte artificial example exceeded its 4 GiB limit. Each run records which checks completed. The 21 remaining original formulas keep their existing status. [Definitions, previous results and qualification procedure](audit/research/three-source-synthetic-projection/README.md)

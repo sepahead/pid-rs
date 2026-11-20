@@ -538,8 +538,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "7ac1c37a6194101d77215d6d851ae6eb7eee8fbb3fbac382770ae530702eb8fb",
-        "size_bytes": 96861
+        "sha256": "2d144719d942f4465673daeb169202f3cd8323182f58ae33d7bdb40298dee786",
+        "size_bytes": 98954
       },
       {
         "git_mode": "100644",
@@ -604,8 +604,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "b95e46e34f506757d56c82638f4e9fc1eb916e3d6c8f2d07803c9006aa654236",
-        "size_bytes": 63502
+        "sha256": "a99d019c0dda571d31821435f9e1509a22a22307885f59439533411f92756539",
+        "size_bytes": 64080
       },
       {
         "git_mode": "100644",
@@ -5550,6 +5550,12 @@
         "path": "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json",
         "sha256": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35",
         "size_bytes": 3023
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/lean-source-inventory-2026-11-20.md",
+        "sha256": "776b919d29719f5fd607fe05474f5e0c594bcc981b1e6cf3b28b6bbe4eb0ae73",
+        "size_bytes": 3778
       },
       {
         "git_mode": "100644",
@@ -36758,8 +36764,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "475935ac7047ca8e0065f7784dfd59d00d9e91374f9e9ef8d78377e5b0435cea",
-    "entry_count": 6102
+    "entries_sha256": "02657db92d11ba7dc8c696a25183f7486bcabc10743f3f1d121974f11d41d5ab",
+    "entry_count": 6103
   },
   "subprojections": [
     {
@@ -36787,7 +36793,7 @@
       ]
     },
     {
-      "entries_sha256": "7449974ae877a470230f376cc5a3c074f5ef118048e799974be66efd0484d808",
+      "entries_sha256": "989e3b091d60207ea2bb878d2712ef49ae840b334abba489f2c2feac6c5bed00",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

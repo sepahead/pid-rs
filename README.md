@@ -142,6 +142,8 @@ positive short-prefix mean need not indicate dependence. Its three locally accep
 separate replay package; they add no Rust/Python estimator or confidence guarantee and do not
 change the frozen aggregate Lean baseline. The guide indexes it as a companion package.
 
+The prefix score and the mutual information of the observed frequency table can have different means on the same data. Take two independent observations of an independent fair binary source and target. If both coordinates change between the rows, the horizon-one prefix score is one nat and empirical mutual information is $\ln 2$ nats. Otherwise both values are zero. The event has probability $1/4$, so the means are $1/4$ and $(\ln 2)/4$ nats. The population mutual information is zero. [Finite-prefix definition and example](audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md) · [Empirical mutual information example](audit/research/source-coupling-compression/EXPOSITION.md)
+
 The [finite-prefix bias companion](audit/formal/lean-prefix-mgw-bias/PUBLICATION.md) bounds the
 difference between a population MGW atom and the expectation of that prefix statistic. The
 bounds show how a finite horizon can distort an atom before sampling error is considered. Their
@@ -264,7 +266,7 @@ Selected boundaries that are easy to confuse:
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
 | General mixed-variable shared exclusions | Schick-Poland et al.'s arXiv v2 proposes an auxiliary-indicator/RCP/Radon–Nikodým construction for a finite source family under stated Radon/Borel premises, intended to cover discrete, continuous, and mixed variables. pid-rs neither implements it nor adjudicates pointwise existence or version-independence at null conditioning events or for target-local Radon–Nikodým representatives. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
 | Heuristics / Lorentz KSG | Heuristics are project-defined research baselines; Lorentz KSG is a paper-derived research adaptation. Neither has a pid-rs consistency result for the claimed target setting. |
-| Shannon redundancy/vulnerability | Target-conditioned $\bar r$ and $\bar v$ follow the cited Shannon-invariants work. Target-free $\mathrm{Red}^{\circ}$ and $\mathrm{Vul}^{\circ}$ are project-defined entropy-ratio analogues, not those published target quantities. |
+| Shannon redundancy/vulnerability | Target-based $\bar r$ and $\bar v$ use mutual information about a specified target. The project-defined $\mathrm{Red}^{\circ}$ and $\mathrm{Vul}^{\circ}$ use only the source entropies. The complete source tuple as target gives the special case below. [Definitions and arithmetic](audit/research/normalized-shannon-arithmetic/README.md) |
 | Resampling and testing | Moving-block bootstrap, permutation schemes, and BH/BY use cited or standard procedures; pid-rs adds typed assumptions, failure retention, and provenance, not a generic calibration theorem. |
 | Run logs and Python bindings | Project engineering around the estimator code; no statistical-method paper is claimed for the schema, replay tooling, wrappers, or result classes. |
 | Software identity | Project-defined software infrastructure with stable local Rust and Python code; it has no defining method paper and makes no scientific-novelty claim. |
@@ -276,6 +278,10 @@ I(S_1,S_2;T)
 =\mathrm{Red}+\mathrm{Unq}(S_1)+\mathrm{Unq}(S_2)
 +\mathrm{Syn}.
 $$
+
+A screening statistic can give the same value for two different decompositions. Take independent fair source bits $S_1,S_2$. Compare a fair target independent of both with a target that copies $S_1$. In each case the co-information $I(S_1;T)+I(S_2;T)-I(S_1,S_2;T)$ is zero, and every source-only statistic sees the same law. The sum of the four atoms is zero in the first case and $\ln 2$ nats in the second. [Co-information definition and sign convention](METHODS.md#co-informationdiscrete--discrete-co-information)
+
+There is also an exact relation between the target-based and source-only degrees in the table. Let $S$ be the complete tuple of finite categorical sources and suppose its entropy $H(S)$ is positive. Choosing $T=S$ gives $I(T;S)=H(S)$, $I(T;S_i)=H(S_i)$ and $I(T;S_i\mid S_{-i})=H(S_i\mid S_{-i})$, where $S_{-i}$ omits source $i$. Substitution into the two published ratios yields the two source-only entropy ratios in exact arithmetic for this target. The source-only Rust functions take rows and the target-based reports take mutual information values, with different numerical checks. [Target-based formulas](https://arxiv.org/abs/2504.15779v1) · [Source-only definitions and code](crates/pid-core/src/invariants.rs)
 
 Pointwise and averaged SxPID atoms are deliberately different public types. A
 `SxPointwiseAtom` belongs to one distinct positive-mass joint realization under the complete
@@ -324,7 +330,7 @@ The [finite-alphabet plug-in convergence note](FINITE_ALPHABET_PLUGIN_CONVERGENC
 exact-real result for fixed finite alphabets and fixed lattices. It covers categorical SxPID for
 2–4 sources, Williams--Beer $I_{\min}$ for 2–3 sources, and finite-alphabet Shannon entropy, mutual
 information, co-information, and O-information. Under i.i.d. or strictly stationary and ergodic
-sampling, the prefix plug-in quantities converge almost surely. Normalized ratios also need a
+sampling, the quantities evaluated on the empirical frequencies of the first $n$ rows converge almost surely as $n$ grows. Normalized ratios also need a
 strictly positive population denominator. The paper-defined PID and Shannon quantities keep the
 origins listed in [METHODS.md](METHODS.md); only this validation analysis is new in pid-rs. The
 note retains the derivations, counterexamples, and rejected stronger claims for later audit.
