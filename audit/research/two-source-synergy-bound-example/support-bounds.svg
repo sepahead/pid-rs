@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="306" viewBox="0 0 800 306" role="img" aria-labelledby="title desc">
+  <title id="title">The same two tables give different bounds when the support limit changes</title>
+  <desc id="desc">Reference counts in cells 000, 010, 100, 111 are 50 each. Changed counts are 1, 99, 50, 50. Total variation is 0.245. Bounds displayed to three decimal places are 3.969 nats for K equal to four and 4.648 for K equal to sixteen. The local bound rounds to 4.346 nats. Smaller values give tighter bounds.</desc>
+  <rect x="0" y="0" width="800" height="306" fill="white" />
+  <text x="18" y="28" fill="#1F3F60" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="bold" text-anchor="start">Where the 49 counts move</text>
+  <text x="372" y="28" fill="#1F3F60" font-family="DejaVu Sans, Arial, sans-serif" font-size="19" font-weight="bold" text-anchor="start">Upper bound on synergy change</text>
+  <text x="372" y="51" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" font-weight="normal" text-anchor="start">Bound values rounded to three decimal places</text>
+  <line x1="345" y1="16" x2="345" y2="277" stroke="#D2E0E2" stroke-width="1.5" />
+  <rect x="16" y="48" width="306" height="29" fill="#F7F3E9" />
+  <text x="27" y="68" fill="#1F6968" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start">Cell</text>
+  <text x="129" y="68" fill="#1F6968" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Reference</text>
+  <text x="251" y="68" fill="#1F6968" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Changed</text>
+  <text x="27" y="102" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="start">000</text>
+  <text x="129" y="102" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="middle">50</text>
+  <text x="251" y="102" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="middle">1</text>
+  <line x1="19" y1="113" x2="319" y2="113" stroke="#D2E0E2" stroke-width="1" />
+  <text x="27" y="136" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="start">010</text>
+  <text x="129" y="136" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="middle">50</text>
+  <text x="251" y="136" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="middle">99</text>
+  <line x1="19" y1="147" x2="319" y2="147" stroke="#D2E0E2" stroke-width="1" />
+  <text x="27" y="170" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="start">100</text>
+  <text x="129" y="170" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="middle">50</text>
+  <text x="251" y="170" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="middle">50</text>
+  <line x1="19" y1="181" x2="319" y2="181" stroke="#D2E0E2" stroke-width="1" />
+  <text x="27" y="204" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="start">111</text>
+  <text x="129" y="204" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="middle">50</text>
+  <text x="251" y="204" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" font-weight="normal" text-anchor="middle">50</text>
+  <line x1="19" y1="215" x2="319" y2="215" stroke="#D2E0E2" stroke-width="1" />
+  <text x="27" y="246" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">Each column totals 200.</text>
+  <text x="27" y="269" fill="#1F6968" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start">Total variation = 49/200.</text>
+  <line x1="516.0" y1="61" x2="516.0" y2="216" stroke="#D2E0E2" stroke-width="1" />
+  <text x="516.0" y="235" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">0</text>
+  <line x1="560.2" y1="61" x2="560.2" y2="216" stroke="#D2E0E2" stroke-width="1" />
+  <text x="560.2" y="235" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">1</text>
+  <line x1="604.4" y1="61" x2="604.4" y2="216" stroke="#D2E0E2" stroke-width="1" />
+  <text x="604.4" y="235" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">2</text>
+  <line x1="648.6" y1="61" x2="648.6" y2="216" stroke="#D2E0E2" stroke-width="1" />
+  <text x="648.6" y="235" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">3</text>
+  <line x1="692.8" y1="61" x2="692.8" y2="216" stroke="#D2E0E2" stroke-width="1" />
+  <text x="692.8" y="235" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">4</text>
+  <line x1="737.0" y1="61" x2="737.0" y2="216" stroke="#D2E0E2" stroke-width="1" />
+  <text x="737.0" y="235" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle">5</text>
+  <line x1="516" y1="216" x2="737" y2="216" stroke="#2C3E50" stroke-width="1" />
+  <text x="626.5" y="257" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="middle">Bound in nats</text>
+  <text x="372" y="96" fill="#1F6968" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start">Global, K = 4</text>
+  <line x1="516" y1="91" x2="691.4220951447847" y2="91" stroke="#1F6968" stroke-width="3" />
+  <rect x="687.4220951447847" y="87" width="8" height="8" fill="#1F6968" />
+  <text x="785" y="96" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end">3.969</text>
+  <text x="372" y="145" fill="#743E37" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start">Local, p = 1/4</text>
+  <line x1="516" y1="140" x2="708.1067801130587" y2="140" stroke="#743E37" stroke-width="3" />
+  <circle cx="708.1067801130587" cy="140" r="5" fill="white" stroke="#743E37" stroke-width="2.4" />
+  <text x="785" y="145" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end">4.346</text>
+  <text x="372" y="194" fill="#1F6968" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="start">Global, K = 16</text>
+  <line x1="516" y1="189" x2="721.4464584179193" y2="189" stroke="#1F6968" stroke-width="3" />
+  <rect x="717.4464584179193" y="185" width="8" height="8" fill="#1F6968" />
+  <text x="785" y="194" fill="#2C3E50" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="end">4.648</text>
+  <text x="18" y="294" fill="#1F3F60" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" font-weight="normal" text-anchor="start">The tables fix the distance. K changes only the global upper bound.</text>
+</svg>

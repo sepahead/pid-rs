@@ -32319,6 +32319,30 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/two-source-synergy-bound-example/counts.json",
+        "sha256": "9c7f4dd6701272fc498a0bb6d5fbcbb86d99fa865e2612033480ce130888d4df",
+        "size_bytes": 471
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/two-source-synergy-bound-example/example.py",
+        "sha256": "90269a203c5819cd8c270646fa9ce55a3549c9df07283571670a872fdfd44180",
+        "size_bytes": 6477
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/two-source-synergy-bound-example/support-bounds.svg",
+        "sha256": "8d17efb99545682fdafce492b51c6c48bc762ed3a88f18f946d4670f9bb53ddf",
+        "size_bytes": 7600
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/two-source-synergy-bound-example/verify_numbers.py",
+        "sha256": "82a08b6959888229d47dd30f123d148f2d29f9b6a8ac3c03d2245fd0f890ce78",
+        "size_bytes": 3682
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/review-packets/2026-07-25/README.md",
         "sha256": "b8b5f9ed62366d135e67b15a9cbca2bf053f41d18ca1a2aaa444ead9ae7fe423",
         "size_bytes": 2476
@@ -36914,8 +36938,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "3b03005268c2a9a5279227016d19e3d7fa328d5c2d608eedd331e5bcf17ed477",
-    "entry_count": 6128
+    "entries_sha256": "b4b2533e6dcfe757d8efb977df0f60d65b551b6dfc4939fe61af1e929a28c8ae",
+    "entry_count": 6132
   },
   "subprojections": [
     {

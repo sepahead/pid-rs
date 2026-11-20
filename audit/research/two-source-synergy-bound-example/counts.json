@@ -1,0 +1,38 @@
+{
+  "order": [
+    "source_1",
+    "source_2",
+    "target"
+  ],
+  "alphabet": [
+    2,
+    2,
+    2
+  ],
+  "rows": [
+    {
+      "cell": "000",
+      "reference": 50,
+      "changed": 1
+    },
+    {
+      "cell": "010",
+      "reference": 50,
+      "changed": 99
+    },
+    {
+      "cell": "100",
+      "reference": 50,
+      "changed": 50
+    },
+    {
+      "cell": "111",
+      "reference": 50,
+      "changed": 50
+    }
+  ],
+  "support_bounds": [
+    4,
+    16
+  ]
+}
