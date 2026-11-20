@@ -75,8 +75,8 @@ C3_FORMAT_CUSTODY_COUNT=0
 C8_TEXT_PORTABILITY_COUNT=0
 PYTHON_BYTECODE_COUNT=0
 VISUAL_RECEIPT_HOSTILE_COUNT=0
-V4_ACTUAL_VIEW_COUNT=0
-EXPECTED_V4_ACTUAL_VIEW_COUNT=150
+V5_ACTUAL_VIEW_COUNT=0
+EXPECTED_V5_ACTUAL_VIEW_COUNT=162
 SPLIT_VISUAL_HOSTILE_COUNT=0
 EXPECTED_SPLIT_VISUAL_HOSTILE_COUNT=0
 MACHINE_SCOPE_HOSTILE_COUNT=0
@@ -91,13 +91,13 @@ EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
 EXPECTED_C8_TEXT_PORTABILITY_COUNT=71
 EXPECTED_PYTHON_BYTECODE_COUNT=12
 EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT=24
-EXPECTED_TOTAL_CONTROL_COUNT=576
+EXPECTED_TOTAL_CONTROL_COUNT=588
 # Cross-toolchain keeps every hostile case but replaces the primary exact positive with a
 # cross-toolchain positive. The two additional mode positives would then duplicate it or
 # reintroduce exact PNG identity, so only those two controls are omitted in this mode.
 if [[ "$VISUAL_TEST_MODE" == "--cross-toolchain" ]]; then
-  EXPECTED_V4_ACTUAL_VIEW_COUNT=148
-  EXPECTED_TOTAL_CONTROL_COUNT=574
+  EXPECTED_V5_ACTUAL_VIEW_COUNT=160
+  EXPECTED_TOTAL_CONTROL_COUNT=586
 fi
 # This suite never compiles the 87-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
@@ -1972,7 +1972,8 @@ copy_manifest_fixture() {
     "scripts/compare-formal-pdf-renders-self-test.py"
     "audit/evidence/x-thread-citation-edge-application.json"
     "audit/evidence/x-thread-citation-source-manifest.json"
-    "audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md"
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-11-20.md"
+    "audit/evidence/mathematical-workflow-visual-review-2026-11-20/actual-views.json"
     "audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json"
 
     "audit/formal/latex/mathematical-problem-solving-workflow.tex"
@@ -2016,8 +2017,9 @@ copy_manifest_fixture "$BASE_REPOSITORY"
 CHECKER="$BASE_REPOSITORY/scripts/check-mathematical-workflow-pdf.sh"
 BASE_PDF="$BASE_REPOSITORY/output/pdf/mathematical-problem-solving-workflow.pdf"
 BASE_RENDERING_RECEIPT="$BASE_REPOSITORY/output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
-BASE_VISUAL_RECEIPT="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md"
-BASE_VISUAL_RECORDS="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json"
+BASE_VISUAL_RECEIPT="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-receipt-2026-11-20.md"
+BASE_VISUAL_RECORDS="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-review-2026-11-20/actual-views.json"
+PRIOR_VISUAL_RECORDS="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json"
 BASE_MARKDOWN="$BASE_REPOSITORY/MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 BASE_FIGURE_DIR="$BASE_REPOSITORY/audit/formal/latex/figures/mathematical-workflow"
 
@@ -6189,7 +6191,7 @@ run_visual_validator() {
     "${visual_python[@]}" "$VISUAL_VALIDATOR" \
     "$1" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" \
     "$EXPECTED_PAGES" "$EXPECTED_DPI" "$EXPECTED_HIGH_RESOLUTION_DPI" \
-    "${2:-$BASE_VISUAL_RECORDS}" "${3:---cross-toolchain}" "$TEST_ROOT"
+    "${2:-$BASE_VISUAL_RECORDS}" "${3:---cross-toolchain}" "$TEST_ROOT" "${5:-$PRIOR_VISUAL_RECORDS}"
 }
 
 expect_visual_reject() {
@@ -6198,7 +6200,7 @@ expect_visual_reject() {
 }
 
 expect_accept \
-  "visual receipt v4 accepts current artifact bindings and all 22 rendered crops ($VISUAL_TEST_MODE)" \
+  "visual receipt v5 accepts current artifact bindings and all ten 300-dpi full pages ($VISUAL_TEST_MODE)" \
   run_visual_validator "$VISUAL_CONTROL" "$BASE_VISUAL_RECORDS" "$VISUAL_TEST_MODE"
 
 case_file="$TEST_ROOT/visual-private-path.md"
@@ -6211,7 +6213,7 @@ expect_visual_reject \
 
 case_file="$TEST_ROOT/visual-duplicate-field.md"
 cp "$VISUAL_CONTROL" "$case_file"
-printf "schema: \`pid-rs/mathematical-workflow-visual-review/v4\`\n" >>"$case_file"
+printf "schema: \`pid-rs/mathematical-workflow-visual-review/v5\`\n" >>"$case_file"
 expect_visual_reject \
   "visual receipt rejects duplicate canonical fields" \
   "visual receipt must contain exactly one canonical schema field" \
@@ -6229,7 +6231,7 @@ case_file="$TEST_ROOT/visual-pdf-digest.md"
 cp "$VISUAL_CONTROL" "$case_file"
 replace_once \
   "$case_file" \
-  'pdf_sha256: `446832ea439c838c6037ba7ad495294f8f07c7916162ff4ac0785bf3f50bed52`' \
+  'pdf_sha256: `b4f1a9e19a93c9aea5458509c42a9a807f0c74e071a6be59e253879ff5910560`' \
   'pdf_sha256: `0000000000000000000000000000000000000000000000000000000000000000`'
 expect_visual_reject \
   "visual receipt rejects a stale PDF digest binding" \
@@ -6240,7 +6242,7 @@ case_file="$TEST_ROOT/visual-rendering-receipt-digest.md"
 cp "$VISUAL_CONTROL" "$case_file"
 replace_once \
   "$case_file" \
-  'rendering_receipt_sha256: `bc64dbbcd56e818e6f5d98d67635c54c2f31b4341f749ea4c4cf339398966d87`' \
+  'rendering_receipt_sha256: `094c0ca99b86c473c4531be2216850c5f6499db9b3d5025e14658e70271402fe`' \
   'rendering_receipt_sha256: `0000000000000000000000000000000000000000000000000000000000000000`'
 expect_visual_reject \
   "visual receipt rejects a stale rendering-receipt digest binding" \
@@ -6275,8 +6277,8 @@ case_file="$TEST_ROOT/visual-detail-target-count.md"
 cp "$VISUAL_CONTROL" "$case_file"
 replace_once \
   "$case_file" \
-  'detail_targets: `22`' \
-  'detail_targets: `21`'
+  'detail_targets: `10`' \
+  'detail_targets: `9`'
 expect_visual_reject \
   "visual receipt rejects detail-target count drift" \
   "visual receipt field detail_targets differs" \
@@ -6420,24 +6422,24 @@ for context_mode in comment fence quote details reference-comment; do
     run_visual_validator "$case_file"
 done
 
-# v4 records use causal mutations before the frozen byte digest. Each case starts from
+# v5 records use causal mutations before the frozen byte digest. Each case starts from
 # the committed positive control, and runs in normal and optimized Python. Exact crop tests
 # invoke real Poppler; cross-toolchain tests still require every other predicate and the pin.
-expect_v4_accept() {
+expect_v5_accept() {
   expect_accept "$@"
-  V4_ACTUAL_VIEW_COUNT=$((V4_ACTUAL_VIEW_COUNT + 1))
+  V5_ACTUAL_VIEW_COUNT=$((V5_ACTUAL_VIEW_COUNT + 1))
 }
-expect_v4_reject() {
+expect_v5_reject() {
   expect_reject "$@"
-  V4_ACTUAL_VIEW_COUNT=$((V4_ACTUAL_VIEW_COUNT + 1))
+  V5_ACTUAL_VIEW_COUNT=$((V5_ACTUAL_VIEW_COUNT + 1))
 }
 if [[ "$VISUAL_TEST_MODE" == "--exact" ]]; then
-  expect_v4_accept "v4 records accept the committed cross-toolchain control" \
+  expect_v5_accept "v5 records accept the committed cross-toolchain control" \
     run_visual_validator "$VISUAL_CONTROL"
-  expect_v4_accept "v4 records accept all exact crops in optimized Python" \
+  expect_v5_accept "v5 records accept all exact crops in optimized Python" \
     run_visual_validator "$VISUAL_CONTROL" "$BASE_VISUAL_RECORDS" --exact optimized
 fi
-expect_v4_accept "v4 records accept the optimized cross-toolchain control" \
+expect_v5_accept "v5 records accept the optimized cross-toolchain control" \
   run_visual_validator "$VISUAL_CONTROL" "$BASE_VISUAL_RECORDS" --cross-toolchain optimized
 
 # The canonical receipt is also byte-closed after its content checks. Python's splitlines and
@@ -6462,13 +6464,13 @@ else:
     raise SystemExit("unknown v4 whitespace mutation")
 Path(sys.argv[2]).write_bytes(raw)
 PY_WHITESPACE
-  expect_v4_reject "v4 receipt rejects $whitespace_variant serialization" \
+  expect_v5_reject "v4 receipt rejects $whitespace_variant serialization" \
     "visual receipt does not have canonical Markdown serialization" \
     run_visual_validator "$case_file"
 done
 
-make_v4_mutant() {
-  python3 -I -S -B - "$BASE_VISUAL_RECORDS" "$1" "$2" <<'PY_V4_MUTANT'
+make_v5_mutant() {
+  python3 -I -S -B - "$BASE_VISUAL_RECORDS" "$1" "$2" <<'PY_V5_MUTANT'
 from copy import deepcopy
 from datetime import datetime, timedelta
 import json
@@ -6544,7 +6546,7 @@ elif variant == "time-outside-sitting":
     page["recorded_after_view_utc"] = (datetime.fromisoformat(sitting["start_utc"]) - timedelta(seconds=1)).isoformat()
     expected = "actual-view time is outside its sitting"
 elif variant == "overlapping-sittings":
-    records["sittings"].append(dict(sitting, id="C"))
+    records["sittings"].append(dict(sitting, id="E"))
     expected = "actual-view sittings overlap or are out of order"
 elif variant == "decreasing-times":
     # Several records share one second; swap the first view with the first strictly later one.
@@ -6583,9 +6585,9 @@ elif variant.startswith(("bool-", "float-")):
         crop["crop"][0] = value if value is not None else float(crop["crop"][0])
         expected = "actual-view crop coordinates must have exact integer type"
     else:
-        raise SystemExit("unknown typed v4 mutation")
+        raise SystemExit("unknown typed v5 mutation")
 elif variant == "url-not-host-path":
-    page["finding"] = "This finding cites https://example.org/path and stays otherwise valid."
+    next(v for v in views if v["sitting"] == "C")["finding"] = "This finding cites https://example.org/path and stays otherwise valid."
     expected = "actual-view frozen record digest differs"
 elif variant == "drive-letter-path":
     page["finding"] = "A Windows path C:\\reviewer\\image.png must not be published here."
@@ -6643,7 +6645,7 @@ elif variant == "sitting-empty-interval":
     expected = "actual-view sitting start must precede end"
 elif variant == "sitting-count":
     end = datetime.fromisoformat(records["sittings"][-1]["end_utc"])
-    records["sittings"].append({"id": "C", "start_utc": (end + timedelta(seconds=1)).isoformat(), "end_utc": (end + timedelta(seconds=2)).isoformat()})
+    records["sittings"].append({"id": "E", "start_utc": (end + timedelta(seconds=1)).isoformat(), "end_utc": (end + timedelta(seconds=2)).isoformat()})
     expected = "actual-view sitting count differs from receipt"
 elif variant == "undeclared-sitting":
     page["sitting"] = "Z"
@@ -6666,11 +6668,28 @@ elif variant == "multiple-pages":
 elif variant == "nonfinite-json":
     page["dpi"] = float("nan")
     expected = "actual-view non-finite JSON number: NaN"
+elif variant == "changed-historical-finding":
+    page["finding"] = "A different retrospective finding claims the same earlier view."
+    expected = "October carried page differs from its original observation"
+elif variant in ("changed-page-sitting", "detail-sitting"):
+    old_sitting, new_sitting = ("C", "D") if variant == "changed-page-sitting" else ("D", "C")
+    subject = next(v for v in views if v["sitting"] == old_sitting)
+    subject["sitting"] = new_sitting
+    subject["recorded_after_view_utc"] = next(s["end_utc"] for s in records["sittings"] if s["id"] == new_sitting)
+    views.sort(key=lambda v: v["recorded_after_view_utc"])
+    expected = ("November changed page lacks a direct observation" if variant == "changed-page-sitting"
+                else "November detail is outside its declared sitting")
+elif variant == "changed-historical-sitting":
+    sitting["start_utc"] = (datetime.fromisoformat(sitting["start_utc"]) - timedelta(seconds=1)).isoformat()
+    expected = "October sitting or superseded-view provenance differs"
+elif variant == "changed-historical-superseded":
+    superseded["finding"] = "This rewritten superseded page observation is historically unsupported."
+    expected = "October sitting or superseded-view provenance differs"
 elif variant == "record-digest-last":
-    page["finding"] = "This changed finding remains structurally valid but was never frozen."
+    next(v for v in views if v["sitting"] == "C")["finding"] = "This changed finding remains structurally valid but was never frozen."
     expected = "actual-view frozen record digest differs"
 else:
-    raise SystemExit(f"unknown v4 mutation: {variant}")
+    raise SystemExit(f"unknown v5 mutation: {variant}")
 raw = json.dumps(records, indent=1, ensure_ascii=False) + "\n"
 if variant == "duplicate-json-member":
     raw = raw.replace('"dpi": 120,', '"dpi": 120, "dpi": 120,', 1)
@@ -6678,10 +6697,11 @@ elif variant == "escaped-private-path":
     raw = raw.replace("/private/", r"\u002fprivate\u002f")
 Path(sys.argv[2]).write_text(raw, encoding="utf-8", newline="\n")
 print("visual receipt " + expected)
-PY_V4_MUTANT
+PY_V5_MUTANT
 }
 
 for variant in \
+  changed-historical-finding changed-page-sitting detail-sitting changed-historical-sitting changed-historical-superseded \
   page-image-not-render page-component page-name missing-gray-page duplicated-page \
   crop-digest-exact crop-digest-cross missing-target extra-target duplicate-target \
   changed-rectangle one-pixel-rectangle crop-mode-page crop-components \
@@ -6697,16 +6717,27 @@ for variant in \
   sittings-empty sitting-id sitting-id-duplicate sitting-time-format sitting-time-invalid \
   sitting-empty-interval sitting-count undeclared-sitting view-time-format \
   page-extra-key crop-extra-key unknown-kind multiple-pages nonfinite-json record-digest-last; do
-  case_file="$TEST_ROOT/actual-views-v4-$variant.json"
-  expected="$(make_v4_mutant "$case_file" "$variant")"
+  case_file="$TEST_ROOT/actual-views-v5-$variant.json"
+  expected="$(make_v5_mutant "$case_file" "$variant")"
   visual_mode=--cross-toolchain
   if [[ "$variant" == "crop-digest-exact" ]]; then
     visual_mode=--exact
   fi
   for python_mode in normal optimized; do
-    expect_v4_reject "v4 records reject $variant ($python_mode)" "$expected" \
+    expect_v5_reject "v5 records reject $variant ($python_mode)" "$expected" \
       run_visual_validator "$VISUAL_CONTROL" "$case_file" "$visual_mode" "$python_mode"
   done
+done
+
+# The carry-forward authority is a separately captured, immutable October record.
+case_file="$TEST_ROOT/altered-historical-views.json"
+cp "$PRIOR_VISUAL_RECORDS" "$case_file"
+chmod u+w "$case_file"
+printf '\n' >> "$case_file"
+for python_mode in normal optimized; do
+  expect_v5_reject "v5 rejects an altered historical source ($python_mode)" \
+    "visual receipt October actual-view source digest differs" \
+    run_visual_validator "$VISUAL_CONTROL" "$BASE_VISUAL_RECORDS" --cross-toolchain "$python_mode" "$case_file"
 done
 
 # The extracted validator must reject renderer failure, either diagnostic stream, and absent
@@ -6741,14 +6772,14 @@ for renderer_failure in stdout stderr exit missing-png; do
   esac
   chmod 0700 "$renderer_directory/pdftoppm"
   for visual_mode in --exact --cross-toolchain; do
-    expect_v4_reject "v4 rejects renderer $renderer_failure ($visual_mode)" \
+    expect_v5_reject "v5 rejects renderer $renderer_failure ($visual_mode)" \
       "visual receipt $expected" \
       run_visual_renderer_probe "$renderer_directory" "$visual_mode"
   done
 done
 
-# Split-review controls are retired: v4 has one reviewer and sittings, with no stage or
-# reviewer partition. Historical v3 verification belongs to check-workflow-publication-history.py.
+# The November records distinguish carried October observations from fresh November views.
+# The September split-review contract remains covered by check-workflow-publication-history.py.
 
 # Four separate controls reject a full-pass claim for each machine-scoped lens.
 for machine_lens in \
@@ -7697,7 +7728,7 @@ c3_control_count=$((
   + C3_EXECUTABLE_CUSTODY_COUNT
   + C3_FORMAT_CUSTODY_COUNT
 ))
-predecessor_control_count=$((PASS_COUNT - c3_control_count - C8_TEXT_PORTABILITY_COUNT - PYTHON_BYTECODE_COUNT - SPLIT_VISUAL_HOSTILE_COUNT - MACHINE_SCOPE_HOSTILE_COUNT - V4_ACTUAL_VIEW_COUNT))
+predecessor_control_count=$((PASS_COUNT - c3_control_count - C8_TEXT_PORTABILITY_COUNT - PYTHON_BYTECODE_COUNT - SPLIT_VISUAL_HOSTILE_COUNT - MACHINE_SCOPE_HOSTILE_COUNT - V5_ACTUAL_VIEW_COUNT))
 if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C3_BOUNDED_PROBE_COUNT" -ne "$EXPECTED_C3_BOUNDED_PROBE_COUNT" \
     || "$C3_ENTRY_WRAPPER_COUNT" -ne "$EXPECTED_C3_ENTRY_WRAPPER_COUNT" \
@@ -7708,15 +7739,15 @@ if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C8_TEXT_PORTABILITY_COUNT" -ne "$EXPECTED_C8_TEXT_PORTABILITY_COUNT" \
     || "$PYTHON_BYTECODE_COUNT" -ne "$EXPECTED_PYTHON_BYTECODE_COUNT" \
     || "$VISUAL_RECEIPT_HOSTILE_COUNT" -ne "$EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT" \
-    || "$V4_ACTUAL_VIEW_COUNT" -ne "$EXPECTED_V4_ACTUAL_VIEW_COUNT" \
+    || "$V5_ACTUAL_VIEW_COUNT" -ne "$EXPECTED_V5_ACTUAL_VIEW_COUNT" \
     || "$SPLIT_VISUAL_HOSTILE_COUNT" -ne "$EXPECTED_SPLIT_VISUAL_HOSTILE_COUNT" \
     || "$MACHINE_SCOPE_HOSTILE_COUNT" -ne "$EXPECTED_MACHINE_SCOPE_HOSTILE_COUNT" \
     || "$predecessor_control_count" -ne "$EXPECTED_PREDECESSOR_CONTROL_COUNT" \
     || "$PASS_COUNT" -ne "$EXPECTED_TOTAL_CONTROL_COUNT" ]]; then
-  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, python-bytecode=$PYTHON_BYTECODE_COUNT, visual-receipt-hostile=$VISUAL_RECEIPT_HOSTILE_COUNT, v4-actual-view=$V4_ACTUAL_VIEW_COUNT, split-visual-hostile=$SPLIT_VISUAL_HOSTILE_COUNT, machine-scope-hostile=$MACHINE_SCOPE_HOSTILE_COUNT, total=$PASS_COUNT"
+  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, python-bytecode=$PYTHON_BYTECODE_COUNT, visual-receipt-hostile=$VISUAL_RECEIPT_HOSTILE_COUNT, v5-actual-view=$V5_ACTUAL_VIEW_COUNT, split-visual-hostile=$SPLIT_VISUAL_HOSTILE_COUNT, machine-scope-hostile=$MACHINE_SCOPE_HOSTILE_COUNT, total=$PASS_COUNT"
 fi
 
-printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; python-bytecode=%d; visual-receipt-hostile=%d; v4-actual-view=%d; split-visual-hostile=%d; machine-scope-hostile=%d; no report compilation was performed\n' \
+printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; python-bytecode=%d; visual-receipt-hostile=%d; v5-actual-view=%d; split-visual-hostile=%d; machine-scope-hostile=%d; no report compilation was performed\n' \
   "$PASS_COUNT" \
   "$predecessor_control_count" \
   "$C3_BOUNDED_PROBE_COUNT" \
@@ -7728,6 +7759,6 @@ printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen fa
   "$C8_TEXT_PORTABILITY_COUNT" \
   "$PYTHON_BYTECODE_COUNT" \
   "$VISUAL_RECEIPT_HOSTILE_COUNT" \
-  "$V4_ACTUAL_VIEW_COUNT" \
+  "$V5_ACTUAL_VIEW_COUNT" \
   "$SPLIT_VISUAL_HOSTILE_COUNT" \
   "$MACHINE_SCOPE_HOSTILE_COUNT"

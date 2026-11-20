@@ -27,8 +27,9 @@ SOURCE="audit/formal/latex/mathematical-problem-solving-workflow.tex"
 MARKDOWN="MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 COMMITTED="output/pdf/mathematical-problem-solving-workflow.pdf"
 RENDERING_RECEIPT="output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
-VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md"
-VISUAL_RECORDS="audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json"
+VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-11-20.md"
+VISUAL_RECORDS="audit/evidence/mathematical-workflow-visual-review-2026-11-20/actual-views.json"
+PRIOR_VISUAL_RECORDS="audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json"
 SHARED_STYLE="audit/formal/latex/pid-rs-report-tables.sty"
 PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
@@ -654,7 +655,7 @@ if [[ "$MODE" != "--refresh" ]]; then
   # agent actually inspects the refreshed pages.  Treating stale or absent output bytes as source
   # inputs made a clean refresh impossible and falsely enlarged the build dependency closure.
   # Exact and cross-toolchain modes still capture the report, rendering, and visual records.
-  manifest_paths+=("$COMMITTED" "$RENDERING_RECEIPT" "$VISUAL_RECEIPT" "$VISUAL_RECORDS")
+  manifest_paths+=("$COMMITTED" "$RENDERING_RECEIPT" "$VISUAL_RECEIPT" "$VISUAL_RECORDS" "$PRIOR_VISUAL_RECORDS")
 fi
 for stem in "${FIGURE_STEMS[@]}"; do
   manifest_paths+=("$FIGURE_DIR/$stem.svg")
@@ -1378,7 +1379,7 @@ for forbidden in (
 # byte bindings close the residual framing/style parser boundary. Updating either digest is an
 # explicit custody transition, not a claim that the bytes are semantically correct by hashing.
 markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
-if markdown_digest != "f05845157268f3b875499ea683f2371198d703a99112992d973b0db842ae42a1":
+if markdown_digest != "6ef6a9d1c81468db3c3698ccb5f65f1879d22c97db65ec5dd74b799a6ab62be7":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
 if primer_digest != "e4c8a2915681444417418da67603685f2185ca5bb73067764b9f75e87a40f620":
@@ -1402,7 +1403,7 @@ if [[ "$MODE" != "--refresh" ]]; then
     "$EXPECTED_PAGES" \
     "$RENDER_DPI" \
     "$HIGH_RESOLUTION_DPI" \
-    "$SNAPSHOT_ROOT/$VISUAL_RECORDS" "$MODE" "$BUILD_ROOT" <<'PY'
+    "$SNAPSHOT_ROOT/$VISUAL_RECORDS" "$MODE" "$BUILD_ROOT" "$SNAPSHOT_ROOT/$PRIOR_VISUAL_RECORDS" <<'PY'
 from __future__ import annotations
 
 from collections import Counter
@@ -1517,13 +1518,13 @@ def field(name: str) -> str:
     return field_values[name]
 
 
-# These reviewed literals describe the 28 October 2026 actual-view evidence. A new review must
+# These literals describe the corrected November printing and its carried October records. A new review must
 # re-pin the date, changed pages, sittings, record digest, roster and review paragraphs together.
 # Subject and rendering digests bind the captured current files, never a historical PDF copy.
 actual_pdf_sha256 = hashlib.sha256(pdf_path.read_bytes()).hexdigest()
 actual_rendering_receipt_sha256 = hashlib.sha256(rendering_receipt_path.read_bytes()).hexdigest()
 expected_fields = {
-    "schema": "pid-rs/mathematical-workflow-visual-review/v4",
+    "schema": "pid-rs/mathematical-workflow-visual-review/v5",
     "subject": "output/pdf/mathematical-problem-solving-workflow.pdf",
     "pdf_sha256": actual_pdf_sha256,
     "rendering_receipt": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
@@ -1533,18 +1534,18 @@ expected_fields = {
     "high_resolution_dpi": "300",
     "color_pages_reviewed": "1-87",
     "grayscale_pages_reviewed": "1-87",
-    "detail_targets": "22",
+    "detail_targets": "10",
     "figure_pages_reviewed": "5-6,10,12",
-    "changed_pages": "1-2,12-20,26-33,59,67",
-    "previous_publication_pdf_sha256": "24a394e979d0a9430f10e5999790c6d467c502e2ccf6553cc74e5140fbb10263",
+    "changed_pages": "6,10,12,73",
+    "previous_publication_pdf_sha256": "446832ea439c838c6037ba7ad495294f8f07c7916162ff4ac0785bf3f50bed52",
     "lens_count": "20",
     "status": "passed",
-    "review_date_utc": "2026-10-28",
-    "reviewer_kind": "single-agent-visual-inspection",
-    "sittings": "2",
-    "actual_view_records": "audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json",
-    "actual_view_records_sha256": "d3d1e9e364c0daa89e95ba5b5d07ba8fe35f552052c80e268f25b4d551581a53",
-    "timing_scope": "each-record-written-after-its-view;times-self-reported",
+    "review_date_utc": "2026-11-20",
+    "reviewer_kind": "dated-model-visual-inspections",
+    "sittings": "4",
+    "actual_view_records": "audit/evidence/mathematical-workflow-visual-review-2026-11-20/actual-views.json",
+    "actual_view_records_sha256": "79a0af9166144fed4789e6c49fbfdb5f321b4042b10c6e7ad9382c1a8a9c88d7",
+    "timing_scope": "October-records-retained-for-identical-images;November-observations-after-view;times-self-reported",
 }
 for name, expected in expected_fields.items():
     observed = field(name)
@@ -1636,7 +1637,7 @@ expected_lens_rows = (
     ),
     (
         "normal-size plus high-resolution rendered inspection",
-        "Every color and grayscale page was viewed alone at 120 dpi, and every named detail target was viewed at 300 dpi.",
+        "Page-level records cover both modes at 120 dpi. Fresh 300-dpi inspections cover every figure and the corrected paragraph in both modes.",
     ),
 )
 if len(expected_lens_rows) != 20 or field_values["lens_count"] != str(len(expected_lens_rows)):
@@ -1710,30 +1711,15 @@ for (expected_name, expected_evidence), (name, outcome, evidence) in zip(
     if evidence != expected_evidence:
         fail(f"lens evidence differs for {name}: {evidence!r}")
 
-# Closed 300-dpi crop roster, transcribed from the reviewed m2-roster.txt.
+# The hosted release retained complete 300-dpi pages. The records bind those exact
+# images. The printed figures and corrected paragraph were inspected at magnification.
 detail_roster = {
-    "p01-title-and-date": ("color", 1, [257, 270, 1965, 577]),
-    "p02-contents-3-4": ("color", 2, [320, 256, 1902, 782]),
-    "p12-source-policy": ("color", 12, [256, 2706, 1967, 500]),
-    "p13-suggested-citation": ("color", 13, [257, 923, 1966, 333]),
-    "p17-erdos-heading": ("color", 17, [256, 252, 1966, 345]),
-    "p17-erdos-source": ("color", 17, [256, 1670, 1968, 551]),
-    "p17-lea-source": ("color", 17, [256, 2215, 1967, 290]),
-    "p19-grothendieck-source": ("color", 19, [256, 668, 1972, 460]),
-    "p26-correction-chain": ("color", 26, [256, 1219, 1966, 517]),
-    "p29-heading-3-4-10": ("color", 29, [256, 102, 1966, 388]),
-    "p31-zeta-thread": ("color", 31, [256, 781, 1970, 911]),
-    "p33-third-party-reply": ("color", 33, [257, 2790, 1971, 420]),
-    "p59-goal-pause": ("color", 59, [371, 478, 1852, 421]),
-    "p67-category-theoretic": ("color", 67, [257, 2141, 1965, 277]),
-    "p05-figure-1-color": ("color", 5, [257, 257, 1965, 924]),
-    "p05-figure-1-gray": ("gray", 5, [257, 257, 1965, 924]),
-    "p06-figure-2-color": ("color", 6, [257, 257, 1965, 1135]),
-    "p06-figure-2-gray": ("gray", 6, [257, 257, 1965, 1135]),
-    "p10-figure-3-color": ("color", 10, [257, 1884, 1965, 1065]),
-    "p10-figure-3-gray": ("gray", 10, [257, 1884, 1965, 1065]),
-    "p12-figure-4-color": ("color", 12, [257, 696, 1965, 1205]),
-    "p12-figure-4-gray": ("gray", 12, [257, 696, 1965, 1205]),
+    f"{target}-{mode}": (mode, page, [0, 0, 2481, 3508])
+    for target, page in (
+        ("p05-figure-1", 5), ("p06-figure-2", 6), ("p10-figure-3", 10),
+        ("p12-figure-4", 12), ("p73-descriptor", 73),
+    )
+    for mode in ("color", "gray")
 }
 
 # Check semantics before the final records-byte pin: a stale hash must not hide a malformed
@@ -1804,9 +1790,9 @@ exact_keys(records, {
     "views", "superseded_views",
 }, "actual-view top-level")
 for name, expected in (
-    ("schema", "pid-rs/workflow-actual-views/v2"),
-    ("scope", "Actual views by one AI agent; no independent, external or human review is claimed."),
-    ("reviewer", "one AI agent"),
+    ("schema", "pid-rs/workflow-actual-views/v3"),
+    ("scope", "October model-inspection records for byte-identical pages and November model inspections of the changed pages and selected details. No human or institutional review is claimed."),
+    ("reviewer", "dated October and November model-review records"),
     ("pdf_sha256", field_values["pdf_sha256"]),
     ("rendering_receipt_sha256", field_values["rendering_receipt_sha256"]),
 ):
@@ -2001,10 +1987,10 @@ def compact_pages(pages):
 
 # The reviewed prose is literal; a new review re-pins it with the fields above.
 required_statements = (
-    "The records cover all 87 color pages and all 87 grayscale pages at 120 dpi, one page per view, and 22 named detail targets at 300 dpi: every passage that this revision changed and every figure, the figures in both modes.",
+    "The 174 normal-size page records cover pages 1–87 in color and grayscale at 120 dpi. The 166 October records carried forward identify byte-identical page images. The eight November records cover changed pages 6, 10, 12 and 73 in both modes. Separate November records bind ten 300-dpi full-page images. Magnified figure regions on pages 5, 6, 10 and 12 and the corrected paragraph on page 73 were inspected in both modes.",
     "No blank, clipped, overlapping, misordered, or visibly corrupt page was observed.",
-    "One AI agent made every view, in two sittings, and wrote each record after its view. Record times are self-reported. No independent, external or human review is claimed. Record consistency is not proof that a view happened, and this receipt is not a proof of mathematical correctness, accessibility conformance, semantic completeness or a machine-gate pass.",
-    "Earlier passes over a previous build on 26 and 27 October covered every color page and grayscale pages 1 to 64; the text changed afterwards, so this record supersedes them. During this review, page 59 showed the pause instruction breaking inside a monospaced token; the wording was changed twice, page 59 was viewed again after each rebuild and its detail target after the last, and the two earlier views of page 59 are kept as superseded records.",
+    "October sittings A and B and November sittings C and D record model inspection. The retained October entries preserve their original findings and times. The November reviewer wrote the new entries after inspecting each image. Times are self-reported. Human review, independent institutional review and mathematical correctness fall outside this visual receipt.",
+    "The two earlier views of page 59 remain in the superseded October record. They contribute no current page coverage. The current cover dates the October protocol edition. Its November corrected printing and the two systems mentioned on page 73 are identified in the dated correction notice.",
 )
 tail_text = "\n".join(lines[table_cursor + 1 :])
 paragraphs = [
@@ -2016,7 +2002,7 @@ for statement in required_statements:
     if paragraphs.count(statement) != 1:
         fail(f"required top-level review paragraph is absent or duplicated: {statement}")
 advisory_prefix = "Advisory observations, none of which prevents publication, concern pages "
-advisory_suffix = ": unedited long identifiers, digests, paths and version tokens that wrap inside the token, the dense contents page, a heading left at a page foot, and free space where a heading or table moved to the next page."
+advisory_suffix = ": long identifiers, paths and version tokens, dense contents, heading placement, available white space, and the page 73 reference to the pair identified in the correction notice."
 advisory_paragraphs = [paragraph for paragraph in paragraphs if paragraph.startswith(advisory_prefix)]
 if len(advisory_paragraphs) != 1 or not advisory_paragraphs[0].endswith(advisory_suffix):
     fail("required top-level advisory paragraph is absent or duplicated")
@@ -2037,19 +2023,45 @@ canonical_receipt = (
 if raw != canonical_receipt.encode("utf-8"):
     fail("does not have canonical Markdown serialization")
 
+# The older JSON is captured in the same private snapshot as the current PDF.
+# Derive eligible carry-forwards from its actual page digests and this rendering
+# receipt. New observations are required for every changed image.
+prior_bytes = Path(sys.argv[10]).read_bytes()
+if hashlib.sha256(prior_bytes).hexdigest() != "d3d1e9e364c0daa89e95ba5b5d07ba8fe35f552052c80e268f25b4d551581a53":
+    fail("October actual-view source digest differs")
+prior = json.loads(prior_bytes)
+if (sittings[:2] != prior["sittings"] or superseded != prior["superseded_views"]
+        or [s["id"] for s in sittings] != ["A", "B", "C", "D"]):
+    fail("October sitting or superseded-view provenance differs")
+prior_pages = {(row["mode"], row["pages"][0]): row for row in prior["views"] if row["kind"] == "page"}
+if set(prior_pages) != set(render_rows):
+    fail("October page inventory differs")
+changed = {key for key, old_row in prior_pages.items() if old_row["sha256"] != render_rows[key]}
+if changed != {(m, p) for m in ("color", "gray") for p in (6, 10, 12, 73)}:
+    fail("October to November changed page inventory differs")
+for view in views:
+    key = (view["mode"], view["pages"][0])
+    if view["kind"] == "crop":
+        if view["sitting"] != "D":
+            fail("November detail is outside its declared sitting")
+    elif key in changed:
+        if view["sitting"] != "C":
+            fail("November changed page lacks a direct observation")
+    elif view != prior_pages[key]:
+        fail("October carried page differs from its original observation")
+
 # The shell launches this block with render_pdf_page_set's clean environment, using only
 # captured tools and snapshot inputs. Each fixed target is rendered afresh in a private
 # build directory. No record-supplied path or coordinate becomes an executable argument.
 with tempfile.TemporaryDirectory(prefix="visual-crops.", dir=build_root) as temporary:
     for target, (render_mode, page, rectangle) in detail_roster.items():
         output = Path(temporary) / target
-        x, y, width, height = rectangle
+        width, height = rectangle[2:]
         command = ["pdftoppm", "-png"]
         if render_mode == "gray":
             command.append("-gray")
         command.extend([
             "-r", "300", "-f", str(page), "-l", str(page),
-            "-x", str(x), "-y", str(y), "-W", str(width), "-H", str(height),
             "-singlefile", str(pdf_path), str(output),
         ])
         try:
@@ -2061,7 +2073,12 @@ with tempfile.TemporaryDirectory(prefix="visual-crops.", dir=build_root) as temp
             png = output.with_suffix(".png")
             if png.is_symlink() or not png.is_file():
                 fail(f"actual-view crop rendering did not produce a regular PNG: {target}")
-            rendered_digest = hashlib.sha256(png.read_bytes()).hexdigest()
+            png_bytes = png.read_bytes()
+            if (png_bytes[:16] != bytes.fromhex("89504e470d0a1a0a0000000d49484452")
+                    or int.from_bytes(png_bytes[16:20], "big") != width
+                    or int.from_bytes(png_bytes[20:24], "big") != height):
+                fail(f"actual-view full-page raster dimensions differ: {target}")
+            rendered_digest = hashlib.sha256(png_bytes).hexdigest()
         except (OSError, subprocess.TimeoutExpired) as error:
             fail(f"actual-view crop rendering could not complete: {target}: {error}")
         if mode == "--exact" and crops[target] != rendered_digest:
@@ -2069,8 +2086,8 @@ with tempfile.TemporaryDirectory(prefix="visual-crops.", dir=build_root) as temp
 # Cross-toolchain mode skips only the comparison with the recorded crop digest: Poppler
 # versions may encode different PNG bytes. Rendering failures/diagnostics, schema, roster,
 # coverage, receipt bindings and the frozen records-byte check still fail in both modes.
-if len(observed_images) != 196:
-    fail("actual-view image inventory must be exactly 196")
+if len(observed_images) != 184:
+    fail("actual-view image inventory must be exactly 184")
 if hashlib.sha256(records_raw).hexdigest() != field_values["actual_view_records_sha256"]:
     fail("actual-view frozen record digest differs")
 

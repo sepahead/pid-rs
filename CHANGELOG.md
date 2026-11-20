@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Correct the implication on page 73 of the mathematical workflow. Two systems have the same descriptor and different total mutual information. Any atom rule that gives the same vector for this pair cannot recover both totals from that vector. The corrected PDF preserves all 232 named destinations. [Worked example and earlier failed build](audit/evidence/mathematical-workflow-correction-2026-11-20.md)
+
 - Correct the average degrees of redundancy and vulnerability for supplied binary64 mutual information values. Each function now rounds its exact numerator and exact quotient independently. On 184 fixed calls, 41 earlier reports differed from the exact references, including 13 incorrect statuses. All 184 corrected reports agreed in all seven fields. [Definitions, examples and measurements](audit/research/normalized-shannon-arithmetic/README.md)
 - Publish the six original three-source count tables and their complete categorical shared-exclusion certificates. The portable reader recomputes all 648 coordinates, tests 360 relations and checks 20 deliberately invalid records or inputs. The general claim about the Rust producer remains open. [Tables, exact products and checks](audit/research/three-source-six-certificate-observations/README.md)
 - Clarify the categorical report fields, the cost of comparing occupied states, and the ordering of exact mutual information values for one coherent law. The signed getter returns a difference. The averaged-only and pointwise APIs expose different outputs. [Categorical report fields](crates/pid-core/src/sxpid.rs) · [Mutual information inputs](crates/pid-core/src/invariants.rs)

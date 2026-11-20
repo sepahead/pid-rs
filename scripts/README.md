@@ -3105,23 +3105,36 @@ artifact-retention and rendering gate: it does not instantiate the citation-edge
 proofs, prove any PID claim, establish semantic correctness from visual structure, authenticate the
 toolchain, or turn correlated checks of the same bytes into independent evidence.
 
-The [28 October 2026 visual receipt](../audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md)
-and its [actual-view records](../audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json)
-bind 196 views of the current PDF: all 87 pages in color and in grayscale at 120 dpi, one page per
-view, and 22 named detail targets at 300 dpi, with two superseded views of an earlier build. The
-gate requires each page view to carry the digest of its render in the rendering receipt and every
-page once per mode; a closed roster of detail-target boxes; a clear or advisory outcome for every
-view (a blocker fails) with a finding of at least six words; record times inside declared,
-non-overlapping sittings and never decreasing; a review date equal to the date of the latest view;
-an advisory paragraph that names exactly the advisory pages; exact JSON types; and canonical
-receipt bytes. The records digest is checked last, so a mutation reaches its own rule first. Exact
-mode renders the 22 targets again from the committed PDF in the clean Poppler environment and
-compares their digests; cross-toolchain mode also renders them and skips only that comparison. The
-self-test has 576 controls in exact mode and 574 in cross-toolchain mode, of which 150 and 148
-cover the records. Run standalone without an argument, it takes the cross-toolchain subset; the
-exact gate passes `--exact`. The receipt states one AI agent, two sittings and self-reported times.
-It is agent artifact review, not mathematical proof, accessibility certification, human review or
-hosted success.
+The November printing corrects page 73 of the October protocol edition. The **hat** and
+**tilde** systems have total mutual information of 3 and 2 bits. Total mutual information
+measures how much all sources together reduce uncertainty about the target. Both systems
+have the same **descriptor vector**. This vector lists the joint entropy of each group of
+target bits with the same minimal recovering sets. Each minimal recovering set determines
+the target bit, and no smaller subset does. [Worked example and definitions](../audit/evidence/mathematical-workflow-correction-2026-11-20.md)
+· [Primary source, Definition 6 and Lemmas 4–5](https://arxiv.org/html/2604.03869v2#S4)
+
+A partial information decomposition supplies an **atom vector**, an ordered list of
+component values. A function can recover both totals from these vectors exactly when the
+vectors differ. If one function calculates the atom vector from the descriptor vector for
+every system, the two atom vectors must agree here. A common list of component labels gives
+no such guarantee. [Foundational study](../FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md)
+
+The November review covers all 87 pages in color and grayscale at 120 dots per inch. The
+October observations cover 166 images whose bytes match the November images. The reviewer
+inspected the other eight images on pages 6, 10, 12 and 73. At 300 dots per inch, the reviewer
+inspected all four figures and the corrected paragraph in both modes. The ten high-resolution
+records identify the full images used for magnification. [November receipt](../audit/evidence/mathematical-workflow-visual-receipt-2026-11-20.md)
+· [November records](../audit/evidence/mathematical-workflow-visual-review-2026-11-20/actual-views.json)
+
+The checker compares each reused observation with the original October record, including
+the time, finding and image digest. An image digest identifies the image file by its bytes.
+Sessions A and B belong to October. Sessions C and D belong to November. The reviewers
+supplied the observation times. [October receipt](../audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md)
+· [October records](../audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json)
+
+Both checker modes render the ten high-resolution images again and check their dimensions.
+Exact mode also compares the image digests. The test program defines 588 controls in
+exact mode and 586 in cross-toolchain mode. Of these, 162 and 160 examine the visual records.
 
 The September 5 split visual receipt and the authorship-only check bound the previous PDF and no
 longer bind the current one. `check-workflow-publication-history.py` keeps them verifiable: it

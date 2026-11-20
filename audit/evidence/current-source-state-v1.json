@@ -99,8 +99,8 @@
     {
       "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "446832ea439c838c6037ba7ad495294f8f07c7916162ff4ac0785bf3f50bed52",
-      "size_bytes": 861882
+      "sha256": "b4f1a9e19a93c9aea5458509c42a9a807f0c74e071a6be59e253879ff5910560",
+      "size_bytes": 861884
     },
     {
       "path": "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
@@ -358,8 +358,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "e5203b41400a303cf09c364bde759790797f5a45effbc286acce366b997dd221",
-        "size_bytes": 343920
+        "sha256": "7f2c6010a8e0bd2191c1342da15a50bbeb82e3c8aecffb3dfd060fe9df6e2a40",
+        "size_bytes": 344326
       },
       {
         "git_mode": "100644",
@@ -466,8 +466,8 @@
       {
         "git_mode": "100644",
         "path": "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md",
-        "sha256": "f05845157268f3b875499ea683f2371198d703a99112992d973b0db842ae42a1",
-        "size_bytes": 251305
+        "sha256": "6ef6a9d1c81468db3c3698ccb5f65f1879d22c97db65ec5dd74b799a6ab62be7",
+        "size_bytes": 251293
       },
       {
         "git_mode": "100644",
@@ -5877,6 +5877,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-correction-2026-11-20.md",
+        "sha256": "710e56599a578e358df4033792336e76688eb1fc7a8819fb0b60c1110a290658",
+        "size_bytes": 5504
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/mathematical-workflow-publication-profile-2026-09-01/checker-before-2026-09-05-profile-update.sh",
         "sha256": "4729e35f694634549d1d8e841fe4eb169dd7d3a737ff85ba0024f28c6223e54d",
         "size_bytes": 254812
@@ -5931,6 +5937,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-visual-receipt-2026-11-20.md",
+        "sha256": "256b3a6f4b46825fb4ad4f165b777b61b39af9a80a7751c568ca5dc18cfd84ef",
+        "size_bytes": 5724
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json",
         "sha256": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae",
         "size_bytes": 89628
@@ -5946,6 +5958,12 @@
         "path": "audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json",
         "sha256": "d3d1e9e364c0daa89e95ba5b5d07ba8fe35f552052c80e268f25b4d551581a53",
         "size_bytes": 125828
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-visual-review-2026-11-20/actual-views.json",
+        "sha256": "79a0af9166144fed4789e6c49fbfdb5f321b4042b10c6e7ad9382c1a8a9c88d7",
+        "size_bytes": 117377
       },
       {
         "git_mode": "100644",
@@ -17584,8 +17602,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf",
-        "sha256": "f794cb966c4e2e9029d093a3e572f86068a428f70a9b67ff484c821f32b20f24",
-        "size_bytes": 69875
+        "sha256": "73ce525ef4cb730d69090088bc10da496df38b9bb0a5d840e0d221938dcc0a29",
+        "size_bytes": 69874
       },
       {
         "git_mode": "100644",
@@ -17596,8 +17614,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf",
-        "sha256": "3a7ca079704d5f20f7f157a2a1f4b8f268ebc1ec50fd2efc90dd15d4bd962be7",
-        "size_bytes": 78442
+        "sha256": "f9dd317f1d4d90b997b6abd6b9c6e93c43a113eb5fad70efe02ecb3997dd9e2f",
+        "size_bytes": 78435
       },
       {
         "git_mode": "100644",
@@ -17608,8 +17626,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf",
-        "sha256": "9e003510ccd712b64b04a59cbb8ab2cbc0df52ea8c911659d7cc3469307cde59",
-        "size_bytes": 70071
+        "sha256": "67dee90529aeb6e7e4c51c895d647da80bde5e24a7a1bfb03eac1f8e72bbe942",
+        "size_bytes": 70068
       },
       {
         "git_mode": "100644",
@@ -17620,8 +17638,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf",
-        "sha256": "dab9010266897c497227a74d8f13abb4e707ffec1b5afa67138ba4a85cabebe6",
-        "size_bytes": 73497
+        "sha256": "e1dc5486b39e7559e812715304ada92ac10641c20b30800c86213348cfff022a",
+        "size_bytes": 73495
       },
       {
         "git_mode": "100644",
@@ -17896,8 +17914,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-problem-solving-workflow.tex",
-        "sha256": "71825f25ebdd561202078c456ec5166dd19516f74edd48bb343ab753b34f2389",
-        "size_bytes": 285305
+        "sha256": "733af9b159e2cfc7dfed394bd34288bb51de9d310d664e19613df4b0c60eae51",
+        "size_bytes": 285293
       },
       {
         "git_mode": "100644",
@@ -34840,13 +34858,13 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
-        "sha256": "446832ea439c838c6037ba7ad495294f8f07c7916162ff4ac0785bf3f50bed52",
-        "size_bytes": 861882
+        "sha256": "b4f1a9e19a93c9aea5458509c42a9a807f0c74e071a6be59e253879ff5910560",
+        "size_bytes": 861884
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
-        "sha256": "bc64dbbcd56e818e6f5d98d67635c54c2f31b4341f749ea4c4cf339398966d87",
+        "sha256": "094c0ca99b86c473c4531be2216850c5f6499db9b3d5025e14658e70271402fe",
         "size_bytes": 19054
       },
       {
@@ -35002,8 +35020,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "7d05f8ff55dcc3c2006739459745d53b1503da8a3d0d331e080419fb678f46fd",
-        "size_bytes": 318865
+        "sha256": "1a27ff979aeaab0ce2d2eaed32b74c11369acc25f2f506b391463c70bad67754",
+        "size_bytes": 319783
       },
       {
         "git_mode": "100755",
@@ -35302,7 +35320,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "8a1962835af9e45ee0a33a341014515c291d7abddb4ab597dac3b4f1a4b1524b",
+        "sha256": "acd4eb8acd3339ecce3c58c505fa3166f043b2ea61618cfa58140e90f12a2c86",
         "size_bytes": 90915
       },
       {
@@ -35902,8 +35920,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "bd0302950be5b46b160b7dcdf87e63b7ac0d1c678acaf1985de6cd8af6b63464",
-        "size_bytes": 139663
+        "sha256": "787fbd2371c45beb71fd63d79fb467e0e2118736f64c6766d082185b1dcac2c6",
+        "size_bytes": 140337
       },
       {
         "git_mode": "100644",
@@ -36190,14 +36208,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
-        "sha256": "4567bd6fc7224e3daba372da5f423bc06e315435598a60b4a7716a9ddc47f5e4",
-        "size_bytes": 329868
+        "sha256": "49293633db5e61bb55dc628d0d1fef0c42ffc517c255536adf57dd2d48512043",
+        "size_bytes": 332109
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf.sh",
-        "sha256": "e09dd19b4deb943b4b93700a5d01ac5fd895a643d85e2ae4d7ffc54dd91e0986",
-        "size_bytes": 287666
+        "sha256": "db3d0d0368f28440362a9ceff294c985433037955b38197c811d2001dffb25bb",
+        "size_bytes": 288791
       },
       {
         "git_mode": "100644",
@@ -36896,8 +36914,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "7f6c2d1c8263e0cd32df5b9dc09c6958c27fecefc89c2c28312804b31e2ce199",
-    "entry_count": 6125
+    "entries_sha256": "3b03005268c2a9a5279227016d19e3d7fa328d5c2d608eedd331e5bcf17ed477",
+    "entry_count": 6128
   },
   "subprojections": [
     {
@@ -36909,7 +36927,7 @@
       ]
     },
     {
-      "entries_sha256": "28f45a5981a2a7be3d3e72addd8f966e32630261eff3e24f010ccb4c6e53e858",
+      "entries_sha256": "2ca695bfb2ee76dadb19376ec0b540f722647a3a175f1234d9ff5b9748012bf1",
       "entry_count": 2385,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -36917,7 +36935,7 @@
       ]
     },
     {
-      "entries_sha256": "fe5b661ad8ac1c7fc728aefb470a433dc833eb94538bc7b6f13ee2e0be1d3570",
+      "entries_sha256": "fa45d3b58a7c03bfb5517412d99ca072181ce5c29ec11e064e9a334949cad02f",
       "entry_count": 50,
       "name": "generated_pdf_set",
       "selectors": [
@@ -36925,7 +36943,7 @@
       ]
     },
     {
-      "entries_sha256": "989e3b091d60207ea2bb878d2712ef49ae840b334abba489f2c2feac6c5bed00",
+      "entries_sha256": "7706fcaebc23d5f3763b0686c21ba67ecd4bcf9eaebd2e5d13392d380a43143b",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
