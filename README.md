@@ -390,6 +390,8 @@ that every atom attains these coefficients, make lower-order or complete moduli 
 an alphabet-independent bound. The coefficients change if distance is restated using
 $\lVert p-q\rVert_1=2\eta$.
 
+Two probability tables show how the support size affects a bound on signed synergy. The tables have four occupied cells and differ by 49 of 200 counts. A bound that uses the exact support size can be smaller than the local bound. A larger upper bound on the support size can reverse their order. [Worked example, assumptions and exact counts](audit/research/two-source-synergy-bound-example/README.md) · [Illustrated PDF](output/pdf/two-source-synergy-bound-example.pdf)
+
 The [revision-3 claim](claims/SX-SUPPORT-FREE-CONTINUITY-001/claim-v3.md) and retained
 [counterexamples](claims/SX-SUPPORT-FREE-CONTINUITY-001/failures/exact-counterexamples.md)
 record why there is no global linear modulus, pointwise support-boundary theorem, active-face

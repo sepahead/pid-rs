@@ -2001,6 +2001,8 @@ Run `python3 -I -S -B audit/evidence/normalized-shannon-reports-2026-11-20/check
 
 From the repository root, run `python3 -I -S -B audit/research/three-source-six-certificate-observations/check.py` to check all 648 coordinate records and the 360 specified relations. The sibling `controls.py` checks the 20 expected refusals. The reader uses Python's standard library and the shipped count tables and output records. [Recomputation procedure](../audit/research/three-source-six-certificate-observations/README.md)
 
+The [synergy-bound example](../audit/research/two-source-synergy-bound-example/README.md) compares two continuity bounds on one fixed pair of tables. From its study directory, run `python3 -I -S -B example.py --check` and `python3 -I -S -B verify_numbers.py`. Repeat both commands with `-O` before `-I` for the optimized interpreter. The aggregate PDF gate runs these four checks. The leaf builder’s `--check` compares freshly typeset bytes with the shipped PDF. Its `--check-committed` mode verifies source and PDF digests, metadata, searching, embedded fonts and links without typesetting. The checks cover the declared table, arithmetic and publication. They do not evaluate an atom.
+
 The [November mathematical results guide](../MATHEMATICAL_RESULTS_GUIDE_CURRENT.md) has a
 [separate PDF](../output/pdf/mathematical-results-guide-current.pdf). Run
 `python3 -I -S -B scripts/build-current-mathematical-results-guide.py --check` to rebuild and

@@ -75,6 +75,7 @@ MARKDOWN_SOURCES=(
   audit/research/three-source-w02/README.md
   audit/research/normalized-shannon-arithmetic/README.md
   audit/research/three-source-six-certificate-observations/README.md
+  audit/research/two-source-synergy-bound-example/README.md
   audit/research/embodied-sensor-utility/EXPOSITION.md
   audit/research/embodied-sensor-utility/OVERVIEW.md
   audit/evidence/cross-implementation-reverification-2026-09-26.md
@@ -103,6 +104,7 @@ STANDALONE=(
   three-source-w02
   normalized-shannon-arithmetic
   three-source-six-certificate-observations
+  two-source-synergy-bound-example
   embodied-sensor-utility
   embodied-sensor-overview
   cross-implementation-reverification
@@ -1599,7 +1601,7 @@ mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed
 expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
-for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage three-source-alphabet-counts three-source-w02 normalized-shannon-arithmetic three-source-six-certificate-observations mathematical-results-guide-current; do
+for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage three-source-alphabet-counts three-source-w02 normalized-shannon-arithmetic three-source-six-certificate-observations two-source-synergy-bound-example mathematical-results-guide-current; do
   fixture="$TEST_ROOT/missing-$bias_stem-pdf"
   make_fixture "$fixture"
   mv "$fixture/output/pdf/$bias_stem.pdf" "$fixture/removed-bias-paper.pdf"

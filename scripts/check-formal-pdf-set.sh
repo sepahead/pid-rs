@@ -52,6 +52,7 @@ STANDALONE_MARKDOWN_PAPERS=(
   "three-source-w02"
   "normalized-shannon-arithmetic"
   "three-source-six-certificate-observations"
+  "two-source-synergy-bound-example"
   "embodied-sensor-utility"
   "embodied-sensor-overview"
   "cross-implementation-reverification"
@@ -81,6 +82,7 @@ STANDALONE_MARKDOWN_SOURCES=(
   "audit/research/three-source-w02/README.md"
   "audit/research/normalized-shannon-arithmetic/README.md"
   "audit/research/three-source-six-certificate-observations/README.md"
+  "audit/research/two-source-synergy-bound-example/README.md"
   "audit/research/embodied-sensor-utility/EXPOSITION.md"
   "audit/research/embodied-sensor-utility/OVERVIEW.md"
   "audit/evidence/cross-implementation-reverification-2026-09-26.md"
@@ -299,10 +301,13 @@ fi
 for check in \
   audit/evidence/normalized-shannon-reports-2026-11-20/check.py \
   audit/research/three-source-six-certificate-observations/check.py \
-  audit/research/three-source-six-certificate-observations/controls.py; do
+  audit/research/three-source-six-certificate-observations/controls.py \
+  audit/research/two-source-synergy-bound-example/verify_numbers.py; do
   python3 -I -S -B "$check" >/dev/null
   python3 -O -I -S -B "$check" >/dev/null
 done
+python3 -I -S -B audit/research/two-source-synergy-bound-example/example.py --check >/dev/null
+python3 -O -I -S -B audit/research/two-source-synergy-bound-example/example.py --check >/dev/null
 python3 -I -S -B audit/evidence/finite-copy-bootstrap-coverage/verify.py >/dev/null
 python3 -O -I -S -B audit/evidence/finite-copy-bootstrap-coverage/verify.py >/dev/null
 python3 -I -S -B audit/research/three-source-w02/replay.py --check-sources >/dev/null
@@ -314,12 +319,14 @@ if [[ "$MODE" == "--exact" ]]; then
   python3 -I -S -B audit/research/three-source-w02/build_pdf.py --check
   python3 -I -S -B audit/research/normalized-shannon-arithmetic/build_pdf.py --check
   python3 -I -S -B audit/research/three-source-six-certificate-observations/build_pdf.py --check
+  python3 -I -S -B audit/research/two-source-synergy-bound-example/build_pdf.py --check
   python3 -I -S -B scripts/build-finite-copy-bootstrap-pdf.py --check
 else
   python3 -I -S -B audit/research/three-source-alphabet-counts/build_pdf.py --check-committed
   python3 -I -S -B audit/research/three-source-w02/build_pdf.py --check-committed
   python3 -I -S -B audit/research/normalized-shannon-arithmetic/build_pdf.py --check-committed
   python3 -I -S -B audit/research/three-source-six-certificate-observations/build_pdf.py --check-committed
+  python3 -I -S -B audit/research/two-source-synergy-bound-example/build_pdf.py --check-committed
   python3 -I -S -B scripts/build-finite-copy-bootstrap-pdf.py --check-committed
 fi
 python3 -I -S scripts/sync-mathematical-workflow-tex.py --check
