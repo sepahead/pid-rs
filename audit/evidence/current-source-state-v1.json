@@ -610,8 +610,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "20f56c93854360fcbb4ec337a5a4ecdfa680ef9230474c7527945d90346b0372",
-        "size_bytes": 65942
+        "sha256": "0f5ab1f0fbb7a167f3544cd4ca2f8f23371bed4dd800e0a61b3c5bd11a7d6d9a",
+        "size_bytes": 66505
       },
       {
         "git_mode": "100644",
@@ -15666,6 +15666,42 @@
         "path": "audit/evidence/task-dispositions.json",
         "sha256": "0ace29ac18e004f6a225f6c968eda8aa53ccb213b38466bed7b86d9558034ce0",
         "size_bytes": 95256
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-source-original-proof-attempt-2026-11-20/README.md",
+        "sha256": "b906dd83a419072f916a2e1a6bbbaadc7c36860b1bb133c11baec46d5c138c47",
+        "size_bytes": 4055
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-source-original-proof-attempt-2026-11-20/check.py",
+        "sha256": "e3932aabe45055b6481025043fa762ff2949bbad50d9df9be313dacd467898b2",
+        "size_bytes": 6778
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-source-original-proof-attempt-2026-11-20/result.json",
+        "sha256": "befccab0caecb6e3cd9b3feb21597c7ea3adf0505b61db74ca258556644876e6",
+        "size_bytes": 29581
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-source-original-proof-attempt-2026-11-20/submitted/W01.json",
+        "sha256": "1b11aab5303b5d5e295cb19749e032aa705c7640b54befec212bd4f634ed81d9",
+        "size_bytes": 15666
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-source-original-proof-attempt-2026-11-20/submitted/W03.json",
+        "sha256": "15c00dd63c2513f632c7bb1433d9a43e41482959a4ebb5219c20a28ae106a117",
+        "size_bytes": 15975
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-source-original-proof-attempt-2026-11-20/submitted/W15.json",
+        "sha256": "3a57eece2707dd4489f4310ddac10b6810fb8faeb2a7f0d3a73b95d38780c38d",
+        "size_bytes": 15613
       },
       {
         "git_mode": "100644",
@@ -36974,8 +37010,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "9181d3b20e09b1e4064d4e11b9d370a3aced86586cfbb06a27056dd6aaafbd42",
-    "entry_count": 6138
+    "entries_sha256": "53d3f25f5b8edfbc435d1f87c4506cabcb2ec9d6d0794d1a5544740bc3751fae",
+    "entry_count": 6144
   },
   "subprojections": [
     {

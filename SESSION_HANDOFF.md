@@ -1,5 +1,9 @@
 # Session handoff — updated 20 November 2026
 
+## Three original proof inputs
+
+The first of three selected inputs reached the registered memory limit during compilation. For W01, 19 modules had passed compilation and a fresh stock Lean check. The next module produced no result. The checker never started W03 or W15. The count remains one complete proof for 22 original formulas that solvers reported as unsatisfiable. The three submitted proof files and the outcomes of all 63 commands are available. [Result and inspection procedure](audit/evidence/three-source-original-proof-attempt-2026-11-20/README.md)
+
 ## Normalized information ratios and finite certificates
 
 The normalized Shannon reports round their exact represented-input numerators and quotients independently. Of 184 fixed Rust calls, 41 differed from the exact reference before correction and none differed afterward. The first observer failed to compile and supplied zero numerical observations. A separate hosted job replayed the 561-case exact-sum corpus and the PID2 and experimental test groups in both debug and release builds. These checks use the named production source and do not establish the behavior of every possible input. [Arithmetic and scope](audit/research/normalized-shannon-arithmetic/README.md) · [Original and corrected report outputs](audit/evidence/normalized-shannon-reports-2026-11-20/receipt.json) · [Exact-sum and PID2 execution](https://github.com/sepahead/pid-rs/actions/runs/44644106055)
