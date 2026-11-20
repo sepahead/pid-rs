@@ -2636,10 +2636,11 @@
       "category": "measure",
       "code_availability": "local",
       "constraints": [
-        "These are the target-based normalized Shannon invariants from the cited formulation; denominator degeneracy is reported explicitly.",
-        "Every marginal, joint, and leave-one-out mutual-information input must describe one coherent target/source joint law with the same estimand, units, preprocessing, and evaluation sample. For the convergence claim, each input sequence must be the corresponding exact-real finite-alphabet plug-in term formed from the same empirical law.",
-        "Finite-sample plug-in estimates can violate population identities or bounds; the ratio API checks arithmetic and denominator policy, not input-law coherence.",
-        "The exact-real ratio convergence result requires positive population joint mutual information. A population denominator strictly above the report threshold guarantees eventual Defined status; equality gives no eventual status guarantee."
+        "The target-based average degrees divide a sum of marginal mutual informations or a sum of joint-minus-leave-one-out mutual informations by the positive joint mutual information. Both degrees are unitless. Inputs and the reported numerator and denominator use nats.",
+        "The published interpretation requires one joint distribution, with the same target, sources, units, estimand, preprocessing, and evaluation sample. The convergence argument uses the corresponding exact-real finite-alphabet plug-in terms from a common empirical distribution.",
+        "For m sources and positive joint mutual information, both exact degrees lie in [0,m], including on any single finite empirical distribution. Rounding each exact mutual information once by the same nearest-even rule preserves its order and nonnegativity, although the joint value can round to zero. Different estimands or separate multi-step numerical estimates need not obey these bounds. The API accepts finite signed summaries and cannot establish their common-distribution provenance.",
+        "The ratio and original-unit numerator are independently rounded to nearest binary64 with ties to even from the exact represented inputs. A defined ratio can have an absent numerator when the original-unit sum overflows. Non-defined reports omit both fields and retain a finite denominator.",
+        "The exact-real convergence result requires positive population joint mutual information. A population denominator strictly above the reporting threshold gives eventual threshold separation under convergence. Equality gives no eventual status guarantee. The numerical report also requires finite inputs and a representable quotient."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [],
@@ -2647,11 +2648,11 @@
       "id": "shannon-invariants.average-degrees",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds typed normalization status, unit labels, stable ratio arithmetic, and an explicit denominator policy.",
+      "new_in_pid_rs": "Provides a typed normalization policy and unit labels, exact accumulation of the represented terms, and separate nearest-even rounding of the original-unit numerator and the ratio.",
       "python_entry_points": [],
       "reference_links": [
         {
-          "locator": "average degree of redundancy and vulnerability definitions",
+          "locator": "arXiv:2504.15779v1, Propositions 1 and 2, Eqs. (6) and (10). The retitled v2, Shannon observables, gives the same ratios in Eqs. (2), (3), (13), and (17).",
           "reference_id": "gutknecht-2025",
           "role": "defining-paper"
         }
@@ -2661,11 +2662,14 @@
       ],
       "rust_entry_points": [
         "pid_core::diagnostics::average_degree_of_redundancy",
-        "pid_core::diagnostics::average_degree_of_vulnerability"
+        "pid_core::diagnostics::average_degree_of_redundancy_with_policy",
+        "pid_core::diagnostics::average_degree_of_vulnerability",
+        "pid_core::diagnostics::average_degree_of_vulnerability_with_policy"
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
-        "crates/pid-core/src/invariants.rs"
+        "crates/pid-core/src/invariants.rs",
+        "crates/pid-core/src/exact_binary64.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/invariants.rs"
@@ -2676,11 +2680,15 @@
         "evidence_paths": [
           "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
           "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
-          "crates/pid-core/tests/invariants.rs"
+          "crates/pid-core/tests/invariants.rs",
+          "audit/research/normalized-shannon-ratios/README.md",
+          "audit/research/normalized-shannon-ratios/oracle.py",
+          "crates/pid-core/tests/fixtures/normalized_shannon_ratio.json",
+          "crates/pid-core/tests/normalized_shannon_ratio.rs"
         ],
         "level": "unit-and-integration",
-        "limitations": "Formula and boundary tests do not establish application-specific interpretation or stability. The positive-denominator convergence argument is prose; Lean does not encode these ratios, the sampling theorem, or Rust arithmetic.",
-        "scope": "Formula identities, overflow resistance, normalization boundaries, denominator degeneracies, and exact-real convergence with a positive population denominator and explicit threshold separation."
+        "limitations": "Finite input cases provide bounded arithmetic evidence. Separately fitted inputs can be statistically incoherent. The convergence argument is prose; the cited Lean result does not prove these ratios, the sampling theorem, or the compiled Rust implementation.",
+        "scope": "Formula and policy tests, plus 184 fixed public API calls checking all seven report fields against an exact-rational reference. The separate exact-real convergence argument assumes a positive population denominator and explicit threshold separation."
       }
     },
     {
@@ -5646,7 +5654,7 @@
       "year": 2021
     },
     {
-      "arxiv": "2504.15779",
+      "arxiv": "2504.15779v1",
       "authors": [
         "Aaron J. Gutknecht",
         "Fernando E. Rosas",
@@ -5659,7 +5667,7 @@
       "id": "gutknecht-2025",
       "title": "Shannon Invariants: A Scalable Approach to Information Decomposition",
       "type": "paper",
-      "url": "https://doi.org/10.48550/arXiv.2504.15779",
+      "url": "https://arxiv.org/abs/2504.15779v1",
       "year": 2025
     },
     {

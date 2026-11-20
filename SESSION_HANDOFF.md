@@ -1,4 +1,10 @@
-# Session handoff — updated 19 November 2026
+# Session handoff — updated 20 November 2026
+
+## Normalized information ratios and finite certificates
+
+The normalized Shannon reports round their exact represented-input numerators and quotients independently. Of 184 fixed Rust calls, 41 differed from the exact reference before correction and none differed afterward. The first observer failed to compile and supplied zero numerical observations. A separate hosted job replayed the 561-case exact-sum corpus and the PID2 and experimental test groups in both debug and release builds. These checks use the named production source and do not establish the behavior of every possible input. [Arithmetic and scope](audit/research/normalized-shannon-arithmetic/README.md) · [Original and corrected report outputs](audit/evidence/normalized-shannon-reports-2026-11-20/receipt.json) · [Exact-sum and PID2 execution](https://github.com/sepahead/pid-rs/actions/runs/44644106055)
+
+The six original three-source categorical count tables and their 648 output coordinates are available together. Their exact rational products, signed logarithm enclosures, 360 specified relations and 20 adverse controls can be recomputed. The full producer dependency record, a universal guarantee for accepted output records and the other 21 original solver formulas remain open. [Six-table study](audit/research/three-source-six-certificate-observations/README.md) · [Three-source claim decision](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md) · [Original formula archive](audit/formal/finite-smt39-qualification-v1/README.md)
 
 ## Hosted proof checks on four artificial scripts
 
@@ -21,7 +27,7 @@ argument proves the sharp middle binomial coefficient at every positive arity.
 ## Weighted counts and canonical input tables
 
 The current results guide links the categorical bootstrap example, fixed-alphabet theorem,
-source-partition sign correction, canonical table proof and fresh weighted-count replay.
+source-partition sign correction, canonical table proof, weighted-count replay, normalized information ratios and six categorical output certificates.
 [November guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md) · [Typeset guide](output/pdf/mathematical-results-guide-current.pdf)
 
 Stock Lean 4.34.1 checked 22 statements and 22 matching typed uses for weighted events
@@ -101,8 +107,7 @@ The revision-4 checker binds the corrected source comments and keeps its existin
 and rejection criteria. [Worked example and proof scope](audit/evidence/pid2-signed-input-reconstruction-2026-11-18.md).
 
 The original explanations remain recoverable at `1479fc5e`. Reconsider the stated scope if the
-permutation action, randomization law, PID2 construction or rounding contract changes. Exact-commit
-hosted checks and mainline integration remain pending.
+permutation action, randomization law, PID2 construction or rounding contract changes. These corrections reached main at `c10708015a0205f2719f90885a06ebe71988e7d0`. Its 47 ordinary hosted jobs passed. [Hosted execution](https://github.com/sepahead/pid-rs/actions/runs/44499141824)
 
 ## Fitted centering and resampling spread, 18 November 2026
 
@@ -113,8 +118,9 @@ the v2 hash domain. The same centered arithmetic supplies the sample spread of c
 replicates. The public fit and bootstrap tests retain the numerical counterexample and its
 scope. The earlier implementation remains available at `1479fc5e`. [Correction and reopen conditions](audit/evidence/centered-binary64-moments-2026-11-18.md).
 
-Exact-commit hosted checks and mainline integration remain pending. A universal binary64 error
-bound and statistical coverage for a user-supplied resampling procedure require separate evidence.
+These corrections reached main at `c10708015a0205f2719f90885a06ebe71988e7d0`. [Hosted execution](https://github.com/sepahead/pid-rs/actions/runs/44499141824)
+
+A universal binary64 error bound and statistical coverage for a user-supplied resampling procedure require separate evidence.
 
 ## Source-partition bounds and scientific review, 18 November 2026
 

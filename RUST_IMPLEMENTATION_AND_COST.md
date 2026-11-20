@@ -156,6 +156,16 @@ With eight categories per source and a binary target, the complete capacities ar
 
 Use a task-defined, training-fitted representation with an explicit held-out target and retained fit identity. Coarsening can reduce compute and variance while discarding information and changing the estimand. A Euclidean or hyperbolic embedding does not remove this tradeoff. Report sensitivity to the representation instead of silently treating a cheaper representation as the original sensor variable.
 
+## Target-conditioned Shannon ratios
+
+At revision `03325745f64becf437b9b3042b51a9d925450579`, the stable functions `pid_core::diagnostics::average_degree_of_redundancy` and `average_degree_of_vulnerability` combine supplied mutual information values, in nats. When the ratio is defined, they return a dimensionless value and, when representable, its numerator in nats. With $m$ sources the first numerator sums $m$ single-source values. The second sums the loss in joint information on deleting each source, using $2m$ signed terms. Each term is represented exactly in units of the smallest positive binary64 number. The quotient and numerator each receive their own final rounding. Both functions have an explicit denominator-policy variant and use the default build. [Definitions, denominator policy and worked examples](audit/research/normalized-shannon-arithmetic/README.md)
+
+For $L$ 64-bit words per sign, accumulation takes at most order $mL$ work and order $L$ auxiliary storage. On a 64-bit target each sign uses 34 words and the quotient uses 36. Input storage, mutual information estimation and the cost of obtaining the joint distribution are separate. The ratio calculation has no training stage, resampling, cancellation hook or caller-set budget. No measured latency is reported. [Accumulator source](crates/pid-core/src/exact_binary64.rs)
+
+## Six finite categorical output certificates
+
+The portable reader evaluates six fixed tables with three categorical sources and one target. It works on distinct complete states and their multiplicities. Direct event counting for the 18 fixed nodes takes quadratically many state comparisons in the number of occupied states, with an additional dependence on token length. Exact rational arithmetic and the logarithm enclosures depend on the bit lengths and requested precision. The default Rust `discrete_sxpid3_averaged` API instead accepts the expanded observation rows and returns averaged floating-point atoms. The portable package supplies no end-to-end measurement of the Rust API. [Inputs, implementation, costs and limits](audit/research/three-source-six-certificate-observations/README.md)
+
 ## Measurement and improvement plan
 
 The repository has [Criterion benchmarks](crates/pid-core/benches/estimators.rs) for continuous kernels, quantization and small categorical cases. They are a starting point, not an end-to-end robotics qualification. Record an exact release build and its source revision, compiler/features, hardware, $N,K,D,s$, alphabets and occupancy, selected API, preprocessing cost, thread count, resource limits, warm-up, repetitions, elapsed-time distribution, peak memory and refused or cancelled cases. Keep estimator time separate from model inference, compilation and Lean/checker execution. No current timing number is asserted in this note.

@@ -1997,13 +1997,17 @@ The [eighteen-family study](../audit/research/three-source-w02/README.md) suppli
 
 The [four-script experiment](../audit/research/three-source-synthetic-projection/README.md) tests a reduction from all typed variable assignments to a smaller finite input. Its source check regenerates 37 Lean modules. Its hosted Linux workflow separately compiles the proofs, checks four expected compiler refusals and runs the stock checker in fresh processes. It retains partial evidence when a time or memory limit stops a stage. The fixtures in this experiment are artificial. [Workflow and resource limits](../.github/workflows/three-source-synthetic-projection.yml)
 
+Run `python3 -I -S -B audit/evidence/normalized-shannon-reports-2026-11-20/check.py` to compare the saved native report outputs with all 184 fixed expected reports. It verifies the numerical observations for the original and corrected code. The public arithmetic study explains what the seven fields measure. [Definitions and finite results](../audit/research/normalized-shannon-arithmetic/README.md)
+
+From the repository root, run `python3 -I -S -B audit/research/three-source-six-certificate-observations/check.py` to check all 648 coordinate records and the 360 specified relations. The sibling `controls.py` checks the 20 expected refusals. The reader uses Python's standard library and the shipped count tables and output records. [Recomputation procedure](../audit/research/three-source-six-certificate-observations/README.md)
+
 The [November mathematical results guide](../MATHEMATICAL_RESULTS_GUIDE_CURRENT.md) has a
 [separate PDF](../output/pdf/mathematical-results-guide-current.pdf). Run
 `python3 -I -S -B scripts/build-current-mathematical-results-guide.py --check` to rebuild and
 compare the canonical bytes. On a different typesetting installation, `--check-committed` verifies
 the tracked source and shipped artifact, including page text, authorship, fonts and link targets.
 The exact and cross-toolchain aggregate modes use these respective operations. The published
-[publication record](../audit/evidence/mathematical-results-guide-november-2026-11-19.md) describes the four-page November edition. The full 28-page foundation guide retains
+[publication record](../audit/evidence/mathematical-results-guide-november-2026-11-19.md) describes the earlier four-page edition. The [20 November publication record](../audit/evidence/november-results-publication-2026-11-20.md) describes the five-page guide and both studies. The full 28-page foundation guide retains
 its previously qualified builder and stricter structural and hosted profiles.
 
 `build-mathematical-results-guide-pdf.sh` renders `MATHEMATICAL_RESULTS_GUIDE.md` through an
@@ -3351,7 +3355,7 @@ checks do not replace the external caller's custody or rendered-page review.
 
 The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
-`audit/formal/latex/real-occupancy-sensors/publication-inputs-v8.json`. The v8 profile binds the source and typeset definition of the two forecast scores. Profiles v1–v7 retain the prior bindings.
+`audit/formal/latex/real-occupancy-sensors/publication-inputs-v9.json`. The v9 profile binds the revision of `METHODS.md` that documents target-based Shannon degree arithmetic. The v8 profile bound the source and typeset definition of the two forecast scores. Profiles v1–v7 retain the prior bindings.
 The v5 successor added the negative OR-forecast comparison, its portable reproduction
 evidence and the third figure. The v6 successor only pins the regenerated `METHODS.md` after the
 intrinsic-dimension provenance correction. The v7 successor pins the November revision of
@@ -3402,7 +3406,7 @@ bind the citation corrections and Sepehr Mahmoudian author header and byline. Se
 hashes bind each figure PDF. Citation controls retain the author header and change only the label
 or URL; separate Markdown controls reject a missing or changed author and unrelated source changes.
 The current input profile is
-`audit/formal/latex/mgw-fixed-world/publication-inputs-v11.json`. The v11 profile binds the cited office report's scoring-rule revision. Profiles v1–v10 retain the earlier source identities.
+`audit/formal/latex/mgw-fixed-world/publication-inputs-v12.json`. The v12 profile binds the revision of `METHODS.md` that documents target-based Shannon degree arithmetic. The v11 profile bound the cited office report's scoring-rule revision. Profiles v1–v10 retain the earlier source identities.
 The v8 profile was a dependency-only successor of v7. It pinned the revised recorded-office
 Markdown, which this paper's source map binds, and kept the v7 authored-paper references. The v9
 profile pinned the September revision of `METHODS.md`. The v10 profile pinned its November revision.

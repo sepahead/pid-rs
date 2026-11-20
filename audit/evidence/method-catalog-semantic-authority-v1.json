@@ -45,7 +45,7 @@
   "authority_schema_sha256": "afc9bb89a704dce43a53f01117e068dde9984177446c9e6d2ff049e120a27f20",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "a583377d473444d492549bd22cef9aa3ccc98bdd9dd7c34793ed817ef9357dd5",
+  "catalog_sha256": "b354818b74b89f33f76d4276d04a6f13932f141fa9de918638a620fd8ca8bf43",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -580,7 +580,7 @@
       },
       "method_id": "shannon-invariants.average-degrees",
       "observed_alias_families": [],
-      "payload_sha256": "a7a0abc34e6cbbb8edd6d21e3d71453e02fd3358fffb705f2100dfe90e6b960c"
+      "payload_sha256": "735c170ae4137cac2d05036b8a385f23115db549948c5b7594e462e363dbe461"
     },
     {
       "facts": {
@@ -595,7 +595,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "edf069f2e6f2b29ef65a9a4357920ce52337a137f8989a079a2e54ade3eb3452"
+      "payload_sha256": "10e90103e4c7edc80bca811931c0cb3f88b854c87fb8a50319ab7e9f8bd96817"
     },
     {
       "facts": {
@@ -606,7 +606,7 @@
       },
       "method_id": "shannon-invariants.target-free-ratios",
       "observed_alias_families": [],
-      "payload_sha256": "d9da0b879caf70035a1b43d898800f08ac06d723b463c73f60f8672d2089b1fa"
+      "payload_sha256": "8ef2dab2ca50324a8d995426be848ff8809372b96989320c9b44a8fdf7bf561d"
     },
     {
       "facts": {
@@ -999,8 +999,8 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "83101505e5b7b19f8342ea513502ea526fc61e0ac1f1abf3795ffb9f8e6bebad",
-  "reference_registry_sha256": "346ea3678134e0a7dca4a0b1b405fc0db84074768a13d19ce9875b306fe814de",
+  "ordered_root_sha256": "5d82aa4ad926886caa6d87f27759298b22e31e3f579bc972052f8d25dac5fc97",
+  "reference_registry_sha256": "4ab357bb67c3ea70074de0ab21d878fefa37b10343e8c8bc1ceb14a38c5da719",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1
 }

@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Correct the average degrees of redundancy and vulnerability for supplied binary64 mutual information values. Each function now rounds its exact numerator and exact quotient independently. On 184 fixed calls, 41 earlier reports differed from the exact references, including 13 incorrect statuses. All 184 corrected reports agreed in all seven fields. [Definitions, examples and measurements](audit/research/normalized-shannon-arithmetic/README.md)
+- Publish the six original three-source count tables and their complete categorical shared-exclusion certificates. The portable reader recomputes all 648 coordinates, tests 360 relations and checks 20 deliberately invalid records or inputs. The general claim about the Rust producer remains open. [Tables, exact products and checks](audit/research/three-source-six-certificate-observations/README.md)
+- Clarify the categorical report fields, the cost of comparing occupied states, and the ordering of exact mutual information values for one coherent law. The signed getter returns a difference. The averaged-only and pointwise APIs expose different outputs. [Categorical report fields](crates/pid-core/src/sxpid.rs) · [Mutual information inputs](crates/pid-core/src/invariants.rs)
+
 - Give a stock Lean proof for the two assertions in the archived three-source count test W02. All assignments evaluate the assertions to true followed by false. The source counts eighteen valid families and tests distinctness of eighteen listed codes. Identifying the list with the valid families needs a separate membership check. [Report and proof](audit/research/three-source-w02/README.md)
 
 - Cite the defining statistical sources in five studies and state the sampling distribution, the forecast loss, and the role of each reference calculation. Distinguish source probabilities from probabilities conditional on the observed target. [Source-by-source corrections](audit/evidence/statistical-method-primary-sources-2026-11-19.md)
@@ -16,7 +20,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   and the stock kernel's replay scope. [Count definitions and proofs](audit/research/three-source-alphabet-counts/README.md)
 - Prove both inverse identities for the restricted integer-table grammar. Two original readers
   recover all 29,403 tables in the stated finite check. [Encoding and examples](audit/research/categorical-count-table-encoding/README.md)
-- Publish a new four-page guide to the November results and their scope. The earlier nine
+- Publish a guide to the November results and their scope. The earlier nine
   families and six companion packages have a separate foundation guide. [November results guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md)
 
 - Correct the sufficient sign constant in the exploratory source-partition optimizer. Exact rational

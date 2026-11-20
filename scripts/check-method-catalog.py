@@ -44,7 +44,7 @@ SEMANTIC_ALIAS_DIAGNOSTIC_REVISION = 1
 # Updating this reviewed root is the explicit re-adjudication step for any catalog semantic
 # payload, typed fact, linked-reference record, alias diagnostic, or authority-schema change.
 EXPECTED_SEMANTIC_AUTHORITY_ROOT_SHA256 = (
-    "83101505e5b7b19f8342ea513502ea526fc61e0ac1f1abf3795ffb9f8e6bebad"
+    "5d82aa4ad926886caa6d87f27759298b22e31e3f579bc972052f8d25dac5fc97"
 )
 MIGRATION_METHOD_ID = "software.python-experimental-migration-bindings"
 PYTHON_V1_METHOD_ID = "software.python-v1-bindings"

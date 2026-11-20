@@ -79,10 +79,10 @@ This was a citation defect, not a mathematical counterexample or a proof failure
 
 ## Current reference and publication controls
 
-The current [v11 input profile](../latex/mgw-fixed-world/publication-inputs-v11.json)
+The current [v12 input profile](../latex/mgw-fixed-world/publication-inputs-v12.json)
 binds the authored nine-page PDF of 231,810 bytes with SHA-256
 `6fc4cfbe5bb71037515c4ebdd3119b20e6e970ce6f117e1b9659b44a728b565a`.
-The paper names **Sepehr Mahmoudian** as author. The v11 profile binds the cited office report after its score-definition revision. Two exact builds in each Python mode reproduced the same nine-page paper. The [19 November citation record](../../evidence/statistical-method-primary-sources-2026-11-19.md) identifies the selected bytes. Profiles v1–v10 retain the earlier bindings.
+The paper names **Sepehr Mahmoudian** as author. The v12 profile binds the revision of `METHODS.md` that documents target-based Shannon degree arithmetic. The [v11 profile](../latex/mgw-fixed-world/publication-inputs-v11.json) bound the cited office report after its score-definition revision. Under v11, two exact builds in each Python mode reproduced the same nine-page paper. The [19 November citation record](../../evidence/statistical-method-primary-sources-2026-11-19.md) identifies the selected bytes. Profiles v1–v10 retain the earlier bindings.
 The earlier citation-only PDF and its execution observations are recorded below.
 The [v10 profile](../latex/mgw-fixed-world/publication-inputs-v10.json) updated the `METHODS.md` binding for the November statistical studies.
 Two exact builds in each Python mode reproduced the reference. The

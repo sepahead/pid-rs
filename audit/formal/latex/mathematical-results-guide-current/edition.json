@@ -1,24 +1,25 @@
 {
-  "edition": "2026-11-19",
-  "scope": "Local byte-exact reproduction and direct inspection of the shipped November PDF; foundation v4/v5 profiles retain their separate scope.",
+  "edition": "2026-11-20",
+  "scope": "Source and PDF identities, checked page text and link destinations for the 20 November guide. The citation records document the bounded numerical observations.",
   "inputs": {
-    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "c92a9607ae7eb448d1f1b109fa832f2bf2ce13ed43b77ed45ea4f3275e1b99ff",
-    "audit/formal/latex/mathematical-results-guide-current/publication.tex": "5bdd57edecf751900a52f6a56369478949fb439db47252cea7ff72b90e69bd76",
-    "audit/formal/latex/mathematical-results-guide-current/publication.lua": "c92077a00ae48f60ab562a359c1ec044baa04aae8d2cc5f3680e81bd44d19951",
+    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "f7d57623f510555aa2c2ebd4b83a4d88b4ce7ffb5d1872d33a1e07da18a9c380",
+    "audit/formal/latex/mathematical-results-guide-current/publication.tex": "2d27cac2510a84304a1b2e5cdcf0f282947f894576f8fc777cdf868064ac1dc1",
+    "audit/formal/latex/mathematical-results-guide-current/publication.lua": "004dd40c9916a5c38111540e6f4e0eee5043b373572d5906c690c512aeaca678",
     "audit/formal/latex/pid-rs-report-tables.sty": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
     "audit/formal/latex/pid-rs-workflow-publication.sty": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
     "MATHEMATICAL_RESULTS_GUIDE.md": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b",
     "output/pdf/mathematical-results-guide.pdf": "166dd75fc3f60b6f30feee8cbba46076bba28abc5aaaf3d33f8b1475e6ab15f1"
   },
-  "pdf_sha256": "0556d73ae891eb5dbeaadf219433a057bf22b66b23a593b323937be66a619d3f",
+  "pdf_sha256": "61950e12af0e45709894cbdae6cf29ee2260cfd8b34fe289ca692fe61ac24b7e",
   "pdfinfo": {
     "Title": "Mathematical results guide for November 2026",
     "Author": "Sepehr Mahmoudian",
-    "Pages": "4",
+    "Pages": "5",
     "Page size": "595.276 x 841.89 pts (A4)",
     "Encrypted": "no",
     "JavaScript": "no",
-    "Tagged": "no"
+    "Tagged": "no",
+    "Subject": "Sampling, formal counts, six categorical certificates and Shannon degree arithmetic"
   },
   "embedded_font_entries": 9,
   "page_text": [
@@ -26,7 +27,9 @@
       "Sepehr Mahmoudian",
       "Why the nominal 95% range has coverage 64/81",
       "64/81",
-      "all 14 other ordered samples cover"
+      "all 14 other ordered samples cover",
+      "20 November 2026",
+      "arithmetic on supplied information values"
     ],
     [
       "What a fitted quantizer fixes",
@@ -50,11 +53,26 @@
       "Rust implementation and computational cost",
       "experimental::pipelines::block_bootstrap",
       "Cargo feature experimental-pipelines",
-      "discrete_sxpid2_averaged",
+      "discrete_sxpid2_averaged"
+    ],
+    [
+      "When rounding changes a normalized degree",
+      "ties to even",
+      "order and nonnegativity",
+      "the exact redundancy degree 3/10",
+      "184 fixed calls",
+      "41 reports",
+      "matched all seven fields",
+      "What six three-source certificates establish",
+      "648 named coordinates (108 per table)",
+      "360 relations",
+      "42,212,880 to 42,611,592 bytes",
+      "complete source custody",
       "Software citation"
     ]
   ],
   "uri_targets": [
+    "https://arxiv.org/abs/2504.15779v1",
     "https://doi.org/10.1103/PhysRevE.103.032149",
     "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
     "https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
@@ -63,9 +81,12 @@
     "https://github.com/sepahead/pid-rs/blob/main/METHODS.md",
     "https://github.com/sepahead/pid-rs/blob/main/RUST_IMPLEMENTATION_AND_COST.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/finite-copy-bootstrap-coverage/README.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/normalized-shannon-reports-2026-11-20/receipt.json",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-count-table-encoding/README.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/normalized-shannon-arithmetic/README.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/source-coupling-compression/EXPOSITION.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-alphabet-counts/README.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-six-certificate-observations/README.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-w02/README.md",
     "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md",
     "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/obligations.md",
