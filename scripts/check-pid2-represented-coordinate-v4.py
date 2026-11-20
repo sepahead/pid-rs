@@ -35,7 +35,7 @@ EXPECTED_FAMILY_CASES = 1023
 
 SOURCE_SHA256 = {
     "crates/pid-core/src/exact_binary64.rs": (
-        "6e7d6be525878638e4be253aff9bd74d25dd94afb53f1b520fb8e4e1a0a8cdfb"
+        "c3d047917b9f1c5d162c325e3128183787f0f874205fe80ba0bb6c2dd68042c5"
     ),
     "crates/pid-core/src/pid2.rs": (
         "f8cce5ece132a54df30a19f3b867c1296b5325e725408f628143c619ac814146"

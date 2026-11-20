@@ -28,16 +28,16 @@ SELF_RELATIVE: Final[Path] = Path(
     "scripts/check-sxpid3-p5-rust-source-route-self-test.py"
 )
 EXPECTED_STDOUT_SHA256: Final[str] = (
-    "a8cdab4307bf3bc46b03ad6487282a5ab4f0768959d1370f008860de978f22d0"
+    "9bbf6bf401575c51db09ef8c2ee152e0decd7470b4d6a30dce5aa327316b70e3"
 )
 EXPECTED_CHECKER_SOURCE_SHA256: Final[str] = (
-    "1bb15e5a45c2e5fdde8b8d933df64cc875f26b1d79fb048f2a68af57d9b3f603"
+    "1eea8db8a7b5487cdb9fef71e4585af49aec3d5350b714aa1d331e82a9fd0621"
 )
 EXPECTED_PRIMARY_CHECKER_SOURCE_SHA256: Final[str] = (
     "d9d1c540930855b31f8190fdb2095d215c736f6f6c3d19c60e2a353923be06d2"
 )
 EXPECTED_MANIFEST_SHA256: Final[str] = (
-    "e0ef5a05bbade1ccbd83767ee0e1e39f05276790bb2b433dd8e5fff7ea83046a"
+    "cc7243f01137661c674a1b2c9c213851078f0822947d957f2984364582419282"
 )
 EXPECTED_STABLE_KEYS: Final[list[str]] = [
     "01",

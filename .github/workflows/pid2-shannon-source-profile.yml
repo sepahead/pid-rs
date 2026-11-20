@@ -1,0 +1,97 @@
+name: PID2 and exact-sum source qualification
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['review/**']
+    paths:
+      - '.github/workflows/pid2-shannon-source-profile.yml'
+      - 'scripts/check-pid2-shannon-source-profile.py'
+      - 'scripts/check-pid2-represented-coordinate-v4*.py'
+      - 'scripts/generate-exact-binary64-sum-oracle.py'
+      - 'crates/pid-core/tests/fixtures/*exact*binary64*'
+      - 'crates/pid-core/src/exact_binary64.rs'
+      - 'crates/pid-core/src/invariants.rs'
+      - 'crates/pid-core/src/pid2.rs'
+      - 'crates/pid-core/src/bin/exp0.rs'
+      - 'crates/pid-core/tests/pid2.rs'
+      - 'crates/pid-core/Cargo.toml'
+      - 'Cargo.lock'
+      - 'Cargo.toml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pid2-source-profile-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    env:
+      CARGO_BUILD_JOBS: '2'
+      RUST_TEST_THREADS: '1'
+      CARGO_INCREMENTAL: '0'
+      CARGO_TERM_COLOR: never
+      RUSTFLAGS: '-D warnings'
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: ${{ github.sha }}
+          path: profile
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: 03325745f64becf437b9b3042b51a9d925450579
+          path: production
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check both complete-file profiles and the observation controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          result="$RUNNER_TEMP/pid2-source-qualification"
+          mkdir "$result"
+          test "$(git -C profile rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git -C production rev-parse HEAD)" = 03325745f64becf437b9b3042b51a9d925450579
+          printf '%s\n' "$GITHUB_SHA" > "$result/profile-commit.txt"
+          python3 --version > "$result/python-version.txt"
+          for mode in normal optimized; do
+            flags=()
+            if test "$mode" = optimized; then flags=(-O); fi
+            for op in source controls; do
+              python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-source-profile.py "$op" --repo-root profile > "$result/$op-$mode.json"
+            done
+            python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-represented-coordinate-v4-self-test.py > "$result/pid2-controls-$mode.txt"
+          done
+          cmp "$result/source-normal.json" "$result/source-optimized.json"
+          cmp "$result/controls-normal.json" "$result/controls-optimized.json"
+          cmp "$result/pid2-controls-normal.txt" "$result/pid2-controls-optimized.txt"
+      - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
+        with:
+          toolchain: '1.99.1'
+      - name: Execute the four native partitions and the canonical full checker
+        shell: bash
+        run: |
+          set -euo pipefail
+          result="$RUNNER_TEMP/pid2-source-qualification"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/pid2-native-target"
+          python3 -I -S -B profile/scripts/check-pid2-shannon-source-profile.py native --repo-root production --output "$result/native" > "$result/native.json"
+          for mode in normal optimized; do
+            flags=()
+            if test "$mode" = optimized; then flags=(-O); fi
+            python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-represented-coordinate-v4.py --scope full --repo-root production > "$result/full-$mode.txt"
+          done
+          cmp "$result/full-normal.txt" "$result/full-optimized.txt"
+          test -z "$(git -C production status --porcelain --untracked-files=all)"
+      - name: Retain complete native observations and source profiles
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: pid2-shannon-source-profile-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/pid2-source-qualification
+          if-no-files-found: error
+          retention-days: 30
