@@ -4815,7 +4815,7 @@
         "The implementation-separated exact-rational route generates the complete 18-node three-source antichain lattice and evaluates two finite Lyu--Clark--Raviv witness systems. It finds eight differing SxPID net atoms and exact top-node mutual-information products 8 and 4, and kills union-to-intersection, descriptor-substitution, and relation mutations. Those two systems and three named mutations are finite evidence, not an exhaustive theorem over all distributions or faults.",
         "The Rust relation-witness regression exercises the public categorical kernel and checks exact rational products before binary64 reconstruction. It is implementation evidence, not an independent deductive refinement theorem.",
         "The pinned Lean development kernel-checks three axiom-free generic descriptor-factorization implications and its self-test kills three premise mutations. It does not formalize SxPID events, the Lyu--Clark--Raviv systems, the concrete descriptor collision, the Rust kernel, or floating-point arithmetic.",
-        "The descriptor-collision impossibility transfers to a candidate PID only under an explicit factorization through the stipulated recoverability descriptor. The exact witness shows that SxPID does not satisfy that premise; sharing an antichain index set is not a mapping theorem.",
+        "For the two systems with unequal mutual information, reconstruction from another PID fails on that pair exactly when its two atom vectors agree. Global factorization of the atoms through the stipulated descriptor suffices for that equality. Eight of the eighteen SxPID atoms differ on the pair.",
         "The audit concludes that shared exclusions is a coherent signed local event-logical PID under its explicit semantic contract. It does not establish that this semantics is uniquely forced by Shannon theory or that atoms are nonnegative set-sized, causal, common-deterministic, processing-monotone, or authority-grade quantities.",
         "Exact finite-law semantics, counterexamples, and reconstruction do not establish population sampling assumptions, estimator calibration, continuous ISX validity, higher-source software refinement beyond the exercised witness, or downstream scientific and authorization validity."
       ],
@@ -4841,8 +4841,8 @@
           "role": "defining-paper"
         },
         {
-          "locator": "descriptor-collision witness and stipulated alternative atom semantics",
-          "reference_id": "lyu-clark-raviv-2026",
+          "locator": "Definition 6 and Lemma 4 specify the grouped target-coordinate entropies. Lemma 5 supplies the collision used by Theorem 1.",
+          "reference_id": "lyu-clark-raviv-2026-structural-v2",
           "role": "caveat"
         },
         {
@@ -5799,6 +5799,20 @@
       "title": "Multivariate Partial Information Decomposition: Constructions, Inconsistencies, and Alternative Measures",
       "type": "paper",
       "url": "https://doi.org/10.1103/8rzp-w5z1",
+      "year": 2026
+    },
+    {
+      "arxiv": "2604.03869v2",
+      "authors": [
+        "Aobo Lyu",
+        "Andrew Clark",
+        "Netanel Raviv"
+      ],
+      "doi": null,
+      "id": "lyu-clark-raviv-2026-structural-v2",
+      "title": "Structural Impossibility of Antichain-Lattice Partial Information Decomposition",
+      "type": "paper",
+      "url": "https://arxiv.org/abs/2604.03869v2",
       "year": 2026
     },
     {

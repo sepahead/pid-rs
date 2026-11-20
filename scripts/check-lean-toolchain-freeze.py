@@ -702,12 +702,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
         "bc64dbbcd56e818e6f5d98d67635c54c2f31b4341f749ea4c4cf339398966d87"
     ),
-    "scripts/README.md": '44277d901030ee68c5d3f88f12b3eca84c2cd61c80b325aeed464cbae7fbcab6',
+    "scripts/README.md": '7d05f8ff55dcc3c2006739459745d53b1503da8a3d0d331e080419fb678f46fd',
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        '22a46789a1de9c55932f3306e411e055f7679aad20d7876ab0ff5b7b409c4131'
+        '8a1962835af9e45ee0a33a341014515c291d7abddb4ab597dac3b4f1a4b1524b'
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"

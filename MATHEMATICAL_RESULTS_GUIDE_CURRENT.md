@@ -70,7 +70,7 @@ All 29,403 emitted words were distinct and the tested readers recovered the corr
 
 ## What the 22 checked count statements establish
 
-There are three named sources. The source and target labels can have arbitrary types with decidable equality. The table has a finite set of row indices, a natural-number weight per index, and a target label. Fix a key and a family of source collections. The **source event** holds at a row when all sources in at least one collection match their labels at the key. A Boolean disjunction of these conjunctions tests the same event. [Formal definitions, declarations and replay](audit/research/three-source-alphabet-counts/README.md)
+There are three named sources. The source and target labels can have arbitrary types with decidable equality. The counts sum over a finite set of row indices. Each index has a natural-number weight, three source labels and a target label. Choose any reference index (the key) and a family of source collections. The **source event** holds at a row when all sources in at least one collection match their labels at the key. A Boolean disjunction of these conjunctions tests the same event. [Formal definitions, declarations and replay](audit/research/three-source-alphabet-counts/README.md)
 
 Write $N$ for the total weight, $U$ for the source-event weight, $T$ for the target-match weight and $V$ for the weight of their intersection. These symbols denote counts on this page. Nonnegative weights and event inclusion give
 
@@ -78,7 +78,7 @@ $$
 V\le U\le N,\qquad V\le T\le N.
 $$
 
-A positive-weight key matches itself on all sources and the target. For a nonempty family all three counts are positive. Stock Lean 4.34.1 compiled and replayed 22 theorem types about counts, order and the Boolean representation. The definition comparison covered nine pairs and one auxiliary definition. Paper correspondence, Rust and floating-point refinement, the original Lean 4.33 protocol and human review remain open. [Exact checked scope](audit/research/three-source-alphabet-counts/README.md)
+If the family is nonempty and the key belongs to the summed index set, its row contributes its own weight to $V$. A positive weight at that key therefore makes all four counts positive. Stock Lean 4.34.1 compiled and replayed 22 theorem types about counts, order and the Boolean representation. The definition comparison covered nine pairs and one auxiliary definition. Paper correspondence, Rust and floating-point refinement, the original Lean 4.33 protocol and human review remain open. [Exact checked scope](audit/research/three-source-alphabet-counts/README.md)
 
 A separate proof checks both assertions in the archived count test W02. Every assignment makes the first true and the second false. There are eighteen nonempty families of incomparable nonempty branches. The script checks that eighteen listed codes are distinct. It does not test that each listed code represents such a family. [Count, source and checked proof](audit/research/three-source-w02/README.md)
 

@@ -3355,7 +3355,7 @@ checks do not replace the external caller's custody or rendered-page review.
 
 The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
-`audit/formal/latex/real-occupancy-sensors/publication-inputs-v11.json`. The v11 profile binds the `METHODS.md` distinction between FA-2 ergodic convergence and finite-sample dependence bounds. The v10 profile bound the clarification of ergodic sampling, tuple-copy targets and the binary64 denominator threshold for Shannon ratios. The v9 profile bound the target-based Shannon degree arithmetic. The v8 profile bound the source and typeset definition of the two forecast scores. Profiles v1–v7 retain the prior bindings.
+`audit/formal/latex/real-occupancy-sensors/publication-inputs-v12.json`. The v12 profile binds the corrected structural-paper citation and descriptor-transfer condition in `METHODS.md`. The v11 profile records the distinction between FA-2 ergodic convergence and finite-sample dependence bounds. The v10 profile bound the clarification of ergodic sampling, tuple-copy targets and the binary64 denominator threshold for Shannon ratios. The v9 profile bound the target-based Shannon degree arithmetic. The v8 profile bound the source and typeset definition of the two forecast scores. Profiles v1–v7 retain the prior bindings.
 The v5 successor added the negative OR-forecast comparison, its portable reproduction
 evidence and the third figure. The v6 successor only pins the regenerated `METHODS.md` after the
 intrinsic-dimension provenance correction. The v7 successor pins the November revision of
@@ -3406,7 +3406,7 @@ bind the citation corrections and Sepehr Mahmoudian author header and byline. Se
 hashes bind each figure PDF. Citation controls retain the author header and change only the label
 or URL; separate Markdown controls reject a missing or changed author and unrelated source changes.
 The current input profile is
-`audit/formal/latex/mgw-fixed-world/publication-inputs-v14.json`. The v14 profile binds the `METHODS.md` distinction between FA-2 ergodic convergence and finite-sample dependence bounds. The v13 profile bound the clarification of ergodic sampling, tuple-copy targets and the binary64 denominator threshold for Shannon ratios. The v12 profile bound the target-based Shannon degree arithmetic. The v11 profile bound the cited office report's scoring-rule revision. Profiles v1–v10 retain the earlier source identities.
+`audit/formal/latex/mgw-fixed-world/publication-inputs-v15.json`. The v15 profile binds the corrected structural-paper citation and descriptor-transfer condition in `METHODS.md`. The v14 profile records the distinction between FA-2 ergodic convergence and finite-sample dependence bounds. The v13 profile bound the clarification of ergodic sampling, tuple-copy targets and the binary64 denominator threshold for Shannon ratios. The v12 profile bound the target-based Shannon degree arithmetic. The v11 profile bound the cited office report's scoring-rule revision. Profiles v1–v10 retain the earlier source identities.
 The v8 profile was a dependency-only successor of v7. It pinned the revised recorded-office
 Markdown, which this paper's source map binds, and kept the v7 authored-paper references. The v9
 profile pinned the September revision of `METHODS.md`. The v10 profile pinned its November revision.

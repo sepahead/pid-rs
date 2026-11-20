@@ -7,16 +7,17 @@ $i^{\mathrm{sx}}_\cap$ and its antichain-lattice PID. This document does not def
 measure. It separates published theorems, project rederivations, exact counterexamples, bounded
 computations, executable observations, and open questions.
 
-**Date:** 25 July 2026
+**Author:** Sepehr Mahmoudian. **Date:** 25 July 2026. The 20 November 2026 revision corrects the
+descriptor-transfer condition in Section 7.4. Cite *Foundational validity audit of shared-exclusions
+PID* (2026) with the exact repository commit or release. [Software citation](CITATION.cff).
 
 **Units:** nats unless a result is explicitly stated in bits.
 **Primary object audited:** Makkeh--Gutknecht--Wibral shared exclusions, not PID in general.
 
-The audit uses three complementary, implementation-distinct but correlated lanes for its most
-sensitive compatibility conclusion. The standard-library Python checker and the Rust regression
-each compute the concrete witness. Lean proves only the conditional transfer firewall: it isolates
-the descriptor-factorization premise needed to transfer a descriptor-collision impossibility
-result to a candidate PID, but it does not compute or certify the concrete Sx event calculation.
+The standard-library Python checker and the Rust test each compute the concrete witness. Lean
+proves that global descriptor factorization suffices to pass the witness collision to another
+assignment. Equality of its two atom vectors already rules out reconstruction of the unequal
+totals. The generic Lean proof does not compute the concrete Sx events.
 All three lanes share reviewed semantic cuts, including the encoding of the stipulated systems,
 the descriptor map, and the conclusion being tested. Their agreement is therefore corroboration
 across implementations, not logical independence.
@@ -787,15 +788,17 @@ $$
 \tag{26}
 $$
 
-Their Lemma 4 stipulates
+For each antichain $\alpha$, let $U_\alpha$ be the tuple of nonconstant target coordinates whose
+minimal recovering sets form $\alpha$. Lemma 4 assigns their joint entropy, with zero for an empty
+tuple:
 
 $$
 \Pi(\alpha)=H(U_\alpha).
 \tag{27}
 $$
 
-It therefore assigns one bit to each of the three labels in Equation (26) and zero to every other
-label, in both systems.
+In this pair each nonempty group contains one fair bit. Both systems assign one bit to each of the
+three labels in Equation (26) and zero to every other label.
 
 The crucial observation is immediate. In the tilde system those three one-bit coordinates are not
 independent. Their stipulated values sum to three bits, while the target has only two bits. Thus the
@@ -806,8 +809,7 @@ The final step of their Lemma 4 proof says that the atom value is “assigned”
 No Möbius inversion of a Sx cumulative appears. No argument makes the $U_\alpha$ independent
 across different labels. Theorem 1 is valid on its explicitly stated Definition 6 domain: the two
 witness laws have the same complete descriptor vector and unequal mutual information, so no single
-map from that vector reconstructs mutual information for every law in that domain. Marginal
-component entropies and access labels do not encode the witness's cross-coordinate relation.
+map from that vector reconstructs mutual information for every law in that domain. The relation in the tilde system occurs between the three groups.
 
 ### 7.3 Exact SxPID result
 
@@ -883,7 +885,7 @@ reconstruct their mutual information.
 
 #### Descriptor-factorization firewall
 
-The transfer condition can be stated without PID terminology. Let $D(P)$ be a descriptor vector,
+One sufficient condition can be stated without PID terminology. Let $D(P)$ be a descriptor vector,
 $A(P)$ an atom vector, and $J(P)$ the quantity to be reconstructed. Suppose the atom assignment
 factors through the descriptors:
 
@@ -902,7 +904,7 @@ J(P)\ne J(Q),
 $$
 
 then $A(P)=A(Q)$, so no function $f$ can satisfy $f(A(R))=J(R)$ for every system $R$.
-Conversely,
+An assignment that distinguishes equal descriptors refutes that global premise:
 
 $$
 D(P)=D(Q),
@@ -913,22 +915,24 @@ A(P)\ne A(Q)
 \tag{32}
 $$
 
-This is the exact logical firewall. The Lyu--Clark--Raviv witness proves a reconstruction
-impossibility for atom assignments that accept Equation (30), with their recoverability-label and
-component-entropy descriptor. It does not transfer to an atom assignment merely because that
-assignment is indexed by the same antichain lattice. A separate theorem must establish Equation
-(30) for that assignment.
+For a specified pair with different totals, reconstruction fails on that pair exactly when
+$A(P)=A(Q)$. For all systems a decoder of a real-valued $J$ exists exactly when $J$ is constant
+on each set of systems with the same $A$. Assign the common value to each attained atom vector,
+and any real value to the others. Global factorization in Equation (30) makes all descriptor
+collisions atom collisions. A single pair can suffice without global factorization. For example,
+on three systems take $D=(0,0,0)$, $A=(0,0,1)$ and $J=(3,2,2)$. The first two force conflicting
+outputs at the same atom value. The third rules out Equation (30).
 
-The SxPID calculation supplies the converse witness in Equation (32): the two systems have the same
-stipulated recoverability descriptors but eight different Sx atoms. Therefore SxPID does not factor
-through that descriptor map. This does not make the descriptor theorem false. It shows that the
-operative premise is descriptor sufficiency, not antichain indexing alone.
+In the published pair the descriptor entries are the joint entropies $H(U_\alpha)$ of target
+coordinates grouped by minimal recovering antichain. The systems have the same descriptor, but
+eight of the eighteen Sx atoms differ. This refutes Equation (30) for SxPID. The exact products
+in Equations (28) and (29) independently show that the two totals can be read from the Sx atoms.
 
 The generic argument is kernel-checked in
 [`audit/formal/lean-foundational-sxpid/PidDescriptorFactorization.lean`](audit/formal/lean-foundational-sxpid/PidDescriptorFactorization.lean).
-It contains three axiom-free theorems: descriptor factorization forces equal atoms; a descriptor
-collision with unequal target quantities blocks universal reconstruction; and an atom distinction
-at a descriptor collision refutes factorization. The pinned checker and a three-mutation fail-closed
+Its three theorems have empty axiom inventories. Factorization forces equal atoms at equal
+descriptors. Under that factorization a descriptor collision with unequal quantities rules out
+universal reconstruction. Different atom values at a descriptor collision refute factorization. The pinned checker and a three-mutation fail-closed
 suite, augmented by three kernel-checked finite premise countermodels, are
 [`scripts/check-lean-descriptor-factorization.py`](scripts/check-lean-descriptor-factorization.py)
 and
@@ -941,15 +945,14 @@ The checker binds the theorem source, Lake manifest/configuration, toolchain ide
 reported Lean version. These are reproducibility checks, not an authenticity or binary-attestation
 claim about the installed Lean/mathlib toolchain.
 
-Phrases such as “regardless of any axioms” and “rules out any multivariate information
-decomposition that relies solely on the antichain lattice” are therefore safe only when read with
-the descriptor-factorization premise explicit. Distribution-dependent signed Möbius atoms,
-including SxPID, do not accept that premise in this witness.
+The antichain index set alone fixes no numerical atom values. To use this paper's pair for a
+different assignment one must establish that the two assigned vectors agree. A global
+factorization is one way to establish that equality.
 
 **Preserved insight:** antichain access labels alone do not store all relations among semantically
 named target components. A future relation-aware representation may be useful as metadata or a
-second analytical layer. It must not replace Sx atoms with nonadditive coordinate entropies and
-still call the result a decomposition of mutual information.
+second analytical layer. Here the three group entropies sum to three bits in each system, while the Sx atoms reconstruct
+the respective totals of three and two bits.
 
 ### 7.5 Three complementary, implementation-distinct but correlated lanes
 
@@ -1003,9 +1006,8 @@ reviewed semantic cuts that connect the published constructions, descriptor map,
 and tested conclusion. They are implementation-distinct corroboration, not independent proofs of
 one end-to-end statement.
 
-**Finding F11 [P,R,X,E].** The 2026 witness is a genuine warning against treating access labels plus
-marginal component entropies as a complete representation. It is not a contradiction of
-shared-exclusions PID.
+**Finding F11 [P,R,X,E].** The minimal recovering sets and the joint entropy of each corresponding group
+can agree while total mutual information differs. The Sx atom vectors distinguish these two systems.
 
 ---
 
@@ -1215,8 +1217,8 @@ semantics uniquely true.
 
 ### 12.1 Relation annotations, not replacement atoms **[O]**
 
-The Lyu witness shows that access labels and marginal component entropies lose cross-component
-relations. A safe extension is to attach relation invariants to a valid Sx decomposition as
+The two witness systems have the same minimal recovering sets and the same joint entropy within
+each group of target coordinates. A dependence between groups changes their total mutual information. A safe extension is to attach relation invariants to a valid Sx decomposition as
 metadata, while preserving Equation (10). Candidate annotations include target multi-information,
 algebraic constraints, or explicitly declared factor graphs. They must not be added again as
 ordinary atoms unless a new exact reconstruction theorem prevents double counting.
@@ -1278,7 +1280,7 @@ One scalar “confidence score” should not collapse these logically different 
 | The disjunction semantics is uniquely forced by Shannon theory | **Not established** | Constitutive-semantic gap |
 | Lyu's two systems have identical SxPID atoms | **False** | [X,E] Equations (28), (29) |
 | Lyu's descriptor theorem exposes lost cross-coordinate relations | **Established within its stipulated model** | [P,R] |
-| Descriptor-collision impossibility transfers to every antichain-indexed PID | **False without a descriptor-factorization theorem** | [P,R,X,E], Equations (30)--(32), Lean firewall |
+| Descriptor-collision impossibility transfers to every antichain-indexed PID | **False in general. The chosen unequal-total pair obstructs reconstruction exactly when its atoms agree.** | [P,R,X,E], Equations (30)--(32), Lean firewall |
 | Lyu's theorem refutes all antichain-lattice PID, including SxPID | **Not established for SxPID** | Descriptor factorization fails; Python and Rust compute the witness, while Lean checks only the conditional firewall; all three lanes share reviewed semantic cuts |
 | SxPID is causal or authority-grade by itself | **False/unsupported** | Observational identifiability boundary |
 | Categorical SxPID is a defensible signed event-logical estimand | **Yes, under the regime contract** | Entire audit |
@@ -1334,6 +1336,6 @@ witness. These implementation-distinct lanes share the reviewed semantic cuts st
    version audited and remained the current arXiv version when rechecked on 25 July 2026.
 4. Aobo Lyu, Andrew Clark, and Netanel Raviv. “Structural Impossibility of Antichain-Lattice
    Partial Information Decomposition.”
-   [arXiv:2604.03869v2](https://arxiv.org/abs/2604.03869), 14 April 2026.
+   [arXiv:2604.03869v2](https://arxiv.org/abs/2604.03869v2), 14 April 2026.
 5. Paul L. Williams and Randall D. Beer. “Nonnegative Decomposition of Multivariate
    Information.” [arXiv:1004.2515](https://arxiv.org/abs/1004.2515), 2010.

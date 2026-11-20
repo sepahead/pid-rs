@@ -1,8 +1,8 @@
 {
   "edition": "2026-11-20",
-  "scope": "Source and PDF identities, page text and links for the revised 20 November guide. The new material concerns exact empirical inputs, source-only ratios and the numerical threshold. The recorded comparison still covers 184 supplied-input calls.",
+  "scope": "Source and PDF identities, page text and links for the revised 20 November guide. The new material concerns exact empirical inputs, source-only ratios and the numerical threshold. The recorded comparison still covers 184 supplied-input calls. The weighted-event positivity summary explicitly requires the reference row to belong to the finite sum.",
   "inputs": {
-    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "c3f1d394ce4b0f16bd23779513136ef26ea5f4ab8cc7c9d29284296c4852bf5d",
+    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "8ece19bec8c4133096befda8a6ba8dade95367e2c12a1f1124d369d81e1357fe",
     "audit/formal/latex/mathematical-results-guide-current/publication.tex": "2d27cac2510a84304a1b2e5cdcf0f282947f894576f8fc777cdf868064ac1dc1",
     "audit/formal/latex/mathematical-results-guide-current/publication.lua": "004dd40c9916a5c38111540e6f4e0eee5043b373572d5906c690c512aeaca678",
     "audit/formal/latex/pid-rs-report-tables.sty": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
@@ -10,7 +10,7 @@
     "MATHEMATICAL_RESULTS_GUIDE.md": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b",
     "output/pdf/mathematical-results-guide.pdf": "166dd75fc3f60b6f30feee8cbba46076bba28abc5aaaf3d33f8b1475e6ab15f1"
   },
-  "pdf_sha256": "2aa7434f4df0de7c6f761c6ac710b0721c330030aebb8cb862e035c3e98a660a",
+  "pdf_sha256": "d771bcfbec55181223166d9e8f49d92c6d925bae5ab57cdae04c7cc1558659ef",
   "pdfinfo": {
     "Title": "Mathematical results guide for November 2026",
     "Author": "Sepehr Mahmoudian",
@@ -53,7 +53,9 @@
       "Rust implementation and computational cost",
       "experimental::pipelines::block_bootstrap",
       "Cargo feature experimental-pipelines",
-      "discrete_sxpid2_averaged"
+      "discrete_sxpid2_averaged",
+      "belongs to the summed index set",
+      "all four counts positive"
     ],
     [
       "When rounding changes a normalized degree",

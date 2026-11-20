@@ -61,7 +61,7 @@
   {Exact semantics, compatibility firewall, adversarial counterexamples,\\
    and a bounded executable audit}}
 \author{Sepehr Mahmoudian}
-\date{25 July 2026}
+\date{25 July 2026 \quad Revised 20 November 2026}
 
 \begin{document}
 \PidMakeTitle
@@ -75,10 +75,9 @@ properties from constitutive semantic choices; and give exact finite
 counterexamples to stronger interpretations.  We also reproduce the 2026
 Lyu--Clark--Raviv relation witness.  A standard-library exact-rational checker
 and a separate Rust regression show that their stipulated coordinate
-recoverability descriptors are not SxPID atoms.  A kernel-checked Lean theorem
-then isolates the missing transfer premise: an atom assignment must factor
-through those descriptors before their collision can imply a reconstruction
-impossibility for that assignment.  No fatal algebraic
+recoverability descriptors are not SxPID atoms.  Their unequal totals rule out a decoder for any assignment
+that gives the same atom vector on the pair.  A kernel-checked Lean theorem
+shows that global factorization through the descriptor suffices.  No fatal algebraic
 contradiction is found in the native shared-exclusions construction.  The
 valid conclusion is narrower: SxPID is a coherent signed, local, event-logical
 decomposition under an explicit semantic and statistical contract, not a
@@ -164,6 +163,7 @@ five lenses: definitional compatibility, theorem scope, executable refinement,
 numerical/statistical implications, and adversarial counterexamples.
 
 \subsection{Five-lens result ledger}
+The landscape table on the next page lists the evidence for all twelve findings.
 
 \begin{landscape}
 \begingroup
@@ -253,8 +253,8 @@ LP--TCR--REI and LP--ID--REI incompatibilities & Calling either a defect unique
 to SxPID or an algebraic inconsistency of Sx \\
 Lyu--Clark--Raviv (2026), Definition 6/Lemma 4 & Incompatible atom semantics &
 Coordinate-recoverability descriptors and relation loss & Calling
-$H(U_\alpha)$ an SxPID atom or transferring their impossibility theorem without
-the missing descriptor premise \\
+$H(U_\alpha)$ an SxPID atom or transferring their comparison without
+showing equal atom vectors on the witness pair \\
 Williams--Beer identity/local positivity & Comparison only & Report what Sx
 accepts or rejects & Redefining Sx after a violation \\
 Dependency coloring & Estimator layer only & Concentration under proved mutual
@@ -637,12 +637,13 @@ systems:
 \alpha(x_9)=\{\{3\},\{12\}\}.
 \label{eq:access-labels}
 \end{equation}
-Their Lemma 4 stipulates
+Let $U_\alpha$ group the nonconstant target coordinates whose minimal recovering
+sets form $\alpha$.  Lemma~4 assigns their joint entropy, zero for an empty group:
 \begin{equation}
 \Pi(\alpha)=H(U_\alpha).
 \label{eq:descriptor}
 \end{equation}
-It assigns one bit to each of those labels and zero elsewhere in both systems.
+Here each nonempty group is one fair bit. Both vectors have three one-bit entries.
 In the tilde system the three coordinates are related.  Their stipulated
 values sum to three bits while the target has two.  This is a recoverability
 descriptor vector, not a whole-equals-sum-of-parts PID of $I(S;T)$ there.
@@ -652,8 +653,7 @@ and it does not prove independence among distinct $U_\alpha$.  Theorem 1 is
 valid on its explicitly stated Definition 6 domain: the witness laws have the
 same complete descriptor vector and unequal mutual information, so no single
 map from that vector reconstructs mutual information for every law in that
-domain.  Access labels and marginal component entropies omit the witness's
-cross-coordinate relation.
+domain.  The tilde relation occurs between the three groups.
 
 \subsection{Exact SxPID result}
 
@@ -719,7 +719,7 @@ SxPID fails MI reconstruction.  Equations~\eqref{eq:hat-product} and
 
 \subsubsection{Descriptor-factorization firewall}
 
-The transfer condition does not require PID terminology.  Let $D(P)$ be a
+One sufficient condition can be stated without PID terminology.  Let $D(P)$ be a
 descriptor vector, $A(P)$ an atom vector, and $J(P)$ the quantity to be
 reconstructed.  Suppose the atom assignment factors through the descriptor:
 \begin{equation}
@@ -732,7 +732,7 @@ D(P)=D(Q),\qquad J(P)\ne J(Q),
 \label{eq:descriptor-collision}
 \end{equation}
 then $A(P)=A(Q)$, so no function $f$ can satisfy
-$f(A(R))=J(R)$ for every system $R$.  Conversely,
+$f(A(R))=J(R)$ for every system $R$.  A distinguishing pair instead gives
 \begin{equation}
 D(P)=D(Q),\qquad A(P)\ne A(Q)
 \quad\Longrightarrow\quad
@@ -740,18 +740,20 @@ D(P)=D(Q),\qquad A(P)\ne A(Q)
 \label{eq:factorization-refuted}
 \end{equation}
 
-This is the exact logical firewall.  The Lyu--Clark--Raviv witness proves a
-reconstruction impossibility for atom assignments that accept
-Equation~\eqref{eq:descriptor-factor}, using their recoverability-label and
-component-entropy descriptor.  It does not transfer merely because another
-assignment is indexed by the same antichain lattice.  A separate theorem must
-establish Equation~\eqref{eq:descriptor-factor} for that assignment.
+For a pair with unequal totals, reconstruction fails on that pair exactly when
+$A(P)=A(Q)$.  On all systems a decoder of a real-valued $J$ exists exactly
+when $J$ is constant on each set of systems with the same $A$.  Assign the
+common value to each attained atom vector and any real value elsewhere.
+Equation~\eqref{eq:descriptor-factor} suffices, but is unnecessary for a single
+collision.  For example, on three systems take $D=(0,0,0)$, $A=(0,0,1)$
+and $J=(3,2,2)$.  The first two require conflicting outputs at one atom
+value.  The third rules out a global factorization.
 
-The SxPID calculation supplies the converse witness in
-Equation~\eqref{eq:factorization-refuted}: the descriptors agree but eight Sx
-atoms differ.  Therefore SxPID does not factor through that descriptor map.
-The descriptor theorem remains valid; its operative premise is descriptor
-sufficiency, not antichain indexing alone.
+The published descriptors record the joint entropies $H(U_\alpha)$ of target
+coordinates grouped by minimal recovering antichain.  They agree, but eight Sx
+atoms differ.  This refutes Equation~\eqref{eq:descriptor-factor} for SxPID\@.
+The products in Equations~\eqref{eq:hat-product} and~\eqref{eq:tilde-product}
+show that its atoms reconstruct both totals.
 
 The generic firewall is kernel-checked in
 \path{audit/formal/lean-foundational-sxpid/}\newline
@@ -768,24 +770,22 @@ countermodels.  Their deterministic outputs are
 These are reproducibility checks, not an authenticity or binary-attestation
 claim about the installed Lean/mathlib toolchain.
 
-Phrases such as ``regardless of any axioms'' and ``any multivariate
-information decomposition that relies solely on the antichain lattice'' are
-therefore safe only with the descriptor-factorization premise explicit.
-Distribution-dependent signed M\"obius atoms, including SxPID, do not accept
-that premise in this witness.
+A shared antichain index set does not fix numerical atom values.  To use
+this pair against another atom assignment, establish equality of its two atom
+vectors.  Global factorization is one way to establish that equality.
 
 \paragraph{Preserved insight.}
 Access labels alone do not encode every relation among semantically named
-target components.  Relation-aware metadata may be useful, but it cannot
-replace Sx atoms with nonadditive coordinate entropies and remain a
-decomposition of mutual information.
+target components.  Each system has three bits of summed group entropy.
+The Sx atoms reconstruct the respective totals of three and two bits.
 
 \paragraph{Finding F11 \evidence{P,R,X,E}.}
-The witness is a genuine warning against access-label/marginal-entropy
-descriptors as a complete representation.  It is not a contradiction of
-shared-exclusions PID\@.
+The minimal recovering sets and the joint entropy of each corresponding group
+can agree while total mutual information differs.  The Sx atom vectors
+distinguish these two systems.
 
 \subsection{Three complementary, implementation-distinct but correlated lanes}
+\label{sec:found-witness-lanes}
 
 The standard-library Python lane
 \path{audit/tools/foundational_sxpid/check_lcr_relation_}\newline
@@ -1000,8 +1000,8 @@ The Lyu systems have identical SxPID atoms & False & \evidence{X,E},
 Equations~\eqref{eq:hat-product}--\eqref{eq:tilde-product} \\
 Lyu descriptors expose lost target relations & Established in their model &
 \evidence{P,R} \\
-Descriptor-collision impossibility transfers to every antichain PID & False
-without a factorization theorem & \evidence{P,R,X,E},
+Descriptor-collision impossibility transfers to every antichain PID & False in general;
+the pair must also have equal atoms & \evidence{P,R,X,E},
 Equations~\eqref{eq:descriptor-factor}--\eqref{eq:factorization-refuted} \\
 Lyu refutes all lattice PID including Sx & Not established for Sx &
 Descriptor factorization fails; Python and Rust compute the witness, while
@@ -1039,7 +1039,7 @@ without invoking the Rust implementation.  The Rust route separately
 exercises the public event/lattice kernel.  The Lean route proves the abstract
 transfer firewall while explicitly leaving the concrete descriptor/Sx binding
 to the two executable routes.  These implementation-distinct lanes share the
-reviewed semantic cuts stated in Section~7.5, so this record does not claim
+reviewed semantic cuts stated in Section~\ref{sec:found-witness-lanes}, so this record does not claim
 three logically independent end-to-end proofs.
 
 \clearpage
@@ -1066,11 +1066,16 @@ three logically independent end-to-end proofs.
   \item A. Lyu, A. Clark, and N. Raviv,
   ``Structural Impossibility of Antichain-Lattice Partial Information
   Decomposition,''
-  \href{https://arxiv.org/abs/2604.03869}{arXiv:2604.03869v2},
+  \href{https://arxiv.org/abs/2604.03869v2}{arXiv:2604.03869v2},
   14 April 2026.
   \item P. L. Williams and R. D. Beer, ``Nonnegative Decomposition of
   Multivariate Information,''
   \href{https://arxiv.org/abs/1004.2515}{arXiv:1004.2515} (2010).
 \end{enumerate}
+
+\smallskip\noindent
+Cite Sepehr Mahmoudian (2026), \emph{Foundational validity audit of
+shared-exclusions PID}, with the exact repository commit or release.
+\href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{Software citation}.
 
 \end{document}
