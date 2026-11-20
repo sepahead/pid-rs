@@ -2640,7 +2640,7 @@
         "The published interpretation requires one joint distribution, with the same target, sources, units, estimand, preprocessing, and evaluation sample. The convergence argument uses the corresponding exact-real finite-alphabet plug-in terms from a common empirical distribution.",
         "For m sources and positive joint mutual information, both exact degrees lie in [0,m], including on any single finite empirical distribution. Rounding each exact mutual information once by the same nearest-even rule preserves its order and nonnegativity, although the joint value can round to zero. Different estimands or separate multi-step numerical estimates need not obey these bounds. The API accepts finite signed summaries and cannot establish their common-distribution provenance.",
         "The ratio and original-unit numerator are independently rounded to nearest binary64 with ties to even from the exact represented inputs. A defined ratio can have an absent numerator when the original-unit sum overflows. Non-defined reports omit both fields and retain a finite denominator.",
-        "The exact-real convergence result requires positive population joint mutual information. A population denominator strictly above the reporting threshold gives eventual threshold separation under convergence. Equality gives no eventual status guarantee. The numerical report also requires finite inputs and a representable quotient."
+        "Suppose the empirical probabilities on a fixed finite alphabet converge to the population law, as occurs almost surely under i.i.d. or strictly stationary ergodic sampling. If the limiting joint MI J is positive, the coherent exact-real plug-in ratios converge to their population values. For the exact-real denominator test with a fixed floor c, J>c gives eventual passage. If exact joint MI values converge to J and each is rounded once to nearest binary64, a sufficient condition for eventual supplied values above a finite c is that its successor is finite and J is strictly above their exact midpoint. A limit strictly between c and that midpoint eventually rounds to c; equality at the midpoint gives no general eventual guarantee. No finite input exceeds the largest finite floor. Defined reports also require nonempty finite terms and a representable final ratio. Separately computed estimates require their own error control."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [],
@@ -2688,7 +2688,7 @@
         ],
         "level": "unit-and-integration",
         "limitations": "Finite input cases provide bounded arithmetic evidence. Separately fitted inputs can be statistically incoherent. The convergence argument is prose; the cited Lean result does not prove these ratios, the sampling theorem, or the compiled Rust implementation.",
-        "scope": "Formula and policy tests, plus 184 fixed public API calls checking all seven report fields against an exact-rational reference. The separate exact-real convergence argument assumes a positive population denominator and explicit threshold separation."
+        "scope": "Formula and policy tests, plus 184 fixed public API calls checking all seven report fields against an exact-rational reference. In the written convergence argument the empirical laws must converge to the same fixed population law and the limiting joint MI must be positive. Threshold separation concerns eventual denominator acceptance, with different sufficient conditions for exact-real and once-rounded inputs."
       }
     },
     {
@@ -2768,8 +2768,10 @@
       "category": "diagnostic",
       "code_availability": "local",
       "constraints": [
-        "These target-free entropy-ratio analogues are project-specific and are not the exact target-based invariants in Gutknecht et al.",
-        "The exact-real ratio convergence result requires positive population joint entropy; it does not cover a zero denominator, dependence, drift, or binary64 asymptotics."
+        "For aligned categorical sources S=(S_1,...,S_m) with positive joint entropy H(S), the project-defined ratios are sum_i H(S_i)/H(S) and sum_i [H(S)-H(S_-i)]/H(S), where S_-i omits source i. Both are dimensionless and use the empirical law of the supplied rows.",
+        "On one fixed finite-alphabet law with positive population joint entropy, the exact-real plug-in ratios converge almost surely under i.i.d. sampling or strictly stationary ergodic sampling from that law. Strict stationarity alone does not imply convergence to the marginal-law ratios. Zero population joint entropy, arbitrary drift, finite-sample rates and binary64 convergence are outside this result.",
+        "When the target is the entire source tuple T=S on that same law, the published target-based degrees reduce algebraically to these two entropy ratios for H(S)>0. This substitution does not identify the source-only diagnostics with the degrees for a general target.",
+        "The source-only categorical API checks for zero computed joint entropy, accumulates floating-point entropy terms with compensation and returns a scalar or typed error. The target-based report instead accepts supplied MI summaries, has a configurable nonnegative reporting floor and rounds the ratio and original-unit numerator independently. Equality of exact quantities does not establish identical statuses or binary64 outputs."
       ],
       "definition_origin": "project-defined",
       "depends_on": [],
@@ -2781,7 +2783,7 @@
       "python_entry_points": [],
       "reference_links": [
         {
-          "locator": "target-based invariants used only as conceptual context",
+          "locator": "arXiv:2504.15779v1, Propositions 1 and 2, Eqs. (6) and (10), for target-based degrees. The tuple-copy substitution T=S gives the source-only formulas on a common law with H(S)>0. The Rust source-only APIs are project-defined.",
           "reference_id": "gutknecht-2025",
           "role": "methodological-background"
         }
@@ -2809,8 +2811,8 @@
           "crates/pid-core/tests/invariants.rs"
         ],
         "level": "unit-and-integration",
-        "limitations": "These ratios must not be cited or interpreted as the exact published target-based quantities. The positive-denominator convergence argument is prose; Lean does not encode these ratios, the sampling theorem, or Rust arithmetic.",
-        "scope": "Canonical independent, redundant, and XOR systems; variable-order symmetry; randomized Shannon bounds; constant inputs; malformed lengths; zero-joint-entropy rejection; and exact-real convergence for a positive population denominator."
+        "limitations": "The exact-real limit follows from convergence of finite cell frequencies, continuity of entropy and a positive limiting denominator. It gives no generic finite-sample rate for dependent data, no binary64 refinement and no guarantee for a varying law. The cited Lean development contains deterministic continuity components; the sampling theorem and these ratio corollaries are in the written argument.",
+        "scope": "Empirical canonical independent, redundant and XOR systems, variable-order symmetry, randomized Shannon bounds, constant inputs, malformed lengths and zero-joint-entropy rejection. FA-2 and the ratio argument cover a fixed finite alphabet with i.i.d. or strictly stationary ergodic samples and positive population joint entropy."
       }
     },
     {
@@ -4696,7 +4698,7 @@
         "The convergence theorem uses exact real arithmetic on fixed finite alphabets and a fixed finite lattice. This cross-family row claims Lean's deterministic continuity core, finite heterogeneous keyed source, target, and target-restricted Sx event layer, generic finite equivalence-union fractional-cover bounds, and the supplied-exact-count bridge for four fixed two-source signed-net cumulative logarithms and positive-support averages. The aggregate checker also imports the separately cataloged categorical-only count-to-atom bridge; checker co-location does not attach that 24-coordinate result to fitted quantization, I_min, Shannon invariants, or any other family. This row claims no bytes or rows to counts, stochastic limit theorem, concrete Mobius-atom or complete informative/misinformative family, I_min formalization, Rust refinement, floating-point or certifier/parser execution, calibration, or population validity.",
         "The sampling implications, displayed local I_min, Shannon, and ratio bounds, time-uniform i.i.d. envelope, and frozen-transform corollary are prose proofs and are not encoded in Lean.",
         "The Decimal-to-Rust fixture comparison covers only its committed empirical count tables and its stated binary64 envelope.",
-        "This entry itself supplies no global binary64 error bound, dependence theorem, drift theorem, or external-review claim. See validation.dependency-color-sxpid-concentration for the separate declared-color extension."
+        "FA-2 gives almost-sure convergence of cumulative finite-alphabet frequencies under strictly stationary ergodic sampling from the stated one-time law. It gives no general finite-sample rate for dependent rows. FA-3 bounds i.i.d. rows. The separate validation.dependency-color-sxpid-concentration entry gives a finite-sample bound under its declared coloring assumptions. This entry supplies no global binary64 error bound, drift theorem or external-review claim."
       ],
       "definition_origin": "project-defined",
       "depends_on": [

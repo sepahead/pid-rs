@@ -384,9 +384,9 @@ Use k/sample-size trajectories, shell/radius/count reports, geometry diagnostics
 sensitivity, and a matched synthetic oracle. These diagnostics can falsify some assumptions but do
 not certify them.
 
-Normalized average redundancy/vulnerability quantities are unitless screening ratios, not PID
-atoms or universal validation scores. Their denominator is an estimated joint MI: a non-positive
-or policy-small denominator makes the ratio explicitly undefined. `NormalizedInvariantReport`
+The target-based average degrees of redundancy and vulnerability are unitless ratios. The caller
+supplies the joint mutual information denominator and the marginal or leave-one-out information
+values, all in nats. A nonpositive or policy-small denominator gives an explicit status. `NormalizedInvariantReport`
 records that status and the caller-selectable threshold in nats; choosing a smaller threshold does
 not make a noise-dominated ratio scientifically stable.
 
@@ -394,8 +394,12 @@ The target-conditioned `average_degree_of_redundancy` ($\bar r$) and
 `average_degree_of_vulnerability` ($\bar v$) follow the cited Shannon-invariants formulation.
 `red_degree_discrete` ($\mathrm{Red}^{\circ}$) and
 `vul_degree_discrete` ($\mathrm{Vul}^{\circ}$) are project-defined, target-free entropy-ratio
-analogues. Their notation and bounds do not make them the published target quantities, PID atoms,
-or substitutes for a target-conditioned analysis.
+diagnostics. When the target is exactly the complete source tuple and joint entropy is positive,
+the published ratios reduce in exact arithmetic to the source-only entropy ratios. A different
+target requires its own information values. The row-based entropy functions and the functions
+taking mutual information have different numerical policies. An exact mutual information
+strictly above a binary64 threshold can round to the threshold and be rejected. [Proof and worked
+example](audit/research/normalized-shannon-arithmetic/README.md)
 
 ## Continuous shared exclusions and PID
 

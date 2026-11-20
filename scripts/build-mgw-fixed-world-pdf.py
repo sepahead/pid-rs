@@ -55,8 +55,8 @@ REQUIRED_RECORDED_LOCAL = frozenset({
     "publication.tex", "body.tex", "pid-rs-report-tables.sty",
     "pid-rs-workflow-publication.sty", *(name + ".pdf" for name in FIGURE_NAMES),
 })
-MANIFEST = ASSETS + "publication-inputs-v12.json"
-MANIFEST_SHA = "4b9a990dd7123cb36810ec923a3ea51130ed4d975dca9a425e018a8a405cff1f"
+MANIFEST = ASSETS + "publication-inputs-v14.json"
+MANIFEST_SHA = "a189e77bbee7e24ed2e64bb56c38c68bdd78a5e4dd5dd5ff04d571ea66a0c0a9"
 RUNTIME = "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py"
 RUNTIME_SHA = "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
 EXPECTED_PDF_SHA = "6fc4cfbe5bb71037515c4ebdd3119b20e6e970ce6f117e1b9659b44a728b565a"

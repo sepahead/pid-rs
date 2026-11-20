@@ -9,4 +9,4 @@ if __name__ == "__main__":
     spec = importlib.util.spec_from_file_location("finite_study_publication", BUILDER)
     publication = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(publication)
-    publication.command_line(HERE, "normalized-shannon-arithmetic", "Rounding the average degrees of redundancy and vulnerability", 4)
+    publication.command_line(HERE, "normalized-shannon-arithmetic", "Rounding the average degrees of redundancy and vulnerability", 5)

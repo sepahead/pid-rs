@@ -24,8 +24,8 @@
     {
       "path": "method-catalog.json",
       "role": "method_catalog",
-      "sha256": "b354818b74b89f33f76d4276d04a6f13932f141fa9de918638a620fd8ca8bf43",
-      "size_bytes": 469125
+      "sha256": "07014687f42c27efea7af1a385c3e6da6f1072ff429a0a4caa3abb5135155292",
+      "size_bytes": 471661
     },
     {
       "path": "release-scope-1.0.json",
@@ -340,8 +340,8 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "072961959b570a1bb25ad181418dce6481b2be4698485c61cb39b8ce269b9d78",
-        "size_bytes": 101402
+        "sha256": "63cf52002a052a105f0f3a841f97afef9382e248c1d045ab7f9a0c4f3b3cfc67",
+        "size_bytes": 101628
       },
       {
         "git_mode": "100644",
@@ -400,7 +400,7 @@
       {
         "git_mode": "100644",
         "path": "ECOSYSTEM_CAPABILITIES.md",
-        "sha256": "d0467b11964a929df802cde7d52420ad1f6b1b702cd58bbc07cffbab1ea62293",
+        "sha256": "cabb46192a170d158c982c0f72b122e8b3803d851ec110c3c561531248783774",
         "size_bytes": 65091
       },
       {
@@ -436,8 +436,8 @@
       {
         "git_mode": "100644",
         "path": "KNOWN_LIMITATIONS.md",
-        "sha256": "1cb0caa0ccb05463d87ecef7cf72bd8949171b663dc910779487455ca471f842",
-        "size_bytes": 54371
+        "sha256": "0212967c2c2ed644685f650b18e5ceded3ffc02a130866c2f00d5387a2d3790a",
+        "size_bytes": 54786
       },
       {
         "git_mode": "100644",
@@ -472,19 +472,19 @@
       {
         "git_mode": "100644",
         "path": "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md",
-        "sha256": "f7d57623f510555aa2c2ebd4b83a4d88b4ce7ffb5d1872d33a1e07da18a9c380",
-        "size_bytes": 14345
+        "sha256": "c3f1d394ce4b0f16bd23779513136ef26ea5f4ab8cc7c9d29284296c4852bf5d",
+        "size_bytes": 14754
       },
       {
         "git_mode": "100644",
         "path": "METHODS.md",
-        "sha256": "5eda56cf5a0e4b15aac04a78e53ef1ede4e5efa91f958776cee73597e5b90b4a",
-        "size_bytes": 569317
+        "sha256": "c45b53a7490c451380f784041b46651b81d5ec81300b4a492b81ea592eb7d76c",
+        "size_bytes": 571837
       },
       {
         "git_mode": "100644",
         "path": "METHODS_SUMMARY.md",
-        "sha256": "5f862ab3760e5d8d467084f19f4bc9c71b8bb42a703790a82859d66655507323",
+        "sha256": "a8ee5d523c60d92a7f55a20d26af652d0caa744ac80832c49bf7e040a5745e06",
         "size_bytes": 44276
       },
       {
@@ -526,7 +526,7 @@
       {
         "git_mode": "100644",
         "path": "PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
-        "sha256": "9712a5197311ba855553776c862e673dc3241315246ef9da2b04769ec334a574",
+        "sha256": "2204d520a9fdd74e433b208b5ea2e35897192e386b2dc053fbd3e391b55a8f15",
         "size_bytes": 31466
       },
       {
@@ -604,8 +604,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "a99d019c0dda571d31821435f9e1509a22a22307885f59439533411f92756539",
-        "size_bytes": 64080
+        "sha256": "306b3d7ad5621ae9a1793511f7d37f4674df717cf3c3026f90b32b56ef47e9c9",
+        "size_bytes": 64960
       },
       {
         "git_mode": "100644",
@@ -5944,13 +5944,13 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/method-catalog-semantic-authority-v1.json",
-        "sha256": "01d5769cc60cf08c60cd733b75110f0216379ed18dd573209999f67cbfe18f75",
+        "sha256": "5702b02217d278c55a4ac664801ab68716da787cfdd713b9dd9009d16ba9921c",
         "size_bytes": 39594
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/methods-summary-v1.json",
-        "sha256": "7dc78fe7316517940e233d58b7fa9ce88c93a483e8a8d3b19fab895f739e0260",
+        "sha256": "35ad1fcd8e6a2041d39ffec6b6c8c41e0ed7b12056f2176520da5a86511cc043",
         "size_bytes": 79309
       },
       {
@@ -6034,8 +6034,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/november-results-publication-2026-11-20.md",
-        "sha256": "1e2f720498623ad6283c3bcc2494fb4551c8ca4dcfc71426a3eeb323d82fa986",
-        "size_bytes": 4240
+        "sha256": "d88f9a366f2cb4d9619328c958e14c6aceae6ffb47db276dbae1d07652b3e6f2",
+        "size_bytes": 6851
       },
       {
         "git_mode": "100644",
@@ -6130,7 +6130,7 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/pid-mathematical-audit-protocol-v1.json",
-        "sha256": "a3c1d34b0993e57148ecbf86a82ebfd6588ce04ed83d5659e5f26772b4767553",
+        "sha256": "319cec8c30e09189b67ad9def1bc7bf43c7a8bab8ff89b335889e7c4b0389437",
         "size_bytes": 58046
       },
       {
@@ -17896,8 +17896,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
-        "sha256": "4282ee872d26a530a9bf7005c6e6193096b79431808a1e10c4c23c6eb0559d2f",
-        "size_bytes": 4929
+        "sha256": "4d5117f365918d7e9f5e60e9b947832129e104570c9c0cc75bb17b5e264bb385",
+        "size_bytes": 5171
       },
       {
         "git_mode": "100644",
@@ -18222,6 +18222,18 @@
         "path": "audit/formal/latex/mgw-fixed-world/publication-inputs-v12.json",
         "sha256": "4b9a990dd7123cb36810ec923a3ea51130ed4d975dca9a425e018a8a405cff1f",
         "size_bytes": 77391
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/publication-inputs-v13.json",
+        "sha256": "a4946e3b879c2048c3599010cf35f0630ab0ee79d1b7797bce8df33068c235c1",
+        "size_bytes": 77433
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/publication-inputs-v14.json",
+        "sha256": "a189e77bbee7e24ed2e64bb56c38c68bdd78a5e4dd5dd5ff04d571ea66a0c0a9",
+        "size_bytes": 77374
       },
       {
         "git_mode": "100644",
@@ -18729,6 +18741,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/real-occupancy-sensors/publication-inputs-v10.json",
+        "sha256": "6fcad7959157aa2b3dce966c7ce0c4040106dced173a5abe1599d4562206fac0",
+        "size_bytes": 58026
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/real-occupancy-sensors/publication-inputs-v11.json",
+        "sha256": "83fc76323c2442abc59db455a09585f7536a3807cee22abddb66922b222493c6",
+        "size_bytes": 57967
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/real-occupancy-sensors/publication-inputs-v2.json",
         "sha256": "2f5bbed2684fcbdeec54d4a50ad92019cb6565e35c45c8959fd8f7ca3b16d42d",
         "size_bytes": 53580
@@ -19168,8 +19192,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/lean-mgw-fixed-world/PUBLICATION.md",
-        "sha256": "f6da1732b929bb8fa4677479e2ff855ff698b332243693091de007e8432124de",
-        "size_bytes": 12057
+        "sha256": "461292e48f7155b5037e5dfa62d8181d0395c8afc3975d58c3ae14120af73100",
+        "size_bytes": 12388
       },
       {
         "git_mode": "100644",
@@ -30430,13 +30454,13 @@
       {
         "git_mode": "100644",
         "path": "audit/research/normalized-shannon-arithmetic/README.md",
-        "sha256": "7c8136558fbacfdb18f16e7f61290d7ee0d04d83d5ca35482c8348db9dda8481",
-        "size_bytes": 11500
+        "sha256": "8b301dd41842c645aa036786e5a11e6641146d39dd3a571379f1ef79d7075c34",
+        "size_bytes": 15459
       },
       {
         "git_mode": "100644",
         "path": "audit/research/normalized-shannon-arithmetic/build_pdf.py",
-        "sha256": "ef006556f74a5051e062a21afa61d7ce1e170ce91da12b2d26dc8ea27c937e9e",
+        "sha256": "9c78a7bc26062ce2f5e8343c04125f076e451259a2f38f0c35c57ba12dd39896",
         "size_bytes": 615
       },
       {
@@ -31732,8 +31756,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/three-source-six-certificate-observations/README.md",
-        "sha256": "adcc4a5e995d47a404fe7f2a05bcdfc26b3ca0714749353202b8f8d89dfd2387",
-        "size_bytes": 19869
+        "sha256": "fd968d429391e9c442b108e8f5802a0edfd9eacd5cca2337fd57cce630e7efff",
+        "size_bytes": 20467
       },
       {
         "git_mode": "100644",
@@ -33664,7 +33688,7 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/identity/software-identity-reference-v1.json",
-        "sha256": "8c7ba089abb4c5443763070ddf7eb9506ab988f7f2d6c77c840e375d333708cd",
+        "sha256": "a181c104314a20f3adae14f7d8d37d43c0937f0f61a86217d68fafeb87139b9b",
         "size_bytes": 1453
       },
       {
@@ -34414,7 +34438,7 @@
       {
         "git_mode": "100644",
         "path": "ecosystem-capabilities.json",
-        "sha256": "76d57eda075a25b8e7a665bba028234913e70fc058bb815b632463564352dc20",
+        "sha256": "9647d2ec52519fd14852569a4249d4c0bc16dec1ada6d92123f63ede2de15a3d",
         "size_bytes": 71752
       },
       {
@@ -34540,8 +34564,8 @@
       {
         "git_mode": "100644",
         "path": "method-catalog.json",
-        "sha256": "b354818b74b89f33f76d4276d04a6f13932f141fa9de918638a620fd8ca8bf43",
-        "size_bytes": 469125
+        "sha256": "07014687f42c27efea7af1a385c3e6da6f1072ff429a0a4caa3abb5135155292",
+        "size_bytes": 471661
       },
       {
         "git_mode": "100644",
@@ -34726,8 +34750,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-results-guide-current.pdf",
-        "sha256": "61950e12af0e45709894cbdae6cf29ee2260cfd8b34fe289ca692fe61ac24b7e",
-        "size_bytes": 70795
+        "sha256": "2aa7434f4df0de7c6f761c6ac710b0721c330030aebb8cb862e035c3e98a660a",
+        "size_bytes": 71225
       },
       {
         "git_mode": "100644",
@@ -34744,8 +34768,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/normalized-shannon-arithmetic.pdf",
-        "sha256": "c9bcc78b9ef7af19e773fad034900a419ac236a2cd6c6ef9a422eaa3e8b8645e",
-        "size_bytes": 66996
+        "sha256": "a016d8fef5cb3082ca28bd1d182a186e7c80424f254e4b2df5f71eba0ff05c3e",
+        "size_bytes": 79856
       },
       {
         "git_mode": "100644",
@@ -34852,8 +34876,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/three-source-six-certificate-observations.pdf",
-        "sha256": "0c03166935e9cab223c6262e55e8465886b8057bc059ac12addfce50ffac22e0",
-        "size_bytes": 86051
+        "sha256": "082fe3edf72069dbe71172d6579ec819f5d7c07fb4227e877aa72ecef404fbd6",
+        "size_bytes": 88534
       },
       {
         "git_mode": "100644",
@@ -34876,8 +34900,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "132da4deeb4fb014347f91e5570406886d305ba5ae3962129bcda7c75eda3a95",
-        "size_bytes": 318220
+        "sha256": "44277d901030ee68c5d3f88f12b3eca84c2cd61c80b325aeed464cbae7fbcab6",
+        "size_bytes": 318661
       },
       {
         "git_mode": "100755",
@@ -34930,7 +34954,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/build-mgw-fixed-world-pdf.py",
-        "sha256": "08836e30a147edf38d24af74fdbc40fb3a3ba67562ec3f3840e119999d697f97",
+        "sha256": "fa32ec0ecdcb6c0bd1b40f88423c798e59fcb8287ce36781befaea67019380ea",
         "size_bytes": 44038
       },
       {
@@ -34978,8 +35002,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/build-recorded-office-sensors-pdf.py",
-        "sha256": "61053d4610433f9692f9037bead59f1a5b267ee38a98b610dba0af39801bf205",
-        "size_bytes": 23402
+        "sha256": "7251d0a04b33eab073187050a9d80e9808cc51dd09df26017301653d6781c123",
+        "size_bytes": 23403
       },
       {
         "git_mode": "100644",
@@ -35176,7 +35200,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "8f69aa1b2f025687ecded83567c825dd3c4109049956f3d1dc84434866e7e707",
+        "sha256": "22a46789a1de9c55932f3306e411e055f7679aad20d7876ab0ff5b7b409c4131",
         "size_bytes": 90915
       },
       {
@@ -35242,7 +35266,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-ecosystem-capabilities.py",
-        "sha256": "0b8c24d5fba2b2bb26a93919a71ea21890745575699d8be2c445efb62db6efd9",
+        "sha256": "f33c65a773f07fb2ca7ce10cec29469508b025e864b3ef684fd2bd634547ed3b",
         "size_bytes": 72358
       },
       {
@@ -35422,13 +35446,13 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py",
-        "sha256": "050b584de2b767c03bd7a79aa2d0751f1df435bdb3db05a46e25c0ed052ad2e8",
+        "sha256": "996e29f1c6c4296dc1b9a6353c74608078947cbd0c084982b4bdbfb66c980d03",
         "size_bytes": 21157
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-ksg-harmonic-revision-v4-preservation.py",
-        "sha256": "0cc267f89101496b74026131d1335b8b723f5e34dc84edbeb64225ad71fe7ecb",
+        "sha256": "adae748624a3e5346dfa06f0750b8a9074eace7340389e3f494784820dd8d0cd",
         "size_bytes": 25209
       },
       {
@@ -35776,7 +35800,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "6779e304396219349481759514127d90945b2737b70e38eb0ec93530cc66564f",
+        "sha256": "3265502d79c7acbe46ea1f5527b54837c0b089ff68573c7c1b70852d27fddb6f",
         "size_bytes": 139663
       },
       {
@@ -36082,7 +36106,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-method-catalog.py",
-        "sha256": "239ce51cd3ba25fea0bc10c0212bd8b563d9269d5283879770acd484a330ef8a",
+        "sha256": "ce07f447d4fc409dc59d8ef08f832f18bde37433a8816f744e6eddef83ea0aba",
         "size_bytes": 73167
       },
       {
@@ -36770,8 +36794,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "c19d2ed7c437e61d30542a87325d1d6fe1c124f5aa57a8458d6de6b1e56635e2",
-    "entry_count": 6104
+    "entries_sha256": "6aea79b246fabc29b78daa9565081d37430ca81e2b16a424c32ba514ad133097",
+    "entry_count": 6108
   },
   "subprojections": [
     {
@@ -36783,15 +36807,15 @@
       ]
     },
     {
-      "entries_sha256": "e2bb4daebd84b242b23298187535f07206a42db3d01a7019a554b54ba0daf423",
-      "entry_count": 2379,
+      "entries_sha256": "0ee4cf8879b76e43efb0cc804ce3ad08902c154175646879773b64c5672c3802",
+      "entry_count": 2383,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "27b8c816cb81bf3abe1a900fae14e480f82dc5a3872097c1523d77a96222ee40",
+      "entries_sha256": "f03dcff84f39e9cd34487ed19d56e0e25c7e21515847dac297dbff48ea6231dd",
       "entry_count": 50,
       "name": "generated_pdf_set",
       "selectors": [

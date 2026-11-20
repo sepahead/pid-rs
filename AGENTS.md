@@ -132,9 +132,12 @@ project composition for a quantized estimand; PID2 composes separately estimated
 its atom construction is defined in Ehrlich et al., while pid-rs report/cross-fit wrappers are
 project-defined. Incomplete PID3 is an availability diagnostic; the full paper-defined
 mixed-dimensional PID3 remains research-only here. Heuristics are project-defined baselines;
-Lorentz KSG is a paper-derived research adaptation. Target-free `Red°`/`Vul°` are project-defined
-analogues rather than the published target-conditioned `r̄`/`v̄`; resampling contracts and run
-logs add engineering without a generic calibration theorem; Python exposure is a binding status,
+Lorentz KSG is a paper-derived research adaptation. The two project-defined source-only
+entropy ratios equal the published average degrees in exact arithmetic when the full finite
+source tuple is the target and its entropy is positive. Always state the target and give the
+numerical policy of the chosen API. [Formulas and worked cases](audit/research/normalized-shannon-arithmetic/README.md)
+
+Resampling contracts and run logs add engineering without a generic calibration theorem. Python exposure is a binding status,
 not a method-origin status. The software-identity envelope is project-defined infrastructure with
 local Rust/Python code, no defining method paper, and no scientific-novelty or attestation claim.
 
