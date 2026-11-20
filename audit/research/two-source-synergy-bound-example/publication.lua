@@ -1,6 +1,7 @@
 -- Convert only this note's local image and source links for its PDF edition.
 local prior = "https://github.com/sepahead/pid-rs/blob/8ff4e244f63d94ff14a9075da212db6a67c108ec/"
 local note = "https://github.com/sepahead/pid-rs/blob/70e55aacc5c7fb53270a306db962c259e46482d8/audit/research/two-source-synergy-bound-example/"
+local atom = "https://github.com/sepahead/pid-rs/blob/8299214c4198d263f28e7f2a8ab28b78b3133e07/audit/research/two-source-synergy-bound-example/"
 function Pandoc(doc)
   if pandoc.utils.stringify(doc.blocks[1]) ~= "How the support count changes a synergy bound"
       or pandoc.utils.stringify(doc.blocks[2]) ~= "Sepehr Mahmoudian · 2026" then
@@ -28,6 +29,8 @@ function Pandoc(doc)
       local src = el.target:match("^%.%./%.%./%.%./([%w_/%-%.]+)$")
       if src and not src:find("..",1,true) then
         el.target = prior .. src
+      elseif el.target == "verify_signed_synergy.py" then
+        el.target = atom .. el.target
       elseif el.target:match("^[%w_%-]+%.[%w]+$") then
         el.target = note .. el.target
       else

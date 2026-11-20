@@ -15,11 +15,12 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 STEM = "two-source-synergy-bound-example"
 TITLE = "How the support count changes a synergy bound"
+PAGES = 4
 SHARED = Path("audit/research/three-source-alphabet-counts/build_pdf.py")
 STYLES = Path("audit/formal/latex")
 LEAF = Path("audit/research") / STEM
 SOURCE_FILES = [
-    *(LEAF / name for name in ("README.md", "counts.json", "example.py", "verify_numbers.py",
+    *(LEAF / name for name in ("README.md", "counts.json", "example.py", "verify_numbers.py", "verify_signed_synergy.py",
                                 "publication.lua", "publication.tex", "support-bounds.svg", "build_pdf.py")),
     SHARED, STYLES / "pid-rs-report-tables.sty", STYLES / "pid-rs-workflow-publication.sty",
 ]
@@ -31,7 +32,7 @@ def sha(path):
 
 def profile(repo):
     record = json.loads((HERE / "publication.json").read_text(encoding="utf-8"))
-    if record["schema"] != 1:
+    if record["schema"] != 1 or record["title"] != TITLE or record["pages"] != PAGES:
         raise ValueError("unexpected publication profile")
     sources = {str(p): sha(repo / p) for p in SOURCE_FILES}
     if sources != record["source_sha256"]:
@@ -42,14 +43,18 @@ def verify(pdf, repo):
     shared_spec = importlib.util.spec_from_file_location("finite_study_publication", repo / SHARED)
     shared = importlib.util.module_from_spec(shared_spec)
     shared_spec.loader.exec_module(shared)
-    shared.verify(pdf, title=TITLE, pages=3)
+    shared.verify(pdf, title=TITLE, pages=PAGES)
     text = subprocess.check_output(["pdftotext", "-layout", str(pdf), "-"], text=True, timeout=30)
     flat = " ".join(text.split())
     for phrase in ("Figure 1.", "3.968825682", "4.346307242", "4.648109919",
                    "rounded to three decimal places", "--check", "--write", "--output",
-                   "Conditions for each calculation", "Rust implementation and computational cost"):
+                   "Conditions for each calculation", "Rust implementation and computational cost",
+                   "The actual change in signed synergy", "0.215761554339", "0.105074106669",
+                   "0.110687447670", "298/297", "102/101", "298/199", "verify_signed_synergy.py"):
         if phrase not in flat:
             raise ValueError("missing publication text: " + phrase)
+    if not any(s in flat for s in ("−0.110687447670", "-0.110687447670")):
+        raise ValueError("missing signed direction for the actual synergy change")
     urls = set(re.findall(r"https://\S+", subprocess.check_output(["pdfinfo", "-url", str(pdf)],
                                                                  text=True, timeout=30)))
     return urls
@@ -75,6 +80,7 @@ def build(output, repo, figure=None):
         def run(args, timeout):
             subprocess.run(args, cwd=work, env=env, check=True, timeout=timeout)
         run([sys.executable, "-I", "-S", "-B", str(HERE / "example.py"), "--check"], 30)
+        run([sys.executable, "-I", "-S", "-B", str(HERE / "verify_signed_synergy.py")], 30)
         run(["rsvg-convert", "--format=pdf", "--output=support-bounds.pdf", str(HERE / "support-bounds.svg")], 60)
         run(["pandoc", "--from=markdown", "--to=latex", "--standalone", "--syntax-highlighting=none",
              "--template", str(HERE/"publication.tex"), "--lua-filter", str(HERE/"publication.lua"),

@@ -302,7 +302,8 @@ for check in \
   audit/evidence/normalized-shannon-reports-2026-11-20/check.py \
   audit/research/three-source-six-certificate-observations/check.py \
   audit/research/three-source-six-certificate-observations/controls.py \
-  audit/research/two-source-synergy-bound-example/verify_numbers.py; do
+  audit/research/two-source-synergy-bound-example/verify_numbers.py \
+  audit/research/two-source-synergy-bound-example/verify_signed_synergy.py; do
   python3 -I -S -B "$check" >/dev/null
   python3 -O -I -S -B "$check" >/dev/null
 done

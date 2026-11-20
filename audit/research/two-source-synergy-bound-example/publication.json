@@ -1,32 +1,36 @@
 {
   "schema": 1,
   "title": "How the support count changes a synergy bound",
-  "pages": 3,
+  "pages": 4,
   "citation_source_commit": "8ff4e244f63d94ff14a9075da212db6a67c108ec",
   "first_arithmetic_source_commit": "70e55aacc5c7fb53270a306db962c259e46482d8",
+  "direct_atom_source_commit": "8299214c4198d263f28e7f2a8ab28b78b3133e07",
   "source_sha256": {
-    "audit/research/two-source-synergy-bound-example/README.md": "fa5135a16db93a9b0ea4d25ec3f4f9ea8b12ff648d3969d3cb5dd2c62479cd35",
+    "audit/research/two-source-synergy-bound-example/README.md": "2f953b2828437aff240e17198b1476b7bd73e3e65e6b66f8ee3797786e9dd6d8",
     "audit/research/two-source-synergy-bound-example/counts.json": "9c7f4dd6701272fc498a0bb6d5fbcbb86d99fa865e2612033480ce130888d4df",
     "audit/research/two-source-synergy-bound-example/example.py": "90269a203c5819cd8c270646fa9ce55a3549c9df07283571670a872fdfd44180",
     "audit/research/two-source-synergy-bound-example/verify_numbers.py": "82a08b6959888229d47dd30f123d148f2d29f9b6a8ac3c03d2245fd0f890ce78",
-    "audit/research/two-source-synergy-bound-example/publication.lua": "f85d4fa1fa4e720f7600a569a5f607664d7289cb2a4e760318c7592563177184",
-    "audit/research/two-source-synergy-bound-example/publication.tex": "91be1ceee68183b71173f86b3513aaf733d503cfd8a412448748c30be60786be",
+    "audit/research/two-source-synergy-bound-example/verify_signed_synergy.py": "829d966e4f8ebc34657b3e792d36a75f44df569b3262b411cc90b434e45f23d7",
+    "audit/research/two-source-synergy-bound-example/publication.lua": "e0bf8c5de5f1242e9f2526404b36414c901de5953de97f404f9eb15c28ad16c5",
+    "audit/research/two-source-synergy-bound-example/publication.tex": "d5b27178eb38f1719cec24fe079a441bdc4f6dbc68ec51c10d4d48c9fc8ff830",
     "audit/research/two-source-synergy-bound-example/support-bounds.svg": "8d17efb99545682fdafce492b51c6c48bc762ed3a88f18f946d4670f9bb53ddf",
-    "audit/research/two-source-synergy-bound-example/build_pdf.py": "d973577d5a99eddc65791ec77bac4868a7a64810040eb61967531b31db711103",
+    "audit/research/two-source-synergy-bound-example/build_pdf.py": "3c23bdb7ef5c48dd9d96922232798453b48bcf7ec0230e0ecf7686ab504ff876",
     "audit/research/three-source-alphabet-counts/build_pdf.py": "2124c6e9229599f923c2bdabae657e3e6f77fbec0307ac765ae6d062c2d3ae5d",
     "audit/formal/latex/pid-rs-report-tables.sty": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
     "audit/formal/latex/pid-rs-workflow-publication.sty": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
   },
-  "pdf_sha256": "c5e28b6fc656a61298509aa195b82886b9a605c393d83a3df8557d4c1935699b",
+  "pdf_sha256": "af4eadb06cd6de70fa65bbab1fbce4e60c63ee38ef811e5c7aeb75960f2b4731",
   "pdf_urls": [
     "https://arxiv.org/abs/2002.03356v5",
     "https://github.com/sepahead/pid-rs/blob/70e55aacc5c7fb53270a306db962c259e46482d8/audit/research/two-source-synergy-bound-example/counts.json",
     "https://github.com/sepahead/pid-rs/blob/70e55aacc5c7fb53270a306db962c259e46482d8/audit/research/two-source-synergy-bound-example/example.py",
     "https://github.com/sepahead/pid-rs/blob/70e55aacc5c7fb53270a306db962c259e46482d8/audit/research/two-source-synergy-bound-example/verify_numbers.py",
+    "https://github.com/sepahead/pid-rs/blob/8299214c4198d263f28e7f2a8ab28b78b3133e07/audit/research/two-source-synergy-bound-example/verify_signed_synergy.py",
     "https://github.com/sepahead/pid-rs/blob/8ff4e244f63d94ff14a9075da212db6a67c108ec/CITATION.cff",
     "https://github.com/sepahead/pid-rs/blob/8ff4e244f63d94ff14a9075da212db6a67c108ec/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
     "https://github.com/sepahead/pid-rs/blob/8ff4e244f63d94ff14a9075da212db6a67c108ec/RUST_IMPLEMENTATION_AND_COST.md",
     "https://github.com/sepahead/pid-rs/blob/8ff4e244f63d94ff14a9075da212db6a67c108ec/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md",
-    "https://github.com/sepahead/pid-rs/blob/8ff4e244f63d94ff14a9075da212db6a67c108ec/crates/pid-core/src/sxpid.rs"
+    "https://github.com/sepahead/pid-rs/blob/8ff4e244f63d94ff14a9075da212db6a67c108ec/crates/pid-core/src/sxpid.rs",
+    "https://github.com/sepahead/pid-rs/blob/8ff4e244f63d94ff14a9075da212db6a67c108ec/crates/pid-core/tests/fixtures/sxpid2_exhaustive_oracle.json"
   ]
 }

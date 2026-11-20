@@ -702,12 +702,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
         "094c0ca99b86c473c4531be2216850c5f6499db9b3d5025e14658e70271402fe"
     ),
-    "scripts/README.md": '7526273a319da584885941980d9a6479e458b9cfe526133b1489c32796e82712',
+    "scripts/README.md": 'de6ee50f3fd87228aa02780006ea3bbe17ffb765ad42426677453dd74f809dda',
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        '947f4e71a51773441581f43c7a474ed72db0e3202098c19084926d78c1ec5740'
+        'e39fa4e2da25196eb3d5e18c2615201063e7f8236aa1c92afdce654aa7221a7e'
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -716,7 +716,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
     ),
     "scripts/check-formal-pdf-set.sh": (
-        "3905ef0b71c5852b4b3d30f745642bd6638c16173be216d598f9d30947870fad"
+        "189cdd44d3be7e9ec777f2a1c4a208812fc28e16f08ab8d2e2d93ab141c24070"
     ),
     "scripts/build-finite-target-copy-mgw-pdf.py": (
         "7aba9fdee6135a84ea68ebddef05d631aabcd47be92251e53380df1459d40af6"

@@ -32518,14 +32518,14 @@
       {
         "git_mode": "100644",
         "path": "audit/research/two-source-synergy-bound-example/README.md",
-        "sha256": "fa5135a16db93a9b0ea4d25ec3f4f9ea8b12ff648d3969d3cb5dd2c62479cd35",
-        "size_bytes": 7584
+        "sha256": "2f953b2828437aff240e17198b1476b7bd73e3e65e6b66f8ee3797786e9dd6d8",
+        "size_bytes": 10353
       },
       {
         "git_mode": "100644",
         "path": "audit/research/two-source-synergy-bound-example/build_pdf.py",
-        "sha256": "d973577d5a99eddc65791ec77bac4868a7a64810040eb61967531b31db711103",
-        "size_bytes": 5988
+        "sha256": "3c23bdb7ef5c48dd9d96922232798453b48bcf7ec0230e0ecf7686ab504ff876",
+        "size_bytes": 6530
       },
       {
         "git_mode": "100644",
@@ -32542,20 +32542,20 @@
       {
         "git_mode": "100644",
         "path": "audit/research/two-source-synergy-bound-example/publication.json",
-        "sha256": "7a06d61bb4cf9fc9b8eaadd330267050e9c2c67174fb067e55fb17b41ce971ef",
-        "size_bytes": 2949
+        "sha256": "e43eeb5be67d4fbea687ad8f67742141660cf563c9b566f09bc2150c1d1b2571",
+        "size_bytes": 3482
       },
       {
         "git_mode": "100644",
         "path": "audit/research/two-source-synergy-bound-example/publication.lua",
-        "sha256": "f85d4fa1fa4e720f7600a569a5f607664d7289cb2a4e760318c7592563177184",
-        "size_bytes": 1826
+        "sha256": "e0bf8c5de5f1242e9f2526404b36414c901de5953de97f404f9eb15c28ad16c5",
+        "size_bytes": 2067
       },
       {
         "git_mode": "100644",
         "path": "audit/research/two-source-synergy-bound-example/publication.tex",
-        "sha256": "91be1ceee68183b71173f86b3513aaf733d503cfd8a412448748c30be60786be",
-        "size_bytes": 1331
+        "sha256": "d5b27178eb38f1719cec24fe079a441bdc4f6dbc68ec51c10d4d48c9fc8ff830",
+        "size_bytes": 1358
       },
       {
         "git_mode": "100644",
@@ -35272,8 +35272,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/two-source-synergy-bound-example.pdf",
-        "sha256": "c5e28b6fc656a61298509aa195b82886b9a605c393d83a3df8557d4c1935699b",
-        "size_bytes": 120354
+        "sha256": "af4eadb06cd6de70fa65bbab1fbce4e60c63ee38ef811e5c7aeb75960f2b4731",
+        "size_bytes": 130058
       },
       {
         "git_mode": "100644",
@@ -35284,8 +35284,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "7526273a319da584885941980d9a6479e458b9cfe526133b1489c32796e82712",
-        "size_bytes": 320473
+        "sha256": "de6ee50f3fd87228aa02780006ea3bbe17ffb765ad42426677453dd74f809dda",
+        "size_bytes": 320617
       },
       {
         "git_mode": "100755",
@@ -35584,7 +35584,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "947f4e71a51773441581f43c7a474ed72db0e3202098c19084926d78c1ec5740",
+        "sha256": "e39fa4e2da25196eb3d5e18c2615201063e7f8236aa1c92afdce654aa7221a7e",
         "size_bytes": 90915
       },
       {
@@ -35728,8 +35728,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "3905ef0b71c5852b4b3d30f745642bd6638c16173be216d598f9d30947870fad",
-        "size_bytes": 36658
+        "sha256": "189cdd44d3be7e9ec777f2a1c4a208812fc28e16f08ab8d2e2d93ab141c24070",
+        "size_bytes": 36735
       },
       {
         "git_mode": "100755",
@@ -36184,7 +36184,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "12f0ac40a3bde58fbb0f6195f506e69da2255c46e20340d6537c3ac7718b06bd",
+        "sha256": "4976f901fda0899c24becff70d8fdde5056992abc4ae88d6f1c2ca3f1f23e832",
         "size_bytes": 140337
       },
       {
@@ -37178,7 +37178,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "67e7c35281dd0a6c5336210f85c11fd5e8512f4a22432839d3c5b724c0abd0ce",
+    "entries_sha256": "3b10876e2c482065268f85b5a500d8ed8424320853c972cdda4e251c97f38847",
     "entry_count": 6172
   },
   "subprojections": [
@@ -37199,7 +37199,7 @@
       ]
     },
     {
-      "entries_sha256": "4a2cac1b1a7dc87faa884f4a18f89d2ebc2d5eccb816cb682211f08094baea2f",
+      "entries_sha256": "95055129a723866780868521e93ce2a20be3f8799adb7a6ad79c60566e93e56b",
       "entry_count": 51,
       "name": "generated_pdf_set",
       "selectors": [
