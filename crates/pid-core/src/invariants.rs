@@ -512,9 +512,9 @@ impl NormalizedInvariantReport {
 /// - `joint_mi`: I(T; S_1...S_n), which must be positive for the ratio to be meaningful.
 /// - Every input must describe the same target/source joint law, units, estimand, preprocessing,
 ///   and evaluation sample. This function cannot verify that semantic coherence.
-/// - Exact mutual informations of one empirical distribution satisfy the Shannon inequalities.
-///   Separately estimated or rounded inputs can violate them and can be signed. The report
-///   evaluates the supplied numbers without testing their statistical coherence.
+/// - On one empirical distribution each exact marginal MI lies between zero and the joint MI.
+///   Rounding each exact value once to nearest preserves this order. Separate estimates or
+///   numerical errors in their computation can violate it. The report accepts signed inputs.
 /// - Undefined and policy-unstable cases are represented by [`NormalizedInvariantStatus`], never
 ///   by a floating-point sentinel.
 pub fn average_degree_of_redundancy(
@@ -557,9 +557,9 @@ pub fn average_degree_of_redundancy_with_policy(
 ///   (For n=2, this is just [I(T;S_2), I(T;S_1)]).
 /// - Every input must describe the same target/source joint law, units, estimand, preprocessing,
 ///   and evaluation sample. This function cannot verify that semantic coherence.
-/// - On one empirical distribution, an exact leave-one-out mutual information cannot exceed
-///   the joint mutual information. Separately estimated or rounded inputs can violate this
-///   bound and can be signed. The report evaluates their differences without clamping them.
+/// - On one empirical distribution each exact leave-one-out MI lies between zero and the joint
+///   MI. Rounding each exact value once to nearest preserves this order. Separate estimates or
+///   numerical errors in their computation can violate it. The report accepts signed inputs.
 /// - Undefined and policy-unstable cases are represented by [`NormalizedInvariantStatus`], never
 ///   by a floating-point sentinel.
 pub fn average_degree_of_vulnerability(

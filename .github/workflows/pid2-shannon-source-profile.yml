@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/pid2-shannon-source-profile.yml'
       - 'scripts/check-pid2-shannon-source-profile.py'
+      - 'scripts/check-pid2-shannon-rustdoc-profile.py'
       - 'scripts/check-pid2-represented-coordinate-v4*.py'
       - 'scripts/generate-exact-binary64-sum-oracle.py'
       - 'crates/pid-core/tests/fixtures/*exact*binary64*'
@@ -49,7 +50,7 @@ jobs:
           path: production
           fetch-depth: 0
           persist-credentials: false
-      - name: Check both complete-file profiles and the observation controls
+      - name: Check the production and documented source profiles and their controls
         shell: bash
         run: |
           set -euo pipefail
@@ -63,10 +64,13 @@ jobs:
             flags=()
             if test "$mode" = optimized; then flags=(-O); fi
             for op in source controls; do
-              python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-source-profile.py "$op" --repo-root profile > "$result/$op-$mode.json"
+              python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-rustdoc-profile.py "$op" --repo-root profile > "$result/rustdoc-$op-$mode.json"
+              python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-source-profile.py "$op" --repo-root production > "$result/$op-$mode.json"
             done
             python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-represented-coordinate-v4-self-test.py > "$result/pid2-controls-$mode.txt"
           done
+          cmp "$result/rustdoc-source-normal.json" "$result/rustdoc-source-optimized.json"
+          cmp "$result/rustdoc-controls-normal.json" "$result/rustdoc-controls-optimized.json"
           cmp "$result/source-normal.json" "$result/source-optimized.json"
           cmp "$result/controls-normal.json" "$result/controls-optimized.json"
           cmp "$result/pid2-controls-normal.txt" "$result/pid2-controls-optimized.txt"

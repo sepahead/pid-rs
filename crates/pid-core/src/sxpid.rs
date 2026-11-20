@@ -161,9 +161,16 @@
 //!
 //! # Complexity
 //!
-//! Brute-force over the empirical distribution: with `D` distinct realizations the cost is
-//! `O(D² · #nodes · max collections)`. This is meant for low-effective-dimension categorical data
-//! (gates, or explicitly quantized PLS/PCA-reduced variables).
+//! Let `N` be the number of aligned rows, `D` their total scalar width across all sources and
+//! the target, and `K` the number of distinct complete rows. For two to four sources and fixed
+//! width, constructing the empirical distribution and the mutual-information histograms takes
+//! at most `O(N log(max(2, N)))` work. The event calculation compares every supported state with
+//! every other state and with itself. On a lattice of `m` nodes with at most `a` source groups
+//! per node, these comparisons take at most `O(m a D K²)` coordinate operations. The general
+//! routine also constructs the lattice and inverts two sets of cumulative values at each state.
+//! Repeated rows can keep `K` small even when row processing dominates the call. Requesting
+//! pointwise atoms retains `O(K (m + D))` additional output. Averaged-only calls still process
+//! every supported state. These bounds describe work and storage, without a latency estimate.
 
 #[cfg(feature = "experimental-pipelines")]
 use crate::discrete_pid::quantize_equal_width;
@@ -518,9 +525,10 @@ impl SxAtomInterpretation {
 
 /// Paper-defined pointwise shared-exclusions Möbius atom for one distinct joint realization.
 ///
-/// The informative (`π⁺`) and misinformative (`π⁻`) components are non-negative in
-/// exact arithmetic (Makkeh, Gutknecht & Wibral 2021, Theorem IV.3), modulo binary64 roundoff.
-/// The signed net atom is derived as `π⁺ − π⁻`; nothing is clamped. All quantities are nats.
+/// The informative (`π⁺`) and misinformative (`π⁻`) components are non-negative in exact
+/// arithmetic. Binary64 subtraction can give a small negative residual at an exact zero.
+/// The signed net atom is computed as `π⁺ − π⁻`. Both component values are returned without
+/// clamping, in nats. See [Makkeh, Gutknecht & Wibral, Theorem IV.3](https://arxiv.org/abs/2002.03356v5).
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct SxPointwiseAtom {
     informative_nats: f64,
@@ -535,12 +543,12 @@ impl SxPointwiseAtom {
         }
     }
 
-    /// Non-negative informative partial atom `π⁺`, in nats.
+    /// Computed informative partial atom `π⁺`, in nats. Roundoff can give a negative residual.
     pub const fn informative_nats(self) -> f64 {
         self.informative_nats
     }
 
-    /// Non-negative misinformative partial atom `π⁻`, in nats.
+    /// Computed misinformative partial atom `π⁻`, in nats. Roundoff can give a negative residual.
     pub const fn misinformative_nats(self) -> f64 {
         self.misinformative_nats
     }
@@ -573,8 +581,8 @@ impl Serialize for SxPointwiseAtom {
 /// Paper-defined empirical-PMF average of pointwise shared-exclusions Möbius atoms.
 ///
 /// This is the empirical probability-weighted average over distinct joint realizations, not a
-/// population expectation. The signed net atom is derived as `Π⁺ − Π⁻`; nothing is clamped.
-/// All quantities are nats.
+/// population expectation. An averaged component can retain a negative roundoff residual from
+/// the pointwise calculation. The signed net atom is derived as `Π⁺ − Π⁻`. All quantities are nats.
 ///
 /// Pointwise and averaged atoms are intentionally distinct nominal types:
 ///
@@ -660,8 +668,10 @@ pub struct SxPointwise2 {
 #[derive(Debug, Serialize)]
 #[non_exhaustive]
 pub struct DiscreteSxPid2Result {
-    /// One entry per distinct realization (the signature pointwise output of SxPID).
+    /// One record per distinct complete input row when pointwise output was requested.
+    /// An averaged-only call returns an empty vector.
     pub pointwise: Vec<SxPointwise2>,
+    /// Whether this call retained the per-realization records.
     pub pointwise_included: bool,
     /// Probability-weighted (averaged) atoms.
     pub unq1: SxAveragedAtom,
@@ -702,7 +712,10 @@ pub struct SxPointwise3 {
 #[derive(Debug, Serialize)]
 #[non_exhaustive]
 pub struct DiscreteSxPid3Result {
+    /// One record per distinct complete input row when pointwise output was requested.
+    /// An averaged-only call returns an empty vector.
     pub pointwise: Vec<SxPointwise3>,
+    /// Whether this call retained the per-realization records.
     pub pointwise_included: bool,
     /// The 18 antichains (as set-lists of bitmasks), aligned with `atoms`.
     pub antichains: Vec<Vec<u8>>,
@@ -713,7 +726,8 @@ pub struct DiscreteSxPid3Result {
     pub mi_s2_t: f64,
     pub mi_s0s1s2_t: f64,
     /// Mutual information for every non-empty source subset. Index `mask - 1` corresponds to the
-    /// source bitmask `mask` (`1..=7`) and equals the sum of atoms in that node's down-set.
+    /// source bitmask `mask` (`1..=7`). In exact arithmetic this equals the sum of averaged
+    /// net atoms at or below the node for that single source collection. The MI is computed separately.
     pub subset_mis: Vec<f64>,
     /// Categorical/quantized input provenance and observed state counts.
     pub input: DiscreteInputMetadata,
@@ -2535,12 +2549,17 @@ pub struct DiscreteSxPidNResult {
     pub antichains: Vec<Vec<u8>>,
     /// Averaged atoms, aligned with `antichains`.
     pub atoms: Vec<SxAveragedAtom>,
+    /// One record per distinct complete input row when pointwise output was requested.
+    /// An averaged-only call returns an empty vector.
     pub pointwise: Vec<SxPointwiseN>,
+    /// Whether this call retained the per-realization records.
     pub pointwise_included: bool,
-    /// Joint MI `I(S_0,…,S_{n-1}; T)` — the sum of all averaged net atoms (reconstruction).
+    /// Separately computed joint MI `I(S_0,…,S_{n-1}; T)`. The averaged net atoms sum to it
+    /// in exact arithmetic.
     pub joint_mi: f64,
     /// Mutual information for every non-empty source subset. Index `mask - 1` corresponds to the
-    /// source bitmask `mask` and equals the sum of atoms in that node's down-set.
+    /// source bitmask `mask`. In exact arithmetic this equals the sum of averaged net atoms at
+    /// or below the node for that single source collection. The MI is computed separately.
     pub subset_mis: Vec<f64>,
     /// Categorical/quantized input provenance and observed state counts.
     pub input: DiscreteInputMetadata,
