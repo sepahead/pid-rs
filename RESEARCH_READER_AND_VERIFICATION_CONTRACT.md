@@ -1,6 +1,6 @@
 # Research reader and verification contract
 
-Sepehr Mahmoudian · 10 October 2026.
+Sepehr Mahmoudian · 10 October 2026. English instructions updated 20 November 2026.
 
 Project-defined process guidance, not a PID result or proof. This contract
 extends the existing mathematical workflow without replacing its claim packets,
@@ -70,6 +70,21 @@ compare the simplest applicable alternative, and specify a falsifiable acceptanc
 test. Preserve rejected transfers. A source's benchmark, reviewer score or
 different-domain success gives no PID correctness, calibration, novelty or
 application credit.
+
+## English text
+
+Use the writing rules in ASD-STE100 Issue 9. Select general words from its dictionary.
+Use each approved word with its specified meaning and part of speech.
+For a mathematical term, use the rules for technical nouns and technical verbs.
+Give the meaning of the term at first use. Give each paragraph one topic. [ASD-STE100, Issue 9](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf)
+
+Keep each condition with the statement that needs it.
+For example, “if the rows are independent” gives a condition. “The rows are independent” makes a claim about the rows.
+A reader needs evidence from the sampling design to apply the conditional result to a particular data set.
+
+After a change, compare the text with its source. Examine the order of the quantities and the direction of each implication.
+Examine words such as “every” and “some.” Record the text, the results of these checks, and any open questions.
+The automatic report for the results guide gives the results for selected writing rules. [Results guide checks](scripts/check-mathematical-results-guide-prose.py)
 
 ## Cited glossary
 

@@ -212,8 +212,13 @@ application bounds. Explain the actual AI role, selected strategy and nearest si
 report the strongest checked findings, their evidence and current application significance separately
 from conditional future possibilities. Keep mechanical, semantic, formal, numerical, statistical,
 visual and human evidence distinct. Cite primary sources for paper-defined and classical results;
-mark project-defined derivations and novelty status. Use ASD-STE100-inspired plain technical prose
-without claiming conformance absent a separate audit. Preserve counterexamples, false positives,
+mark project-defined derivations and novelty status.
+
+Use ASD-STE100 Issue 9 when you write or change English text. Use its writing rules.
+Select general words from its dictionary. Give the meaning of each mathematical term before the reader needs it.
+After a change, compare each assumption and each conclusion with its source. Record the text that you examined. [ASD-STE100, Issue 9](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf)
+
+Preserve counterexamples, false positives,
 unsuccessful routes and negative results with scope, rejection reasons and reopen conditions;
 correct stale active claims without erasing their record.
 

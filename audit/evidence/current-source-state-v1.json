@@ -346,8 +346,8 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "63cf52002a052a105f0f3a841f97afef9382e248c1d045ab7f9a0c4f3b3cfc67",
-        "size_bytes": 101628
+        "sha256": "6b9bbef42f97e6fcd2fb1de8f94c663d40abbc02d6d668520669961e1cf0f29a",
+        "size_bytes": 101925
       },
       {
         "git_mode": "100644",
@@ -580,8 +580,8 @@
       {
         "git_mode": "100644",
         "path": "RESEARCH_READER_AND_VERIFICATION_CONTRACT.md",
-        "sha256": "beb44db4d02ff6556b0386d7e62bf4c5cdce7dfb3b9e88859bd8b8c08f7caf2d",
-        "size_bytes": 14563
+        "sha256": "02bebeffeb7f55ed00857d097ec8c8f446f0cb4cf1cb0c3593b60b6a1ba582ea",
+        "size_bytes": 15722
       },
       {
         "git_mode": "100644",
@@ -610,8 +610,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "e6ced644c52a010d6fbb3983025a2e4838fea1d07d2c52f1e93e5628e70162df",
-        "size_bytes": 65815
+        "sha256": "20f56c93854360fcbb4ec337a5a4ecdfa680ef9230474c7527945d90346b0372",
+        "size_bytes": 65942
       },
       {
         "git_mode": "100644",
@@ -35902,7 +35902,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "e8b4486995d51ddd1ec23577eb45a2e0f17ed00628868e26e4f07e903ade34dc",
+        "sha256": "bd0302950be5b46b160b7dcdf87e63b7ac0d1c678acaf1985de6cd8af6b63464",
         "size_bytes": 139663
       },
       {
@@ -36896,7 +36896,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "ceb16f60e352652e0c3a3c101777efc5df4f63e9f516f51620430670e36cd54b",
+    "entries_sha256": "7f6c2d1c8263e0cd32df5b9dc09c6958c27fecefc89c2c28312804b31e2ce199",
     "entry_count": 6125
   },
   "subprojections": [

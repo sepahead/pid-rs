@@ -787,7 +787,8 @@ Use the reviewed repository-local TeX/SVG assets for the established design lang
 turquoise `#1F6968` for subordinate headings, lapis for primary structure, restrained geometric
 patterns, searchable text, sufficient spacing, and grayscale-readable labels. External private-CV
 files are provenance/design references only; published builds must not depend on their paths.
-Use ASD-STE100-inspired plain technical language without claiming audited conformance.
+Use ASD-STE100 Issue 9 when you write or change English text.
+The reader contract gives an example of a mathematical condition. [Writing and review rules](RESEARCH_READER_AND_VERIFICATION_CONTRACT.md#english-text)
 
 Render and inspect changed PDF pages and a declared high-risk set. Include motivations, complete
 derivations, assumptions, examples, bounds, citations, successful and failed routes, formal
