@@ -1,0 +1,1 @@
+{"definition_revision":"makkeh-gutknecht-wibral-2021-empirical-sxpid3-nats-v1","rows":[{"count":"1","source_states":[["0"],["1"],["1"]],"target_state":["1"]},{"count":"1","source_states":[["1"],["0"],["1"]],"target_state":["1"]},{"count":"1","source_states":[["1"],["1"],["1"]],"target_state":["0"]}],"schema":"pid-rs/categorical-sxpid3-count-table/v1","sources":3,"units":"nats"}

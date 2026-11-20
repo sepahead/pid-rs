@@ -1,0 +1,54 @@
+{
+  "corrected_commit": "03325745f64becf437b9b3042b51a9d925450579",
+  "corrected_qualification": {
+    "archive_sha256": "0c3754180fc8660474cd9ab99b5f4dac6c7c5199ef674ec94dbf0fb557c47efc",
+    "artifact": 14585613973,
+    "run": 44640966503
+  },
+  "earlier_unexecuted_observer": {
+    "archive_sha256": "e97873f8204e1c0f25b54f7bf1d2f83d0162d8e22e6e9ff3ad56684d77132210",
+    "artifact": 14585885518,
+    "commit": "50117e2cf5245840270544c8dae9ae8920981773",
+    "observation_count": 0,
+    "run": 44638831978,
+    "terminal": "Compilation failed with E0277 while formatting the digest. No numerical reports were produced."
+  },
+  "fixture_sha256": "8a2bfd810e74c29d2c3a38311777a3b1dc418fc3751b8ddad547249c216a2327",
+  "judge_commit": "a5fe92978a8671c2592191ab9c5b25b6ab46c02b",
+  "method": "target-conditioned average degrees on supplied binary64 mutual information values",
+  "observed": {
+    "corrected": {
+      "cargo_exit": 0,
+      "differing_fields": {},
+      "differing_rows": 0,
+      "file": "corrected.json",
+      "observation_sha256": "8d252784872fb8c5b8af9cee363ca924275f8d51317436ec09e69615f0164352",
+      "old_regressions": 16,
+      "scored_rows": 184,
+      "source_commit": "03325745f64becf437b9b3042b51a9d925450579"
+    },
+    "original": {
+      "cargo_exit": 101,
+      "differing_fields": {
+        "numerator_nats": 13,
+        "status": 13,
+        "value": 41
+      },
+      "differing_rows": 41,
+      "file": "original.json",
+      "observation_sha256": "9a7c35edf9748bf45602b02a32dc71fc38b710d878f0f6e9534fc8b961b9dc74",
+      "old_regressions": 16,
+      "scored_rows": 184,
+      "source_commit": "0f3122a96e48a099581ad4faf3e3d5d9138367f6"
+    }
+  },
+  "original_commit": "0f3122a96e48a099581ad4faf3e3d5d9138367f6",
+  "original_qualification": {
+    "archive_sha256": "f96962bdcc99f993ca7ae342171c5549f2f0f5e7d3ae6fc2efd5bfbf9465397c",
+    "artifact": 14585333475,
+    "run": 44640265708
+  },
+  "schema": "pid-rs/normalized-shannon-native-observations-v1",
+  "scope": "Exact readback on 122 input prescriptions and 184 API calls. The standard-library Fraction and integer-neighbor references share the prespecified inputs. Both hosted runs used the same compiler and judge. The population estimands and specification-to-Rust refinement require separate evidence.",
+  "toolchain": "rustc 1.99.1 (58cf8f9c35b355199727627d07ae34a4e2846d67), x86_64-unknown-linux-gnu"
+}
