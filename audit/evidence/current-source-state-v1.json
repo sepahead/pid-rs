@@ -15669,6 +15669,30 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/synthetic-assertion-route-attempt-2026-11-20/README.md",
+        "sha256": "33396971ed5129c8b6b24dc41e8667c21a04a34679f8c8aeeffff731fae7d3d8",
+        "size_bytes": 5309
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/synthetic-assertion-route-attempt-2026-11-20/archive-members.json",
+        "sha256": "dea0758f0ac1ae892b6d1022fcc68073913452a95e1a89fa270cded9b46ee895",
+        "size_bytes": 18593
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/synthetic-assertion-route-attempt-2026-11-20/result.json",
+        "sha256": "b581be2db667fa8730764f5801d0547dba2d7ccffa5c331a544adfa7d69e0e92",
+        "size_bytes": 36060
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/synthetic-assertion-route-attempt-2026-11-20/submitted-proof-bodies.json.txt",
+        "sha256": "a8d2092e9406b46700167bb0c9ab24f72ab0a9186725d12df0a0e6e13c56315e",
+        "size_bytes": 630
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/task-dispositions.json",
         "sha256": "0ace29ac18e004f6a225f6c968eda8aa53ccb213b38466bed7b86d9558034ce0",
         "size_bytes": 95256
@@ -37154,8 +37178,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "64ff23f7c803707adf5728e36b96b273ca6e46cd778dd48ffa63cc80fa50f1e6",
-    "entry_count": 6168
+    "entries_sha256": "67e7c35281dd0a6c5336210f85c11fd5e8512f4a22432839d3c5b724c0abd0ce",
+    "entry_count": 6172
   },
   "subprojections": [
     {

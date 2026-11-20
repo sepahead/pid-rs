@@ -1,0 +1,942 @@
+{
+  "artifact_bytes": 705318,
+  "artifact_id": 14663932446,
+  "artifact_members": 108,
+  "artifact_sha256": "786cfda4673fd44de66e95df04afbc81b795a0982b4a50838d4dccbb15d995c1",
+  "axioms_histogram": {
+    "(empty)": 2,
+    "Classical.choice, Quot.sound, propext": 15,
+    "propext": 5
+  },
+  "candidate_sha256": "a8d2092e9406b46700167bb0c9ab24f72ab0a9186725d12df0a0e6e13c56315e",
+  "commands": 25,
+  "declarations": {
+    "RouteConsumer.counterexample": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteResult.counterexample"
+      ],
+      "owner": "RouteConsumer",
+      "type_sha256": "f26ba9a2c68908a3905b28405314f0317c44dda827f97d8a5a1ddddb743707ab",
+      "value_sha256": "f940d31b7687c47b629c280696c9a4c1d8321b227468bbfa14d8a016966bfedb"
+    },
+    "RouteConsumer.difference": {
+      "axioms": [
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteResult.environmentsDiffer"
+      ],
+      "owner": "RouteConsumer",
+      "type_sha256": "327ce1aa8146fb73adec81f7270ea7ebbd1c63b4afa2038621b9e7c4ae68e02d",
+      "value_sha256": "3d06587733cbf4607fade854ccd9b560a50df01a7602d217e7460ba818f38a10"
+    },
+    "RouteConsumer.formation": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteHelpers.wellFormedInputs"
+      ],
+      "owner": "RouteConsumer",
+      "type_sha256": "5e4b271de7922242b385d70b1ed92bb4a8017ae60b1dfb2cbde917fd0114aad9",
+      "value_sha256": "97d3c82f480dd5596b9f843a7805d9c98d00a9cd01597fa6528c3a7391a0aa5a"
+    },
+    "RouteConsumer.invariance": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteResult.sameOutput"
+      ],
+      "owner": "RouteConsumer",
+      "type_sha256": "b02479ea89a2dac3f51d19dd17d69ca7b623595d25bf4bc81b5024f5f89051c3",
+      "value_sha256": "746959fe26e53d04cb7a6551d94b674e1d680211663ef65b59e92d06f68ad53e"
+    },
+    "RouteConsumer.ordered": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteResult.ordered"
+      ],
+      "owner": "RouteConsumer",
+      "type_sha256": "c663538c7492afe2f474fed3ebc4be37d55324a49f623a06c5f9a9df430bc89d",
+      "value_sha256": "f785d4651ac000823c291cfdf55f5a1a02b2c1a21a380ad129ffde3e853453f5"
+    },
+    "RouteConsumer.reachableTag": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteHelpers.changedUse"
+      ],
+      "owner": "RouteConsumer",
+      "type_sha256": "ea0904eb95da214fcd4438b15d2cc5d05fc58aed59c2dc637c10d16b492c73b7",
+      "value_sha256": "6c9a9dd4d9b4bed32606dc38829285cc47df61acc57c53d8a55f30e670e395c8"
+    },
+    "RouteConsumer.successful": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteResult.allRefute"
+      ],
+      "owner": "RouteConsumer",
+      "type_sha256": "e9399b40fb5579d9bdb5484bc73d61fcff7b53f3b3676870ea9c906f7d406135",
+      "value_sha256": "adc599cdc64e4824348db9191240c4b3cbafd84b6f7199f0cd3008a321fbb32e"
+    },
+    "RouteConsumer.typedFailure": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteHelpers.failedSource"
+      ],
+      "owner": "RouteConsumer",
+      "type_sha256": "8498853dff3ecf8c0a9dcb9a26f61bf3474f2bd5009d8fa1a23690adb333749c",
+      "value_sha256": "fb12f7d7ff520d5505a17d458c835591a50b93473a839aa6f3d53ea0bc4cfdb8"
+    },
+    "RouteHelpers.changedUse": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [],
+      "owner": "RouteLeaves",
+      "type_sha256": "ea0904eb95da214fcd4438b15d2cc5d05fc58aed59c2dc637c10d16b492c73b7",
+      "value_sha256": "722754d4e02cb72b095daabc49747fac63872b324411074a7dd59306e0341c5a"
+    },
+    "RouteHelpers.evalViaRelay": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [],
+      "owner": "RouteTail",
+      "type_sha256": "2abbdefd4972f651252b13ee43be13050e61495c32e97dbf371e27210d20285c",
+      "value_sha256": "f05ab67219ded821f2d088db3ed350b1791cfb986a6267c15c8743a6fe2ec223"
+    },
+    "RouteHelpers.failedSource": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [],
+      "owner": "RouteLeaves",
+      "type_sha256": "8498853dff3ecf8c0a9dcb9a26f61bf3474f2bd5009d8fa1a23690adb333749c",
+      "value_sha256": "7bd299912a6e57fbb876cbb3db8d4336d2df14a75b8de7267155e7d7a29c3556"
+    },
+    "RouteHelpers.leafFalse": {
+      "axioms": [],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [],
+      "owner": "RouteLeaves",
+      "type_sha256": "9749433f1bf7f78991a41c8ad5f7078071f413e7dd0a184d714476f3399dd2c3",
+      "value_sha256": "9a7dfefca60f28330b72e1f6eb3100ece550550ea9256e5a067441c1a5494660"
+    },
+    "RouteHelpers.leafTrue": {
+      "axioms": [],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [],
+      "owner": "RouteLeaves",
+      "type_sha256": "857e97ba5e4edbe6fb15f74d7c05851f2b2128f1b5173a18f45651bf1e096f12",
+      "value_sha256": "cf728cff30e8ac8944b4e77d5e6804b38091a5e040ba66eae72f3726187e14f8"
+    },
+    "RouteHelpers.prefixBit": {
+      "axioms": [
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [],
+      "owner": "RoutePrefix",
+      "type_sha256": "af90a4db919b1aa6a5e1ccf9d14a05691687b7ec4eb9df75b813f326a0406a65",
+      "value_sha256": "f08e3fa90c91f057c9c21be8470cfa9d1e6ec0f4498eea4ec8f973257173328f"
+    },
+    "RouteHelpers.prefixTag": {
+      "axioms": [
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [],
+      "owner": "RoutePrefix",
+      "type_sha256": "ffa76c482da6c56342be08fcaf55272c1f0c9b67b541102d25092e6f54dcad38",
+      "value_sha256": "d3a540c2379adbef3adbff8e00cb736d6e97ff658d7b53a81f6bc1f5933c5d64"
+    },
+    "RouteHelpers.wellFormedInputs": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [],
+      "owner": "RoutePrefix",
+      "type_sha256": "5e4b271de7922242b385d70b1ed92bb4a8017ae60b1dfb2cbde917fd0114aad9",
+      "value_sha256": "3ff04f2db8c539ed599fd746f28fc0bd2f8ae7816b0cd0a5f20f03640fb88b81"
+    },
+    "RouteHelpers.witnessInputs": {
+      "axioms": [
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [],
+      "owner": "RouteTail",
+      "type_sha256": "085e35743b5e1594e00010f3666150bb4e7325e61b5531617b9d37ab18241e56",
+      "value_sha256": "41c8477a031b857304ba68e824a43467b96a535144549dc92865d24fe00e4997"
+    },
+    "RouteResult.allRefute": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteHelpers.leafFalse",
+        "RouteHelpers.leafTrue",
+        "RouteResult.ordered"
+      ],
+      "owner": "RouteResult",
+      "type_sha256": "e9399b40fb5579d9bdb5484bc73d61fcff7b53f3b3676870ea9c906f7d406135",
+      "value_sha256": "54c2ead6c9ac8ab690f8db4d294431e731ea9d3fc7cd856266f9968b5e4a744d"
+    },
+    "RouteResult.counterexample": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteHelpers.witnessInputs",
+        "RouteResult.environmentsDiffer",
+        "RouteResult.sameOutput"
+      ],
+      "owner": "RouteResult",
+      "type_sha256": "f26ba9a2c68908a3905b28405314f0317c44dda827f97d8a5a1ddddb743707ab",
+      "value_sha256": "5445439439b17f733df6bb9bd6bf2e2b33b72710a1f55f79a604aadc47302da4"
+    },
+    "RouteResult.environmentsDiffer": {
+      "axioms": [
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteHelpers.prefixTag",
+        "RouteHelpers.witnessInputs"
+      ],
+      "owner": "RouteResult",
+      "type_sha256": "327ce1aa8146fb73adec81f7270ea7ebbd1c63b4afa2038621b9e7c4ae68e02d",
+      "value_sha256": "ee7e04983313d41f28945fa8b9963eeae290e1af9c69cf6261fc7a9f6931b877"
+    },
+    "RouteResult.ordered": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteHelpers.evalViaRelay",
+        "RouteHelpers.prefixBit"
+      ],
+      "owner": "RouteResult",
+      "type_sha256": "c663538c7492afe2f474fed3ebc4be37d55324a49f623a06c5f9a9df430bc89d",
+      "value_sha256": "a865664d7ee5e5a54913a97a4279a59b912a1529fb2cadccd66c862677b4f469"
+    },
+    "RouteResult.sameOutput": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "direct_type_axioms": [],
+      "direct_value_axioms": [],
+      "expected_direct_edges": [
+        "RouteResult.ordered"
+      ],
+      "owner": "RouteResult",
+      "type_sha256": "d1820ab4beed42cede656c16646d73fcdf636a8fbc401639b8e223a8484dc164",
+      "value_sha256": "648308208bbf134c86689628359268fea004e3504827eb23d8687eda84314b1f"
+    }
+  },
+  "earlier_stock_anchors_match": {
+    "bin/lean": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "bin/leanchecker": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe",
+    "src/lean/Lean/Environment.lean": "ee364e4788ce0560c87f621eeb3c4c3dfec62e8db4e15e099fd80e6adc533b86",
+    "src/lean/Lean/Replay.lean": "c434b5b2bc5047ca58d4a095fcf1d9935d413c788ae98a4f21948e6a95ca3fb0",
+    "src/lean/LeanChecker.lean": "2d18ec111d73c536b0bdee2533556bb9548c349f386797d3d3837b1f84d55dae"
+  },
+  "elapsed_seconds": 393.922409936,
+  "event": {
+    "attempt": 1,
+    "name": "push",
+    "workflow_conclusion": "failure"
+  },
+  "external_sha256": {
+    "audit/research/three-source-original-first-three/finite_trace.py": "cd7c5f1bebba51fb13be3f6e400908feacb35d5032048ef57ab3492ce30455ea",
+    "audit/research/three-source-original-first-three/observations.py": "9bb7fe901e973d450dae98951c97988f38d6f0a713e1482b0b6438d7c6660f59",
+    "audit/research/three-source-original-first-three/proof_interface.py": "6b6f2c616c3fc04e5b4a68047b06e44c3d9cbe817de6daf7038b4c524a7638ce",
+    "audit/research/three-source-synthetic-projection/lean/ProjectionCore.lean": "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11",
+    "audit/research/three-source-synthetic-projection/readback.py": "2e3ec093879e27e37b057ad290e22bebb0deb58fe76f764a8f6ab12fc0821bb1",
+    "audit/research/three-source-synthetic-projection/resources.py": "81a7da0a2c744af3f0d181534b61295f64e1b4f3029a4b7fa711f64ff826c25d",
+    "audit/research/three-source-w02/lean/W02Inspect.lean": "30834cf49fd2fd4c40536ad8a70bdf74d3228c15cd80995225d78788f4209768",
+    "audit/research/three-source-w02/lean/W02Semantics.lean": "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3"
+  },
+  "head": "b409a4ef646fb85bc22c1b3cc65cb44818412bac",
+  "job_id": 136530593268,
+  "kind": "Static historical observation. The submitted proof bytes are data.",
+  "limits": {
+    "campaign_seconds": 5400,
+    "group_rss_bytes": 4294967296,
+    "retained_bytes": 1073741824,
+    "subprocess_seconds": 900
+  },
+  "log_members": 10,
+  "logs_sha256": "2d7710fd21b7c83944d8eae7d77e603a13bfc137fb090e921f113f52b70e2d18",
+  "manifest_sha256": "1325621956f39c518323e94c72fbd7bafdee9b27caae0a4ec0c8fcfe5ac757d0",
+  "max_direct_rss": 820879360,
+  "max_group_rss": 788189184,
+  "max_process_wall": 45.003492967,
+  "members_sha256": "dea0758f0ac1ae892b6d1022fcc68073913452a95e1a89fa270cded9b46ee895",
+  "native_error": "ValueError: unexpected compiler error for RefuseReachedInteger",
+  "negative_controls": {
+    "RefuseConstant": {
+      "diagnostic": {
+        "caption": "",
+        "data": "Tactic `rfl` failed: The left-hand side\n  evaluate primary (sample false 0)\nis not definitionally equal to the right-hand side\n  observed true\n\n\u22a2 evaluate primary (sample false 0) = observed true",
+        "endPos": {
+          "column": 69,
+          "line": 4
+        },
+        "fileName": "RefuseConstant.lean",
+        "isSilent": false,
+        "keepFullRange": false,
+        "kind": "[anonymous]",
+        "pos": {
+          "column": 66,
+          "line": 4
+        },
+        "severity": "error"
+      },
+      "expected": {
+        "contains": [
+          "is not definitionally equal",
+          "evaluate primary"
+        ],
+        "line": 4,
+        "prefix": "Tactic `rfl` failed:"
+      },
+      "matches": true,
+      "sha256": "6149470b872451adfa2a80c975590a7c6c5aba041bf119a1fc1b58dfc162ba0e"
+    },
+    "RefuseFailureAsFalse": {
+      "executed": false
+    },
+    "RefuseReachedInteger": {
+      "diagnostic": {
+        "caption": "",
+        "data": "(deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached\n\nNote: Use `set_option maxHeartbeats <num>` to set the limit.\n\nHint: Additional diagnostic information may be available using the `set_option diagnostics true` command.",
+        "endPos": {
+          "column": 99,
+          "line": 4
+        },
+        "fileName": "RefuseReachedInteger.lean",
+        "isSilent": false,
+        "keepFullRange": false,
+        "kind": "runtime.maxHeartbeats",
+        "pos": {
+          "column": 96,
+          "line": 4
+        },
+        "severity": "error"
+      },
+      "expected": {
+        "contains": [
+          "is not definitionally equal",
+          "evaluate readingTag"
+        ],
+        "line": 4,
+        "prefix": "Tactic `rfl` failed:"
+      },
+      "matches": false,
+      "sha256": "52ad246965615edfff9c49661c80efdf8771220228372b2a3186414f2551ae7d"
+    },
+    "RefuseWholeState": {
+      "diagnostic": {
+        "caption": "",
+        "data": "Tactic `rfl` failed: The left-hand side\n  state sample0\nis not definitionally equal to the right-hand side\n  state sample1\n\n\u22a2 state sample0 = state sample1",
+        "endPos": {
+          "column": 49,
+          "line": 4
+        },
+        "fileName": "RefuseWholeState.lean",
+        "isSilent": false,
+        "keepFullRange": false,
+        "kind": "[anonymous]",
+        "pos": {
+          "column": 46,
+          "line": 4
+        },
+        "severity": "error"
+      },
+      "expected": {
+        "contains": [
+          "is not definitionally equal",
+          "state sample"
+        ],
+        "line": 4,
+        "prefix": "Tactic `rfl` failed:"
+      },
+      "matches": true,
+      "sha256": "a236411f2fff851e13c45a9800c999400b344f13ad7ac0317fa2515c99482ddb"
+    }
+  },
+  "object_hashes_after_failure": {
+    "ProjectionCore.olean": "4a5645565f31e4b2f472480b36117d8988fb4489a10ad83081963f56c8b1f8ac",
+    "RouteAxioms.olean": "93f9ebf301737c644e0cf0f6c2776fbf7a2c88ff1fea93f736db90864532b2d4",
+    "RouteConsumer.olean": "8619032bd78de734eb949382c98e4258ff9ac5e5b8fa4d6d140378102edee28a",
+    "RouteInspect.olean": "b400316f0600eb3c93c91c43290cb6396f8cb084364a415d5501024a99b9b452",
+    "RouteLeaves.olean": "ac2bf896e1e610645cd890bf5e3bdd391a228afb92f365a564d591a535ea08ef",
+    "RoutePrefix.olean": "8cb6c2cb58f62901b17833e857452aa57e590a8dff2f91ee9eea5ddbe3093e2a",
+    "RouteResult.olean": "4854e22372f2d7bfcbdeb2e31069c6dc7773fc21b2596f7419a840f7ad610e12",
+    "RouteSpec.olean": "eefda52f92ae5c5e3194f509281f04a825bc93907bc9b66e106d305002608e1a",
+    "RouteTail.olean": "73a5ead9f19e4c504a4f6d7b4ef932c18321b1fac0fdab28f8a7ec9e5ba8bc72",
+    "RouteTrace.olean": "f976ee712547fa6446bb17d1cf26b3c5e63c4644b6470b3de0ed5b887b4e3737",
+    "W02Semantics.olean": "921c0ab66aea8894b574825a4d6762b4d6ee57c735a6f79e9f9f2cf8a99e555d"
+  },
+  "ordered_commands": [
+    {
+      "campaign_elapsed_seconds": 18.640858634999994,
+      "direct_wait4_maxrss_bytes": 13307904,
+      "elapsed_seconds": 6.657492547999993,
+      "exit": 0,
+      "group_rss_sample_count": 80,
+      "max_observed_group_rss_bytes": 16343040,
+      "retained_before_receipt_bytes": 1007,
+      "stage": "provision",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "extract-stock"
+    },
+    {
+      "campaign_elapsed_seconds": 18.725604408999992,
+      "direct_wait4_maxrss_bytes": 94601216,
+      "elapsed_seconds": 0.08420640999999307,
+      "exit": 0,
+      "group_rss_sample_count": 1,
+      "max_observed_group_rss_bytes": 11173888,
+      "retained_before_receipt_bytes": 1851,
+      "stage": "provision",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 106,
+      "stdout_sha256": "355a9a028f81641782d75d6e6b58dec70f29d2f61238a9e271690259d9bf5680",
+      "stop": null,
+      "tag": "stock-version"
+    },
+    {
+      "campaign_elapsed_seconds": 18.810201971999994,
+      "direct_wait4_maxrss_bytes": 94408704,
+      "elapsed_seconds": 0.08407634099999939,
+      "exit": 0,
+      "group_rss_sample_count": 1,
+      "max_observed_group_rss_bytes": 11284480,
+      "retained_before_receipt_bytes": 2549,
+      "stage": "provision",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 41,
+      "stdout_sha256": "e8905851835bf12aa23cdca8b9ea6980d9cbe8d45ba5878a9a09b1f6264e5747",
+      "stop": null,
+      "tag": "stock-revision"
+    },
+    {
+      "campaign_elapsed_seconds": 19.642006927000004,
+      "direct_wait4_maxrss_bytes": 554127360,
+      "elapsed_seconds": 0.8290868750000016,
+      "exit": 0,
+      "group_rss_sample_count": 10,
+      "max_observed_group_rss_bytes": 552685568,
+      "retained_before_receipt_bytes": 1638475,
+      "stage": "W02Semantics",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-W02Semantics"
+    },
+    {
+      "campaign_elapsed_seconds": 63.994784888999995,
+      "direct_wait4_maxrss_bytes": 560963584,
+      "elapsed_seconds": 44.35011459100001,
+      "exit": 0,
+      "group_rss_sample_count": 536,
+      "max_observed_group_rss_bytes": 560963584,
+      "retained_before_receipt_bytes": 1639339,
+      "stage": "W02Semantics",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-W02Semantics"
+    },
+    {
+      "campaign_elapsed_seconds": 64.2456018,
+      "direct_wait4_maxrss_bytes": 527560704,
+      "elapsed_seconds": 0.25011552200000153,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 511787008,
+      "retained_before_receipt_bytes": 1815232,
+      "stage": "ProjectionCore",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-ProjectionCore"
+    },
+    {
+      "campaign_elapsed_seconds": 108.793696439,
+      "direct_wait4_maxrss_bytes": 560947200,
+      "elapsed_seconds": 44.547185743,
+      "exit": 0,
+      "group_rss_sample_count": 538,
+      "max_observed_group_rss_bytes": 560816128,
+      "retained_before_receipt_bytes": 1816096,
+      "stage": "ProjectionCore",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-ProjectionCore"
+    },
+    {
+      "campaign_elapsed_seconds": 109.127302689,
+      "direct_wait4_maxrss_bytes": 520708096,
+      "elapsed_seconds": 0.3329378829999996,
+      "exit": 0,
+      "group_rss_sample_count": 4,
+      "max_observed_group_rss_bytes": 503021568,
+      "retained_before_receipt_bytes": 1956201,
+      "stage": "RouteSpec",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteSpec"
+    },
+    {
+      "campaign_elapsed_seconds": 153.509518612,
+      "direct_wait4_maxrss_bytes": 556777472,
+      "elapsed_seconds": 44.381255302,
+      "exit": 0,
+      "group_rss_sample_count": 536,
+      "max_observed_group_rss_bytes": 552583168,
+      "retained_before_receipt_bytes": 1957047,
+      "stage": "RouteSpec",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteSpec"
+    },
+    {
+      "campaign_elapsed_seconds": 153.75992455,
+      "direct_wait4_maxrss_bytes": 536207360,
+      "elapsed_seconds": 0.24966262000000938,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 518938624,
+      "retained_before_receipt_bytes": 1969673,
+      "stage": "RoutePrefix",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RoutePrefix"
+    },
+    {
+      "campaign_elapsed_seconds": 198.597419803,
+      "direct_wait4_maxrss_bytes": 556953600,
+      "elapsed_seconds": 44.836673007,
+      "exit": 0,
+      "group_rss_sample_count": 540,
+      "max_observed_group_rss_bytes": 556822528,
+      "retained_before_receipt_bytes": 1970527,
+      "stage": "RoutePrefix",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RoutePrefix"
+    },
+    {
+      "campaign_elapsed_seconds": 199.015540302,
+      "direct_wait4_maxrss_bytes": 529678336,
+      "elapsed_seconds": 0.41728748900001733,
+      "exit": 0,
+      "group_rss_sample_count": 5,
+      "max_observed_group_rss_bytes": 519036928,
+      "retained_before_receipt_bytes": 1984095,
+      "stage": "RouteTail",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteTail"
+    },
+    {
+      "campaign_elapsed_seconds": 243.284216265,
+      "direct_wait4_maxrss_bytes": 556994560,
+      "elapsed_seconds": 44.267861947,
+      "exit": 0,
+      "group_rss_sample_count": 534,
+      "max_observed_group_rss_bytes": 556994560,
+      "retained_before_receipt_bytes": 1984942,
+      "stage": "RouteTail",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteTail"
+    },
+    {
+      "campaign_elapsed_seconds": 243.618040389,
+      "direct_wait4_maxrss_bytes": 533696512,
+      "elapsed_seconds": 0.33288205000002336,
+      "exit": 0,
+      "group_rss_sample_count": 4,
+      "max_observed_group_rss_bytes": 524959744,
+      "retained_before_receipt_bytes": 2003248,
+      "stage": "RouteLeaves",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteLeaves"
+    },
+    {
+      "campaign_elapsed_seconds": 288.622406341,
+      "direct_wait4_maxrss_bytes": 558776320,
+      "elapsed_seconds": 45.003492967,
+      "exit": 0,
+      "group_rss_sample_count": 542,
+      "max_observed_group_rss_bytes": 558776320,
+      "retained_before_receipt_bytes": 2004103,
+      "stage": "RouteLeaves",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteLeaves"
+    },
+    {
+      "campaign_elapsed_seconds": 288.874346585,
+      "direct_wait4_maxrss_bytes": 515452928,
+      "elapsed_seconds": 0.2510349450000149,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 454701056,
+      "retained_before_receipt_bytes": 2030543,
+      "stage": "RouteResult",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteResult"
+    },
+    {
+      "campaign_elapsed_seconds": 333.13616154,
+      "direct_wait4_maxrss_bytes": 557621248,
+      "elapsed_seconds": 44.260889636,
+      "exit": 0,
+      "group_rss_sample_count": 536,
+      "max_observed_group_rss_bytes": 557621248,
+      "retained_before_receipt_bytes": 2031397,
+      "stage": "RouteResult",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteResult"
+    },
+    {
+      "campaign_elapsed_seconds": 333.386948313,
+      "direct_wait4_maxrss_bytes": 512167936,
+      "elapsed_seconds": 0.24981605699997544,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 503693312,
+      "retained_before_receipt_bytes": 2050468,
+      "stage": "RouteConsumer",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteConsumer"
+    },
+    {
+      "campaign_elapsed_seconds": 377.549100087,
+      "direct_wait4_maxrss_bytes": 559022080,
+      "elapsed_seconds": 44.161182967,
+      "exit": 0,
+      "group_rss_sample_count": 535,
+      "max_observed_group_rss_bytes": 559022080,
+      "retained_before_receipt_bytes": 2051331,
+      "stage": "RouteConsumer",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteConsumer"
+    },
+    {
+      "campaign_elapsed_seconds": 377.716812731,
+      "direct_wait4_maxrss_bytes": 506515456,
+      "elapsed_seconds": 0.1667945549999672,
+      "exit": 0,
+      "group_rss_sample_count": 2,
+      "max_observed_group_rss_bytes": 445325312,
+      "retained_before_receipt_bytes": 2055102,
+      "stage": "independent term, axiom and finite readback",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 1685,
+      "stdout_sha256": "71d09cc95789aa72d25c2d21a680d637e87828e3586362c6dfe2f4b7ce6d48a6",
+      "stop": null,
+      "tag": "compile-RouteAxioms"
+    },
+    {
+      "campaign_elapsed_seconds": 378.13526728700003,
+      "direct_wait4_maxrss_bytes": 820879360,
+      "elapsed_seconds": 0.4175603649999857,
+      "exit": 0,
+      "group_rss_sample_count": 5,
+      "max_observed_group_rss_bytes": 788189184,
+      "retained_before_receipt_bytes": 2188473,
+      "stage": "independent term, axiom and finite readback",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 129794,
+      "stdout_sha256": "54da9996a620e5bf4e4ded339fb28c71ab9d0e19a205fe177386688fb77d1d2a",
+      "stop": null,
+      "tag": "compile-RouteInspect"
+    },
+    {
+      "campaign_elapsed_seconds": 378.386116974,
+      "direct_wait4_maxrss_bytes": 515731456,
+      "elapsed_seconds": 0.2498081200000115,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 439824384,
+      "retained_before_receipt_bytes": 2227604,
+      "stage": "independent term, axiom and finite readback",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 16,
+      "stdout_sha256": "bd736bb357db68c84540586f1e52be20ff01fe142f13eab441c0d6243646bc7b",
+      "stop": null,
+      "tag": "compile-RouteTrace"
+    },
+    {
+      "campaign_elapsed_seconds": 383.096235322,
+      "direct_wait4_maxrss_bytes": 539537408,
+      "elapsed_seconds": 4.7070014260000335,
+      "exit": 1,
+      "group_rss_sample_count": 57,
+      "max_observed_group_rss_bytes": 539156480,
+      "retained_before_receipt_bytes": 2241040,
+      "stage": "four negative theorem controls",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 362,
+      "stdout_sha256": "a236411f2fff851e13c45a9800c999400b344f13ad7ac0317fa2515c99482ddb",
+      "stop": null,
+      "tag": "refuse-RefuseWholeState"
+    },
+    {
+      "campaign_elapsed_seconds": 383.430137751,
+      "direct_wait4_maxrss_bytes": 510509056,
+      "elapsed_seconds": 0.33285013299996535,
+      "exit": 1,
+      "group_rss_sample_count": 4,
+      "max_observed_group_rss_bytes": 509739008,
+      "retained_before_receipt_bytes": 2242344,
+      "stage": "four negative theorem controls",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 400,
+      "stdout_sha256": "6149470b872451adfa2a80c975590a7c6c5aba041bf119a1fc1b58dfc162ba0e",
+      "stop": null,
+      "tag": "refuse-RefuseConstant"
+    },
+    {
+      "campaign_elapsed_seconds": 393.92187575,
+      "direct_wait4_maxrss_bytes": 592027648,
+      "elapsed_seconds": 10.490591387999984,
+      "exit": 1,
+      "group_rss_sample_count": 126,
+      "max_observed_group_rss_bytes": 592027648,
+      "retained_before_receipt_bytes": 2243718,
+      "stage": "four negative theorem controls",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 476,
+      "stdout_sha256": "52ad246965615edfff9c49661c80efdf8771220228372b2a3186414f2551ae7d",
+      "stop": null,
+      "tag": "refuse-RefuseReachedInteger"
+    }
+  ],
+  "ordinary_import_trust": 1025,
+  "peak_tags": {
+    "direct": [
+      "compile-RouteInspect"
+    ],
+    "group": [
+      "compile-RouteInspect"
+    ]
+  },
+  "post_run_custody_reached": false,
+  "protected_members": 20,
+  "public_archive": "https://github.com/sepahead/pid-rs/actions/runs/44806160042/artifacts/14663932446",
+  "raw_axioms_sha256": "71d09cc95789aa72d25c2d21a680d637e87828e3586362c6dfe2f4b7ce6d48a6",
+  "raw_terms_sha256": "54da9996a620e5bf4e4ded339fb28c71ab9d0e19a205fe177386688fb77d1d2a",
+  "registered_synthetic_predicate": "failure",
+  "registration_parent": "12b4bf2aa7ede11514480bbd2e6e11fe7f7eb91b",
+  "registration_sha256": "aeea65ae05cd255d080297042e2d2b29413b84a2a60cbbcb801bc9c90fc1e6c4",
+  "resource_controls_reached": false,
+  "role": {
+    "original_formula": "none",
+    "source_program": "invented typed scripts"
+  },
+  "run_id": 44806160042,
+  "schema": "pid-rs/synthetic-assertion-route-terminal-observation/v1",
+  "source_hashes": {
+    "ProjectionCore.lean": "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11",
+    "RefuseConstant.lean": "a829e2c559f6615ac2a6262d74ed3ce37d18833d38d0ea4ec4a344e90c009959",
+    "RefuseFailureAsFalse.lean": "f6441423ded70df4bc82f8191775a0fb80997407f726a34f9708105507f95a62",
+    "RefuseReachedInteger.lean": "2c2b96ef1313e63cf31f7f7c69b0cf059c0a32a02abcc83bf68770a24a9d2051",
+    "RefuseWholeState.lean": "5df366d57dba13c434c1d3e846a6f93ef222acd77d907cc1ad0090f3f5dd122f",
+    "RouteAxioms.lean": "e122fff47eb07552f53dde28be4e941857623c386fefdbc97595cda0cd1b28db",
+    "RouteConsumer.lean": "b8784c55703cbd3723ed5a9e2cf2985018f31bb7e4dc4c3dcf65e053a6c61c2f",
+    "RouteInspect.lean": "eb80652222b094ead05892b77a595e941799fee275043a90b9c8f3a7c6751ca4",
+    "RouteLeaves.lean": "14c7664811c373956fbe0b570f2288ccf94ef459bb92ae2c108fd362eca85a46",
+    "RoutePrefix.lean": "41049fca27d9a76fba6be94583907a4fcd7665fdfc6c985a0494ab4a7dcf81df",
+    "RouteResult.lean": "3c308c8a6864cb2ce1a8e8c115ba2a6ed3f2e0c9fe4caab22ebd433985a46738",
+    "RouteSpec.lean": "69caa29d1ef668badfdd40edd7006a7e456e3ea4d473647c44cebc04e9013db9",
+    "RouteTail.lean": "45c464af9bb257c27f5a3a4a4e6ca725ef3eb7b237b1d8b18dae7d033b47d5ac",
+    "RouteTrace.lean": "fd4ad15d92c03ae89349e7b4111e91a7f47ec570dab3a544580300d8ae218ac3",
+    "W02Semantics.lean": "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3"
+  },
+  "stages_recorded": {
+    "declared_targets": 22,
+    "finite_codes": [
+      1,
+      2,
+      2,
+      1,
+      0
+    ],
+    "proof_input_negatives": [
+      "extra slot",
+      "forbidden axiom"
+    ],
+    "stock_fresh": [
+      "W02Semantics",
+      "ProjectionCore",
+      "RouteSpec",
+      "RoutePrefix",
+      "RouteTail",
+      "RouteLeaves",
+      "RouteResult",
+      "RouteConsumer"
+    ]
+  },
+  "stock": {
+    "git": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "linux_tar_zst_sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+    "version": "4.34.1"
+  },
+  "uncompressed_member_bytes": 2267262,
+  "unreached": [
+    "RefuseFailureAsFalse",
+    "small successful monitor control",
+    "memory and time refusal controls",
+    "complete negative report",
+    "final source, object and stock comparison",
+    "final checkout readmission"
+  ],
+  "workflow_sha256": "743d0416aeb6f1fed12ae3c16b7778e7f1988923e7f2d546a486420ac67a6d45"
+}
