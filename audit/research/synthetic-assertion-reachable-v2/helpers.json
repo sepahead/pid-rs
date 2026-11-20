@@ -1,0 +1,24 @@
+{
+  "slots": [
+    "RouteHelpers.wellFormedInputs",
+    "RouteHelpers.prefixBit",
+    "RouteHelpers.prefixTag",
+    "RouteHelpers.evalViaRelay",
+    "RouteHelpers.witnessInputs",
+    "RouteHelpers.leafFalse",
+    "RouteHelpers.leafTrue",
+    "RouteHelpers.changedUse",
+    "RouteHelpers.failedSource"
+  ],
+  "owners": {
+    "RouteHelpers.wellFormedInputs": "RoutePrefix",
+    "RouteHelpers.prefixBit": "RoutePrefix",
+    "RouteHelpers.prefixTag": "RoutePrefix",
+    "RouteHelpers.evalViaRelay": "RouteTail",
+    "RouteHelpers.witnessInputs": "RouteTail",
+    "RouteHelpers.leafFalse": "RouteLeaves",
+    "RouteHelpers.leafTrue": "RouteLeaves",
+    "RouteHelpers.changedUse": "RouteLeaves",
+    "RouteHelpers.failedSource": "RouteLeaves"
+  }
+}

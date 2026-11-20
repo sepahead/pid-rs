@@ -1,0 +1,12 @@
+import RoutePrefix
+
+open SmtW02 ArchivedProjection RouteSpec
+namespace RouteHelpers
+
+theorem evalViaRelay : ∀ v : Valuation primary, evaluate primary v = fromValue (fetch (state v) "relay") := by
+@@PROOF RouteHelpers.evalViaRelay@@
+
+theorem witnessInputs : bit sample0 = true ∧ bit sample1 = true ∧ tag sample0 = 0 ∧ tag sample1 = 1 := by
+@@PROOF RouteHelpers.witnessInputs@@
+
+end RouteHelpers

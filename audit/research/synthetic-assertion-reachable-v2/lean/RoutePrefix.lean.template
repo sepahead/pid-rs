@@ -1,0 +1,15 @@
+import RouteSpec
+
+open SmtW02 ArchivedProjection RouteSpec
+namespace RouteHelpers
+
+theorem wellFormedInputs : wellFormed primary = true ∧ wellFormed readingTag = true ∧ wellFormed malformed = false := by
+@@PROOF RouteHelpers.wellFormedInputs@@
+
+theorem prefixBit : ∀ v : Valuation primary, fetch (state v) "relay" = some (.boolean (bit v)) := by
+@@PROOF RouteHelpers.prefixBit@@
+
+theorem prefixTag : ∀ v : Valuation primary, fetch (state v) "unused" = some (.integer (tag v)) := by
+@@PROOF RouteHelpers.prefixTag@@
+
+end RouteHelpers
