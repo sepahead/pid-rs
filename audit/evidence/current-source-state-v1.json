@@ -268,8 +268,8 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/pid2-shannon-source-profile.yml",
-        "sha256": "df6841e0bcfec212cb0cf50ae3790c850630a991e89b45414cb45c8748e045ac",
-        "size_bytes": 4547
+        "sha256": "f7758367a6a920e3db0a2e9be540d300013b8ef63c1598eade644a7fc3e64e95",
+        "size_bytes": 5145
       },
       {
         "git_mode": "100644",
@@ -6142,8 +6142,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/pid2-represented-coordinate-source-2026-11-20.md",
-        "sha256": "4b240c1490a8d464c577a14e2c310038cf42ac0d444526688045b5a6092caf49",
-        "size_bytes": 4921
+        "sha256": "9034cf27a5ea3be0b1eeac46a5a5a1f29fb36b8b6a6d95824779465e81a023be",
+        "size_bytes": 6675
       },
       {
         "git_mode": "100644",
@@ -33736,8 +33736,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/invariants.rs",
-        "sha256": "99cfbc6b26ae86964e305bdf7aa81f842220044f1c833fe9ad7e7df76fd86589",
-        "size_bytes": 33827
+        "sha256": "4d5dbd90163a9f219236eaed74e2346fd1629c5d7f45c64454c9102cf4b0f21b",
+        "size_bytes": 34576
       },
       {
         "git_mode": "100644",
@@ -34300,8 +34300,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-python/src/lib.rs",
-        "sha256": "e37fb541c1537f6cd20a57fba63d8e53f73d046143e732f55437e79a644668cb",
-        "size_bytes": 96259
+        "sha256": "1ac174c8b95c7f4d9ae30bd315df794542ac7b866a914bcaea1c8746664a2ebe",
+        "size_bytes": 96472
       },
       {
         "git_mode": "100644",
@@ -36195,6 +36195,12 @@
       },
       {
         "git_mode": "100755",
+        "path": "scripts/check-pid2-shannon-report-label-profile.py",
+        "sha256": "495f92c10ee4e9b4391d72a72c208dd3b0b79b3fab6356ddd004bc4816fa9208",
+        "size_bytes": 11483
+      },
+      {
+        "git_mode": "100755",
         "path": "scripts/check-pid2-shannon-rustdoc-profile.py",
         "sha256": "7200b92c6773b0be1a5bac530c4d13eff7f62aaf961ea43cbb525cb9d9eaeb5a",
         "size_bytes": 9171
@@ -36764,8 +36770,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "02657db92d11ba7dc8c696a25183f7486bcabc10743f3f1d121974f11d41d5ab",
-    "entry_count": 6103
+    "entries_sha256": "c19d2ed7c437e61d30542a87325d1d6fe1c124f5aa57a8458d6de6b1e56635e2",
+    "entry_count": 6104
   },
   "subprojections": [
     {

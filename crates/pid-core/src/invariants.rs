@@ -26,9 +26,12 @@
 //!
 //! Method catalog: shannon-invariants.average-degrees
 //!
-//! **PROJECT-DEFINED ANALOGUES.** `red_degree_discrete` and `vul_degree_discrete` are target-free
-//! entropy-ratio screening summaries inspired by those invariants. They are not the published
-//! target-based quantities and have no dedicated paper claim.
+//! **PROJECT-DEFINED ANALOGUES.** `red_degree_discrete` and `vul_degree_discrete` take only
+//! categorical source columns. For a finite source tuple `S` with `H(S) > 0`, choosing
+//! `T = S` in the published target-based degrees gives `I(T;S_i) = H(S_i)` and `I(T;S) = H(S)`.
+//! Removing source `i` then loses `H(S) - H(S_-i)`. The exact degrees for this target equal
+//! the two source-only entropy ratios. A separately specified target can give different values.
+//! These APIs directly estimate empirical entropies and reject zero joint entropy.
 //!
 //! Method catalog: shannon-invariants.target-free-ratios
 //!
@@ -40,11 +43,18 @@
 //! Each target-based input sequence must be the corresponding exact-real finite-alphabet plug-in
 //! term from the same empirical law, target, source order, units, preprocessing, evaluation sample,
 //! and estimand.
-//! For the target-based report policy, convergence guarantees eventual `Defined` status when the
-//! population denominator is strictly larger than the policy threshold. Equality at the threshold
-//! gives no eventual status guarantee. The argument does not prove binary64 asymptotics,
-//! dependent-window validity, or a new Shannon quantity. The method catalog records this evidence
-//! under `validation.finite-alphabet-plugin-convergence`.
+//! For the exact-real threshold rule, a limit strictly above the floor eventually passes.
+//! Equality alone gives no eventual status guarantee. The Rust policy compares the supplied
+//! binary64 denominator. For example, let `c` be the default floor and choose a binary source
+//! whose entropy lies strictly between `c` and the midpoint to the next larger binary64 value.
+//! With a copy of the source as target, empirical mutual information converging to this entropy
+//! eventually exceeds `c` in exact arithmetic but rounds to `c` on a single nearest rounding.
+//! The Rust report then returns `DenominatorBelowPolicyThreshold`.
+//! On a fixed finite alphabet, cumulative prefix frequencies converge almost surely for i.i.d.
+//! rows or strictly stationary ergodic rows with the specified one-time marginal distribution.
+//! The ergodic result supplies no generic finite-sample rate or moving-window guarantee.
+//! Binary64 estimator convergence requires separate evidence. See the method catalog entry
+//! `validation.finite-alphabet-plugin-convergence`.
 
 use std::cmp::Ordering;
 use std::mem::size_of;
@@ -161,10 +171,9 @@ pub fn red_degree_discrete_resource_estimate(
     )
 }
 
-/// Degree of Redundancy (Red°), computed on discrete variables — a **target-free
-/// entropy-ratio analogue** of the degree-of-redundancy invariant of Gutknecht et al.
-/// (2025) (their `r̄` is stated in the MI-to-a-target form; this applies the same
-/// Shannon-invariants framework to the joint entropy, with no target `Y`):
+/// Target-free degree of redundancy (Red°) from categorical source columns.
+/// With positive joint entropy, its exact formula equals Gutknecht et al.'s average degree
+/// of redundancy when the target is a copy of the full source tuple.
 ///
 /// ```text
 /// Red°(X1,...,Xm) := (Σ_i H(Xi)) / H(X1,...,Xm)
@@ -236,10 +245,9 @@ pub fn vul_degree_discrete_resource_estimate(
     )
 }
 
-/// Degree of Vulnerability (Vul°), computed on discrete variables — a **target-free
-/// entropy-ratio analogue** of the degree-of-vulnerability invariant of Gutknecht et al.
-/// (2025) (their `v̄` is stated in the MI-to-a-target form; this applies the same
-/// Shannon-invariants framework to the joint entropy, with no target `Y`):
+/// Target-free degree of vulnerability (Vul°) from categorical source columns.
+/// With positive joint entropy, its exact formula equals Gutknecht et al.'s average degree
+/// of vulnerability when the target is a copy of the full source tuple.
 ///
 /// ```text
 /// Vul°(X1,...,Xm) := (Σ_i H(Xi | X_-i)) / H(X1,...,Xm)
@@ -476,7 +484,7 @@ pub enum NormalizedInvariantUnit {
     Unitless,
 }
 
-/// Typed result for a normalized Shannon-invariant analogue.
+/// Typed result for a target-based average degree of redundancy or vulnerability.
 ///
 /// `value` is present exactly when `status == Defined`. Invalid or unstable inputs never become
 /// an unexplained `NaN`, which keeps JSON/run-log handoff unambiguous. For a defined report,

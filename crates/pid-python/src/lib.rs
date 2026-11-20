@@ -1179,8 +1179,11 @@ fn compute_pid2_report(
     Ok(output.into_any().unbind())
 }
 
-/// Shannon-invariant screening quantities, in nats: the three MI terms, co-information,
-/// and the r̄ / v̄ statistics.
+/// Return six two-source Shannon summaries for the supplied target.
+///
+/// `mi_s1_t`, `mi_s2_t`, `mi_s1s2_t` and `co_information` are in nats.
+/// `r_bar` and `v_bar` are dimensionless average degrees of redundancy and vulnerability.
+/// An undefined degree raises `RuntimeError`. The dictionary is returned only if both are defined.
 ///
 /// All MI estimates use `NegativeHandling::Allow`. Co-information uses compensated summation
 /// of the signed terms. Re-evaluating `mi_s1_t + mi_s2_t - mi_s1s2_t` with ordinary binary64

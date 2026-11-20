@@ -8,6 +8,7 @@ on:
       - .github/workflows/pid2-shannon-source-profile.yml
       - scripts/check-pid2-shannon-source-profile.py
       - scripts/check-pid2-shannon-rustdoc-profile.py
+      - scripts/check-pid2-shannon-report-label-profile.py
       - scripts/check-pid2-represented-coordinate-v4*.py
       - scripts/generate-exact-binary64-sum-oracle.py
       - crates/pid-core/tests/fixtures/*exact*binary64*
@@ -59,16 +60,21 @@ jobs:
           test "$(git -C profile rev-parse HEAD)" = "$GITHUB_SHA"
           test "$(git -C production rev-parse HEAD)" = 03325745f64becf437b9b3042b51a9d925450579
           printf '%s\n' "$GITHUB_SHA" > "$result/profile-commit.txt"
+          previous="$RUNNER_TEMP/pid2-rustdoc-predecessor"
+          git -C profile worktree add --detach "$previous" 9411667f972af0547d391a0be6d95b011b515171
           python3 --version > "$result/python-version.txt"
           for mode in normal optimized; do
             flags=()
             if test "$mode" = optimized; then flags=(-O); fi
             for op in source controls; do
-              python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-rustdoc-profile.py "$op" --repo-root profile > "$result/rustdoc-$op-$mode.json"
+              python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-rustdoc-profile.py "$op" --repo-root "$previous" > "$result/rustdoc-$op-$mode.json"
+              python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-report-label-profile.py "$op" --repo-root profile > "$result/report-label-$op-$mode.json"
               python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-source-profile.py "$op" --repo-root production > "$result/$op-$mode.json"
             done
             python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-represented-coordinate-v4-self-test.py > "$result/pid2-controls-$mode.txt"
           done
+          cmp "$result/report-label-source-normal.json" "$result/report-label-source-optimized.json"
+          cmp "$result/report-label-controls-normal.json" "$result/report-label-controls-optimized.json"
           cmp "$result/rustdoc-source-normal.json" "$result/rustdoc-source-optimized.json"
           cmp "$result/rustdoc-controls-normal.json" "$result/rustdoc-controls-optimized.json"
           cmp "$result/source-normal.json" "$result/source-optimized.json"

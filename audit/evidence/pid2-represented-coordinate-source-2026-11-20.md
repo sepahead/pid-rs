@@ -15,7 +15,7 @@ For the sum, the magnitude is an integer number of minimum-subnormal units, each
 
 At source-profile commit `54b6c186aedacbba046cdd6ee81886d5ace43764`, the working `invariants.rs` had SHA-256 `00e57e312888783928ce967aa44b3d2769f4c39e3f4ae377b3cbd8c1f6b390d5`. The revised Rust documentation states that for one empirical distribution, rounding each exact marginal, leave-one-out and joint mutual information once to nearest preserves their order. Separate estimation or numerical errors in the computed inputs can violate that order. The documentation replaces precisely two Rust comment paragraphs. The resulting complete source file has SHA-256 `99cfbc6b26ae86964e305bdf7aa81f842220044f1c833fe9ad7e7df76fd86589`. [Exact documentation profile](../../scripts/check-pid2-shannon-rustdoc-profile.py)
 
-With complete Git history, run the following in a checkout containing the documentation update. The first command derives the revised file from the production commit and verifies both the committed and working copies. It also checks the other 12 production inputs and the two earlier checker programs byte for byte. The second exercises one accepted projection and eleven required refusals. Repeat each command with `-O` immediately after `python3`.
+With complete Git history, run the following in the two-paragraph documentation profile at `9411667f972af0547d391a0be6d95b011b515171`. The first command derives the revised file from the production commit and verifies both the committed and working copies. It also checks the other 12 production inputs and the two earlier checker programs byte for byte. The second exercises one accepted projection and eleven required refusals. Repeat each command with `-O` immediately after `python3`.
 
 ```sh
 python3 -I -S -B scripts/check-pid2-shannon-rustdoc-profile.py source
@@ -25,3 +25,15 @@ python3 -I -S -B scripts/check-pid2-shannon-rustdoc-profile.py controls
 For the original source comparison, run `scripts/check-pid2-shannon-source-profile.py source --repo-root <production-checkout>` with Python, pointing it to a checkout of the exact production commit above. It replays the historical and changed accumulators against both checker versions and requires the two crossed pairs to fail. Its `controls` operation exercises one accepted and eight rejected native logs. The workflow retains these results separately from the documentation checks.
 
 The hosted workflow checks out the production commit independently of the review checkout and uses Rust 1.99.1 on Ubuntu 24.04. In each of debug and release, it records all three exact-sum tests, including the original 561-case corpus, all 17 PID2 unit tests, all 18 integration tests and all 34 `exp0` tests. It checks every executed test name, the counts, the exit status and the result summary. It also executes the canonical revision-4 full checker in both Python modes. The run artifact identifies the checkout, compiler, commands and native logs. These finite checks concern represented scalar arithmetic. Estimation, calibration and executable refinement require separate evidence. [Hosted workflow](../../.github/workflows/pid2-shannon-source-profile.yml) · [Observer and fixed input hashes](../../scripts/check-pid2-shannon-source-profile.py)
+
+
+## Which functions return the typed report
+
+The stable Rust functions for the target-based average degrees of redundancy and vulnerability, including their explicit-policy variants, return `NormalizedInvariantReport`. They take supplied mutual information values in nats. The source-only categorical diagnostics `red_degree_discrete` and `vul_degree_discrete` take columns of labels and return a scalar in `PidResult<f64>`. The revised rustdoc names the target-based report and shows why both source-only formulas coincide with the published degrees when the target copies the full source tuple and joint entropy is positive. It also distinguishes exact-real threshold passage from a rounded denominator equal to the floor, and stationary ergodic cumulative prefixes from arbitrary moving windows. The checker derives five documentation regions from the preceding profile.
+
+To check the documented successor, run both commands in the checkout that contains it. Repeat with `-O` immediately after `python3`. The source check verifies the predecessor’s exact checker, both Git and working files, and the registered Git mode and blob transition. The controls accept the documented projection and require 13 specific refusals. Native PID2 and exact-sum observations retain their original production commit. [Successor checker](../../scripts/check-pid2-shannon-report-label-profile.py) · [Predecessor checker at its source](https://github.com/sepahead/pid-rs/blob/9411667f972af0547d391a0be6d95b011b515171/scripts/check-pid2-shannon-rustdoc-profile.py)
+
+```sh
+python3 -I -S -B scripts/check-pid2-shannon-report-label-profile.py source
+python3 -I -S -B scripts/check-pid2-shannon-report-label-profile.py controls
+```
