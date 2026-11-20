@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "purpose": "original first-three judge preparation, no original proof bodies",
+  "package_files": {
+    "README.md": {
+      "bytes": 10859,
+      "sha256": "df7b1660f69b8cc456e3bf393c896cf941ea1090554037ff32d6b2764cb8e0ac"
+    },
+    "assembly.py": {
+      "bytes": 7630,
+      "sha256": "210c8b9d957f2d8380c3011533191bdaf135ed9e3271d1ae6048f8ec153a053d"
+    },
+    "bindings.json": {
+      "bytes": 12108,
+      "sha256": "c84874224e90dce1daa11d536b9c9c90125762defdca8c656b12ff139d0ae24b"
+    },
+    "consumers/W01.lean": {
+      "bytes": 2167,
+      "sha256": "66931800613c3b4ef8ab61e98c51d49bab514849abd50d0bb6f8e58b1dd01c9d"
+    },
+    "consumers/W03.lean": {
+      "bytes": 2283,
+      "sha256": "26df599a619738d223bb4854facd544a2c0381488d2bc3439cd10578519471a6"
+    },
+    "consumers/W15.lean": {
+      "bytes": 2216,
+      "sha256": "960a8728ce1b5edeecebf6c3595b3f7f2a00f27db78f1bda4d92fcd5ee7a3d66"
+    },
+    "finite_trace.py": {
+      "bytes": 2488,
+      "sha256": "cd7c5f1bebba51fb13be3f6e400908feacb35d5032048ef57ab3492ce30455ea"
+    },
+    "generated.json": {
+      "bytes": 1599,
+      "sha256": "1d6afc790244d903355c65412a88e95d7fe56d11c3ecd43470d1b4af7996e9a6"
+    },
+    "observations.py": {
+      "bytes": 2711,
+      "sha256": "9bb7fe901e973d450dae98951c97988f38d6f0a713e1482b0b6438d7c6660f59"
+    },
+    "proof_interface.py": {
+      "bytes": 3125,
+      "sha256": "6b6f2c616c3fc04e5b4a68047b06e44c3d9cbe817de6daf7038b4c524a7638ce"
+    },
+    "run.py": {
+      "bytes": 17355,
+      "sha256": "d1374eb1c47ad60f3528adc6728a9459c7884656b628431cf5084f4b4e53abb0"
+    },
+    "statements.py": {
+      "bytes": 12735,
+      "sha256": "69c78b86bea9e4d7ffc6999c1c79f87454e1e0fb24adc5c179d3c6af1b6d6cd2"
+    }
+  }
+}

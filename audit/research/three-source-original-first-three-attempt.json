@@ -1,0 +1,114 @@
+{
+  "acceptance": {
+    "case_order": [
+      "W01",
+      "W03",
+      "W15"
+    ],
+    "native": "Pass the fixed artificial positive/reduction checks and all four precise native refusals. For each case, require all registered proofs and typed consumers, the exact finite output and coordinate order, the source, module, type, body and direct/transitive axiom readback, and final resource and custody checks.",
+    "overall": "All three cases must pass for campaign acceptance. An ordinary mathematical case failure is retained and later cases may run under remaining resources. Individual case predicates require final custody and independent readback including their full receipts.",
+    "reference": "W01 requires [true,false] for all 128 family masks. W03 requires validity and the negated original order at (a,a), with at least one result false for all 128 masks. W15 requires [true,false] for all 256 ordered four-bit pairs. The traces must agree with the full-valuation proof through the fixed typed consumer.",
+    "stop": "A resource, control, registration, toolchain or final-custody failure ends or invalidates the affected campaign according to the bound driver. Unreached or unverified cases receive no pass. A failed outer run cannot be described as three accepted cases.",
+    "unavailable": "Missing trigger, artifact, logs or required receipt, unavailable toolchain, timeout, rejection, unexpected diagnostics, duplicate invocation or incomplete execution cannot supply the missing predicate. Retain exact available evidence and the unresolved case rather than substituting another run."
+  },
+  "allowed_write_files": [
+    "audit/research/three-source-original-first-three-proofs/W01.json",
+    "audit/research/three-source-original-first-three-proofs/W03.json",
+    "audit/research/three-source-original-first-three-proofs/W15.json"
+  ],
+  "attempt_id": "SMT39-W01-W03-W15-20261120-01",
+  "cases": [
+    "W01",
+    "W03",
+    "W15"
+  ],
+  "external_custody": {
+    "before_candidate": "Publish this registration and all fourteen bound judge files on an ordinary registration ref with no proof directory. Independently retrieve its exact remote Git object and registration bytes, verify all fixed identities, record both externally and release candidate access only after that readback.",
+    "launcher": "Use the push event only. Record the first GitHub run ID, commit, ref and attempt 1. Duplicate pushes, manual dispatches and reruns provide no alternative scored observation. No proof feedback may be used to revise this attempt.",
+    "permitted_sequence": "The operator records one immutable registration commit, one direct-child three-file proof commit and one push to a previously absent reserved verification ref. The ref suffix is the lowercase 40-hex registration commit, a hyphen and the lowercase 64-hex SHA-256 of these registration bytes.",
+    "retention": "Preserve the remote commit and bytes, all submitted proof files, raw logs, action results, artifact and independent readback including omissions. Keep the first unsuccessful or withdrawn result. A retry, scientific change or new budget requires a separately authorized later revision."
+  },
+  "judge_manifest_sha256": "ce5e726e3dc91c34d566e9a69e62cce1d6f55dbe45293457280bbea63ea4735e",
+  "judge_sources_sha256": {
+    ".github/workflows/three-source-original-first-three.yml": "7e0f45658eda1469e1d91d2007cb6a5bc23ab1fb48563c49974cf54562b7ea1b",
+    "audit/research/three-source-original-first-three/README.md": "df7b1660f69b8cc456e3bf393c896cf941ea1090554037ff32d6b2764cb8e0ac",
+    "audit/research/three-source-original-first-three/assembly.py": "210c8b9d957f2d8380c3011533191bdaf135ed9e3271d1ae6048f8ec153a053d",
+    "audit/research/three-source-original-first-three/bindings.json": "c84874224e90dce1daa11d536b9c9c90125762defdca8c656b12ff139d0ae24b",
+    "audit/research/three-source-original-first-three/consumers/W01.lean": "66931800613c3b4ef8ab61e98c51d49bab514849abd50d0bb6f8e58b1dd01c9d",
+    "audit/research/three-source-original-first-three/consumers/W03.lean": "26df599a619738d223bb4854facd544a2c0381488d2bc3439cd10578519471a6",
+    "audit/research/three-source-original-first-three/consumers/W15.lean": "960a8728ce1b5edeecebf6c3595b3f7f2a00f27db78f1bda4d92fcd5ee7a3d66",
+    "audit/research/three-source-original-first-three/finite_trace.py": "cd7c5f1bebba51fb13be3f6e400908feacb35d5032048ef57ab3492ce30455ea",
+    "audit/research/three-source-original-first-three/generated.json": "1d6afc790244d903355c65412a88e95d7fe56d11c3ecd43470d1b4af7996e9a6",
+    "audit/research/three-source-original-first-three/manifest.json": "ce5e726e3dc91c34d566e9a69e62cce1d6f55dbe45293457280bbea63ea4735e",
+    "audit/research/three-source-original-first-three/observations.py": "9bb7fe901e973d450dae98951c97988f38d6f0a713e1482b0b6438d7c6660f59",
+    "audit/research/three-source-original-first-three/proof_interface.py": "6b6f2c616c3fc04e5b4a68047b06e44c3d9cbe817de6daf7038b4c524a7638ce",
+    "audit/research/three-source-original-first-three/run.py": "d1374eb1c47ad60f3528adc6728a9459c7884656b628431cf5084f4b4e53abb0",
+    "audit/research/three-source-original-first-three/statements.py": "69c78b86bea9e4d7ffc6999c1c79f87454e1e0fb24adc5c179d3c6af1b6d6cd2"
+  },
+  "kind": "single original first-three stock attempt",
+  "launch_event": "push",
+  "limits": {
+    "campaign_seconds": 5400,
+    "group_rss_bytes": 4294967296,
+    "retained_bytes": 1073741824,
+    "subprocess_seconds": 900
+  },
+  "object": "A proof about all full, well-typed valuations of each of three exact archived command sequences under the bound interpreter. Each evaluation must succeed with two Booleans, at least one false.",
+  "original_qualified_archive_commit": "5b60576d81cbf2862f8f44d3ff18036e23488bda",
+  "preparation_registration_sha256": "dc8fdd5dce240955489c334c654d01f0bf8440534d966ebdf694daf0cf9ff551",
+  "prior_input_commit": "03be681b15cd959d4fbef328e007aa383413132b",
+  "qualified_synthetic_manifest_sha256": "45db526d9121411f1d946154747813adb1d1dd704a398af5cf0876417967d152",
+  "raw_inputs": {
+    "W01": {
+      "bytes": 39338,
+      "git_blob": "0743803680b22f20489cf129c882e8f955831ce6",
+      "literal_lean_sha256": "20f8455d3a3508df1b531327c49e7fe2b7b8a3bc0924690010336545f6b06a20",
+      "projected_reference_rows": 128,
+      "relative_path": "audit/formal/finite-smt39-qualification-v1/raw/W01-carrier-complete/generator.stdout.smt2",
+      "sha256": "ca064fa505a839da620431c2987dde384316eeac1535c79147a3b7cb881d9c9f",
+      "typed_tree_sha256": "fe33e1519fd8d98155c83a6b28accea90cd98db90c72571b99812db7ef13df96"
+    },
+    "W03": {
+      "bytes": 39272,
+      "git_blob": "6fda0a4281e67697b8e562d6e68f93acc6638165",
+      "literal_lean_sha256": "71775357f33cecc343ccb07b9c8e040c9d2bf1c6502af280fc56f71f825282c3",
+      "projected_reference_rows": 128,
+      "relative_path": "audit/formal/finite-smt39-qualification-v1/raw/W03-reflexivity/generator.stdout.smt2",
+      "sha256": "c67e6ab935acc7fb8fd1dd9c25fb6e6561db30cbe0b61ac8eb9a5968861126ff",
+      "typed_tree_sha256": "9ebaea0df413137f8157b48186b0430f8105754526fe6606a22f55b86c061421"
+    },
+    "W15": {
+      "bytes": 39473,
+      "git_blob": "2234db624fcc0497956e431bb735a80428e21705",
+      "literal_lean_sha256": "fa7f972b22b7e1990e37e14e5fbd2d664f13177c2efc0c7bc84478f90f54f0fd",
+      "projected_reference_rows": 256,
+      "relative_path": "audit/formal/finite-smt39-qualification-v1/raw/W15-full-joint-event/generator.stdout.smt2",
+      "sha256": "2175ff7776cda4b507c470fa44aa7e4d7f175fae28144f40eee36d25f144f3a5",
+      "typed_tree_sha256": "38950ac67a84de3ccffde7535de6fa11a84fe6fe95aee259143108c6ffdc93f9"
+    }
+  },
+  "registration_date_utc": "2026-11-20",
+  "schema": 1,
+  "selection": {
+    "basis": "Prespecified source-only dependency inspection selected one small family-mask membership equality, one reflexivity instance and one full-joint-event identity. The expected unsatisfiable labels were public before selection.",
+    "entries": "Exactly W01, W03 and W15 in that order, each once, under one campaign and one complete set of three proof files. Preserve all three individual dispositions.",
+    "evidence_class": "Deterministic formal and exact finite-execution evidence under the named model and checks; no held-out empirical confirmation, external human adjudication, general solver qualification or PID-to-software correspondence.",
+    "pool": "The previous archive contains 22 mathematical unsatisfiable cases. The previously checked W02 leaves 21. No random selection was used.",
+    "submission": "First and only registered three-file submission. No candidate tournament, best-of-N or replacement case. No original native or solver trials before the one hosted launch."
+  },
+  "stock": {
+    "allowed_transitive_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "git": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "host": "ubuntu-24.04, x86_64",
+    "job_timeout_minutes": 100,
+    "name": "Lean 4.34.1",
+    "proof_compilation": "One native command at a time, warning-as-error, original consumers compiled and replayed with stock leanchecker --fresh. The stock release supplies the precompiled imports.",
+    "release": "https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst"
+  },
+  "stock_archive_sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+  "workflow_sha256": "7e0f45658eda1469e1d91d2007cb6a5bc23ab1fb48563c49974cf54562b7ea1b"
+}

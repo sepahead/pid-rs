@@ -1,0 +1,102 @@
+name: Archived original finite proof check
+
+on:
+  push:
+    branches:
+      - review/three-source-original/*
+    paths:
+      - audit/research/three-source-original-first-three-proofs/W01.json
+      - audit/research/three-source-original-first-three-proofs/W03.json
+      - audit/research/three-source-original-first-three-proofs/W15.json
+  workflow_dispatch:
+    inputs:
+      registration_commit:
+        description: Earlier full Git commit containing the separate original attempt registration
+        required: true
+        type: string
+      registration_sha256:
+        description: Independently retained SHA-256 of the original attempt registration file
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  check-originals:
+    name: Three archived formulas on stock Lean 4.34.1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    defaults:
+      run:
+        shell: bash
+    env:
+      PACKAGE: audit/research/three-source-original-first-three
+      EXPECTED_MANIFEST: ce5e726e3dc91c34d566e9a69e62cce1d6f55dbe45293457280bbea63ea4735e
+      RELEASE: https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst
+      ARCHIVE_SHA256: 47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4
+      DISPATCH_REGISTRATION_COMMIT: ${{ inputs.registration_commit }}
+      DISPATCH_REGISTRATION_SHA256: ${{ inputs.registration_sha256 }}
+    steps:
+      - name: Start the bounded original attempt
+        run: |
+          set -euo pipefail
+          test "$GITHUB_RUN_ATTEMPT" = "1"
+          case "$GITHUB_EVENT_NAME" in
+            push)
+              [[ "$GITHUB_REF" =~ ^refs/heads/review/three-source-original/([0-9a-f]{40})-([0-9a-f]{64})$ ]]
+              registration_commit="${BASH_REMATCH[1]}"
+              registration_sha256="${BASH_REMATCH[2]}"
+              ;;
+            workflow_dispatch)
+              registration_commit="$DISPATCH_REGISTRATION_COMMIT"
+              registration_sha256="$DISPATCH_REGISTRATION_SHA256"
+              [[ "$registration_commit" =~ ^[a-f0-9]{40}$ ]]
+              [[ "$registration_sha256" =~ ^[a-f0-9]{64}$ ]]
+              ;;
+            *) exit 1 ;;
+          esac
+          printf 'REGISTRATION_COMMIT=%s\nREGISTRATION_SHA256=%s\n' "$registration_commit" "$registration_sha256" >> "$GITHUB_ENV"
+          started=$(python3 -I -S -c 'import time; print(time.monotonic())')
+          printf 'CAMPAIGN_STARTED=%s\n' "$started" >> "$GITHUB_ENV"
+          mkdir "$RUNNER_TEMP/original-evidence"
+          printf 'commit=%s\nrun=%s\nattempt=%s\nstart=%s\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$started" > "$RUNNER_TEMP/original-evidence/host.txt"
+
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Bind the registration and official Linux release
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git merge-base --is-ancestor "$REGISTRATION_COMMIT" "$GITHUB_SHA"
+          printf '%s  %s\n' "$EXPECTED_MANIFEST" "$PACKAGE/manifest.json" | sha256sum --check --strict
+          reg=audit/research/three-source-original-first-three-attempt.json
+          git show "$REGISTRATION_COMMIT:$reg" > "$RUNNER_TEMP/original-evidence/registration.json"
+          printf '%s  %s\n' "$REGISTRATION_SHA256" "$RUNNER_TEMP/original-evidence/registration.json" | sha256sum --check --strict
+          cmp "$reg" "$RUNNER_TEMP/original-evidence/registration.json"
+          timeout 850s curl --fail --location --proto '=https' --tlsv1.2 \
+            --retry 2 --retry-max-time 650 --max-time 420 \
+            --output "$RUNNER_TEMP/original-lean.tar.zst" "$RELEASE"
+          printf '%s  %s\n' "$ARCHIVE_SHA256" "$RUNNER_TEMP/original-lean.tar.zst" | sha256sum --check --strict
+
+      - name: Check artificial controls and three fixed original records
+        run: |
+          set -euo pipefail
+          python3 -I -S -B "$PACKAGE/run.py" --native \
+            --expected-manifest "$EXPECTED_MANIFEST" --commit "$GITHUB_SHA" \
+            --registration-commit "$REGISTRATION_COMMIT" --registration-sha256 "$REGISTRATION_SHA256" \
+            --started "$CAMPAIGN_STARTED" --archive "$RUNNER_TEMP/original-lean.tar.zst" \
+            --stock-root "$RUNNER_TEMP/original-lean-stock" --output "$RUNNER_TEMP/original-evidence/result"
+
+      - name: Retain original evidence and failures
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: original-first-three-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/original-evidence
+          if-no-files-found: error
+          compression-level: 1
+

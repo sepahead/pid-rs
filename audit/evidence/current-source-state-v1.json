@@ -303,6 +303,12 @@
       },
       {
         "git_mode": "100644",
+        "path": ".github/workflows/three-source-original-first-three.yml",
+        "sha256": "7e0f45658eda1469e1d91d2007cb6a5bc23ab1fb48563c49974cf54562b7ea1b",
+        "size_bytes": 4834
+      },
+      {
+        "git_mode": "100644",
         "path": ".github/workflows/three-source-synthetic-projection.yml",
         "sha256": "5f28b2f825a842e313448dcbba1771947bdb6ca1e946fb961ccbbac30a774b44",
         "size_bytes": 3173
@@ -31767,6 +31773,90 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three-attempt.json",
+        "sha256": "c01a877dbe6adc40ec9cb699cabe4b11ae3c5f9fe37a93f8381b3e6d3e8523a6",
+        "size_bytes": 9509
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/README.md",
+        "sha256": "df7b1660f69b8cc456e3bf393c896cf941ea1090554037ff32d6b2764cb8e0ac",
+        "size_bytes": 10859
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/assembly.py",
+        "sha256": "210c8b9d957f2d8380c3011533191bdaf135ed9e3271d1ae6048f8ec153a053d",
+        "size_bytes": 7630
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/bindings.json",
+        "sha256": "c84874224e90dce1daa11d536b9c9c90125762defdca8c656b12ff139d0ae24b",
+        "size_bytes": 12108
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/consumers/W01.lean",
+        "sha256": "66931800613c3b4ef8ab61e98c51d49bab514849abd50d0bb6f8e58b1dd01c9d",
+        "size_bytes": 2167
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/consumers/W03.lean",
+        "sha256": "26df599a619738d223bb4854facd544a2c0381488d2bc3439cd10578519471a6",
+        "size_bytes": 2283
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/consumers/W15.lean",
+        "sha256": "960a8728ce1b5edeecebf6c3595b3f7f2a00f27db78f1bda4d92fcd5ee7a3d66",
+        "size_bytes": 2216
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/finite_trace.py",
+        "sha256": "cd7c5f1bebba51fb13be3f6e400908feacb35d5032048ef57ab3492ce30455ea",
+        "size_bytes": 2488
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/generated.json",
+        "sha256": "1d6afc790244d903355c65412a88e95d7fe56d11c3ecd43470d1b4af7996e9a6",
+        "size_bytes": 1599
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/manifest.json",
+        "sha256": "ce5e726e3dc91c34d566e9a69e62cce1d6f55dbe45293457280bbea63ea4735e",
+        "size_bytes": 1748
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/observations.py",
+        "sha256": "9bb7fe901e973d450dae98951c97988f38d6f0a713e1482b0b6438d7c6660f59",
+        "size_bytes": 2711
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/proof_interface.py",
+        "sha256": "6b6f2c616c3fc04e5b4a68047b06e44c3d9cbe817de6daf7038b4c524a7638ce",
+        "size_bytes": 3125
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/run.py",
+        "sha256": "d1374eb1c47ad60f3528adc6728a9459c7884656b628431cf5084f4b4e53abb0",
+        "size_bytes": 17355
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-first-three/statements.py",
+        "sha256": "69c78b86bea9e4d7ffc6999c1c79f87454e1e0fb24adc5c179d3c6af1b6d6cd2",
+        "size_bytes": 12735
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/three-source-six-certificate-observations/README.md",
         "sha256": "fd968d429391e9c442b108e8f5802a0edfd9eacd5cca2337fd57cce630e7efff",
         "size_bytes": 20467
@@ -36806,8 +36896,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "271b679f57966d077be0bf2ff97c0ba0d3837bbcd91f222e4a52d269fe3156a9",
-    "entry_count": 6110
+    "entries_sha256": "ceb16f60e352652e0c3a3c101777efc5df4f63e9f516f51620430670e36cd54b",
+    "entry_count": 6125
   },
   "subprojections": [
     {
