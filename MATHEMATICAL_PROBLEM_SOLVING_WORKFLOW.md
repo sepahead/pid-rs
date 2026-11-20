@@ -2526,9 +2526,9 @@ independent-COPY and signed-XOR values place it outside that premise package, so
 theorem neither refutes MGW nor is refuted by those values. The later
 [“Structural Impossibility of Antichain-Lattice Partial Information Decomposition”
 (arXiv:2604.03869v2)](https://arxiv.org/abs/2604.03869v2) instead stipulates
-recoverability-descriptor atoms; its impossibility transfers only to a PID that factors through
-that descriptor. Sharing an antichain carrier supplies neither premise package nor descriptor
-factorization.
+recoverability-descriptor atoms. Its unequal-information pair rules out reconstruction from
+another PID exactly when that PID gives the same atom vector on both systems. Factorization
+through the descriptor suffices to give this equality. A shared antichain index alone does not.
 
 The Schick-Poland finite-discrete specialization can map to MGW by standard conditioning when the
 supported event has positive probability and the required `/P(R)` normalization is present; the

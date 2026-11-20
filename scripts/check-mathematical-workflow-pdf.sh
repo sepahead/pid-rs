@@ -1378,7 +1378,7 @@ for forbidden in (
 # byte bindings close the residual framing/style parser boundary. Updating either digest is an
 # explicit custody transition, not a claim that the bytes are semantically correct by hashing.
 markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
-if markdown_digest != "f05845157268f3b875499ea683f2371198d703a99112992d973b0db842ae42a1":
+if markdown_digest != "3f0b894b69fafed0879de3b231a7db2290fab909089613fe28d0f70d2c784174":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
 if primer_digest != "e4c8a2915681444417418da67603685f2185ca5bb73067764b9f75e87a40f620":

@@ -1,0 +1,97 @@
+name: Descriptor correction workflow PDF refresh
+
+on:
+  push:
+    branches:
+      - review/descriptor-workflow-refresh
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: descriptor-workflow-publication
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Rebuild the previous and corrected workflow on one stock runner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    steps:
+      - name: Record hosted job identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/workflow-publication-results"
+          mkdir -m 0700 "$out"
+          printf '%s\n' "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" > "$out/run.txt"
+          printf '%s\n' "$ImageOS" "$ImageVersion" "$RUNNER_OS" "$RUNNER_ARCH" > "$out/runner.txt"
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+          path: current
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          ref: a7b63292aff4d3dcd0472ccc0094348c1dab4f46
+          persist-credentials: false
+          path: previous
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12.11'
+      - name: Verify source custody and the pinned PDF parser
+        working-directory: current
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git -C ../previous rev-parse HEAD)" = a7b63292aff4d3dcd0472ccc0094348c1dab4f46
+          python -I -S -B audit/formal/workflow-refresh-2026-11-20/run.py inputs "$PWD" "$PWD/../previous" "$RUNNER_TEMP/workflow-publication-results"
+          python -m pip install --disable-pip-version-check --no-cache-dir --no-deps --require-hashes --requirement audit/formal/requirements-pdf.txt
+          python -I -B -c 'import pypdf,sys; print(sys.version, pypdf.__version__); sys.exit(sys.version_info[:3] != (3,12,11) or pypdf.__version__ != "6.16.1")' > "$RUNNER_TEMP/workflow-publication-results/python.txt"
+      - name: Install the stock Ubuntu TeX tools and verify the Markdown parser
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/workflow-publication-results"
+          packages=(chktex fontconfig latexmk lacheck librsvg2-bin libxml2-utils lmodern poppler-utils ripgrep texlive-fonts-extra texlive-fonts-recommended texlive-luatex texlive-plain-generic)
+          sudo apt-get update
+          (cd "$RUNNER_TEMP" && apt-get download texlive-latex-extra=2023.20240207-1)
+          archive="$RUNNER_TEMP/texlive-latex-extra_2023.20240207-1_all.deb"
+          printf '%s  %s\n' db88906dc6c7d814edbb878041d75e389c6d898b76fa5dc2efe71abb9da5f0fd "$archive" | sha256sum --check --strict > "$out/apt-archive.txt"
+          sudo apt-get install --yes --no-install-recommends "${packages[@]}" "$archive"
+          dpkg-query -W > "$out/dpkg.tsv"
+          module="$(kpsewhich markdown.lua)"
+          printf '%s  %s\n' 2ac1dd75563ef09081477053231a1d472ab1230302759475dfe0a2a61337b5d3 "$module" | sha256sum --check --strict > "$out/markdown-parser.txt"
+          lualatex --version > "$out/lualatex.txt"
+          pdftoppm -v 2> "$out/poppler.txt"
+          df -h "$RUNNER_TEMP" > "$out/filesystem.txt"
+      - name: Install the repository-admitted stock luaotfload utility
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_file="$(/usr/bin/readlink -f /usr/bin/luaotfload-tool)"
+          test "$source_file" = /usr/share/texlive/texmf-dist/scripts/luaotfload/luaotfload-tool.lua
+          destination="$pythonLocation/bin/luaotfload-tool"
+          test ! -e "$destination" && test ! -L "$destination"
+          stage="$(/usr/bin/mktemp "$pythonLocation/bin/.pid-rs-luaotfload-tool.XXXXXX")"
+          trap '/usr/bin/rm -f -- "$stage"' EXIT
+          /usr/bin/install -m 0755 "$source_file" "$stage"
+          /usr/bin/cmp -s "$source_file" "$stage"
+          /usr/bin/ln -T -- "$stage" "$destination"
+          /usr/bin/cmp -s "$source_file" "$destination"
+          sha256sum "$source_file" "$destination" > "$RUNNER_TEMP/workflow-publication-results/luaotfload.txt"
+      - name: Execute both official refreshes serially and retain page evidence
+        working-directory: current
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -I -S -B audit/formal/workflow-refresh-2026-11-20/run.py refresh "$PWD" "$PWD/../previous" "$RUNNER_TEMP/workflow-publication-results"
+      - name: Retain terminal results, observed pages and publication products
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: workflow-refresh-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/workflow-publication-results
+          if-no-files-found: error
+          retention-days: 30

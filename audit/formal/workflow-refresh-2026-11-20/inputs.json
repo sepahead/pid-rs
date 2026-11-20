@@ -1,0 +1,200 @@
+{
+  "scripts/check-mathematical-workflow-pdf.sh": {
+    "before": "e09dd19b4deb943b4b93700a5d01ac5fd895a643d85e2ae4d7ffc54dd91e0986",
+    "input": "a74f04069c1775b645fd09cfd42ddeb6771a69e6608e159b86c1aab1621d19d4",
+    "bytes": 287666,
+    "mode": "100755"
+  },
+  "scripts/check-mathematical-workflow-pdf-self-test.sh": {
+    "before": "4567bd6fc7224e3daba372da5f423bc06e315435598a60b4a7716a9ddc47f5e4",
+    "input": "4567bd6fc7224e3daba372da5f423bc06e315435598a60b4a7716a9ddc47f5e4",
+    "bytes": 329868,
+    "mode": "100755"
+  },
+  "scripts/prepare-mathematical-workflow-markdown-parser.py": {
+    "before": "59e3c3adebddd34a6d9d4876d75f861f44fe45488f703a7694c9fdcef5e152b6",
+    "input": "59e3c3adebddd34a6d9d4876d75f861f44fe45488f703a7694c9fdcef5e152b6",
+    "bytes": 16956,
+    "mode": "100755"
+  },
+  "scripts/prepare-mathematical-workflow-markdown-parser-self-test.py": {
+    "before": "c7c16b5de703138ffcd75dfc9bebaf73ee12e014aa1effb36d3536d627ca6732",
+    "input": "c7c16b5de703138ffcd75dfc9bebaf73ee12e014aa1effb36d3536d627ca6732",
+    "bytes": 20671,
+    "mode": "100755"
+  },
+  "scripts/sync-mathematical-workflow-tex.py": {
+    "before": "2c8706315fe38a6e3ed72c07633d19859742eea123c13af9f8ac11c2bcae762a",
+    "input": "2c8706315fe38a6e3ed72c07633d19859742eea123c13af9f8ac11c2bcae762a",
+    "bytes": 30541,
+    "mode": "100644"
+  },
+  "scripts/check-citation-edge-countermodel.py": {
+    "before": "57f77854e0fcc926fac8c54bf6dd95076c6f7607a49014ec5f080a3ef874a49b",
+    "input": "57f77854e0fcc926fac8c54bf6dd95076c6f7607a49014ec5f080a3ef874a49b",
+    "bytes": 46451,
+    "mode": "100755"
+  },
+  "scripts/check-citation-edge-countermodel-self-test.py": {
+    "before": "277028e8bc5429cf88704a8856c16ce998a69a6528f2f27a0f0778348950cb79",
+    "input": "277028e8bc5429cf88704a8856c16ce998a69a6528f2f27a0f0778348950cb79",
+    "bytes": 12626,
+    "mode": "100755"
+  },
+  "audit/evidence/x-thread-citation-edge-application.json": {
+    "before": "05a77423dc7a3f145dedd5c21b5dffff8e1ad4c5da368dd09ef94fa5c87647d4",
+    "input": "05a77423dc7a3f145dedd5c21b5dffff8e1ad4c5da368dd09ef94fa5c87647d4",
+    "bytes": 15924,
+    "mode": "100644"
+  },
+  "audit/evidence/x-thread-citation-source-manifest.json": {
+    "before": "b21a35401490a47f74c14fc2f8a442aa791311bca0f9ec9696eccb5395fec3da",
+    "input": "b21a35401490a47f74c14fc2f8a442aa791311bca0f9ec9696eccb5395fec3da",
+    "bytes": 6139,
+    "mode": "100644"
+  },
+  "audit/formal/latex/mathematical-problem-solving-workflow.tex": {
+    "before": "71825f25ebdd561202078c456ec5166dd19516f74edd48bb343ab753b34f2389",
+    "input": "649dbb2ef83d2392104fda9d0e9650e4925bd642e468d57879ae671200545031",
+    "bytes": 285380,
+    "mode": "100644"
+  },
+  "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": {
+    "before": "f05845157268f3b875499ea683f2371198d703a99112992d973b0db842ae42a1",
+    "input": "3f0b894b69fafed0879de3b231a7db2290fab909089613fe28d0f70d2c784174",
+    "bytes": 251380,
+    "mode": "100644"
+  },
+  "audit/formal/latex/pid-rs-report-tables.sty": {
+    "before": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+    "input": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+    "bytes": 4051,
+    "mode": "100644"
+  },
+  "audit/formal/latex/pid-rs-workflow-publication.sty": {
+    "before": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+    "input": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+    "bytes": 8607,
+    "mode": "100644"
+  },
+  "audit/formal/workflow-markdown-parser-profiles.json": {
+    "before": "9be68a7ada3370741c9b4dbc8fc9ddc08ec98cea800f4205c53b8825d2f31606",
+    "input": "9be68a7ada3370741c9b4dbc8fc9ddc08ec98cea800f4205c53b8825d2f31606",
+    "bytes": 1059,
+    "mode": "100644"
+  },
+  "audit/formal/latex/pid-rs-markdown-gc-loader.lua": {
+    "before": "2f436ae96d89b30b1cb8399ca667c08793e2b81542b83507f867fbe030d3ee5a",
+    "input": "2f436ae96d89b30b1cb8399ca667c08793e2b81542b83507f867fbe030d3ee5a",
+    "bytes": 2930,
+    "mode": "100644"
+  },
+  "audit/formal/requirements-pdf.txt": {
+    "before": "90cda7a5c8dadda7ed0b0dbb2ef3767569b970fb7f86847bd866e63600addd49",
+    "input": "90cda7a5c8dadda7ed0b0dbb2ef3767569b970fb7f86847bd866e63600addd49",
+    "bytes": 93,
+    "mode": "100644"
+  },
+  "scripts/check-formal-pdf-log.sh": {
+    "before": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da",
+    "input": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da",
+    "bytes": 2417,
+    "mode": "100755"
+  },
+  "scripts/check-formal-pdf-log-self-test.sh": {
+    "before": "8b15fa3ab89ecfad822fbee66973f6d71b9ec272bdef5c0147201320f689e483",
+    "input": "8b15fa3ab89ecfad822fbee66973f6d71b9ec272bdef5c0147201320f689e483",
+    "bytes": 6617,
+    "mode": "100755"
+  },
+  "scripts/compare-formal-pdf-renders.py": {
+    "before": "7b230bef4371398c18a3975d6888207bc31a737eeffb0217f3d5bbc0aec3054b",
+    "input": "7b230bef4371398c18a3975d6888207bc31a737eeffb0217f3d5bbc0aec3054b",
+    "bytes": 16408,
+    "mode": "100644"
+  },
+  "scripts/compare-formal-pdf-renders-self-test.py": {
+    "before": "5ac3ccda1c69d4e2c730aa8a22e2b7251ade79a1dfd841e9e674e8cb8d243e72",
+    "input": "5ac3ccda1c69d4e2c730aa8a22e2b7251ade79a1dfd841e9e674e8cb8d243e72",
+    "bytes": 15382,
+    "mode": "100644"
+  },
+  "scripts/sync-mathematical-workflow-tex-self-test.py": {
+    "before": "60aee045e5000b2b7cc4b218887faca88aaaf0ccaa1ed022c37a86202dcb9fbf",
+    "input": "60aee045e5000b2b7cc4b218887faca88aaaf0ccaa1ed022c37a86202dcb9fbf",
+    "bytes": 15628,
+    "mode": "100644"
+  },
+  "output/pdf/mathematical-problem-solving-workflow.pdf": {
+    "before": "446832ea439c838c6037ba7ad495294f8f07c7916162ff4ac0785bf3f50bed52",
+    "input": "446832ea439c838c6037ba7ad495294f8f07c7916162ff4ac0785bf3f50bed52",
+    "bytes": 861882,
+    "mode": "100644"
+  },
+  "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": {
+    "before": "bc64dbbcd56e818e6f5d98d67635c54c2f31b4341f749ea4c4cf339398966d87",
+    "input": "bc64dbbcd56e818e6f5d98d67635c54c2f31b4341f749ea4c4cf339398966d87",
+    "bytes": 19054,
+    "mode": "100644"
+  },
+  "audit/evidence/mathematical-workflow-visual-receipt-2026-10-28.md": {
+    "before": "05cbee6d1abdf19b61491e4b98bcedb0bc35b64e9abddd15c62a8ea00a414927",
+    "input": "05cbee6d1abdf19b61491e4b98bcedb0bc35b64e9abddd15c62a8ea00a414927",
+    "bytes": 5650,
+    "mode": "100644"
+  },
+  "audit/evidence/mathematical-workflow-visual-review-2026-10-28/actual-views.json": {
+    "before": "d3d1e9e364c0daa89e95ba5b5d07ba8fe35f552052c80e268f25b4d551581a53",
+    "input": "d3d1e9e364c0daa89e95ba5b5d07ba8fe35f552052c80e268f25b4d551581a53",
+    "bytes": 125828,
+    "mode": "100644"
+  },
+  "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.svg": {
+    "before": "9cd110dcecdd839ea37046cccc8a3a387557ca710c2589faacc367bdb1f7e324",
+    "input": "9cd110dcecdd839ea37046cccc8a3a387557ca710c2589faacc367bdb1f7e324",
+    "bytes": 5635,
+    "mode": "100644"
+  },
+  "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf": {
+    "before": "f794cb966c4e2e9029d093a3e572f86068a428f70a9b67ff484c821f32b20f24",
+    "input": "f794cb966c4e2e9029d093a3e572f86068a428f70a9b67ff484c821f32b20f24",
+    "bytes": 69875,
+    "mode": "100644"
+  },
+  "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.svg": {
+    "before": "127942939fa8fabcabb541fa31401ad8afc46215542130a0940104731f9ad999",
+    "input": "127942939fa8fabcabb541fa31401ad8afc46215542130a0940104731f9ad999",
+    "bytes": 5456,
+    "mode": "100644"
+  },
+  "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf": {
+    "before": "9e003510ccd712b64b04a59cbb8ab2cbc0df52ea8c911659d7cc3469307cde59",
+    "input": "9e003510ccd712b64b04a59cbb8ab2cbc0df52ea8c911659d7cc3469307cde59",
+    "bytes": 70071,
+    "mode": "100644"
+  },
+  "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.svg": {
+    "before": "81d75b0deb6623d9230cabba297ed8855cc0421d2ae7949164d551bd2e89eb1f",
+    "input": "81d75b0deb6623d9230cabba297ed8855cc0421d2ae7949164d551bd2e89eb1f",
+    "bytes": 6115,
+    "mode": "100644"
+  },
+  "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf": {
+    "before": "dab9010266897c497227a74d8f13abb4e707ffec1b5afa67138ba4a85cabebe6",
+    "input": "dab9010266897c497227a74d8f13abb4e707ffec1b5afa67138ba4a85cabebe6",
+    "bytes": 73497,
+    "mode": "100644"
+  },
+  "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.svg": {
+    "before": "ff3b8f2e6df87ecec544d5a11c11329464621e7134f7ba6ec51cfc70f2f88c6e",
+    "input": "ff3b8f2e6df87ecec544d5a11c11329464621e7134f7ba6ec51cfc70f2f88c6e",
+    "bytes": 7716,
+    "mode": "100644"
+  },
+  "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf": {
+    "before": "3a7ca079704d5f20f7f157a2a1f4b8f268ebc1ec50fd2efc90dd15d4bd962be7",
+    "input": "3a7ca079704d5f20f7f157a2a1f4b8f268ebc1ec50fd2efc90dd15d4bd962be7",
+    "bytes": 78442,
+    "mode": "100644"
+  }
+}
