@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'review/normalized-shannon-baseline-*'
-      - 'review/normalized-shannon-fix-*'
+      - review/normalized-shannon-baseline-*
+      - review/normalized-shannon-fix-*
     paths:
-      - '.github/workflows/normalized-shannon-ratio.yml'
-      - 'audit/research/normalized-shannon-ratios/**'
-      - 'crates/pid-core/tests/normalized_shannon_ratio.rs'
-      - 'crates/pid-core/tests/fixtures/normalized_shannon_ratio.json'
-      - 'crates/pid-core/src/invariants.rs'
-      - 'crates/pid-core/src/exact_binary64.rs'
+      - .github/workflows/normalized-shannon-ratio.yml
+      - audit/research/normalized-shannon-ratios/**
+      - crates/pid-core/tests/normalized_shannon_ratio.rs
+      - crates/pid-core/tests/fixtures/normalized_shannon_ratio.json
+      - crates/pid-core/src/invariants.rs
+      - crates/pid-core/src/exact_binary64.rs
 
 permissions:
   contents: read

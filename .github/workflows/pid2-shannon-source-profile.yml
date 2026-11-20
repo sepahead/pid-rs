@@ -5,20 +5,20 @@ on:
   push:
     branches: ['review/**']
     paths:
-      - '.github/workflows/pid2-shannon-source-profile.yml'
-      - 'scripts/check-pid2-shannon-source-profile.py'
-      - 'scripts/check-pid2-shannon-rustdoc-profile.py'
-      - 'scripts/check-pid2-represented-coordinate-v4*.py'
-      - 'scripts/generate-exact-binary64-sum-oracle.py'
-      - 'crates/pid-core/tests/fixtures/*exact*binary64*'
-      - 'crates/pid-core/src/exact_binary64.rs'
-      - 'crates/pid-core/src/invariants.rs'
-      - 'crates/pid-core/src/pid2.rs'
-      - 'crates/pid-core/src/bin/exp0.rs'
-      - 'crates/pid-core/tests/pid2.rs'
-      - 'crates/pid-core/Cargo.toml'
-      - 'Cargo.lock'
-      - 'Cargo.toml'
+      - .github/workflows/pid2-shannon-source-profile.yml
+      - scripts/check-pid2-shannon-source-profile.py
+      - scripts/check-pid2-shannon-rustdoc-profile.py
+      - scripts/check-pid2-represented-coordinate-v4*.py
+      - scripts/generate-exact-binary64-sum-oracle.py
+      - crates/pid-core/tests/fixtures/*exact*binary64*
+      - crates/pid-core/src/exact_binary64.rs
+      - crates/pid-core/src/invariants.rs
+      - crates/pid-core/src/pid2.rs
+      - crates/pid-core/src/bin/exp0.rs
+      - crates/pid-core/tests/pid2.rs
+      - crates/pid-core/Cargo.toml
+      - Cargo.lock
+      - Cargo.toml
 
 permissions:
   contents: read

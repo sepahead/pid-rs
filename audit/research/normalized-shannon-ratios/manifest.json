@@ -1,6 +1,6 @@
 {
   "files": {
-    ".github/workflows/normalized-shannon-ratio.yml": "bfe31f056c9d3b4a530a874249960efc460c1dede2ba394a46144dc76f2d7a13",
+    ".github/workflows/normalized-shannon-ratio.yml": "8d7314b1f6338c2dcf81a49f28a8b1a9e1f8a22b2cedd151bb7798587c748a43",
     "audit/research/normalized-shannon-ratios/README.md": "935ed1da8c3c7336a6693d042dd629ebefcfc2d6d47c986defdba08903338847",
     "audit/research/normalized-shannon-ratios/judge.py": "39529a9bfe2ca469e4e6d6befcb649dc1ef02a8e46d59f64bf0333011e1f4a31",
     "audit/research/normalized-shannon-ratios/oracle.py": "f2d0ebb3dd866533abfb2ace1d6ba5e100cddea0ef975dbbd806cc35558b6290",

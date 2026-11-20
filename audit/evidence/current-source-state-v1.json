@@ -262,14 +262,14 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/normalized-shannon-ratio.yml",
-        "sha256": "bfe31f056c9d3b4a530a874249960efc460c1dede2ba394a46144dc76f2d7a13",
-        "size_bytes": 2869
+        "sha256": "8d7314b1f6338c2dcf81a49f28a8b1a9e1f8a22b2cedd151bb7798587c748a43",
+        "size_bytes": 2853
       },
       {
         "git_mode": "100644",
         "path": ".github/workflows/pid2-shannon-source-profile.yml",
-        "sha256": "8a9127850d40999fafaf228f38a5766048b0cd9fba8979ef4b30b89b437dfae3",
-        "size_bytes": 4575
+        "sha256": "df6841e0bcfec212cb0cf50ae3790c850630a991e89b45414cb45c8748e045ac",
+        "size_bytes": 4547
       },
       {
         "git_mode": "100644",
@@ -15507,6 +15507,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/shannon-workflow-filters-2026-11-20.md",
+        "sha256": "e9af8e39d1cff0f5ca56db7c259e456d3e8e8e14be8ff66dd091f1fd13ab3bb0",
+        "size_bytes": 1908
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json",
         "sha256": "25b226abce58071ffa383753528300b7b2ef7203c47b07bb5f9a1b3b02e08420",
         "size_bytes": 38143
@@ -30454,7 +30460,7 @@
       {
         "git_mode": "100644",
         "path": "audit/research/normalized-shannon-ratios/manifest.json",
-        "sha256": "35439baf58eef626f99a5e10ef2bc42356558c560a10aaab0c496136af084f5c",
+        "sha256": "2fe8ae3b2ba678b220e0c134deb8b19626acd12498eb8b844d2841fa4fabc769",
         "size_bytes": 832
       },
       {
@@ -36752,8 +36758,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "9beee0b5c5aa558630c982df02e684f0cc43d0dd2362fbc6a80930c07a0c8a3d",
-    "entry_count": 6101
+    "entries_sha256": "475935ac7047ca8e0065f7784dfd59d00d9e91374f9e9ef8d78377e5b0435cea",
+    "entry_count": 6102
   },
   "subprojections": [
     {
