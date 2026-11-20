@@ -1,0 +1,25 @@
+# Checking equality of two program outputs
+
+Sepehr Mahmoudian · 20 November 2026
+
+Can a proof test keep the statement about two complete program runs and still produce the expected error when their outputs differ? On one fixed example, stock Lean 4.34.1 did so. The earlier test stopped at its internal work limit. The revised test used the same input program and the same nine submitted proof bodies. It added a proof that connects each complete run to its output. This check used only invented programs. [Earlier failure](../synthetic-assertion-route-attempt-2026-11-20/README.md) · [Registered question and inputs](../../research/synthetic-assertion-reachable-v3/task.json)
+
+## The program and the proof
+
+A **valuation** assigns a value to each declared input. An **assertion** is a statement that the program evaluates to true or false. The interpreter returns the two answers in order. It returns a separate value if evaluation fails. The program in the failed equality test reads a Boolean and an integer. Hold the Boolean at true. With the integer set to 1, the output is false followed by true. With the integer set to 0, the output is true followed by false. [Interpreter](../../research/three-source-w02/lean/W02Semantics.lean) · [Input programs](../../research/synthetic-assertion-reachable-v3/lean/RouteSpec.lean) · [Both evaluated results](../../research/synthetic-assertion-reachable-v3/lean/RouteConsumer.lean)
+
+Write the two complete results as *x* and *y*. Write their known output lists as *a* and *b*, respectively. The endpoint proofs give *x = a* and *y = b*. If *x = y*, follow the equalities from *a* through *x* and *y* to *b*. If *a = b*, follow them in the other direction. Thus *x = y* if and only if *a = b*. The generic proof accepts any four values of the same Lean type under the two endpoint assumptions. Its application here also preserves the interpreter's distinct value for failure. [Checked proof and its two controls](../../research/synthetic-assertion-reachable-v3/lean/RouteTransport.lean)
+
+The test kept the original false statement that the two complete results were equal. It used the second implication to reduce that statement to equality of the two lists. It then tried **reflexivity**, the rule that a value equals itself. The compiler reported the expected mismatch on line 6 at column 2. The other three false statements also produced their specified errors. [False statement](../../research/synthetic-assertion-reachable-v3/negative/RefuseReachedInteger.lean) · [Four diagnostics and command results](result.json)
+
+## What the stock checker read
+
+Nine ordinary modules each compiled and passed a separate stock replay. A term observer and a separate axiom listing covered 26 named theorems. Eight typed uses referred directly to their required declarations. Three theorems used no transitive axioms. Five used only propositional extensionality (`propext`). The other 18 used `propext`, choice (`Classical.choice`) and the quotient identification rule (`Quot.sound`). The source and proof-term digests identify the checked objects. [Declaration records](declarations.json) · [Checker and acceptance conditions](../../research/synthetic-assertion-reachable-v3/check.py)
+
+The ordinary environment reported import trust 1025. Stock fresh replay loads compiled imports. Its replay code accepts declared axioms and skips unsafe and partial declarations. Each named target also had to be an ordinary theorem and pass the axiom and proof-term checks. The observer and the stock replay share the Lean implementation and its inputs. The candidate file already existed. This run supplies bounded evidence for the registered procedure. Of the 22 original formulas with archived unsatisfiable solver responses, W02 still has the only complete stock proof of its formal reading. [Trust and replay procedure](../../formal/LEAN_4_33_FREEZE_AND_REPLAY.md) · [Three original proof inputs](../three-source-original-proof-attempt-2026-11-20/README.md)
+
+## Rust implementation and computational cost
+
+This offline test runs a project-defined interpreter in Lean. Its inputs are one Boolean and one unbounded integer. It takes no sample rows, estimates no probability and exposes no Rust estimator or feature. One hosted Linux worker ran 28 main commands and three resource controls. The registered campaign took 538.161 seconds. The maximum sampled process-group memory was 798,416,896 bytes. The largest direct-child memory reading was 826,925,056 bytes. The main commands each had a 900-second limit and a 4 GiB process-group memory limit. Separate reduced limits tested the monitor. The ordinary probe exited successfully. The memory and wall-time probes each stopped for the specified reason. These measurements describe proof checking on this input. [Hosted execution](https://github.com/sepahead/pid-rs/actions/runs/44825299375/job/136596255579) · [All saved member digests](archive-members.json)
+
+For citation, use Sepehr Mahmoudian, *Checking equality of two program outputs* (2026). Include the exact repository commit or release. [Software citation](../../../CITATION.cff)

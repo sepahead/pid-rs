@@ -1,0 +1,639 @@
+{
+  "archive_sha256": "9a5259fe3ca8d8e6b6ce2f39093934d27de57b2765d4c5c00847550481632b58",
+  "attempt": 1,
+  "child": "e3d6682207880f5beaffebdc1a0260ab8b44b725",
+  "commands": [
+    {
+      "direct_wait4_maxrss_bytes": 13225984,
+      "elapsed_seconds": 5.969759940999992,
+      "exit": 0,
+      "group_rss_sample_count": 68,
+      "max_observed_group_rss_bytes": 16039936,
+      "stage": "provision",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "extract-stock"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 94588928,
+      "elapsed_seconds": 0.0880855959999991,
+      "exit": 0,
+      "group_rss_sample_count": 1,
+      "max_observed_group_rss_bytes": 24158208,
+      "stage": "provision",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 106,
+      "stdout_sha256": "355a9a028f81641782d75d6e6b58dec70f29d2f61238a9e271690259d9bf5680",
+      "stop": null,
+      "tag": "stock-version"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 94433280,
+      "elapsed_seconds": 0.08831068500001038,
+      "exit": 0,
+      "group_rss_sample_count": 1,
+      "max_observed_group_rss_bytes": 29904896,
+      "stage": "provision",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 41,
+      "stdout_sha256": "e8905851835bf12aa23cdca8b9ea6980d9cbe8d45ba5878a9a09b1f6264e5747",
+      "stop": null,
+      "tag": "stock-revision"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 554442752,
+      "elapsed_seconds": 1.1413042759999996,
+      "exit": 0,
+      "group_rss_sample_count": 13,
+      "max_observed_group_rss_bytes": 553918464,
+      "stage": "W02Semantics",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-W02Semantics"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 560558080,
+      "elapsed_seconds": 57.400457985,
+      "exit": 0,
+      "group_rss_sample_count": 674,
+      "max_observed_group_rss_bytes": 560558080,
+      "stage": "W02Semantics",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-W02Semantics"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 527634432,
+      "elapsed_seconds": 0.35520162399998867,
+      "exit": 0,
+      "group_rss_sample_count": 4,
+      "max_observed_group_rss_bytes": 511950848,
+      "stage": "ProjectionCore",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-ProjectionCore"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 560697344,
+      "elapsed_seconds": 55.512427734,
+      "exit": 0,
+      "group_rss_sample_count": 651,
+      "max_observed_group_rss_bytes": 560697344,
+      "stage": "ProjectionCore",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-ProjectionCore"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 520499200,
+      "elapsed_seconds": 0.44194003999999154,
+      "exit": 0,
+      "group_rss_sample_count": 5,
+      "max_observed_group_rss_bytes": 506040320,
+      "stage": "RouteSpec",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteSpec"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 556752896,
+      "elapsed_seconds": 56.71025398499998,
+      "exit": 0,
+      "group_rss_sample_count": 664,
+      "max_observed_group_rss_bytes": 556752896,
+      "stage": "RouteSpec",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteSpec"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 535945216,
+      "elapsed_seconds": 0.4387799159999872,
+      "exit": 0,
+      "group_rss_sample_count": 5,
+      "max_observed_group_rss_bytes": 518791168,
+      "stage": "RoutePrefix",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RoutePrefix"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 556982272,
+      "elapsed_seconds": 57.50342983899998,
+      "exit": 0,
+      "group_rss_sample_count": 673,
+      "max_observed_group_rss_bytes": 556982272,
+      "stage": "RoutePrefix",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RoutePrefix"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 531816448,
+      "elapsed_seconds": 0.5231788159999837,
+      "exit": 0,
+      "group_rss_sample_count": 6,
+      "max_observed_group_rss_bytes": 516829184,
+      "stage": "RouteTail",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteTail"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 557060096,
+      "elapsed_seconds": 56.15368194499996,
+      "exit": 0,
+      "group_rss_sample_count": 659,
+      "max_observed_group_rss_bytes": 557060096,
+      "stage": "RouteTail",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteTail"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 537653248,
+      "elapsed_seconds": 0.4275144459999751,
+      "exit": 0,
+      "group_rss_sample_count": 5,
+      "max_observed_group_rss_bytes": 524734464,
+      "stage": "RouteLeaves",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteLeaves"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 556515328,
+      "elapsed_seconds": 56.24992537899999,
+      "exit": 0,
+      "group_rss_sample_count": 658,
+      "max_observed_group_rss_bytes": 556515328,
+      "stage": "RouteLeaves",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteLeaves"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 515743744,
+      "elapsed_seconds": 0.2573900450000224,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 487911424,
+      "stage": "RouteResult",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteResult"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 557785088,
+      "elapsed_seconds": 55.38690754999999,
+      "exit": 0,
+      "group_rss_sample_count": 651,
+      "max_observed_group_rss_bytes": 557785088,
+      "stage": "RouteResult",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteResult"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 512131072,
+      "elapsed_seconds": 0.25843310800001973,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 490029056,
+      "stage": "RouteConsumer",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteConsumer"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 555286528,
+      "elapsed_seconds": 56.19767708999996,
+      "exit": 0,
+      "group_rss_sample_count": 658,
+      "max_observed_group_rss_bytes": 555286528,
+      "stage": "RouteConsumer",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteConsumer"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 512856064,
+      "elapsed_seconds": 0.2582462120000173,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 487866368,
+      "stage": "RouteTransport",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "compile-RouteTransport"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 555102208,
+      "elapsed_seconds": 55.379177461999916,
+      "exit": 0,
+      "group_rss_sample_count": 649,
+      "max_observed_group_rss_bytes": 555102208,
+      "stage": "RouteTransport",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "fresh-RouteTransport"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 506544128,
+      "elapsed_seconds": 0.2592341199999737,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 487415808,
+      "stage": "independent term, axiom and finite readback",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 2009,
+      "stdout_sha256": "74dc26d99abeb299007f44609fa9ea78962a0eafbe5c36fe51709b2235adb34c",
+      "stop": null,
+      "tag": "compile-RouteAxioms"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 826925056,
+      "elapsed_seconds": 0.5258126620000212,
+      "exit": 0,
+      "group_rss_sample_count": 6,
+      "max_observed_group_rss_bytes": 798416896,
+      "stage": "independent term, axiom and finite readback",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 195538,
+      "stdout_sha256": "018e449896693ad4fda9b8fc4bfc8ddf9372a6feec4fd42e8ede85118d31f94d",
+      "stop": null,
+      "tag": "compile-RouteInspect"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 515805184,
+      "elapsed_seconds": 0.2641990600000099,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 492367872,
+      "stage": "independent term, axiom and finite readback",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 16,
+      "stdout_sha256": "bd736bb357db68c84540586f1e52be20ff01fe142f13eab441c0d6243646bc7b",
+      "stop": null,
+      "tag": "compile-RouteTrace"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 539549696,
+      "elapsed_seconds": 8.104530800999896,
+      "exit": 1,
+      "group_rss_sample_count": 94,
+      "max_observed_group_rss_bytes": 538779648,
+      "stage": "four negative theorem controls",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 362,
+      "stdout_sha256": "a236411f2fff851e13c45a9800c999400b344f13ad7ac0317fa2515c99482ddb",
+      "stop": null,
+      "tag": "refuse-RefuseWholeState"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 510496768,
+      "elapsed_seconds": 0.42881247499997244,
+      "exit": 1,
+      "group_rss_sample_count": 5,
+      "max_observed_group_rss_bytes": 509722624,
+      "stage": "four negative theorem controls",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 400,
+      "stdout_sha256": "6149470b872451adfa2a80c975590a7c6c5aba041bf119a1fc1b58dfc162ba0e",
+      "stop": null,
+      "tag": "refuse-RefuseConstant"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 502046720,
+      "elapsed_seconds": 0.25810500400007186,
+      "exit": 1,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 487804928,
+      "stage": "four negative theorem controls",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 384,
+      "stdout_sha256": "236668ec85a59f656dba7b6b1e11764b5e1e51a2f321cbcb0f48f2bee654cc3f",
+      "stop": null,
+      "tag": "refuse-RefuseReachedInteger"
+    },
+    {
+      "direct_wait4_maxrss_bytes": 510271488,
+      "elapsed_seconds": 0.42950204800001757,
+      "exit": 1,
+      "group_rss_sample_count": 5,
+      "max_observed_group_rss_bytes": 507412480,
+      "stage": "four negative theorem controls",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 438,
+      "stdout_sha256": "ff424443f2cd0fd05c23e3c2b72c4a48106e6b95748b590356cc792364ad631f",
+      "stop": null,
+      "tag": "refuse-RefuseFailureAsFalse"
+    }
+  ],
+  "compiler_diagnostics": {
+    "RefuseConstant": {
+      "caption": "",
+      "data": "Tactic `rfl` failed: The left-hand side\n  evaluate primary (sample false 0)\nis not definitionally equal to the right-hand side\n  observed true\n\n⊢ evaluate primary (sample false 0) = observed true",
+      "endPos": {
+        "column": 69,
+        "line": 4
+      },
+      "fileName": "RefuseConstant.lean",
+      "isSilent": false,
+      "keepFullRange": false,
+      "kind": "[anonymous]",
+      "pos": {
+        "column": 66,
+        "line": 4
+      },
+      "severity": "error"
+    },
+    "RefuseFailureAsFalse": {
+      "caption": "",
+      "data": "Tactic `rfl` failed: The left-hand side\n  evaluate malformed (zeroValuation malformed)\nis not definitionally equal to the right-hand side\n  some [false, true]\n\n⊢ evaluate malformed (zeroValuation malformed) = some [false, true]",
+      "endPos": {
+        "column": 85,
+        "line": 4
+      },
+      "fileName": "RefuseFailureAsFalse.lean",
+      "isSilent": false,
+      "keepFullRange": false,
+      "kind": "[anonymous]",
+      "pos": {
+        "column": 82,
+        "line": 4
+      },
+      "severity": "error"
+    },
+    "RefuseReachedInteger": {
+      "caption": "",
+      "data": "Tactic `rfl` failed: The left-hand side\n  some [false, true]\nis not definitionally equal to the right-hand side\n  some [true, false]\n\n⊢ some [false, true] = some [true, false]",
+      "endPos": {
+        "column": 5,
+        "line": 6
+      },
+      "fileName": "RefuseReachedInteger.lean",
+      "isSilent": false,
+      "keepFullRange": false,
+      "kind": "[anonymous]",
+      "pos": {
+        "column": 2,
+        "line": 6
+      },
+      "severity": "error"
+    },
+    "RefuseWholeState": {
+      "caption": "",
+      "data": "Tactic `rfl` failed: The left-hand side\n  state sample0\nis not definitionally equal to the right-hand side\n  state sample1\n\n⊢ state sample0 = state sample1",
+      "endPos": {
+        "column": 49,
+        "line": 4
+      },
+      "fileName": "RefuseWholeState.lean",
+      "isSilent": false,
+      "keepFullRange": false,
+      "kind": "[anonymous]",
+      "pos": {
+        "column": 46,
+        "line": 4
+      },
+      "severity": "error"
+    }
+  },
+  "completed": "qualified on the fixed synthetic input",
+  "direct_peak_bytes": 826925056,
+  "elapsed_seconds": 538.160865441,
+  "fixed_proof_sha256": "a8d2092e9406b46700167bb0c9ab24f72ab0a9186725d12df0a0e6e13c56315e",
+  "generic_and_specific_edges": {
+    "RouteResult.allRefute": [
+      "RouteResult.ordered",
+      "RouteHelpers.leafFalse",
+      "RouteHelpers.leafTrue"
+    ],
+    "RouteResult.counterexample": [
+      "RouteResult.sameOutput",
+      "RouteResult.environmentsDiffer",
+      "RouteHelpers.witnessInputs"
+    ],
+    "RouteResult.environmentsDiffer": [
+      "RouteHelpers.prefixTag",
+      "RouteHelpers.witnessInputs"
+    ],
+    "RouteResult.ordered": [
+      "RouteHelpers.evalViaRelay",
+      "RouteHelpers.prefixBit"
+    ],
+    "RouteResult.sameOutput": [
+      "RouteResult.ordered"
+    ],
+    "RouteTransport.equalControl": [
+      "RouteTransport.equalResults",
+      "RouteConsumer.reachableTag"
+    ],
+    "RouteTransport.reached": [
+      "RouteTransport.equalResults",
+      "RouteConsumer.reachableTag"
+    ],
+    "RouteTransport.unequalControl": [
+      "RouteTransport.reached"
+    ]
+  },
+  "job": 136596255579,
+  "limits": {
+    "campaign_seconds": 5400,
+    "group_rss_bytes": 4294967296,
+    "retained_bytes": 1073741824,
+    "subprocess_seconds": 900
+  },
+  "log_archive_sha256": "b828868610a0ee19e7893fe53e991bb40386b5e6b571d034f67512a3a56df87f",
+  "object_sha256": {
+    "ProjectionCore.olean": "4a5645565f31e4b2f472480b36117d8988fb4489a10ad83081963f56c8b1f8ac",
+    "RouteAxioms.olean": "4bc2f66f3b42b490da097012391235ae56113dc0a59e955f03b0710983e39405",
+    "RouteConsumer.olean": "8619032bd78de734eb949382c98e4258ff9ac5e5b8fa4d6d140378102edee28a",
+    "RouteInspect.olean": "c7cadc9690c5a5fae7d86f4620293bccfb5e96c7feba0b504da9436dea9bd5c1",
+    "RouteLeaves.olean": "ac2bf896e1e610645cd890bf5e3bdd391a228afb92f365a564d591a535ea08ef",
+    "RoutePrefix.olean": "8cb6c2cb58f62901b17833e857452aa57e590a8dff2f91ee9eea5ddbe3093e2a",
+    "RouteResult.olean": "4854e22372f2d7bfcbdeb2e31069c6dc7773fc21b2596f7419a840f7ad610e12",
+    "RouteSpec.olean": "eefda52f92ae5c5e3194f509281f04a825bc93907bc9b66e106d305002608e1a",
+    "RouteTail.olean": "73a5ead9f19e4c504a4f6d7b4ef932c18321b1fac0fdab28f8a7ec9e5ba8bc72",
+    "RouteTrace.olean": "f976ee712547fa6446bb17d1cf26b3c5e63c4644b6470b3de0ed5b887b4e3737",
+    "RouteTransport.olean": "10c81249529af8e37c019ce0013c5a197b02e6c52c2cc800f815ce8ceeea5bbf",
+    "W02Semantics.olean": "921c0ab66aea8894b574825a4d6762b4d6ee57c735a6f79e9f9f2cf8a99e555d"
+  },
+  "official_artifact": 14673199929,
+  "ordinary_fresh_modules": [
+    "W02Semantics",
+    "ProjectionCore",
+    "RouteSpec",
+    "RoutePrefix",
+    "RouteTail",
+    "RouteLeaves",
+    "RouteResult",
+    "RouteConsumer",
+    "RouteTransport"
+  ],
+  "ordinary_import_trust": 1025,
+  "original_formulas_checked": 0,
+  "parent": "144878274a211cc5d2a7760670843b56650c1fcd",
+  "previous_attempt_commit": "b409a4ef646fb85bc22c1b3cc65cb44818412bac",
+  "registration_sha256": "5076d66634cba4c56a6440fbe6d13c0a164004a50c40c84cd43829d36e768f7a",
+  "resource_controls": {
+    "ordinary": {
+      "direct_wait4_maxrss_bytes": 13398016,
+      "elapsed_seconds": 0.2561281409999765,
+      "exit": 0,
+      "group_rss_sample_count": 3,
+      "max_observed_group_rss_bytes": 8765440,
+      "stage": "synthetic ordinary command",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": null,
+      "tag": "ordinary"
+    },
+    "rss": {
+      "direct_wait4_maxrss_bytes": 159764480,
+      "elapsed_seconds": 0.17147836199990252,
+      "exit": -9,
+      "group_rss_sample_count": 2,
+      "max_observed_group_rss_bytes": 159764480,
+      "stage": "synthetic monitor probe",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": "observed process-group RSS",
+      "tag": "expected-stop"
+    },
+    "wall": {
+      "direct_wait4_maxrss_bytes": 13402112,
+      "elapsed_seconds": 1.1018082629999526,
+      "exit": -9,
+      "group_rss_sample_count": 13,
+      "max_observed_group_rss_bytes": 8749056,
+      "stage": "synthetic monitor probe",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stop": "native or campaign time",
+      "tag": "expected-stop"
+    }
+  },
+  "run": 44825299375,
+  "sampled_peak_group_bytes": 798416896,
+  "source_sha256": {
+    "ProjectionCore.lean": "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11",
+    "RefuseConstant.lean": "a829e2c559f6615ac2a6262d74ed3ce37d18833d38d0ea4ec4a344e90c009959",
+    "RefuseFailureAsFalse.lean": "f6441423ded70df4bc82f8191775a0fb80997407f726a34f9708105507f95a62",
+    "RefuseReachedInteger.lean": "9b52db0cd7a1587834cde001ded70627fb3760e1f8657a874ddd092e52101a9c",
+    "RefuseWholeState.lean": "5df366d57dba13c434c1d3e846a6f93ef222acd77d907cc1ad0090f3f5dd122f",
+    "RouteAxioms.lean": "4e552e5847c29f23b57389adf9f5077c9e25166121661ff5422b5c953e6c5b4f",
+    "RouteConsumer.lean": "b8784c55703cbd3723ed5a9e2cf2985018f31bb7e4dc4c3dcf65e053a6c61c2f",
+    "RouteInspect.lean": "89d489a0eb4522fda202d02fb8d9474a47ed1e13f94573f049ae50f85a9664a3",
+    "RouteLeaves.lean": "14c7664811c373956fbe0b570f2288ccf94ef459bb92ae2c108fd362eca85a46",
+    "RoutePrefix.lean": "41049fca27d9a76fba6be94583907a4fcd7665fdfc6c985a0494ab4a7dcf81df",
+    "RouteResult.lean": "3c308c8a6864cb2ce1a8e8c115ba2a6ed3f2e0c9fe4caab22ebd433985a46738",
+    "RouteSpec.lean": "69caa29d1ef668badfdd40edd7006a7e456e3ea4d473647c44cebc04e9013db9",
+    "RouteTail.lean": "45c464af9bb257c27f5a3a4a4e6ca725ef3eb7b237b1d8b18dae7d033b47d5ac",
+    "RouteTrace.lean": "fd4ad15d92c03ae89349e7b4111e91a7f47ec570dab3a544580300d8ae218ac3",
+    "RouteTransport.lean": "29b3ab9f80a6d2c15139cd9a8a638d07892613621b571657f719797c26caf7ae",
+    "W02Semantics.lean": "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3"
+  },
+  "stock": {
+    "git": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "linux_tar_zst_sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+    "version": "4.34.1"
+  },
+  "stock_files": {
+    "bin/lean": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "bin/leanchecker": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe",
+    "src/lean/Lean/Environment.lean": "ee364e4788ce0560c87f621eeb3c4c3dfec62e8db4e15e099fd80e6adc533b86",
+    "src/lean/Lean/Replay.lean": "c434b5b2bc5047ca58d4a095fcf1d9935d413c788ae98a4f21948e6a95ca3fb0",
+    "src/lean/LeanChecker.lean": "2d18ec111d73c536b0bdee2533556bb9548c349f386797d3d3837b1f84d55dae"
+  },
+  "typed_codes": [
+    1,
+    2,
+    2,
+    1,
+    0
+  ],
+  "typed_consumers": {
+    "RouteConsumer.counterexample": "RouteResult.counterexample",
+    "RouteConsumer.difference": "RouteResult.environmentsDiffer",
+    "RouteConsumer.formation": "RouteHelpers.wellFormedInputs",
+    "RouteConsumer.invariance": "RouteResult.sameOutput",
+    "RouteConsumer.ordered": "RouteResult.ordered",
+    "RouteConsumer.reachableTag": "RouteHelpers.changedUse",
+    "RouteConsumer.successful": "RouteResult.allRefute",
+    "RouteConsumer.typedFailure": "RouteHelpers.failedSource"
+  }
+}

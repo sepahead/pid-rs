@@ -622,8 +622,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "0f5ab1f0fbb7a167f3544cd4ca2f8f23371bed4dd800e0a61b3c5bd11a7d6d9a",
-        "size_bytes": 66505
+        "sha256": "16069db8b830682d18ebf929b052f96058b7dd4d2cac4925e3f6ad2d991eb815",
+        "size_bytes": 67216
       },
       {
         "git_mode": "100644",
@@ -15696,6 +15696,30 @@
         "path": "audit/evidence/synthetic-assertion-route-attempt-2026-11-20/submitted-proof-bodies.json.txt",
         "sha256": "a8d2092e9406b46700167bb0c9ab24f72ab0a9186725d12df0a0e6e13c56315e",
         "size_bytes": 630
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/synthetic-assertion-transport-2026-11-20/README.md",
+        "sha256": "3da91fc518621e58bfd3218f4d794ff5ca6a305b74fff4d6805a3f5001250bf7",
+        "size_bytes": 5120
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/synthetic-assertion-transport-2026-11-20/archive-members.json",
+        "sha256": "3ea7f3df5740497e11383292bebca645c66100e4e128efa2e67fc7a2f8b73f7d",
+        "size_bytes": 22412
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/synthetic-assertion-transport-2026-11-20/declarations.json",
+        "sha256": "9e26dc4876f5d712038e1186a7c3f704accac7214c87ab655e8d2cf3cc20fb91",
+        "size_bytes": 9616
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/synthetic-assertion-transport-2026-11-20/result.json",
+        "sha256": "645be389e182611b67cf57acb68541a9054fee95e4e52f4d0ff431dc0e1a0eec",
+        "size_bytes": 24849
       },
       {
         "git_mode": "100644",
@@ -37328,8 +37352,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "d5df18c76447edd54eb9c2eed1a55a259443c2d73f4eca66e462d39d2f926e95",
-    "entry_count": 6197
+    "entries_sha256": "a5d5d101f4e6a59ac3a815ba0232640e9b5ddd4165194e7e8f46047b2ad03ead",
+    "entry_count": 6201
   },
   "subprojections": [
     {
