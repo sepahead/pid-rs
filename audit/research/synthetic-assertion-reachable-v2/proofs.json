@@ -1,0 +1,32 @@
+{
+  "RouteHelpers.wellFormedInputs": [
+    "decide +kernel"
+  ],
+  "RouteHelpers.prefixBit": [
+    "intro v",
+    "rfl"
+  ],
+  "RouteHelpers.prefixTag": [
+    "intro v",
+    "rfl"
+  ],
+  "RouteHelpers.evalViaRelay": [
+    "intro v",
+    "exact (congrArg fromValue (prefixBit v)).symm"
+  ],
+  "RouteHelpers.witnessInputs": [
+    "decide +kernel"
+  ],
+  "RouteHelpers.leafFalse": [
+    "exact ⟨false, true, rfl, Or.inl rfl⟩"
+  ],
+  "RouteHelpers.leafTrue": [
+    "exact ⟨true, false, rfl, Or.inr rfl⟩"
+  ],
+  "RouteHelpers.changedUse": [
+    "decide +kernel"
+  ],
+  "RouteHelpers.failedSource": [
+    "decide +kernel"
+  ]
+}
