@@ -1,0 +1,21 @@
+{
+  "schema": "pid-rs/synthetic-assertion-reachable-hosted/v3",
+  "task_sha256": "bbdd9a8226748d63e28fee3d90f5eb93ab54e70ebdf628ea4329897110d1974f",
+  "manifest_sha256": "7b0b33fe89809006653dc2f367d950984cda4a5d4fded8d08d8b2acfcd9f1e91",
+  "workflow_sha256": "7442c1be5ba1de56ce55e880711345bcb70802d465fd98b8bd2c3072bef437b8",
+  "candidate": "audit/research/synthetic-assertion-reachable-v3/proofs.json",
+  "stock": {
+    "version": "4.34.1",
+    "git": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "linux_tar_zst_sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4"
+  },
+  "limits": {
+    "group_rss_bytes": 4294967296,
+    "subprocess_seconds": 900,
+    "campaign_seconds": 5400,
+    "retained_bytes": 1073741824
+  },
+  "trigger": "exact registered push, first run attempt; one candidate and one stock worker",
+  "fixed_candidate_sha256": "a8d2092e9406b46700167bb0c9ab24f72ab0a9186725d12df0a0e6e13c56315e",
+  "diagnostic_decision_sha256": "4034e9f129ed1a69122718d4c3e19e3ecead9867ebe40c5e695f2bcf1345882b"
+}

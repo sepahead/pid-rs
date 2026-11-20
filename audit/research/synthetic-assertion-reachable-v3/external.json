@@ -1,0 +1,15 @@
+{
+  "audit/research/three-source-w02/lean/W02Semantics.lean": "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3",
+  "audit/research/three-source-synthetic-projection/lean/ProjectionCore.lean": "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11",
+  "audit/research/three-source-synthetic-projection/resources.py": "81a7da0a2c744af3f0d181534b61295f64e1b4f3029a4b7fa711f64ff826c25d",
+  "audit/research/three-source-synthetic-projection/readback.py": "2e3ec093879e27e37b057ad290e22bebb0deb58fe76f764a8f6ab12fc0821bb1",
+  "audit/research/three-source-original-first-three/observations.py": "9bb7fe901e973d450dae98951c97988f38d6f0a713e1482b0b6438d7c6660f59",
+  "audit/research/three-source-original-first-three/proof_interface.py": "6b6f2c616c3fc04e5b4a68047b06e44c3d9cbe817de6daf7038b4c524a7638ce",
+  "audit/research/three-source-original-first-three/finite_trace.py": "cd7c5f1bebba51fb13be3f6e400908feacb35d5032048ef57ab3492ce30455ea",
+  "audit/research/three-source-w02/lean/W02Inspect.lean": "30834cf49fd2fd4c40536ad8a70bdf74d3228c15cd80995225d78788f4209768",
+  "audit/research/synthetic-assertion-reachable-v2/manifest.json": "1325621956f39c518323e94c72fbd7bafdee9b27caae0a4ec0c8fcfe5ac757d0",
+  "audit/research/synthetic-assertion-reachable-v2/negative.json": "de80bca5f4637baf12412013a16811958355240ebb4164ab3ddf1a09ccba13f2",
+  "audit/research/synthetic-assertion-reachable-v2/roster.json": "2d692f8ef46b2285f21f037018fe525e1cd1c353ef12ae7e278ba0a26a5dbef9",
+  "audit/research/synthetic-assertion-reachable-v2/negative/RefuseReachedInteger.lean": "2c2b96ef1313e63cf31f7f7c69b0cf059c0a32a02abcc83bf68770a24a9d2051",
+  "audit/research/synthetic-assertion-reachable-v2/task.json": "c021cb2dda190a739cebcb99cf66f26f8683f7380d36ce72161b690a4ce67817"
+}

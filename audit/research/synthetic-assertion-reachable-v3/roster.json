@@ -1,0 +1,74 @@
+{
+  "targets": {
+    "RouteHelpers.wellFormedInputs": "RoutePrefix",
+    "RouteHelpers.prefixBit": "RoutePrefix",
+    "RouteHelpers.prefixTag": "RoutePrefix",
+    "RouteHelpers.evalViaRelay": "RouteTail",
+    "RouteHelpers.witnessInputs": "RouteTail",
+    "RouteHelpers.leafFalse": "RouteLeaves",
+    "RouteHelpers.leafTrue": "RouteLeaves",
+    "RouteHelpers.changedUse": "RouteLeaves",
+    "RouteHelpers.failedSource": "RouteLeaves",
+    "RouteResult.ordered": "RouteResult",
+    "RouteResult.sameOutput": "RouteResult",
+    "RouteResult.environmentsDiffer": "RouteResult",
+    "RouteResult.counterexample": "RouteResult",
+    "RouteResult.allRefute": "RouteResult",
+    "RouteConsumer.formation": "RouteConsumer",
+    "RouteConsumer.ordered": "RouteConsumer",
+    "RouteConsumer.invariance": "RouteConsumer",
+    "RouteConsumer.difference": "RouteConsumer",
+    "RouteConsumer.counterexample": "RouteConsumer",
+    "RouteConsumer.successful": "RouteConsumer",
+    "RouteConsumer.reachableTag": "RouteConsumer",
+    "RouteConsumer.typedFailure": "RouteConsumer",
+    "RouteTransport.equalResults": "RouteTransport",
+    "RouteTransport.reached": "RouteTransport",
+    "RouteTransport.equalControl": "RouteTransport",
+    "RouteTransport.unequalControl": "RouteTransport"
+  },
+  "consumer_uses": {
+    "RouteConsumer.formation": "RouteHelpers.wellFormedInputs",
+    "RouteConsumer.ordered": "RouteResult.ordered",
+    "RouteConsumer.invariance": "RouteResult.sameOutput",
+    "RouteConsumer.difference": "RouteResult.environmentsDiffer",
+    "RouteConsumer.counterexample": "RouteResult.counterexample",
+    "RouteConsumer.successful": "RouteResult.allRefute",
+    "RouteConsumer.reachableTag": "RouteHelpers.changedUse",
+    "RouteConsumer.typedFailure": "RouteHelpers.failedSource"
+  },
+  "direct_internal_edges": {
+    "RouteResult.ordered": [
+      "RouteHelpers.evalViaRelay",
+      "RouteHelpers.prefixBit"
+    ],
+    "RouteResult.sameOutput": [
+      "RouteResult.ordered"
+    ],
+    "RouteResult.environmentsDiffer": [
+      "RouteHelpers.prefixTag",
+      "RouteHelpers.witnessInputs"
+    ],
+    "RouteResult.counterexample": [
+      "RouteResult.sameOutput",
+      "RouteResult.environmentsDiffer",
+      "RouteHelpers.witnessInputs"
+    ],
+    "RouteResult.allRefute": [
+      "RouteResult.ordered",
+      "RouteHelpers.leafFalse",
+      "RouteHelpers.leafTrue"
+    ],
+    "RouteTransport.reached": [
+      "RouteTransport.equalResults",
+      "RouteConsumer.reachableTag"
+    ],
+    "RouteTransport.equalControl": [
+      "RouteTransport.equalResults",
+      "RouteConsumer.reachableTag"
+    ],
+    "RouteTransport.unequalControl": [
+      "RouteTransport.reached"
+    ]
+  }
+}

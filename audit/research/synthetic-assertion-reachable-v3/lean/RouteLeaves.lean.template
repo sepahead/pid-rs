@@ -1,0 +1,18 @@
+import RouteTail
+
+open SmtW02 ArchivedProjection RouteSpec
+namespace RouteHelpers
+
+theorem leafFalse : RefutesTwo (observed false) := by
+@@PROOF RouteHelpers.leafFalse@@
+
+theorem leafTrue : RefutesTwo (observed true) := by
+@@PROOF RouteHelpers.leafTrue@@
+
+theorem changedUse : evaluate readingTag (tagSample true 0) = some [true, false] ∧ evaluate readingTag (tagSample true 1) = some [false, true] := by
+@@PROOF RouteHelpers.changedUse@@
+
+theorem failedSource : evaluate malformed (zeroValuation malformed) = none := by
+@@PROOF RouteHelpers.failedSource@@
+
+end RouteHelpers

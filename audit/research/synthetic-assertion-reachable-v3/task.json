@@ -1,0 +1,63 @@
+{
+  "schema": "pid-rs/synthetic-assertion-reachable-qualification-task/v1",
+  "revision": "SYNTHETIC-REACHED-INTEGER-TRANSPORT-V3-01",
+  "purpose": "Prospective deterministic requalification of a released synthetic payload with a changed diagnostic route.",
+  "retired_original": {
+    "attempt": "SMT39-W01-W03-W15-20261120-01",
+    "run": 44760935574,
+    "disposition": "Permanent resource failure, no original theorem verdict. All original source, proof, judge and execution bytes remain outside this qualification."
+  },
+  "synthetic": {
+    "script": "Original bound SmtW02 interpreter. Headers and final check/exit as required. Constants keep : Bool, unused : Int; idb(x : Bool) := x; relay() := idb(keep). Echo, assertion relay, assertion not relay. Second invented program uses the same prefix but tests unused = 0, then its negation. Third invented program has a missing Boolean name in its assertion.",
+    "enumeration": "The retained Boolean coordinates are exactly false then true. Full valuations include every integer and both Booleans. Finite controls in the second program use keep=true and unused=0 or 1. The malformed program must return none."
+  },
+  "predicates": [
+    "The invented primary script is well formed. Given any of its full typed valuations, the prefix lookup/call of relay returns the selected Boolean. The unused-constant lookup returns the supplied integer. Correct behavior is required through the original names, function environments and interpreter, without replacing source calls by a supplied truth table.",
+    "The actual full evaluator returns some [b,!b] on every valuation, including all integers. Its output is invariant when only the omitted integer changes. Both Boolean leaves feed an independently typed finite aggregate which proves that at least one ordered result is false.",
+    "A constructive pair with retained bit true and omitted integers 0 and 1 has equal projections, different complete prefix environments and equal successful full outputs. The changed-assertion program reads the integer, giving [true,false] and [false,true] respectively. The malformed program gives none.",
+    "Each new helper and final declaration is a checked theorem. Fresh stock replay includes every ordinary fixture/proof/consumer module. An independent fixed consumer uses each public result by its precise name. A stock expression/owner observer and an independent ordered axiom query agree for the full roster. All transitive axiom sets are subsets of the original exact allowlist {Classical.choice, Quot.sound, propext}. Ordinary import trust stays separately reported.",
+    "Reject fixed native false propositions about whole-state equality, the incorrect constant output on the false input, equivalence after making the integer assertion-reachable, and interpreting failed evaluation as false. Reject an unknown proof slot, forbidden proof tokens, and a fabricated unapproved transitive axiom in the reader.",
+    "The Linux process-group monitor must stop a small, controlled memory overrun and a wall-time overrun for their registered reasons. A genuine positive ordinary command must return successfully. The full qualification retains one sequential command stream, the original 4 GiB group limit, 900s subprocess limit, 5400s overall limit and 1 GiB retained evidence limit.",
+    "Freeze the exact v2 false full-evaluator equality in the same order. Preserve the three other negative files, all nine helper targets and their proof bodies, the original positive modules, the concrete trace and the original eight typed consumers.",
+    "Add one ordinary module with a type-checked polymorphic equality transport for arbitrary endpoints and their two given values. The type parameter ranges over Type. Specialize it to both supplied distinct input valuations using the already checked endpoint facts in reverse declaration order to match the exact historical false target. Include a positive reflexive instantiated case and a positive proof that the two genuine evaluations differ. Require all four new named declarations, direct named edges, same stock fresh and transitive axiom readback.",
+    "For the designated false proposition, apply only the corresponding implication from literal equality to the full equality. Request a stock rfl mismatch only on the two unequal actual literal lists. Accept exactly one registered non-silent stock error from its source and line. Require the two left/right lists and their order, the intended diagnostic class and absence of a compiled object. A resource stop, generic error, altered target, unused adapter or omitted readback fails.",
+    "Run the original compiler and genuine reduced-budget monitor controls, reject unknown/forbidden proof inputs and fabricated axiom, and verify end-to-end post-run custody. No original formula or historical result changes.",
+    "One external issuance may supply only the exact previous released candidate bytes under the new path to isolate the changed qualification. The registration is candidate-free. No external independent or blind confirmation is claimed. Native Linux execution awaits independent binding to the full protected judge and workflow."
+  ],
+  "write_scope": [
+    "One newly added file at audit/research/synthetic-assertion-reachable-v3/proofs.json with exactly the previously issued nine-body bytes and fixed SHA-256. No original formula or new proof search."
+  ],
+  "limits": {
+    "group_rss_bytes": 4294967296,
+    "subprocess_seconds": 900,
+    "campaign_seconds": 5400,
+    "retained_bytes": 1073741824,
+    "parallel_native_jobs": 1
+  },
+  "dependency_revision": "ae5e436c7638b258d45c6cbe118fbdfff4291372",
+  "dependency_sha256": {
+    "audit/research/three-source-w02/lean/W02Semantics.lean": "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3",
+    "audit/research/three-source-synthetic-projection/lean/ProjectionCore.lean": "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11",
+    "audit/research/three-source-synthetic-projection/resources.py": "81a7da0a2c744af3f0d181534b61295f64e1b4f3029a4b7fa711f64ff826c25d",
+    "audit/research/three-source-synthetic-projection/readback.py": "2e3ec093879e27e37b057ad290e22bebb0deb58fe76f764a8f6ab12fc0821bb1",
+    "audit/research/three-source-original-first-three/observations.py": "9bb7fe901e973d450dae98951c97988f38d6f0a713e1482b0b6438d7c6660f59",
+    "audit/research/three-source-original-first-three/proof_interface.py": "6b6f2c616c3fc04e5b4a68047b06e44c3d9cbe817de6daf7038b4c524a7638ce",
+    "audit/research/three-source-original-first-three/finite_trace.py": "cd7c5f1bebba51fb13be3f6e400908feacb35d5032048ef57ab3492ce30455ea"
+  },
+  "stock": {
+    "version": "4.34.1",
+    "git": "5045d0056413266e57c625dcd7c365b10e377c52",
+    "linux_tar_zst_sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4"
+  },
+  "selection": "One fixed, previously released synthetic input. Outcome is deterministic bounded public requalification. Any failed condition is terminal. Exposure precludes a blind or new independent selection claim.",
+  "custody": "Prepare this registration without including a proof file. The parent must bind the public protected judge and expected input before the one separately issued hosted execution.",
+  "historical_synthetic": {
+    "registration": "aeea65ae05cd255d080297042e2d2b29413b84a2a60cbbcb801bc9c90fc1e6c4",
+    "commit": "b409a4ef646fb85bc22c1b3cc65cb44818412bac",
+    "attempt": 44806160042,
+    "terminal": "Permanent failure at the third targeted negative. The diagnostic exhausted 200000 stock heartbeats."
+  },
+  "previous_candidate_bytes": "a8d2092e9406b46700167bb0c9ab24f72ab0a9186725d12df0a0e6e13c56315e",
+  "prior_semantic_task_sha256": "c021cb2dda190a739cebcb99cf66f26f8683f7380d36ce72161b690a4ce67817",
+  "diagnostic_decision_sha256": "4034e9f129ed1a69122718d4c3e19e3ecead9867ebe40c5e695f2bcf1345882b"
+}

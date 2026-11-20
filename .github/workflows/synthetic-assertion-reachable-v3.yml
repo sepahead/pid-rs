@@ -1,0 +1,77 @@
+name: Synthetic assertion-equality transport qualification
+
+on:
+  push:
+    branches:
+      - review/synthetic-route-v3/*
+    paths:
+      - audit/research/synthetic-assertion-reachable-v3/proofs.json
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    name: Fixed synthetic proof and transported refusal on stock Lean 4.34.1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    defaults:
+      run:
+        shell: bash
+    env:
+      PACKAGE: audit/research/synthetic-assertion-reachable-v3
+      EXPECTED_MANIFEST: 7b0b33fe89809006653dc2f367d950984cda4a5d4fded8d08d8b2acfcd9f1e91
+      RELEASE: https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst
+      ARCHIVE_SHA256: 47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4
+    steps:
+      - name: Bind the first push and start the clock
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          [[ "$GITHUB_REF" =~ ^refs/heads/review/synthetic-route-v3/([0-9a-f]{40})-([0-9a-f]{64})$ ]]
+          registration_commit="${BASH_REMATCH[1]}"
+          registration_sha256="${BASH_REMATCH[2]}"
+          started=$(python3 -I -S -B -c 'import time; print(time.monotonic())')
+          printf 'REGISTRATION_COMMIT=%s\nREGISTRATION_SHA256=%s\nCAMPAIGN_STARTED=%s\n' \
+            "$registration_commit" "$registration_sha256" "$started" >> "$GITHUB_ENV"
+          mkdir "$RUNNER_TEMP/route-evidence"
+          printf 'commit=%s\nrun=%s\nattempt=%s\nstart=%s\n' \
+            "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$started" > "$RUNNER_TEMP/route-evidence/host.txt"
+
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify the registration and stock archive
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA $REGISTRATION_COMMIT"
+          printf '%s  %s\n' "$EXPECTED_MANIFEST" "$PACKAGE/manifest.json" | sha256sum --check --strict
+          reg=${PACKAGE}-registration.json
+          git show "$REGISTRATION_COMMIT:$reg" > "$RUNNER_TEMP/route-evidence/registration.json"
+          printf '%s  %s\n' "$REGISTRATION_SHA256" "$RUNNER_TEMP/route-evidence/registration.json" | sha256sum --check --strict
+          cmp "$reg" "$RUNNER_TEMP/route-evidence/registration.json"
+          timeout 850s curl --fail --location --proto '=https' --tlsv1.2 \
+            --retry 2 --retry-max-time 650 --max-time 420 \
+            --output "$RUNNER_TEMP/route-lean.tar.zst" "$RELEASE"
+          printf '%s  %s\n' "$ARCHIVE_SHA256" "$RUNNER_TEMP/route-lean.tar.zst" | sha256sum --check --strict
+
+      - name: Check the synthetic assertions and refusal controls
+        run: |
+          set -euo pipefail
+          python3 -I -S -B "$PACKAGE/check.py" native --repo "$GITHUB_WORKSPACE" --manifest "$EXPECTED_MANIFEST" \
+            --started "$CAMPAIGN_STARTED" --registration-commit "$REGISTRATION_COMMIT" \
+            --registration-sha256 "$REGISTRATION_SHA256" --archive "$RUNNER_TEMP/route-lean.tar.zst" \
+            --stock-dir "$RUNNER_TEMP/route-lean-stock" --output "$RUNNER_TEMP/route-evidence/result"
+
+      - name: Preserve results and failures
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: synthetic-route-v3-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/route-evidence
+          if-no-files-found: error
+          compression-level: 1

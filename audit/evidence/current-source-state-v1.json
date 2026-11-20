@@ -309,6 +309,12 @@
       },
       {
         "git_mode": "100644",
+        "path": ".github/workflows/synthetic-assertion-reachable-v3.yml",
+        "sha256": "7442c1be5ba1de56ce55e880711345bcb70802d465fd98b8bd2c3072bef437b8",
+        "size_bytes": 3713
+      },
+      {
+        "git_mode": "100644",
         "path": ".github/workflows/three-source-original-first-three.yml",
         "sha256": "7e0f45658eda1469e1d91d2007cb6a5bc23ab1fb48563c49974cf54562b7ea1b",
         "size_bytes": 4834
@@ -31893,6 +31899,150 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3-registration.json",
+        "sha256": "5076d66634cba4c56a6440fbe6d13c0a164004a50c40c84cd43829d36e768f7a",
+        "size_bytes": 1036
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/README.md",
+        "sha256": "01c7e68aedadda532f372852fc955b14e58ae47f9f60a6db956045a95aa59efb",
+        "size_bytes": 5163
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/check.py",
+        "sha256": "ff8643377ff4ce85c42e816f24b0dd1456086d785322c0505fcc199e684dc54b",
+        "size_bytes": 22079
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/diagnostic-decision.json",
+        "sha256": "4034e9f129ed1a69122718d4c3e19e3ecead9867ebe40c5e695f2bcf1345882b",
+        "size_bytes": 3460
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/external.json",
+        "sha256": "d7fd29b18d7c9e29e2f63ea82f232674cef29f9ac1e2be84e17996b9af936421",
+        "size_bytes": 1780
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/helpers.json",
+        "sha256": "1c26cb64d2e316fbde332d5127f4512731886abcbd738c299e5caca232ada7f2",
+        "size_bytes": 743
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/lean/RouteAxioms.lean",
+        "sha256": "4e552e5847c29f23b57389adf9f5077c9e25166121661ff5422b5c953e6c5b4f",
+        "size_bytes": 1047
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/lean/RouteConsumer.lean",
+        "sha256": "b8784c55703cbd3723ed5a9e2cf2985018f31bb7e4dc4c3dcf65e053a6c61c2f",
+        "size_bytes": 1140
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/lean/RouteInspect.lean",
+        "sha256": "89d489a0eb4522fda202d02fb8d9474a47ed1e13f94573f049ae50f85a9664a3",
+        "size_bytes": 2391
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/lean/RouteLeaves.lean.template",
+        "sha256": "1ccf18293fc40410dd557df01eb3aec71c632cdf0c1f83b21824297862ce4f38",
+        "size_bytes": 577
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/lean/RoutePrefix.lean.template",
+        "sha256": "a0b111c2d01db230788b5e05420cbbe3243a5c651c3ccd854d64414c32c19138",
+        "size_bytes": 541
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/lean/RouteResult.lean",
+        "sha256": "3c308c8a6864cb2ce1a8e8c115ba2a6ed3f2e0c9fe4caab22ebd433985a46738",
+        "size_bytes": 1669
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/lean/RouteSpec.lean",
+        "sha256": "69caa29d1ef668badfdd40edd7006a7e456e3ea4d473647c44cebc04e9013db9",
+        "size_bytes": 1778
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/lean/RouteTail.lean.template",
+        "sha256": "ee3e71270eb8a59ab22ad34238f30972d0a623cb2a40c06a19f8668f8eac3248",
+        "size_bytes": 402
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/lean/RouteTrace.lean",
+        "sha256": "fd4ad15d92c03ae89349e7b4111e91a7f47ec570dab3a544580300d8ae218ac3",
+        "size_bytes": 397
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/lean/RouteTransport.lean",
+        "sha256": "29b3ab9f80a6d2c15139cd9a8a638d07892613621b571657f719797c26caf7ae",
+        "size_bytes": 995
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/manifest.json",
+        "sha256": "7b0b33fe89809006653dc2f367d950984cda4a5d4fded8d08d8b2acfcd9f1e91",
+        "size_bytes": 2094
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/negative.json",
+        "sha256": "0b9a481e41153c5ad571cdb7095dd3946c8c1a24c9668982699dde3647bedd2d",
+        "size_bytes": 709
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/negative/RefuseConstant.lean",
+        "sha256": "a829e2c559f6615ac2a6262d74ed3ce37d18833d38d0ea4ec4a344e90c009959",
+        "size_bytes": 141
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/negative/RefuseFailureAsFalse.lean",
+        "sha256": "f6441423ded70df4bc82f8191775a0fb80997407f726a34f9708105507f95a62",
+        "size_bytes": 157
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/negative/RefuseReachedInteger.lean",
+        "sha256": "9b52db0cd7a1587834cde001ded70627fb3760e1f8657a874ddd092e52101a9c",
+        "size_bytes": 213
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/negative/RefuseWholeState.lean",
+        "sha256": "5df366d57dba13c434c1d3e846a6f93ef222acd77d907cc1ad0090f3f5dd122f",
+        "size_bytes": 121
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/roster.json",
+        "sha256": "6fbfe377e1e2648eb019165903b79638b8104a1c007cf8834928514b8834f529",
+        "size_bytes": 2689
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/synthetic-assertion-reachable-v3/task.json",
+        "sha256": "bbdd9a8226748d63e28fee3d90f5eb93ab54e70ebdf628ea4329897110d1974f",
+        "size_bytes": 7905
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/three-source-alphabet-counts/README.md",
         "sha256": "a9e7961c1f89c06e14578c5b7cd6f265421174a9336b9811b58bf9cd324ddf1b",
         "size_bytes": 13863
@@ -37178,8 +37328,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "3b10876e2c482065268f85b5a500d8ed8424320853c972cdda4e251c97f38847",
-    "entry_count": 6172
+    "entries_sha256": "d5df18c76447edd54eb9c2eed1a55a259443c2d73f4eca66e462d39d2f926e95",
+    "entry_count": 6197
   },
   "subprojections": [
     {

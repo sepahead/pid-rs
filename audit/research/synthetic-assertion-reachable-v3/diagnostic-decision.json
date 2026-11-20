@@ -1,0 +1,37 @@
+{
+  "revision": "SYNTHETIC-REACHED-INTEGER-TRANSPORT-V3-01",
+  "class": "Prospective deterministic requalification of a released synthetic payload with a changed diagnostic route.",
+  "historical": {
+    "registration": "aeea65ae05cd255d080297042e2d2b29413b84a2a60cbbcb801bc9c90fc1e6c4",
+    "commit": "b409a4ef646fb85bc22c1b3cc65cb44818412bac",
+    "attempt": 44806160042,
+    "terminal": "Permanent failure at the third targeted negative. The diagnostic exhausted 200000 stock heartbeats."
+  },
+  "fixed": {
+    "prior_task": "c021cb2dda190a739cebcb99cf66f26f8683f7380d36ce72161b690a4ce67817",
+    "prior_manifest": "1325621956f39c518323e94c72fbd7bafdee9b27caae0a4ec0c8fcfe5ac757d0",
+    "published_candidate_sha256": "a8d2092e9406b46700167bb0c9ab24f72ab0a9186725d12df0a0e6e13c56315e",
+    "stock": "Lean 4.34.1 Linux x86-64, Git 5045d0056413266e57c625dcd7c365b10e377c52",
+    "stock_archive_sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "limits": {
+      "group_rss_bytes": 4294967296,
+      "subprocess_seconds": 900,
+      "campaign_seconds": 5400,
+      "retained_bytes": 1073741824
+    },
+    "heartbeat_policy": "Retain the stock default including the third diagnostic. Preserve each registered process limit, independent negative check and complete 22-name historical predicate."
+  },
+  "changes": [
+    "Freeze the exact v2 false full-evaluator equality in the same order. Preserve the three other negative files, all nine helper targets and their proof bodies, the original positive modules, the concrete trace and the original eight typed consumers.",
+    "Add one ordinary module with a type-checked polymorphic equality transport for arbitrary endpoints and their two given values. The type parameter ranges over Type. Specialize it to both supplied distinct input valuations using the already checked endpoint facts in reverse declaration order to match the exact historical false target. Include a positive reflexive instantiated case and a positive proof that the two genuine evaluations differ. Require all four new named declarations, direct named edges, same stock fresh and transitive axiom readback.",
+    "For the designated false proposition, apply only the corresponding implication from literal equality to the full equality. Request a stock rfl mismatch only on the two unequal actual literal lists. Accept exactly one registered non-silent stock error from its source and line. Require the two left/right lists and their order, the intended diagnostic class and absence of a compiled object. A resource stop, generic error, altered target, unused adapter or omitted readback fails.",
+    "Run the original compiler and genuine reduced-budget monitor controls, reject unknown/forbidden proof inputs and fabricated axiom, and verify end-to-end post-run custody. No original formula or historical result changes.",
+    "One external issuance may supply only the exact previous released candidate bytes under the new path to isolate the changed qualification. The registration is candidate-free. No external independent or blind confirmation is claimed. Native Linux execution awaits independent binding to the full protected judge and workflow."
+  ],
+  "producer_scope": "No new scientific proof bodies authorized. Preparation includes fixed judge controls and a source-only readback. No local native execution."
+}

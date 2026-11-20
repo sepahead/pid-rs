@@ -1,0 +1,35 @@
+{
+  "RefuseWholeState": {
+    "line": 4,
+    "prefix": "Tactic `rfl` failed:",
+    "contains": [
+      "is not definitionally equal",
+      "state sample"
+    ]
+  },
+  "RefuseConstant": {
+    "line": 4,
+    "prefix": "Tactic `rfl` failed:",
+    "contains": [
+      "is not definitionally equal",
+      "evaluate primary"
+    ]
+  },
+  "RefuseReachedInteger": {
+    "line": 6,
+    "prefix": "Tactic `rfl` failed:",
+    "contains": [
+      "is not definitionally equal",
+      "some [false, true]",
+      "some [true, false]"
+    ]
+  },
+  "RefuseFailureAsFalse": {
+    "line": 4,
+    "prefix": "Tactic `rfl` failed:",
+    "contains": [
+      "is not definitionally equal",
+      "evaluate malformed"
+    ]
+  }
+}
