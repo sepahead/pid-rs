@@ -1,0 +1,602 @@
+{
+  "schema": 1,
+  "source_commit": "03be681b15cd959d4fbef328e007aa383413132b",
+  "preparation_registration_sha256": "a0e105f6f9ee32e8f1d6f74a00f344f851b1e63dc36c7e3f37770df2729e36c1",
+  "declarations": [
+    [
+      "a",
+      [
+        "bv",
+        7
+      ]
+    ],
+    [
+      "b",
+      [
+        "bv",
+        7
+      ]
+    ],
+    [
+      "c",
+      [
+        "bv",
+        7
+      ]
+    ],
+    [
+      "q",
+      [
+        "bv",
+        3
+      ]
+    ],
+    [
+      "h",
+      [
+        "bv",
+        3
+      ]
+    ],
+    [
+      "x",
+      [
+        "bv",
+        3
+      ]
+    ],
+    [
+      "k",
+      [
+        "bv",
+        4
+      ]
+    ],
+    [
+      "r",
+      [
+        "bv",
+        4
+      ]
+    ],
+    [
+      "tau",
+      [
+        "bool"
+      ]
+    ],
+    [
+      "w0",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w1",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w2",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w3",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w4",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w5",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w6",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w7",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w8",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w9",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w10",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w11",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w12",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w13",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w14",
+      [
+        "int"
+      ]
+    ],
+    [
+      "w15",
+      [
+        "int"
+      ]
+    ]
+  ],
+  "defined_names": [
+    "sub",
+    "has",
+    "incomparable",
+    "valid",
+    "canonical",
+    "leq",
+    "leq-one-for-all",
+    "leq-proper",
+    "singleton",
+    "branch",
+    "branch-direct",
+    "source",
+    "source-direct",
+    "source-outer-and",
+    "source-inner-or",
+    "restricted",
+    "raw-branch",
+    "raw-source",
+    "raw-target",
+    "raw-restricted",
+    "eq-pattern",
+    "valid-pair",
+    "pair-duplicate-mutant",
+    "z",
+    "m",
+    "m-changed",
+    "weight",
+    "N",
+    "positive-table",
+    "U",
+    "V",
+    "Tmass",
+    "fixture",
+    "p0-mask",
+    "p0-family",
+    "p0-table",
+    "p0-cell",
+    "p1-mask",
+    "p1-family",
+    "p1-table",
+    "p1-cell",
+    "p2-mask",
+    "p2-family",
+    "p2-table",
+    "p2-cell",
+    "p3-mask",
+    "p3-family",
+    "p3-table",
+    "p3-cell",
+    "p4-mask",
+    "p4-family",
+    "p4-table",
+    "p4-cell",
+    "p5-mask",
+    "p5-family",
+    "p5-table",
+    "p5-cell"
+  ],
+  "cases": {
+    "W01": {
+      "input": {
+        "relative_path": "audit/formal/finite-smt39-qualification-v1/raw/W01-carrier-complete/generator.stdout.smt2",
+        "git_blob": "0743803680b22f20489cf129c882e8f955831ce6",
+        "bytes": 39338,
+        "sha256": "ca064fa505a839da620431c2987dde384316eeac1535c79147a3b7cb881d9c9f"
+      },
+      "structure": {
+        "annotated_sha256": "fe33e1519fd8d98155c83a6b28accea90cd98db90c72571b99812db7ef13df96",
+        "commands": 89,
+        "evaluated": false,
+        "full_spans": 27089,
+        "lean_sha256": "20f8455d3a3508df1b531327c49e7fe2b7b8a3bc0924690010336545f6b06a20",
+        "raw_bytes": 39338,
+        "sha256": "ca064fa505a839da620431c2987dde384316eeac1535c79147a3b7cb881d9c9f",
+        "spans_sha256": "f390173da28c6627c0acff4335352b57fe2cb28cdedbe40b9bd2dd6e5a778517",
+        "tree_sha256": "1180d3ed1515467466c714e34cec97d348d97f1c03936f8ec04d6ca42decb645"
+      },
+      "assertions": [
+        [
+          "assert",
+          "true"
+        ],
+        [
+          "assert",
+          [
+            "not",
+            [
+              "=",
+              [
+                "valid",
+                "a"
+              ],
+              [
+                "canonical",
+                "a"
+              ]
+            ]
+          ]
+        ]
+      ],
+      "slots": [
+        {
+          "index": 0,
+          "name": "a",
+          "source_type": [
+            "bv",
+            7
+          ]
+        }
+      ],
+      "combinations": 128
+    },
+    "W03": {
+      "input": {
+        "relative_path": "audit/formal/finite-smt39-qualification-v1/raw/W03-reflexivity/generator.stdout.smt2",
+        "git_blob": "6fda0a4281e67697b8e562d6e68f93acc6638165",
+        "bytes": 39272,
+        "sha256": "c67e6ab935acc7fb8fd1dd9c25fb6e6561db30cbe0b61ac8eb9a5968861126ff"
+      },
+      "structure": {
+        "annotated_sha256": "9ebaea0df413137f8157b48186b0430f8105754526fe6606a22f55b86c061421",
+        "commands": 89,
+        "evaluated": false,
+        "full_spans": 27085,
+        "lean_sha256": "71775357f33cecc343ccb07b9c8e040c9d2bf1c6502af280fc56f71f825282c3",
+        "raw_bytes": 39272,
+        "sha256": "c67e6ab935acc7fb8fd1dd9c25fb6e6561db30cbe0b61ac8eb9a5968861126ff",
+        "spans_sha256": "19bbe7c4767ba53ce0e41cfac71e449d81e2fee59e8b10ad2f57a3871bccae95",
+        "tree_sha256": "86881846fd1adf2bb6208ddfcb3a4736ef6b5945fb2828a8fe735a5855771388"
+      },
+      "assertions": [
+        [
+          "assert",
+          [
+            "valid",
+            "a"
+          ]
+        ],
+        [
+          "assert",
+          [
+            "not",
+            [
+              "leq",
+              "a",
+              "a"
+            ]
+          ]
+        ]
+      ],
+      "slots": [
+        {
+          "index": 0,
+          "name": "a",
+          "source_type": [
+            "bv",
+            7
+          ]
+        }
+      ],
+      "combinations": 128
+    },
+    "W15": {
+      "input": {
+        "relative_path": "audit/formal/finite-smt39-qualification-v1/raw/W15-full-joint-event/generator.stdout.smt2",
+        "git_blob": "2234db624fcc0497956e431bb735a80428e21705",
+        "bytes": 39473,
+        "sha256": "2175ff7776cda4b507c470fa44aa7e4d7f175fae28144f40eee36d25f144f3a5"
+      },
+      "structure": {
+        "annotated_sha256": "38950ac67a84de3ccffde7535de6fa11a84fe6fe95aee259143108c6ffdc93f9",
+        "commands": 89,
+        "evaluated": false,
+        "full_spans": 27193,
+        "lean_sha256": "fa7f972b22b7e1990e37e14e5fbd2d664f13177c2efc0c7bc84478f90f54f0fd",
+        "raw_bytes": 39473,
+        "sha256": "2175ff7776cda4b507c470fa44aa7e4d7f175fae28144f40eee36d25f144f3a5",
+        "spans_sha256": "a2cef3acabd22a106213d300c9083af5570a674f5733f01153c27f55007102be",
+        "tree_sha256": "63b51a237d9ed52663d5b761f8b0ba704a76e58728aa81c65e8723fba26a2aca"
+      },
+      "assertions": [
+        [
+          "assert",
+          "true"
+        ],
+        [
+          "assert",
+          [
+            "not",
+            [
+              "=",
+              [
+                "raw-source",
+                [
+                  "_",
+                  "bv64",
+                  "7"
+                ],
+                "k",
+                "r"
+              ],
+              [
+                "and",
+                [
+                  "=",
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "3",
+                      "3"
+                    ],
+                    "k"
+                  ],
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "3",
+                      "3"
+                    ],
+                    "r"
+                  ]
+                ],
+                [
+                  "=",
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "2",
+                      "2"
+                    ],
+                    "k"
+                  ],
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "2",
+                      "2"
+                    ],
+                    "r"
+                  ]
+                ],
+                [
+                  "=",
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "1",
+                      "1"
+                    ],
+                    "k"
+                  ],
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "1",
+                      "1"
+                    ],
+                    "r"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "slots": [
+        {
+          "index": 6,
+          "name": "k",
+          "source_type": [
+            "bv",
+            4
+          ]
+        },
+        {
+          "index": 7,
+          "name": "r",
+          "source_type": [
+            "bv",
+            4
+          ]
+        }
+      ],
+      "combinations": 256
+    }
+  },
+  "registered_shared": {
+    "audit/research/three-source-w02/source_reader.py": {
+      "relative_path": "audit/research/three-source-w02/source_reader.py",
+      "git_blob": "2d2949655554a21774b034f450d1d5a705ff5918",
+      "bytes": 7129,
+      "sha256": "8826c1380b6fd9d6f8945672c0281aa69e7431e75152652c3109650440632302"
+    },
+    "audit/research/three-source-w02/source_writer.py": {
+      "relative_path": "audit/research/three-source-w02/source_writer.py",
+      "git_blob": "465816f62b72faf3ab497afc741a2fc175b9c45a",
+      "bytes": 9353,
+      "sha256": "38b91a375ddb237c33f06db48519654cc6d41bd27678b2e1e4a6cabd02710504"
+    },
+    "audit/research/three-source-w02/lean_literals.py": {
+      "relative_path": "audit/research/three-source-w02/lean_literals.py",
+      "git_blob": "dc57595b7dc3d5a0ecd6ce51730c56135c88939c",
+      "bytes": 2514,
+      "sha256": "73913ccab97e64878c472c52ff8b9fd1cf6f8f861dac584d58f2acd3818aa274"
+    },
+    "audit/research/three-source-w02/lean/W02Semantics.lean": {
+      "relative_path": "audit/research/three-source-w02/lean/W02Semantics.lean",
+      "git_blob": "23a8615ec3708d046a0f1f39a222ede2ffab801e",
+      "bytes": 10838,
+      "sha256": "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3"
+    },
+    "audit/research/three-source-w02/lean/W02Inspect.lean": {
+      "relative_path": "audit/research/three-source-w02/lean/W02Inspect.lean",
+      "git_blob": "4758a018f8aa0faa9e72413f1d5669f752c257a0",
+      "bytes": 1567,
+      "sha256": "30834cf49fd2fd4c40536ad8a70bdf74d3228c15cd80995225d78788f4209768"
+    },
+    "audit/research/three-source-synthetic-projection/lean/ProjectionCore.lean": {
+      "relative_path": "audit/research/three-source-synthetic-projection/lean/ProjectionCore.lean",
+      "git_blob": "19447b613c4dc744fa4c095895cb4f11fef13ba6",
+      "bytes": 3031,
+      "sha256": "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11"
+    },
+    "audit/research/three-source-synthetic-projection/lean/ProjectionReification.lean": {
+      "relative_path": "audit/research/three-source-synthetic-projection/lean/ProjectionReification.lean",
+      "git_blob": "37ed5a58c6fe9aa13b375d5ce8f0e1bfd70e4fbc",
+      "bytes": 3119,
+      "sha256": "c7ad167ec2736ae5d57462c22d48fe63e76f14657468c88c63858783d929e599"
+    },
+    "audit/research/three-source-synthetic-projection/manifest.json": {
+      "relative_path": "audit/research/three-source-synthetic-projection/manifest.json",
+      "git_blob": "480c0390b0e508fde3693c50f015494e2b420aed",
+      "bytes": 5158,
+      "sha256": "45db526d9121411f1d946154747813adb1d1dd704a398af5cf0876417967d152"
+    }
+  },
+  "synthetic_reuse": [
+    "fixtures.json",
+    "fixtures/Pair.smt2",
+    "fixtures/Sat.smt2",
+    "fixtures/Unary.smt2",
+    "generated.json",
+    "lean/ConsumerSynthetic.lean",
+    "lean/ControlFalseOnFailure.lean",
+    "lean/ControlFixedVector.lean",
+    "lean/ControlSatWrongSource.lean",
+    "lean/ControlWrongProjection.lean",
+    "lean/ProjectionCore.lean",
+    "lean/ProjectionReification.lean",
+    "lean/SyntheticAssembly.lean",
+    "lean/SyntheticPairProof.lean",
+    "lean/SyntheticRefusalsProved.lean",
+    "lean/SyntheticSatProof.lean",
+    "lean/SyntheticUnaryProof.lean",
+    "make_sources.py",
+    "plan.json",
+    "readback.py",
+    "resources.py"
+  ],
+  "external": [
+    ".github/workflows/synthetic-assertion-reachable-v3.yml",
+    "audit/formal/finite-smt39-qualification-v1/raw/W01-carrier-complete/generator.stdout.smt2",
+    "audit/formal/finite-smt39-qualification-v1/raw/W03-reflexivity/generator.stdout.smt2",
+    "audit/formal/finite-smt39-qualification-v1/raw/W15-full-joint-event/generator.stdout.smt2",
+    "audit/research/synthetic-assertion-reachable-v3-registration.json",
+    "audit/research/synthetic-assertion-reachable-v3/README.md",
+    "audit/research/synthetic-assertion-reachable-v3/check.py",
+    "audit/research/synthetic-assertion-reachable-v3/diagnostic-decision.json",
+    "audit/research/synthetic-assertion-reachable-v3/external.json",
+    "audit/research/synthetic-assertion-reachable-v3/helpers.json",
+    "audit/research/synthetic-assertion-reachable-v3/lean/RouteAxioms.lean",
+    "audit/research/synthetic-assertion-reachable-v3/lean/RouteConsumer.lean",
+    "audit/research/synthetic-assertion-reachable-v3/lean/RouteInspect.lean",
+    "audit/research/synthetic-assertion-reachable-v3/lean/RouteLeaves.lean.template",
+    "audit/research/synthetic-assertion-reachable-v3/lean/RoutePrefix.lean.template",
+    "audit/research/synthetic-assertion-reachable-v3/lean/RouteResult.lean",
+    "audit/research/synthetic-assertion-reachable-v3/lean/RouteSpec.lean",
+    "audit/research/synthetic-assertion-reachable-v3/lean/RouteTail.lean.template",
+    "audit/research/synthetic-assertion-reachable-v3/lean/RouteTrace.lean",
+    "audit/research/synthetic-assertion-reachable-v3/lean/RouteTransport.lean",
+    "audit/research/synthetic-assertion-reachable-v3/manifest.json",
+    "audit/research/synthetic-assertion-reachable-v3/negative.json",
+    "audit/research/synthetic-assertion-reachable-v3/negative/RefuseConstant.lean",
+    "audit/research/synthetic-assertion-reachable-v3/negative/RefuseFailureAsFalse.lean",
+    "audit/research/synthetic-assertion-reachable-v3/negative/RefuseReachedInteger.lean",
+    "audit/research/synthetic-assertion-reachable-v3/negative/RefuseWholeState.lean",
+    "audit/research/synthetic-assertion-reachable-v3/roster.json",
+    "audit/research/synthetic-assertion-reachable-v3/task.json",
+    "audit/research/three-source-original-first-three-attempt.json",
+    "audit/research/three-source-original-first-three/README.md",
+    "audit/research/three-source-original-first-three/assembly.py",
+    "audit/research/three-source-original-first-three/bindings.json",
+    "audit/research/three-source-original-first-three/consumers/W01.lean",
+    "audit/research/three-source-original-first-three/consumers/W03.lean",
+    "audit/research/three-source-original-first-three/consumers/W15.lean",
+    "audit/research/three-source-original-first-three/finite_trace.py",
+    "audit/research/three-source-original-first-three/generated.json",
+    "audit/research/three-source-original-first-three/manifest.json",
+    "audit/research/three-source-original-first-three/observations.py",
+    "audit/research/three-source-original-first-three/proof_interface.py",
+    "audit/research/three-source-original-first-three/run.py",
+    "audit/research/three-source-original-first-three/statements.py",
+    "audit/research/three-source-synthetic-projection/fixtures.json",
+    "audit/research/three-source-synthetic-projection/fixtures/Pair.smt2",
+    "audit/research/three-source-synthetic-projection/fixtures/Sat.smt2",
+    "audit/research/three-source-synthetic-projection/fixtures/Unary.smt2",
+    "audit/research/three-source-synthetic-projection/generated.json",
+    "audit/research/three-source-synthetic-projection/lean/ConsumerSynthetic.lean",
+    "audit/research/three-source-synthetic-projection/lean/ControlFalseOnFailure.lean",
+    "audit/research/three-source-synthetic-projection/lean/ControlFixedVector.lean",
+    "audit/research/three-source-synthetic-projection/lean/ControlSatWrongSource.lean",
+    "audit/research/three-source-synthetic-projection/lean/ControlWrongProjection.lean",
+    "audit/research/three-source-synthetic-projection/lean/ProjectionCore.lean",
+    "audit/research/three-source-synthetic-projection/lean/ProjectionReification.lean",
+    "audit/research/three-source-synthetic-projection/lean/SyntheticAssembly.lean",
+    "audit/research/three-source-synthetic-projection/lean/SyntheticPairProof.lean",
+    "audit/research/three-source-synthetic-projection/lean/SyntheticRefusalsProved.lean",
+    "audit/research/three-source-synthetic-projection/lean/SyntheticSatProof.lean",
+    "audit/research/three-source-synthetic-projection/lean/SyntheticUnaryProof.lean",
+    "audit/research/three-source-synthetic-projection/make_sources.py",
+    "audit/research/three-source-synthetic-projection/manifest.json",
+    "audit/research/three-source-synthetic-projection/plan.json",
+    "audit/research/three-source-synthetic-projection/readback.py",
+    "audit/research/three-source-synthetic-projection/resources.py",
+    "audit/research/three-source-w02/lean/W02Inspect.lean",
+    "audit/research/three-source-w02/lean/W02Semantics.lean",
+    "audit/research/three-source-w02/lean_literals.py",
+    "audit/research/three-source-w02/source_reader.py",
+    "audit/research/three-source-w02/source_writer.py"
+  ]
+}

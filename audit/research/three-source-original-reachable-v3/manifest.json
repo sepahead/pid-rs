@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "purpose": "Protected original reachable proof judge with serial case windows v3",
+  "package_files": {
+    "BUDGET.md": {
+      "bytes": 3506,
+      "sha256": "2a862436f3f3415f5ae47a7214fbd34640d6397ca8feb4647ba22778bb20e73d"
+    },
+    "README.md": {
+      "bytes": 5832,
+      "sha256": "420d63960c5fa0ebfcc2b95b9609b25507bc1025757b8c95fb2518e82b03a26a"
+    },
+    "assembly.py": {
+      "bytes": 8951,
+      "sha256": "0030dd624c4ac9cd2600fba0d084162808c0dbc3c973da7a39c5ccfa9c458ce9"
+    },
+    "bindings.json": {
+      "bytes": 17337,
+      "sha256": "cf2402a8ff3c24e568ca236a11f4bd625681c17c34f7d38cce5897390f44cd2b"
+    },
+    "external.json": {
+      "bytes": 20588,
+      "sha256": "7f2b7a6d623ca03a3dce3c5f4a81ab29afd46a831491663572734eff9a0901d1"
+    },
+    "generated.json": {
+      "bytes": 1896,
+      "sha256": "a482cec5799c0717cbe76c74d76759cdf7bf3f688ab641a2059569456878a849"
+    },
+    "native_resources.py": {
+      "bytes": 6277,
+      "sha256": "d5dd2682156862e674ba958a172877d87ffe899241c07ca262e8718e32af5fcc"
+    },
+    "qualification.py": {
+      "bytes": 10417,
+      "sha256": "f9fd184f6174fd64325484f9fbf66e487cb1ebb072573bce99b5cf376507b6c8"
+    },
+    "readback.py": {
+      "bytes": 4027,
+      "sha256": "9d75e6f09a07bdcd66064d1f809eb4262e0cde10c034ad6d043d74c71b4a3bfe"
+    },
+    "route.py": {
+      "bytes": 14335,
+      "sha256": "158758d7f033e263dbd93e2ee6009cfc1590cb11e62995a5be87afba46ff478f"
+    },
+    "run.py": {
+      "bytes": 24853,
+      "sha256": "6953c331d2faa72df513c8a8a996db05568ea9d4700331ef6cc673ae04c12c5f"
+    },
+    "schedule.py": {
+      "bytes": 8233,
+      "sha256": "24c036c6c1618b23b34439bda6855f6b40f56e286d4eab56fdc40c5ad6fb3150"
+    },
+    "schedule_controls.py": {
+      "bytes": 6494,
+      "sha256": "8f311ea1bc152bfc2393abdfb825a6252e004d38de07184738e021a4ff67c6ac"
+    },
+    "task.json": {
+      "bytes": 5336,
+      "sha256": "a0e105f6f9ee32e8f1d6f74a00f344f851b1e63dc36c7e3f37770df2729e36c1"
+    }
+  }
+}

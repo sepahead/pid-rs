@@ -1,0 +1,273 @@
+{
+  "schema": 1,
+  "kind": "single original assertion-reachable attempt v3",
+  "attempt_id": "SMT39-W01-W03-W15-REACHABLE-20261121-CASEWINDOW-01",
+  "preparation_registration_sha256": "a0e105f6f9ee32e8f1d6f74a00f344f851b1e63dc36c7e3f37770df2729e36c1",
+  "judge_manifest_sha256": "554d27b67fed684099c5c9a441016f66fa02d95a9e066b257b030f59cb0742ed",
+  "workflow_sha256": "ef38024136325c84298b440982be0a315f55ee962c2fb4daf83a4cda859e5fc0",
+  "allowed_write_files": [
+    "audit/research/three-source-original-reachable-v3-proofs/W01.json",
+    "audit/research/three-source-original-reachable-v3-proofs/W03.json",
+    "audit/research/three-source-original-reachable-v3-proofs/W15.json"
+  ],
+  "cases": [
+    "W01",
+    "W03",
+    "W15"
+  ],
+  "limits": {
+    "campaign_seconds": 18000,
+    "subprocess_seconds": 900,
+    "retained_bytes": 1073741824,
+    "group_rss_bytes": 4294967296
+  },
+  "stock_archive_sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+  "launch_event": "push",
+  "source_commit": "5b60576d81cbf2862f8f44d3ff18036e23488bda",
+  "historical_attempt": {
+    "commit": "ae5e436c7638b258d45c6cbe118fbdfff4291372",
+    "run": 44760935574,
+    "archive_sha256": "ad493f45a89be70f62c9dc5c965f2dc3ffd8b0bc162f891cbe11df8e1c41c365",
+    "result": "W01 exceeded 4 GiB while compiling its single six-declaration dynamic module. W03 and W15 were never attempted. Preserve all prior evidence."
+  },
+  "synthetic_qualification": {
+    "failed_run": 44806160042,
+    "passed_run": 44825299375,
+    "passed_commit": "e3d6682207880f5beaffebdc1a0260ab8b44b725",
+    "registration": "5076d66634cba4c56a6440fbe6d13c0a164004a50c40c84cd43829d36e768f7a",
+    "archive_sha256": "9a5259fe3ca8d8e6b6ce2f39093934d27de57b2765d4c5c00847550481632b58",
+    "scope": "One invented script, two valuations, a variant that reads the omitted integer, failure on malformed input, an ordered finite proof, four native false controls and three bounded resource-control outcomes. This gives no original proof."
+  },
+  "source_predicate_sha256": "a482cec5799c0717cbe76c74d76759cdf7bf3f688ab641a2059569456878a849",
+  "external_authorities_sha256": "7f2b7a6d623ca03a3dce3c5f4a81ab29afd46a831491663572734eff9a0901d1",
+  "frozen_case_requirements": {
+    "W01": {
+      "raw": "ca064fa505a839da620431c2987dde384316eeac1535c79147a3b7cb881d9c9f",
+      "typed": "fe33e1519fd8d98155c83a6b28accea90cd98db90c72571b99812db7ef13df96",
+      "literal": "20f8455d3a3508df1b531327c49e7fe2b7b8a3bc0924690010336545f6b06a20",
+      "commands": 89,
+      "historic_named": 132,
+      "new_named": 55,
+      "all_named": 187,
+      "new_candidate_slots": 129,
+      "historical_slots": 102,
+      "ordinary_compile_and_fresh_count": 32,
+      "isolated_lemma_count": 27,
+      "typed_direct_edge_count": 101,
+      "ordered_intervals": [
+        [
+          0,
+          8
+        ],
+        [
+          8,
+          16
+        ],
+        [
+          16,
+          24
+        ],
+        [
+          24,
+          32
+        ],
+        [
+          32,
+          40
+        ],
+        [
+          40,
+          48
+        ],
+        [
+          48,
+          56
+        ],
+        [
+          56,
+          64
+        ],
+        [
+          64,
+          72
+        ],
+        [
+          72,
+          80
+        ],
+        [
+          80,
+          88
+        ],
+        [
+          88,
+          96
+        ],
+        [
+          96,
+          104
+        ],
+        [
+          104,
+          112
+        ],
+        [
+          112,
+          120
+        ],
+        [
+          120,
+          128
+        ]
+      ],
+      "original_numerical_observations": 0
+    },
+    "W03": {
+      "raw": "c67e6ab935acc7fb8fd1dd9c25fb6e6561db30cbe0b61ac8eb9a5968861126ff",
+      "typed": "9ebaea0df413137f8157b48186b0430f8105754526fe6606a22f55b86c061421",
+      "literal": "71775357f33cecc343ccb07b9c8e040c9d2bf1c6502af280fc56f71f825282c3",
+      "commands": 89,
+      "historic_named": 132,
+      "new_named": 47,
+      "all_named": 179,
+      "new_candidate_slots": 121,
+      "historical_slots": 102,
+      "ordinary_compile_and_fresh_count": 32,
+      "isolated_lemma_count": 19,
+      "typed_direct_edge_count": 95,
+      "ordered_intervals": [
+        [
+          0,
+          16
+        ],
+        [
+          16,
+          32
+        ],
+        [
+          32,
+          48
+        ],
+        [
+          48,
+          64
+        ],
+        [
+          64,
+          80
+        ],
+        [
+          80,
+          96
+        ],
+        [
+          96,
+          112
+        ],
+        [
+          112,
+          128
+        ]
+      ],
+      "original_numerical_observations": 0
+    },
+    "W15": {
+      "raw": "2175ff7776cda4b507c470fa44aa7e4d7f175fae28144f40eee36d25f144f3a5",
+      "typed": "38950ac67a84de3ccffde7535de6fa11a84fe6fe95aee259143108c6ffdc93f9",
+      "literal": "fa7f972b22b7e1990e37e14e5fbd2d664f13177c2efc0c7bc84478f90f54f0fd",
+      "commands": 89,
+      "historic_named": 132,
+      "new_named": 53,
+      "all_named": 185,
+      "new_candidate_slots": 128,
+      "historical_slots": 102,
+      "ordinary_compile_and_fresh_count": 32,
+      "isolated_lemma_count": 26,
+      "typed_direct_edge_count": 99,
+      "ordered_intervals": [
+        [
+          0,
+          16
+        ],
+        [
+          16,
+          32
+        ],
+        [
+          32,
+          48
+        ],
+        [
+          48,
+          64
+        ],
+        [
+          64,
+          80
+        ],
+        [
+          80,
+          96
+        ],
+        [
+          96,
+          112
+        ],
+        [
+          112,
+          128
+        ],
+        [
+          128,
+          144
+        ],
+        [
+          144,
+          160
+        ],
+        [
+          160,
+          176
+        ],
+        [
+          176,
+          192
+        ],
+        [
+          192,
+          208
+        ],
+        [
+          208,
+          224
+        ],
+        [
+          224,
+          240
+        ],
+        [
+          240,
+          256
+        ]
+      ],
+      "original_numerical_observations": 0
+    }
+  },
+  "stopping_rule": "Exactly one reserved first push and direct child of the candidate-free registration. Single CPU and native worker. W01, W03 and W15 have independent bounded windows. A failed case retains its real outcome. Continue after a local mathematical, time, or memory refusal only when the ended process, case sources and shared supplier have been verified. Global time, shared custody, storage or lingering-process failures end the campaign. All three cases must pass for the combined result. No retry.",
+  "candidate_isolation": "Only the three proof JSONs change at the child. The earlier registration has none at the new locations. All imports, script bytes, pure reference, counterexample scope, judge sources, old authorities, stock, limits, helper statements, trees and typed direct-use graph are prebound. The previously published scientific payloads and partial results are development evidence. One deterministic proof per slot, no search against this judge.",
+  "external_release": "Before authorizing the candidate, confirm the remote Git tree and all members, then retain and retrieve a copy outside the source checkout. Record the one run ID and independent archive readback. These are separate from the prospective source preparation.",
+  "schedule": {
+    "workers": 1,
+    "allowed_logical_cpus": 1,
+    "shared_setup_seconds": 1500,
+    "case_seconds": 5400,
+    "final_reserve_seconds": 300,
+    "workflow_timeout_minutes": 320,
+    "case_order": [
+      "W01",
+      "W03",
+      "W15"
+    ]
+  },
+  "unissued_predecessor_registration_sha256": "2501e35b99eef27c3e71127deffebfc533ee05d2a47fe109586b410dc983d34a"
+}

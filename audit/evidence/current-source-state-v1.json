@@ -321,6 +321,12 @@
       },
       {
         "git_mode": "100644",
+        "path": ".github/workflows/three-source-original-reachable-v3.yml",
+        "sha256": "ef38024136325c84298b440982be0a315f55ee962c2fb4daf83a4cda859e5fc0",
+        "size_bytes": 3938
+      },
+      {
+        "git_mode": "100644",
         "path": ".github/workflows/three-source-synthetic-projection.yml",
         "sha256": "5f28b2f825a842e313448dcbba1771947bdb6ca1e946fb961ccbbac30a774b44",
         "size_bytes": 3173
@@ -32247,6 +32253,102 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3-registration.json",
+        "sha256": "0e7ef52332da92c229205198efe112d197d21a7d2f8bb9d5bfa2a3f0f816c939",
+        "size_bytes": 7727
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/BUDGET.md",
+        "sha256": "2a862436f3f3415f5ae47a7214fbd34640d6397ca8feb4647ba22778bb20e73d",
+        "size_bytes": 3506
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/README.md",
+        "sha256": "420d63960c5fa0ebfcc2b95b9609b25507bc1025757b8c95fb2518e82b03a26a",
+        "size_bytes": 5832
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/assembly.py",
+        "sha256": "0030dd624c4ac9cd2600fba0d084162808c0dbc3c973da7a39c5ccfa9c458ce9",
+        "size_bytes": 8951
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/bindings.json",
+        "sha256": "cf2402a8ff3c24e568ca236a11f4bd625681c17c34f7d38cce5897390f44cd2b",
+        "size_bytes": 17337
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/external.json",
+        "sha256": "7f2b7a6d623ca03a3dce3c5f4a81ab29afd46a831491663572734eff9a0901d1",
+        "size_bytes": 20588
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/generated.json",
+        "sha256": "a482cec5799c0717cbe76c74d76759cdf7bf3f688ab641a2059569456878a849",
+        "size_bytes": 1896
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/manifest.json",
+        "sha256": "554d27b67fed684099c5c9a441016f66fa02d95a9e066b257b030f59cb0742ed",
+        "size_bytes": 1996
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/native_resources.py",
+        "sha256": "d5dd2682156862e674ba958a172877d87ffe899241c07ca262e8718e32af5fcc",
+        "size_bytes": 6277
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/qualification.py",
+        "sha256": "f9fd184f6174fd64325484f9fbf66e487cb1ebb072573bce99b5cf376507b6c8",
+        "size_bytes": 10417
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/readback.py",
+        "sha256": "9d75e6f09a07bdcd66064d1f809eb4262e0cde10c034ad6d043d74c71b4a3bfe",
+        "size_bytes": 4027
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/route.py",
+        "sha256": "158758d7f033e263dbd93e2ee6009cfc1590cb11e62995a5be87afba46ff478f",
+        "size_bytes": 14335
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/run.py",
+        "sha256": "6953c331d2faa72df513c8a8a996db05568ea9d4700331ef6cc673ae04c12c5f",
+        "size_bytes": 24853
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/schedule.py",
+        "sha256": "24c036c6c1618b23b34439bda6855f6b40f56e286d4eab56fdc40c5ad6fb3150",
+        "size_bytes": 8233
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/schedule_controls.py",
+        "sha256": "8f311ea1bc152bfc2393abdfb825a6252e004d38de07184738e021a4ff67c6ac",
+        "size_bytes": 6494
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-original-reachable-v3/task.json",
+        "sha256": "a0e105f6f9ee32e8f1d6f74a00f344f851b1e63dc36c7e3f37770df2729e36c1",
+        "size_bytes": 5336
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/three-source-six-certificate-observations/README.md",
         "sha256": "fd968d429391e9c442b108e8f5802a0edfd9eacd5cca2337fd57cce630e7efff",
         "size_bytes": 20467
@@ -37352,8 +37454,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "a5d5d101f4e6a59ac3a815ba0232640e9b5ddd4165194e7e8f46047b2ad03ead",
-    "entry_count": 6201
+    "entries_sha256": "460e5bd91d419557d73652f8e34e1aa854264ee42585a0b2bf9adadc7defe4df",
+    "entry_count": 6218
   },
   "subprojections": [
     {

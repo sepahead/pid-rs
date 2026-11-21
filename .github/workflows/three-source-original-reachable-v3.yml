@@ -1,0 +1,80 @@
+name: Three original proof checks with separate time limits
+
+on:
+  push:
+    branches:
+      - review/original-reachable-v3/*
+    paths:
+      - audit/research/three-source-original-reachable-v3-proofs/W01.json
+      - audit/research/three-source-original-reachable-v3-proofs/W03.json
+      - audit/research/three-source-original-reachable-v3-proofs/W15.json
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    name: Three original scripts and their ordered assertions on stock Lean 4.34.1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 320
+    defaults:
+      run:
+        shell: bash
+    env:
+      PACKAGE: audit/research/three-source-original-reachable-v3
+      EXPECTED_MANIFEST: 554d27b67fed684099c5c9a441016f66fa02d95a9e066b257b030f59cb0742ed
+      RELEASE: https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst
+      ARCHIVE_SHA256: 47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4
+    steps:
+      - name: Bind the first push and start the clock
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          [[ "$GITHUB_REF" =~ ^refs/heads/review/original-reachable-v3/([0-9a-f]{40})-([0-9a-f]{64})$ ]]
+          registration_commit="${BASH_REMATCH[1]}"
+          registration_sha256="${BASH_REMATCH[2]}"
+          started=$(python3 -I -S -B -c 'import time; print(time.monotonic())')
+          printf 'REGISTRATION_COMMIT=%s\nREGISTRATION_SHA256=%s\nCAMPAIGN_STARTED=%s\n' \
+            "$registration_commit" "$registration_sha256" "$started" >> "$GITHUB_ENV"
+          mkdir "$RUNNER_TEMP/route-evidence"
+          printf 'commit=%s\nrun=%s\nattempt=%s\nstart=%s\n' \
+            "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$started" > "$RUNNER_TEMP/route-evidence/host.txt"
+
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify the registration and stock archive
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA $REGISTRATION_COMMIT"
+          printf '%s  %s\n' "$EXPECTED_MANIFEST" "$PACKAGE/manifest.json" | sha256sum --check --strict
+          reg=${PACKAGE}-registration.json
+          git show "$REGISTRATION_COMMIT:$reg" > "$RUNNER_TEMP/route-evidence/registration.json"
+          printf '%s  %s\n' "$REGISTRATION_SHA256" "$RUNNER_TEMP/route-evidence/registration.json" | sha256sum --check --strict
+          cmp "$reg" "$RUNNER_TEMP/route-evidence/registration.json"
+          timeout 850s curl --fail --location --proto '=https' --tlsv1.2 \
+            --retry 2 --retry-max-time 650 --max-time 420 \
+            --output "$RUNNER_TEMP/route-lean.tar.zst" "$RELEASE"
+          printf '%s  %s\n' "$ARCHIVE_SHA256" "$RUNNER_TEMP/route-lean.tar.zst" | sha256sum --check --strict
+
+      - name: Check the three original scripts and artificial controls
+        run: |
+          set -euo pipefail
+          python3 -I -S -B "$PACKAGE/run.py" --native --repository "$GITHUB_WORKSPACE" \
+            --expected-manifest "$EXPECTED_MANIFEST" --commit "$GITHUB_SHA" \
+            --registration-commit "$REGISTRATION_COMMIT" --registration-sha256 "$REGISTRATION_SHA256" \
+            --started "$CAMPAIGN_STARTED" --archive "$RUNNER_TEMP/route-lean.tar.zst" \
+            --stock-root "$RUNNER_TEMP/route-stock" --output "$RUNNER_TEMP/route-evidence/result"
+
+      - name: Preserve results and failures
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: original-reachable-v3-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/route-evidence
+          if-no-files-found: error
+          compression-level: 1
