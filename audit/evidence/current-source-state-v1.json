@@ -562,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "ecb2b5a3851e5f781f22f0ce0589c623dd4af0b714eda7838849ece790c7f871",
-        "size_bytes": 99427
+        "sha256": "5cb2535de4b57415fe9f55db7407932d5ecd6035043f45e5fc80eec3685ca596",
+        "size_bytes": 99725
       },
       {
         "git_mode": "100644",
@@ -628,8 +628,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "16069db8b830682d18ebf929b052f96058b7dd4d2cac4925e3f6ad2d991eb815",
-        "size_bytes": 67216
+        "sha256": "3d9b599b58467eb9bf6e765cad2411fdcc55ee478eff8c095680fa3a8ddd653e",
+        "size_bytes": 67820
       },
       {
         "git_mode": "100644",
@@ -15732,6 +15732,78 @@
         "path": "audit/evidence/task-dispositions.json",
         "sha256": "0ace29ac18e004f6a225f6c968eda8aa53ccb213b38466bed7b86d9558034ce0",
         "size_bytes": 95256
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/README.md",
+        "sha256": "2b42351282679b74fe60a25f06971d41b58ff9f68aa86f9acb0c69e396dba87b",
+        "size_bytes": 10956
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/check.py",
+        "sha256": "7cc9065517650427ed5a330e4039ce331278fb3c5ef28967bebe46ab1524479e",
+        "size_bytes": 17190
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/diagnostics/call-a.lean.txt",
+        "sha256": "0fc03d0089f82235f442c46392b89e7e7dd2725889853c0ee4530a6f6d985fe4",
+        "size_bytes": 3589
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/diagnostics/call-a.stdout.txt",
+        "sha256": "f92857ff1d942e865f043561a4062969af23f62a23cde50d2c937930f806a4be",
+        "size_bytes": 3809
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/diagnostics/call-k.lean.txt",
+        "sha256": "0f3128f5584bcc9cb2b6ffb98c1abda441f3ed45b0c9669b85cf8119181d6ba7",
+        "size_bytes": 3385
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/diagnostics/call-k.stdout.txt",
+        "sha256": "f4510c3d124560d4eb99e2c0cb9b93b5aacfc86656ae9e389c6074130e323842",
+        "size_bytes": 3815
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/diagnostics/prefix.lean.txt",
+        "sha256": "770bc7d30fcc4fdba189b05b91c99021d8a89bee1aa74cdab5d0d5dc061db1af",
+        "size_bytes": 2752
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/diagnostics/prefix.stdout.txt",
+        "sha256": "5fb66bfd5e1c5ea4774edc5eb258f52d03e0ccb8afa198ebe584600b336f1787",
+        "size_bytes": 76
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/result.json",
+        "sha256": "40e4a02b404f92c277133bf0b01fa26ba710aa49026ca7e7b52850552a1d34de",
+        "size_bytes": 49413
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/submitted/W01.json",
+        "sha256": "191af78bdbdd7c4e2c91b6f557ff8a63930ef855fce89f3c9a9f477366210e1d",
+        "size_bytes": 44797
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/submitted/W03.json",
+        "sha256": "4aae1ff93415742743d2fbaf96fbcd86b6e867de8f744594f8d3d2ba2d21e55b",
+        "size_bytes": 43947
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/three-original-reachable-attempt-2026-11-21/submitted/W15.json",
+        "sha256": "61f2342529b54a41bdfa4ec39eff124e34a4c863a0dd13bf4d0ae63744565d18",
+        "size_bytes": 41895
       },
       {
         "git_mode": "100644",
@@ -37454,8 +37526,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "460e5bd91d419557d73652f8e34e1aa854264ee42585a0b2bf9adadc7defe4df",
-    "entry_count": 6218
+    "entries_sha256": "0a5b480ec59bdd3840b3cadf618a66c4531b51639699900897c9baee52a86d71",
+    "entry_count": 6230
   },
   "subprojections": [
     {
@@ -37483,7 +37555,7 @@
       ]
     },
     {
-      "entries_sha256": "5c7b5a0887be38823f087f45f657c4852b3f02830a6cf4059b8f9754cc1cff68",
+      "entries_sha256": "330a570930bafea7d558eea1a0bb83e028eccdf1ba2c23198aad9dab0291cfca",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

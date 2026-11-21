@@ -124,6 +124,8 @@ The [November mathematical results guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md)
 [PDF](output/pdf/mathematical-results-guide-current.pdf) cover the exact bootstrap example,
 fitted quantizers, source-partition optimization, count-table encoding and 22 checked count statements. It also covers the original eighteen-family formula, two normalized Shannon ratios and six three-source categorical certificates.
 
+Three further archived formulas reached the same proof step in a second stock Lean attempt. Each passed 22 module replays and stopped before the original assertion values were checked. [Inputs, diagnostics and recorded limits](audit/evidence/three-original-reachable-attempt-2026-11-21/README.md)
+
 The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its
 [28-page PDF](output/pdf/mathematical-results-guide.pdf) map nine foundational result families and six
 companion packages to their exact objects, assumptions, formulas, evidence, costs, uses, nonclaims,

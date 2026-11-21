@@ -1,0 +1,1120 @@
+{
+  "schema": "original-reachable-outcomes-v1",
+  "run": 44847287927,
+  "run_attempt": 1,
+  "job": 136670022819,
+  "artifact_id": 14685698407,
+  "candidate_commit": "1f0d2a9570f87b3e407dbfb5ae627e8d0607795f",
+  "registration_commit": "37e0913096e2d1fdf136278c18161ed8ede1d5e7",
+  "registration_sha256": "0e7ef52332da92c229205198efe112d197d21a7d2f8bb9d5bfa2a3f0f816c939",
+  "attempt_id": "SMT39-W01-W03-W15-REACHABLE-20261121-CASEWINDOW-01",
+  "release": "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+  "archive_source_commit": "5b60576d81cbf2862f8f44d3ff18036e23488bda",
+  "host_package_source_commit": "03be681b15cd959d4fbef328e007aa383413132b",
+  "official_lean_archive_sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+  "judge_manifest_sha256": "554d27b67fed684099c5c9a441016f66fa02d95a9e066b257b030f59cb0742ed",
+  "workflow_sha256": "ef38024136325c84298b440982be0a315f55ee962c2fb4daf83a4cda859e5fc0",
+  "stock_anchors": {
+    "bin/lean": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "bin/leanchecker": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe",
+    "src/lean/Lean/Environment.lean": "ee364e4788ce0560c87f621eeb3c4c3dfec62e8db4e15e099fd80e6adc533b86",
+    "src/lean/Lean/Replay.lean": "c434b5b2bc5047ca58d4a095fcf1d9935d413c788ae98a4f21948e6a95ca3fb0",
+    "src/lean/LeanChecker.lean": "2d18ec111d73c536b0bdee2533556bb9548c349f386797d3d3837b1f84d55dae"
+  },
+  "hosted_artifact": {
+    "sha256": "4191e5d0a52b5c2f0abe538403e527d82b6c13f51373e1e6bc3c3acfd944621f",
+    "bytes": 12508619,
+    "members": 1039,
+    "member_bytes": 44837095
+  },
+  "hosted_logs": {
+    "attempt-one-logs.zip": {
+      "sha256": "b673b2a6fbc34fe8a91bee7ea63b6430b861108c27e6fcc66ba1728a05f988a0",
+      "bytes": 19599
+    },
+    "job.log": {
+      "sha256": "2508327c60a0d5f4512351c6e4222c42160c29cf47b285275670ec101d9c77a5",
+      "bytes": 31009
+    }
+  },
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "retained_before_final_bytes": 44672154,
+  "main_commands": 162,
+  "elapsed_seconds": 3566.4260212450004,
+  "max_sampled_group_rss_bytes": 688726016,
+  "max_direct_wait4_rss_bytes": 694493184,
+  "scheduler": {
+    "elapsed_seconds": 205.74302474499996,
+    "native_worker_affinity": {
+      "before": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "during_native": [
+        0
+      ]
+    },
+    "schedule": {
+      "allowed_logical_cpus": 1,
+      "case_order": [
+        "W01",
+        "W03",
+        "W15"
+      ],
+      "case_seconds": 5400,
+      "final_reserve_seconds": 300,
+      "shared_setup_seconds": 1500,
+      "workers": 1,
+      "workflow_timeout_minutes": 320
+    }
+  },
+  "scientific_stock_modules": 22,
+  "ordinary_module_order": [
+    "W02Semantics",
+    "ProjectionCore",
+    "ProjectionReification",
+    "TraceCode",
+    "OriginalLiteral",
+    "OriginalPrefix",
+    "OriginalContract",
+    "ReachSpec",
+    "OriginalStaticGroup00",
+    "OriginalStaticGroup01",
+    "OriginalStaticGroup02",
+    "OriginalStaticGroup03",
+    "OriginalStaticGroup04",
+    "OriginalStaticGroup05",
+    "OriginalStaticGroup06",
+    "OriginalStaticGroup07",
+    "OriginalStaticGroup08",
+    "OriginalStaticGroup09",
+    "OriginalStaticGroup10",
+    "OriginalStatic",
+    "ReachRightInverse",
+    "ReachCheckedBody"
+  ],
+  "remaining_owners": [
+    "ReachCalls",
+    "ReachLeaves",
+    "ReachBodyAgreement",
+    "ReachFullEvaluation",
+    "ReachPreserves",
+    "ReachReifies",
+    "OriginalDynamic",
+    "OriginalPredicates",
+    "OriginalFinite",
+    "OriginalConsumer",
+    "OriginalTrace",
+    "OriginalAxioms",
+    "OriginalTerms"
+  ],
+  "cpu_control_outcomes": {
+    "next-worker": {
+      "tag": "next-worker",
+      "exit": 0,
+      "stop": null,
+      "elapsed_seconds": 0.25408220899998923,
+      "max_observed_group_rss_bytes": 8560640,
+      "direct_wait4_maxrss_bytes": 29962240,
+      "post_group_absent": true,
+      "residual_after_wait4": false,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "rss": {
+      "tag": "rss",
+      "exit": -9,
+      "stop": "observed process-group RSS",
+      "elapsed_seconds": 0.1711576120000018,
+      "max_observed_group_rss_bytes": 159559680,
+      "direct_wait4_maxrss_bytes": 159559680,
+      "post_group_absent": true,
+      "residual_after_wait4": false,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "single-cpu": {
+      "tag": "single-cpu",
+      "exit": 0,
+      "stop": null,
+      "elapsed_seconds": 0.08809008100001847,
+      "max_observed_group_rss_bytes": 7712768,
+      "direct_wait4_maxrss_bytes": 29962240,
+      "post_group_absent": true,
+      "residual_after_wait4": false,
+      "stdout_bytes": 2,
+      "stdout_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wall": {
+      "tag": "wall",
+      "exit": -9,
+      "stop": "native or campaign time",
+      "elapsed_seconds": 1.083544494000023,
+      "max_observed_group_rss_bytes": 8605696,
+      "direct_wait4_maxrss_bytes": 29962240,
+      "post_group_absent": true,
+      "residual_after_wait4": false,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "cases": {
+    "W01": {
+      "raw": {
+        "bytes": 39338,
+        "git_blob": "0743803680b22f20489cf129c882e8f955831ce6",
+        "relative_path": "audit/formal/finite-smt39-qualification-v1/raw/W01-carrier-complete/generator.stdout.smt2",
+        "sha256": "ca064fa505a839da620431c2987dde384316eeac1535c79147a3b7cb881d9c9f"
+      },
+      "typed_sha256": "fe33e1519fd8d98155c83a6b28accea90cd98db90c72571b99812db7ef13df96",
+      "literal_sha256": "20f8455d3a3508df1b531327c49e7fe2b7b8a3bc0924690010336545f6b06a20",
+      "assertions": [
+        [
+          "assert",
+          "true"
+        ],
+        [
+          "assert",
+          [
+            "not",
+            [
+              "=",
+              [
+                "valid",
+                "a"
+              ],
+              [
+                "canonical",
+                "a"
+              ]
+            ]
+          ]
+        ]
+      ],
+      "projected_slots": [
+        {
+          "index": 0,
+          "name": "a",
+          "source_type": [
+            "bv",
+            7
+          ]
+        }
+      ],
+      "finite_count_required": 128,
+      "finite_count_observed": 0,
+      "named_terms_required": 187,
+      "named_terms_final_observed": 0,
+      "required_direct_edges": 101,
+      "named_slots_submitted": 129,
+      "targets_whose_ordinary_owner_was_replayed": 107,
+      "case_elapsed_seconds_including_custody": 1115.020045625,
+      "max_observed_case_group_rss_bytes": 686698496,
+      "max_wait4_case_rss_bytes": 692465664,
+      "submitted_sha256": "191af78bdbdd7c4e2c91b6f557ff8a63930ef855fce89f3c9a9f477366210e1d",
+      "source_structure_sha256": "1914fb2ffacd66c3a08baadab88362601d2990543bb98c673e3bd83ec5385fad",
+      "source_partition_bytes": 39338,
+      "case_outcome": {
+        "status": "failed registered case",
+        "error": "RuntimeError: unexpected native outcome or diagnostics at W01-isolate-ReachMethod.callA",
+        "transition_sha256": "626a738e6d3157dcf1da311390aff53c23b1e82632234fdac8aa96992e7d0640"
+      },
+      "all_sources_sha256": "44225f68a6de4e76872ca0ea7293ad698937b9480c9775cf14b708ee287962b0",
+      "case_clock": {
+        "case": "W01",
+        "start_s_since_campaign": 205.743578033,
+        "deadline_s_since_campaign": 5605.743578033,
+        "available_seconds": 5400.0,
+        "reserved_for_later_case_seconds": 10800,
+        "final_seconds_reserved": 300
+      },
+      "transition": "continue after ordinary failed case",
+      "module_fingerprints": [
+        [
+          "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3",
+          "921c0ab66aea8894b574825a4d6762b4d6ee57c735a6f79e9f9f2cf8a99e555d",
+          "1e47ed60aa143a00a2d5f865746c0ab953a297edbee655857b49a0a8795dc4fb",
+          "cb29d385c98277a9b4c7591d7f8efeabb6aa0a6fb4182be09d4ceb26cafd348f"
+        ],
+        [
+          "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11",
+          "4a5645565f31e4b2f472480b36117d8988fb4489a10ad83081963f56c8b1f8ac",
+          "fd7881313390d2e720e3537889e26046e171ac1ac3b855a491144909db76a697",
+          "ebd2e32f5961fe6913d8813149b012d41609d4e46f26c14e8d845636fe818c22"
+        ],
+        [
+          "c7ad167ec2736ae5d57462c22d48fe63e76f14657468c88c63858783d929e599",
+          "e4bcf232e57beb3ac41f4ad6ec024b081672180a7d3139c29e5e4b58c978431c",
+          "0f9eac9c6027e985385f12bcb29e3cbe311f5995082a913e2c2e6aa5db006641",
+          "c5ead52c765feaca91f1599362c86b956c6c9dbf83b1146fc0a1365928e69c98"
+        ],
+        [
+          "778f4e6dda461996836c62765727c70b0ec6776f85cab94aff20cec932a04b29",
+          "3a6cf1ce77bd395819eddf375714539c1085572cc2905a32e6946834ce09c61d",
+          "cd527b9c6a1497c3df1eed74350f8f611665c8892a15268ed7c58d09b77cb861",
+          "9073c3830b805b5f42b25a711a05f7ad9c579e635ddee738d009baacf796ae03"
+        ],
+        [
+          "20f8455d3a3508df1b531327c49e7fe2b7b8a3bc0924690010336545f6b06a20",
+          "7b06efb312800e49016635ddcd82197cb8de34c26d43381b7d3ac2048e719037",
+          "92b188336610bc7c0676377eb11e8a9cc8a27189e9bb68af09e1713159864fdb",
+          "d906b3a0e37a06af4dfb29820ada5b5d3f4a526829bead38fb90795a917d2f3e"
+        ],
+        [
+          "89708c93f9c10e1502aa2ebdf36bdc7031fd54001a93618d1d151e7a51cd4aa5",
+          "b96441b467b9998bfff4158d188e00ad2c38338317770e3480bae35799b0942b",
+          "11ba2430564408bc47f922795d45a1a2a81a661ceb475f51da66c445fb336d14",
+          "9ffd77b2495b1a44785d0e87a9ae0ae55db4dc1730f858f8542f17a3944968dd"
+        ],
+        [
+          "6a0a08b8f38ef8d2a35e1336a0a0c1021b885f5cdb7ecc439bc1fdecfb5b2dd8",
+          "5a2997aac11b6261d5b6b5df351f80f7f62c1f7dc105825a96757db5dc55e4b6",
+          "aad010e1e07a8a9adb91c91f5b6de8e79c691e9c03454bd58d265c785fb03e14",
+          "4649755faf9f6c4f9719fe4c01d9b16bb9de6f58f4586a3ca8b31c9b5b17e57d"
+        ],
+        [
+          "0c5afe151179b57a9168776ec0d16a181baa7215857ea81ee2f157e8374c9ccb",
+          "4962c32e5ef7e559d115ca0dd86ca781fc2d6f1425e7b7b0dbb348a6063f0a77",
+          "297ea96e4e3189d46b6b19136f5f88799f39963ce238dd4b8e27d513bd9f0669",
+          "a9aec21230ed99d92f6f0e7303f6e63568f230fcd7d088e8d21225833ed115a5"
+        ],
+        [
+          "60d84da46ef7b9363220f2f5029afbae840d82eaeb80f52d504bb6f749df146d",
+          "5e674aaf77654ab22b2363f24ce9ca53b6471eb4bf695ff07a8661176a4d2c04",
+          "5d71dd17877602304204bf7ff6c561c4503323619cac2225de726893a1834d7b",
+          "a1f5136314e74afe2e8b276e0089d1e6dfa3eca3e487c4d4faffa66c6fd74741"
+        ],
+        [
+          "db4c8a4923382964c072ebc37d2c35a0218216add1c6c4ee624671dfaca78dd8",
+          "66ddce3757af1f727336e8a96f0805aba353849d1144e0db26bf0626242625fa",
+          "90f93bc85599138367971c11e3d5aa2f1f3d3ba6a546c80bcf94658d160dffc3",
+          "c67e6f2af92c4cbbf0444c597abb5b4068ec489611dfeb29cd492555dcf12eab"
+        ],
+        [
+          "e5ea514318534ad2f730c2025718fb4c8e1a6b4db17be7430f07e9a9a22b4520",
+          "65c0ac78cca0b601887279d319388e655242d53ea12348b4c4b79d4057ccdf4b",
+          "408edd79b0d79f835c7e02f591183242c6f9bdad3a508031b259f92e9b33a59f",
+          "63c27a4ba57c5f937533a14d8fa9d753fe4638d32e600ff7f7825b2a10263e7e"
+        ],
+        [
+          "bdd73a7b672fca5313d906eca8db7b1f73ada9bf1e1b3cc22d96c856dfa20942",
+          "295d30dcb94fc4063070a54116a909dde1e7868e64c0264a5d42c92117a8175b",
+          "801133b2681f31779e1bc4e454b2c5f4abb84c3b2d96726c70128b48526f9d61",
+          "6222e0274b675e0c18ffd5fd06708439565ff0792689a13497ee9045ede078ac"
+        ],
+        [
+          "4f98f41873b6e23e824739ec648f982bfdcfde24819f4da1e8b2927fb109f0be",
+          "9e19d42d682f94bc0dfa39c849b199ccef7a41603d49e0f34a2dfa2f5950621b",
+          "02e0d0eb7cf65e71e9fbf50db58d1f905bbf470220632dbf2487fe4db9a86bb5",
+          "9bec7df2b07fb1630a3104ad6f49508ba3619e5b6abcc68a309c9a370e43020f"
+        ],
+        [
+          "8295302bf0b94c090877391c0c34d82ed98939213f4da6e2e85fa83fc7e2d9a3",
+          "f6c40aa66ebf7f17d9978f999e8c88a39383d0cac529e514d80c2e207aedc6a1",
+          "52a231d661f8f9fdd6f3731138371f2427dc0907bddc422e02ad92555d999f14",
+          "6925ada2dd884fdfd37c95960d2e09bba79d495852ab43c4e59925491f034795"
+        ],
+        [
+          "e3cafc9a5668d9f64d07d9f76158a80096fc5b6f8ec0489addcf5d0fe2d02d46",
+          "c98a3722875d941812094afbaa9057bed9f3e4eed4df62060e6eb7132d6915a1",
+          "6bbe9792390406740703de86507f3b4d7696179dc364eecfc6c89508b50ea873",
+          "b1c5b461e00189d5613c75034875590a3f5bc893fdfdbacf69ec1cb4d4946eac"
+        ],
+        [
+          "203424973005c8204c18d775543e80d41237f2436f3b6037f6fc899cf2fea02a",
+          "becfa2f3baad178e661d96410c87d6fd48d68f2fb1c36f3e69b198d10f9cdcfa",
+          "36ff49e081dfaa5c1821d08e4938b194e8a8b4e4ddd19ece24feef448925ec73",
+          "5b59bf6bb1ab00f7a677faa6f0059625ab966f1ef4767576c594b9823f34aeae"
+        ],
+        [
+          "48c3fa98f48bd3c6b42e78408355deaa79c1b959d6399c90469d94f18e1fff11",
+          "ff5eceeef49dd9dfe99ee1a99304a4247ad0c42fe201b14d8b5c09837c5abb9b",
+          "1f60cc874df153e635f096a6df78d07df8ea27366bcfd9b54c0e5c7cefee4272",
+          "b2e403b4f4205c121e6a005998ff75b2c86425e81b2628a3aac57c8eb89c5840"
+        ],
+        [
+          "b7d39d5da647191f59090675db8dcdd818e2dcd845326383f71516b88f115a02",
+          "28ccb0eceb1260292ef03762d7a5c5c63456c7d0c34064ee42620ed12dd8b057",
+          "f4ec69cf6d0112c550b5bff8c7fe4c94c9c3a9fd80b8a3a446872dddadf94b78",
+          "92cba379c78a8d3afd28260e3c0aa456dc94cb18eca46fe30852c484b0485722"
+        ],
+        [
+          "cc831c09e705d5370141278ce41bfe44749d393784b41347fa6fd2cab2d999bc",
+          "428e1913af795656f7996e242d5d5df6e80fda568690bf97ebad3be6848201a3",
+          "f07cb5ffbe072be613a70d14224d5a561d1d228ca89d41937660be0586b0308f",
+          "559dfe2311be61beefe884659e6ffd6cd7a6561a1613d46e1ef3aead99ba95a1"
+        ],
+        [
+          "c18f5b90f982b9da6fbb020a2aebb0b09f4c194921070055bd4f14e90cf0a4d7",
+          "11e66ae7cc1a42f25b585628cc27978961cd6b5667e064f860a1ed980b49dc8f",
+          "e37d8decfa8beebbf764286976bfee0ff5e4024f80f03d09a877f89ab03f40a7",
+          "ed35cfb9377f5cd68f21cfbbc987e081a83f48e7a9d14974fd748f708bb83684"
+        ],
+        [
+          "e547f88309669b5ebe5093893b29eec4b50d0e4e5f545d5346bc828debd76e56",
+          "239a51050c18d6cd6874d36d1eb9b806a38041d2892789ee32d2a4e1dc154153",
+          "ad55013e4432092aecb6a399cc5d0be6b8e7b8b28f6781d24de44ceab9a1d0c6",
+          "93b48c2a2b9706478c2ea39abdd40230628af35202b378376be9d96b66974a65"
+        ],
+        [
+          "2b09c27aa00a4b41b319fdca3f48eb87f7b40b1e5972ada32cbf7a88889501dc",
+          "4777d7602413d89fc2e906836ba24536b365870339eaf9afdedbe2dcfa790c80",
+          "8a6a0f11e6dbad01bad0a387fd622fe892ca4dc8a54260d5b27a859745f3f3c9",
+          "166cc599f0115da9f5307ce8ee6272692292bc54f8d6266d7abfd1ed0fefee9c"
+        ]
+      ],
+      "isolated": {
+        "OriginalReach.prefixInstallation": {
+          "owner": "ReachCalls",
+          "statement": "theorem OriginalReach.prefixInstallation : ReachSpec.prefixReady := by",
+          "source": "diagnostics/prefix.lean.txt",
+          "stdout": "diagnostics/prefix.stdout.txt",
+          "source_sha256": "770bc7d30fcc4fdba189b05b91c99021d8a89bee1aa74cdab5d0d5dc061db1af",
+          "submitted_owner_sha256": "b8358641e2abe678649b021ab0a50a630cc711e62c7fcb40bfda744b31902309",
+          "template_sha256": "e75177ae74182aef5e80b841d0afb4d6ad12fc1235f2f2e18a8a591a59cb22dd",
+          "input_receipt_sha256": "a7bdd826d452536e03c91a8c7d112d9ffd81a797d07842381422d11a62d79311",
+          "local_imports": {
+            "ReachCheckedBody.olean": "4777d7602413d89fc2e906836ba24536b365870339eaf9afdedbe2dcfa790c80"
+          },
+          "native": {
+            "tag": "W01-isolate-OriginalReach.prefixInstallation",
+            "exit": 0,
+            "stop": null,
+            "elapsed_seconds": 0.5198278620000565,
+            "max_observed_group_rss_bytes": 572514304,
+            "direct_wait4_maxrss_bytes": 572837888,
+            "post_group_absent": true,
+            "residual_after_wait4": false,
+            "stdout_bytes": 76,
+            "stdout_sha256": "5fb66bfd5e1c5ea4774edc5eb258f52d03e0ccb8afa198ebe584600b336f1787",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "isolated_checkpoint_passed": true,
+          "retained_olean": false
+        },
+        "ReachMethod.callA": {
+          "owner": "ReachCalls",
+          "statement": "theorem ReachMethod.callA : (ReachSpec.prefixReady) → ReachSpec.callAgrees 0 \"a\" := by",
+          "source": "diagnostics/call-a.lean.txt",
+          "stdout": "diagnostics/call-a.stdout.txt",
+          "source_sha256": "0fc03d0089f82235f442c46392b89e7e7dd2725889853c0ee4530a6f6d985fe4",
+          "submitted_owner_sha256": "b8358641e2abe678649b021ab0a50a630cc711e62c7fcb40bfda744b31902309",
+          "template_sha256": "00404ae0b79f41aa4582e94b899b83651173e71072022dd6815e79fc0439568b",
+          "input_receipt_sha256": "8ed819011f90b28a49e87a4c74bd75cddef59386a7b5c0ac33c68d977c8b5c96",
+          "local_imports": {
+            "ReachCheckedBody.olean": "4777d7602413d89fc2e906836ba24536b365870339eaf9afdedbe2dcfa790c80"
+          },
+          "native": {
+            "tag": "W01-isolate-ReachMethod.callA",
+            "exit": 1,
+            "stop": null,
+            "elapsed_seconds": 0.26082033800003046,
+            "max_observed_group_rss_bytes": 507039744,
+            "direct_wait4_maxrss_bytes": 511635456,
+            "post_group_absent": true,
+            "residual_after_wait4": false,
+            "stdout_bytes": 3809,
+            "stdout_sha256": "f92857ff1d942e865f043561a4062969af23f62a23cde50d2c937930f806a4be",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_axioms": null,
+          "isolated_checkpoint_passed": false,
+          "retained_olean": false
+        }
+      }
+    },
+    "W03": {
+      "raw": {
+        "bytes": 39272,
+        "git_blob": "6fda0a4281e67697b8e562d6e68f93acc6638165",
+        "relative_path": "audit/formal/finite-smt39-qualification-v1/raw/W03-reflexivity/generator.stdout.smt2",
+        "sha256": "c67e6ab935acc7fb8fd1dd9c25fb6e6561db30cbe0b61ac8eb9a5968861126ff"
+      },
+      "typed_sha256": "9ebaea0df413137f8157b48186b0430f8105754526fe6606a22f55b86c061421",
+      "literal_sha256": "71775357f33cecc343ccb07b9c8e040c9d2bf1c6502af280fc56f71f825282c3",
+      "assertions": [
+        [
+          "assert",
+          [
+            "valid",
+            "a"
+          ]
+        ],
+        [
+          "assert",
+          [
+            "not",
+            [
+              "leq",
+              "a",
+              "a"
+            ]
+          ]
+        ]
+      ],
+      "projected_slots": [
+        {
+          "index": 0,
+          "name": "a",
+          "source_type": [
+            "bv",
+            7
+          ]
+        }
+      ],
+      "finite_count_required": 128,
+      "finite_count_observed": 0,
+      "named_terms_required": 179,
+      "named_terms_final_observed": 0,
+      "required_direct_edges": 95,
+      "named_slots_submitted": 121,
+      "targets_whose_ordinary_owner_was_replayed": 107,
+      "case_elapsed_seconds_including_custody": 1122.4482749440003,
+      "max_observed_case_group_rss_bytes": 688726016,
+      "max_wait4_case_rss_bytes": 694493184,
+      "submitted_sha256": "4aae1ff93415742743d2fbaf96fbcd86b6e867de8f744594f8d3d2ba2d21e55b",
+      "source_structure_sha256": "477f7a17f72f1848fd66d6f328d1a49213f0067a05c8c1eeddf65b818f4be44e",
+      "source_partition_bytes": 39272,
+      "case_outcome": {
+        "status": "failed registered case",
+        "error": "RuntimeError: unexpected native outcome or diagnostics at W03-isolate-ReachMethod.callA",
+        "transition_sha256": "d67c70924a746e346d897e06e8e77ce9c21c25d90187b009c82630f093547ed6"
+      },
+      "all_sources_sha256": "f7b6ba67838c213238eaf6a132a948e132e9355e7b4f9729d190c65c7789d009",
+      "case_clock": {
+        "case": "W03",
+        "start_s_since_campaign": 1320.7673809419998,
+        "deadline_s_since_campaign": 6720.767380941999,
+        "available_seconds": 5400.0,
+        "reserved_for_later_case_seconds": 5400,
+        "final_seconds_reserved": 300
+      },
+      "transition": "continue after ordinary failed case",
+      "module_fingerprints": [
+        [
+          "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3",
+          "921c0ab66aea8894b574825a4d6762b4d6ee57c735a6f79e9f9f2cf8a99e555d",
+          "1e47ed60aa143a00a2d5f865746c0ab953a297edbee655857b49a0a8795dc4fb",
+          "cb29d385c98277a9b4c7591d7f8efeabb6aa0a6fb4182be09d4ceb26cafd348f"
+        ],
+        [
+          "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11",
+          "4a5645565f31e4b2f472480b36117d8988fb4489a10ad83081963f56c8b1f8ac",
+          "fd7881313390d2e720e3537889e26046e171ac1ac3b855a491144909db76a697",
+          "ebd2e32f5961fe6913d8813149b012d41609d4e46f26c14e8d845636fe818c22"
+        ],
+        [
+          "c7ad167ec2736ae5d57462c22d48fe63e76f14657468c88c63858783d929e599",
+          "e4bcf232e57beb3ac41f4ad6ec024b081672180a7d3139c29e5e4b58c978431c",
+          "0f9eac9c6027e985385f12bcb29e3cbe311f5995082a913e2c2e6aa5db006641",
+          "c5ead52c765feaca91f1599362c86b956c6c9dbf83b1146fc0a1365928e69c98"
+        ],
+        [
+          "778f4e6dda461996836c62765727c70b0ec6776f85cab94aff20cec932a04b29",
+          "3a6cf1ce77bd395819eddf375714539c1085572cc2905a32e6946834ce09c61d",
+          "cd527b9c6a1497c3df1eed74350f8f611665c8892a15268ed7c58d09b77cb861",
+          "9073c3830b805b5f42b25a711a05f7ad9c579e635ddee738d009baacf796ae03"
+        ],
+        [
+          "71775357f33cecc343ccb07b9c8e040c9d2bf1c6502af280fc56f71f825282c3",
+          "a017d3aeb729879386938ba9a142f9cc16da80ec6af27bb75bc6cd18a7433d99",
+          "1caed2a36ed303ab58b918655b7450c151b1f78890029ed66d0bdbe9417b85b9",
+          "fe5bb4f6c1755ec45e06880a11cdb62cfe7b8bebe8727ff6f77ed1e6b67add05"
+        ],
+        [
+          "863e023bd999a84d96a50d75896715dd5214f1fed0f910d2cf13228cf818bc0b",
+          "83563fec838501728ed3d883736c5e7087ae4ab44056677b2cf2ec7f602071d4",
+          "66ce249fe11737e05812312f9c849ba5c6a76e8d5d906f0c650b3ef83683f051",
+          "03bfe3807ae322f64815ba60da62b9eb1ad84cf9010f0d967af116224a754deb"
+        ],
+        [
+          "9a44a39962f84cc64af34d9df40dfa7d23dc5c6f9525fcf38ababb0b148fd6b8",
+          "cf34e0ae62cb3f9520433947c09185c2b953643bbb84742d49c6b94ae9ce38ee",
+          "df1d60c552087236af9cfec16b6c09e4ddd13c42e9279d23b560ad0799e5f0e7",
+          "95e2b671530447f186d02a5f83ce0a7ade4f867f60d9a2a1d53eb5d5300dee9e"
+        ],
+        [
+          "4e3dbad0412cca071f588e4b4efcc28a7c81c9966d2349e99196646b402a062b",
+          "412df08762aac5f22bde3c55c508feaff309fd10298cf073b800eb2a737f8a32",
+          "bc0c089c8ac8ed51139ca11d3a15f1920fd316d409aeb62bcf4dda131b5b9a51",
+          "b3bada51abf516610522e7648ba79b259847a46390535fe32d42ed916bfabc8c"
+        ],
+        [
+          "60d84da46ef7b9363220f2f5029afbae840d82eaeb80f52d504bb6f749df146d",
+          "5e674aaf77654ab22b2363f24ce9ca53b6471eb4bf695ff07a8661176a4d2c04",
+          "254a7d10476ce0a4d00641dc45f62d0d61c29f3cae752feda9e6bc1e0c4a305c",
+          "750854e2c60413f69a78c4d162b2306f9602c6713fb62a31873fb9c844a51383"
+        ],
+        [
+          "db4c8a4923382964c072ebc37d2c35a0218216add1c6c4ee624671dfaca78dd8",
+          "66ddce3757af1f727336e8a96f0805aba353849d1144e0db26bf0626242625fa",
+          "e1f78c060a3fb6cd6b9b22e03e0d2371ead0ddcede189e0a105a1d3391e00ec5",
+          "f459c547e38aa431c7f2cb43b45665347f2c3dfe734d50dfc079e9723fe2ef7c"
+        ],
+        [
+          "e5ea514318534ad2f730c2025718fb4c8e1a6b4db17be7430f07e9a9a22b4520",
+          "65c0ac78cca0b601887279d319388e655242d53ea12348b4c4b79d4057ccdf4b",
+          "cb0803093b757f34e9c4ea5fd6b7146d430d31a3ba21568e34b61b253a3c3004",
+          "aaa568c292e2c4742ea7dfc5c708649f998bdba09b34de72d9efafe8654caad7"
+        ],
+        [
+          "bdd73a7b672fca5313d906eca8db7b1f73ada9bf1e1b3cc22d96c856dfa20942",
+          "295d30dcb94fc4063070a54116a909dde1e7868e64c0264a5d42c92117a8175b",
+          "6c41441bb6e62e0ab43666f8934c2d9494a98bf5d139b9e3d90fbea9875e2396",
+          "844fcdba361ae2391ae9cac730a454fcab7b3d9136d72e65859f9b310dc41fe9"
+        ],
+        [
+          "4f98f41873b6e23e824739ec648f982bfdcfde24819f4da1e8b2927fb109f0be",
+          "9e19d42d682f94bc0dfa39c849b199ccef7a41603d49e0f34a2dfa2f5950621b",
+          "ceb9d0418d4acbd41f3a6b15c50cc8bcfdadb95c9a0cb6cefdffe6f69acfacc4",
+          "1217e31f7644cafd73e22ae29ba299112eb76457c36aef2428e1a0b713971102"
+        ],
+        [
+          "8295302bf0b94c090877391c0c34d82ed98939213f4da6e2e85fa83fc7e2d9a3",
+          "f6c40aa66ebf7f17d9978f999e8c88a39383d0cac529e514d80c2e207aedc6a1",
+          "964cb13f5fee98ce8cd8b2872d4daed4de7cd164404642d57f60bd5677a179ab",
+          "63515e29fe555c1b3b600a39a9573a367a645133b68da82ec0b7bd4284a44e81"
+        ],
+        [
+          "e3cafc9a5668d9f64d07d9f76158a80096fc5b6f8ec0489addcf5d0fe2d02d46",
+          "c98a3722875d941812094afbaa9057bed9f3e4eed4df62060e6eb7132d6915a1",
+          "e35ad8aac65e3a59dbc5b7014bdd2d1c7216c4a3401623a7ca3c0dedf0632981",
+          "f876812ab89d73217dcc2331b4851076a5e77f6c8caf8265ba2c94c521777c1f"
+        ],
+        [
+          "203424973005c8204c18d775543e80d41237f2436f3b6037f6fc899cf2fea02a",
+          "becfa2f3baad178e661d96410c87d6fd48d68f2fb1c36f3e69b198d10f9cdcfa",
+          "c11d8bb69f971f470a4530d88d1de3118706d8c708fe7eba98758090f6393409",
+          "30d8594861040b19789327ad46ec15b0c89421a59c6d47afe4c11003475836e5"
+        ],
+        [
+          "48c3fa98f48bd3c6b42e78408355deaa79c1b959d6399c90469d94f18e1fff11",
+          "ff5eceeef49dd9dfe99ee1a99304a4247ad0c42fe201b14d8b5c09837c5abb9b",
+          "95a5d6fd59e730b1ec6f8c789370e589e84ddfcc174b8bc4532853baa0062082",
+          "db1281324eeb3d331cb146794a0204e0ceb2484496f4bdca6986c82b1644c479"
+        ],
+        [
+          "b7d39d5da647191f59090675db8dcdd818e2dcd845326383f71516b88f115a02",
+          "28ccb0eceb1260292ef03762d7a5c5c63456c7d0c34064ee42620ed12dd8b057",
+          "226b6bf138fb4a688c8ef06332ba8f11f98a90637d090204456eaf080fcdaf03",
+          "b26141e59dcd8c2b7c8993ea916c94bb67d670df1dd020819491e34544913354"
+        ],
+        [
+          "cc831c09e705d5370141278ce41bfe44749d393784b41347fa6fd2cab2d999bc",
+          "428e1913af795656f7996e242d5d5df6e80fda568690bf97ebad3be6848201a3",
+          "365a66afce850915852407756b0c7b388da5785478e236b5a986b372bfed15ee",
+          "04a71ade67f2864f16d5df060fece539c5ed8557db65c51a68d6453401ac8164"
+        ],
+        [
+          "c18f5b90f982b9da6fbb020a2aebb0b09f4c194921070055bd4f14e90cf0a4d7",
+          "11e66ae7cc1a42f25b585628cc27978961cd6b5667e064f860a1ed980b49dc8f",
+          "6ae088105fcc2fcd30812be6bdff33000c1917387e34211b4cb7c492c6d8e33e",
+          "ba6a7854abc3ccd97602daaf1df91602830fdba9510be40665ce240aad515d53"
+        ],
+        [
+          "e547f88309669b5ebe5093893b29eec4b50d0e4e5f545d5346bc828debd76e56",
+          "239a51050c18d6cd6874d36d1eb9b806a38041d2892789ee32d2a4e1dc154153",
+          "5e8b03015858ae0b4fabb8fa28296ad9475a9b455d77f378b44c338237b7f848",
+          "7280d8f37e4c461fd19b50c71c676117367d9368f480d229229f0e65b6b8fdfc"
+        ],
+        [
+          "2b09c27aa00a4b41b319fdca3f48eb87f7b40b1e5972ada32cbf7a88889501dc",
+          "4777d7602413d89fc2e906836ba24536b365870339eaf9afdedbe2dcfa790c80",
+          "5c6cdbd5a1a3f604c767a99abcaa3df32bec4c767af6b5c78b9483be76202aea",
+          "3b3c728ab3f9a73acca1531acd3882d64fdc91e7dd014e3e30e24e07025dba60"
+        ]
+      ],
+      "isolated": {
+        "OriginalReach.prefixInstallation": {
+          "owner": "ReachCalls",
+          "statement": "theorem OriginalReach.prefixInstallation : ReachSpec.prefixReady := by",
+          "source": "diagnostics/prefix.lean.txt",
+          "stdout": "diagnostics/prefix.stdout.txt",
+          "source_sha256": "770bc7d30fcc4fdba189b05b91c99021d8a89bee1aa74cdab5d0d5dc061db1af",
+          "submitted_owner_sha256": "85dd626ad0cb7ebdeb6e7d8eb91b5b5feab8eda5ea37729b59c1040469b2b6ce",
+          "template_sha256": "e75177ae74182aef5e80b841d0afb4d6ad12fc1235f2f2e18a8a591a59cb22dd",
+          "input_receipt_sha256": "244b80d9e2652e688ccede96f31eda750a76c894f09b8272c544a595ccc71787",
+          "local_imports": {
+            "ReachCheckedBody.olean": "4777d7602413d89fc2e906836ba24536b365870339eaf9afdedbe2dcfa790c80"
+          },
+          "native": {
+            "tag": "W03-isolate-OriginalReach.prefixInstallation",
+            "exit": 0,
+            "stop": null,
+            "elapsed_seconds": 0.5234368629999153,
+            "max_observed_group_rss_bytes": 572588032,
+            "direct_wait4_maxrss_bytes": 572911616,
+            "post_group_absent": true,
+            "residual_after_wait4": false,
+            "stdout_bytes": 76,
+            "stdout_sha256": "5fb66bfd5e1c5ea4774edc5eb258f52d03e0ccb8afa198ebe584600b336f1787",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "isolated_checkpoint_passed": true,
+          "retained_olean": false
+        },
+        "ReachMethod.callA": {
+          "owner": "ReachCalls",
+          "statement": "theorem ReachMethod.callA : (ReachSpec.prefixReady) → ReachSpec.callAgrees 0 \"a\" := by",
+          "source": "diagnostics/call-a.lean.txt",
+          "stdout": "diagnostics/call-a.stdout.txt",
+          "source_sha256": "0fc03d0089f82235f442c46392b89e7e7dd2725889853c0ee4530a6f6d985fe4",
+          "submitted_owner_sha256": "85dd626ad0cb7ebdeb6e7d8eb91b5b5feab8eda5ea37729b59c1040469b2b6ce",
+          "template_sha256": "00404ae0b79f41aa4582e94b899b83651173e71072022dd6815e79fc0439568b",
+          "input_receipt_sha256": "214578c271b36ffcc44b23d3a1a099056bd767b1a68593f23fb89ccbdb412b37",
+          "local_imports": {
+            "ReachCheckedBody.olean": "4777d7602413d89fc2e906836ba24536b365870339eaf9afdedbe2dcfa790c80"
+          },
+          "native": {
+            "tag": "W03-isolate-ReachMethod.callA",
+            "exit": 1,
+            "stop": null,
+            "elapsed_seconds": 0.2617444500001511,
+            "max_observed_group_rss_bytes": 506867712,
+            "direct_wait4_maxrss_bytes": 511598592,
+            "post_group_absent": true,
+            "residual_after_wait4": false,
+            "stdout_bytes": 3809,
+            "stdout_sha256": "f92857ff1d942e865f043561a4062969af23f62a23cde50d2c937930f806a4be",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_axioms": null,
+          "isolated_checkpoint_passed": false,
+          "retained_olean": false
+        }
+      }
+    },
+    "W15": {
+      "raw": {
+        "bytes": 39473,
+        "git_blob": "2234db624fcc0497956e431bb735a80428e21705",
+        "relative_path": "audit/formal/finite-smt39-qualification-v1/raw/W15-full-joint-event/generator.stdout.smt2",
+        "sha256": "2175ff7776cda4b507c470fa44aa7e4d7f175fae28144f40eee36d25f144f3a5"
+      },
+      "typed_sha256": "38950ac67a84de3ccffde7535de6fa11a84fe6fe95aee259143108c6ffdc93f9",
+      "literal_sha256": "fa7f972b22b7e1990e37e14e5fbd2d664f13177c2efc0c7bc84478f90f54f0fd",
+      "assertions": [
+        [
+          "assert",
+          "true"
+        ],
+        [
+          "assert",
+          [
+            "not",
+            [
+              "=",
+              [
+                "raw-source",
+                [
+                  "_",
+                  "bv64",
+                  "7"
+                ],
+                "k",
+                "r"
+              ],
+              [
+                "and",
+                [
+                  "=",
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "3",
+                      "3"
+                    ],
+                    "k"
+                  ],
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "3",
+                      "3"
+                    ],
+                    "r"
+                  ]
+                ],
+                [
+                  "=",
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "2",
+                      "2"
+                    ],
+                    "k"
+                  ],
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "2",
+                      "2"
+                    ],
+                    "r"
+                  ]
+                ],
+                [
+                  "=",
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "1",
+                      "1"
+                    ],
+                    "k"
+                  ],
+                  [
+                    [
+                      "_",
+                      "extract",
+                      "1",
+                      "1"
+                    ],
+                    "r"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "projected_slots": [
+        {
+          "index": 6,
+          "name": "k",
+          "source_type": [
+            "bv",
+            4
+          ]
+        },
+        {
+          "index": 7,
+          "name": "r",
+          "source_type": [
+            "bv",
+            4
+          ]
+        }
+      ],
+      "finite_count_required": 256,
+      "finite_count_observed": 0,
+      "named_terms_required": 185,
+      "named_terms_final_observed": 0,
+      "required_direct_edges": 99,
+      "named_slots_submitted": 128,
+      "targets_whose_ordinary_owner_was_replayed": 107,
+      "case_elapsed_seconds_including_custody": 1122.9892354879998,
+      "max_observed_case_group_rss_bytes": 679444480,
+      "max_wait4_case_rss_bytes": 693567488,
+      "submitted_sha256": "61f2342529b54a41bdfa4ec39eff124e34a4c863a0dd13bf4d0ae63744565d18",
+      "source_structure_sha256": "dc4640199d60a6157edf17a7a2f843e642666bf63416e811f8dcf09e4e1fbe73",
+      "source_partition_bytes": 39473,
+      "case_outcome": {
+        "status": "failed registered case",
+        "error": "RuntimeError: unexpected native outcome or diagnostics at W15-isolate-ReachMethod.callK",
+        "transition_sha256": "e8206e0f2f5632f6f4ddf6e89c9416728c2ee40169882c90e1f7b04c96435f5a"
+      },
+      "all_sources_sha256": "d12516fe6b77f727bb94f16b1c1f2e0b40f55a3d6083c72b868a7dbabec3e10c",
+      "case_clock": {
+        "case": "W15",
+        "start_s_since_campaign": 2443.220823553,
+        "deadline_s_since_campaign": 7843.220823553,
+        "available_seconds": 5400.0,
+        "reserved_for_later_case_seconds": 0,
+        "final_seconds_reserved": 300
+      },
+      "transition": "continue after ordinary failed case",
+      "module_fingerprints": [
+        [
+          "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3",
+          "921c0ab66aea8894b574825a4d6762b4d6ee57c735a6f79e9f9f2cf8a99e555d",
+          "1e47ed60aa143a00a2d5f865746c0ab953a297edbee655857b49a0a8795dc4fb",
+          "cb29d385c98277a9b4c7591d7f8efeabb6aa0a6fb4182be09d4ceb26cafd348f"
+        ],
+        [
+          "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11",
+          "4a5645565f31e4b2f472480b36117d8988fb4489a10ad83081963f56c8b1f8ac",
+          "fd7881313390d2e720e3537889e26046e171ac1ac3b855a491144909db76a697",
+          "ebd2e32f5961fe6913d8813149b012d41609d4e46f26c14e8d845636fe818c22"
+        ],
+        [
+          "c7ad167ec2736ae5d57462c22d48fe63e76f14657468c88c63858783d929e599",
+          "e4bcf232e57beb3ac41f4ad6ec024b081672180a7d3139c29e5e4b58c978431c",
+          "0f9eac9c6027e985385f12bcb29e3cbe311f5995082a913e2c2e6aa5db006641",
+          "c5ead52c765feaca91f1599362c86b956c6c9dbf83b1146fc0a1365928e69c98"
+        ],
+        [
+          "778f4e6dda461996836c62765727c70b0ec6776f85cab94aff20cec932a04b29",
+          "3a6cf1ce77bd395819eddf375714539c1085572cc2905a32e6946834ce09c61d",
+          "cd527b9c6a1497c3df1eed74350f8f611665c8892a15268ed7c58d09b77cb861",
+          "9073c3830b805b5f42b25a711a05f7ad9c579e635ddee738d009baacf796ae03"
+        ],
+        [
+          "fa7f972b22b7e1990e37e14e5fbd2d664f13177c2efc0c7bc84478f90f54f0fd",
+          "7becb5f55a85b5c5299f6fb980e2c8c6e649c7845a5f1b84a61dff5a4d213da4",
+          "a1ee82946c009f0e167a0be908ad071789586d757ee1b07906588458a5922e94",
+          "de51e44eee8df1e21d2e165a26a58104f7cdb874dd40245a4eee0dd36a7a4608"
+        ],
+        [
+          "ee6ef268f60ae6c2e77b9bb9147731a3fde376a476871d853ccb0fb94df99e0d",
+          "8fbeea17d03066112b2fad911c284386b8e8f6bb14bd1ff3db9430df60cf56de",
+          "883f98a7801ddf32dadb706614f80445670ffcdbd3c9e87e19a37b02a79d38ca",
+          "f4d0590c7c239549c173c6ce6576d4963b792faa8dcc0fee5c5e85bedf63ca8b"
+        ],
+        [
+          "e39944001e970555443e24cd35bfc637f52296a4802cd6bb3cf86a5498541e15",
+          "d30c3e8d0bb0b714fa3c3aacdc1e3940244d2c521816eb4ef11cbe3f95e307f8",
+          "5f4cb18f2ff17d15a046371764fa231b11fdcce8eb5d7ecee1efbc3f71f60230",
+          "ad04ac57d1a57bf987b01dab20f1d6de6f760dc0822e6c7696407f38240d90b0"
+        ],
+        [
+          "90f1a27ae16037dc3cb76bb2ecef0158c7a9346f38716e7cd45878b7da9d8630",
+          "cb6e7a4a11c09e74b418a7ac588aca1aa493cd87acc2b917a03fad3693273988",
+          "079a664386ce605fca6d1aa4daa4057b1ee723156f622b0c09e743952c03d8a3",
+          "54dae6e94038142b23bd27951422e4297c1ea6ab3eea71a2019962a51cb9f961"
+        ],
+        [
+          "60d84da46ef7b9363220f2f5029afbae840d82eaeb80f52d504bb6f749df146d",
+          "5e674aaf77654ab22b2363f24ce9ca53b6471eb4bf695ff07a8661176a4d2c04",
+          "f182d844ddb0ed976fbb42332dacf3009ab16da99877d1504718fd5dd8106654",
+          "05b4c2393229857f7b3f613e848c152476a025cbe33052ab3e0f66e1e9399b46"
+        ],
+        [
+          "db4c8a4923382964c072ebc37d2c35a0218216add1c6c4ee624671dfaca78dd8",
+          "66ddce3757af1f727336e8a96f0805aba353849d1144e0db26bf0626242625fa",
+          "f970ff4ccafe968b863988001c6f91bd05fbb02979337e8ea8dfa2aeaa8f04df",
+          "6cb59c5e6875c817546d7b8e1d8dde40d99df738b3dab779ab2606343084da1d"
+        ],
+        [
+          "e5ea514318534ad2f730c2025718fb4c8e1a6b4db17be7430f07e9a9a22b4520",
+          "65c0ac78cca0b601887279d319388e655242d53ea12348b4c4b79d4057ccdf4b",
+          "6c21b12cd61d45ea75e182e72f9d7004954f22573dbc03b896294d6e21f20517",
+          "140831a3469d9cb48399e4dfcb655e8561141a18b7f0ac1212be8afbd3dddf7c"
+        ],
+        [
+          "bdd73a7b672fca5313d906eca8db7b1f73ada9bf1e1b3cc22d96c856dfa20942",
+          "295d30dcb94fc4063070a54116a909dde1e7868e64c0264a5d42c92117a8175b",
+          "7a7500c1c85b68078b56aa2cc50ba505943b4a7feb83ea00932cb92cb5907ba6",
+          "ece4ab2702ed89246dc16bf4373c951ab34b529860f475f2171f24167c7b5cea"
+        ],
+        [
+          "4f98f41873b6e23e824739ec648f982bfdcfde24819f4da1e8b2927fb109f0be",
+          "9e19d42d682f94bc0dfa39c849b199ccef7a41603d49e0f34a2dfa2f5950621b",
+          "d62e5eccf14464c60e137b1fc1d2566a572d30854ff4f3d6540dbc2be228d4a5",
+          "f5cd9744c61bac7cab9a2db30d94b357a9d4c7e54b0d181c3034682bf5400377"
+        ],
+        [
+          "8295302bf0b94c090877391c0c34d82ed98939213f4da6e2e85fa83fc7e2d9a3",
+          "f6c40aa66ebf7f17d9978f999e8c88a39383d0cac529e514d80c2e207aedc6a1",
+          "9513b5eed7641bdbc34a6f600cc4e4d546d9871db5b4c84063d05a4229d06fb8",
+          "340c372710a186512a012bc58a1b72823c9bd12e4270f4be26345c998203dbe1"
+        ],
+        [
+          "e3cafc9a5668d9f64d07d9f76158a80096fc5b6f8ec0489addcf5d0fe2d02d46",
+          "c98a3722875d941812094afbaa9057bed9f3e4eed4df62060e6eb7132d6915a1",
+          "055013127449d69a566801fdfe60dd80ddb0d9d5a7eafef2222fa9576479306b",
+          "a9faaa9d46b25ba4908cbc9942ee837ebed37b17c30df4cf065f49b0ca27ced5"
+        ],
+        [
+          "203424973005c8204c18d775543e80d41237f2436f3b6037f6fc899cf2fea02a",
+          "becfa2f3baad178e661d96410c87d6fd48d68f2fb1c36f3e69b198d10f9cdcfa",
+          "edb3e970626eaf5d05995dcf67ffa3796b3c88590e8a841f90b5d73d0210d5da",
+          "44b4801ea9656d2ac355886db6e576f9c32c7a6ee1a08405a5eb8851f7bc4a3b"
+        ],
+        [
+          "48c3fa98f48bd3c6b42e78408355deaa79c1b959d6399c90469d94f18e1fff11",
+          "ff5eceeef49dd9dfe99ee1a99304a4247ad0c42fe201b14d8b5c09837c5abb9b",
+          "4925cfae90b3b48d4fef54f1f9a2fd70ca3418f763637e1f2c535a66528e8429",
+          "1a88fd1ce7318676301de25a2114addb5f6cc69dfdd46915d733444dbe705e34"
+        ],
+        [
+          "b7d39d5da647191f59090675db8dcdd818e2dcd845326383f71516b88f115a02",
+          "28ccb0eceb1260292ef03762d7a5c5c63456c7d0c34064ee42620ed12dd8b057",
+          "712fa25b04832f3497b2ef7df4e1b729bd1cff5c1855e8ae6e658f9219b1cf14",
+          "57fa6672faec5fbd928c5505af5cd852c1bebde96237e70c7db148c279a591b0"
+        ],
+        [
+          "cc831c09e705d5370141278ce41bfe44749d393784b41347fa6fd2cab2d999bc",
+          "428e1913af795656f7996e242d5d5df6e80fda568690bf97ebad3be6848201a3",
+          "2dcb9df50c9263b9b4bc22d1704190496782f35641809bdce4cc37ac8d6cc3ed",
+          "3c549cbc846fb60467f4346787ba8b4118a40285a4daab0309d79abe6b51efb4"
+        ],
+        [
+          "c18f5b90f982b9da6fbb020a2aebb0b09f4c194921070055bd4f14e90cf0a4d7",
+          "11e66ae7cc1a42f25b585628cc27978961cd6b5667e064f860a1ed980b49dc8f",
+          "fc85b6e86d0e5ca35315e01d21cdb5778b6d85acc000b9d3919b2ee50dd4f1ee",
+          "973652fc16ddd87eed147280a874b050af3849f104eb237e456bbcdaeaeb10a4"
+        ],
+        [
+          "e547f88309669b5ebe5093893b29eec4b50d0e4e5f545d5346bc828debd76e56",
+          "239a51050c18d6cd6874d36d1eb9b806a38041d2892789ee32d2a4e1dc154153",
+          "c6182af3df0ec38f5e05972112579645e151d6d0f5a51d1c0f072e24cff274d7",
+          "ef1f1fbe3916886c816daa18dd344aba32a38cc83396cef8f60564b77f72b602"
+        ],
+        [
+          "2b09c27aa00a4b41b319fdca3f48eb87f7b40b1e5972ada32cbf7a88889501dc",
+          "4777d7602413d89fc2e906836ba24536b365870339eaf9afdedbe2dcfa790c80",
+          "a138e2df0776cb024c3edcdc4ab3b52a3ed4b0baab2057bece32754c3fe7bfaf",
+          "d4fb01209d2e15729db3c39ca130ff0f99518439c498722b22c72680a33b93ce"
+        ]
+      ],
+      "isolated": {
+        "OriginalReach.prefixInstallation": {
+          "owner": "ReachCalls",
+          "statement": "theorem OriginalReach.prefixInstallation : ReachSpec.prefixReady := by",
+          "source": "diagnostics/prefix.lean.txt",
+          "stdout": "diagnostics/prefix.stdout.txt",
+          "source_sha256": "770bc7d30fcc4fdba189b05b91c99021d8a89bee1aa74cdab5d0d5dc061db1af",
+          "submitted_owner_sha256": "ec55b85107340c00880a9a29ddcba09fe81a30b0442fae3facabe7c2c59948c4",
+          "template_sha256": "e75177ae74182aef5e80b841d0afb4d6ad12fc1235f2f2e18a8a591a59cb22dd",
+          "input_receipt_sha256": "e841e31e5d84c8d373a56e85344ed6c49c755d4bfa5a9e4c754925a2c7237d22",
+          "local_imports": {
+            "ReachCheckedBody.olean": "4777d7602413d89fc2e906836ba24536b365870339eaf9afdedbe2dcfa790c80"
+          },
+          "native": {
+            "tag": "W15-isolate-OriginalReach.prefixInstallation",
+            "exit": 0,
+            "stop": null,
+            "elapsed_seconds": 0.4386476939998829,
+            "max_observed_group_rss_bytes": 571781120,
+            "direct_wait4_maxrss_bytes": 573861888,
+            "post_group_absent": true,
+            "residual_after_wait4": false,
+            "stdout_bytes": 76,
+            "stdout_sha256": "5fb66bfd5e1c5ea4774edc5eb258f52d03e0ccb8afa198ebe584600b336f1787",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_axioms": [
+            "Quot.sound",
+            "propext"
+          ],
+          "isolated_checkpoint_passed": true,
+          "retained_olean": false
+        },
+        "ReachMethod.callK": {
+          "owner": "ReachCalls",
+          "statement": "theorem ReachMethod.callK : (ReachSpec.prefixReady) → ReachSpec.callAgrees 6 \"k\" := by",
+          "source": "diagnostics/call-k.lean.txt",
+          "stdout": "diagnostics/call-k.stdout.txt",
+          "source_sha256": "0f3128f5584bcc9cb2b6ffb98c1abda441f3ed45b0c9669b85cf8119181d6ba7",
+          "submitted_owner_sha256": "ec55b85107340c00880a9a29ddcba09fe81a30b0442fae3facabe7c2c59948c4",
+          "template_sha256": "eef9886e81e185e93ec7aa6f94cd942dba3f903a9c81ca322c1665a4bc4e44f9",
+          "input_receipt_sha256": "cab0cf3ddc8992b52d707ff71cd4f1b88d3b7b26d90e5765c1a813d447591a5d",
+          "local_imports": {
+            "ReachCheckedBody.olean": "4777d7602413d89fc2e906836ba24536b365870339eaf9afdedbe2dcfa790c80"
+          },
+          "native": {
+            "tag": "W15-isolate-ReachMethod.callK",
+            "exit": 1,
+            "stop": null,
+            "elapsed_seconds": 0.2614585609999267,
+            "max_observed_group_rss_bytes": 508186624,
+            "direct_wait4_maxrss_bytes": 514613248,
+            "post_group_absent": true,
+            "residual_after_wait4": false,
+            "stdout_bytes": 3815,
+            "stdout_sha256": "f4510c3d124560d4eb99e2c0cb9b93b5aacfc86656ae9e389c6074130e323842",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observed_axioms": null,
+          "isolated_checkpoint_passed": false,
+          "retained_olean": false
+        }
+      }
+    }
+  },
+  "all_case_status": "failed",
+  "all_case_error": "ValueError: one or more registered cases failed",
+  "original_cases_accepted": 0,
+  "main_exit_counts": {
+    "0": 155,
+    "1": 7
+  },
+  "all_main_command_streams_sha256": "c57cfc79b1978a8c5695560e60de873731a6d652c4ebd04e7b8f4cfe08e785df",
+  "final_custody_sha256": "8336f0ba566fdea3e4ba7a94b2c038c8ca4a0a9901daadc0b86c46722fd55f98",
+  "artificial_controls": {
+    "fresh_modules": [
+      "ConsumerSynthetic",
+      "SyntheticRefusalsProved",
+      "TraceCode"
+    ],
+    "ordered_trace": {
+      "codes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        4,
+        4
+      ],
+      "sha256": "113dc630147a779507e687f5a1c41d97f7e537ee07facd13845a9544faf78981"
+    },
+    "native_refusals": {
+      "ControlFalseOnFailure": {
+        "diagnostic": "Tactic `decide` proved that the proposition\n  RefutesTwo none\nis false",
+        "line": 3,
+        "module": "ControlFalseOnFailure",
+        "stdout_sha256": "b34281c72a41cf7edfefb0fef31eda28bf927f732430cbfd689cbc13ba793596"
+      },
+      "ControlFixedVector": {
+        "diagnostic": "Tactic `rfl` failed: The left-hand side\n  evaluate syntheticUnary ρ\nis not definitionally equal to the right-hand side\n  some [true, false]\n\nρ : Valuation syntheticUnary\n⊢ evaluate syntheticUnary ρ = some [true, false]",
+        "line": 3,
+        "module": "ControlFixedVector",
+        "stdout_sha256": "3906cc11f8a3c84ea23d6869c10af076d7dc756056e77e2aaaf869b408a07d06"
+      },
+      "ControlSatWrongSource": {
+        "diagnostic": "Type mismatch\n  SyntheticUnaryProof.noModel\nhas type\n  ¬∃ ρ, Satisfies SyntheticUnaryProof.s ρ\nbut is expected to have type\n  ¬∃ ρ, Satisfies syntheticSat ρ",
+        "line": 3,
+        "module": "ControlSatWrongSource",
+        "stdout_sha256": "97d651da6fb67353869a7b375147695a489e51b948892c685985954596c24144"
+      },
+      "ControlWrongProjection": {
+        "diagnostic": "Tactic `rfl` failed: The left-hand side\n  evaluate syntheticUnary ρ\nis not definitionally equal to the right-hand side\n  evaluate syntheticUnary (SyntheticUnaryProof.restore (wrongPack ρ))\n\nρ : Valuation syntheticUnary\n⊢ evaluate syntheticUnary ρ = evaluate syntheticUnary (SyntheticUnaryProof.restore (wrongPack ρ))",
+        "line": 4,
+        "module": "ControlWrongProjection",
+        "stdout_sha256": "333f8d9a877fbe85a25f07a869df00ac6ec0a0f2202415f6caa9deaa019d8595"
+      }
+    }
+  },
+  "module_fingerprint_columns": [
+    "scientific source",
+    "compiled object",
+    "ordinary compile input receipt",
+    "fresh input receipt"
+  ]
+}

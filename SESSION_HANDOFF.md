@@ -1,6 +1,10 @@
-# Session handoff — updated 20 November 2026
+# Session handoff — updated 21 November 2026
 
-## Three original proof inputs
+## Three original proof inputs with separate time limits
+
+A second registered attempt tested W01, W03 and W15. Each completed 22 module compilations and 22 fresh stock Lean checks. Each also checked a lemma about the names installed by its program. All three then failed during the next proof. No original assertion values or complete theorem records were produced. W02 remains the one completed stock proof among the 22 archived formulas that solvers reported as unsatisfiable. [Results, compiler diagnostics and record reader](audit/evidence/three-original-reachable-attempt-2026-11-21/README.md)
+
+## Earlier three-input memory stop
 
 The first of three selected inputs reached the registered memory limit during compilation. For W01, 19 modules had passed compilation and a fresh stock Lean check. The next module produced no result. The checker never started W03 or W15. The count remains one complete proof for 22 original formulas that solvers reported as unsatisfiable. The three submitted proof files and the outcomes of all 63 commands are available. [Result and inspection procedure](audit/evidence/three-source-original-proof-attempt-2026-11-20/README.md)
 

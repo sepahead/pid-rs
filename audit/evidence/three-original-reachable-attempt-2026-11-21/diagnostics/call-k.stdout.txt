@@ -1,0 +1,66 @@
+One.lean:11:50: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Decidable
+    (6 < ↑k →
+      k = 7 ∨
+        k = 8 ∨
+          k = 9 ∨
+            k = 10 ∨
+              k = 11 ∨
+                k = 12 ∨
+                  k = 13 ∨
+                    k = 14 ∨
+                      k = 15 ∨
+                        k = 16 ∨
+                          k = 17 ∨
+                            k = 18 ∨
+                              k = 19 ∨
+                                k = 20 ∨
+                                  k = 21 ∨
+                                    k = 22 ∨
+                                      k = 23 ∨
+                                        k = 24 ∨
+                                          k = 25 ∨
+                                            k = 26 ∨
+                                              k = 27 ∨
+                                                k = 28 ∨
+                                                  k = 29 ∨
+                                                    k = 30 ∨
+                                                      k = 31 ∨
+                                                        k = 32 ∨
+                                                          k = 33 ∨
+                                                            k = 34 ∨
+                                                              k = 35 ∨
+                                                                k = 36 ∨
+                                                                  k = 37 ∨
+                                                                    k = 38 ∨
+                                                                      k = 39 ∨
+                                                                        k = 40 ∨
+                                                                          k = 41 ∨
+                                                                            k = 42 ∨
+                                                                              k = 43 ∨
+                                                                                k = 44 ∨
+                                                                                  k = 45 ∨
+                                                                                    k = 46 ∨
+                                                                                      k = 47 ∨
+                                                                                        k = 48 ∨
+                                                                                          k = 49 ∨
+                                                                                            k = 50 ∨
+                                                                                              k = 51 ∨
+                                                                                                k = 52 ∨
+                                                                                                  k = 53 ∨
+                                                                                                    k = 54 ∨ k = 55 ∨ ⋯)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+One.lean:8:84: error: unsolved goals
+case refine_1
+_ready : prefixReady
+rho : V
+i : Fin 83
+hi : 6 < ↑i
+args : List Value
+atInstall :
+  call (large rho 7) ((installedName cmd6).getD (String.ofList [])) args =
+    call (small (pack rho) 7) ((installedName cmd6).getD (String.ofList [])) args
+indices : ((List.finRange 83).all fun k => sorry) = true
+⊢ call (large rho ↑i) "k" args = call (small (pack rho) ↑i) "k" args
+'ReachMethod.callK' depends on axioms: [propext, sorryAx]

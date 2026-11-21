@@ -1,0 +1,45 @@
+import ReachCheckedBody
+
+set_option maxRecDepth 65536
+set_option maxHeartbeats 20000000
+
+open SmtW02 ArchivedProjection OriginalPrefix OriginalContract ReachSpec
+
+theorem OriginalReach.prefixInstallation : ReachSpec.prefixReady := by
+  refine (fun (one : ∀ (c : Cmd) (read : String → Option Value) (s : DynamicState), (installedName c).isSome = true → ∃ t n, dynamicStep read s c = some t ∧ installedName c = some n ∧ t.assertedRev = s.assertedRev ∧ t.globals.map Prod.fst = n :: s.globals.map Prod.fst) => ?_) ?_
+  refine (fun (many : ∀ xs : List Cmd, ∀ (read : String → Option Value) (s : DynamicState), xs.all (fun c => (installedName c).isSome) = true → ∃ t, xs.foldlM (dynamicStep read) s = some t ∧ t.assertedRev = s.assertedRev ∧ t.globals.map Prod.fst = (xs.filterMap installedName).reverse ++ s.globals.map Prod.fst) => ?_) ?_
+  constructor
+  intro rho i
+  have eligible : (List.finRange 83).all (fun k => (commands.take k.val).all (fun c => (installedName c).isSome)) = true := (by decide +kernel)
+  obtain ⟨t, ht, ha, hn⟩ := many (commands.take i.val) (valuationLookup (declarations originalScript) rho) ({} : DynamicState) ((List.all_eq_true.mp eligible) i (List.mem_finRange i))
+  exact ⟨t, ht, ha, hn.trans (List.append_nil _)⟩
+  intro x i
+  have eligible : (List.finRange 83).all (fun k => (retainedAt k.val).all (fun c => (installedName c).isSome)) = true := (by decide +kernel)
+  obtain ⟨t, ht, ha, hn⟩ := many (retainedAt i.val) (lookupSmall x) ({} : DynamicState) ((List.all_eq_true.mp eligible) i (List.mem_finRange i))
+  exact ⟨t, ht, ha, hn.trans (List.append_nil _)⟩
+  intro xs
+  refine List.rec (motive := fun xs => ∀ (read : String → Option Value) (s : DynamicState), xs.all (fun c => (installedName c).isSome) = true → ∃ t, xs.foldlM (dynamicStep read) s = some t ∧ t.assertedRev = s.assertedRev ∧ t.globals.map Prod.fst = (xs.filterMap installedName).reverse ++ s.globals.map Prod.fst) ?_ ?_ xs
+  intro read s h
+  exact ⟨s, rfl, rfl, rfl⟩
+  intro c cs ih read s h
+  have hc : (installedName c).isSome = true := (List.all_eq_true.mp h) c (List.Mem.head _)
+  have hcs : cs.all (fun c => (installedName c).isSome) = true := List.all_eq_true.mpr (fun z hz => (List.all_eq_true.mp h) z (List.Mem.tail _ hz))
+  obtain ⟨mid, n, hm, hn, ha, hg⟩ := one c read s hc
+  obtain ⟨t, ht, hta, htg⟩ := ih read mid hcs
+  refine ⟨t, ?_, hta.trans ha, ?_⟩
+  rw [List.foldlM_cons, hm]
+  exact ht
+  rw [htg, hg]
+  simp [List.filterMap, hn, List.append_assoc]
+  intro c read s h
+  cases c
+  cases h
+  cases h
+  exact ⟨_, _, rfl, rfl, rfl, rfl⟩
+  exact ⟨_, _, rfl, rfl, rfl, rfl⟩
+  cases h
+  cases h
+  cases h
+  cases h
+
+#print axioms OriginalReach.prefixInstallation
