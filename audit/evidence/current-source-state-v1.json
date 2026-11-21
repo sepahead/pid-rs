@@ -4935,6 +4935,36 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/index-family-control-attempt-2026-11-21/README.md",
+        "sha256": "b55571f04a430af0cf5ac49a188d30625ac1195f82d877f9d51298bf152f3894",
+        "size_bytes": 8732
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-control-attempt-2026-11-21/check.py",
+        "sha256": "b880fdefe62ac6f4b9074f3d6799458aaf07c629e3f5b5c52c7a3e804c6f0bf4",
+        "size_bytes": 16264
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-control-attempt-2026-11-21/native-evidence.zip",
+        "sha256": "85ccfa1c1e746b51df96a6529dea25137bb36c286fd1d03d0e45fb555ac342bc",
+        "size_bytes": 534167
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-control-attempt-2026-11-21/record.json",
+        "sha256": "76fcf3226ea47ff9bd6e7f2086a81a5774f69fce882b68d15ef3d10e0fbc988b",
+        "size_bytes": 14025
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-control-attempt-2026-11-21/submitted.json",
+        "sha256": "bfb3751fbe4d66fdd84b94b2ab5bf25c47184725944298fcc4e29e74c42e55c8",
+        "size_bytes": 34893
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/ksg-m1a-composite-v4-process-visual-receipt-2026-08-17.md",
         "sha256": "f014f36f8f3cd6325a5fa9f74eda2fb7a7d9b2202eea0cb81b4af2b6387e0b81",
         "size_bytes": 2006
@@ -37640,8 +37670,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "882e7e284a40d2e71742bd410fe7e22512265a1819f22fb96a461ee197bed09c",
-    "entry_count": 6249
+    "entries_sha256": "65da44d1a6d381df607587c38119e7456f63f2ce3e0291de7ddaefc9a502634e",
+    "entry_count": 6254
   },
   "subprojections": [
     {
