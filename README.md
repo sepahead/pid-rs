@@ -126,6 +126,8 @@ fitted quantizers, source-partition optimization, count-table encoding and 22 ch
 
 Three further archived formulas reached the same proof step in a second stock Lean attempt. Each passed 22 module replays and stopped before the original assertion values were checked. [Inputs, diagnostics and recorded limits](audit/evidence/three-original-reachable-attempt-2026-11-21/README.md)
 
+A separate test of one artificial example with 83 table positions recovered 167 declaration records. The 85th term reader exceeded its 4 GiB memory limit before it returned a record. The two remaining term readers and the numerical checks did not run. [Inputs, measured limit and partial results](audit/evidence/index-family-observer-v4-attempt-2026-11-21/README.md)
+
 The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its
 [28-page PDF](output/pdf/mathematical-results-guide.pdf) map nine foundational result families and six
 companion packages to their exact objects, assumptions, formulas, evidence, costs, uses, nonclaims,

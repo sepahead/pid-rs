@@ -388,8 +388,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "86c29d1ebf4f8bdc5ae1f37ab663f442033cd539baccb0bbbb2824f83fbdcc1b",
-        "size_bytes": 344734
+        "sha256": "2c797f4d28cf90bb7981a9e19d43ac98673182f57e5faa5871da01f03eb3b82f",
+        "size_bytes": 345095
       },
       {
         "git_mode": "100644",
@@ -574,8 +574,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "5cb2535de4b57415fe9f55db7407932d5ecd6035043f45e5fc80eec3685ca596",
-        "size_bytes": 99725
+        "sha256": "81f5f2158d62074279bb61289e998a9f097401a1c65492f1a281b4430560cd6e",
+        "size_bytes": 100093
       },
       {
         "git_mode": "100644",
@@ -640,8 +640,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "ff40b676fdfeee7a9d66ea946bcd91f4c550657483ab86c56236ef1df5748d72",
-        "size_bytes": 68401
+        "sha256": "282ac08451bd18db555c947cfcf6457d26b7d44c0ba00532457ac72dcf57b698",
+        "size_bytes": 68994
       },
       {
         "git_mode": "100644",
@@ -4968,6 +4968,114 @@
         "path": "audit/evidence/index-family-control-attempt-2026-11-21/submitted.json",
         "sha256": "bfb3751fbe4d66fdd84b94b2ab5bf25c47184725944298fcc4e29e74c42e55c8",
         "size_bytes": 34893
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/README.md",
+        "sha256": "ebefdf389e66e3b9064b9764be3b374d146d2a2f316107d18bf67bc4fa80abe0",
+        "size_bytes": 8025
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/check.py",
+        "sha256": "8ade6626249474cf85aad727be44ab9030c0589784cb32cfc09acd02c375902c",
+        "size_bytes": 11186
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/hosted/artifact.json",
+        "sha256": "40a058272daaf9369fe722d29c0a0c1bb5063bf27b4a98a686395b8ed6fb0390",
+        "size_bytes": 630
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/hosted/artifacts.json",
+        "sha256": "2832158f8ef5ac3a483ed7aa19b0352fb8ff115f154d5524337e14748a1e98b0",
+        "size_bytes": 735
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/hosted/attempt-jobs.json",
+        "sha256": "d8989de46afa34751a7693b79d6a8c69b3de27d47bfb68522d40cbbda62e63c1",
+        "size_bytes": 2927
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/hosted/branch-runs.json",
+        "sha256": "9a2e5646b27530dc57c9099e8b423e5b63907558442cd7f707866de5f8f9c5ac",
+        "size_bytes": 926
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/hosted/job.json",
+        "sha256": "18b623f2341163dad4ed36bb0583967bc3eba7e364d1a3c48ce21b5b322c3f70",
+        "size_bytes": 2559
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/hosted/run.json",
+        "sha256": "c9a4d45ef4a07241dc0624f4e792509e1f5e288a68f89c74b7598ad8ea29bfa6",
+        "size_bytes": 785
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/hosted/workflow.json",
+        "sha256": "ebb9bb63123d3cdc7062549bc6ecbcae89c5790b638bdf9e1a0410608c5d56c0",
+        "size_bytes": 276
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/ids.json",
+        "sha256": "b3218ea294de411e0976762240248f6532ac2389e945fe89a625d863c3a4898c",
+        "size_bytes": 163
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/issue.json",
+        "sha256": "06c39b77845f88e92622d45d04b8069a66f7277f4607e7415ab732a47b1dbcae",
+        "size_bytes": 315
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/issued-child.pack",
+        "sha256": "37b73bdb1b0bb976a66f169e7414492e7fb18db115608f0e597f0d33c63d2ad4",
+        "size_bytes": 5168
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/native-evidence.zip",
+        "sha256": "71535d2330cba6b3c203fceecf1bcafd3c589aeb61831274a2d57209054fb3c4",
+        "size_bytes": 2845758
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/readback/normal/attribution.json",
+        "sha256": "8582a1221aafd3fb8474ac03ae9fe3e0a75b88f7ad1594514161bda1452d7d6a",
+        "size_bytes": 4572
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/readback/normal/v4.original-readback.json",
+        "sha256": "691682b755a487e43504bf9e4a50dfc8316f62e5e5a6ae417301270933435b17",
+        "size_bytes": 69006
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/readback/optimized/attribution.json",
+        "sha256": "8582a1221aafd3fb8474ac03ae9fe3e0a75b88f7ad1594514161bda1452d7d6a",
+        "size_bytes": 4572
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/readback/optimized/v4.original-readback.json",
+        "sha256": "691682b755a487e43504bf9e4a50dfc8316f62e5e5a6ae417301270933435b17",
+        "size_bytes": 69006
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/index-family-observer-v4-attempt-2026-11-21/record.json",
+        "sha256": "9e38ac29917c310df1678edddb0c210a7e5c115182cd037c095abfa5fa3a17da",
+        "size_bytes": 20240
       },
       {
         "git_mode": "100644",
@@ -36778,7 +36886,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "8f7d6d5195af415ce85d1df8c5f8c722cd2b94b0f02c1a8d0b8e77fc8fee0f36",
+        "sha256": "2d57f29d9e7a9f38fdff4d8fb60e56e32739c9e6fd8e7baccf44b6f2b915cac4",
         "size_bytes": 140337
       },
       {
@@ -37772,8 +37880,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "12c0f5646b312b473b313540be5c54916ea399c6e3e438f2d0e16e29892abf43",
-    "entry_count": 6271
+    "entries_sha256": "05fe625a67164bfed3bb013f2ae441a6f9f2e4614efa63067a42aa044b2e0895",
+    "entry_count": 6289
   },
   "subprojections": [
     {
@@ -37801,7 +37909,7 @@
       ]
     },
     {
-      "entries_sha256": "dce30825432c7982df061ddc4b66b2da830cae8f54d7535b6f3ffc039cb849e9",
+      "entries_sha256": "584e61ddcacd542b869093268fc2f3ec95828d1b822dd2366fb4b90227d77b53",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

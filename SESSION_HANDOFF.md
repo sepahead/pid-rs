@@ -1,5 +1,9 @@
 # Session handoff — updated 21 November 2026
 
+## Memory limit on the artificial 83-position example
+
+Four modules compiled and passed their fresh Lean checks. A separate command printed 170 axiom sets. The first 84 term readers returned 167 named records. Reader 85 exceeded its 4 GiB process-group memory limit and returned no record for its assigned declaration. The run stopped before the complete dependency check, the 332 numerical comparisons or the three false controls. It evaluated no original solver formula. [Original archive, earlier failure and readback](audit/evidence/index-family-observer-v4-attempt-2026-11-21/README.md)
+
 ## Three original proof inputs with separate time limits
 
 A second registered attempt tested W01, W03 and W15. Each completed 22 module compilations and 22 fresh stock Lean checks. Each also checked a lemma about the names installed by its program. All three then failed during the next proof. No original assertion values or complete theorem records were produced. W02 remains the one completed stock proof among the 22 archived formulas that solvers reported as unsatisfiable. [Results, compiler diagnostics and record reader](audit/evidence/three-original-reachable-attempt-2026-11-21/README.md)

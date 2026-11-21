@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve the failed attempt to read every proof term of an artificial 83-position example. The first 84 term readers returned 167 named records. Reader 85 exceeded its 4 GiB memory limit. The complete comparison of 170 declarations remains open. [Native records and independent readback](audit/evidence/index-family-observer-v4-attempt-2026-11-21/README.md)
+
 - Document two valid logarithm intervals that the seven scheduled precisions do not fit. Both examples supply the numbers directly. A count table with total one cannot produce either input. All 648 coordinates in the six published tables passed the containment test at 256 bits. [Calculation and scope](audit/research/three-source-six-certificate-observations/README.md#two-inputs-to-the-logarithm-routine)
 
 - Correct the implication on page 73 of the mathematical workflow. Two systems have the same descriptor and different total mutual information. Any atom rule that gives the same vector for this pair cannot recover both totals from that vector. The corrected PDF preserves all 232 named destinations. [Worked example and earlier failed build](audit/evidence/mathematical-workflow-correction-2026-11-20.md)

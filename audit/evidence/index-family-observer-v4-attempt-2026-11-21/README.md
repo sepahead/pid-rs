@@ -1,0 +1,40 @@
+# The 85th term observer exceeded the memory limit on the fixed 83-position example
+
+Sepehr Mahmoudian · 21 November 2026
+
+Could 87 smaller Lean processes read all 170 stored declarations of the same artificial proof within the registered limits? The first 84 term observers completed. The 85th process exceeded its 4 GiB resident-memory ceiling. **The calibration failed.** This was the only run on the registered branch, and it evaluated zero original scientific formulas. [Hosted run](https://github.com/sepahead/pid-rs/actions/runs/44876000370) · [Native job](https://github.com/sepahead/pid-rs/actions/runs/44876000370/job/136760703965) · [Registration and selection rule](../../research/index-family-observer-v4-registration.json)
+
+A *term* is Lean's stored expression for a proof or definition. An *observer* reads specified properties of a declaration. A *fresh check* replays eligible declarations in a new kernel environment. An *axiom* is an assumption on which a theorem depends. The artificial input has 83 table positions. The two proof constructions establish the specified equality for every positive index and natural argument when the readiness flag is true. The earlier run checked four compiled modules, then its single all-terms observer hit the memory ceiling before returning any term row. This run used the same exposed input and divided the original list of names among 87 processes. [Earlier failure and definitions](../index-family-control-attempt-2026-11-21/README.md) · [Original submission](../index-family-control-attempt-2026-11-21/submitted.json) · [Frozen observer design](../../research/index-family-observer-v4/README.md)
+
+## What the native records show
+
+| Observation | Result |
+|---|---|
+| Source and proof checking | All 97 source hashes matched. The four modules `IndexSpec`, `IndexProofs`, `IndexInline` and `IndexConsumer` each compiled and passed their corresponding `leanchecker --fresh` invocation. |
+| Separate axiom listing | Lean printed 170 named sets. `IndexExample.cover83` used no axioms. The other 169 used exactly `propext`, propositional extensionality. The 8,778 bytes match the earlier native print exactly. |
+| Term observers 1 through 84 | These commands exited zero with the expected resource outcomes. Their output contains 167 newline-terminated native records in the prescribed order, covering the 83 leaf and 84 finite-tail names. The separate reader below checks the names, order and bytes of this prefix. |
+| Term observer 85 | The command had the sole assigned name `IndexExample.inlineComplete`. Both its output streams were empty. It exited with signal 9. Its resource receipt recorded a process-group memory stop. |
+| Remaining work | The two final term observers, numerical trace and three false controls were not reached. The run produced no complete joined term report, no completed check of the 254 registered direct dependencies and no 332-row numerical result. No full term-based comparison of all 170 transitive axiom sets was available. |
+
+The 167 named rows contain 52,627,282 bytes when their original streams are concatenated in order. The complete raw source and all intermediate output streams are in the original archive. The frozen failure reader links 89 compiled objects to completed commands. There are 97 native command receipts, including the failed invocation. The original 170-line axiom print is a separate command from the term observers. A successful read of 167 names alone gives no verdict on all stored types, proofs or direct dependencies. [Native ZIP](native-evidence.zip) · [Original failure readback](readback/normal/v4.original-readback.json) · [Additional identity checks](readback/normal/attribution.json)
+
+## Rust implementation and computational cost
+
+This is an offline check of an artificial Lean fixture. Its inputs are source, compiled objects and execution records. It has no statistical sample, information units or Rust estimator API. The job requested one logical CPU. The registered limits were 2,700 seconds per campaign, 900 seconds per native command, 4 GiB of process memory and 1 GiB of retained evidence. The failed command ran for 1.73 seconds. Twenty group samples yielded a reported maximum of **4,463,542,272 bytes**, above the **4,294,967,296-byte** ceiling. The direct-process measurement recorded the same byte count. The process group was absent after cleanup. The native campaign recorded 247.79 seconds. These readings locate the failing invocation. They do not identify the part of Lean or the feature of the assigned proof that caused the memory use. [Resource provider](../../research/three-source-original-reachable-v3/native_resources.py) · [Measured command prefix](readback/optimized/v4.original-readback.json)
+
+The stock version and revision commands matched Lean 4.34.1 for Linux x86-64, source revision `5045d0056413266e57c625dcd7c365b10e377c52`. The source contract identifies the stock supplier archive and the hashes of `bin/lean` and `bin/leanchecker` observed in a previous successful sibling run. The failed run's terminal record contains neither the two executable hashes nor its CPU affinity list. A matching version string and an intended CPU allocation leave those observations open. [Source contract and sibling evidence](../../research/index-family-native-attribution-v1/README.md) · [Frozen attribution result](readback/optimized/attribution.json)
+
+## Reproduce the failure readback
+
+Run 44876000370, attempt 1, used child `42d314c293d1ca1db3bd2c9a022c04e9d2399087` of registration `bfab413c4e7354c780f2f343f4be091bcc497f6b`. The official history contains one branch run and one first-attempt job, 136760703965. Artifact 14695418751 contains 481 ZIP members. The original ZIP has 2,845,758 bytes and its members total 55,363,020 uncompressed bytes. Its SHA-256 is `71535d2330cba6b3c203fceecf1bcafd3c589aeb61831274a2d57209054fb3c4`. The retained metadata gives the relevant provider fields, exact API queries and digests of the complete original responses. Reacquiring those responses addresses provider custody separately from offline reproduction. [GitHub artifact](https://github.com/sepahead/pid-rs/actions/runs/44876000370/artifacts/14695418751) · [Public observation record](record.json) · [Issued commit](https://github.com/sepahead/pid-rs/commit/42d314c293d1ca1db3bd2c9a022c04e9d2399087)
+
+From a full repository clone containing the registration parent, run these commands with Git and Python 3.11 or later.
+
+~~~sh
+python3 -I -S -B audit/evidence/index-family-observer-v4-attempt-2026-11-21/check.py --self-test
+python3 -I -S -B -O audit/evidence/index-family-observer-v4-attempt-2026-11-21/check.py --self-test
+~~~
+
+The reader recovers the issued child in a temporary Git object store. The pack contains five objects. The child commit and three trees are new. The fifth object holds the 34,893 bytes of the [earlier submission](../index-family-control-attempt-2026-11-21/submitted.json). The new file uses those same bytes. It checks the 48 bound source files, uses the frozen attribution checker, and compares all five output files with their original identities. Both original Python modes returned status 2 for **no positive native attribution** and produced byte-identical output files. The public replay returns zero when it reproduces that historical negative and its stated prefix. It executes no compiled Lean object and issues no workflow. Model-assisted local review shared the same source, artifact and provider custody. No independent human scientific review is claimed. [Public replay](check.py) · [Frozen attribution checker](https://github.com/sepahead/pid-rs/blob/bfab413c4e7354c780f2f343f4be091bcc497f6b/audit/research/index-family-native-attribution-v1/check.py)
+
+**Suggested citation.** Sepehr Mahmoudian (2026), *The 85th term observer exceeded the memory limit on the fixed 83-position example*. Include the repository commit or release, run 44876000370 and the native archive digest. [Software citation](../../../CITATION.cff)
