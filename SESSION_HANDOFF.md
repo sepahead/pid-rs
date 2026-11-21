@@ -16,6 +16,10 @@ The first of three selected inputs reached the registered memory limit during co
 
 One program produces two different lists when its integer input changes. A proof connects those lists to both complete runs. The revised stock Lean check passed its four required compiler-error controls and its three resource controls. Nine ordinary modules passed a fresh replay. Three further modules checked terms, axioms and example outputs. The term and axiom records cover 26 named theorems. An earlier test of the same proof input had reached the compiler work limit. Both outcomes are preserved. The original-formula count above is unchanged. [Proof, exact inputs and measured resources](audit/evidence/synthetic-assertion-transport-2026-11-20/README.md)
 
+## Recomputing the six tables from the printed values
+
+The nine-page study gives the counted rows and names of all 18 nodes. Its exact rational calculation reproduces the endpoints of all 648 retained intervals. It covers the same six empirical tables. The general obligation for accepted certificates remains open. [Data, calculation and worked negative atom](audit/research/three-source-six-certificate-observations/README.md#recovering-every-printed-enclosure)
+
 ## Two direct inputs to the logarithm routine
 
 For each input, the supplied interval contains the true logarithm. None of the seven precision settings produced an interval entirely inside it. The inputs have divisor one. Every valid count table with total one gives product one, so neither input is a coordinate of such a table. All 648 coordinates of the six published tables met the containment test at 256 bits. [Examples, calculation and requirements for accepted tables](audit/research/three-source-six-certificate-observations/README.md#two-inputs-to-the-logarithm-routine)

@@ -12,7 +12,9 @@ function Pandoc(doc)
   -- Preserve the reader's section order and keep each mathematical discussion together.
   local pages = {
     ["The defining papers"] = true,
+    ["The six input tables and all 18 node keys"] = true,
     ["Bounding the logarithm"] = true,
+    ["Recovering every printed enclosure"] = true,
     ["Two inputs to the logarithm routine"] = true,
     ["Transformations of the six tables"] = true,
     ["Checks on altered records"] = true,
