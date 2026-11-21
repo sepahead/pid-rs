@@ -60,6 +60,21 @@ In the **weighted** table $X_1=X_3=Y=0$ everywhere. The two $X_2$ states have co
 
 In the **negative** table, node `02+04` matches source two **or** source three. In file order its three event counts are 2, 2 and 3. The matching target counts are 2, 2 and 1, and the joint event-and-target counts are all one. The informative and misinformative products are therefore $9/4$ and $4$. Its only strictly lower node is `01+02+04`. That lower event is certain because source one is constant, so its two component products are one. At `02+04`, the signed atom consequently has product $(9/4)/4=9/16<1$ and value $\ln(9/16)/3<0$ nats. The case name `unit` is a fixture identifier. Its fourth row has multiplicity four. [Negative case output](cases/negative/C.json) · [Unit case input](cases/unit/B.json)
 
+### Two inputs to the logarithm routine
+
+**Added 21 November 2026.** Can the seven scheduled precisions fit an independently computed interval inside any correct reported interval? The six tables met the subset test at 256 bits. To test the arithmetic alone, supply the positive rational $Q=1+x$ and divisor $N=1$ directly, where $x=2^{-k}$ for $k=2048$ or $4096$. For both, $[0,x]$ contains the true value strictly in its interior because
+$$
+0<\ln(1+x)=\int_0^x\frac{du}{1+u}<x .
+$$
+
+Let $p$ be the output precision in bits. In schedule order $p=256,384,512,768,1024,1536,2048$, the computed lower endpoint is always zero. In units of $2^{-p}$, the upper numerators for $k=2048$ are $(1,1,1,1,1,1,2)$. For $k=4096$ all seven are one. In each case every computed upper endpoint exceeds $x$. When $k=4096$ even the finest output grid has no positive point in $[0,x]$. When $k=2048$ the last grid contains $x$ exactly and the rounding inside the routine matters. [Pinned logarithm routine](https://github.com/sepahead/pid-rs/blob/c416ace7a92d9859917cf3bd56b67b43f1fc3614/audit/research/three-source-six-certificate-observations/arithmetic.py#L214-L258)
+
+The series argument is $t=(Q-1)/(Q+1)=1/(2^{k+1}+1)$. At internal scale $2^{p+24}$ and for the listed $p<k$, rounding $t$ down and up gives integers 0 and 1. Later powers have the same bounds. With $m=\lceil(p+24)/3\rceil+1$ terms, the upper sum is $2+(m-1)+1=m+2$ including its tail allowance. This lies strictly between 0 and $2^{24}$, so rounding up after division by $2^{24}$ gives one. At $p=k=2048$ the starting integers are $2^{23}-1$ and $2^{23}$. The first term doubles each. The other 691 terms each add 0 below and 1 above. The tail adds 1 above. The final integers are $2^{24}-2$ and $2^{24}+692$, which round out to 0 and 2 on the output grid.
+
+The normalized upper endpoint has coefficient one and exponent $-k$. The six-table reader permits $-2048$ and rejects $-4096$. The original wire format permits both, and both intervals meet its width limit. A valid table with total one has a single occupied state. Its event, target and intersection counts are all one. Every cumulative and atom product is therefore one. Neither scalar example can be such an empirical coordinate. The proposed claim requires correct intervals for **accepted** tables and specifies rejection when the schedule ends without containment. The 648 observed coordinates and the general claim keep their respective evidence scopes. [Endpoint reader](https://github.com/sepahead/pid-rs/blob/c416ace7a92d9859917cf3bd56b67b43f1fc3614/audit/research/three-source-six-certificate-observations/check.py#L139-L146) · [Original claim](../../../claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md) · [Width, exponent and schedule rules](../../../claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md)
+
+An earlier project study covers a different checker and a producer that adds at least $2^{-176}$ nats on each side. That study also gives an unpadded first-stage counterexample. Here the whole external interval is narrower than its one-sided margin. The exact integer calculation uses the published Python routine offline and has no estimator timing or application result. [Earlier containment study](https://github.com/sepahead/pid-rs/blob/4b35dd94cf0b4a5a081d9f864611d80203e1ca4c/audit/archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/SXPID3_FIRST_STAGE_CONTAINMENT_2026_10_12.md.txt)
+
 ### Transformations of the six tables
 
 The secondary check reconstructed the declared transformations on the B tables and compared exact products by component, scope and transformed mask key. It covers **360 relations**.
@@ -79,7 +94,11 @@ python3 -I -B -O check.py
 python3 -I -B check.py --coordinates weighted
 python3 -I -B controls.py
 python3 -I -B -O controls.py
+python3 -I -B check_schedule.py
+python3 -I -B -O check_schedule.py
 ~~~
+
+The final two commands check the seven upper numerators per scalar input, the last internal integer sums, the panel exponent rule and the 648 empirical precisions. [Schedule example reader](check_schedule.py)
 
 The first command reports the six cases, 648 coordinates and the four relation counts. The third writes the weighted table's 108 mathematical records to standard output. Each includes the stable name and masks, reduced numerator and denominator, exact sign, both pairs of normalized endpoints, chosen precision and containment result. The command checks the complete six-case panel before returning the requested case. All fixed-file hashes include the terminal newline. A failure exits nonzero. [Reader](check.py) · [Case, original-run and observation digest register](panel.json) · [Schema and resource limits](profile.json)
 

@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Document two valid logarithm intervals that the seven scheduled precisions do not fit. Both examples supply the numbers directly. A count table with total one cannot produce either input. All 648 coordinates in the six published tables passed the containment test at 256 bits. [Calculation and scope](audit/research/three-source-six-certificate-observations/README.md#two-inputs-to-the-logarithm-routine)
+
 - Correct the implication on page 73 of the mathematical workflow. Two systems have the same descriptor and different total mutual information. Any atom rule that gives the same vector for this pair cannot recover both totals from that vector. The corrected PDF preserves all 232 named destinations. [Worked example and earlier failed build](audit/evidence/mathematical-workflow-correction-2026-11-20.md)
 
 - Correct the average degrees of redundancy and vulnerability for supplied binary64 mutual information values. Each function now rounds its exact numerator and exact quotient independently. On 184 fixed calls, 41 earlier reports differed from the exact references, including 13 incorrect statuses. All 184 corrected reports agreed in all seven fields. [Definitions, examples and measurements](audit/research/normalized-shannon-arithmetic/README.md)

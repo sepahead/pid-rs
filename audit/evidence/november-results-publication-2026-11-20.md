@@ -33,7 +33,7 @@ The revised papers distinguish a finite population law from a table of integer c
 |---|---:|---|---|
 | [November results guide](https://github.com/sepahead/pid-rs/blob/a7b63292aff4d3dcd0472ccc0094348c1dab4f46/output/pdf/mathematical-results-guide-current.pdf) | 5 | `2aa7434f4df0de7c6f761c6ac710b0721c330030aebb8cb862e035c3e98a660a` | All five pages compared at 105 dpi. Pages 1–4 have identical pixels. Page 5 was also inspected at 200 dpi and in grayscale. Its links bring the document to 24 URI annotations with 21 targets. |
 | [Normalized Shannon arithmetic](../../output/pdf/normalized-shannon-arithmetic.pdf) | 5 | `a016d8fef5cb3082ca28bd1d182a186e7c80424f254e4b2df5f71eba0ff05c3e` | Each page was read at 90 dpi. The count proof on page 2 and threshold example on page 5 were also read at 180 and 160 dpi, respectively. |
-| [Six categorical certificates](../../output/pdf/three-source-six-certificate-observations.pdf) | 6 | `082fe3edf72069dbe71172d6579ec819f5d7c07fb4227e877aa72ecef404fbd6` | All six pages compared at 90 dpi. Only page 2 changed and was also inspected at 180 dpi. Its two new links bring the document to 50 URI annotations and 31 targets. |
+| [Six categorical certificates, six-page edition](https://github.com/sepahead/pid-rs/blob/a7b63292aff4d3dcd0472ccc0094348c1dab4f46/output/pdf/three-source-six-certificate-observations.pdf) | 6 | `082fe3edf72069dbe71172d6579ec819f5d7c07fb4227e877aa72ecef404fbd6` | All six pages compared at 90 dpi. Only page 2 changed and was also inspected at 180 dpi. Its two new links bring the document to 50 URI annotations and 31 targets. |
 
 The revised pages use the existing fonts, page grid, palette, labels and ornamental elements. Their fraction bars, exponents, signs and second-page table were inspected in the rendered documents. Each paper rebuilt byte for byte in ordinary and optimized Python. The preceding editions remain available through the exact links above.
 
@@ -47,5 +47,11 @@ The short guide now states that a positive-weight key belongs to the finite inde
 |---|---:|---|---|
 | [Foundational shared-exclusions report](../../output/pdf/foundational-shared-exclusions-pid-audit.pdf) | 16 | `3cce44d74dca856c92ad28c478ffc6a2b15530ab99a02e722ca09b7e4bd00c8f` | All eight pages whose raster changed from the earlier edition were examined at 90 dpi. Pages 3, 10, 11, 15 and 16 were inspected at 180 dpi. The printed reference from page 15 resolves to §8.5. |
 | [November results guide](../../output/pdf/mathematical-results-guide-current.pdf) | 5 | `d771bcfbec55181223166d9e8f49d92c6d925bae5ab57cdae04c7cc1558659ef` | Only page 4 changed. The membership statement and both count inequalities were inspected at 105 and 210 dpi and in grayscale. |
+
+## 21 November addition to the six-table paper
+
+The seven-page printing retains the original date on the cover. Page 4 carries the dated addition. It calculates two logarithms from directly supplied scalar inputs. Page 5 gives the commands that check their seven precision settings. Each of the 648 coordinates from the six tables met the containment test at 256 bits. A count table with total one cannot supply either scalar example. [Study and calculation](../research/three-source-six-certificate-observations/README.md#two-inputs-to-the-logarithm-routine)
+
+The shipped PDF has SHA-256 `17791ed645e75a5492934aa12fe17da45d42662a0b4f6f947e688bb6afc1108d`. Fresh builds in ordinary and optimized Python matched it byte for byte. The seven 108 dpi page images and the 175 dpi images of pages 4 and 5 matched the earlier visual review. The readable equations, numerical exponents and commands on those two pages were checked again. The file has 57 URI annotations and 35 distinct HTTPS targets. [Seven-page paper](../../output/pdf/three-source-six-certificate-observations.pdf)
 
 Cite Sepehr Mahmoudian (2026), *The 20 November mathematical publications*, with the exact repository commit or release. Cite each study and its defining papers for mathematical claims. [Software citation](../../CITATION.cff)

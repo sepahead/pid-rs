@@ -13,6 +13,7 @@ function Pandoc(doc)
   local pages = {
     ["The defining papers"] = true,
     ["Bounding the logarithm"] = true,
+    ["Two inputs to the logarithm routine"] = true,
     ["Transformations of the six tables"] = true,
     ["Checks on altered records"] = true,
     ["Evidence and open obligations"] = true
