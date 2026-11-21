@@ -1,0 +1,751 @@
+{
+  "IndexExample.leaf00": [
+    "intro ready x hr hzero",
+    "exact False.elim (Nat.lt_irrefl 0 hzero)"
+  ],
+  "IndexExample.leaf01": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf02": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf03": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf04": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf05": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf06": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf07": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf08": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf09": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf10": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf11": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf12": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf13": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf14": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf15": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf16": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf17": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf18": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf19": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf20": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf21": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf22": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf23": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf24": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf25": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf26": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf27": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf28": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf29": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf30": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf31": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf32": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf33": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf34": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf35": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf36": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf37": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf38": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf39": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf40": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf41": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf42": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf43": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf44": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf45": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf46": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf47": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf48": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf49": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf50": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf51": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf52": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf53": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf54": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf55": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf56": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf57": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf58": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf59": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf60": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf61": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf62": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf63": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf64": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf65": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf66": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf67": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf68": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf69": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf70": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf71": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf72": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf73": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf74": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf75": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf76": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf77": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf78": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf79": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf80": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf81": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.leaf82": [
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl"
+  ],
+  "IndexExample.inlineComplete": [
+    "refine Fin.cases (n := 82) (motive := fun j => Guarded j) ?_ ?_",
+    "intro ready x hr hzero",
+    "exact False.elim (Nat.lt_irrefl 0 hzero)",
+    "refine Fin.cases (n := 81) (motive := fun j => Guarded j.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 80) (motive := fun j => Guarded j.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 79) (motive := fun j => Guarded j.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 78) (motive := fun j => Guarded j.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 77) (motive := fun j => Guarded j.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 76) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 75) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 74) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 73) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 72) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 71) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 70) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 69) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 68) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 67) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 66) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 65) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 64) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 63) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 62) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 61) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 60) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 59) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 58) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 57) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 56) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 55) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 54) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 53) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 52) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 51) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 50) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 49) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 48) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 47) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 46) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 45) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 44) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 43) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 42) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 41) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 40) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 39) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 38) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 37) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 36) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 35) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 34) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 33) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 32) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 31) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 30) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 29) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 28) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 27) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 26) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 25) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 24) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 23) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 22) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 21) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 20) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 19) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 18) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 17) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 16) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 15) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 14) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 13) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 12) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 11) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 10) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 9) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 8) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 7) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 6) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 5) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 4) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 3) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 2) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 1) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "refine Fin.cases (n := 0) (motive := fun j => Guarded j.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ.succ) ?_ ?_",
+    "intro ready x hr hpos",
+    "cases hr",
+    "rfl",
+    "intro j",
+    "exact Fin.elim0 j"
+  ]
+}
