@@ -1,0 +1,82 @@
+name: Bounded observation of the artificial index proofs
+
+on:
+  push:
+    branches:
+      - review/index-family-observer-v4/*
+    paths:
+      - audit/research/index-family-observer-v4-submission.json
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    name: Observe 170 synthetic declarations on one Linux CPU
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    defaults:
+      run:
+        shell: bash
+    env:
+      PACKAGE: audit/research/index-family-observer-v4
+      MANIFEST: 69808d61466ccf487021587e91c554552e690416f5c23163deb03bd848741d2c
+      RELEASE: https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst
+      STOCK_SHA: 47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4
+    steps:
+      - name: Bind first push and start clock
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          [[ "$GITHUB_REF" =~ ^refs/heads/review/index-family-observer-v4/([0-9a-f]{40})-([0-9a-f]{64})$ ]]
+          parent="${BASH_REMATCH[1]}"
+          registration="${BASH_REMATCH[2]}"
+          started=$(python3 -I -S -B -c 'import time; print(time.monotonic())')
+          printf 'REG_PARENT=%s\nREG_SHA=%s\nSTARTED=%s\n' "$parent" "$registration" "$started" >> "$GITHUB_ENV"
+          mkdir "$RUNNER_TEMP/index-observer-v4-evidence"
+          python3 -I -S -B - "$GITHUB_SHA" "$parent" "$registration" "$GITHUB_RUN_ID" <<'PY' > "$RUNNER_TEMP/index-observer-v4-evidence/launch.json"
+          import json, os, sys
+          from pathlib import Path
+          directories={key:str(Path(value).resolve()) for key,value in {
+              "workspace":os.environ["GITHUB_WORKSPACE"], "runner_temp":os.environ["RUNNER_TEMP"], "python":sys.executable}.items()}
+          print(json.dumps(dict(commit=sys.argv[1],registration_commit=sys.argv[2],registration_sha256=sys.argv[3],
+                                run=int(sys.argv[4]),attempt=1,execution=directories)))
+          PY
+
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify immutable inputs and retrieve the stock release
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA $REG_PARENT"
+          git merge-base --is-ancestor c416ace7a92d9859917cf3bd56b67b43f1fc3614 "$REG_PARENT"
+          test "$(git diff --no-renames --name-only "$REG_PARENT" "$GITHUB_SHA")" = "audit/research/index-family-observer-v4-submission.json"
+          test -z "$(git ls-tree "$REG_PARENT" -- audit/research/index-family-observer-v4-submission.json)"
+          git show "$REG_PARENT:${PACKAGE}-registration.json" > "$RUNNER_TEMP/observer-v4-registration.json"
+          cmp "$RUNNER_TEMP/observer-v4-registration.json" "${PACKAGE}-registration.json"
+          printf '%s  %s\n' "$REG_SHA" "$RUNNER_TEMP/observer-v4-registration.json" | sha256sum --check --strict
+          printf '%s  %s\n' "$MANIFEST" "$PACKAGE/manifest.json" | sha256sum --check --strict
+          timeout 850s curl --fail --location --proto '=https' --tlsv1.2 --retry 2 --retry-max-time 650 \
+            --max-time 420 --output "$RUNNER_TEMP/index-observer-v4-release.tar.zst" "$RELEASE"
+          printf '%s  %s\n' "$STOCK_SHA" "$RUNNER_TEMP/index-observer-v4-release.tar.zst" | sha256sum --check --strict
+
+      - name: Compile and observe all fixed synthetic proof groups
+        run: |
+          set -euo pipefail
+          python3 -I -S -B "$PACKAGE/run.py" --commit "$GITHUB_SHA" --parent "$REG_PARENT" --register "$REG_SHA" \
+            --manifest "$MANIFEST" --started "$STARTED" --archive "$RUNNER_TEMP/index-observer-v4-release.tar.zst" \
+            --stock "$RUNNER_TEMP/index-observer-v4-stock" --output "$RUNNER_TEMP/index-observer-v4-evidence/result"
+
+      - name: Preserve full or partial calibration evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: index-family-observer-v4-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/index-observer-v4-evidence
+          if-no-files-found: error
+          compression-level: 1

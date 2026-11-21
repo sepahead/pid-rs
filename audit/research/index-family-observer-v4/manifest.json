@@ -1,0 +1,45 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 9695,
+      "sha256": "1bfecb2026c06d1e50f26c106efa2a65279db448c2fbfd80ee11c603276d0857"
+    },
+    "frames.py": {
+      "bytes": 4143,
+      "sha256": "9e8a3f794ccb0332a61700cc38f4ca5757f1ebd645c09b3e2e6c1208285fda05"
+    },
+    "parser_self_test.py": {
+      "bytes": 23763,
+      "sha256": "2702d4f378349a71751df9e7c5f1ce991f65b683f3516b105b021a67729a276f"
+    },
+    "plan.json": {
+      "bytes": 24177,
+      "sha256": "af4e15ceb46f4d05664f9e67b4b3b5233488a63cdb952f3b0b2eba2694462e73"
+    },
+    "providers.json": {
+      "bytes": 5860,
+      "sha256": "d173bba8186068f4504f59161a7efff8e56a244752543de4ff92259bbd4c526c"
+    },
+    "receipt_self_test.py": {
+      "bytes": 21481,
+      "sha256": "957e1e2961959ff0f9e3cb188ec68b8336a6b53585d8f8e42d049d3efa7d4759"
+    },
+    "receipts.py": {
+      "bytes": 12061,
+      "sha256": "3384d79d351fc623821e4a7e5ad19d72ebea2c617e775ebffd9bdeabf802f945"
+    },
+    "run.py": {
+      "bytes": 9886,
+      "sha256": "3e9e57b085d3cc4191b1e03718e29d93c06165b6e630c7ea6ab385c917164498"
+    },
+    "support.py": {
+      "bytes": 10717,
+      "sha256": "3f552f64e122f44508743e6f60949878a42a2e40a37050fbfd8802b953a4900b"
+    },
+    "verify.py": {
+      "bytes": 19270,
+      "sha256": "cb8cd91f802759ca8a827908bd77b21d171e09817a98b4d233563b88c7962ff3"
+    }
+  },
+  "schema": 4
+}
