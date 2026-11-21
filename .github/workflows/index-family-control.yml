@@ -1,0 +1,75 @@
+name: Invented 83-position constructive proof calibration
+
+on:
+  push:
+    branches:
+      - review/index-family-control/*
+    paths:
+      - audit/research/index-family-control-submission.json
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    name: Check all 83 positions on one Linux CPU
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    defaults:
+      run:
+        shell: bash
+    env:
+      PACKAGE: audit/research/index-family-control
+      MANIFEST: c84554eb6f0516dae23f73aba710ce0eb0808dd3980958cfa7fd323240468f79
+      RELEASE: https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst
+      STOCK_SHA: 47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4
+    steps:
+      - name: Bind first push and start clock
+        run: |
+          set -euo pipefail
+          test "$GITHUB_EVENT_NAME" = push
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          [[ "$GITHUB_REF" =~ ^refs/heads/review/index-family-control/([0-9a-f]{40})-([0-9a-f]{64})$ ]]
+          parent="${BASH_REMATCH[1]}"
+          registration="${BASH_REMATCH[2]}"
+          started=$(python3 -I -S -B -c 'import time; print(time.monotonic())')
+          printf 'REG_PARENT=%s\nREG_SHA=%s\nSTARTED=%s\n' "$parent" "$registration" "$started" >> "$GITHUB_ENV"
+          mkdir "$RUNNER_TEMP/index-evidence"
+          python3 -I -S -B - "$GITHUB_SHA" "$parent" "$registration" "$GITHUB_RUN_ID" <<'PY' > "$RUNNER_TEMP/index-evidence/launch.json"
+          import json, sys
+          print(json.dumps(dict(commit=sys.argv[1],registration_commit=sys.argv[2],registration_sha256=sys.argv[3],run=int(sys.argv[4]),attempt=1)))
+          PY
+
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify immutable inputs and retrieve the stock release
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA $REG_PARENT"
+          git show "$REG_PARENT:${PACKAGE}-registration.json" > "$RUNNER_TEMP/control-registration.json"
+          cmp "$RUNNER_TEMP/control-registration.json" "${PACKAGE}-registration.json"
+          printf '%s  %s\n' "$REG_SHA" "$RUNNER_TEMP/control-registration.json" | sha256sum --check --strict
+          printf '%s  %s\n' "$MANIFEST" "$PACKAGE/manifest.json" | sha256sum --check --strict
+          timeout 850s curl --fail --location --proto '=https' --tlsv1.2 --retry 2 --retry-max-time 650 \
+            --max-time 420 --output "$RUNNER_TEMP/index-lean.tar.zst" "$RELEASE"
+          printf '%s  %s\n' "$STOCK_SHA" "$RUNNER_TEMP/index-lean.tar.zst" | sha256sum --check --strict
+
+      - name: Compile and check finite elimination on the invented table
+        run: |
+          set -euo pipefail
+          python3 -I -S -B "$PACKAGE/run.py" --commit "$GITHUB_SHA" --parent "$REG_PARENT" --register "$REG_SHA" \
+            --manifest "$MANIFEST" --started "$STARTED" --archive "$RUNNER_TEMP/index-lean.tar.zst" \
+            --stock "$RUNNER_TEMP/index-stock" --output "$RUNNER_TEMP/index-evidence/result"
+
+      - name: Preserve full or partial calibration evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: index-family-control-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/index-evidence
+          if-no-files-found: error
+          compression-level: 1

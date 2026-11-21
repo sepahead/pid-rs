@@ -1,0 +1,29 @@
+{
+  "source_commit": "37e0913096e2d1fdf136278c18161ed8ede1d5e7",
+  "files": {
+    "audit/research/three-source-original-reachable-v3/native_resources.py": {
+      "bytes": 6277,
+      "sha256": "d5dd2682156862e674ba958a172877d87ffe899241c07ca262e8718e32af5fcc"
+    },
+    "audit/research/three-source-original-reachable-v3/schedule.py": {
+      "bytes": 8233,
+      "sha256": "24c036c6c1618b23b34439bda6855f6b40f56e286d4eab56fdc40c5ad6fb3150"
+    },
+    "audit/research/three-source-original-first-three/observations.py": {
+      "bytes": 2711,
+      "sha256": "9bb7fe901e973d450dae98951c97988f38d6f0a713e1482b0b6438d7c6660f59"
+    },
+    "audit/research/three-source-original-first-three/proof_interface.py": {
+      "bytes": 3125,
+      "sha256": "6b6f2c616c3fc04e5b4a68047b06e44c3d9cbe817de6daf7038b4c524a7638ce"
+    },
+    "audit/research/three-source-synthetic-projection/readback.py": {
+      "bytes": 5104,
+      "sha256": "2e3ec093879e27e37b057ad290e22bebb0deb58fe76f764a8f6ab12fc0821bb1"
+    },
+    "audit/research/synthetic-assertion-reachable-v3/lean/RouteInspect.lean": {
+      "bytes": 2391,
+      "sha256": "89d489a0eb4522fda202d02fb8d9474a47ed1e13f94573f049ae50f85a9664a3"
+    }
+  }
+}

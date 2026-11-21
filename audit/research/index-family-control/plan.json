@@ -1,0 +1,755 @@
+{
+  "schema": 1,
+  "targets": {
+    "IndexExample.leaf00": "IndexProofs",
+    "IndexExample.leaf01": "IndexProofs",
+    "IndexExample.leaf02": "IndexProofs",
+    "IndexExample.leaf03": "IndexProofs",
+    "IndexExample.leaf04": "IndexProofs",
+    "IndexExample.leaf05": "IndexProofs",
+    "IndexExample.leaf06": "IndexProofs",
+    "IndexExample.leaf07": "IndexProofs",
+    "IndexExample.leaf08": "IndexProofs",
+    "IndexExample.leaf09": "IndexProofs",
+    "IndexExample.leaf10": "IndexProofs",
+    "IndexExample.leaf11": "IndexProofs",
+    "IndexExample.leaf12": "IndexProofs",
+    "IndexExample.leaf13": "IndexProofs",
+    "IndexExample.leaf14": "IndexProofs",
+    "IndexExample.leaf15": "IndexProofs",
+    "IndexExample.leaf16": "IndexProofs",
+    "IndexExample.leaf17": "IndexProofs",
+    "IndexExample.leaf18": "IndexProofs",
+    "IndexExample.leaf19": "IndexProofs",
+    "IndexExample.leaf20": "IndexProofs",
+    "IndexExample.leaf21": "IndexProofs",
+    "IndexExample.leaf22": "IndexProofs",
+    "IndexExample.leaf23": "IndexProofs",
+    "IndexExample.leaf24": "IndexProofs",
+    "IndexExample.leaf25": "IndexProofs",
+    "IndexExample.leaf26": "IndexProofs",
+    "IndexExample.leaf27": "IndexProofs",
+    "IndexExample.leaf28": "IndexProofs",
+    "IndexExample.leaf29": "IndexProofs",
+    "IndexExample.leaf30": "IndexProofs",
+    "IndexExample.leaf31": "IndexProofs",
+    "IndexExample.leaf32": "IndexProofs",
+    "IndexExample.leaf33": "IndexProofs",
+    "IndexExample.leaf34": "IndexProofs",
+    "IndexExample.leaf35": "IndexProofs",
+    "IndexExample.leaf36": "IndexProofs",
+    "IndexExample.leaf37": "IndexProofs",
+    "IndexExample.leaf38": "IndexProofs",
+    "IndexExample.leaf39": "IndexProofs",
+    "IndexExample.leaf40": "IndexProofs",
+    "IndexExample.leaf41": "IndexProofs",
+    "IndexExample.leaf42": "IndexProofs",
+    "IndexExample.leaf43": "IndexProofs",
+    "IndexExample.leaf44": "IndexProofs",
+    "IndexExample.leaf45": "IndexProofs",
+    "IndexExample.leaf46": "IndexProofs",
+    "IndexExample.leaf47": "IndexProofs",
+    "IndexExample.leaf48": "IndexProofs",
+    "IndexExample.leaf49": "IndexProofs",
+    "IndexExample.leaf50": "IndexProofs",
+    "IndexExample.leaf51": "IndexProofs",
+    "IndexExample.leaf52": "IndexProofs",
+    "IndexExample.leaf53": "IndexProofs",
+    "IndexExample.leaf54": "IndexProofs",
+    "IndexExample.leaf55": "IndexProofs",
+    "IndexExample.leaf56": "IndexProofs",
+    "IndexExample.leaf57": "IndexProofs",
+    "IndexExample.leaf58": "IndexProofs",
+    "IndexExample.leaf59": "IndexProofs",
+    "IndexExample.leaf60": "IndexProofs",
+    "IndexExample.leaf61": "IndexProofs",
+    "IndexExample.leaf62": "IndexProofs",
+    "IndexExample.leaf63": "IndexProofs",
+    "IndexExample.leaf64": "IndexProofs",
+    "IndexExample.leaf65": "IndexProofs",
+    "IndexExample.leaf66": "IndexProofs",
+    "IndexExample.leaf67": "IndexProofs",
+    "IndexExample.leaf68": "IndexProofs",
+    "IndexExample.leaf69": "IndexProofs",
+    "IndexExample.leaf70": "IndexProofs",
+    "IndexExample.leaf71": "IndexProofs",
+    "IndexExample.leaf72": "IndexProofs",
+    "IndexExample.leaf73": "IndexProofs",
+    "IndexExample.leaf74": "IndexProofs",
+    "IndexExample.leaf75": "IndexProofs",
+    "IndexExample.leaf76": "IndexProofs",
+    "IndexExample.leaf77": "IndexProofs",
+    "IndexExample.leaf78": "IndexProofs",
+    "IndexExample.leaf79": "IndexProofs",
+    "IndexExample.leaf80": "IndexProofs",
+    "IndexExample.leaf81": "IndexProofs",
+    "IndexExample.leaf82": "IndexProofs",
+    "IndexExample.cover83": "IndexProofs",
+    "IndexExample.cover82": "IndexProofs",
+    "IndexExample.cover81": "IndexProofs",
+    "IndexExample.cover80": "IndexProofs",
+    "IndexExample.cover79": "IndexProofs",
+    "IndexExample.cover78": "IndexProofs",
+    "IndexExample.cover77": "IndexProofs",
+    "IndexExample.cover76": "IndexProofs",
+    "IndexExample.cover75": "IndexProofs",
+    "IndexExample.cover74": "IndexProofs",
+    "IndexExample.cover73": "IndexProofs",
+    "IndexExample.cover72": "IndexProofs",
+    "IndexExample.cover71": "IndexProofs",
+    "IndexExample.cover70": "IndexProofs",
+    "IndexExample.cover69": "IndexProofs",
+    "IndexExample.cover68": "IndexProofs",
+    "IndexExample.cover67": "IndexProofs",
+    "IndexExample.cover66": "IndexProofs",
+    "IndexExample.cover65": "IndexProofs",
+    "IndexExample.cover64": "IndexProofs",
+    "IndexExample.cover63": "IndexProofs",
+    "IndexExample.cover62": "IndexProofs",
+    "IndexExample.cover61": "IndexProofs",
+    "IndexExample.cover60": "IndexProofs",
+    "IndexExample.cover59": "IndexProofs",
+    "IndexExample.cover58": "IndexProofs",
+    "IndexExample.cover57": "IndexProofs",
+    "IndexExample.cover56": "IndexProofs",
+    "IndexExample.cover55": "IndexProofs",
+    "IndexExample.cover54": "IndexProofs",
+    "IndexExample.cover53": "IndexProofs",
+    "IndexExample.cover52": "IndexProofs",
+    "IndexExample.cover51": "IndexProofs",
+    "IndexExample.cover50": "IndexProofs",
+    "IndexExample.cover49": "IndexProofs",
+    "IndexExample.cover48": "IndexProofs",
+    "IndexExample.cover47": "IndexProofs",
+    "IndexExample.cover46": "IndexProofs",
+    "IndexExample.cover45": "IndexProofs",
+    "IndexExample.cover44": "IndexProofs",
+    "IndexExample.cover43": "IndexProofs",
+    "IndexExample.cover42": "IndexProofs",
+    "IndexExample.cover41": "IndexProofs",
+    "IndexExample.cover40": "IndexProofs",
+    "IndexExample.cover39": "IndexProofs",
+    "IndexExample.cover38": "IndexProofs",
+    "IndexExample.cover37": "IndexProofs",
+    "IndexExample.cover36": "IndexProofs",
+    "IndexExample.cover35": "IndexProofs",
+    "IndexExample.cover34": "IndexProofs",
+    "IndexExample.cover33": "IndexProofs",
+    "IndexExample.cover32": "IndexProofs",
+    "IndexExample.cover31": "IndexProofs",
+    "IndexExample.cover30": "IndexProofs",
+    "IndexExample.cover29": "IndexProofs",
+    "IndexExample.cover28": "IndexProofs",
+    "IndexExample.cover27": "IndexProofs",
+    "IndexExample.cover26": "IndexProofs",
+    "IndexExample.cover25": "IndexProofs",
+    "IndexExample.cover24": "IndexProofs",
+    "IndexExample.cover23": "IndexProofs",
+    "IndexExample.cover22": "IndexProofs",
+    "IndexExample.cover21": "IndexProofs",
+    "IndexExample.cover20": "IndexProofs",
+    "IndexExample.cover19": "IndexProofs",
+    "IndexExample.cover18": "IndexProofs",
+    "IndexExample.cover17": "IndexProofs",
+    "IndexExample.cover16": "IndexProofs",
+    "IndexExample.cover15": "IndexProofs",
+    "IndexExample.cover14": "IndexProofs",
+    "IndexExample.cover13": "IndexProofs",
+    "IndexExample.cover12": "IndexProofs",
+    "IndexExample.cover11": "IndexProofs",
+    "IndexExample.cover10": "IndexProofs",
+    "IndexExample.cover09": "IndexProofs",
+    "IndexExample.cover08": "IndexProofs",
+    "IndexExample.cover07": "IndexProofs",
+    "IndexExample.cover06": "IndexProofs",
+    "IndexExample.cover05": "IndexProofs",
+    "IndexExample.cover04": "IndexProofs",
+    "IndexExample.cover03": "IndexProofs",
+    "IndexExample.cover02": "IndexProofs",
+    "IndexExample.cover01": "IndexProofs",
+    "IndexExample.cover00": "IndexProofs",
+    "IndexExample.inlineComplete": "IndexInline",
+    "IndexExample.namedResult": "IndexConsumer",
+    "IndexExample.singleSlotResult": "IndexConsumer"
+  },
+  "consumer_uses": {
+    "IndexExample.namedResult": "IndexExample.cover00",
+    "IndexExample.singleSlotResult": "IndexExample.inlineComplete"
+  },
+  "edges": {
+    "IndexExample.cover83": [
+      "Fin.elim0"
+    ],
+    "IndexExample.cover82": [
+      "Fin.cases",
+      "IndexExample.leaf82",
+      "IndexExample.cover83"
+    ],
+    "IndexExample.cover81": [
+      "Fin.cases",
+      "IndexExample.leaf81",
+      "IndexExample.cover82"
+    ],
+    "IndexExample.cover80": [
+      "Fin.cases",
+      "IndexExample.leaf80",
+      "IndexExample.cover81"
+    ],
+    "IndexExample.cover79": [
+      "Fin.cases",
+      "IndexExample.leaf79",
+      "IndexExample.cover80"
+    ],
+    "IndexExample.cover78": [
+      "Fin.cases",
+      "IndexExample.leaf78",
+      "IndexExample.cover79"
+    ],
+    "IndexExample.cover77": [
+      "Fin.cases",
+      "IndexExample.leaf77",
+      "IndexExample.cover78"
+    ],
+    "IndexExample.cover76": [
+      "Fin.cases",
+      "IndexExample.leaf76",
+      "IndexExample.cover77"
+    ],
+    "IndexExample.cover75": [
+      "Fin.cases",
+      "IndexExample.leaf75",
+      "IndexExample.cover76"
+    ],
+    "IndexExample.cover74": [
+      "Fin.cases",
+      "IndexExample.leaf74",
+      "IndexExample.cover75"
+    ],
+    "IndexExample.cover73": [
+      "Fin.cases",
+      "IndexExample.leaf73",
+      "IndexExample.cover74"
+    ],
+    "IndexExample.cover72": [
+      "Fin.cases",
+      "IndexExample.leaf72",
+      "IndexExample.cover73"
+    ],
+    "IndexExample.cover71": [
+      "Fin.cases",
+      "IndexExample.leaf71",
+      "IndexExample.cover72"
+    ],
+    "IndexExample.cover70": [
+      "Fin.cases",
+      "IndexExample.leaf70",
+      "IndexExample.cover71"
+    ],
+    "IndexExample.cover69": [
+      "Fin.cases",
+      "IndexExample.leaf69",
+      "IndexExample.cover70"
+    ],
+    "IndexExample.cover68": [
+      "Fin.cases",
+      "IndexExample.leaf68",
+      "IndexExample.cover69"
+    ],
+    "IndexExample.cover67": [
+      "Fin.cases",
+      "IndexExample.leaf67",
+      "IndexExample.cover68"
+    ],
+    "IndexExample.cover66": [
+      "Fin.cases",
+      "IndexExample.leaf66",
+      "IndexExample.cover67"
+    ],
+    "IndexExample.cover65": [
+      "Fin.cases",
+      "IndexExample.leaf65",
+      "IndexExample.cover66"
+    ],
+    "IndexExample.cover64": [
+      "Fin.cases",
+      "IndexExample.leaf64",
+      "IndexExample.cover65"
+    ],
+    "IndexExample.cover63": [
+      "Fin.cases",
+      "IndexExample.leaf63",
+      "IndexExample.cover64"
+    ],
+    "IndexExample.cover62": [
+      "Fin.cases",
+      "IndexExample.leaf62",
+      "IndexExample.cover63"
+    ],
+    "IndexExample.cover61": [
+      "Fin.cases",
+      "IndexExample.leaf61",
+      "IndexExample.cover62"
+    ],
+    "IndexExample.cover60": [
+      "Fin.cases",
+      "IndexExample.leaf60",
+      "IndexExample.cover61"
+    ],
+    "IndexExample.cover59": [
+      "Fin.cases",
+      "IndexExample.leaf59",
+      "IndexExample.cover60"
+    ],
+    "IndexExample.cover58": [
+      "Fin.cases",
+      "IndexExample.leaf58",
+      "IndexExample.cover59"
+    ],
+    "IndexExample.cover57": [
+      "Fin.cases",
+      "IndexExample.leaf57",
+      "IndexExample.cover58"
+    ],
+    "IndexExample.cover56": [
+      "Fin.cases",
+      "IndexExample.leaf56",
+      "IndexExample.cover57"
+    ],
+    "IndexExample.cover55": [
+      "Fin.cases",
+      "IndexExample.leaf55",
+      "IndexExample.cover56"
+    ],
+    "IndexExample.cover54": [
+      "Fin.cases",
+      "IndexExample.leaf54",
+      "IndexExample.cover55"
+    ],
+    "IndexExample.cover53": [
+      "Fin.cases",
+      "IndexExample.leaf53",
+      "IndexExample.cover54"
+    ],
+    "IndexExample.cover52": [
+      "Fin.cases",
+      "IndexExample.leaf52",
+      "IndexExample.cover53"
+    ],
+    "IndexExample.cover51": [
+      "Fin.cases",
+      "IndexExample.leaf51",
+      "IndexExample.cover52"
+    ],
+    "IndexExample.cover50": [
+      "Fin.cases",
+      "IndexExample.leaf50",
+      "IndexExample.cover51"
+    ],
+    "IndexExample.cover49": [
+      "Fin.cases",
+      "IndexExample.leaf49",
+      "IndexExample.cover50"
+    ],
+    "IndexExample.cover48": [
+      "Fin.cases",
+      "IndexExample.leaf48",
+      "IndexExample.cover49"
+    ],
+    "IndexExample.cover47": [
+      "Fin.cases",
+      "IndexExample.leaf47",
+      "IndexExample.cover48"
+    ],
+    "IndexExample.cover46": [
+      "Fin.cases",
+      "IndexExample.leaf46",
+      "IndexExample.cover47"
+    ],
+    "IndexExample.cover45": [
+      "Fin.cases",
+      "IndexExample.leaf45",
+      "IndexExample.cover46"
+    ],
+    "IndexExample.cover44": [
+      "Fin.cases",
+      "IndexExample.leaf44",
+      "IndexExample.cover45"
+    ],
+    "IndexExample.cover43": [
+      "Fin.cases",
+      "IndexExample.leaf43",
+      "IndexExample.cover44"
+    ],
+    "IndexExample.cover42": [
+      "Fin.cases",
+      "IndexExample.leaf42",
+      "IndexExample.cover43"
+    ],
+    "IndexExample.cover41": [
+      "Fin.cases",
+      "IndexExample.leaf41",
+      "IndexExample.cover42"
+    ],
+    "IndexExample.cover40": [
+      "Fin.cases",
+      "IndexExample.leaf40",
+      "IndexExample.cover41"
+    ],
+    "IndexExample.cover39": [
+      "Fin.cases",
+      "IndexExample.leaf39",
+      "IndexExample.cover40"
+    ],
+    "IndexExample.cover38": [
+      "Fin.cases",
+      "IndexExample.leaf38",
+      "IndexExample.cover39"
+    ],
+    "IndexExample.cover37": [
+      "Fin.cases",
+      "IndexExample.leaf37",
+      "IndexExample.cover38"
+    ],
+    "IndexExample.cover36": [
+      "Fin.cases",
+      "IndexExample.leaf36",
+      "IndexExample.cover37"
+    ],
+    "IndexExample.cover35": [
+      "Fin.cases",
+      "IndexExample.leaf35",
+      "IndexExample.cover36"
+    ],
+    "IndexExample.cover34": [
+      "Fin.cases",
+      "IndexExample.leaf34",
+      "IndexExample.cover35"
+    ],
+    "IndexExample.cover33": [
+      "Fin.cases",
+      "IndexExample.leaf33",
+      "IndexExample.cover34"
+    ],
+    "IndexExample.cover32": [
+      "Fin.cases",
+      "IndexExample.leaf32",
+      "IndexExample.cover33"
+    ],
+    "IndexExample.cover31": [
+      "Fin.cases",
+      "IndexExample.leaf31",
+      "IndexExample.cover32"
+    ],
+    "IndexExample.cover30": [
+      "Fin.cases",
+      "IndexExample.leaf30",
+      "IndexExample.cover31"
+    ],
+    "IndexExample.cover29": [
+      "Fin.cases",
+      "IndexExample.leaf29",
+      "IndexExample.cover30"
+    ],
+    "IndexExample.cover28": [
+      "Fin.cases",
+      "IndexExample.leaf28",
+      "IndexExample.cover29"
+    ],
+    "IndexExample.cover27": [
+      "Fin.cases",
+      "IndexExample.leaf27",
+      "IndexExample.cover28"
+    ],
+    "IndexExample.cover26": [
+      "Fin.cases",
+      "IndexExample.leaf26",
+      "IndexExample.cover27"
+    ],
+    "IndexExample.cover25": [
+      "Fin.cases",
+      "IndexExample.leaf25",
+      "IndexExample.cover26"
+    ],
+    "IndexExample.cover24": [
+      "Fin.cases",
+      "IndexExample.leaf24",
+      "IndexExample.cover25"
+    ],
+    "IndexExample.cover23": [
+      "Fin.cases",
+      "IndexExample.leaf23",
+      "IndexExample.cover24"
+    ],
+    "IndexExample.cover22": [
+      "Fin.cases",
+      "IndexExample.leaf22",
+      "IndexExample.cover23"
+    ],
+    "IndexExample.cover21": [
+      "Fin.cases",
+      "IndexExample.leaf21",
+      "IndexExample.cover22"
+    ],
+    "IndexExample.cover20": [
+      "Fin.cases",
+      "IndexExample.leaf20",
+      "IndexExample.cover21"
+    ],
+    "IndexExample.cover19": [
+      "Fin.cases",
+      "IndexExample.leaf19",
+      "IndexExample.cover20"
+    ],
+    "IndexExample.cover18": [
+      "Fin.cases",
+      "IndexExample.leaf18",
+      "IndexExample.cover19"
+    ],
+    "IndexExample.cover17": [
+      "Fin.cases",
+      "IndexExample.leaf17",
+      "IndexExample.cover18"
+    ],
+    "IndexExample.cover16": [
+      "Fin.cases",
+      "IndexExample.leaf16",
+      "IndexExample.cover17"
+    ],
+    "IndexExample.cover15": [
+      "Fin.cases",
+      "IndexExample.leaf15",
+      "IndexExample.cover16"
+    ],
+    "IndexExample.cover14": [
+      "Fin.cases",
+      "IndexExample.leaf14",
+      "IndexExample.cover15"
+    ],
+    "IndexExample.cover13": [
+      "Fin.cases",
+      "IndexExample.leaf13",
+      "IndexExample.cover14"
+    ],
+    "IndexExample.cover12": [
+      "Fin.cases",
+      "IndexExample.leaf12",
+      "IndexExample.cover13"
+    ],
+    "IndexExample.cover11": [
+      "Fin.cases",
+      "IndexExample.leaf11",
+      "IndexExample.cover12"
+    ],
+    "IndexExample.cover10": [
+      "Fin.cases",
+      "IndexExample.leaf10",
+      "IndexExample.cover11"
+    ],
+    "IndexExample.cover09": [
+      "Fin.cases",
+      "IndexExample.leaf09",
+      "IndexExample.cover10"
+    ],
+    "IndexExample.cover08": [
+      "Fin.cases",
+      "IndexExample.leaf08",
+      "IndexExample.cover09"
+    ],
+    "IndexExample.cover07": [
+      "Fin.cases",
+      "IndexExample.leaf07",
+      "IndexExample.cover08"
+    ],
+    "IndexExample.cover06": [
+      "Fin.cases",
+      "IndexExample.leaf06",
+      "IndexExample.cover07"
+    ],
+    "IndexExample.cover05": [
+      "Fin.cases",
+      "IndexExample.leaf05",
+      "IndexExample.cover06"
+    ],
+    "IndexExample.cover04": [
+      "Fin.cases",
+      "IndexExample.leaf04",
+      "IndexExample.cover05"
+    ],
+    "IndexExample.cover03": [
+      "Fin.cases",
+      "IndexExample.leaf03",
+      "IndexExample.cover04"
+    ],
+    "IndexExample.cover02": [
+      "Fin.cases",
+      "IndexExample.leaf02",
+      "IndexExample.cover03"
+    ],
+    "IndexExample.cover01": [
+      "Fin.cases",
+      "IndexExample.leaf01",
+      "IndexExample.cover02"
+    ],
+    "IndexExample.cover00": [
+      "Fin.cases",
+      "IndexExample.leaf00",
+      "IndexExample.cover01"
+    ],
+    "IndexExample.inlineComplete": [
+      "Fin.cases",
+      "Fin.elim0"
+    ],
+    "IndexExample.namedResult": [
+      "IndexExample.cover00"
+    ],
+    "IndexExample.singleSlotResult": [
+      "IndexExample.inlineComplete"
+    ]
+  },
+  "slots": [
+    "IndexExample.leaf00",
+    "IndexExample.leaf01",
+    "IndexExample.leaf02",
+    "IndexExample.leaf03",
+    "IndexExample.leaf04",
+    "IndexExample.leaf05",
+    "IndexExample.leaf06",
+    "IndexExample.leaf07",
+    "IndexExample.leaf08",
+    "IndexExample.leaf09",
+    "IndexExample.leaf10",
+    "IndexExample.leaf11",
+    "IndexExample.leaf12",
+    "IndexExample.leaf13",
+    "IndexExample.leaf14",
+    "IndexExample.leaf15",
+    "IndexExample.leaf16",
+    "IndexExample.leaf17",
+    "IndexExample.leaf18",
+    "IndexExample.leaf19",
+    "IndexExample.leaf20",
+    "IndexExample.leaf21",
+    "IndexExample.leaf22",
+    "IndexExample.leaf23",
+    "IndexExample.leaf24",
+    "IndexExample.leaf25",
+    "IndexExample.leaf26",
+    "IndexExample.leaf27",
+    "IndexExample.leaf28",
+    "IndexExample.leaf29",
+    "IndexExample.leaf30",
+    "IndexExample.leaf31",
+    "IndexExample.leaf32",
+    "IndexExample.leaf33",
+    "IndexExample.leaf34",
+    "IndexExample.leaf35",
+    "IndexExample.leaf36",
+    "IndexExample.leaf37",
+    "IndexExample.leaf38",
+    "IndexExample.leaf39",
+    "IndexExample.leaf40",
+    "IndexExample.leaf41",
+    "IndexExample.leaf42",
+    "IndexExample.leaf43",
+    "IndexExample.leaf44",
+    "IndexExample.leaf45",
+    "IndexExample.leaf46",
+    "IndexExample.leaf47",
+    "IndexExample.leaf48",
+    "IndexExample.leaf49",
+    "IndexExample.leaf50",
+    "IndexExample.leaf51",
+    "IndexExample.leaf52",
+    "IndexExample.leaf53",
+    "IndexExample.leaf54",
+    "IndexExample.leaf55",
+    "IndexExample.leaf56",
+    "IndexExample.leaf57",
+    "IndexExample.leaf58",
+    "IndexExample.leaf59",
+    "IndexExample.leaf60",
+    "IndexExample.leaf61",
+    "IndexExample.leaf62",
+    "IndexExample.leaf63",
+    "IndexExample.leaf64",
+    "IndexExample.leaf65",
+    "IndexExample.leaf66",
+    "IndexExample.leaf67",
+    "IndexExample.leaf68",
+    "IndexExample.leaf69",
+    "IndexExample.leaf70",
+    "IndexExample.leaf71",
+    "IndexExample.leaf72",
+    "IndexExample.leaf73",
+    "IndexExample.leaf74",
+    "IndexExample.leaf75",
+    "IndexExample.leaf76",
+    "IndexExample.leaf77",
+    "IndexExample.leaf78",
+    "IndexExample.leaf79",
+    "IndexExample.leaf80",
+    "IndexExample.leaf81",
+    "IndexExample.leaf82",
+    "IndexExample.inlineComplete"
+  ],
+  "ordinary": [
+    "IndexSpec",
+    "IndexProofs",
+    "IndexInline",
+    "IndexConsumer"
+  ],
+  "observers": [
+    "IndexAxioms",
+    "IndexTerms",
+    "IndexTrace"
+  ],
+  "refusals": {
+    "RefuseUnready": {
+      "line": 5,
+      "prefix": "Tactic `decide` proved that the proposition",
+      "contains": [
+        "calcLeft 1 0",
+        "lookupRight false 1 0",
+        "is false"
+      ]
+    },
+    "RefuseZero": {
+      "line": 5,
+      "prefix": "Tactic `decide` proved that the proposition",
+      "contains": [
+        "calcLeft 0 7",
+        "lookupRight true 0 7",
+        "is false"
+      ]
+    },
+    "RefuseLast": {
+      "line": 5,
+      "prefix": "Tactic `decide` proved that the proposition",
+      "contains": [
+        "calcLeft 82 7",
+        "lookupRight true 82 7 + 1",
+        "is false"
+      ]
+    }
+  },
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "limits": {
+    "campaign_seconds": 2700,
+    "subprocess_seconds": 900,
+    "group_rss_bytes": 4294967296,
+    "retained_bytes": 1073741824
+  },
+  "axes": [
+    83,
+    2,
+    2
+  ],
+  "arguments": [
+    0,
+    7
+  ]
+}

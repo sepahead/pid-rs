@@ -213,6 +213,12 @@
       },
       {
         "git_mode": "100644",
+        "path": ".github/workflows/index-family-control.yml",
+        "sha256": "9351aa33b0fa490251f65ad46e22294854aec686dc2c9b89842095f19ccb9c25",
+        "size_bytes": 3573
+      },
+      {
+        "git_mode": "100644",
         "path": ".github/workflows/ksg-m1a-composite-v11.yml",
         "sha256": "dd2a03a8c3b2744db2a31e26344b551930e88096b91222493eb52d3d799e40d2",
         "size_bytes": 433
@@ -30663,6 +30669,114 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/index-family-control-registration.json",
+        "sha256": "5e0c0214afe37863f0fe70fd9b489f75eb85a628289238bffd7be93a7a9c7010",
+        "size_bytes": 3766
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/README.md",
+        "sha256": "4cc0446cd054d78257c64ee650932ef7cbfe707fd56333572cde996ae822fec3",
+        "size_bytes": 4999
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/common.py",
+        "sha256": "25f55dff4729dbc80ddf6b177c6d01be2848424484aafa0ff0fc20e6391f26ba",
+        "size_bytes": 6741
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/lean/IndexAxioms.lean",
+        "sha256": "41544829c8c3d95bfe23eb6f001a71dbf3649ec91e1b033fcb7795c041aa34ec",
+        "size_bytes": 5909
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/lean/IndexConsumer.lean",
+        "sha256": "25d2ac43a9ada59622224e2aab3e1c8caee8206361845756b9647c0b54650a0f",
+        "size_bytes": 458
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/lean/IndexInline.lean.in",
+        "sha256": "06f0e54928222e8de0c9866fedd16a45c3caed9493cae5aa4632cc7a1fa58556",
+        "size_bytes": 219
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/lean/IndexProofs.lean.in",
+        "sha256": "0a09714036bfd663e21da681916d5045bb27e4ca004ca267c6cf4346106799a4",
+        "size_bytes": 12379
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/lean/IndexSpec.lean",
+        "sha256": "4e7c7cb0de871aa238d47837f49cbab7e342f9ed41faf263a351421302a473e6",
+        "size_bytes": 5302
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/lean/IndexTerms.lean",
+        "sha256": "52d3475d426288e256557e00a58664911fab3bdb0b4bf96be90e5193a10259d6",
+        "size_bytes": 5589
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/lean/IndexTrace.lean",
+        "sha256": "fa71eba2d781433eff857918f6ba1e50a0b5336a169be7da81face3f33fe2707",
+        "size_bytes": 259
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/lean/RefuseLast.lean",
+        "sha256": "92d2855d06ab4db5cf691b2b00d0a44918d0b094fe8f582cea04d792a4b157c6",
+        "size_bytes": 103
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/lean/RefuseUnready.lean",
+        "sha256": "9287ff42590f8ca9331c23249b9bfe8219d75caec289b082c7addf2332531c24",
+        "size_bytes": 98
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/lean/RefuseZero.lean",
+        "sha256": "3ebaab85155c5025af8a5b53cd24aec738e519bd3777bb485863904589936261",
+        "size_bytes": 97
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/manifest.json",
+        "sha256": "c84554eb6f0516dae23f73aba710ce0eb0808dd3980958cfa7fd323240468f79",
+        "size_bytes": 2280
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/plan.json",
+        "sha256": "8efb6f41a2a6a3fac1ba648623613b122319c072613406a2f964b571c20425a2",
+        "size_bytes": 20633
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/reuse.json",
+        "sha256": "e1b4858ec50c9a43a5f55d70ac3acf47eaacc17e98c3686975af60cd98144615",
+        "size_bytes": 1200
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/run.py",
+        "sha256": "0e08cc843749585215d3a2544c29c58ed6488a964146599c680447bac9a2b9ea",
+        "size_bytes": 9270
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/index-family-control/verify.py",
+        "sha256": "712735302a075969aa6cd407cabc4a420eac8b040f23eb0f330256cccd44439b",
+        "size_bytes": 13217
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/normalized-shannon-arithmetic/README.md",
         "sha256": "8b301dd41842c645aa036786e5a11e6641146d39dd3a571379f1ef79d7075c34",
         "size_bytes": 15459
@@ -37526,8 +37640,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "0a5b480ec59bdd3840b3cadf618a66c4531b51639699900897c9baee52a86d71",
-    "entry_count": 6230
+    "entries_sha256": "882e7e284a40d2e71742bd410fe7e22512265a1819f22fb96a461ee197bed09c",
+    "entry_count": 6249
   },
   "subprojections": [
     {

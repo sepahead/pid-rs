@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "attempt": "INVENTED-83-POSITION-CONSTRUCTIVE-20261121-01",
+  "stock_archive": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+  "stock_git": "5045d0056413266e57c625dcd7c365b10e377c52",
+  "stock_source_anchors": {
+    "src/lean/LeanChecker.lean": "2d18ec111d73c536b0bdee2533556bb9548c349f386797d3d3837b1f84d55dae",
+    "src/lean/Lean/Replay.lean": "c434b5b2bc5047ca58d4a095fcf1d9935d413c788ae98a4f21948e6a95ca3fb0",
+    "src/lean/Lean/Environment.lean": "ee364e4788ce0560c87f621eeb3c4c3dfec62e8db4e15e099fd80e6adc533b86",
+    "src/lean/Init/Data/Fin/Basic.lean": "bb3d4e46cb40a24f5a09e6e003c76f2b84140a598df81233f0bffe3afe08cbf4",
+    "src/lean/Init/Data/Fin/Lemmas.lean": "03a06d6c8b826d7ef0774eecd5f7fc6c8640c1c4e8188ed97c9a4a066d284456",
+    "src/lean/Lean/Elab/Tactic/Decide.lean": "99e84ce67778157e77d7261aa25b64ed72da16e9d1f60031cf2aa26f5ea6ee68"
+  },
+  "base_commit": "37e0913096e2d1fdf136278c18161ed8ede1d5e7",
+  "judge_manifest": "c84554eb6f0516dae23f73aba710ce0eb0808dd3980958cfa7fd323240468f79",
+  "preparation_sha256": "0428c426516fc86e8b45326ccd2896224600a10e1f6716e464391460761bde4a",
+  "supplement_sha256": "05265d406a27276ef77743d3afd8d2f146fde19598afb0e2bf451d7432b179bf",
+  "workflow_sha256": "9351aa33b0fa490251f65ad46e22294854aec686dc2c9b89842095f19ccb9c25",
+  "write_paths": [
+    "audit/research/index-family-control-submission.json"
+  ],
+  "submission": {
+    "bytes": 34893,
+    "sha256": "bfb3751fbe4d66fdd84b94b2ab5bf25c47184725944298fcc4e29e74c42e55c8"
+  },
+  "limits": {
+    "campaign_seconds": 2700,
+    "subprocess_seconds": 900,
+    "group_rss_bytes": 4294967296,
+    "retained_bytes": 1073741824
+  },
+  "workflow_minutes": 55,
+  "cpus": 1,
+  "workers": 1,
+  "derived_source_count": 10,
+  "materialized_sources": {
+    "IndexAxioms.lean": "41544829c8c3d95bfe23eb6f001a71dbf3649ec91e1b033fcb7795c041aa34ec",
+    "IndexConsumer.lean": "25d2ac43a9ada59622224e2aab3e1c8caee8206361845756b9647c0b54650a0f",
+    "IndexInline.lean": "31f654e999f96e3135567d65f9e95c54674ad2e7db1a948400a809d05b13c4fb",
+    "IndexProofs.lean": "f1af811195f2e2a57247364b5cb9074b28dea78c039dda836b43ffb4cb4c15dd",
+    "IndexSpec.lean": "4e7c7cb0de871aa238d47837f49cbab7e342f9ed41faf263a351421302a473e6",
+    "IndexTerms.lean": "52d3475d426288e256557e00a58664911fab3bdb0b4bf96be90e5193a10259d6",
+    "IndexTrace.lean": "fa71eba2d781433eff857918f6ba1e50a0b5336a169be7da81face3f33fe2707",
+    "RefuseLast.lean": "92d2855d06ab4db5cf691b2b00d0a44918d0b094fe8f582cea04d792a4b157c6",
+    "RefuseUnready.lean": "9287ff42590f8ca9331c23249b9bfe8219d75caec289b082c7addf2332531c24",
+    "RefuseZero.lean": "3ebaab85155c5025af8a5b53cd24aec738e519bd3777bb485863904589936261"
+  },
+  "source_assertions_evaluated": 0,
+  "prior_spent": {
+    "registered": "37e0913096e2d1fdf136278c18161ed8ede1d5e7",
+    "candidate": "1f0d2a9570f87b3e407dbfb5ae627e8d0607795f",
+    "run": 44847287927,
+    "job": 136670022819,
+    "native_zip": "4191e5d0a52b5c2f0abe538403e527d82b6c13f51373e1e6bc3c3acfd944621f",
+    "outcome": "Each of W01, W03 and W15 failed in ordinary elaboration. No original final result."
+  },
+  "claim": "For each synthetic finite index and every natural argument, true readiness and positive index imply equality of the two functions. Check two typed consumers, all branches, existing axiom policy, every trace row, and each false closing.",
+  "selection": "One fixed prebound invented payload. One new reserved push and no retries. Retain failures; incomplete controls prevent an original issue.",
+  "boundary": "The synthetic table and all expected values were exposed before the run. No original assertion, captured environment, estimator, independent human disposition or general performance result is tested by this control."
+}

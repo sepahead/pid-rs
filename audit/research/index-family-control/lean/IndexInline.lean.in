@@ -1,0 +1,11 @@
+import IndexSpec
+
+set_option maxRecDepth 65536
+set_option maxHeartbeats 20000000
+
+namespace IndexExample
+
+theorem inlineComplete : ∀ i : Fin 83, Guarded i := by
+@@PROOF IndexExample.inlineComplete@@
+
+end IndexExample

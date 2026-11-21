@@ -1,0 +1,69 @@
+{
+  "purpose": "Exact synthetic mathematical index calibration",
+  "files": {
+    "README.md": {
+      "bytes": 4999,
+      "sha256": "4cc0446cd054d78257c64ee650932ef7cbfe707fd56333572cde996ae822fec3"
+    },
+    "common.py": {
+      "bytes": 6741,
+      "sha256": "25f55dff4729dbc80ddf6b177c6d01be2848424484aafa0ff0fc20e6391f26ba"
+    },
+    "lean/IndexAxioms.lean": {
+      "bytes": 5909,
+      "sha256": "41544829c8c3d95bfe23eb6f001a71dbf3649ec91e1b033fcb7795c041aa34ec"
+    },
+    "lean/IndexConsumer.lean": {
+      "bytes": 458,
+      "sha256": "25d2ac43a9ada59622224e2aab3e1c8caee8206361845756b9647c0b54650a0f"
+    },
+    "lean/IndexInline.lean.in": {
+      "bytes": 219,
+      "sha256": "06f0e54928222e8de0c9866fedd16a45c3caed9493cae5aa4632cc7a1fa58556"
+    },
+    "lean/IndexProofs.lean.in": {
+      "bytes": 12379,
+      "sha256": "0a09714036bfd663e21da681916d5045bb27e4ca004ca267c6cf4346106799a4"
+    },
+    "lean/IndexSpec.lean": {
+      "bytes": 5302,
+      "sha256": "4e7c7cb0de871aa238d47837f49cbab7e342f9ed41faf263a351421302a473e6"
+    },
+    "lean/IndexTerms.lean": {
+      "bytes": 5589,
+      "sha256": "52d3475d426288e256557e00a58664911fab3bdb0b4bf96be90e5193a10259d6"
+    },
+    "lean/IndexTrace.lean": {
+      "bytes": 259,
+      "sha256": "fa71eba2d781433eff857918f6ba1e50a0b5336a169be7da81face3f33fe2707"
+    },
+    "lean/RefuseLast.lean": {
+      "bytes": 103,
+      "sha256": "92d2855d06ab4db5cf691b2b00d0a44918d0b094fe8f582cea04d792a4b157c6"
+    },
+    "lean/RefuseUnready.lean": {
+      "bytes": 98,
+      "sha256": "9287ff42590f8ca9331c23249b9bfe8219d75caec289b082c7addf2332531c24"
+    },
+    "lean/RefuseZero.lean": {
+      "bytes": 97,
+      "sha256": "3ebaab85155c5025af8a5b53cd24aec738e519bd3777bb485863904589936261"
+    },
+    "plan.json": {
+      "bytes": 20633,
+      "sha256": "8efb6f41a2a6a3fac1ba648623613b122319c072613406a2f964b571c20425a2"
+    },
+    "reuse.json": {
+      "bytes": 1200,
+      "sha256": "e1b4858ec50c9a43a5f55d70ac3acf47eaacc17e98c3686975af60cd98144615"
+    },
+    "run.py": {
+      "bytes": 9270,
+      "sha256": "0e08cc843749585215d3a2544c29c58ed6488a964146599c680447bac9a2b9ea"
+    },
+    "verify.py": {
+      "bytes": 13217,
+      "sha256": "712735302a075969aa6cd407cabc4a420eac8b040f23eb0f330256cccd44439b"
+    }
+  }
+}

@@ -1,0 +1,508 @@
+import IndexSpec
+
+set_option maxRecDepth 65536
+set_option maxHeartbeats 20000000
+
+namespace IndexExample
+
+theorem leaf00 : P00 0 := by
+@@PROOF IndexExample.leaf00@@
+
+theorem leaf01 : P01 0 := by
+@@PROOF IndexExample.leaf01@@
+
+theorem leaf02 : P02 0 := by
+@@PROOF IndexExample.leaf02@@
+
+theorem leaf03 : P03 0 := by
+@@PROOF IndexExample.leaf03@@
+
+theorem leaf04 : P04 0 := by
+@@PROOF IndexExample.leaf04@@
+
+theorem leaf05 : P05 0 := by
+@@PROOF IndexExample.leaf05@@
+
+theorem leaf06 : P06 0 := by
+@@PROOF IndexExample.leaf06@@
+
+theorem leaf07 : P07 0 := by
+@@PROOF IndexExample.leaf07@@
+
+theorem leaf08 : P08 0 := by
+@@PROOF IndexExample.leaf08@@
+
+theorem leaf09 : P09 0 := by
+@@PROOF IndexExample.leaf09@@
+
+theorem leaf10 : P10 0 := by
+@@PROOF IndexExample.leaf10@@
+
+theorem leaf11 : P11 0 := by
+@@PROOF IndexExample.leaf11@@
+
+theorem leaf12 : P12 0 := by
+@@PROOF IndexExample.leaf12@@
+
+theorem leaf13 : P13 0 := by
+@@PROOF IndexExample.leaf13@@
+
+theorem leaf14 : P14 0 := by
+@@PROOF IndexExample.leaf14@@
+
+theorem leaf15 : P15 0 := by
+@@PROOF IndexExample.leaf15@@
+
+theorem leaf16 : P16 0 := by
+@@PROOF IndexExample.leaf16@@
+
+theorem leaf17 : P17 0 := by
+@@PROOF IndexExample.leaf17@@
+
+theorem leaf18 : P18 0 := by
+@@PROOF IndexExample.leaf18@@
+
+theorem leaf19 : P19 0 := by
+@@PROOF IndexExample.leaf19@@
+
+theorem leaf20 : P20 0 := by
+@@PROOF IndexExample.leaf20@@
+
+theorem leaf21 : P21 0 := by
+@@PROOF IndexExample.leaf21@@
+
+theorem leaf22 : P22 0 := by
+@@PROOF IndexExample.leaf22@@
+
+theorem leaf23 : P23 0 := by
+@@PROOF IndexExample.leaf23@@
+
+theorem leaf24 : P24 0 := by
+@@PROOF IndexExample.leaf24@@
+
+theorem leaf25 : P25 0 := by
+@@PROOF IndexExample.leaf25@@
+
+theorem leaf26 : P26 0 := by
+@@PROOF IndexExample.leaf26@@
+
+theorem leaf27 : P27 0 := by
+@@PROOF IndexExample.leaf27@@
+
+theorem leaf28 : P28 0 := by
+@@PROOF IndexExample.leaf28@@
+
+theorem leaf29 : P29 0 := by
+@@PROOF IndexExample.leaf29@@
+
+theorem leaf30 : P30 0 := by
+@@PROOF IndexExample.leaf30@@
+
+theorem leaf31 : P31 0 := by
+@@PROOF IndexExample.leaf31@@
+
+theorem leaf32 : P32 0 := by
+@@PROOF IndexExample.leaf32@@
+
+theorem leaf33 : P33 0 := by
+@@PROOF IndexExample.leaf33@@
+
+theorem leaf34 : P34 0 := by
+@@PROOF IndexExample.leaf34@@
+
+theorem leaf35 : P35 0 := by
+@@PROOF IndexExample.leaf35@@
+
+theorem leaf36 : P36 0 := by
+@@PROOF IndexExample.leaf36@@
+
+theorem leaf37 : P37 0 := by
+@@PROOF IndexExample.leaf37@@
+
+theorem leaf38 : P38 0 := by
+@@PROOF IndexExample.leaf38@@
+
+theorem leaf39 : P39 0 := by
+@@PROOF IndexExample.leaf39@@
+
+theorem leaf40 : P40 0 := by
+@@PROOF IndexExample.leaf40@@
+
+theorem leaf41 : P41 0 := by
+@@PROOF IndexExample.leaf41@@
+
+theorem leaf42 : P42 0 := by
+@@PROOF IndexExample.leaf42@@
+
+theorem leaf43 : P43 0 := by
+@@PROOF IndexExample.leaf43@@
+
+theorem leaf44 : P44 0 := by
+@@PROOF IndexExample.leaf44@@
+
+theorem leaf45 : P45 0 := by
+@@PROOF IndexExample.leaf45@@
+
+theorem leaf46 : P46 0 := by
+@@PROOF IndexExample.leaf46@@
+
+theorem leaf47 : P47 0 := by
+@@PROOF IndexExample.leaf47@@
+
+theorem leaf48 : P48 0 := by
+@@PROOF IndexExample.leaf48@@
+
+theorem leaf49 : P49 0 := by
+@@PROOF IndexExample.leaf49@@
+
+theorem leaf50 : P50 0 := by
+@@PROOF IndexExample.leaf50@@
+
+theorem leaf51 : P51 0 := by
+@@PROOF IndexExample.leaf51@@
+
+theorem leaf52 : P52 0 := by
+@@PROOF IndexExample.leaf52@@
+
+theorem leaf53 : P53 0 := by
+@@PROOF IndexExample.leaf53@@
+
+theorem leaf54 : P54 0 := by
+@@PROOF IndexExample.leaf54@@
+
+theorem leaf55 : P55 0 := by
+@@PROOF IndexExample.leaf55@@
+
+theorem leaf56 : P56 0 := by
+@@PROOF IndexExample.leaf56@@
+
+theorem leaf57 : P57 0 := by
+@@PROOF IndexExample.leaf57@@
+
+theorem leaf58 : P58 0 := by
+@@PROOF IndexExample.leaf58@@
+
+theorem leaf59 : P59 0 := by
+@@PROOF IndexExample.leaf59@@
+
+theorem leaf60 : P60 0 := by
+@@PROOF IndexExample.leaf60@@
+
+theorem leaf61 : P61 0 := by
+@@PROOF IndexExample.leaf61@@
+
+theorem leaf62 : P62 0 := by
+@@PROOF IndexExample.leaf62@@
+
+theorem leaf63 : P63 0 := by
+@@PROOF IndexExample.leaf63@@
+
+theorem leaf64 : P64 0 := by
+@@PROOF IndexExample.leaf64@@
+
+theorem leaf65 : P65 0 := by
+@@PROOF IndexExample.leaf65@@
+
+theorem leaf66 : P66 0 := by
+@@PROOF IndexExample.leaf66@@
+
+theorem leaf67 : P67 0 := by
+@@PROOF IndexExample.leaf67@@
+
+theorem leaf68 : P68 0 := by
+@@PROOF IndexExample.leaf68@@
+
+theorem leaf69 : P69 0 := by
+@@PROOF IndexExample.leaf69@@
+
+theorem leaf70 : P70 0 := by
+@@PROOF IndexExample.leaf70@@
+
+theorem leaf71 : P71 0 := by
+@@PROOF IndexExample.leaf71@@
+
+theorem leaf72 : P72 0 := by
+@@PROOF IndexExample.leaf72@@
+
+theorem leaf73 : P73 0 := by
+@@PROOF IndexExample.leaf73@@
+
+theorem leaf74 : P74 0 := by
+@@PROOF IndexExample.leaf74@@
+
+theorem leaf75 : P75 0 := by
+@@PROOF IndexExample.leaf75@@
+
+theorem leaf76 : P76 0 := by
+@@PROOF IndexExample.leaf76@@
+
+theorem leaf77 : P77 0 := by
+@@PROOF IndexExample.leaf77@@
+
+theorem leaf78 : P78 0 := by
+@@PROOF IndexExample.leaf78@@
+
+theorem leaf79 : P79 0 := by
+@@PROOF IndexExample.leaf79@@
+
+theorem leaf80 : P80 0 := by
+@@PROOF IndexExample.leaf80@@
+
+theorem leaf81 : P81 0 := by
+@@PROOF IndexExample.leaf81@@
+
+theorem leaf82 : P82 0 := by
+@@PROOF IndexExample.leaf82@@
+
+theorem cover83 : ∀ i : Fin 0, P83 i := fun i => Fin.elim0 i
+
+theorem cover82 : ∀ i : Fin 1, P82 i :=
+  Fin.cases (motive := P82) leaf82 cover83
+
+theorem cover81 : ∀ i : Fin 2, P81 i :=
+  Fin.cases (motive := P81) leaf81 cover82
+
+theorem cover80 : ∀ i : Fin 3, P80 i :=
+  Fin.cases (motive := P80) leaf80 cover81
+
+theorem cover79 : ∀ i : Fin 4, P79 i :=
+  Fin.cases (motive := P79) leaf79 cover80
+
+theorem cover78 : ∀ i : Fin 5, P78 i :=
+  Fin.cases (motive := P78) leaf78 cover79
+
+theorem cover77 : ∀ i : Fin 6, P77 i :=
+  Fin.cases (motive := P77) leaf77 cover78
+
+theorem cover76 : ∀ i : Fin 7, P76 i :=
+  Fin.cases (motive := P76) leaf76 cover77
+
+theorem cover75 : ∀ i : Fin 8, P75 i :=
+  Fin.cases (motive := P75) leaf75 cover76
+
+theorem cover74 : ∀ i : Fin 9, P74 i :=
+  Fin.cases (motive := P74) leaf74 cover75
+
+theorem cover73 : ∀ i : Fin 10, P73 i :=
+  Fin.cases (motive := P73) leaf73 cover74
+
+theorem cover72 : ∀ i : Fin 11, P72 i :=
+  Fin.cases (motive := P72) leaf72 cover73
+
+theorem cover71 : ∀ i : Fin 12, P71 i :=
+  Fin.cases (motive := P71) leaf71 cover72
+
+theorem cover70 : ∀ i : Fin 13, P70 i :=
+  Fin.cases (motive := P70) leaf70 cover71
+
+theorem cover69 : ∀ i : Fin 14, P69 i :=
+  Fin.cases (motive := P69) leaf69 cover70
+
+theorem cover68 : ∀ i : Fin 15, P68 i :=
+  Fin.cases (motive := P68) leaf68 cover69
+
+theorem cover67 : ∀ i : Fin 16, P67 i :=
+  Fin.cases (motive := P67) leaf67 cover68
+
+theorem cover66 : ∀ i : Fin 17, P66 i :=
+  Fin.cases (motive := P66) leaf66 cover67
+
+theorem cover65 : ∀ i : Fin 18, P65 i :=
+  Fin.cases (motive := P65) leaf65 cover66
+
+theorem cover64 : ∀ i : Fin 19, P64 i :=
+  Fin.cases (motive := P64) leaf64 cover65
+
+theorem cover63 : ∀ i : Fin 20, P63 i :=
+  Fin.cases (motive := P63) leaf63 cover64
+
+theorem cover62 : ∀ i : Fin 21, P62 i :=
+  Fin.cases (motive := P62) leaf62 cover63
+
+theorem cover61 : ∀ i : Fin 22, P61 i :=
+  Fin.cases (motive := P61) leaf61 cover62
+
+theorem cover60 : ∀ i : Fin 23, P60 i :=
+  Fin.cases (motive := P60) leaf60 cover61
+
+theorem cover59 : ∀ i : Fin 24, P59 i :=
+  Fin.cases (motive := P59) leaf59 cover60
+
+theorem cover58 : ∀ i : Fin 25, P58 i :=
+  Fin.cases (motive := P58) leaf58 cover59
+
+theorem cover57 : ∀ i : Fin 26, P57 i :=
+  Fin.cases (motive := P57) leaf57 cover58
+
+theorem cover56 : ∀ i : Fin 27, P56 i :=
+  Fin.cases (motive := P56) leaf56 cover57
+
+theorem cover55 : ∀ i : Fin 28, P55 i :=
+  Fin.cases (motive := P55) leaf55 cover56
+
+theorem cover54 : ∀ i : Fin 29, P54 i :=
+  Fin.cases (motive := P54) leaf54 cover55
+
+theorem cover53 : ∀ i : Fin 30, P53 i :=
+  Fin.cases (motive := P53) leaf53 cover54
+
+theorem cover52 : ∀ i : Fin 31, P52 i :=
+  Fin.cases (motive := P52) leaf52 cover53
+
+theorem cover51 : ∀ i : Fin 32, P51 i :=
+  Fin.cases (motive := P51) leaf51 cover52
+
+theorem cover50 : ∀ i : Fin 33, P50 i :=
+  Fin.cases (motive := P50) leaf50 cover51
+
+theorem cover49 : ∀ i : Fin 34, P49 i :=
+  Fin.cases (motive := P49) leaf49 cover50
+
+theorem cover48 : ∀ i : Fin 35, P48 i :=
+  Fin.cases (motive := P48) leaf48 cover49
+
+theorem cover47 : ∀ i : Fin 36, P47 i :=
+  Fin.cases (motive := P47) leaf47 cover48
+
+theorem cover46 : ∀ i : Fin 37, P46 i :=
+  Fin.cases (motive := P46) leaf46 cover47
+
+theorem cover45 : ∀ i : Fin 38, P45 i :=
+  Fin.cases (motive := P45) leaf45 cover46
+
+theorem cover44 : ∀ i : Fin 39, P44 i :=
+  Fin.cases (motive := P44) leaf44 cover45
+
+theorem cover43 : ∀ i : Fin 40, P43 i :=
+  Fin.cases (motive := P43) leaf43 cover44
+
+theorem cover42 : ∀ i : Fin 41, P42 i :=
+  Fin.cases (motive := P42) leaf42 cover43
+
+theorem cover41 : ∀ i : Fin 42, P41 i :=
+  Fin.cases (motive := P41) leaf41 cover42
+
+theorem cover40 : ∀ i : Fin 43, P40 i :=
+  Fin.cases (motive := P40) leaf40 cover41
+
+theorem cover39 : ∀ i : Fin 44, P39 i :=
+  Fin.cases (motive := P39) leaf39 cover40
+
+theorem cover38 : ∀ i : Fin 45, P38 i :=
+  Fin.cases (motive := P38) leaf38 cover39
+
+theorem cover37 : ∀ i : Fin 46, P37 i :=
+  Fin.cases (motive := P37) leaf37 cover38
+
+theorem cover36 : ∀ i : Fin 47, P36 i :=
+  Fin.cases (motive := P36) leaf36 cover37
+
+theorem cover35 : ∀ i : Fin 48, P35 i :=
+  Fin.cases (motive := P35) leaf35 cover36
+
+theorem cover34 : ∀ i : Fin 49, P34 i :=
+  Fin.cases (motive := P34) leaf34 cover35
+
+theorem cover33 : ∀ i : Fin 50, P33 i :=
+  Fin.cases (motive := P33) leaf33 cover34
+
+theorem cover32 : ∀ i : Fin 51, P32 i :=
+  Fin.cases (motive := P32) leaf32 cover33
+
+theorem cover31 : ∀ i : Fin 52, P31 i :=
+  Fin.cases (motive := P31) leaf31 cover32
+
+theorem cover30 : ∀ i : Fin 53, P30 i :=
+  Fin.cases (motive := P30) leaf30 cover31
+
+theorem cover29 : ∀ i : Fin 54, P29 i :=
+  Fin.cases (motive := P29) leaf29 cover30
+
+theorem cover28 : ∀ i : Fin 55, P28 i :=
+  Fin.cases (motive := P28) leaf28 cover29
+
+theorem cover27 : ∀ i : Fin 56, P27 i :=
+  Fin.cases (motive := P27) leaf27 cover28
+
+theorem cover26 : ∀ i : Fin 57, P26 i :=
+  Fin.cases (motive := P26) leaf26 cover27
+
+theorem cover25 : ∀ i : Fin 58, P25 i :=
+  Fin.cases (motive := P25) leaf25 cover26
+
+theorem cover24 : ∀ i : Fin 59, P24 i :=
+  Fin.cases (motive := P24) leaf24 cover25
+
+theorem cover23 : ∀ i : Fin 60, P23 i :=
+  Fin.cases (motive := P23) leaf23 cover24
+
+theorem cover22 : ∀ i : Fin 61, P22 i :=
+  Fin.cases (motive := P22) leaf22 cover23
+
+theorem cover21 : ∀ i : Fin 62, P21 i :=
+  Fin.cases (motive := P21) leaf21 cover22
+
+theorem cover20 : ∀ i : Fin 63, P20 i :=
+  Fin.cases (motive := P20) leaf20 cover21
+
+theorem cover19 : ∀ i : Fin 64, P19 i :=
+  Fin.cases (motive := P19) leaf19 cover20
+
+theorem cover18 : ∀ i : Fin 65, P18 i :=
+  Fin.cases (motive := P18) leaf18 cover19
+
+theorem cover17 : ∀ i : Fin 66, P17 i :=
+  Fin.cases (motive := P17) leaf17 cover18
+
+theorem cover16 : ∀ i : Fin 67, P16 i :=
+  Fin.cases (motive := P16) leaf16 cover17
+
+theorem cover15 : ∀ i : Fin 68, P15 i :=
+  Fin.cases (motive := P15) leaf15 cover16
+
+theorem cover14 : ∀ i : Fin 69, P14 i :=
+  Fin.cases (motive := P14) leaf14 cover15
+
+theorem cover13 : ∀ i : Fin 70, P13 i :=
+  Fin.cases (motive := P13) leaf13 cover14
+
+theorem cover12 : ∀ i : Fin 71, P12 i :=
+  Fin.cases (motive := P12) leaf12 cover13
+
+theorem cover11 : ∀ i : Fin 72, P11 i :=
+  Fin.cases (motive := P11) leaf11 cover12
+
+theorem cover10 : ∀ i : Fin 73, P10 i :=
+  Fin.cases (motive := P10) leaf10 cover11
+
+theorem cover09 : ∀ i : Fin 74, P09 i :=
+  Fin.cases (motive := P09) leaf09 cover10
+
+theorem cover08 : ∀ i : Fin 75, P08 i :=
+  Fin.cases (motive := P08) leaf08 cover09
+
+theorem cover07 : ∀ i : Fin 76, P07 i :=
+  Fin.cases (motive := P07) leaf07 cover08
+
+theorem cover06 : ∀ i : Fin 77, P06 i :=
+  Fin.cases (motive := P06) leaf06 cover07
+
+theorem cover05 : ∀ i : Fin 78, P05 i :=
+  Fin.cases (motive := P05) leaf05 cover06
+
+theorem cover04 : ∀ i : Fin 79, P04 i :=
+  Fin.cases (motive := P04) leaf04 cover05
+
+theorem cover03 : ∀ i : Fin 80, P03 i :=
+  Fin.cases (motive := P03) leaf03 cover04
+
+theorem cover02 : ∀ i : Fin 81, P02 i :=
+  Fin.cases (motive := P02) leaf02 cover03
+
+theorem cover01 : ∀ i : Fin 82, P01 i :=
+  Fin.cases (motive := P01) leaf01 cover02
+
+theorem cover00 : ∀ i : Fin 83, P00 i :=
+  Fin.cases (motive := P00) leaf00 cover01
+
+end IndexExample
