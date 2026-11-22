@@ -7,6 +7,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Characterize the support of all 18 local categorical shared-exclusion calculations. An eight-row parity table gives 17 finite signed values and one undefined value at an absent source triple. [Proof, examples and replay](audit/research/three-source-supported-states/README.md) · [PDF](output/pdf/three-source-supported-states.pdf)
+- The foundations report attributes atom nonnegativity to Williams and Beer's decomposition and the copied-pair identity to Harder, Salge and Polani. The report now links to the audited first revision of the incompatibility paper. [Foundations report](FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md) · [PDF](output/pdf/foundational-shared-exclusions-pid-audit.pdf)
+
 - Explain which rows enter the finite-alphabet convergence theorem and when the rounded denominator passes the Rust report's floor. The concentration study enumerates all 1,024 ten-bit strings in its eight-window example and states the independence needed within each group. [Convergence study](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md) · [Concentration study](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
 
 - State both nonemptiness requirements for categorical shared-exclusions nodes and distinguish the probability ratio from its logarithm. The report proves when a determining pair makes the top atom zero. For the four-row XOR tuple copy, it separates seven nonzero exact atoms from the observed binary64 results. [Corrections and original report](audit/evidence/finite-sx-node-and-logarithm-2026-11-21.md)

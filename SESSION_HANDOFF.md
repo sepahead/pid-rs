@@ -1,4 +1,10 @@
-# Session handoff — updated 21 November 2026
+# Session handoff — updated 22 November 2026
+
+## Support of the three-source categorical calculations and the copied-pair identity
+
+For a finite table with nonnegative integer weights, both local shared-exclusion logarithms are finite at every one of the 18 nodes exactly when the complete reference state has positive total weight. The two ways to include the target event agree at each valid node. In a synthetic table with four even-parity source triples and a binary stimulus independent of the source triple, the key with source triple 111 and stimulus 1 has 17 zero signed values. The full-source value is undefined. Direct row counts give the same support decision. [Proof, bounded calculations and their assumptions](audit/research/three-source-supported-states/README.md) · [PDF](output/pdf/three-source-supported-states.pdf)
+
+The foundations report now credits Williams and Beer for the nonnegativity of their atoms and Harder, Salge and Polani for the copied-pair identity. The primary-source list points to revision 1 of the incompatibility paper that the report examined. [Corrected comparison and sources](FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md) · [PDF](output/pdf/foundational-shared-exclusions-pid-audit.pdf)
 
 ## Source-event assumptions and worked examples
 

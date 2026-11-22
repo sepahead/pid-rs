@@ -52,6 +52,7 @@ STANDALONE_MARKDOWN_PAPERS=(
   "three-source-w02"
   "normalized-shannon-arithmetic"
   "three-source-six-certificate-observations"
+  "three-source-supported-states"
   "two-source-synergy-bound-example"
   "embodied-sensor-utility"
   "embodied-sensor-overview"
@@ -82,6 +83,7 @@ STANDALONE_MARKDOWN_SOURCES=(
   "audit/research/three-source-w02/README.md"
   "audit/research/normalized-shannon-arithmetic/README.md"
   "audit/research/three-source-six-certificate-observations/README.md"
+  "audit/research/three-source-supported-states/README.md"
   "audit/research/two-source-synergy-bound-example/README.md"
   "audit/research/embodied-sensor-utility/EXPOSITION.md"
   "audit/research/embodied-sensor-utility/OVERVIEW.md"
@@ -317,11 +319,14 @@ python3 -I -S -B audit/research/three-source-w02/replay.py --check-sources >/dev
 python3 -O -I -S -B audit/research/three-source-w02/replay.py --check-sources >/dev/null
 python3 -I -S -B audit/research/three-source-alphabet-counts/replay_checks.py >/dev/null
 python3 -O -I -S -B audit/research/three-source-alphabet-counts/replay_checks.py >/dev/null
+python3 -I -S -B audit/research/three-source-supported-states/replay.py
+python3 -O -I -S -B audit/research/three-source-supported-states/replay.py
 if [[ "$MODE" == "--exact" ]]; then
   python3 -I -S -B audit/research/three-source-alphabet-counts/build_pdf.py --check
   python3 -I -S -B audit/research/three-source-w02/build_pdf.py --check
   python3 -I -S -B audit/research/normalized-shannon-arithmetic/build_pdf.py --check
   python3 -I -S -B audit/research/three-source-six-certificate-observations/build_pdf.py --check
+  python3 -I -S -B audit/research/three-source-supported-states/build_pdf.py --check
   python3 -I -S -B audit/research/two-source-synergy-bound-example/build_pdf.py --check
   python3 -I -S -B scripts/build-finite-copy-bootstrap-pdf.py --check
 else
@@ -329,9 +334,11 @@ else
   python3 -I -S -B audit/research/three-source-w02/build_pdf.py --check-committed
   python3 -I -S -B audit/research/normalized-shannon-arithmetic/build_pdf.py --check-committed
   python3 -I -S -B audit/research/three-source-six-certificate-observations/build_pdf.py --check-committed
+  python3 -I -S -B audit/research/three-source-supported-states/build_pdf.py --check-committed
   python3 -I -S -B audit/research/two-source-synergy-bound-example/build_pdf.py --check-committed
   python3 -I -S -B scripts/build-finite-copy-bootstrap-pdf.py --check-committed
 fi
+echo "Checked the supported-state report with $MODE."
 python3 -I -S scripts/sync-mathematical-workflow-tex.py --check
 python3 -I -S scripts/sync-mathematical-workflow-tex-self-test.py
 python3 -O -I -S scripts/sync-mathematical-workflow-tex-self-test.py

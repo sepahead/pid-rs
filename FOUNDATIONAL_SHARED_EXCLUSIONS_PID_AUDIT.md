@@ -120,7 +120,7 @@ assumptions are shown to match the definitions in Section 3.
 | Gutknecht, Wibral, and Makkeh (2021) | **Native conceptual foundation** | Parthood and formal-logic indexing; constitutive principles | Treating the constitutive principles as uniquely forced Shannon theorems |
 | Matthias, Makkeh, Wibral, and Gutknecht (2025) | **Compatible abstract PID theorem** | LP--TCR--REI and LP--ID--REI incompatibilities; Sx trade-off classification | Calling the incompatibility a defect unique to SxPID |
 | Lyu, Clark, and Raviv (2026), Definition 6/Lemma 4 | **Incompatible atom semantics** | Comparison of coordinate-recoverability descriptors and relation loss | Calling $H(U_\alpha)$ the SxPID atom or transferring their reconstruction impossibility to SxPID |
-| Williams--Beer identity/local positivity desiderata | **Comparison-only properties** | State what Sx accepts or rejects | Redefining Sx after observing a violation |
+| Williams–Beer atom nonnegativity and the Harder–Salge–Polani copied-pair identity | **Comparison-only properties** | State what Sx accepts or rejects | Redefining Sx after observing a violation |
 | Dependency coloring | **Estimator-layer only** | Concentration under a proved within-color independence contract | Calling it a new “colored PID” measure or attributing it to the Sx definition |
 | `pid-rs` categorical kernel | **Executable approximation to the native definition** | Implementation evidence and regression testing | Treating passing tests as a proof of the semantic postulate or all real arithmetic |
 | Support-change continuity theorem in this repository | **Project theorem about native averaged SxPID** | Closed-simplex continuity of averaged finite-alphabet quantities | Attributing it to the 2021 paper or applying it to disappearing pointwise keys |
@@ -1365,10 +1365,12 @@ witness. These implementation-distinct lanes share the reviewed semantic cuts st
    [arXiv:2008.09535v2](https://arxiv.org/abs/2008.09535v2).
 3. Philip Hendrik Matthias, Abdullah Makkeh, Michael Wibral, and Aaron J. Gutknecht. “Novel
    Inconsistency Results for Partial Information Decomposition.”
-   [arXiv:2512.16662v1](https://arxiv.org/abs/2512.16662), 18 December 2025. Version 1 was the
+   [arXiv:2512.16662v1](https://arxiv.org/abs/2512.16662v1), 18 December 2025. Version 1 was the
    version audited and remained the current arXiv version when rechecked on 25 July 2026.
 4. Aobo Lyu, Andrew Clark, and Netanel Raviv. “Structural Impossibility of Antichain-Lattice
    Partial Information Decomposition.”
    [arXiv:2604.03869v2](https://arxiv.org/abs/2604.03869v2), 14 April 2026.
 5. Paul L. Williams and Randall D. Beer. “Nonnegative Decomposition of Multivariate
    Information.” [arXiv:1004.2515v1](https://arxiv.org/abs/1004.2515v1), 2010.
+6. Malte Harder, Christoph Salge and Daniel Polani. “Bivariate measure of redundant information.”
+   *Physical Review E* 87, 012130 (2013), Section III.A. [Version of record](https://doi.org/10.1103/PhysRevE.87.012130).

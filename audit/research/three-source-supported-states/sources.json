@@ -1,0 +1,119 @@
+{
+  "finite_results_sha256": "0a804dbe9be436ad99caf3b21d6299284341b6d5a64b6b57735cf098c4e8ccac",
+  "ledger_tsv_sha256": "bf41a22fb4eac50c8108d69ef8e9e4d8702d52bc32b8897a051af9828e1e2613",
+  "method_context": {
+    "ehrlich-complexity-v2": {
+      "authors": [
+        "David A. Ehrlich",
+        "Andreas C. Schneider",
+        "Viola Priesemann",
+        "Michael Wibral",
+        "Abdullah Makkeh"
+      ],
+      "html": {
+        "bytes": 474753,
+        "sha256": "29ef5c2e62c1d761544b1165a31628d0d3a0f3a230dcde690574d08ae0dbdbd8",
+        "url": "https://arxiv.org/html/2209.10438v2"
+      },
+      "purpose": "quantized-network application and Equation (5) mutual-information denominator",
+      "revision": "arXiv:2209.10438v2",
+      "title": "A Measure of the Complexity of Neural Representations based on Partial Information Decomposition"
+    },
+    "ehrlich-continuous-v3": {
+      "pdf": {
+        "bytes": 2168968,
+        "sha256": "cf785c96d24a49d793e835d70e26d94ffe67b9c71251265e6e4040753ec8f563",
+        "url": "https://arxiv.org/pdf/2311.06373v3"
+      },
+      "purpose": "definition of a distinct functional",
+      "revision": "arXiv:2311.06373v3",
+      "title": "Partial Information Decomposition for Continuous Variables based on Shared Exclusions: Analytical Formulation and Estimation"
+    },
+    "williams-beer-v1": {
+      "pdf": {
+        "bytes": 1944029,
+        "sha256": "5654e8083b45f1c4fc92669996f647712322a3563a56252dbeb1d0ec46b24678",
+        "url": "https://arxiv.org/pdf/1004.2515v1"
+      },
+      "purpose": "definition of a distinct functional",
+      "revision": "arXiv:1004.2515v1",
+      "title": "Nonnegative Decomposition of Multivariate Information"
+    }
+  },
+  "paper": {
+    "authors": [
+      "Abdullah Makkeh",
+      "Aaron J. Gutknecht",
+      "Michael Wibral"
+    ],
+    "compared_full_text": "arXiv v5 only",
+    "doi": "10.1103/PhysRevE.103.032149",
+    "files": {
+      "apstemplate.tex": {
+        "bytes": 142869,
+        "member_of": "arxiv-v5-source.tar",
+        "sha256": "60ac061c9874149d65d6fab21e627ca66f96d9e4d4990d1ee243632776faaf61"
+      },
+      "arxiv-v5-source.tar": {
+        "bytes": 489040,
+        "retrieval": "https://arxiv.org/src/2002.03356v5",
+        "sha256": "6420b90ccd5c1e971e19b41c24676b0ed3276aa47f1b3ceadc49bac219bf9584"
+      },
+      "arxiv-v5.pdf": {
+        "bytes": 1002114,
+        "retrieval": "https://arxiv.org/pdf/2002.03356v5",
+        "sha256": "5939ce0f4c727f1998040421c07a1689af1b8d9a35a0ee3c83fe25cd85263dc6"
+      }
+    },
+    "revision": "arXiv:2002.03356v5",
+    "title": "Introducing a differentiable measure of pointwise shared information"
+  },
+  "parity_results_sha256": "885264435c3759f6abe489f81d7a47e3fc0bd7d34233dcb4e17c9dcdd513e2b7",
+  "stock_records": {
+    "audit/evidence/finite-three-source-hosted-2026-11-19.json": {
+      "bytes": 3056,
+      "commit": "5628bb6e2b6f14619a72a045a0dbb3ab8cbf6186",
+      "sha256": "315b2aaff9d2969a0685fc8f87f69cbeb549d53804478a8c3f610e4493368e3a"
+    },
+    "audit/research/three-source-alphabet-counts/declarations.txt": {
+      "bytes": 61834,
+      "commit": "add8134a0c3df6142dcf74b02d9cb14c797bd8ce",
+      "sha256": "70e5e8c6d673bf5244ba12660ae472a2d67f112d140d5e90ff23ead6f4c1131a"
+    },
+    "audit/research/three-source-alphabet-counts/lean/AlphabetCounts.lean": {
+      "bytes": 11475,
+      "commit": "add8134a0c3df6142dcf74b02d9cb14c797bd8ce",
+      "sha256": "ab340702db5e125c4d29d6446845325b16eb8ad5d3c0f5e1e976651f4cb2d9d0"
+    },
+    "audit/research/three-source-alphabet-counts/lean/Contract.lean": {
+      "bytes": 4229,
+      "commit": "add8134a0c3df6142dcf74b02d9cb14c797bd8ce",
+      "sha256": "61c8d92c30a934c91aa025c27d24468619f6974fdc9154edba57d5deb701a55e"
+    },
+    "audit/research/three-source-alphabet-counts/lean/CountEvidence.lean": {
+      "bytes": 21861,
+      "commit": "add8134a0c3df6142dcf74b02d9cb14c797bd8ce",
+      "sha256": "7974d99f28bf04af3c8f58afd0c9c59977e5f05674db8e3981e92ad786c4657a"
+    },
+    "audit/research/three-source-alphabet-counts/lean/CountRaw.lean": {
+      "bytes": 9038,
+      "commit": "add8134a0c3df6142dcf74b02d9cb14c797bd8ce",
+      "sha256": "2ac11744a833f75e2de5ec6f26f1e1def58d868341f9d6dd733d786029600eea"
+    },
+    "audit/research/three-source-alphabet-counts/observations.json": {
+      "bytes": 12289,
+      "commit": "add8134a0c3df6142dcf74b02d9cb14c797bd8ce",
+      "sha256": "040b25e0706c0848157816bffbd31223a65edd57949c99c94407e4aeab4cbf04"
+    },
+    "audit/research/three-source-alphabet-counts/portable-run/dependencies.json": {
+      "bytes": 54394,
+      "commit": "add8134a0c3df6142dcf74b02d9cb14c797bd8ce",
+      "sha256": "e868fe7bddde50eb8dd47c2f1c34c5bde7e0d81805058e279dfb210573327179"
+    },
+    "audit/research/three-source-alphabet-counts/portable-run/receipt.json": {
+      "bytes": 2047,
+      "commit": "add8134a0c3df6142dcf74b02d9cb14c797bd8ce",
+      "sha256": "aa438e3d66e5487288280e59653e09e6c341a417882e407e1412d003b94dfb5b"
+    }
+  }
+}

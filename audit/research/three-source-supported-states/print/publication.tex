@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=23mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math,amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\setmathfont{latinmodern-math.otf}
+\usepackage{microtype,ragged2e,etoolbox}
+\usepackage{pid-rs-report-tables,pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark,fancyvrb}
+\DefineVerbatimEnvironment{verbatim}{Verbatim}{fontsize=\small}
+\pdfvariable minorversion=7
+\pdfvariable suppressoptionalinfo=767
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,citecolor=PidSecondary,
+  pdftitle={When are all 18 local shared-exclusion calculations finite?},
+  pdfauthor={Sepehr Mahmoudian},pdfsubject={Support of categorical shared exclusions and an eight-trial stimulus-response table},
+  pdflang={en-US},pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Categorical shared exclusions}{Support of a complete state}
+\PidWorkflowConfigureSections
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em plus 0.08em minus 0.05em}
+\setlength{\emergencystretch}{2.6em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcounter{none}
+\AtBeginEnvironment{longtable}{\small\setlength{\tabcolsep}{4pt}}
+\title{\PidReportTitle{When are all 18 local shared-exclusion\\calculations finite?}{An exact support criterion and an eight-trial example}}
+\author{Sepehr Mahmoudian}
+\date{22 November 2026}
+\begin{document}
+\PidMakeTitle
+\input{body.tex}
+\end{document}

@@ -1,0 +1,113 @@
+{
+  "absent_keys_per_order": 8,
+  "columns": [
+    "source_order",
+    "original_key",
+    "original_node",
+    "transformed_key",
+    "transformed_node",
+    "N",
+    "U",
+    "V",
+    "T"
+  ],
+  "coordinates": 1728,
+  "finite_signed_zero_nats": 1680,
+  "nodes_per_key": 18,
+  "occupied_keys_per_order": 8,
+  "reference_111_target_1_U_V": {
+    "1": [
+      4,
+      2
+    ],
+    "12": [
+      2,
+      1
+    ],
+    "123": [
+      0,
+      0
+    ],
+    "12|13": [
+      4,
+      2
+    ],
+    "12|13|23": [
+      6,
+      3
+    ],
+    "12|23": [
+      4,
+      2
+    ],
+    "12|3": [
+      6,
+      3
+    ],
+    "13": [
+      2,
+      1
+    ],
+    "13|2": [
+      6,
+      3
+    ],
+    "13|23": [
+      4,
+      2
+    ],
+    "1|2": [
+      6,
+      3
+    ],
+    "1|23": [
+      6,
+      3
+    ],
+    "1|2|3": [
+      6,
+      3
+    ],
+    "1|3": [
+      6,
+      3
+    ],
+    "2": [
+      4,
+      2
+    ],
+    "23": [
+      2,
+      1
+    ],
+    "2|3": [
+      6,
+      3
+    ],
+    "3": [
+      4,
+      2
+    ]
+  },
+  "rows": [
+    "0000",
+    "0001",
+    "0110",
+    "0111",
+    "1010",
+    "1011",
+    "1100",
+    "1101"
+  ],
+  "schema": "three-source-parity-counts-v1",
+  "sorted_coordinate_tsv_sha256": "11cf9fa3743a52b3b0c530e316668b0ec7323b2e2855fdde77637c17eb4d35ad",
+  "source_orders": [
+    "123",
+    "132",
+    "213",
+    "231",
+    "312",
+    "321"
+  ],
+  "undefined_full_source": 48
+}
