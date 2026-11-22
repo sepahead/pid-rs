@@ -68,7 +68,8 @@
    and a formal evidence boundary}}
 \author{Sepehr Mahmoudian}
 \date{23 July 2026 \quad\textbullet\quad
-  \hyperref[supp:windows]{Window supplement, 18 November 2026 (p.~\pageref*{supp:windows})}}
+  \hyperref[supp:windows]{Window supplement, 18 November 2026 (p.~\pageref*{supp:windows})}\\
+  Reader revision, 22 November 2026}
 
 \begin{document}
 \PidMakeTitle
@@ -76,20 +77,25 @@
 \begin{abstract}
 This document gives project-defined validation, new in \texttt{pid-rs}, for the categorical
 shared-exclusions partial information decomposition (SxPID) defined by Makkeh, Gutknecht, and
-Wibral.  The
-paper-defined functional is not new.  There is no measure called ``colored PID'': coloring
+Wibral. A complete row contains one label for each source and the target. The shared event
+matches at least one source collection. A node lists a nonempty family of nonempty source-index
+sets, with no member containing another. Information uses the natural logarithm and is in nats.  There is no measure called ``colored PID'': coloring
 qualifies the sampling theorem and comes from older dependence/concentration machinery, while its
 composition with SxPID here is project-defined.  The document derives a finite-sample concentration bound
 for the complete empirical joint law when all complete rows share one common finite law and a
 predeclared coloring partitions observations into classes whose complete rows are mutually independent.
-Dependence across classes can be arbitrary.  A
-class-load factor, exactly Janson's cover-specific $T^2$ specialized to a partition, improves the
-ordinary color-count factor for unbalanced classes.  A telescoping error allocation
+Dependence across classes can be arbitrary.  If the group sizes are $n_a$, the factor for this partition is
+$(\sum_a\sqrt{n_a})^2$, with the sum over nonempty groups. This is the
+quantity Janson calls $T^2$ for this cover. It is the denominator in the one-sided bound for
+the centered count of a fixed event. For unequal groups it is smaller than the number of groups
+times the row count.  A telescoping error allocation
 gives a time-uniform envelope.  A nonidentical-law extension separates random error from explicit
 drift.  A stronger common-support modulus then transfers joint-law error to pointwise and averaged
-SxPID atoms.  The local result includes one-$\Lambda$ cumulative control, general-source
-M{\"o}bius-row bounds, and complete two-source atom bounds.  Exact diamond analysis reduces the
-synergy modulus to $\Lambda-\eta$.  Lean checks deterministic
+SxPID atoms.  The local result bounds individual cumulative and atom values when both
+laws assign positive probability to the same cells. For two sources, using
+all four nodes gives a smaller error bound for the contribution available
+only from the two sources together. The later theorem gives the constants
+and their domains.  Lean checks deterministic
 algebraic subclaims, and an executable challenge suite retains
 counterexamples to weaker assumptions.  The result does not validate continuous shared
 exclusions, arbitrary time series, adaptive evaluation transforms, or binary64 asymptotics.
@@ -157,7 +163,7 @@ stable categorical functions
 They are exported from \nolinkurl{stable::categorical}.  This document adds no estimator and no
 public Rust API\@.  Its proof and executable artifacts are validation evidence.
 
-\section*{Reader's guide, foundational notation, and prerequisites}
+\section*{\leavevmode\phantomsection Reader's guide, foundational notation, and prerequisites}
 \addcontentsline{toc}{section}{Reader's guide, notation, and prerequisites}
 
 Throughout, $\log$ denotes the natural logarithm, and every information quantity is measured in
@@ -248,7 +254,7 @@ $S_1$, unique information from $S_2$, and synergy.  For each $u\in\{+,-,\sx\}$,
       +c_{\alpha_{\mathrm{red}}}^u.
 \end{align}
 
-For a complete empirical calculation, let $Q$ put mass $1/4$ on each XOR row
+For a complete empirical calculation, let $Q$ put mass $1/4$ on each exclusive-or (XOR, addition modulo two) row
 \[
   (S_1,S_2,T)\in\{(0,0,0),(0,1,1),(1,0,1),(1,1,0)\}.
 \]
@@ -342,7 +348,9 @@ increment exposes no public color-map estimator.
 
 The quantity denoted $V_n$ is not new mathematics from \texttt{pid-rs}.  It is exactly Janson's
 cover-specific $T^2$ in the proof of Theorem~2.1, Equations~(3.1)--(3.3), specialized to a
-partition with $w_a=1$ and squared-range sum $c_a=n_{a,n}$, so that
+partition. For one fixed set of cells, each row indicator is in $[0,1]$. Each row has exactly
+one group, with cover weight $w_a=1$. Each unit range contributes one to its group's
+squared-range sum $c_a=n_{a,n}$, so that
 $T^2=(\sum_a\sqrt{c_a})^2=V_n$.
 Remark~3.3 of that paper retains this cover-specific quantity before the coarser
 fractional-chromatic bound~\cite{janson2004}.  The finite-alphabet/SxPID composition, explicit
@@ -377,6 +385,10 @@ For each occupied $a$, the complete rows $(Z_i)_{i\in C_{a,n}}$ must be jointly 
 independent.  Dependence between distinct classes may be arbitrary.
 \end{definition}
 
+Let $U,V$ be independent fair bits. For rows $U,V$ the probability of two zeros is $1/4$. For
+rows $U,U$ it is $1/2$, although each marginal remains fair. Next form the three rows
+$U,V,U\oplus V$, where $\oplus$ denotes addition modulo two. Each pair is uniform on the four
+possible pairs. All three rows are zero with probability $1/4$ instead of $1/8$.
 Pairwise independence inside a class is insufficient.  Neither a covariance cutoff nor an
 unspecified mixing label establishes Definition~\ref{def:dc-color}.  There is one precise
 conditional extension: if $\mathcal G$ describes an independent training or design artifact,
@@ -452,6 +464,8 @@ If at most $d\ge1$ labels are occupied, then
   \right\}.
 \end{equation}
 \end{theorem}
+
+Theorem~\ref{thm:finite} uses only the finite row law and the group independence assumption. It applies without any PID functional. The later transfer to the categorical shared-exclusions atoms of Makkeh, Gutknecht and Wibral also requires the common-support and positive cell-floor premises.
 
 This is a paper-derived specialization and composition, not a new concentration method.  Janson's
 proof of Theorem~2.1, Equations~(3.1)--(3.3), gives the same cover-specific exponent when its exact
@@ -599,10 +613,22 @@ possible constant for every admissible joint law.
 \begin{enumerate}[leftmargin=*]
   \item \textbf{I.i.d.\ rows, one class.}  Set $\kappa(i)=0$.  Mutual independence holds,
     $n_{0,n}=n$, and $V_n=n$.  The common row law alone would not justify this coloring.
-  \item \textbf{\hyperref[supp:windows]{Width-three overlapping windows.}}  Let
-    $Z_t=f(E_t,E_{t+1},E_{t+2})$ for i.i.d.\ innovations and one fixed finite-output map, and set
-    $\kappa(t)=t\bmod3$.  Rows in one class use disjoint innovation triples.  For $n=8$, the loads
-    are $3,3,2$ and $V_8=(2\sqrt3+\sqrt2)^2<24=3n$.
+  \item \textbf{\hyperref[supp:windows]{Width-three overlapping windows.}} Take ten independent
+    fair bits $E_1,\ldots,E_{10}$. Set $Z_i=(E_i,E_{i+1},E_{i+2})$ for $1\le i\le8$. Each
+    binary triple has probability $1/8$. The groups $\{1,4,7\}$, $\{2,5,8\}$, and $\{3,6\}$
+    partition the rows. Within each group they use disjoint bits, which gives mutual
+    independence. The first two rows are both $000$ exactly when four bits vanish. This has
+    probability $1/16$, whereas independence would give $1/64$. For the indicators of $000$,
+    the squared-range sums are $3,3,2$. Thus
+    \[
+      V_8=(2\sqrt3+\sqrt2)^2=14+4\sqrt6<24=3n,\qquad 6<(5/2)^2.
+    \]
+    If $N$ counts $000$ rows, its mean is $8/8=1$. At a deviation of two counts, Janson's
+    one-sided bound gives $\Prb(N\ge3)\le\exp(-8/V_8)$. To check the exact probability, write
+    the integers from $0$ to $1023$ as ten-bit strings with leading zeros. Count overlapping
+    occurrences of $000$ in each string. Exactly $133$ strings contain at least three, giving
+    probability $133/1024$.
+
   \item \textbf{Copied classes.}  Let $X_1,\ldots,X_m$ be independent fair bits.  Make $d$
     classes and put one copy of every $X_j$ in each class.  Every class contains $m$ mutually
     independent rows, but the classes are exact copies.  Hence $n=md$,
@@ -1865,7 +1891,9 @@ does not return a usable total transform, and impose the zero-failure condition
 \begin{equation}\label{eq:frozen-zero-failure}
   \Prb(F_{\mathrm{fit}})=0.
 \end{equation}
-Let $(\mathsf X,\mathcal A)$ be a standard-Borel raw-row space, let $\mu$ be a probability law on
+A standard Borel space is measurably isomorphic to a Borel subset of a complete separable
+metric space. The identifying map and its inverse are measurable. Let $(\mathsf X,\mathcal A)$
+be such a raw-row space, let $\mu$ be a probability law on
 it, and let $X_1,X_2,\ldots$ be i.i.d.\ with law $\mu$, with
 $\sigma(X_i:i\ge1)$ independent of $\mathcal G$.  Let $\cZ$ be one fixed nonempty finite output
 alphabet; when invoking SxPID, its elements are the complete source--target symbols introduced in
@@ -1885,7 +1913,16 @@ $Z_i(\omega)=\Phi_\omega(X_i(\omega))$, and
   \mu\!\left(\Phi_\omega^{-1}(\{z\})\right),
   \qquad z\in\cZ.
 \end{equation}
-Then $P_\omega=\Phi_{\omega\#}\mu$ is a $\mathcal G$-measurable probability kernel and, for every
+Then $P_\omega=\Phi_{\omega\#}\mu$ is a probability kernel. For every outcome it assigns a
+probability measure to the finite output alphabet. For each label set $B\subseteq\cZ$, its mass
+$P_\omega(B)=\sum_{z\in B}P_\omega(z)$ is $\mathcal G$-measurable. For each training event
+$A\in\mathcal G$ the conditional law satisfies~\cite{kallenberg2021}
+\[
+  \int_A P_\omega(B)\,d\Prb(\omega)=\Prb(A\cap\{Z_1\in B\}).
+\]
+Changing a kernel on a measurable training event of probability zero preserves this identity.
+The finite alphabet lets two versions agree for every label set outside a single event of
+probability zero. Only held-out rows enter the empirical law. For every
 $k\ge1$, all distinct $i_1,\ldots,i_k$, and all $z_1,\ldots,z_k\in\cZ$,
 \begin{equation}\label{eq:frozen-conditional-iid}
   \Prb\!\left(
@@ -2017,6 +2054,9 @@ validate continuous $I_\cap^\sx$, arbitrary overlapping windows, adaptive prepro
 evaluation rows, unknown mixing rates, or binary64 asymptotics.
 
 \section{Counterexamples and invalidated routes}
+
+The table records the assumption removed in each case, a construction that tests it, and the
+premise required by the theorem.
 
 \begin{longtable}{L{0.24\textwidth}L{0.43\textwidth}L{0.23\textwidth}}
 \toprule
@@ -2229,6 +2269,9 @@ evidence.  They are not a general proof, a global binary64 bound, or external re
 
 \section{Ecosystem use boundary}
 
+The table gives mathematical conditions for four proposed uses. To apply a bound, the consumer
+must record and check the row construction and the independence assumptions for its own data. The status is \texttt{not\_claimed} for each consumer.
+
 \begin{center}
 \begin{tabular}{L{0.16\textwidth}L{0.33\textwidth}L{0.41\textwidth}}
 \toprule
@@ -2247,9 +2290,6 @@ mapping, run-log contract, direct dependency, and explicit scientific estimand \
 \bottomrule
 \end{tabular}
 \end{center}
-
-This document does not assert that a consumer meets these premises.  Integration remains
-\texttt{not\_claimed} until the consumer records and checks them.
 
 \section{Reproduction}
 
@@ -2303,6 +2343,11 @@ W.~Hoeffding.
 \newblock \emph{Journal of the American Statistical Association}, 58(301):13--30, 1963.
 \newblock \url{https://doi.org/10.1080/01621459.1963.10500830}.
 
+\bibitem{kallenberg2021}
+O. Kallenberg.
+\emph{Foundations of Modern Probability}, 3rd ed., Chapter 8, pp.~163--183.
+Springer, 2021. \url{https://doi.org/10.1007/978-3-030-61871-1_9}.
+
 \bibitem{janson2004}
 S.~Janson.
 \newblock Large deviations for sums of partly dependent random variables.
@@ -2334,7 +2379,7 @@ T.~Weissman, E.~Ordentlich, G.~Seroussi, S.~Verd{\'u}, and M.~J. Weinberger.
 
 \clearpage
 \pdfbookmark[1]{Supplement. Counting overlapping three-bit windows}{majoritysupplement}
-\section*{Supplement. Counting overlapping three-bit windows}\label{supp:windows}
+\section*{\leavevmode\phantomsection Supplement. Counting overlapping three-bit windows}\label{supp:windows}
 
 Can the independent-row bound in DC-1 hold when adjacent rows share two of their three
 input bits? Each row still has the same distribution. The independent-row substitution
@@ -2404,7 +2449,10 @@ atom-specific error or an inference for another process requires its own argumen
 
 \subsection*{Rust implementation and computational cost}
 
-The offline Python reference uses standard-library integers and rational numbers. From
+For the eight-window example, direct enumeration tests eight triples in each of 1024 strings.
+It needs one ten-bit string, its window count, and one tally of qualifying strings. This exact
+check uses no training or resampling. For the 300-window calculation, the offline Python
+reference uses standard-library integers and rational numbers. From
 the repository root, run
 \begin{verbatim}
 python3 scripts/count-majority-windows.py

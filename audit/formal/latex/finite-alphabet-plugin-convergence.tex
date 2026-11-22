@@ -65,18 +65,27 @@
 
 \title{\PidReportTitle
   {Finite-Alphabet Plug-In Convergence\\for Shared-Exclusions PID}
-  {Exact-real theorem, local moduli, an anytime i.i.d.\ envelope,\\
+  {Convergence of empirical values and bounds across all sample sizes,\\
    and a formal evidence boundary}}
 \author{Sepehr Mahmoudian}
-\date{22 July 2026, revised 18 November 2026}
+\date{22 July 2026, revised 22 November 2026}
 
 \begin{document}
 \PidMakeTitle
 
 \begin{abstract}
+A finite alphabet is a fixed set of possible labels. A complete row gives a
+label for each source and the target variable. A plug-in estimate substitutes
+observed complete-row frequencies for population probabilities. Each information coordinate is a scalar functional,
+a map from the law to a real number. The ordered list of coordinates is a finite vector. A continuity bound
+limits the change in an information value when those probabilities change.
+Independent, identically distributed (i.i.d.) rows are independent draws from
+the same law. A time-uniform bound holds simultaneously for all sample sizes.
 This document gives new project-defined validation for existing information measures in
 \texttt{pid-rs}.  Its primary object is the Wibral-lineage categorical shared-exclusions partial
-information decomposition (SxPID).  The paper-defined functional is not new.  The document proves
+information decomposition (SxPID). This decomposition assigns information about the target to
+combinations of sources. In categorical SxPID, matching at least one of several source
+collections defines a shared event. The logarithms are natural and information is in nats.  The document proves
 exact-real plug-in convergence on fixed finite alphabets, gives explicit local continuity moduli,
 and composes them with a conservative time-uniform i.i.d.\ concentration event.  A secondary
 corollary covers the Williams--Beer $\imin$ functional and fixed Shannon combinations.  A
@@ -86,11 +95,10 @@ convergence and drift calibration remain open.  Invalid stronger claims and
 counterexamples remain in the document.
 \end{abstract}
 
-A separate repository paper on SxPID under a dependency coloring gives a categorical result for a
-predeclared independence coloring.  Its Theorem DC-1 separately assumes
-$\operatorname{Law}(Z_i)=P$ for every complete row and mutual independence inside every color
-class; identical distribution and independence are not conflated.  Theorem DC-3 handles
-nonidentical-law drift.  Those results do not change the i.i.d.\ and ergodic claims in this paper,
+A separate paper assigns each row index to a group before observing the
+rows. Its Theorem DC-1 requires the same probability law for every complete
+row and mutual independence within each group. Dependence between groups is
+allowed. Its Theorem DC-3 also treats changes in the row laws.  Those results do not change the i.i.d.\ and ergodic claims in this paper,
 and they do not cover generic mixing, outcome-adaptive colors, or continuous estimators.
 
 \begingroup
@@ -118,10 +126,10 @@ Shannon entropy and mutual information & Paper-defined classical quantities~\cit
 convergence and entropy continuity bounds \\
 Discrete co-information and O-information & Paper-defined quantities~\cite{bell2003,mcgill1954,rosas2019} & Convergence as fixed finite
 entropy combinations \\
-Target-free normalized ratios & Project-defined analogues in \texttt{pid-rs} & Positive-denominator
+Source-only entropy ratios & Project-defined formulas in \texttt{pid-rs} & Positive-denominator
 ratio convergence \\
 Target-conditioned normalized ratios & Paper-defined ratios with a project-defined report
-policy~\cite{gutknecht2025} & Positive-denominator ratio convergence and a status boundary \\
+policy~\cite{gutknecht2025} & Exact-ratio convergence and rounded denominator test \\
 Fitted quantizer plus categorical PID & Project-defined composition; quantization has published
 background~\cite{grayneuhoff1998} & Conditional frozen-transform corollary \\
 \bottomrule
@@ -156,7 +164,9 @@ covered by the result are:
 
 \subsection*{What problem this note solves}
 
-A plug-in estimate evaluates a functional at observed relative frequencies.  A prefix contains
+A node lists a nonempty family of nonempty source-index sets, with no member containing another.
+Its atom is the contribution left after subtracting the contributions at all strictly lower
+nodes. The reader's guide gives the order and the subtraction rule. A prefix contains
 all rows from the start of a sequence.  Support consists of cells with positive probability.
 Write $P$ for the population law and $\Phat_n$ for the law of the first $n$ rows.
 Do the plug-in values approach the corresponding population values for the functionals of
@@ -179,7 +189,7 @@ premises.  FA-3 adds a conservative time-uniform i.i.d.\ radius.  Keeping these 
 prevents a strong law, a finite-sample bound, a PID identity, and binary64 behavior from being
 mistaken for one another.
 
-\section*{Reader's guide, foundational notation, and prerequisites}
+\section*{\leavevmode\phantomsection Reader's guide, foundational notation, and prerequisites}
 \addcontentsline{toc}{section}{Reader's guide, notation, and prerequisites}
 
 No prior knowledge of PID is required for the arguments below.  A \emph{probability law} $Q$ on a
@@ -302,6 +312,17 @@ The cumulative net term is $c^\sx_\alpha=c^+_\alpha-c^-_\alpha$.  A fixed M{\"o}
 each cumulative vector to its pointwise atom vector.  The averaged atom under $Q$ is the
 $Q$-weighted sum over joint realizations.
 
+\paragraph{A deterministic prefix.} In source, source, target order, alternate the complete
+binary rows $000,111,000,111,\ldots$. Let $P$ give each row mass $1/2$. At the bottom node
+$\{\{1\},\{2\}\}$ either source match agrees with the target match on the two-row support.
+Thus $Q(A_\alpha)=Q(B_\alpha)=Q(C)=Q(z)$ for a supported row $z$, and the bottom signed atom is $-\log Q(z)$. The first three rows give
+masses $2/3$ and $1/3$, so the averaged atom is
+\[
+ -(2/3)\log(2/3)-(1/3)\log(1/3)=\log3-(2/3)\log2\quad\text{nats}.
+\]
+The two frequencies tend to $1/2$. The limit is $\log2$ nats. The first prefix omits $111$.
+Both cells occur from the second prefix onward. This example uses the deterministic theorem.
+
 \paragraph{The two-source dictionary and a worked empirical example.}
 For $m=2$, the four antichains are
 \[
@@ -331,7 +352,7 @@ respectively.  For each $u\in\{+,-,\sx\}$, the zeta relation is explicitly
       +\pi^u_{\alpha_2}+\pi^u_{\alpha_{\mathrm{syn}}}.
 \end{align}
 
-As a complete empirical calculation, take the four binary XOR rows
+As a complete empirical calculation, take the four binary exclusive-or (XOR, addition modulo two) rows
 \[
   (s_1,s_2,t)\in\{(0,0,0),(0,1,1),(1,0,1),(1,1,0)\},
 \]
@@ -768,9 +789,13 @@ They require positive joint entropy.  The published target-conditioned ratios ar
     &=\frac{\sum_i\left[I(T;S_1,\ldots,S_m)-I(T;S_{-i})\right]}
             {I(T;S_1,\ldots,S_m)}.
 \end{align}
-Here $I(T;\varnothing)=0$.  These ratios require positive joint mutual information.  All four
-ratios are unitless.  Any reporting threshold is a software policy, not part of the mathematical
-definitions.
+Here $I(T;\varnothing)=0$. These ratios require positive joint mutual information. All four
+ratios are unitless. Set the target equal to the full source tuple $X=(X_1,\ldots,X_r)$.
+Then $I(X;X)=H(X)$, $I(X;X_i)=H(X_i)$ and $I(X;X_i\mid X_{-i})=H(X_i\mid X_{-i})$,
+where $X_{-i}$ omits source $i$. With $H(X)>0$, the two published degrees~\cite{gutknecht2025}
+therefore equal the two source-only ratios in exact arithmetic for this target. The Rust
+source-only functions compute entropies from categorical rows and return an error if the
+computed joint entropy is zero.
 
 Let one entropy term have alphabet size $K\ge2$, and put
 \begin{equation}
@@ -849,17 +874,24 @@ The denominator condition gives $D_q\ge d/2$.  Decompose the difference into
 $(N_q-N_p)/D_q+N_p(D_p-D_q)/(D_qD_p)$ and apply the triangle inequality.
 \end{proof}
 
-Target-free normalized limits require positive population joint entropy.  Target-conditioned
-normalized limits require positive population joint mutual information.  Every target-conditioned
-input term must describe the same law, target, source order, units, preprocessing, evaluation
-sample, and estimand.  For the convergence claim, each input sequence must be the corresponding
-exact-real finite-alphabet plug-in term formed from the same empirical law.  A positive denominator
-alone does not establish this coherence.
+For a general target, the two exact degrees converge when the limiting joint mutual information
+is positive. Each input must use the same empirical law, target, source order, units and
+preprocessing at each prefix. Let $J_n$ denote the exact empirical joint mutual information and
+let $J$ be its limit. For the exact denominator test $J_n>c$, a limit above the fixed floor $c$
+guarantees eventual passage. A limit below $c$ guarantees eventual failure. At equality the
+outcome depends on the sequence.
 
-For coherent terms under the exact-real denominator rule with threshold $\tau$, a population denominator strictly above $\tau$ guarantees eventual
-\texttt{Defined} status.  A denominator below $\tau$ guarantees an eventual status other than
-\texttt{Defined}.
-Equality gives no eventual status guarantee. Rust also checks input and result representability.
+The Rust report compares a supplied binary64 denominator with a finite nonnegative floor $c$
+in nats. Binary64 is a 64-bit floating-point format. Suppose each $J_n$ is rounded once to
+the nearest binary64 value, with ties to even, and the supplied values are finite. Let $c_+$
+be the next larger binary64 value when it is finite. A limit above the exact midpoint
+$(c+c_+)/2$ guarantees eventual passage of the denominator test. A limit strictly between $c$
+and the midpoint eventually rounds to $c$ and fails the test. At the midpoint the side of
+approach matters. The largest finite floor rejects every finite denominator. A defined report
+also requires nonempty finite inputs and a representable quotient. The
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/research/normalized-shannon-arithmetic/README.md}{arithmetic study}
+gives a copied binary source whose limiting joint mutual information is one quarter of the gap
+above the default floor.
 
 \section{A time-uniform i.i.d.\ envelope}
 
@@ -934,6 +966,13 @@ dependence, drift, rejection selection, or the $2^{53}$ sample-count limit.
 
 \section{Conditionally i.i.d.\ evaluation of a frozen transform}
 
+Training fixes one transform. Only the held-out evaluation rows contribute to the empirical
+law. A sigma-field contains the whole space and is closed under complements and countable
+unions. The training sigma-field contains the events determined by training. A standard Borel
+space is measurably isomorphic to a Borel subset of a complete separable metric space. This
+means the identifying map and its inverse are measurable. Examples include a finite alphabet
+and Euclidean measurement space.
+
 Let $(\Omega,\mathcal F,\Prb)$ be the underlying probability space and let
 $\mathcal G\subseteq\mathcal F$ be generated by the training artifact.  Let $\mathcal X$ be
 standard Borel, let $\cZ$ be finite, and let $\bot\notin\cZ$.  Suppose
@@ -944,7 +983,28 @@ is $\mathcal G\otimes\mathcal B(\mathcal X)$-measurable.  The same frozen map
 $\Phi_\omega(x):=\Phi(\omega,x)$ is used for every evaluation row and every prefix.
 
 Let $W_1,W_2,\ldots$ be conditionally i.i.d.\ given $\mathcal G$, with common regular conditional
-law $\kappa_\omega$ on $\mathcal X$.  An i.i.d.\ raw sequence independent of the training artifact
+law $\kappa_\omega$ on $\mathcal X$. This is a probability kernel. For each outcome $\omega$,
+$B\mapsto\kappa_\omega(B)$ is a probability measure on the measurable row sets
+$\mathcal B(\mathcal X)$. For every such set $B$, the function $\omega\mapsto\kappa_\omega(B)$
+is $\mathcal G$-measurable. The defining identity is
+\[
+ \int_A\kappa_\omega(B)\,d\Prb(\omega)
+ =\Prb(A\cap\{W_1\in B\}),\qquad A\in\mathcal G,\quad B\in\mathcal B(\mathcal X).
+\]
+Such a kernel exists on a standard Borel row space~\cite{kallenberg2021,durrett2019}. A
+countable family of measurable sets determines each law. Thus two versions agree as measures
+outside one event of probability zero. For example, let training record a uniform number $H$
+in $[0,1]$ and let $W_1$ be an independent fair bit. Start with the constant fair-bit kernel.
+Changing it to a point mass at zero on $H=1/2$ preserves the identity because this event has
+probability zero. The identity does not determine the value there.
+
+For $k\ge1$ and measurable raw-row sets $B_1,\ldots,B_k$, conditional independence and the
+common law give
+\[
+ \Prb\!\left(\bigcap_{j=1}^k\{W_j\in B_j\}\,\middle|\,\mathcal G\right)(\omega)
+ =\prod_{j=1}^k\kappa_\omega(B_j)\quad\text{almost surely}.
+\]
+An i.i.d.\ raw sequence independent of the training artifact
 is the special case in which $\kappa_\omega$ is a fixed law. Consider the common-bit process
 in the counterexample table below. If training records that bit, each evaluation row has the
 same point-mass law given training and the rows are conditionally independent. A raw row
@@ -1286,11 +1346,23 @@ Cite this study as Sepehr Mahmoudian, \emph{Finite-Alphabet Plug-In Convergence 
 Shared-Exclusions PID} (2026), with the exact repository commit or release. Cite the defining
 method papers separately. The \href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{software citation} is included in the repository.
 
+\clearpage
 \phantomsection
 \addcontentsline{toc}{section}{References}
 \begingroup
 \small
 \begin{thebibliography}{99}
+
+\bibitem{kallenberg2021}
+O. Kallenberg.
+\emph{Foundations of Modern Probability}, 3rd ed., Chapter 8, pp.~163--183.
+Springer, 2021. \url{https://doi.org/10.1007/978-3-030-61871-1_9}.
+
+\bibitem{durrett2019}
+R. Durrett.
+\emph{Probability: Theory and Examples}, 5th ed., Section~4.1.3, pp.~214--215,
+Theorem~4.1.17. Cambridge University Press, 2019.
+\url{https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf}.
 
 \bibitem{birkhoff1931}
 G. D. Birkhoff.

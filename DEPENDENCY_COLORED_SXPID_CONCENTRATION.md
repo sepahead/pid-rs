@@ -1,10 +1,14 @@
 # Concentration for finite-alphabet SxPID under a dependency coloring
 
-**Sepehr Mahmoudian** · 23 July 2026 · Window supplement added 18 November 2026
+**Sepehr Mahmoudian** · 23 July 2026 · Window supplement added 18 November 2026 · Revised 22 November 2026
 
 Cite this report as Mahmoudian, S. (2026), *Concentration for Finite-Alphabet Shared-Exclusions
 PID under a Dependency Coloring*. Include the exact repository commit or release. The software
 citation is in [CITATION.cff](CITATION.cff).
+
+A **complete row** contains one label for each source and the target. Categorical shared-exclusions partial information decomposition (SxPID) uses the event that at least one source collection matches the row. A **node** is a nonempty family of nonempty source-index sets, with no member containing another. Node $\beta$ is below node $\alpha$ when every member of $\alpha$ contains a member of $\beta$. Subtract the contributions at all strictly lower nodes from a node's cumulative value to obtain its **atom**. Each information value uses the natural logarithm and is measured in nats. A **color** is a group of row indices fixed before evaluation. In the common-law theorem all rows have the same distribution and the complete rows in each group must be mutually independent. Between groups the rows may be dependent. The **empirical law** lists the observed cell proportions. A concentration bound limits the probability that this law differs from the population law by a specified amount. A continuity bound then controls each reported information value. [Makkeh, Gutknecht and Wibral](https://arxiv.org/abs/2002.03356v5), [Janson, proof of Theorem 2.1](https://doi.org/10.1002/rsa.20008).
+
+For each nonempty group $a$, let $n_a$ count its rows in a prefix of length $n$. The factor $(\sum_a\sqrt{n_a})^2$ uses every group size. It is the denominator in the one-sided bound for the centered count of a fixed event. Section 2 computes the factor for eight overlapping windows.
 
 The [window supplement](#supplement-counting-overlapping-three-bit-windows) gives an exact
 counterexample. At distance 0.30, the probability of a deviation under an overlapping-window
@@ -95,7 +99,7 @@ and the deterministic SxPID transfer visibly separate.
 
 The quantity called $V_n$ below is **not new mathematics from pid-rs**. It is exactly Janson's
 cover-specific $T^2$ from the proof of his Theorem 2.1, Equations (3.1)--(3.3), specialized to a
-partition with weights $w_a=1$ and squared-range sums $c_a=n_{a,n}$, so that
+partition. For one fixed set of cells, each row indicator is in $[0,1]$. A row belongs to exactly one group. Its group's cover weight is $w_a=1$ and its unit range contributes one to the group's squared-range sum $c_a=n_{a,n}$, so that
 $T^2=(\sum_a\sqrt{c_a})^2=V_n$. Janson's
 Remark 3.3 explicitly retains this cover-specific quantity before the coarser fractional-chromatic
 bound. What is project-specific here is the finite-alphabet/SxPID composition, its explicit
@@ -150,7 +154,7 @@ The **DC-D1 independence-coloring contract** is:
 2. Dependence between different classes may be arbitrary.
 3. The map $\kappa$ is fixed without using evaluation outcomes.
 
-Pairwise independence inside a color is not sufficient. A covariance cutoff is not sufficient.
+Two independent fair bits $U,V$ give a direct test. For rows $U,V$, the chance that both are zero is $1/4$. For rows $U,U$ it is $1/2$, although each marginal is still fair. Three rows $U,V,U\oplus V$, where $\oplus$ denotes addition modulo two, give a different failure. Each pair is uniform on the four possible pairs, but all three are zero with probability $1/4$ instead of $1/8$. Pairwise independence inside a color is not sufficient. A covariance cutoff is not sufficient.
 An unspecified mixing label does not establish the color contract.
 
 There is one precise conditional extension. If $\mathcal G$ describes an independent training or
@@ -239,6 +243,8 @@ $\mathrm{supp}(P)$ almost surely. An observed support size is not a known popula
 size. When $s=1$, the law distance is zero and the result is vacuous.
 
 ### Proof, with every probabilistic step exposed
+
+Theorem DC-1 uses only the finite row law and the group independence assumption. It applies without any PID functional. The later transfer to the categorical shared-exclusions atoms of Makkeh, Gutknecht and Wibral also requires the common-support and positive cell-floor premises.
 
 This is a paper-derived specialization and composition, not a new concentration method. Janson's
 proof of Theorem 2.1, Equations (3.1)--(3.3), already yields the same cover-specific exponent after
@@ -367,11 +373,8 @@ that $V_n$ is the best possible constant for every admissible joint law.
 1. **I.i.d. rows, one class.** Take $\kappa(i)=0$. Mutual independence holds, $n_{0,n}=n$, and
    $V_n=n$. Equation (1) reduces to the usual Hoeffding-scale exponent. The common row law alone
    would not justify this coloring; mutual independence does.
-2. **Width-three overlapping windows.** Let $Z_t=f(E_t,E_{t+1},E_{t+2})$ for i.i.d. innovations
-   and one fixed finite-output map, and choose $\kappa(t)=t\bmod3$. Rows in a class use disjoint
-   innovation triples. For $n=8$, the loads are $3,3,2$ and
-   $V_8=(2\sqrt3+\sqrt2)^2<24=3n$. In general $V_n\le3n$. The
-   [supplement](#supplement-counting-overlapping-three-bit-windows) works out the case of 300 fair-bit triples.
+2. **Width-three overlapping windows.** Take ten independent fair bits $E_1,\ldots,E_{10}$. The eight complete rows are $Z_i=(E_i,E_{i+1},E_{i+2})$, $1\le i\le8$. Every binary triple has probability $1/8$. The groups $\{1,4,7\}$, $\{2,5,8\}$, $\{3,6\}$ partition the rows. Within each group the rows use disjoint bits, so they are mutually independent. Across groups, the first two rows are both $000$ precisely when four bits vanish, with probability $1/16$. Independence would give $1/64$. The squared-range sums are $3,3,2$ for the indicators of $000$. Thus $V_8=(2\sqrt3+\sqrt2)^2=14+4\sqrt6<24=3n$, since $6<(5/2)^2$. For a check at a fixed threshold, let $N$ count the $000$ rows. Its mean is $8/8=1$. Janson's one-sided bound gives $\Pr(N\ge3)\le\exp(-8/V_8)$. For an exact check, list the integers from $0$ to $1023$ as ten-bit strings with leading zeros. Count overlapping occurrences of $000$ in each. Exactly $133$ strings contain at least three, so the probability is $133/1024$. For general $n$ the three-group partition gives $V_n\le3n$. The [supplement](#supplement-counting-overlapping-three-bit-windows) gives a separate calculation for 300 windows.
+
 3. **Copied classes: why the color factor cannot generally be removed.** Let
    $X_1,\ldots,X_m$ be independent fair bits. Make $d$ classes, and put one copy of every $X_j$ in
    each class. Each class contains $m$ mutually independent rows, but the classes are exact copies.
@@ -1617,6 +1620,14 @@ almost surely defined on the conditional evaluation law, be replaced by a declar
 almost-sure modification, or route failure to an explicit finite symbol. Silently dropping failed
 rows or accepting only complete-success samples changes the sampling law and is not covered.
 
+For the independent held-out case, let $\mu$ be the common law of the raw evaluation rows $X_i$, which are i.i.d. and independent of training. Training chooses one jointly measurable finite-output map $\Phi(\omega,x)$. The raw row space is standard Borel, meaning it is measurably isomorphic to a Borel subset of a complete separable metric space. Let $Z_i=\Phi(\omega,X_i)$. At training outcome $\omega$, the transformed law is $P_\omega(B)=\mu\{x:\Phi(\omega,x)\in B\}$ for each set $B$ of output labels. A **probability kernel** assigns a probability measure to each outcome. For each $B$ its value must be measurable with respect to the training sigma-field. For every training event $A\in\mathcal G$, its defining conditional-law identity is
+
+$$
+\int_A P_\omega(B)\,d\Pr(\omega)=\Pr(A\cap\{Z_1\in B\}).
+$$
+
+Two versions may differ on a training event of probability zero. Because the output alphabet is finite, they agree for all label sets simultaneously outside one such event. Only held-out rows contribute to the empirical law. For these independent raw rows one color suffices. The more general colored-row result needs the stated conditional independence within each group. [Kallenberg, Chapter 8](https://doi.org/10.1007/978-3-030-61871-1_9).
+
 The conditional scientific target is the SxPID of $P_\omega$, not generally the SxPID of the
 unconditional mixture $\mathbb E[P_\omega]$: SxPID is nonlinear in its law. A random conditional
 $p_{\min}(\omega)$ gives only a conditional modulus unless a deterministic positive lower bound is
@@ -1820,6 +1831,7 @@ This result does not assert that any consumer already meets these premises. Inte
 - Hoeffding, W. (1963). “Probability inequalities for sums of bounded random variables.” *Journal
   of the American Statistical Association*, 58(301), 13-30.
   <https://doi.org/10.1080/01621459.1963.10500830>
+- Kallenberg, O. (2021). *Foundations of Modern Probability*, 3rd ed., Chapter 8, “Conditioning and Disintegration,” pp. 163–183. [Chapter DOI](https://doi.org/10.1007/978-3-030-61871-1_9).
 - Janson, S. (2004). “Large deviations for sums of partly dependent random variables.” *Random
   Structures & Algorithms*, 24(3), 234-248. <https://doi.org/10.1002/rsa.20008>
 - Pelekis, C., Ramon, J., and Wang, Y. (2017). “Hölder-type inequalities and their applications to
@@ -1901,6 +1913,8 @@ the exact count. It concerns the empirical distribution itself. An atom-specific
 inference for another process requires its own argument.
 
 ### Rust implementation and computational cost
+
+The direct eight-window example tests eight triples in each of 1024 strings. It needs one ten-bit string, its window count and one tally of qualifying strings. This exact check uses no training or resampling. The following costs refer to the 300-window calculation.
 
 The offline Python reference uses standard-library integers and rational numbers. Run
 `python3 scripts/count-majority-windows.py` from the repository root to print both integer

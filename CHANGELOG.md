@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Explain which rows enter the finite-alphabet convergence theorem and when the rounded denominator passes the Rust report's floor. The concentration study enumerates all 1,024 ten-bit strings in its eight-window example and states the independence needed within each group. [Convergence study](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md) · [Concentration study](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
+
 - State both nonemptiness requirements for categorical shared-exclusions nodes and distinguish the probability ratio from its logarithm. The report proves when a determining pair makes the top atom zero. For the four-row XOR tuple copy, it separates seven nonzero exact atoms from the observed binary64 results. [Corrections and original report](audit/evidence/finite-sx-node-and-logarithm-2026-11-21.md)
 - Give the exact entropy, resampling ranks and probability weights for the four-row copy law in the November guide. In the four-symbol recoding example, one atom contributes to five cumulative values. The guide gives the two bounds that limit the old optimization to one nat and explains both assertions in the three-source count test. [Mathematical results guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md)
 
