@@ -87,8 +87,8 @@
     {
       "path": "output/pdf/foundational-shared-exclusions-pid-audit.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "d4b8d339af16c6fe41b9a9596cf0b0de75ac04014ba26499739148333e6bb7c9",
-      "size_bytes": 374205
+      "sha256": "cb70b0dd737bd3eda4ed0f89a41675803f5fd2d4597a52aa63304ffd1bf6b84a",
+      "size_bytes": 374265
     },
     {
       "path": "output/pdf/ksg-m1a-composite-v4-process.pdf",
@@ -6238,8 +6238,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/november-results-publication-2026-11-20.md",
-        "sha256": "c626aa9704f09537c485b30052382c37ed3ffd2cd2ef46ea0a8f0ee0ecc02534",
-        "size_bytes": 12957
+        "sha256": "a4b11680248d1593b30dba327d491a5c4842e2d4bde1ad593350f339e91930ce",
+        "size_bytes": 13556
       },
       {
         "git_mode": "100644",
@@ -18220,8 +18220,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/foundational-shared-exclusions-pid-audit.tex",
-        "sha256": "631676de5bc8445070357a318049f2c17929650e3dacd1197d53391d0b7b3dd4",
-        "size_bytes": 53540
+        "sha256": "ace2c19df6b2da29cf41467c7075b58fb8707f099244d7a1907a950b32fec851",
+        "size_bytes": 53559
       },
       {
         "git_mode": "100644",
@@ -35782,8 +35782,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/foundational-shared-exclusions-pid-audit.pdf",
-        "sha256": "d4b8d339af16c6fe41b9a9596cf0b0de75ac04014ba26499739148333e6bb7c9",
-        "size_bytes": 374205
+        "sha256": "cb70b0dd737bd3eda4ed0f89a41675803f5fd2d4597a52aa63304ffd1bf6b84a",
+        "size_bytes": 374265
       },
       {
         "git_mode": "100644",
@@ -37898,7 +37898,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "20348e73d23febda3b44c36f2b970b13800f3b706745c6ecdb58dd7d39fb85a7",
+    "entries_sha256": "1a72e182ef6c803dc37015df390b75be019f3efaf6e0efa1e062cd281f1a602b",
     "entry_count": 6292
   },
   "subprojections": [
@@ -37911,7 +37911,7 @@
       ]
     },
     {
-      "entries_sha256": "27699ba46a6ccaf3350dc141d0a5ca06f570d48fe13d2236ce0bc3147fcb5dea",
+      "entries_sha256": "7e1dfb6ddee301c65f3f633d06086bf69cf38b9f9adface02bd998086dad1438",
       "entry_count": 2385,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -37919,7 +37919,7 @@
       ]
     },
     {
-      "entries_sha256": "086b53d01f9d68a4b947b1275235c0cc97ef7d0b9c7d4dc012ec5fed62358854",
+      "entries_sha256": "2f01d6b7b8af61ebe0028cd42c8c742b0d39aa957dba7644695206d4332d4222",
       "entry_count": 51,
       "name": "generated_pdf_set",
       "selectors": [

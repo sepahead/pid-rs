@@ -66,9 +66,11 @@ The 18-page foundations report gives the node domain and the logarithm at a supp
 
 | Printing | Pages | SHA-256 of the PDF |
 |---|---:|---|
-| [Foundations report](../../output/pdf/foundational-shared-exclusions-pid-audit.pdf) | 18 | `d4b8d339af16c6fe41b9a9596cf0b0de75ac04014ba26499739148333e6bb7c9` |
+| [Foundations report](../../output/pdf/foundational-shared-exclusions-pid-audit.pdf) | 18 | `cb70b0dd737bd3eda4ed0f89a41675803f5fd2d4597a52aa63304ffd1bf6b84a` |
 | [November guide](../../output/pdf/mathematical-results-guide-current.pdf) | 5 | `470bc40237e14ed7b83d415b0ef5b2809f82ae25fcd021084705641756177556` |
 
 Two fresh local builds produced the same bytes for each PDF. In the foundations report, the reproducibility record starts on page 17 and the primary sources start on page 18. The new destinations agree with the table of contents. The earlier 16-page report remains available in the table above. All 18 foundations pages and all five guide pages were examined at 105 dpi. The 210 dpi detail checks covered foundations pages 1, 3–6, 9, 10, 12, 17 and 18 and all five guide pages. The table, equations, references and source-label conditions were read against their sources. The visual review was model-assisted.
+
+On 22 November, the publication check found that the three-row XOR table lacked its required heading band. The first review PDF had SHA-256 `d4b8d339af16c6fe41b9a9596cf0b0de75ac04014ba26499739148333e6bb7c9`. The corrected table uses the same mineral-blue band as the other tables. The text, three observed words, page count and destinations stay the same. [First review PDF](https://github.com/sepahead/pid-rs/blob/ccb7fc986d8eeebfee3790372e5a4001f5968b84/output/pdf/foundational-shared-exclusions-pid-audit.pdf) · [First hosted check](https://github.com/sepahead/pid-rs/actions/runs/44970557828)
 
 Cite Sepehr Mahmoudian (2026), *The 20 November mathematical publications*, with the exact repository commit or release. Cite each study and its defining papers for mathematical claims. [Software citation](../../CITATION.cff)
