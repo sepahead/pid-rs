@@ -1,5 +1,9 @@
 # Session handoff — updated 21 November 2026
 
+## Source-event assumptions and worked examples
+
+The foundations report now states why the event has positive probability at a supported outcome. An empty family gives an empty union. A one-outcome law distinguishes a probability ratio of one from a redundancy of zero nats. For three finite categorical sources, the report proves that the top atom vanishes if the third source is a function of the first two on the support. It gives the seven nonzero exact atoms of the XOR tuple copy and the measured Rust values. The guide supplies the entropy and bootstrap ranks. Its four-symbol recoding example distinguishes one nonzero atom from five nonzero cumulative values. These corrections do not change the stored finite numerical cases or the open formal obligations. [Original wording and checked cases](audit/evidence/finite-sx-node-and-logarithm-2026-11-21.md) · [November guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md)
+
 ## Memory limit on the artificial 83-position example
 
 Four modules compiled and passed their fresh Lean checks. A separate command printed 170 axiom sets. The first 84 term readers returned 167 named records. Reader 85 exceeded its 4 GiB process-group memory limit and returned no record for its assigned declaration. The run stopped before the complete dependency check, the 332 numerical comparisons or the three false controls. It evaluated no original solver formula. [Original archive, earlier failure and readback](audit/evidence/index-family-observer-v4-attempt-2026-11-21/README.md)

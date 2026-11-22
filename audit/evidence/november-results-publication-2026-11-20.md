@@ -45,8 +45,8 @@ The short guide now states that a positive-weight key belongs to the finite inde
 
 | Revised publication | Pages | SHA-256 of the PDF | Rendered inspection |
 |---|---:|---|---|
-| [Foundational shared-exclusions report](../../output/pdf/foundational-shared-exclusions-pid-audit.pdf) | 16 | `3cce44d74dca856c92ad28c478ffc6a2b15530ab99a02e722ca09b7e4bd00c8f` | All eight pages whose raster changed from the earlier edition were examined at 90 dpi. Pages 3, 10, 11, 15 and 16 were inspected at 180 dpi. The printed reference from page 15 resolves to §8.5. |
-| [November results guide](../../output/pdf/mathematical-results-guide-current.pdf) | 5 | `d771bcfbec55181223166d9e8f49d92c6d925bae5ab57cdae04c7cc1558659ef` | Only page 4 changed. The membership statement and both count inequalities were inspected at 105 and 210 dpi and in grayscale. |
+| [Foundational shared-exclusions report, 20 November edition](https://github.com/sepahead/pid-rs/blob/5628bb6e2b6f14619a72a045a0dbb3ab8cbf6186/output/pdf/foundational-shared-exclusions-pid-audit.pdf) | 16 | `3cce44d74dca856c92ad28c478ffc6a2b15530ab99a02e722ca09b7e4bd00c8f` | All eight pages whose raster changed from the earlier edition were examined at 90 dpi. Pages 3, 10, 11, 15 and 16 were inspected at 180 dpi. The printed reference from page 15 resolves to §8.5. |
+| [November results guide, 20 November edition](https://github.com/sepahead/pid-rs/blob/5628bb6e2b6f14619a72a045a0dbb3ab8cbf6186/output/pdf/mathematical-results-guide-current.pdf) | 5 | `d771bcfbec55181223166d9e8f49d92c6d925bae5ab57cdae04c7cc1558659ef` | Only page 4 changed. The membership statement and both count inequalities were inspected at 105 and 210 dpi and in grayscale. |
 
 ## 21 November addition to the six-table paper
 
@@ -59,5 +59,16 @@ The shipped PDF has SHA-256 `17791ed645e75a5492934aa12fe17da45d42662a0b4f6f947e6
 The revised paper gives the rows that define all six inputs, the 18 node keys in report order and a calculation of every reported interval. The report has 392 zero intervals. Each of the other 256 intervals has width $3/2^{164}$ nats. These counts describe the six retained reports. [Tables and exact calculation](../research/three-source-six-certificate-observations/README.md#recovering-every-printed-enclosure)
 
 The nine-page PDF has SHA-256 `1ee4d2ef93899e772fa8bf3b08efa3ced1f79fde178fed1d29c8251ab2781e8d`. Its 95 dpi color and grayscale renderings cover all nine pages. The 190 dpi checks cover the title page, table and mask names, integer endpoint and numerical recurrence on pages 1, 3, 5 and 6. The file has 57 URI annotations and 36 distinct HTTPS targets. [Nine-page paper](../../output/pdf/three-source-six-certificate-observations.pdf)
+
+## 21 November foundations and guide
+
+The 18-page foundations report gives the node domain and the logarithm at a supported outcome. It proves when a determining pair gives zero at the top node for three finite categorical sources. The XOR tuple-copy example distinguishes the cumulative value, the lower atoms and the remaining atom. The five-page guide distinguishes one nonzero atom from five nonzero cumulative values before a four-symbol source is recoded. [Proof and exact examples](../../FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md) · [Guide](../../MATHEMATICAL_RESULTS_GUIDE_CURRENT.md) · [Correction and execution scope](finite-sx-node-and-logarithm-2026-11-21.md)
+
+| Printing | Pages | SHA-256 of the PDF |
+|---|---:|---|
+| [Foundations report](../../output/pdf/foundational-shared-exclusions-pid-audit.pdf) | 18 | `d4b8d339af16c6fe41b9a9596cf0b0de75ac04014ba26499739148333e6bb7c9` |
+| [November guide](../../output/pdf/mathematical-results-guide-current.pdf) | 5 | `470bc40237e14ed7b83d415b0ef5b2809f82ae25fcd021084705641756177556` |
+
+Two fresh local builds produced the same bytes for each PDF. In the foundations report, the reproducibility record starts on page 17 and the primary sources start on page 18. The new destinations agree with the table of contents. The earlier 16-page report remains available in the table above. All 18 foundations pages and all five guide pages were examined at 105 dpi. The 210 dpi detail checks covered foundations pages 1, 3–6, 9, 10, 12, 17 and 18 and all five guide pages. The table, equations, references and source-label conditions were read against their sources. The visual review was model-assisted.
 
 Cite Sepehr Mahmoudian (2026), *The 20 November mathematical publications*, with the exact repository commit or release. Cite each study and its defining papers for mathematical claims. [Software citation](../../CITATION.cff)

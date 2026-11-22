@@ -7,6 +7,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- State both nonemptiness requirements for categorical shared-exclusions nodes and distinguish the probability ratio from its logarithm. The report proves when a determining pair makes the top atom zero. For the four-row XOR tuple copy, it separates seven nonzero exact atoms from the observed binary64 results. [Corrections and original report](audit/evidence/finite-sx-node-and-logarithm-2026-11-21.md)
+- Give the exact entropy, resampling ranks and probability weights for the four-row copy law in the November guide. In the four-symbol recoding example, one atom contributes to five cumulative values. The guide gives the two bounds that limit the old optimization to one nat and explains both assertions in the three-source count test. [Mathematical results guide](MATHEMATICAL_RESULTS_GUIDE_CURRENT.md)
+
 - Give the data needed to reconstruct the six empirical tables, all 18 node keys, and the coordinate intervals in the paper. Of the 648 stored intervals, 392 have width zero. The other 256 have width $3/2^{164}$ nats. [Tables and calculation](audit/research/three-source-six-certificate-observations/README.md#recovering-every-printed-enclosure)
 
 - Preserve the failed attempt to read every proof term of an artificial 83-position example. The first 84 term readers returned 167 named records. Reader 85 exceeded its 4 GiB memory limit. The complete comparison of 170 declarations remains open. [Native records and independent readback](audit/evidence/index-family-observer-v4-attempt-2026-11-21/README.md)

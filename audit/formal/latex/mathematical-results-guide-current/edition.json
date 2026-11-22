@@ -1,16 +1,16 @@
 {
-  "edition": "2026-11-20",
-  "scope": "Source and PDF identities, page text and links for the revised 20 November guide. The new material concerns exact empirical inputs, source-only ratios and the numerical threshold. The recorded comparison still covers 184 supplied-input calls. The weighted-event positivity summary explicitly requires the reference row to belong to the finite sum.",
+  "edition": "2026-11-21",
+  "scope": "Five-page guide to the same studies. It gives the binary entropy, the bootstrap ranks, the four-symbol example with one nonzero atom and five nonzero cumulative values, and both statements in count test W02. The six three-source tables and 184 supplied-input calls keep their original scope.",
   "inputs": {
-    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "8ece19bec8c4133096befda8a6ba8dade95367e2c12a1f1124d369d81e1357fe",
-    "audit/formal/latex/mathematical-results-guide-current/publication.tex": "2d27cac2510a84304a1b2e5cdcf0f282947f894576f8fc777cdf868064ac1dc1",
-    "audit/formal/latex/mathematical-results-guide-current/publication.lua": "004dd40c9916a5c38111540e6f4e0eee5043b373572d5906c690c512aeaca678",
+    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "0d3eefee2a3ca57912878ff1b1d6de48b4e639cecf5f2a7802972f37f4647570",
+    "audit/formal/latex/mathematical-results-guide-current/publication.tex": "263b66eb79b9cffa68516a5fa83283327448d279fca22924c19e4954d3810dfe",
+    "audit/formal/latex/mathematical-results-guide-current/publication.lua": "c48736fda615b081f559a448a2654d0c8e21a0b34c415634d2537258a056cea5",
     "audit/formal/latex/pid-rs-report-tables.sty": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
     "audit/formal/latex/pid-rs-workflow-publication.sty": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
     "MATHEMATICAL_RESULTS_GUIDE.md": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b",
     "output/pdf/mathematical-results-guide.pdf": "166dd75fc3f60b6f30feee8cbba46076bba28abc5aaaf3d33f8b1475e6ab15f1"
   },
-  "pdf_sha256": "d771bcfbec55181223166d9e8f49d92c6d925bae5ab57cdae04c7cc1558659ef",
+  "pdf_sha256": "470bc40237e14ed7b83d415b0ef5b2809f82ae25fcd021084705641756177556",
   "pdfinfo": {
     "Title": "Mathematical results guide for November 2026",
     "Author": "Sepehr Mahmoudian",
@@ -25,17 +25,20 @@
   "page_text": [
     [
       "Sepehr Mahmoudian",
+      "21 November 2026",
       "Why the nominal 95% range has coverage 64/81",
-      "64/81",
-      "all 14 other ordered samples cover",
-      "20 November 2026",
-      "arithmetic on supplied information values"
+      "Entries 5 and 194, counting from zero",
+      "Each of the other 14 ordered samples",
+      "covered probability is 1 − 17/81 = 64/81."
     ],
     [
       "What a fitted quantizer fixes",
       "A declared rejection-sampling rule",
       "When an absolute-value optimization clips its answer",
-      "four-symbol copy example"
+      "Let source two copy a target uniform on four symbols.",
+      "second bound forces",
+      "the original joint source–target mutual information",
+      "Five cumulative values contain this atom."
     ],
     [
       "Reconstructing integer counts from one byte string",
@@ -48,14 +51,15 @@
     [
       "What the 22 checked count statements establish",
       "Stock Lean 4.34.1 compiled and replayed",
-      "Every assignment makes the first true and the second false.",
-      "eighteen listed codes are distinct.",
       "Rust implementation and computational cost",
       "experimental::pipelines::block_bootstrap",
       "Cargo feature experimental-pipelines",
       "discrete_sxpid2_averaged",
       "belongs to the summed index set",
-      "all four counts positive"
+      "all four counts positive",
+      "The first is the literal true.",
+      "the second assertion is false on every assignment.",
+      "every listed code represents a valid family."
     ],
     [
       "When rounding changes a normalized degree",
@@ -89,6 +93,7 @@
     "https://github.com/sepahead/pid-rs/blob/main/RUST_IMPLEMENTATION_AND_COST.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/finite-copy-bootstrap-coverage/README.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/normalized-shannon-reports-2026-11-20/receipt.json",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/source-partition-sign-margin-2026-11-19.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-count-table-encoding/README.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/normalized-shannon-arithmetic/README.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/source-coupling-compression/EXPOSITION.md",

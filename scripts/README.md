@@ -2009,7 +2009,7 @@ The [November mathematical results guide](../MATHEMATICAL_RESULTS_GUIDE_CURRENT.
 compare the canonical bytes. On a different typesetting installation, `--check-committed` verifies
 the tracked source and shipped artifact, including page text, authorship, fonts and link targets.
 The exact and cross-toolchain aggregate modes use these respective operations. The published
-[publication record](../audit/evidence/mathematical-results-guide-november-2026-11-19.md) describes the earlier four-page edition. The [20 November publication record](../audit/evidence/november-results-publication-2026-11-20.md) describes the five-page guide and both studies. The full 28-page foundation guide retains
+[publication record](../audit/evidence/mathematical-results-guide-november-2026-11-19.md) describes the earlier four-page edition. The [20 November publication record](../audit/evidence/november-results-publication-2026-11-20.md) describes its five-page guide and both studies. The 21 November guide supplies the bootstrap ranks, the four-symbol distribution and the actual count assertions. The 18-page [foundations report](../FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md) checks the empty family, the log ratio and the determining-pair identity. The full 28-page foundation guide retains
 its previously qualified builder and stricter structural and hosted profiles.
 
 `build-mathematical-results-guide-pdf.sh` renders `MATHEMATICAL_RESULTS_GUIDE.md` through an
@@ -2616,7 +2616,7 @@ shared-exclusions audit in `audit/formal/latex/foundational-shared-exclusions-pi
 `output/pdf/foundational-shared-exclusions-pid-audit.pdf`. That audit separates the published
 local shared-exclusions functional from implementation and estimator claims, records exact
 finite counterexample searches, and states the boundary of its descriptor-factorization Lean
-proof. Reproducible rendering does not turn those scoped results into an axiomatic uniqueness,
+proof. The gate checks the three rows of measured binary64 values in the XOR tuple-copy table. It checks the printed destinations for the reproducibility record on page 17 and the primary sources on page 18. Reproducible rendering does not turn those scoped results into an axiomatic uniqueness,
 population-consistency, or downstream-validity theorem.
 
 `check-ecosystem-compatibility-audit-pdf.sh` applies the same rendering contract to the downstream

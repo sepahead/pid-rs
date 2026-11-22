@@ -1,24 +1,24 @@
 # Mathematical results guide for November 2026
 
-**Sepehr Mahmoudian · 20 November 2026**
+**Sepehr Mahmoudian · 21 November 2026**
 
-Which conclusions can a reader carry from a categorical count table into a statistical or computational claim? This edition follows that question through sampling, fitted transforms, optimization, three-source counts and arithmetic on supplied information values. The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its [28-page PDF](output/pdf/mathematical-results-guide.pdf) give the full map of nine result families and six earlier companion packages. The linked studies specify the individual claims.
+What can sampling, optimization and arithmetic establish from a categorical count table? The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its [28-page PDF](output/pdf/mathematical-results-guide.pdf) cover nine result families.
 
 ## Reading the results
 
-A **law** specifies outcome probabilities. An **empirical law** divides each observed count by the total. **Coverage** is the probability, across original samples from a specified law, that a reported interval contains the population quantity. A **source** supplies information about a designated target. **Shared redundancy** here means the average information from the union of the specified source events in finite categorical shared-exclusions PID. The logarithms are natural and the information unit is the **nat**. [Defining categorical paper](https://doi.org/10.1103/PhysRevE.103.032149) · [Method catalog](METHODS.md)
+A **law** gives outcome probabilities. An **empirical law** uses relative counts. **Coverage** is the probability, over repeated original samples, that an interval contains the population value. Partial information decomposition (PID) assigns information from **sources** about a **target**. In categorical shared exclusions, each node lists one or more nonempty source sets, none containing another. The **matching event** matches all labels in at least one set. At each outcome with target value $t$ and matching event $A$, the pointwise value is $\ln[P(T=t\mid A)/P(T=t)]$. Redundancy is its probability-weighted average. Natural logarithms give **nats**. [Defining categorical paper](https://doi.org/10.1103/PhysRevE.103.032149) · [Method catalog](METHODS.md)
 
 ## Why the nominal 95% range has coverage 64/81
 
-One exact coverage calculation uses four independent rows, each consisting of a binary target and two copies of that target. The population probability of one is one third. Using seed 7, 200 resamples of four rows, block length one and a nominal 95% level, the public percentile summary covered the population entropy with probability 64/81. Both constant samples missed. Their probability alone gives an upper bound for every seed with the same constant-sample behavior. [Derivation, software scope and finite verification](FINITE_COPY_BOOTSTRAP_COVERAGE.md)
-
-Here either source reveals the target. Population redundancy therefore equals binary entropy. Write $p=1/3$ for the probability of one and $H(p)$ for entropy in nats. The two constant samples return the range $[0,0]$, which excludes the positive value $H(1/3)$. Their total probability is
+Draw four independent binary targets with probability $p=1/3$ of one. Both sources copy the target. Either source reveals its label, so the average information is the binary entropy
 
 $$
-(1-p)^4+p^4=16/81+1/81=17/81.
+H(p)=-p\ln p-(1-p)\ln(1-p),\qquad H(1/3)=\tfrac13\ln(27/4)\ \text{nats}.
 $$
 
-At seed 7 all 14 other ordered samples cover. This establishes the stated coverage for that law, rank rule and seed. The 200 resamples determine an interval for each original sample. They do not supply 200 independent observations of coverage. [Exact table and stored endpoints](audit/evidence/finite-copy-bootstrap-coverage/README.md)
+Set $0\ln0=0$. Each **bootstrap resample** draws four original rows with replacement. With $k$ ones it gives $H(k/4)$. For each original sample, seed 7 and block length one give 200 resamples. Sort their entropies in increasing order. Entries 5 and 194, counting from zero, give the nominal 95% range. [Derivation and software scope](FINITE_COPY_BOOTSTRAP_COVERAGE.md)
+
+Both constant samples give $[0,0]$. Their total probability is $(1-p)^4+p^4=17/81$. Each of the other 14 ordered samples gave endpoints zero and approximately $\ln2$ nats, enclosing $H(1/3)$. The covered probability is $1-17/81=64/81$. [Exact table and stored endpoints](audit/evidence/finite-copy-bootstrap-coverage/README.md)
 
 ---
 
@@ -32,13 +32,13 @@ The policy for out-of-range rows matters too. Write $\eta$ for the conditional p
 
 ## When an absolute-value optimization clips its answer
 
-The source-partition study compares finite shared-exclusions atoms before and after recoding. A signed coordinate difference $d$ and its modeled magnitude $t$ are measured in nats. A binary sign choice selects one of two pairs of linear bounds. The parameter $M$ is their finite upper-bound constant. For a fixed feasible $d$, the selected sign allows $t\le |d|$ and $t\le M-|d|$. Both limits must admit $t=|d|$, which gives the pointwise criterion
+Before and after a change of source labels, the study compares the information assigned to each node. Let $d$ be its signed change in nats. The optimizer maximizes a sum of modeled magnitudes $t\geq0$. A binary variable chooses a sign. For $|d|\leq M$, the two bounds at that sign give $t\leq|d|$ and $t\leq M-|d|$. Here $M$ is a nonnegative constant in nats. The true magnitude fits exactly when $M\geq 2|d|$.
 
-$$
-M\ge 2|d|.
-$$
+Let source two copy a target uniform on four symbols. Sources one and three are constant. Before recoding, the only nonzero atom is $\ln4$ nats at the node whose only group is source two. Five cumulative values contain this atom. In each of their nodes, every group includes source two. A group of constant sources would match all four rows.
 
-A bound on $|d|$ alone can clip the objective. In the study's four-symbol copy example, the true maximum is $\ln 4$ nats and the old sign rule yields 1 nat. Let $B$ be the sum of the four nonnegative entropy totals and $L$ the signed change in target mutual information. The full feasible product admits the sufficient choice $M=B+|L|$. The 30 original finite tables satisfy $|L|<0.106$ nat, so their historical choice $M=B+1$ in nats suffices. The reported numerical optima still lack exact optimization certificates. [Corrected source-partition proof and finite scope](audit/research/source-coupling-compression/EXPOSITION.md)
+Recode all sources to constants. All cumulatives and atoms are then zero. Thus the only nonzero magnitude is $|d|=\ln4$. The old rule used $M=\ln4+1$ nats, so its second bound forces $t\leq1$ nat. This explains how the modeled maximum falls below $\ln4$.
+
+In general, let $B$ be the sum of four entropies: the joint source entropy and its conditional entropy given the target, both before and after recoding. Let $L$ be the original joint source–target mutual information minus its recoded value. Then $M=B+|L|$ suffices throughout the optimization. On the 30 archived distributions $|L|<0.106$ nat, so their choice $M=B+1$ nat suffices. Exact certificates for the reported numerical maxima remain open. [Sign constraints, example and proof](audit/evidence/source-partition-sign-margin-2026-11-19.md) · [Source-partition study](audit/research/source-coupling-compression/EXPOSITION.md)
 
 ---
 
@@ -80,7 +80,7 @@ $$
 
 If the family is nonempty and the key belongs to the summed index set, its row contributes its own weight to $V$. A positive weight at that key therefore makes all four counts positive. Stock Lean 4.34.1 compiled and replayed 22 theorem types about counts, order and the Boolean representation. The definition comparison covered nine pairs and one auxiliary definition. Paper correspondence, Rust and floating-point refinement, the original Lean 4.33 protocol and human review remain open. [Exact checked scope](audit/research/three-source-alphabet-counts/README.md)
 
-A separate proof checks both assertions in the archived count test W02. Every assignment makes the first true and the second false. There are eighteen nonempty families of incomparable nonempty branches. The script checks that eighteen listed codes are distinct. It does not test that each listed code represents such a family. [Count, source and checked proof](audit/research/three-source-w02/README.md)
+A separate proof checks both assertions in the archived count test W02. The first is the literal true. The second denies that exactly 18 of the 128 families of the seven possible branches are valid **and** that 18 listed codes are distinct. Both conditions hold, so the second assertion is false on every assignment. The test omits the separate check that every listed code represents a valid family. [Count, source and checked proof](audit/research/three-source-w02/README.md)
 
 ## Rust implementation and computational cost
 

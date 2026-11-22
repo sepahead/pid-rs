@@ -17,8 +17,7 @@ shared-exclusions contribution at a node of the redundancy lattice. Each
 component is nonnegative under the finite categorical construction of
 Makkeh, Gutknecht and Wibral. Its signed atom is the informative component
 minus the misinformative component. A **coalition** is a nonempty subset
-of the three sources. A node is an antichain of coalitions, so none of its
-distinct members contains another. The finite study uses three categorical
+of the three sources. A node is a nonempty family of coalitions. No distinct member contains another. The finite study uses three categorical
 sources, a common categorical target, and natural logarithms. Each daily
 or pooled table defines its own empirical probability law.
 [Makkeh, Gutknecht and Wibral, arXiv:2002.03356v5, Theorem IV.3](https://arxiv.org/abs/2002.03356v5) · [Study design](../research/source-coupling-compression/EXPOSITION.md#6-recorded-data-design-and-exact-arithmetic).
@@ -84,7 +83,7 @@ every positive entry must have a node containing the branch $\{2\}$.
 The row for $\{1,3\}$ has total zero. It excludes every positive entry at
 a node containing a branch made solely from the constant sources. Every
 remaining branch other than $\{2\}$ would contain 2 and would be comparable
-with $\{2\}$. This leaves only the one-branch node $\{\{2\}\}$.
+with $\{2\}$. This leaves only the one-branch node $\{\{2\}\}$ with a nonzero signed atom. Its value also appears in five cumulative sums. In each of those nodes every branch contains source two. A constant-only branch would make the matching event certain at every row.
 
 The product of the four polytopes is therefore a single point. Its true
 maximum is $\ln4$ nats, whereas $M=\ln4+1$ allows $t$ at most 1 nat at

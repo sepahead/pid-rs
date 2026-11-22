@@ -171,12 +171,20 @@ if "\r" in toc or "\r" in out:
     fail("LaTeX navigation auxiliary contains a carriage return")
 
 toc_matches = re.findall(
-    r"^\\contentsline \{section\}\{Primary sources\}\{16\}\{([^{}]+)\}%$",
+    r"^\\contentsline \{section\}\{Primary sources\}\{18\}\{([^{}]+)\}%$",
     toc,
     flags=re.MULTILINE,
 )
 if len(toc_matches) != 1:
-    fail("Primary sources must have exactly one page-16 TOC destination")
+    fail("Primary sources must have exactly one page-18 TOC destination")
+repro_toc = re.findall(
+    r"^\\contentsline \{section\}\{\\numberline \{15\}Reproducibility record\}"
+    r"\{([0-9]+)\}\{([^{}]+)\}%$",
+    toc,
+    flags=re.MULTILINE,
+)
+if repro_toc != [("17", "section.15")]:
+    fail("Reproducibility record must have one page-17 section.15 TOC destination")
 destination = toc_matches[0]
 if not destination.startswith("section*.") or destination == "section.15":
     fail("Primary sources TOC destination is not a fresh unnumbered-section anchor")
@@ -279,10 +287,10 @@ def validate_pdf_destinations(
         )
     primary_page, _primary_vertical = primary_rows[0]
     reproducibility_page, _reproducibility_vertical = reproducibility_rows[0]
-    if primary_page != 16 or reproducibility_page != 15:
+    if primary_page != 18 or reproducibility_page != 17:
         fail(
             f"{label} navigation destinations moved off their declared "
-            "Reproducibility-page-15/Primary-sources-page-16 structure"
+            "Reproducibility-page-17/Primary-sources-page-18 structure"
         )
 
 
@@ -293,13 +301,20 @@ validate_pdf_destinations(
 )
 validate_pdf_destinations(
     committed_pdf_path,
-    primary_destination="section*.13",
+    primary_destination="section*.14",
     label="committed PDF",
 )
 PY
 
 pdftotext -layout "$BUILT" "$BUILD_DIR/built.txt"
 for sentinel in \
+  'The four pairs cancel at this reference' \
+  'events equal F at every supported reference row' \
+  'Exact event counts give eight nonzero net atoms.' \
+  'An empty family would give an empty union.' \
+  'both event probabilities would be zero' \
+  'A fair binary source equal to its target gives ratio 2' \
+  'Rust implementation and computational cost' \
   'No fatal algebraic contradiction was found' \
   'Compatibility firewall' \
   'Descriptor-factorization firewall' \
@@ -315,6 +330,25 @@ for sentinel in \
     exit 1
   fi
 done
+# Keep the observed words next to the exact value and count they represent.
+python3 -I -S - "$BUILD_DIR/built.txt" <<'ROWS'
+from pathlib import Path
+import re
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+rows = re.findall(
+    r"^[ \t]*(ln\([0-9]+/[0-9]+\))[ \t]+([0-9]+)[ \t]+([0-9a-f]{16})[ \t]*$",
+    text,
+    re.MULTILINE,
+)
+if rows != [
+    ("ln(4/3)", "3", "3fd269621134db92"),
+    ("ln(9/8)", "3", "3fbe27076e2af2e8"),
+    ("ln(32/27)", "1", "3fc5bf406b543db0"),
+]:
+    raise SystemExit("foundational shared-exclusions report: incorrect printed XOR atom table")
+ROWS
 if grep -F -- '??' "$BUILD_DIR/built.txt" >/dev/null; then
   echo "$CHECK_NAME: rendered text contains an unresolved reference marker" >&2
   exit 1

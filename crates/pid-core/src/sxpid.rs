@@ -2586,8 +2586,8 @@ fn leq_n(a: &[u8], b: &[u8]) -> bool {
     b.iter().all(|&bb| a.iter().any(|&aa| aa & !bb == 0))
 }
 
-/// All antichains over the non-empty subsets of `{0..n}` (n ≤ 4), each canonicalised to an
-/// ascending mask list. Brute-force over the powerset of the `2^n − 1` non-empty masks.
+/// Enumerate the nonempty families of nonempty source masks for up to four sources.
+/// Keep families in which no distinct mask contains another. Store each in ascending order.
 fn antichains_n_with_cancellation(
     n: usize,
     budget: ResourceBudget,

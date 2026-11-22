@@ -58,31 +58,19 @@
 
 \title{\PidReportTitle
   {Foundational Validity Audit of Shared-Exclusions PID}
-  {Exact semantics, compatibility firewall, adversarial counterexamples,\\
-   and a bounded executable audit}}
+  {What the categorical measure means and which conclusions it supports}}
 \author{Sepehr Mahmoudian}
-\date{25 July 2026 \quad Revised 20 November 2026}
+\date{25 July 2026 \quad Revised 21 November 2026}
 
 \begin{document}
 \PidMakeTitle
 
 \begin{abstract}
-This report audits the categorical shared-exclusions partial information
-decomposition (SxPID) of Makkeh, Gutknecht, and Wibral from its primitive event
-semantics.  We rederive its lattice order, informative--misinformative split,
-M\"obius inversion, and mutual-information reconstruction; distinguish proved
-properties from constitutive semantic choices; and give exact finite
-counterexamples to stronger interpretations.  We also reproduce the 2026
-Lyu--Clark--Raviv relation witness.  A standard-library exact-rational checker
-and a separate Rust regression show that their stipulated coordinate
-recoverability descriptors are not SxPID atoms.  Their unequal totals rule out a decoder for any assignment
-that gives the same atom vector on the pair.  A kernel-checked Lean theorem
-shows that global factorization through the descriptor suffices.  No fatal algebraic
-contradiction is found in the native shared-exclusions construction.  The
-valid conclusion is narrower: SxPID is a coherent signed, local, event-logical
-decomposition under an explicit semantic and statistical contract, not a
-universal ontology of informational parts.  Natural logarithms and nats are
-used unless bits are stated explicitly.
+Which conclusions follow from the finite categorical shared-exclusions measure of Makkeh, Gutknecht and Wibral? Partial information decomposition (PID) assigns the information several sources give about a target to terms called atoms. We derive the matching-event formula and test interpretations on finite laws. On the example of Lyu, Clark and Raviv, Python checks exact products and Rust evaluates the categorical measure. Group target coordinates by the minimal source sets that determine them. The list of joint entropies of these groups is the \emph{descriptor} here. The two systems have the same descriptor and different totals. Any atom vector determined by this descriptor agrees on the two systems and cannot determine their unequal totals. Lean checks this conditional implication.
+
+\textbf{Terms.} A law assigns probabilities to outcomes. A supported outcome has positive probability. A source set contains one or more indices for sources observed together. An antichain is a family in which no two distinct sets contain one another. A node is a nonempty antichain of source sets. At a fixed outcome its matching event occurs if at least one source set matches all its values. A node's redundancy value includes its atom and all atoms below it. Pointwise means at one outcome. An average weights values by their outcome probabilities. Natural logarithms give nats and base-two logarithms give bits. See \href{https://arxiv.org/abs/1004.2515v1}{Williams and Beer, Eqs.~(4)--(5)}, and \href{https://arxiv.org/abs/2002.03356v5}{Makkeh et al., Sec.~II and App.~A}.
+
+Cite Sepehr Mahmoudian (2026), \emph{Foundational validity audit of shared-exclusions PID}, with the exact repository commit or release. The \href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{software citation} identifies the project.
 \end{abstract}
 
 \tableofcontents
@@ -92,22 +80,18 @@ used unless bits are stated explicitly.
 The categorical shared-exclusions construction is mathematically valid in the
 following precise sense.
 \begin{enumerate}
-  \item Its keyed source event is well-defined for every supported
-        realization.
-  \item Its local cumulative is an ordinary likelihood-ratio information
-        value for that event.
+  \item Every node has a matching event of positive probability at each supported outcome.
+  \item Its pointwise redundancy value is the logarithm of a probability ratio for that event.
   \item The antichain order, event containments, and M\"obius inversion give
         an exact signed decomposition.
   \item The greatest-node cumulative is local mutual information; averaging
         the atoms reconstructs joint source--target mutual information.
   \item Informative and misinformative component atoms are nonnegative.  Net
         atoms need not be.
-  \item Source permutation symmetry, coordinatewise bijective re-encoding
-        invariance, self-redundancy, and the target chain rule follow from the
-        definition.
-  \item The current Rust implementation reproduces the exact finite
-        witnesses in this report, including the adversarial three-source
-        relation witness in Section~\ref{sec:lcr}.
+  \item Source permutations and simultaneous bijective relabeling of each source
+        and the target preserve the values. Self-redundancy and the target
+        chain rule also follow from the definition.
+  \item Rust evaluations agree with the reference values to the stated test tolerance. Section~\ref{sec:lcr} also checks selected integer products exactly.
 \end{enumerate}
 
 No fatal algebraic contradiction was found in the Makkeh--Gutknecht--Wibral
@@ -163,9 +147,10 @@ five lenses: definitional compatibility, theorem scope, executable refinement,
 numerical/statistical implications, and adversarial counterexamples.
 
 \subsection{Five-lens result ledger}
-The landscape table on the next page lists the evidence for all twelve findings.
+The next table lists the evidence for twelve findings.
 
 \begin{landscape}
+\noindent For the tables, MI means mutual information, PMF means probability mass function, and UQ means uncertainty quantification. The data-processing inequality (DPI) bounds information after processing. Local positivity (LP) requires nonnegative net atoms. Re-encoding invariance (REI) preserves values under simultaneous bijections of each source and the target. The target chain rule (TCR) splits information about an ordered target into successive conditional terms. The identity property (ID) sets redundancy about a copy of both sources equal to their mutual information. Exclusive OR (XOR) gives one when its two input bits differ.\par\smallskip
 \begingroup
 \setlength{\tabcolsep}{3pt}
 \scriptsize
@@ -182,7 +167,7 @@ Result & Definition & Theorem and assumptions & Executable refinement &
 Numerical/statistical implication & Adversarial finding \\
 \midrule
 \endhead
-F1 Keyed event & Native & Valid for supported finite keys & Rust scans exact
+F1 Keyed event & Native & Supported outcome and nonempty node & Rust scans exact
 equality events & Rare events produce large logs & Unsupported keys have no
 local occurrence \\
 F2 Lattice/inversion & Native & Finite-poset inversion is exact & Two--four
@@ -281,25 +266,24 @@ have law $p$ on a finite Cartesian-product alphabet.  Fix a supported key
 \[
 z=(s_1,\ldots,s_n,t),\qquad p(z)>0.
 \]
-For each nonempty collection $a\subseteq[n]$, define
+Let $n\geq1$ and $[n]=\{1,\ldots,n\}$. For each nonempty source set $a\subseteq[n]$, define
 \[
 E_a(s)=\bigcap_{i\in a}\{S_i=s_i\}.
 \]
-For an antichain $\alpha$ of nonempty collections, define the inclusive
-disjunction
+Let $\alpha=\{a_1,\ldots,a_m\}$ contain $m\geq1$ such sets. No two distinct members contain one another. The matching event is the union
 \begin{equation}
 A_\alpha(s)=\bigcup_{a\in\alpha}E_a(s).
 \label{eq:event}
 \end{equation}
-Every branch contains the keyed source realization.  Therefore
-$p(A_\alpha)>0$ and $p(T=t,A_\alpha)>0$.  The pointwise cumulative is
+Choose $a\in\alpha$. The complete outcome $z$ belongs to $E_a(s)$ and has target value $t$. Thus $p(A_\alpha)\geq p(T=t,A_\alpha)\geq p(z)>0$.
+An empty family would give an empty union. Even on a one-outcome law, both event probabilities would be zero and the ratio below would have the form $0/0$. The pointwise redundancy value is
 \begin{equation}
 c_\alpha(z;p)
 =\log\frac{p(T=t,A_\alpha)}{p(T=t)p(A_\alpha)}
 =\log\frac{p(T=t\mid A_\alpha)}{p(T=t)}.
 \label{eq:cumulative}
 \end{equation}
-It is a local likelihood ratio for the \emph{keyed} event, not yet an atom.
+The ratio compares the probability of $t$ after the match with its original probability. Equation~\eqref{eq:cumulative} takes its natural logarithm. On a one-outcome law every admitted node has ratio $1$ and redundancy value $\ln 1=0$ nats. A fair binary source equal to its target gives ratio $2$ and redundancy $\ln 2$ nats. See the \href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/finite-sx-node-and-logarithm-2026-11-21.md}{original wording and examples}.
 The informative and misinformative components are
 \begin{equation}
 c_\alpha^+(z;p)=-\log p(A_\alpha),
@@ -311,13 +295,12 @@ and $c_\alpha=c_\alpha^+-c_\alpha^-$.  Both components are nonnegative;
 their difference can have either sign.
 
 \paragraph{Finding F1 \evidence{P,R}.}
-Equations~\eqref{eq:event}--\eqref{eq:components} are defined for every
-supported finite key.  They assign no pointwise value to a zero-probability
+Equations~\eqref{eq:event}--\eqref{eq:components} are defined at each supported outcome for every node in the stated domain.  They assign no pointwise value to a zero-probability
 realization.
 
 \subsection{Antichain order}
 
-Define
+For two nodes $\alpha,\beta$ in this domain, define
 \begin{equation}
 \alpha\preceq\beta
 \quad\Longleftrightarrow\quad
@@ -509,7 +492,7 @@ has universal net local positivity is false.
 \subsection{XOR-source-copy executable witness}
 
 Let $S_1,S_2$ be independent fair bits, $S_3=S_1\oplus S_2$, and
-$T=(S_1,S_2,S_3)$.  The current kernel gives
+$T=(S_1,S_2,S_3)$.  Direct calculation on the four equiprobable rows gives
 \begin{align}
 \Pi_{\{\{1\},\{2\}\}}
 =\Pi_{\{\{1\},\{3\}\}}
@@ -525,6 +508,87 @@ All other atoms vanish, and
 \]
 so the atoms sum to $2\log2$.  This one unconditional witness need not display
 a negative atom; the 2025 result concerns universal property combinations.
+
+\paragraph{When a pair determines the complete source tuple.}
+The exclusive OR (XOR) of two bits equals one exactly when they differ.
+This proof uses the matching events of finite categorical MGW shared exclusions.
+Fix one reference row of positive probability. Restrict all events to rows of positive probability. A source
+group's matching event consists of all rows that agree on every source in
+that group. A node contains one or more nonempty source groups. No distinct
+group in it contains another. Its matching event is the union over its groups.
+
+Let $A,B,C,F$ denote
+the matching events for source groups $\{1,2\}$, $\{1,3\}$, $\{2,3\}$ and
+$\{1,2,3\}$, respectively.
+
+Let $t$ be the reference target. Each matching
+event $E$ contains the reference row. In nats, the informative cumulative
+is $R^+(E)=-\ln P(E)$, the misinformative cumulative is
+$R^-(E)=-\ln P(E\mid T=t)$ and the signed cumulative is
+$R(E)=R^+(E)-R^-(E)$. The order places node $\alpha$ below node $\beta$ when each group of
+$\beta$ contains some group of $\alpha$. Containment permits equality.
+
+Each cumulative sums the atoms at and below its node.
+
+The top atom belongs to the node whose only group is $\{1,2,3\}$.
+The average weights each pointwise atom by its row probability.
+See \href{https://arxiv.org/abs/2002.03356v5}{Makkeh, Gutknecht and Wibral,
+sections II, IV and Appendix A}.
+
+Write $R$ for any one of the three component cumulatives. The strict lower
+set of the top is the union of the three principal lower sets for the pair
+nodes. Every proper source group fits in a pair. The intersection of any
+two or three of these lower sets is the lower set for the node with those
+pair groups. Inclusion--exclusion therefore gives
+\[
+\begin{aligned}
+\pi_{\mathrm{top}}={}&R(F)-R(A)-R(B)-R(C)\\
+ &+R(A\cup B)+R(A\cup C)+R(B\cup C)-R(A\cup B\cup C).
+\end{aligned}
+\]
+If $S_3=f(S_1,S_2)$ on the support, then $A=F\subseteq B,C$. Thus
+$R(F)=R(A)$, $R(A\cup B)=R(B)$, $R(A\cup C)=R(C)$ and
+$R(A\cup B\cup C)=R(B\cup C)$. The four pairs cancel at this reference row whenever $A=F$ on the supported rows.
+A determining pair gives this equality at every supported reference row.
+Each pointwise top atom is then zero, so its probability-weighted average is zero.
+
+Permuting source indices gives the result for either other determining pair.
+All three pair events equal $F$ at every supported reference row exactly when each
+pair determines the full tuple on the support. For example,
+take independent fair bits $S_1,S_2$ and $S_3=0$. Rows $000$ and $010$
+agree on sources one and three but differ on the full tuple.
+
+For the XOR example, take independent fair bits $S_1,S_2$. Set
+$S_3=S_1\oplus S_2$ and take $T=(S_1,S_2,S_3)$. The four equally probable
+source tuples are $000$, $011$, $101$ and $110$. Each pair determines the
+full tuple. Each pair event contains exactly the reference row.
+
+Their common signed cumulative is
+$\ln4$ nats. At the node with all three pair groups, strictly lower atoms
+already contribute $\ln(27/8)$ nats. Its own atom is $\ln(32/27)$.
+The seven displayed nonzero atoms are exact real values.
+
+A separate execution called the stable Rust function
+\texttt{discrete\_sxpid3}. The three source matrices each had one column.
+The target matrix had three columns. All matrices had the four specified rows.
+The observer read the signed averaged field
+\verb|SxAveragedAtom::net_nats()|.
+
+The following hexadecimal words encode the returned binary64 values.
+\begin{center}
+\begin{tabular}{@{}lrl@{}}
+\toprule
+Exact atom (nats) & Nodes & Returned word \\
+\midrule
+$\ln(4/3)$   & 3 & \texttt{3fd269621134db92} \\
+$\ln(9/8)$   & 3 & \texttt{3fbe27076e2af2e8} \\
+$\ln(32/27)$ & 1 & \texttt{3fc5bf406b543db0} \\
+\bottomrule
+\end{tabular}
+\end{center}
+All eleven exact zeros returned positive zero. Each $\ln(4/3)$ result was
+the nearest binary64 value. The $\ln(9/8)$ results were two steps above
+the nearest value. The $\ln(32/27)$ result was two steps below.
 
 \section{Exact counterexample ledger}
 
@@ -657,8 +721,9 @@ domain.  The tilde relation occurs between the three groups.
 
 \subsection{Exact SxPID result}
 
-Independent exact event counting and the current Rust kernel instead give
-eight nonzero net atoms.
+Exact event counts give eight nonzero net atoms. The Rust test compares each
+output $a$ to its binary64 reference $b$ in nats. It accepts
+$|a-b|\leq 2\times10^{-13}\max(1,|a|,|b|)$, including comparisons with zero.
 \begin{center}
 \small
 \begin{tabularx}{\textwidth}{@{}Ycc@{}}
@@ -834,7 +899,7 @@ connect the published constructions, descriptor map, Sx definitions, and
 tested conclusion.  They are implementation-distinct corroboration, not
 independent proofs of one end-to-end statement.
 
-At generation, the bound SHA-256 values were:
+The July witness recorded these SHA-256 digests.
 \begin{itemize}
 \small
   \item checker:
@@ -877,7 +942,7 @@ results; they do not establish practical calibration in every data regime.
 
 \section{Interpretive and causal limits}
 
-A net atom is a M\"obius increment in a likelihood ratio.  Its sign compares
+A local net atom is the change left in a log probability ratio after subtracting all lower atoms.  Its sign compares
 informative and misinformative increments.  Without additional assumptions it
 does not mean beneficial mechanism, causal redundancy/synergy, correct sensor,
 deception, intent, replaceability, intervention robustness, safety margin, or
@@ -937,8 +1002,7 @@ certified negative, or unresolved sign rather than clamping.
 Keep semantic boundaries explicit: disjunction as shared logical consequence
 is an accepted postulate; uniqueness among all redundancy meanings is not a
 theorem; atoms are not common deterministic coordinates or nonnegative set
-sizes; observational atoms are not causal effects.  Formal methods can prove a
-precise model correct, but cannot make an unchosen semantics uniquely true.
+sizes; observational atoms are not causal effects.  A formal proof gives consequences of the chosen definitions.
 
 \section{Correctness-preserving research directions}
 
@@ -977,7 +1041,7 @@ Claim & Decision & Evidence \\
 Claim & Decision & Evidence \\
 \midrule
 \endhead
-Keyed cumulative is a valid local likelihood ratio & Established &
+Pointwise redundancy is the log of a conditional-to-marginal probability ratio & Established &
 \evidence{P,R}, Equations~\eqref{eq:event}--\eqref{eq:components} \\
 Atoms reconstruct mutual information & Established & \evidence{P,R,E},
 Equations~\eqref{eq:zeta}--\eqref{eq:reconstruct} \\
@@ -1015,6 +1079,9 @@ regime contract & Entire audit \\
 \end{longtable}
 \normalsize
 
+\subsection*{Rust implementation and computational cost}
+The stable default-feature function \path{discrete_sxpid_n_averaged_with_budget_and_cancellation} in \path{pid_core::stable::categorical} computes averaged atoms of the empirical law in nats. It takes two to four categorical source matrices and one target with the same $N$ complete rows. Let $D$ count all columns and $K$ the distinct complete rows. The rows supply counts without fitting or resampling. For $m=4,18,166$ nodes at two, three and four sources, the event calculation visits $(2m+1)K^2$ probability-table entries. Each visit can compare several coordinates. Sorting, subset information and inversion add work. Row storage grows as $ND$ and node storage depends on family size. Averaging avoids a $K$-by-$m$ table of local atoms. Resource limits or cancellation can stop the call. Floating-point logarithms and atoms use binary64. No timing is reported for this offline calculation. Formal checks concern separate propositions. The \href{https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/sxpid.rs}{Rust source} and \href{https://github.com/sepahead/pid-rs/blob/main/RUST_IMPLEMENTATION_AND_COST.md}{cost derivation} give the operation counts.
+
 \section{Reproducibility record}
 
 The Rust witness was evaluated against commit
@@ -1022,7 +1089,10 @@ The Rust witness was evaluated against commit
 \begin{center}
 \texttt{f08b56bac473474b39dd2cf2f09c5d13ccda025825a011ee1870f6f2979ff98a}.
 \end{center}
-The environment was Rust/Cargo 1.96.0 and Python 3.14.6.  The permanent commands
+The November rerun used the same case inputs and a revised code comment.
+Its Rust source SHA-256 is
+\path{882c860616cd509137f6d0ad923fb2405bbbaf688b3d43d011c35b2fbb0c7845}.
+The July environment was Rust/Cargo 1.96.0 and Python 3.14.6.  The permanent commands
 are
 \begin{verbatim}
 python3 -I -S audit/tools/foundational_sxpid/check_lcr_relation_witness.py \
@@ -1032,8 +1102,7 @@ python3 -I -S scripts/check-lean-descriptor-factorization.py
 python3 -I -S scripts/check-lean-descriptor-factorization-self-test.py
 \end{verbatim}
 \smallskip
-\noindent At creation both Rust tests, the Python exact checker, and the Lean
-factorization checks passed.  The
+\noindent The July record reports that both Rust tests and the Python exact checker passed.  The
 rational/formal-log route derives event counts, order, atoms, and mutations
 without invoking the Rust implementation.  The Rust route separately
 exercises the public event/lattice kernel.  The Lean route proves the abstract
@@ -1051,13 +1120,13 @@ three logically independent end-to-end proofs.
   ``Introducing a differentiable measure of pointwise shared information,''
   \emph{Physical Review E} 103, 032149 (2021),
   \href{https://doi.org/10.1103/PhysRevE.103.032149}{\nolinkurl{doi:10.1103/PhysRevE.103.032149}},
-  \href{https://arxiv.org/abs/2002.03356}{\nolinkurl{arXiv:2002.03356v5}}.
+  \href{https://arxiv.org/abs/2002.03356v5}{\nolinkurl{arXiv:2002.03356v5}}.
   \item A. J. Gutknecht, M. Wibral, and A. Makkeh,
   ``Bits and Pieces: Understanding Information Decomposition from Part-whole
   Relationships and Formal Logic,'' \emph{Proceedings of the Royal Society A}
   477, 20210110 (2021),
   \href{https://doi.org/10.1098/rspa.2021.0110}{doi:10.1098/rspa.2021.0110},
-  \href{https://arxiv.org/abs/2008.09535}{arXiv:2008.09535}.
+  \href{https://arxiv.org/abs/2008.09535v2}{arXiv:2008.09535v2}.
   \item P. H. Matthias, A. Makkeh, M. Wibral, and A. J. Gutknecht,
   ``Novel Inconsistency Results for Partial Information Decomposition,''
   \href{https://arxiv.org/abs/2512.16662}{arXiv:2512.16662v1},
@@ -1070,7 +1139,7 @@ three logically independent end-to-end proofs.
   14 April 2026.
   \item P. L. Williams and R. D. Beer, ``Nonnegative Decomposition of
   Multivariate Information,''
-  \href{https://arxiv.org/abs/1004.2515}{arXiv:1004.2515} (2010).
+  \href{https://arxiv.org/abs/1004.2515v1}{arXiv:1004.2515v1} (2010).
 \end{enumerate}
 
 \smallskip\noindent
