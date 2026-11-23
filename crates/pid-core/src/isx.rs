@@ -434,18 +434,17 @@ impl IsxConfig {
 
 /// Continuous shared-exclusions redundancy I^sx_∩(S1,S2;T).
 ///
-/// This is the core Wibral-group PID quantity (Makkeh et al. 2021; Ehrlich et al. 2024).
+/// With `IsxMethod::EhrlichKsg`, the population quantity is the mean of the
+/// local log density ratio in Ehrlich et al. (2024, arXiv:2311.06373v3,
+/// Definition 2). Its value depends on the relative scales of the sources.
+/// Equation (14) and Appendix H give the nearest-neighbour estimation route.
 ///
-/// By default (`IsxMethod::EhrlichKsg`), this uses the KSG-style kNN construction described by
-/// Ehrlich et al. (2024, Appendix H).
-///
-/// # Units
-/// Returns redundancy in **nats** (natural log).
-///
-/// # Important: can be negative
-/// `I^sx_∩` is a well-defined functional of the joint distribution, but it is **not guaranteed
-/// to be non-negative** under all desiderata (see the PID inconsistency/impossibility results
-/// discussed in Makkeh et al. 2021 and Matthias et al. 2025). Do not clamp this value to 0.
+/// # Units and sign
+/// Natural logarithms give nats. A local log ratio is negative when its
+/// density ratio is below one. The returned finite-sample estimate keeps its
+/// sign. A negative estimate alone does not determine the sign of the population
+/// mean. The finite categorical incompatibility theorems concern a different
+/// domain and do not establish the sign of this continuous redundancy.
 ///
 /// # Assumptions / failure modes (estimator-level)
 /// The default estimator is kNN-based and inherits the usual kNN MI pathologies:
@@ -578,6 +577,13 @@ fn validate_isx_structure(
 
 /// Compute the cited restricted-domain estimator with neighborhood, scaling, overlap, assumption,
 /// provenance, and resource diagnostics attached.
+///
+/// Each aligned row contains the two source observations and the target
+/// observation. The caller declares the continuous support and source scaling
+/// in the configuration and provenance. The returned value is a signed estimate
+/// in nats of the population mean of Ehrlich et al.'s local log density ratio
+/// (arXiv:2311.06373v3, Definition 2 and Eq. 14). Its sign on the supplied
+/// rows alone does not give the sign of that population mean.
 pub fn isx_redundancy_report(
     s1: MatRef<'_>,
     s2: MatRef<'_>,

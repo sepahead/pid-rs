@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Qualify the earlier three-source identity statement in the categorical catalog and test documentation. Rauh and colleagues use a bijective change of target labels. On all finite distributions, positivity and invariance conflict with the target chain rule at each source count from two, and with identity for independent copied pairs from three. The continuous estimator documentation now identifies the local density ratio, its average and its signed estimate. [Revised finite theorems](https://arxiv.org/abs/2512.16662v2) · [Continuous definition and estimator](https://arxiv.org/abs/2311.06373v3)
+
 - Characterize the support of all 18 local categorical shared-exclusion calculations. An eight-row parity table gives 17 finite signed values and one undefined value at an absent source triple. [Proof, examples and replay](audit/research/three-source-supported-states/README.md) · [PDF](output/pdf/three-source-supported-states.pdf)
 - The foundations report attributes atom nonnegativity to Williams and Beer's decomposition and the copied-pair identity to Harder, Salge and Polani. The report now links to the audited first revision of the incompatibility paper. [Foundations report](FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md) · [PDF](output/pdf/foundational-shared-exclusions-pid-audit.pdf)
 

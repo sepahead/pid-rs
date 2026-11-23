@@ -2853,8 +2853,13 @@
           "role": "caveat"
         },
         {
-          "locator": "three-source incompatibility of identity, local positivity, and the Williams-Beer lattice axioms",
+          "locator": "theorem 2 (arXiv:1404.3146v1): three finite sources on the Williams-Beer lattice, local positivity and identity for source collections; the proof identifies target supports under a bijective change of labels",
           "reference_id": "rauh-2014",
+          "role": "caveat"
+        },
+        {
+          "locator": "sections 4.2 and 4.3: on all finite joint distributions at each fixed source count, local positivity and re-encoding invariance conflict with the target chain rule from two sources, and with independent copied-pair identity from three",
+          "reference_id": "matthias-2026-v2",
           "role": "caveat"
         },
         {
@@ -5841,6 +5846,21 @@
       "type": "paper",
       "url": "https://doi.org/10.1103/PhysRevE.103.032149",
       "year": 2021
+    },
+    {
+      "arxiv": "2512.16662v2",
+      "authors": [
+        "Philip Hendrik Matthias",
+        "Abdullah Makkeh",
+        "Michael Wibral",
+        "Aaron J. Gutknecht"
+      ],
+      "doi": null,
+      "id": "matthias-2026-v2",
+      "title": "Novel Inconsistency Results for Partial Information Decomposition",
+      "type": "paper",
+      "url": "https://arxiv.org/abs/2512.16662v2",
+      "year": 2026
     },
     {
       "arxiv": null,

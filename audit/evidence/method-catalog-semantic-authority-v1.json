@@ -45,7 +45,7 @@
   "authority_schema_sha256": "afc9bb89a704dce43a53f01117e068dde9984177446c9e6d2ff049e120a27f20",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "23b94688f5923de5251afb17fef7578a9f76adcd393d11ddfb5f8b49be4d4133",
+  "catalog_sha256": "d7f3b8b79ddbbe19ad1e629ada21586d815cfec3b081a04ef9877a0fc0cc89bd",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -619,7 +619,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "c4c20493077d86e774512e93a97ce58759e0f4e84f62e30e5557ccd3d66bc08c"
+      "payload_sha256": "f62dff75e2dbdd721b4e1302ab90903a8dce199412dc2b05270c0746abbd68b2"
     },
     {
       "facts": {
@@ -999,8 +999,8 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "93a281861e62bc4b6e9d192225160ac1daa6ad36a8fd4395cc7c2275ac1bf6c2",
-  "reference_registry_sha256": "c9592ad51140759709b2be892af44cb69eff24d9fa2f61e0dbfcebbf5ad4bd50",
+  "ordered_root_sha256": "d3a47b8cf01bb8590f2664bbf5ac684aaf92e4bb8440411f76cd74de17a4a445",
+  "reference_registry_sha256": "3d473e6e9b55df619f742c13caa3b18e7247f5d7bb92cc8743044d3829686779",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1
 }

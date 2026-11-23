@@ -304,14 +304,15 @@ fn mgw_theorem_iv2_cumulative_parts_monotone_on_lattice() {
 fn identity_axiom_imin_overattributes_vs_sxpid() {
     // Two-bit COPY of INDEPENDENT sources: T = (S1, S2), encoded as 2*s1 + s2.
     // Harder et al. (2013) identity axiom: redundancy should be I(S1;S2) = 0.
-    //   - I_min assigns the MAXIMAL 1 bit (= min of the marginal MIs) — the classic
-    //     over-attribution that motivated SxPID.
-    //   - i^sx assigns only log2(4/3) ≈ 0.415 bits — strictly less (though still > 0: SxPID
-    //     gives up the averaged identity axiom even at two sources in exchange for its
-    //     pointwise structure. Identity and non-negativity are jointly satisfiable at two
-    //     sources — e.g. BROJA: Bertschinger, Rauh, Olbrich, Jost & Ay 2014, Entropy 16(4) —
-    //     but identity is incompatible with non-negativity for three or more sources:
-    //     Rauh, Bertschinger, Olbrich & Jost 2014, ISIT / arXiv:1404.3146).
+    // The four equally likely source pairs define the complete population example.
+    // I_min gives one bit of redundancy. Categorical shared exclusions gives
+    // log2(4/3) bits, so it also violates copied-pair identity on this example.
+    // Bivariate BROJA satisfies copied-pair identity, local positivity and
+    // re-encoding invariance. The three-source proof of Rauh et al. (2014,
+    // arXiv:1404.3146v1, Theorem 2) uses a bijection of target supports.
+    // For each fixed source count from three upwards, even identity for independent
+    // copied pairs conflicts with positivity and invariance on all finite laws
+    // (Matthias et al., arXiv:2512.16662v2, Theorem 2).
     let rows = [(0, 0, 0), (0, 1, 1), (1, 0, 2), (1, 1, 3)];
     let reps = 4;
     let (mut s1, mut s2, mut t) = (Vec::new(), Vec::new(), Vec::new());

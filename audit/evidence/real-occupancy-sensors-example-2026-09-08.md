@@ -22,7 +22,9 @@ UCI identifies this as experimental office-occupancy data, with occupancy labels
 | Earlier held-out | `datatest.txt` | 2,665 | 2015-02-02 14:19:00 → 2015-02-04 10:43:00 | 972 |
 | Later held-out | `datatest2.txt` | 9,752 | 2015-02-11 14:48:00 → 2015-02-18 09:19:00 | 2,049 |
 
-The official first test recording predates training. It is a held-out earlier-recording comparison, not prospective evaluation. The second test recording follows training and provides the later-recording comparison. The recordings have no shared timestamps, but that does not establish statistical independence. No room, person, or building beyond the recorded office is held out here.
+The official first test recording predates training. It is a held-out earlier-recording comparison, not prospective evaluation. The second test recording follows training and provides the later-recording comparison. During occupied periods the office door was mostly closed in training and in the earlier test, and mostly open in the later test. The files contain no door-state field. These recording differences limit comparisons of the sensor scores across periods. The records give no estimate of the effect of opening the door. [Luis Candanedo, useR! 2015 presentation, slide 9](https://www.r-project.org/conferences/useR-2015/presentations/lightningtalk-candanedo.pdf).
+
+The recordings have no shared timestamps, but that does not establish statistical independence. No room, person, or building beyond the recorded office is held out here.
 
 ![Recording roles and aligned inputs. Only training rows determine the two source maps.](../formal/latex/figures/real-occupancy-sensors/recording-roles.svg)
 
@@ -199,7 +201,7 @@ Higher accuracy is better; lower Brier score and log loss are better. On the lat
 | Later held-out | co2 | 6388 | 1315 | 807 | 1242 | 0 |
 | Later held-out | pair | 7653 | 50 | 122 | 1927 | 4 |
 
-The 25 and four unseen pair-bin rows in the earlier and later tests matter: the fixed probability-1/2 and tie rule predicts occupancy for them. Improvements in thresholded classification are therefore not evidence of confident predictions for novel combinations. The exact counts, per-day evaluations and information values are retained in [descriptive comparisons](real-occupancy-sensors-example-2026-09-08/descriptive-comparisons.json).
+All 25 additional correct classifications in the earlier recording and all four in the later recording came from two pairs of bins absent from training. Every one of these rows was occupied. The pair assigned probability 1/2 there, and light alone assigned 1/3 or 1/4. With the recorded rule a tie predicts occupancy. If a tie predicts an empty room, the two rules give the same class for every held-out row. The exact counts, per-day evaluations and information values are retained in [descriptive comparisons](real-occupancy-sensors-example-2026-09-08/descriptive-comparisons.json).
 
 ## Does the shared-exclusion event make a useful forecast?
 
