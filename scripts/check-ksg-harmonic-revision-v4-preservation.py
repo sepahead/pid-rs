@@ -133,7 +133,7 @@ EXPECTED_ROUTE_STDOUT = {
 }
 EXPECTED_CATALOG_STDOUT = {
     CURRENT_CATALOG_CHECKER_RELATIVE: (
-        b"OK: 75 method entries and 50 references are coherent\n"
+        b"OK: 75 method entries and 51 references are coherent\n"
     ),
     CURRENT_CATALOG_SELF_TEST_RELATIVE: (
         b"OK: 85 method-catalog mutations were rejected\n"

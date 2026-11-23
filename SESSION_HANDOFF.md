@@ -1,4 +1,8 @@
-# Session handoff — updated 22 November 2026
+# Session handoff — updated 23 November 2026
+
+## The catalog count in the KSG preservation check
+
+At commit `a9ee3b5a1818e88ca7a28054365fd52ed1463040`, 46 of the 47 CI jobs passed. The KSG check stopped because it expected 50 references. The catalog had 75 entries and 51 references. The SHA-256 digest of the failed job log is `439b495bab2cca3d9ba486c9b40fb5171fca7ca0b9a4065240a95d6c550317a2`. [Original job](https://github.com/sepahead/pid-rs/actions/runs/45143816907/job/137588066862) · [Current catalog](method-catalog.json)
 
 ## Support of the three-source categorical calculations and the copied-pair identity
 

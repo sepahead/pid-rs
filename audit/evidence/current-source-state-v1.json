@@ -388,8 +388,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "4505c200de7705686fe624a3a769faace9d21e005aa4432a466623e2a517faf9",
-        "size_bytes": 347956
+        "sha256": "fe30846b10183f53686cd3ed21111ad2889b4afd9ead992e4cf729e5f4e391d6",
+        "size_bytes": 348064
       },
       {
         "git_mode": "100644",
@@ -640,8 +640,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "54366f07f9ddd49adb72e4eb8bffc6f2b0da32fe0e5fd1448582c8cbdf39a666",
-        "size_bytes": 71569
+        "sha256": "a15307bbe4ad73210d6bb2bafae35c9d37979ce89871919492d37a211bc82006",
+        "size_bytes": 72055
       },
       {
         "git_mode": "100644",
@@ -36670,7 +36670,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-ksg-harmonic-revision-v4-preservation.py",
-        "sha256": "1bbe7353ca18309ff150fe90d5f2004fe1e3362551701d63b970da09007dad3d",
+        "sha256": "27f8b966637786c60b04b7fc31d173824d8f8d4072106ab961796d48dc6d3655",
         "size_bytes": 25209
       },
       {
@@ -37018,7 +37018,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "54ffb81208d869c9fcb2e2da91feef89a01fe72a9d5b9c4680509f6f88368c25",
+        "sha256": "d4503c9d3b2158f31d2e0dffa5c0cbd2d4115a1f39bdf3c6b1080eb970e6ad03",
         "size_bytes": 140337
       },
       {
@@ -38012,7 +38012,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "ca6fe3cae46b4a4d1b6dc81509452a6f9c5902a3e2297e35cefbde9c5c59edde",
+    "entries_sha256": "f7b071a24312886ed9361ba378b807787113b9339865c9de55e6520aa67db122",
     "entry_count": 6311
   },
   "subprojections": [
@@ -38041,7 +38041,7 @@
       ]
     },
     {
-      "entries_sha256": "b568af8f408d1b3b6c4cac501919d8e4942e339352cfb0dbc146a22040f36c64",
+      "entries_sha256": "3a7e9429a1d94b1506e3cd1138ecc394996e224d6bee3f165ff63e4014f7eed2",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
