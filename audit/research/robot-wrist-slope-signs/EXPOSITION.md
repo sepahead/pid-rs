@@ -1,22 +1,22 @@
 # Two axial trends and five robot outcomes
 
-**Sepehr Mahmoudian · 23 November 2026**
+**Sepehr Mahmoudian · 24 November 2026**
 
-[Standalone PDF](../../../output/pdf/robot-wrist-slope-signs.pdf) · [Exact certificate](certificate.json) · [All numerical intervals](results.json)
+[Standalone PDF](../../../output/pdf/robot-wrist-slope-signs.pdf) · [Exact certificate](certificate.json) · [All numerical intervals](results.json) · [Full sensor trace comparison](trace-provenance.json)
 
 <!-- body -->
-**Research question.** After a robot event has been detected, does the trend in axial torque change what the recorded axial force trend tells us about the event class? Does force add information to torque? The two directions reduce class uncertainty in all five recorded tasks. The reduction sometimes leaves every class decision unchanged.
+**Research question.** The wrist sensor records three components of force and three of torque. Here *axial* means the recorded $z$ component of either measurement. After a robot event has been detected, does the trend in axial torque change what the recorded axial force trend tells us about the event class? Does force add information to torque? The two directions reduce class uncertainty in all five recorded tasks. The reduction sometimes leaves every class decision unchanged.
 
-**Terms and symbols.** An *episode* is one recorded window of 15 readings. A *class* is the outcome label for one task. $F$ and $Q$ denote negative, zero or positive trends in axial force and torque. $Y$ is the class. An *empirical law* assigns a probability through the frequency in one recorded table. *Entropy* measures uncertainty in $Y$. *Mutual information* (MI) measures the reduction from observing a sign. *Conditional mutual information* (CMI) measures the further reduction in this uncertainty after observing another sign. A *nat* uses natural logarithms. Partial information decomposition (PID) allocates the joint information to signed components, called *atoms*, under a specified redundancy rule. [UCI donor description](https://archive.ics.uci.edu/ml/machine-learning-databases/robotfailure-mld/robotfailure.data.html) · [Shannon, 1948](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x) · [Makkeh, Gutknecht and Wibral, 2021](https://arxiv.org/abs/2002.03356v5)
+**Terms and symbols.** The donors call the five learning problems LP1 to LP5. A *trace* is an ordered array of 15 samples from six sensor channels. An *episode record* pairs one trace with one task label. A *class* is a possible label for that task. Some records in different tasks contain the same trace. $F$ and $Q$ denote negative, zero or positive trends in axial force and torque. $Y$ is the class. An *empirical law* assigns a probability through the frequency in one recorded table. *Entropy* measures uncertainty in $Y$. *Mutual information* (MI) measures the reduction from observing a sign. *Conditional mutual information* (CMI) measures the further reduction in this uncertainty after observing another sign. A *nat* uses natural logarithms. Partial information decomposition (PID) allocates the joint information to signed components, called *atoms*, under a specified redundancy rule. [UCI donor description](https://archive.ics.uci.edu/ml/machine-learning-databases/robotfailure-mld/robotfailure.data.html) · [Shannon, 1948](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x) · [Makkeh, Gutknecht and Wibral, 2021](https://arxiv.org/abs/2002.03356v5)
 
-![Both conditional information gains are positive in five tasks. Comparing the best single sign with both signs gives 38 and 42 correct in LP1, 21 and 22 in LP2, 24 and 24 in LP3, 72 and 72 in LP4, and 49 and 52 in LP5.](figures/information-and-decisions.svg)
+![LP1 to LP5 are five learning problems. Both conditional information gains for the recorded z components of force and torque are positive in each task. Comparing the best single sign with both signs gives 38 and 42 correct in LP1, 21 and 22 in LP2, 24 and 24 in LP3, 72 and 72 in LP4, and 49 and 52 in LP5.](figures/information-and-decisions.svg)
 
-The figure compares changes in class probabilities with changes in the most frequent class. Both summaries use the same episodes. Each task retains its original labels.
+The figure compares changes in class probabilities with changes in the most frequent class. Each row uses the original labels and record count for one task. Some rows use the same underlying measurements.
 
 <!-- page -->
 ## From wrist measurements to five finite laws
 
-Luis Seabra Lopes and Luis M. Camarinha-Matos donated five robot learning problems. The reported window lasts 315 milliseconds, starts immediately after detection, and contains 15 regularly spaced readings. Each reading gives six integers in the order $F_x,F_y,F_z,T_x,T_y,T_z$. One complete episode contributes one observation of the two signs and the donor class. The study uses $F_z$ and $T_z$ in the recorded instrument coordinates. The other four channels are checked for integer form and omitted from the sign summaries. [Original donor description and class definitions](https://archive.ics.uci.edu/ml/machine-learning-databases/robotfailure-mld/robotfailure.data.html)
+Luis Seabra Lopes and Luis M. Camarinha-Matos donated five robot learning problems. The reported window lasts 315 milliseconds, starts immediately after detection, and contains 15 regularly spaced readings. Each reading gives six integers in the order $F_x,F_y,F_z,T_x,T_y,T_z$. One complete episode contributes one observation of the two signs and the donor class. The study uses $F_z$ and $T_z$ in the recorded instrument coordinates. All six channels enter the trace comparison below. Only the two axial channels enter the sign summaries. [Original donor description and class definitions](https://archive.ics.uci.edu/ml/machine-learning-databases/robotfailure-mld/robotfailure.data.html)
 
 For a channel whose ordered readings are $x_1,\ldots,x_{15}$, define its trend sign by
 
@@ -26,9 +26,9 @@ $$
 
 The least-squares line with an intercept has slope $D(x)/280$ per sample index. A positive constant sample spacing preserves the sign in elapsed time. An exact zero includes a varying trace whose weighted changes cancel. No smoothing, tolerance, replacement of missing readings, deduplication or feature tuning enters the table. A change of units with positive scale preserves the sign. Rotation of the coordinate frame can change it. The records do not give a calibrated physical rate.
 
-LP1 records the approach to a grasp, LP2 the transfer of a part, LP3 its position after a transfer failure, LP4 the approach to an ungrasp, and LP5 motion with a part.
+The authors repeated three pick-and-place operations during training. They introduced external disturbances, usually by putting a moving or stationary object in the arm’s path. An operator assigned a failure description to each trace. They report 88 approach-to-grasp traces, 47 transfer traces and 117 approach-to-ungrasp traces. LP1, LP2 and LP4 describe behavior during those operations. LP3 describes the position of a part after transfer. LP5 describes motion with a part. The authors used the same 47 transfer cases for LP2 and LP3. [Original experiment, sections 23.5 and 23.7, pp. 380–381 and 386](https://doi.org/10.1007/978-1-4615-5725-8_23)
 
-| Task | Episodes | Class and count in donor order | Occupied |
+| Task | Records | Class and count in donor order | Occupied |
 | ------ | -------- | ------------------------------------------------------ | --------- |
 | LP1 | 88 | normal 21, collision 17, front collision 16, obstruction 34 | 15 / 36 |
 | LP2 | 47 | normal 20, front collision 6, back collision 7, collision to the right 5, collision to the left 9 | 19 / 45 |
@@ -39,9 +39,35 @@ LP1 records the approach to a grasp, LP2 the transfer of a part, LP3 its positio
 Here the fractions give occupied triple cells divided by the full $3\times3\times K$ alphabet, where $K$ is the number of classes in that task. The donor's summarized percentages are rounded. The integer counts above come from the original labels. LP3 concerns the **position of the part after a transfer failure**. Its label “ok” has the donor's task-specific meaning.
 
 <!-- page -->
+## Which tasks contain the same measurements?
+
+For this comparison, two traces match when all 90 integer readings agree in sample and channel order. Leave the class out of the comparison. The 463 task records contain 251 distinct traces. This count describes the files. Several encounters can produce the same readings. The files give no independent trial identifiers.
+
+| Task | Records | Distinct traces | Repeated rows within this task |
+| --- | --- | --- | --- |
+| LP1 | 88 | 88 | None |
+| LP2 | 47 | 46 | 45 and 46 |
+| LP3 | 47 | 46 | 45 and 46 |
+| LP4 | 117 | 116 | 25 and 45 |
+| LP5 | 164 | 162 | 45 and 46, also 72 and 92 |
+
+For any two tasks, count each shared trace as many times as it occurs in the file with fewer copies of that trace. In this table, the first count includes those copies. The second counts each different shared trace once. Each of the other six task pairs has zero exact matches.
+
+| Pair | Shared records, counting copies | Distinct shared traces |
+| --- | --- | --- |
+| LP2 and LP3 | 47 | 46 |
+| LP2 and LP5 | 46 | 45 |
+| LP3 and LP5 | 46 | 45 |
+| LP4 and LP5 | 117 | 116 |
+
+LP1, LP2 and LP4 share no complete traces with each other. Together they give $88+46+116=250$ distinct traces. LP3 adds none. LP5 adds one. All LP2 and LP3 traces agree in file order. Put the LP2 traces before the LP4 traces. The resulting list matches 163 of the 164 LP5 traces at the same positions. At row 37, the first 11 samples match. All six readings differ at samples 12 through 15. The files do not explain this difference.
+
+**One limit on classification.** LP5 rows 45 and 46 have identical readings. Their labels are collision in a tool and collision in a part. A rule that uses only these readings must give both rows the same answer. On this fixed table, the best such rule gets 163 of 164 records correct. It chooses the most frequent class at each complete trace. This count uses the records that set the rule. The two-sign rules use a coarser description of the same input. [All trace comparisons and differing cells](trace-provenance.json) · [Published experimental account, p. 386](https://doi.org/10.1007/978-1-4615-5725-8_23)
+
+<!-- page -->
 ## The full recorded class distributions
 
-Each cell below lists integer class counts given a sign pair. The class order is the order on the previous page. To get the conditional class distribution, divide an occupied vector by the sum of its entries. To get joint probabilities, divide by the total for that task. An all-zero vector describes an unobserved pair. Such a pair could occur in another recording.
+Each cell below lists integer class counts given a sign pair. Use the donor class order in the task table under “From wrist measurements to five finite laws.” To get the conditional class distribution, divide an occupied vector by the sum of its entries. To get joint probabilities, divide by the total for that task. An all-zero vector describes an unobserved pair. Such a pair could occur in another recording.
 
 | F, Q | LP1 | LP2 | LP3 | LP4 | LP5 |
 | --- | --- | --- | --- | --- | --- |
@@ -57,7 +83,7 @@ Each cell below lists integer class counts given a sign pair. The class order is
 
 **Worked example.** In LP4 the class order is normal, collision, obstruction. With both trends negative, the counts are 12, 33 and 7, so the empirical collision probability is $33/52$. With both trends positive, it is $13/17$. For mixed signs the counts are $(2,15,8)$ and $(8,11,4)$. Collision is the most frequent class at all four occupied sign pairs. Its total is 72 out of 117. Information can change even when the optimal equal-cost label stays the same.
 
-Exactly zero force slopes occur in one episode each of LP2, LP3 and LP5. Exactly zero torque slopes occur in four LP1 episodes. LP2 and LP3 have the same nine source-pair marginal counts, in row order $9,0,15,0,0,1,9,0,13$. The two tasks have different labels. The equal margins alone cannot identify common physical encounters. The 463 episode records therefore supply five separately described empirical laws. [Exact counts](certificate.json)
+Exactly zero force slopes occur in one episode each of LP2, LP3 and LP5. Exactly zero torque slopes occur in four LP1 episodes. LP2 and LP3 have the same nine source-pair marginal counts, in row order $9,0,15,0,0,1,9,0,13$. These two targets label the same 47 transfer cases. Each target and its task records define a separate empirical law. The denominator of each law is its task total. Keep all rows, including repeated traces. [Exact counts](certificate.json)
 
 For each conditioning choice, average the class entropy of its occupied states using their empirical frequencies. These are the results in nats.
 
@@ -72,7 +98,7 @@ For each conditioning choice, average the class entropy of its occupied states u
 <!-- page -->
 ## Which information does a second sign add?
 
-Let $n$ be one task's episode count and $n_{fqy}$ the count at signs $f,q$ and class $y$. Omitting subscripts means summing over them. The row weight is $n_{fqy}/n$. For class counts $n_y$, the target entropy is $H(Y)=-\sum_{y:n_y>0}(n_y/n)\ln(n_y/n)$. Conditional entropy averages that expression over the conditioning states. Write $I_F=H(Y)-H(Y\mid F)$, $I_Q=H(Y)-H(Y\mid Q)$ and $I_{FQ}=H(Y)-H(Y\mid F,Q)$. In nats, the torque and force gains are
+Let $n$ be one task's record count and $n_{fqy}$ the count at signs $f,q$ and class $y$. Omitting subscripts means summing over them. The row weight is $n_{fqy}/n$. For class counts $n_y$, the target entropy is $H(Y)=-\sum_{y:n_y>0}(n_y/n)\ln(n_y/n)$. Conditional entropy averages that expression over the conditioning states. Write $I_F=H(Y)-H(Y\mid F)$, $I_Q=H(Y)-H(Y\mid Q)$ and $I_{FQ}=H(Y)-H(Y\mid F,Q)$. In nats, the torque and force gains are
 
 $$
 I(Q;Y\mid F)=I_{FQ}-I_F,\qquad I(F;Y\mid Q)=I_{FQ}-I_Q.
@@ -90,7 +116,7 @@ The table rounds values to six decimal places. Every gain has a strictly positiv
 
 **The equal-cost decision comparison.** For a predictor state $x$, the best label maximizes the count $n_{xy}$. The correct count is $\sum_{x:n_x>0}\max_y n_{xy}$. With no signs, use the most frequent label in the whole task. A displayed tie uses the first listed donor class. Tied choices give the same correct count.
 
-| Task | Prior | Force | Torque | Both | Episodes |
+| Task | Prior | Force | Torque | Both | Records |
 | --- | --- | --- | --- | --- | --- |
 | LP1 | 34 | 35 | 38 | 42 | 88 |
 | LP2 | 20 | 20 | 21 | 22 | 47 |
@@ -126,6 +152,8 @@ $U_F$ and $U_Q$ are signed net unique atoms. $S$ is signed synergy. Their sum wi
 
 LP4 has strictly negative force-unique information, between $-0.000415318$ and $-0.000415317$ nat. LP5 has strictly negative torque-unique information, between $-0.000804411$ and $-0.000804410$ nat. Positive synergy in both tasks keeps the corresponding conditional gain positive. A unique atom and a conditional gain therefore answer different questions on these same counts.
 
+**Two targets on the same transfer traces.** The informative part of two-source MGW redundancy averages the negative logarithm of the matching source union’s probability. An occupied pair contributes $(n_{fq}/47)\ln(47/u)$. This part depends only on the joint sign counts. For LP2 and LP3 the five occupied pairs give $(n_{fq},u)=(9,33),(15,38),(1,29),(9,31),(13,38)$ in table order. For example, the first union has $24+18-9=33$ records. Each task thus gives the same informative part, about 0.284314 nat. The misinformative part averages $\ln(n_y/u_y)$ over occupied triples with weights $n_{fqy}/47$. It depends on the task label. Subtracting this part from the informative part gives signed redundancies of 0.063624 and 0.014394 nat in LP2 and LP3. This applies the existing source-marginal factorization to these two empirical laws under the same source event and logarithm base. [Prior factorization](../../../SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md) · [Exact source terms](trace-provenance.json)
+
 To reconstruct a local term, take the LP4 collision example with both signs negative. Of 117 episodes, 77 match the force sign, 75 match the torque sign, and 52 match both. Their union contains 100 episodes, including 59 collisions. The local ratio is $(59/100)/(72/117)=767/800$. Its logarithm is negative even though the averaged $R$ is positive. [Exact signed products](certificate.json)
 
 <!-- page -->
@@ -135,26 +163,27 @@ For each reported value $V$, the certificate stores the positive rational $e^{nV
 
 To enclose $\ln p$ for a prime $p$, write $p=2^k x$ with $1\le x<2$. For $z=(x-1)/(x+1)$ sum $2z^{2j+1}/(2j+1)$ for $j=0,\ldots,31$. The remaining positive sum is at most $2z^{65}/[65(1-z^2)]$. Apply the same rule to $\ln 2$ and round prime bounds out at $10^{-18}$. Multiply by signed prime exponents, add them, divide by $n$ and round endpoints outward to nanonats.
 
-From the study directory use Python 3.10 or later. The first command rebuilds every information value and modal count from the published integer table. The second downloads the hash-bound original UCI archive into memory and independently reconstructs the signs from the 15 readings. To use an existing archive, replace the download option with `--archive PATH`.
+From the study directory use Python 3.10 or later. The first command below rebuilds each information value and modal count from the published counts. The second checks the signs against the original UCI ZIP. The third compares the full six-channel traces and their labels. Both download commands accept `--archive PATH` in place of `--fetch` for a local copy. Synthetic checks alone do not read the donor files.
 
 ```text
 python3 -I -B replay.py --self-test
 python3 -I -B replay.py --fetch --self-test
+python3 -I -B trace_provenance.py --fetch --self-test
 ```
 
 The reader requires each of the five named data members and checks its size and SHA-256. All other ZIP members stay unused, including the donor's historical executable. The code and source commitments are portable. The complete original archive SHA-256 is available in the source index. UCI distributes the underlying dataset under Creative Commons Attribution 4.0. Derived frequencies and numerical summaries accompany the study; the original episodes remain at UCI. [Replay program](replay.py) · [Source and member digests](sources.json) · [Dataset and licence](https://doi.org/10.24432/C5M89N)
 
-**What the checks establish.** One registered generator ran with read-only data and a single writable certificate. Two locally separated readers reconstructed every field before seeing each other's output. One factored local ratios from counts; the other computed entropy products and counted each union directly across episodes. Both obtained the same 5,764-byte certificate, including 189 cells, 65 exact log products and 20 modal counts. The three roles shared one administrator, data source, mathematical specification and runtime. AI assistance supported candidate preparation, checking and editorial review. A local computational check of these quantities supplies no independent human review or new-trial calibration.
+**What the checks establish.** One registered generator ran with read-only data and a single writable certificate. Two locally separated readers reconstructed every field before seeing each other's output. One factored local ratios from counts; the other computed entropy products and counted each union directly across episodes. Both obtained the same 5,764-byte certificate, including 189 cells, 65 exact log products and 20 modal counts. The three roles shared one administrator, data source, mathematical specification and runtime. AI assistance supported candidate preparation, checking and editorial review. The later comparison of all six sensor channels was a retrospective check. Separate implementations read the same original files after the sign results were known. These checks supply no independent human review or new-trial calibration.
 
 <!-- page -->
 ## Rust implementation and computational cost
 
 The default-feature production entry point `discrete_sxpid2` in the stable categorical module takes source and target matrices of labels. For this input each matrix has one column and $n$ rows. The public Rust routine returns categorical MGW terms in nats using binary64. The exact Python reference supplies the count products and enclosures for this study. No Rust run or all-input Rust refinement was part of this check. [Categorical Rust source](../../../crates/pid-core/src/sxpid.rs) · [Rust implementation and cost guide](../../../RUST_IMPLEMENTATION_AND_COST.md)
 
-The transformation reads $15\times6$ integers per episode. Its cost grows linearly in the number of episodes. Each dense task table has $9K$ cells for $K$ from three to five classes, with $n$ from 47 to 164. The primary reader stores parsed sign tuples and counts, then factors positive integers no larger than $n$. The separate recipient uses order $n^2$ row comparisons to construct the unions directly. The cost of exact integer products also depends on the lengths of their numerators and denominators. The replay stops on malformed input, an unknown class, the wrong length, a source-hash mismatch or a certificate disagreement. The registered run limited each scientific process to one CPU, 256 MiB of address space and 120 seconds. No classifier was trained and there was no resampling.
+The transformation reads $15\times6$ integers per episode. Its cost grows linearly in the number of episodes. Each dense task table has $9K$ cells for $K$ from three to five classes, with $n$ from 47 to 164. The primary reader stores parsed sign tuples and counts, then factors positive integers no larger than $n$. The separate recipient uses order $n^2$ row comparisons to construct the unions directly. The cost of exact integer products also depends on the lengths of their numerators and denominators. The replay stops on malformed input, an unknown class, the wrong length, a source-hash mismatch or a certificate disagreement. The registered run limited each scientific process to one CPU, 256 MiB of address space and 120 seconds. The separate trace check stores 463 arrays of 90 integers and their labels. It counts repeated arrays and compares ten file pairs. It uses Python integer equality. Its time and memory grow with the number of stored readings for these five tasks, under the usual average-case cost of a hash lookup. No resampling or classifier training enters either calculation.
 
-On the registered single-CPU aarch64 Linux guest with Alpine 3.23.4 and CPython 3.12.13, the generator completed all five tasks in 0.069 s elapsed including process launch; its recorded peak was 15,268 KiB. The primary and recipient scientific loops took 0.022 s and 0.024 s, with process peaks of 16,160 and 17,060 KiB. These measurements concern this offline exact workload. No production Rust throughput or online latency was measured.
+On the registered single-CPU aarch64 Linux guest with Alpine 3.23.4 and CPython 3.12.13, the generator completed all five tasks in 0.069 s elapsed including process launch; its recorded peak was 15,268 KiB. The primary and recipient scientific loops took 0.022 s and 0.024 s, with process peaks of 16,160 and 17,060 KiB. These measurements cover the original offline information calculation. No release timing is reported for the complete-trace comparison or for a Rust estimator on this workload.
 
-**Application boundary.** This repository contribution applies established information measures to a fixed pair of axial signs. The donor examined other feature transformations in its earlier classifier work. The resulting comparison can show how a conditional distribution, equal-cost decisions and a named allocation of information differ after a recorded event. The donor description leaves the sampling frame, trial groups, class adjudication, detector input, coordinate calibration and cross-task incident linkage open. Same-table counts can overstate performance on new episodes. No analysis here establishes population prevalence, an effect of removing a physical sensor, early warning, or a continuous-estimator result. Testing those questions would require independent acquisition groups, a declared loss or intervention and held-out episodes gathered under that protocol.
+**Application boundary.** This repository contribution applies established information measures to a fixed pair of axial signs. The donor examined other feature transformations in its earlier classifier work. The resulting comparison can show how a conditional distribution, equal-cost decisions and a named allocation of information differ after a recorded event. The experiment used operator labels. The sources give no class reliability study, independent trial groups, physical calibration or trigger rule for normal records. Equal traces can cross task boundaries. Even different traces can contain common samples, as row 37 shows. To test prediction, keep known related acquisitions together and test on independently acquired groups. A random split of task rows could give the model access to the same readings during fitting and testing. No analysis here establishes population prevalence, an effect of removing a physical sensor, early warning, or a continuous-estimator result. A sensor removal study would also require a defined intervention and a loss for wrong decisions.
 
-**Citation.** Sepehr Mahmoudian (2026), *Two axial trends and five robot outcomes*. Include the exact repository commit or release. Cite Luis Seabra Lopes and Luis M. Camarinha-Matos, *Robot Execution Failures* (1998), DOI 10.24432/C5M89N, and Abdullah Makkeh, Aaron J. Gutknecht and Michael Wibral (2021), *Introducing a differentiable measure of pointwise shared information*, separately. [Software citation](../../../CITATION.cff) · [Dataset](https://doi.org/10.24432/C5M89N) · [Defining method](https://doi.org/10.1103/PhysRevE.103.032149)
+**Citation.** Sepehr Mahmoudian (2026), *Two axial trends and five robot outcomes*. Include the exact repository commit or release. Cite Luis Seabra Lopes and Luis M. Camarinha-Matos, *Robot Execution Failures* (1998), DOI 10.24432/C5M89N, and their experiment chapter, *Feature Transformation Strategies for a Robot Learning Problem* (1998). Cite Abdullah Makkeh, Aaron J. Gutknecht and Michael Wibral (2021), *Introducing a differentiable measure of pointwise shared information*, separately. [Software citation](../../../CITATION.cff) · [Dataset](https://doi.org/10.24432/C5M89N) · [Original experiment](https://doi.org/10.1007/978-1-4615-5725-8_23) · [Defining method](https://doi.org/10.1103/PhysRevE.103.032149)

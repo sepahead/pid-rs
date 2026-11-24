@@ -3,7 +3,6 @@
 import argparse
 from pathlib import Path, PurePosixPath
 import os
-import posixpath
 import re
 import shutil
 import subprocess
@@ -15,7 +14,7 @@ ROOT = STUDY.parents[2]
 STUDY_PATH = PurePosixPath("audit/research/angular-four-moment-radius")
 TEX_PATH = Path("audit/formal/latex/angular-four-moment-radius")
 LATEX = Path("audit/formal/latex")
-WEB = "https://github.com/sepahead/pid-rs/blob/main/"
+LINK_FILTER = LATEX / "report-source-links.lua"
 ENV = dict(
     os.environ,
     SOURCE_DATE_EPOCH="1795392000",
@@ -25,7 +24,7 @@ ENV = dict(
 )
 
 
-def latex_body():
+def latex_body(assets=ROOT):
     """Use local links in Markdown and public HTTPS destinations in the PDF."""
     source = (
         (STUDY / "EXPOSITION.md")
@@ -40,16 +39,6 @@ def latex_body():
     figure = r"\par\smallskip\noindent\makebox[\linewidth][c]{\includegraphics[width=0.94\linewidth]{radius-bracket.pdf}}\par"
     source = source.replace(image_line[0], figure)
 
-    def portable_link(match):
-        name, address = match.groups()
-        if address.startswith("https://"):
-            return match.group()
-        relative = posixpath.normpath(str(STUDY_PATH / address))
-        if relative.startswith("../") or relative.startswith("/"):
-            raise ValueError(f"invalid local source link {address}")
-        return f"[{name}]({WEB}{relative})"
-
-    source = re.sub(r"\[([^\[\]\n]+)\]\(([^()\s]+)\)", portable_link, source)
     fragments = []
     for page in source.split("<!-- page -->"):
         result = subprocess.run(
@@ -57,6 +46,8 @@ def latex_body():
                 "pandoc",
                 "--from=markdown-implicit_figures-smart+raw_tex+tex_math_dollars",
                 "--to=latex",
+                "--lua-filter",
+                str(Path(assets) / LINK_FILTER),
                 "--shift-heading-level-by=-1",
                 "--wrap=none",
             ],
@@ -64,7 +55,7 @@ def latex_body():
             capture_output=True,
             text=True,
             check=True,
-            env=ENV,
+            env={**ENV, "PID_RS_REPORT_SOURCE_DIR": STUDY_PATH.as_posix()},
         ).stdout
         fragments.append(result.rstrip())
     return ("\n\n\\clearpage\n\n".join(fragments) + "\n").encode()
@@ -72,7 +63,7 @@ def latex_body():
 
 def build(output, assets):
     tex = ROOT / TEX_PATH
-    body = latex_body()
+    body = latex_body(assets)
     if body != (tex / "body.tex").read_bytes():
         raise ValueError("native body differs from the Markdown rendering")
     with tempfile.TemporaryDirectory(prefix="angular-four-report-") as temp:
@@ -145,7 +136,7 @@ def main():
     )
     args = parser.parse_args()
     if args.write_body:
-        (ROOT / TEX_PATH / "body.tex").write_bytes(latex_body())
+        (ROOT / TEX_PATH / "body.tex").write_bytes(latex_body(args.assets_root))
     if args.output:
         build(args.output.resolve(), args.assets_root.resolve())
     if not args.write_body and not args.output:

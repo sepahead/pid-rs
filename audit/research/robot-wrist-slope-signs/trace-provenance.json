@@ -1,0 +1,421 @@
+{
+  "schema": "uci138-complete-measurement-identity-v1",
+  "schema_definition": "One array contains 15 complete samples in donor order. Each sample has six integers (Fx, Fy, Fz, Tx, Ty, Tz). Exclude the target label from equality. Count the smaller number of occurrences of each shared array when computing overlap with multiplicity. The same array can be assigned different task labels. Row and sample numbers start at one.",
+  "dataset_doi": "10.24432/C5M89N",
+  "archive_sha256": "cdfbe0b260f4a21c5249fe0da4b1baf4041959663a9182253885ee1f41a4568e",
+  "task_member_sha256": {
+    "LP1": "e146de5aeaffd864f0e57ce2fe0b58e98582c3e808e6c0e8deb9b25a54ef0cb5",
+    "LP2": "565096a67cc8b9e4cef299316b3ab769054215a6342636e208611eafa780f950",
+    "LP3": "38e5cb0b22477772a03edee82599591375790cb945cf1256ed0a4b516cc30e1a",
+    "LP4": "f0c901ead751ff3104d7e1aeb23165efb88270b219c1954c43bfff2344a7bb3c",
+    "LP5": "0f327415504dccec9509a84f6fa7aea9ebc28e5fa85f2f00933c90565d51108d"
+  },
+  "experiment_source": {
+    "authors": [
+      "Luis Seabra Lopes",
+      "Luis M. Camarinha-Matos"
+    ],
+    "year": 1998,
+    "title": "Feature Transformation Strategies for a Robot Learning Problem",
+    "doi": "10.1007/978-1-4615-5725-8_23",
+    "support": {
+      "sections": "23.5 and 23.7",
+      "print_pages": [
+        380,
+        381,
+        386
+      ],
+      "author_copy": "https://sweet.ua.pt/lsl/pubs/CLI-1998-a-kluwer.pdf",
+      "author_copy_sha256": "418c35877a6e3f0d9f8c202ee02fff08fb8710adf601c27fec46e3800c4996cf"
+    }
+  },
+  "boundary": "Observation of the original files and the authors’ reported 47 shared transfer cases. Array equality alone does not identify a physical trial, its time, its independent acquisition group or the cause of a mismatch.",
+  "measurement_results": {
+    "tasks": {
+      "LP1": {
+        "rows": 88,
+        "distinct_arrays": 88,
+        "repeated_arrays": [],
+        "max_correct_using_full_array_on_this_table": 88
+      },
+      "LP2": {
+        "rows": 47,
+        "distinct_arrays": 46,
+        "repeated_arrays": [
+          {
+            "rows": [
+              45,
+              46
+            ],
+            "labels": [
+              "back_col",
+              "back_col"
+            ]
+          }
+        ],
+        "max_correct_using_full_array_on_this_table": 47
+      },
+      "LP3": {
+        "rows": 47,
+        "distinct_arrays": 46,
+        "repeated_arrays": [
+          {
+            "rows": [
+              45,
+              46
+            ],
+            "labels": [
+              "slightly_moved",
+              "slightly_moved"
+            ]
+          }
+        ],
+        "max_correct_using_full_array_on_this_table": 47
+      },
+      "LP4": {
+        "rows": 117,
+        "distinct_arrays": 116,
+        "repeated_arrays": [
+          {
+            "rows": [
+              25,
+              45
+            ],
+            "labels": [
+              "collision",
+              "collision"
+            ]
+          }
+        ],
+        "max_correct_using_full_array_on_this_table": 117
+      },
+      "LP5": {
+        "rows": 164,
+        "distinct_arrays": 162,
+        "repeated_arrays": [
+          {
+            "rows": [
+              45,
+              46
+            ],
+            "labels": [
+              "collision_in_tool",
+              "collision_in_part"
+            ]
+          },
+          {
+            "rows": [
+              72,
+              92
+            ],
+            "labels": [
+              "collision_in_part",
+              "collision_in_part"
+            ]
+          }
+        ],
+        "max_correct_using_full_array_on_this_table": 163
+      }
+    },
+    "task_pairs": {
+      "LP1/LP2": {
+        "distinct_arrays": 0,
+        "with_multiplicity": 0
+      },
+      "LP1/LP3": {
+        "distinct_arrays": 0,
+        "with_multiplicity": 0
+      },
+      "LP1/LP4": {
+        "distinct_arrays": 0,
+        "with_multiplicity": 0
+      },
+      "LP1/LP5": {
+        "distinct_arrays": 0,
+        "with_multiplicity": 0
+      },
+      "LP2/LP3": {
+        "distinct_arrays": 46,
+        "with_multiplicity": 47
+      },
+      "LP2/LP4": {
+        "distinct_arrays": 0,
+        "with_multiplicity": 0
+      },
+      "LP2/LP5": {
+        "distinct_arrays": 45,
+        "with_multiplicity": 46
+      },
+      "LP3/LP4": {
+        "distinct_arrays": 0,
+        "with_multiplicity": 0
+      },
+      "LP3/LP5": {
+        "distinct_arrays": 45,
+        "with_multiplicity": 46
+      },
+      "LP4/LP5": {
+        "distinct_arrays": 116,
+        "with_multiplicity": 117
+      }
+    },
+    "all_task_rows": 463,
+    "all_distinct_arrays": 251,
+    "LP2_and_LP3_same_arrays_in_same_order": true,
+    "LP2_then_LP4_compared_with_LP5": {
+      "compared": 164,
+      "same": 163,
+      "different": [
+        {
+          "row": 37,
+          "changed_cells": [
+            {
+              "sample": 12,
+              "channel": "Fx",
+              "left": 3,
+              "right": -2
+            },
+            {
+              "sample": 12,
+              "channel": "Fy",
+              "left": -7,
+              "right": 10
+            },
+            {
+              "sample": 12,
+              "channel": "Fz",
+              "left": 81,
+              "right": 86
+            },
+            {
+              "sample": 12,
+              "channel": "Tx",
+              "left": -2,
+              "right": -46
+            },
+            {
+              "sample": 12,
+              "channel": "Ty",
+              "left": -8,
+              "right": -19
+            },
+            {
+              "sample": 12,
+              "channel": "Tz",
+              "left": -2,
+              "right": -7
+            },
+            {
+              "sample": 13,
+              "channel": "Fx",
+              "left": 1,
+              "right": 3
+            },
+            {
+              "sample": 13,
+              "channel": "Fy",
+              "left": -5,
+              "right": -7
+            },
+            {
+              "sample": 13,
+              "channel": "Fz",
+              "left": 83,
+              "right": 81
+            },
+            {
+              "sample": 13,
+              "channel": "Tx",
+              "left": -8,
+              "right": -2
+            },
+            {
+              "sample": 13,
+              "channel": "Ty",
+              "left": -14,
+              "right": -8
+            },
+            {
+              "sample": 13,
+              "channel": "Tz",
+              "left": -11,
+              "right": -2
+            },
+            {
+              "sample": 14,
+              "channel": "Fx",
+              "left": 1,
+              "right": -7
+            },
+            {
+              "sample": 14,
+              "channel": "Fy",
+              "left": 1,
+              "right": -13
+            },
+            {
+              "sample": 14,
+              "channel": "Fz",
+              "left": 81,
+              "right": 84
+            },
+            {
+              "sample": 14,
+              "channel": "Tx",
+              "left": -30,
+              "right": 8
+            },
+            {
+              "sample": 14,
+              "channel": "Ty",
+              "left": -15,
+              "right": -26
+            },
+            {
+              "sample": 14,
+              "channel": "Tz",
+              "left": -13,
+              "right": -9
+            },
+            {
+              "sample": 15,
+              "channel": "Fx",
+              "left": -8,
+              "right": -2
+            },
+            {
+              "sample": 15,
+              "channel": "Fy",
+              "left": -2,
+              "right": 10
+            },
+            {
+              "sample": 15,
+              "channel": "Fz",
+              "left": 84,
+              "right": 86
+            },
+            {
+              "sample": 15,
+              "channel": "Tx",
+              "left": -13,
+              "right": -46
+            },
+            {
+              "sample": 15,
+              "channel": "Ty",
+              "left": -33,
+              "right": -19
+            },
+            {
+              "sample": 15,
+              "channel": "Tz",
+              "left": -10,
+              "right": -7
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "informative_redundancy": {
+    "LP2": {
+      "records": 47,
+      "terms": [
+        {
+          "sign_pair": [
+            -1,
+            -1
+          ],
+          "count": 9,
+          "union": 33
+        },
+        {
+          "sign_pair": [
+            -1,
+            1
+          ],
+          "count": 15,
+          "union": 38
+        },
+        {
+          "sign_pair": [
+            0,
+            1
+          ],
+          "count": 1,
+          "union": 29
+        },
+        {
+          "sign_pair": [
+            1,
+            -1
+          ],
+          "count": 9,
+          "union": 31
+        },
+        {
+          "sign_pair": [
+            1,
+            1
+          ],
+          "count": 13,
+          "union": 38
+        }
+      ],
+      "exp_n_times_informative_redundancy": {
+        "numerator": "3877924263464448622666648186154330754898344901344205917642325627886496385062863",
+        "denominator": "6098449144927073213639616115953446876262366478293566666244100384087867392"
+      }
+    },
+    "LP3": {
+      "records": 47,
+      "terms": [
+        {
+          "sign_pair": [
+            -1,
+            -1
+          ],
+          "count": 9,
+          "union": 33
+        },
+        {
+          "sign_pair": [
+            -1,
+            1
+          ],
+          "count": 15,
+          "union": 38
+        },
+        {
+          "sign_pair": [
+            0,
+            1
+          ],
+          "count": 1,
+          "union": 29
+        },
+        {
+          "sign_pair": [
+            1,
+            -1
+          ],
+          "count": 9,
+          "union": 31
+        },
+        {
+          "sign_pair": [
+            1,
+            1
+          ],
+          "count": 13,
+          "union": 38
+        }
+      ],
+      "exp_n_times_informative_redundancy": {
+        "numerator": "3877924263464448622666648186154330754898344901344205917642325627886496385062863",
+        "denominator": "6098449144927073213639616115953446876262366478293566666244100384087867392"
+      }
+    }
+  }
+}

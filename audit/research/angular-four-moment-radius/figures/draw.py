@@ -28,7 +28,7 @@ def illustration(certificate):
         + str(lower)
         + ". The diamond marks a violation at "
         + str(upper)
-        + " with a equal to the radius and b equal to zero. The unresolved width is "
+        + " with a equal to the radius and b equal to zero. The width of this bracket is "
         + str(width)
         + ". At zero the relative error is undefined.</desc>",
         '<rect width="840" height="440" rx="0" fill="' + IVORY + '"/>',
@@ -84,7 +84,7 @@ def illustration(certificate):
         tick(pos(value, lo, hi), y, word)
     circle(64, y, 5, INK, IVORY)
     label(42, 194, "Expanded scale", 20, TURQUOISE, True)
-    label(191, 194, "The marked endpoints bracket the unknown threshold.", 18)
+    label(191, 194, "The marked endpoints show the 23 November bounds.", 18)
     lo = Fraction(27, 100)
     hi = Fraction(31, 100)
     y = 230
@@ -97,7 +97,7 @@ def illustration(certificate):
     circle(x0, y, 7, TURQUOISE, IVORY)
     diamond(x1, y, 9, POMEGRANATE)
     label(
-        420, 292, "Unresolved interval width  " + str(width), 20, BRONZE, True, "middle"
+        420, 292, "23 November interval width  " + str(width), 20, BRONZE, True, "middle"
     )
     line(42, 307, 798, 307, MINERAL, 1)
     circle(56, 333, 7, TURQUOISE, IVORY)

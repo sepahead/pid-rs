@@ -12,7 +12,7 @@ def graphic(report):
     tasks=report["tasks"]
     parts=['<svg xmlns="http://www.w3.org/2000/svg" width="840" height="440" viewBox="0 0 840 440" role="img" aria-labelledby="title desc">',
            '<title id="title">Information and correct class choices after detection</title>',
-           '<desc id="desc">For LP1 through LP5, two conditional information gains are plotted on one scale in millinats. Both are positive in every task. Exact correct counts for the better single sign and both signs are 38 and 42 of 88, 21 and 22 of 47, 24 and 24 of 47, 72 and 72 of 117, and 49 and 52 of 164. These are same-table decisions.</desc>',
+           '<desc id="desc">LP1 to LP5 are five learning problems. Both slope signs use the recorded z components of wrist force and torque. The two conditional information gains are plotted on one scale in millinats. Both are positive in every task. Exact correct counts for the better single sign and both signs are 38 and 42 of 88, 21 and 22 of 47, 24 and 24 of 47, 72 and 72 of 117, and 49 and 52 of 164. The five tasks share some complete sensor traces. The counts use the original task labels.</desc>',
            f'<rect width="840" height="440" fill="{IVORY}"/>',
            '<g font-family="Source Sans Pro, Source Sans 3, Arial, sans-serif">']
     def label(x,y,text,size=19,fill=INK,bold=False,anchor="start"):
@@ -33,7 +33,7 @@ def graphic(report):
             raise ValueError("display requires unambiguous one-decimal millinat rounding")
         return Fraction(lo+hi,2000000),f"{low//10}.{low%10}"
     label(31,42,"Information and correct class choices after detection",31,LAPIS,True)
-    label(32,70,"Five robot tasks. Each direction uses the same 15 readings of an axial channel.",20)
+    label(32,70,"LP1 to LP5 are five learning problems. Both trends use the sensor z axis.",20)
     line(32,85,808,85)
     label(32,115,"Added class information",23,TURQUOISE,True)
     label(548,115,"Correct class choices",23,TURQUOISE,True)
@@ -43,7 +43,7 @@ def graphic(report):
     label(32,180,"Task",16,LAPIS,True)
     label(410,180,"Torque",16,LAPIS,True,"middle")
     label(477,180,"Force",16,LAPIS,True,"middle")
-    for x,k in ((591,"Single"),(679,"Both"),(770,"Episodes")):label(x,180,k,16,LAPIS,True,"middle")
+    for x,k in ((591,"Single"),(679,"Both"),(770,"Records")):label(x,180,k,16,LAPIS,True,"middle")
     for tick in (0,40,80,120,160):
         x=position(tick);line(x,186,x,333,MINERAL,1)
         label(f"{x:.2f}",179,tick,14,INK,False,"middle")
@@ -62,8 +62,8 @@ def graphic(report):
     line(520,157,520,337)
     line(32,347,808,347)
     label(32,375,"Information is in millinats. 1,000 millinats equal one nat.",19)
-    label(32,402,"LP4 retains positive gains in both directions. Each modal rule gets 72 of 117 correct.",19,LAPIS,True)
-    label(32,427,"Classes and frequencies come from the same recorded task. UCI Robot Execution Failures.",17)
+    label(32,402,"LP4 has two positive gains. Each sign alone and the pair give 72 of 117 correct.",19,LAPIS,True)
+    label(32,427,"Some tasks share traces. Counts use the original task labels. Source | UCI Robot Execution Failures.",17)
     return "\n".join([*parts,"</g>","</svg>",""])
 
 if __name__=="__main__":

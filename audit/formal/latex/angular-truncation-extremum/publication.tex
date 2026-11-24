@@ -1,0 +1,38 @@
+\def\UnicodeFontFile#1#2{"[fonts/#1.otf]:#2"}
+\input{tulmr.fd}
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec}
+\defaultfontfeatures{Path=fonts/}
+\usepackage{unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox,float}
+\usepackage{pid-rs-report-tables,pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\pdfvariable minorversion=7
+\pdfvariable suppressoptionalinfo=767
+\pdfextension catalog { /Lang (en) }
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,citecolor=PidSecondary,
+  pdftitle={The worst direction for an angular information atom},
+  pdfauthor={Sepehr Mahmoudian},pdfdisplaydoctitle=true,
+  pdfsubject={Exact extremal directions and a sharp four-moment threshold for an assigned angular population}}
+\PidSetRunningHeads{The worst direction for an angular information atom}{Population approximation}
+\PidWorkflowConfigureSections
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.43em plus 0.09em minus 0.05em}
+\setlength{\emergencystretch}{3em}
+\setlist{itemsep=0.15em,topsep=0.25em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\title{\PidReportTitle{The worst direction for an angular information atom}{Exact relative truncation error on a two-harmonic population}}
+\author{Sepehr Mahmoudian}
+\date{24 November 2026}
+\begin{document}
+\PidMakeTitle
+\input{body.tex}
+\end{document}

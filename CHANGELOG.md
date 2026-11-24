@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Establish the sharp error threshold for the four-moment approximation of one positive, fixed-radian angular law. The proof identifies the two worst directions for each positive integer number of retained moments. [Proof, exact root bounds and application scope](audit/research/angular-truncation-extremum/EXPOSITION.md)
+
+- Correct the provenance of the robot task tables. LP2 and LP3 share their 47 transfer cases. The ordered LP5 waveforms agree with the joined LP2 and LP4 files in 163 of 164 positions. The new comparison identifies what a common source table fixes under categorical shared exclusions. [Donor experiment](https://doi.org/10.1007/978-1-4615-5725-8_23) · [Study and trace receipt](audit/research/robot-wrist-slope-signs/EXPOSITION.md)
+
 - Use portable sign notation in the equation for the robot wrist trends. [Equation and source data](audit/research/robot-wrist-slope-signs/EXPOSITION.md#from-wrist-measurements-to-five-finite-laws)
 
 - Bound the error from four even moments in a fixed-scale angular population model. The actual relative error stays below one part per million for every direction through radius 583/2048. An axial example exceeds this tolerance at 1197/4096. [Derivation and exact certificate](audit/research/angular-four-moment-radius/EXPOSITION.md)

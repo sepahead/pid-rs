@@ -388,8 +388,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "fe34f152730241806358984ac08332bd1ce96713c7bcb5b8a79baa852c21ccec",
-        "size_bytes": 349008
+        "sha256": "dc66b791f99a403aa837e0f95135d434b6459cebca73faa6cf410cf9fc1744fb",
+        "size_bytes": 349765
       },
       {
         "git_mode": "100644",
@@ -508,8 +508,8 @@
       {
         "git_mode": "100644",
         "path": "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md",
-        "sha256": "e9b4ec1fc49bb0acd043126920a1445c012751edc17662ecb33a1b9f013e9f89",
-        "size_bytes": 31436
+        "sha256": "1e1e61eca72e0cc71ebeab97e968f1c21d1a72f6d7e2bc35501845e04b6c23ef",
+        "size_bytes": 33560
       },
       {
         "git_mode": "100644",
@@ -574,8 +574,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "260d79a9c68cf4bcd14e05b994859113dd26959f7ecebf21f3038fe56c0ccad4",
-        "size_bytes": 101529
+        "sha256": "81f65fe7f3367581ad0cdb83bb397b61ba20e0ca6c97bce64d7581990c0662f1",
+        "size_bytes": 101877
       },
       {
         "git_mode": "100644",
@@ -640,8 +640,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "844c47a223de7b389f7e1e86d282fe1d1e7aa31a1eb5aa67c7e7ad1da9d858f7",
-        "size_bytes": 75241
+        "sha256": "b0ab3ef294f22105451eeb3346b8970770c31d65943a6d64d9adbfed3c39ae4e",
+        "size_bytes": 77003
       },
       {
         "git_mode": "100644",
@@ -17710,14 +17710,26 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/angular-four-moment-radius/body.tex",
-        "sha256": "fffdc5e711c1d4e5f6c8bf64cf7b227cb9af07e00b8220a6eb3288bc4d1467b1",
-        "size_bytes": 17180
+        "sha256": "668f314e8c7ca739f9e40aebef93d1a2a15e608d6f32cf0d29438bef5e807818",
+        "size_bytes": 17376
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/angular-four-moment-radius/publication.tex",
         "sha256": "b110f1096a87cc73cbc635e0a53a7d4ad5ff392ab58e00d53059c090cea5c5d2",
         "size_bytes": 1662
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/angular-truncation-extremum/body.tex",
+        "sha256": "ae395bd6eadd5343cdf7d1d8d2c61dae7448d57012ec42074c092fce125278da",
+        "size_bytes": 18668
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/angular-truncation-extremum/publication.tex",
+        "sha256": "dd08e34c471454b0e43a1a0eae6766dc6d0211aa07d0c63d507542c0e7388e75",
+        "size_bytes": 1683
       },
       {
         "git_mode": "100644",
@@ -18273,6 +18285,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/mathematical-results-guide-current/edition-2026-11-23-angular-radius-and-robot-wrist-tables.json",
+        "sha256": "526b83644643db89dab065bdd0b96a7997bdae87dec3615d00b33389b11cda0e",
+        "size_bytes": 12647
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/edition-2026-11-23-contributions.json",
         "sha256": "0e73577a30c75abbdd24caf6ba4df42bcb31a7092bb9603feda37a3015bf832d",
         "size_bytes": 9519
@@ -18280,20 +18298,20 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
-        "sha256": "526b83644643db89dab065bdd0b96a7997bdae87dec3615d00b33389b11cda0e",
-        "size_bytes": 12647
+        "sha256": "2b86da035933caeb985748840ce6a441c70a4749973a5615c12cb5048bd3c5e0",
+        "size_bytes": 16198
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/publication.lua",
-        "sha256": "a713e46272f30403799091deaaac155eed434495b6444931dab05c022b867485",
+        "sha256": "16dd2b8bc83c9fdaeb80ca1fc7df930a1e41089791a452f20dae7e67584db256",
         "size_bytes": 1025
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/publication.tex",
-        "sha256": "592a13c035d25c621aafedb20221fa1d3580bccf4222d9ec939fed925d902d9e",
-        "size_bytes": 1458
+        "sha256": "5132c863e808d0fe3a3337532af6b14cc02324024de13cd18d55bb11e0cddc9e",
+        "size_bytes": 1470
       },
       {
         "git_mode": "100644",
@@ -19215,15 +19233,21 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/report-source-links.lua",
+        "sha256": "ed5ad7d62cbd775736ca078040cd3e995e3e335077f781199d81234f228ae6d1",
+        "size_bytes": 1321
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/robot-wrist-slope-signs/body.tex",
-        "sha256": "f09e2d6183496907a82acb369f706f1d0658c6bcc73cc3d9cff8bb62ebbc2c5c",
-        "size_bytes": 21955
+        "sha256": "de2fc620d2d739c99542e09cbda318841707ab4ee1e48c751475fe5e4e14fb42",
+        "size_bytes": 27673
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/robot-wrist-slope-signs/publication.tex",
-        "sha256": "95b803169b73967325ed60ba00a128d41696a8905a23939d29afc9e4243942c8",
-        "size_bytes": 1658
+        "sha256": "a90d8a90c29d08dca5ceae35fe91605a1c6a09e0d68a8dd5d3469b2ad8946502",
+        "size_bytes": 1643
       },
       {
         "git_mode": "100644",
@@ -30514,14 +30538,14 @@
       {
         "git_mode": "100644",
         "path": "audit/research/angular-four-moment-radius/EXPOSITION.md",
-        "sha256": "015eb6ea112e4fe9b4b88a68124d72bd87ddeede0fc074740cbd009e5c1a8cfc",
-        "size_bytes": 16729
+        "sha256": "b48de397a318c5f9fea01cc2f5afd52751507112dc270541a40ac5fe60a0100c",
+        "size_bytes": 16861
       },
       {
         "git_mode": "100644",
         "path": "audit/research/angular-four-moment-radius/build.py",
-        "sha256": "0ddc17650a9014f2892eb2721526107aeb2327b5fc3b6d810527071c71905916",
-        "size_bytes": 5316
+        "sha256": "a7b38e8714b232d00e2bb8ed598aed62d30a572dbacff9673d00a440e811fa24",
+        "size_bytes": 4993
       },
       {
         "git_mode": "100644",
@@ -30532,8 +30556,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/angular-four-moment-radius/figures/draw.py",
-        "sha256": "01ed891f00f84fe926e634160ad0ea1961b0e64e7bde1f42b2b0926ec02864da",
-        "size_bytes": 4850
+        "sha256": "a0e0e7211cecc5ff4797518ffbfcedc395f9bdee46f0043f03869a171b1d2515",
+        "size_bytes": 4854
       },
       {
         "git_mode": "100644",
@@ -30544,14 +30568,14 @@
       {
         "git_mode": "100644",
         "path": "audit/research/angular-four-moment-radius/figures/radius-bracket.pdf",
-        "sha256": "b7becf59b28acbea82c1213d9cd4926109a0bdab7203886cdaa5b27bfcd0d25a",
-        "size_bytes": 13005
+        "sha256": "27bd44b69818941742ea0c93a8f2245c58af3f76339d727bb01ac458efa92fdc",
+        "size_bytes": 13257
       },
       {
         "git_mode": "100644",
         "path": "audit/research/angular-four-moment-radius/figures/radius-bracket.svg",
-        "sha256": "274449dc10ac4b3258c82925b01fe664aa9d9e1832745571cb357d7464baee84",
-        "size_bytes": 5142
+        "sha256": "ef405d8f4018cf1b2aad1861fb027ce923985501a3752d015901af3dc75280c2",
+        "size_bytes": 5146
       },
       {
         "git_mode": "100644",
@@ -30564,6 +30588,72 @@
         "path": "audit/research/angular-four-moment-radius/replay.py",
         "sha256": "f1b005226e2564cbb2106855748462f4f06cc84e053f340d7cb87aed6dbeed3d",
         "size_bytes": 7421
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/EVIDENCE.md",
+        "sha256": "26d9e4cc2fccd219f0d1d3704f89cda84ab3d89b86e7d9a3ff84a37bb08c1d1e",
+        "size_bytes": 16566
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/EXPOSITION.md",
+        "sha256": "17ba74dd44c0d25f481b6911f3758b88a1d16606ba5897717821acd7fd14c026",
+        "size_bytes": 17272
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/build.py",
+        "sha256": "0eb5862416208d09a458e38db75431f97aa24d82f64c732ed23269e8691295b5",
+        "size_bytes": 5156
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/certificate.json",
+        "sha256": "663303c0f123c5e83a7122349e0563864b9f055babc8e8a6139e77e9e1231ee5",
+        "size_bytes": 611
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/closed_form.py",
+        "sha256": "202ca865f12317ede23d5d3d28065b92c2f3e0cb68e1b812190f609bb691af8e",
+        "size_bytes": 1641
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/figures/angular-truncation-directions.pdf",
+        "sha256": "fbc34a929d070789630cdb46e03fe14b6496b672369d927e046884c876f0ce15",
+        "size_bytes": 15272
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/figures/angular-truncation-directions.svg",
+        "sha256": "35aa87a1f1e03c005965391f2594b93ea056e803051feee0818184807076268c",
+        "size_bytes": 14008
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/figures/draw.py",
+        "sha256": "4e6bb3623163e1109bd04d8f13924511c8bec6eb3124b1653997a24e9a88c4d3",
+        "size_bytes": 6216
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/figures/native.py",
+        "sha256": "2ad496ee06d174cb357fcb687adb63e80eecf0094967a27929038c9c9f9670a0",
+        "size_bytes": 6694
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/links.lua",
+        "sha256": "14346409c59eb2ae5985b0fec5c2d19fbe20bc7b55e13e03593bbde3ffdf4ed4",
+        "size_bytes": 704
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-truncation-extremum/replay.py",
+        "sha256": "ec7e3e432a0b516e9a11745bca664a002f9bfd30d0a86bf3993690b376450258",
+        "size_bytes": 4805
       },
       {
         "git_mode": "100644",
@@ -31174,14 +31264,14 @@
       {
         "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/EXPOSITION.md",
-        "sha256": "e2d5894d02bbb41ac173aa1fca7b34fe00b70b1c031225e975d1186578df9cff",
-        "size_bytes": 17919
+        "sha256": "0f4e91570c61e1d7450b303349039c3c2f4fa3319be931a24fe5f421a6a37c41",
+        "size_bytes": 23149
       },
       {
         "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/build.py",
-        "sha256": "985802035a9b10a206b33c25ee188a4bbc0fea3c1fd0f6257c2c9a61fa57d7be",
-        "size_bytes": 5417
+        "sha256": "05da20596d854f23cf05d3204b1a0e010985e787e6a8093d54438c9f1350b419",
+        "size_bytes": 5094
       },
       {
         "git_mode": "100644",
@@ -31198,20 +31288,20 @@
       {
         "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/figures/draw.py",
-        "sha256": "2053cc120e62557c138eaaac3c627288c73bb57f4fc9ef21d45de5e77ac2096d",
-        "size_bytes": 4384
+        "sha256": "8dbe9284eb143bd31bf7f46865e10f9d9068199e1aaf1a2adb35d87451d1cd00",
+        "size_bytes": 4539
       },
       {
         "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/figures/information-and-decisions.pdf",
-        "sha256": "a445d41e2d2884d794be0bdceec457529a452c668a4b05c711f0ffac48fc0a93",
-        "size_bytes": 14846
+        "sha256": "7b31e87d43756a319a9e70dcbe4b1839674ac0f7941966d562cdb5f213157700",
+        "size_bytes": 15342
       },
       {
         "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/figures/information-and-decisions.svg",
-        "sha256": "e4b499551adb269aac3a1daed70bc034ae1aadf60a543b37735386ed73a7ad94",
-        "size_bytes": 8265
+        "sha256": "dd89d789e2b4067f6235c711af580d2ac020e865856170671998e6d3b94b4d38",
+        "size_bytes": 8420
       },
       {
         "git_mode": "100644",
@@ -31222,8 +31312,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/replay.py",
-        "sha256": "56e2cd47d3bbd02e2ecc85a1d46f34e1b6c07660d6cf3fe707649597492d3daf",
-        "size_bytes": 6419
+        "sha256": "529e9a2f63fca496c5f2c92352bd768c115a73d921777449e6ab4fa1eda60739",
+        "size_bytes": 6627
       },
       {
         "git_mode": "100644",
@@ -31236,6 +31326,18 @@
         "path": "audit/research/robot-wrist-slope-signs/sources.json",
         "sha256": "34e112b870fc01f6c45857924f79d3e351504e64a3f46711a411899aa7d5b9a8",
         "size_bytes": 3764
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-slope-signs/trace-provenance.json",
+        "sha256": "f164b35a8ab0a8dd3ce09cce5ea563fa36f681824420d61ae8ad9b50b993ff36",
+        "size_bytes": 10261
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-slope-signs/trace_provenance.py",
+        "sha256": "2b334f5f21f4ca510d40c48d9abd428ac39b4e6d3239cbb17c4b2ceee9b271b4",
+        "size_bytes": 10626
       },
       {
         "git_mode": "100644",
@@ -35950,14 +36052,20 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/angular-four-moment-radius.pdf",
-        "sha256": "0e23422743ff8a1650e1963c4a2e540ad9d2d847c5df46d51aa2452ab746bc9a",
-        "size_bytes": 95845
+        "sha256": "cf81f0b8a301ff9e32f0f55f3bd28f80ee720eeae2f2e7b0e466611fa9017ea3",
+        "size_bytes": 96346
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/angular-relative-bound-20261005/relative-error.pdf",
         "sha256": "5752880f70f3affbd59dda780946de3ce0e60d611a11464fc4b736065bdbe761",
         "size_bytes": 98411
+      },
+      {
+        "git_mode": "100644",
+        "path": "output/pdf/angular-truncation-extremum.pdf",
+        "sha256": "87ab13217606d3637013effa90ae8f08f272c04745e2a6bbe158ff572d23484e",
+        "size_bytes": 101119
       },
       {
         "git_mode": "100644",
@@ -36112,8 +36220,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-results-guide-current.pdf",
-        "sha256": "68aa4963b89980473b87250e51e9c54c5269010cd0322ccfd172a3e98cf5d969",
-        "size_bytes": 109062
+        "sha256": "8b1381c9a9c72235e6eeebf303d01bcd773a66c812a018e9deab755a737a6242",
+        "size_bytes": 113733
       },
       {
         "git_mode": "100644",
@@ -36202,8 +36310,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/robot-wrist-slope-signs.pdf",
-        "sha256": "f778624f0f6e9f48b8e488ca55536d3d77301da0697ef002d3e48b592971f93b",
-        "size_bytes": 100657
+        "sha256": "9e1ba06f91bd9cab9e3d3f03cbb5ad9c5c04b14cc0017991399a7a11ab974691",
+        "size_bytes": 110128
       },
       {
         "git_mode": "100644",
@@ -36580,7 +36688,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "3d08cd9401ea5b5f95d733d324311ff7c05f2dac0ec26c030cb2ff9efd717c0a",
+        "sha256": "ff37da3e62b6cd3beebf7563168561f85f3a0896245366a043f9e1049744da99",
         "size_bytes": 90915
       },
       {
@@ -36718,14 +36826,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "6d46ee1ef98793be9d5cdc9cf6fb11389264a9b57354c26367eaf88e469d19d5",
-        "size_bytes": 83927
+        "sha256": "78cd5ead24e2c135771d43c85ab1bf9f7da45cb5045a4a62dc94eb473450f8fa",
+        "size_bytes": 84044
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "5150a7a0d9f0baddc22f49b10a185befa82497f0102b62734ec561bbcdc6d63a",
-        "size_bytes": 38166
+        "sha256": "adfb5ba286a014abce75d19537d25a4038d5a54d635d369cc96bb50a9684b87e",
+        "size_bytes": 38579
       },
       {
         "git_mode": "100755",
@@ -37180,7 +37288,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "21fa670085dc3806ab63903faa6a21f2f606b6aeae5ea6b95dd41dd234dc6d95",
+        "sha256": "39fd68d03e7b9863fd162bab0fc119a422b49c4af69b7117b896767b4603ebc3",
         "size_bytes": 140337
       },
       {
@@ -37742,6 +37850,12 @@
         "size_bytes": 18977
       },
       {
+        "git_mode": "100644",
+        "path": "scripts/check-report-source-links.py",
+        "sha256": "2f42745e92ff662eef03cd6c9b39d380e7e5c890e6395044c2b768e44f699816",
+        "size_bytes": 2568
+      },
+      {
         "git_mode": "100755",
         "path": "scripts/check-repository-snapshot-self-test.sh",
         "sha256": "1e0de3bce9e5deaa5200e2343a54dd173fb045f438ffbbb50fafc0b7b0c867c8",
@@ -38174,8 +38288,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "306c8f44e2e0a2a45e810ec96223c91ece1260eb58a2d7fefdb9bb64091b8a7b",
-    "entry_count": 6338
+    "entries_sha256": "30685239d81f330f80d571b8c5844e16dadef8bf589fbef1b1f97c0dabba60f0",
+    "entry_count": 6357
   },
   "subprojections": [
     {
@@ -38187,23 +38301,23 @@
       ]
     },
     {
-      "entries_sha256": "9e349896fa6b9e7005381a69888699c74de8dbc7ab28dfe129cd90bde96cd3d3",
-      "entry_count": 2393,
+      "entries_sha256": "ae5322818dbba0ca82c99e6f177a0b578fbfab9825b9afa311c6fed81b969733",
+      "entry_count": 2397,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "ea64bd8e42df15f33269a62c2cc1f48112bd0e0a5ca5f37d3f42f9aa7b017943",
-      "entry_count": 54,
+      "entries_sha256": "1d3505e683c7444480738f253d49d4d3e151feaf7a17b7c0d0b3ae2a5d7ff5e6",
+      "entry_count": 55,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "2f39c30d5995bb5c17fce447f4774f8ffc84ab2a61fae9c75229e0ba870ff7df",
+      "entries_sha256": "4ce38577ada4aa3ea54503d8896d0d9e68fc9b54051759f9cc29a6624ec3c6c9",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

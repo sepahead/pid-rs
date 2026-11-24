@@ -1,5 +1,11 @@
 # Session handoff — updated 24 November 2026
 
+## Source correction and angular accuracy threshold
+
+The sign-notation review at `52dd47c17fb2a0ae386805d254f9a17f03f8922c` kept its own check results. Before publication on main, a reading of the original experiment established that the two transfer tasks used the same 47 cases. The current report distinguishes the donor’s case statement, identical recorded traces and physical event identifiers. [Original experiment, pp. 380–381 and 386](https://doi.org/10.1007/978-1-4615-5725-8_23) · [Review run](https://github.com/sepahead/pid-rs/actions/runs/45368479286)
+
+A separate population proof gives the two worst directions for every positive integer number of retained even moments in the fixed-radian angular model. The worst relative error increases strictly at radii between zero and one. With four moments, one part per million is reached at a unique radius near 0.29203860877613. The root separates a uniform strict pass from failure at the two first-harmonic directions. These statements require the three proper terms to be exact. The absolute error is zero at the origin, where the relative quotient is undefined. [Proof and certificate](audit/research/angular-truncation-extremum/EXPOSITION.md) · [PDF](output/pdf/angular-truncation-extremum.pdf)
+
 ## Robot wrist trend equation in web and print
 
 The first two-study review at `0f0bf7d1891247a1dd712e413ffd70c4dea150f0` passed 45 of 47 CI jobs. The PDF and release-scope jobs both stopped on the sign-function command in the wrist study. The equation now uses a form that the repository's Markdown checker accepts. The trend sign still comes from the same centered sum of 15 integer readings. [Equation and five tables](audit/research/robot-wrist-slope-signs/EXPOSITION.md#from-wrist-measurements-to-five-finite-laws) · [Original PDF job](https://github.com/sepahead/pid-rs/actions/runs/45301305664/job/138134215827) · [Original release-scope job](https://github.com/sepahead/pid-rs/actions/runs/45301305664/job/138134216618)
@@ -12,7 +18,7 @@ radian scale. Write $a,b$ for the two amplitudes and $r=|a|+|b|$. Approximating
 only the joint term with four even moments keeps the relative error below one part
 per million for every direction through $r=583/2048$, with $r>0$. At
 $a=1197/4096$, $b=0$, the true error exceeds that tolerance. The project contribution
-is a two-sided interval of width $31/4096$ for the unknown uniform threshold.
+was a two-sided interval of width $31/4096$ for the uniform threshold.
 Two exact-arithmetic readers checked the endpoints. The analytic proof covers the
 intervening parameters in the guaranteed region. The origin, other gauges, finite
 samples and floating-point evaluation each need their stated treatment.
@@ -22,11 +28,10 @@ samples and floating-point evaluation each need their stated treatment.
 ## Axial force, torque and five robot outcomes
 
 Luis Seabra Lopes and Luis M. Camarinha-Matos recorded the UCI *Robot Execution
-Failures* data. The study uses 463 complete episodes in five separate task
-tables. Each 15-reading window starts after detection. The signs of the axial
+Failures* data. The five task tables contain 463 records. LP2 and LP3 label the same 47 transfer cases by robot behaviour and part position, respectively. The two files have the same 47 complete traces in the same order. Of these, 46 traces are distinct. Joining LP2 and LP4 in order matches 163 of 164 LP5 traces. The difference occurs at position 37. These comparisons identify recorded measurements. Each 15-reading window starts after detection. The signs of the axial
 force and torque slopes are the two sources. The target is the donor's class for
 that task. In LP3 it describes the position of the part after a transfer failure.
-Under the categorical shared-exclusions rule of Makkeh, Gutknecht and Wibral,
+Under the categorical shared-exclusions rule of Makkeh, Gutknecht and Wibral, LP2 and LP3 share the same mean informative redundancy, approximately 0.284314 nats. The source counts determine this mean. Target-conditioned terms can differ. Across the five tasks,
 the signed unique atom is negative for force in LP4 and for torque in LP5.
 
 Each sign adds conditional information about the class in all five recorded

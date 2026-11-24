@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="465" viewBox="0 0 900 465" role="img" aria-labelledby="title desc">
+  <title id="title">Direction and radius of four-moment truncation error</title>
+  <desc id="desc">Both panels retain four even moments. At fixed radius 0.30 both pure harmonics maximize absolute error; only the first maximizes relative error. On the first-harmonic axis, relative error crosses one part per million at radius 0.292038608776134 to 0.292038608776135.</desc>
+  <rect width="900" height="465" fill="#FFFFFF" />
+  <text x="22.000" y="28.000" font-family="Source Sans Pro, sans-serif" font-size="22" font-weight="600" text-anchor="start" fill="#1F3F60">Mix the two harmonics</text>
+  <text x="478.000" y="28.000" font-family="Source Sans Pro, sans-serif" font-size="22" font-weight="600" text-anchor="start" fill="#1F3F60">Increase the radius</text>
+  <text x="22.000" y="56.000" font-family="Source Sans Pro, sans-serif" font-size="17" font-weight="400" text-anchor="start" fill="#1F6968">Four even moments, radius 0.30</text>
+  <text x="478.000" y="56.000" font-family="Source Sans Pro, sans-serif" font-size="17" font-weight="400" text-anchor="start" fill="#1F6968">Four even moments, first harmonic alone</text>
+  <text x="22.000" y="88.000" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="start" fill="#2C3E50">Fraction of the largest error</text>
+  <text x="478.000" y="88.000" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="start" fill="#2C3E50">Relative error in parts per million</text>
+  <line x1="73.000" y1="310.000" x2="419.000" y2="310.000" stroke="#D2E0E2" stroke-width="1" />
+  <text x="64.000" y="315.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">0</text>
+  <line x1="73.000" y1="259.750" x2="419.000" y2="259.750" stroke="#D2E0E2" stroke-width="1" />
+  <text x="64.000" y="264.750" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">0.25</text>
+  <line x1="73.000" y1="209.500" x2="419.000" y2="209.500" stroke="#D2E0E2" stroke-width="1" />
+  <text x="64.000" y="214.500" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">0.5</text>
+  <line x1="73.000" y1="159.250" x2="419.000" y2="159.250" stroke="#D2E0E2" stroke-width="1" />
+  <text x="64.000" y="164.250" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">0.75</text>
+  <line x1="73.000" y1="109.000" x2="419.000" y2="109.000" stroke="#D2E0E2" stroke-width="1" />
+  <text x="64.000" y="114.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">1</text>
+  <line x1="73.000" y1="109.000" x2="73.000" y2="310.000" stroke="#2C3E50" stroke-width="1.3" />
+  <line x1="73.000" y1="310.000" x2="419.000" y2="310.000" stroke="#2C3E50" stroke-width="1.3" />
+  <line x1="530.000" y1="310.000" x2="873.000" y2="310.000" stroke="#D2E0E2" stroke-width="1" />
+  <text x="521.000" y="315.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">0</text>
+  <line x1="530.000" y1="269.800" x2="873.000" y2="269.800" stroke="#D2E0E2" stroke-width="1" />
+  <text x="521.000" y="274.800" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">1</text>
+  <line x1="530.000" y1="229.600" x2="873.000" y2="229.600" stroke="#D2E0E2" stroke-width="1" />
+  <text x="521.000" y="234.600" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">2</text>
+  <line x1="530.000" y1="189.400" x2="873.000" y2="189.400" stroke="#D2E0E2" stroke-width="1" />
+  <text x="521.000" y="194.400" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">3</text>
+  <line x1="530.000" y1="149.200" x2="873.000" y2="149.200" stroke="#D2E0E2" stroke-width="1" />
+  <text x="521.000" y="154.200" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">4</text>
+  <line x1="530.000" y1="109.000" x2="873.000" y2="109.000" stroke="#D2E0E2" stroke-width="1" />
+  <text x="521.000" y="114.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="end" fill="#2C3E50">5</text>
+  <line x1="530.000" y1="109.000" x2="530.000" y2="310.000" stroke="#2C3E50" stroke-width="1.3" />
+  <line x1="530.000" y1="310.000" x2="873.000" y2="310.000" stroke="#2C3E50" stroke-width="1.3" />
+  <line x1="73.000" y1="310.000" x2="73.000" y2="316.000" stroke="#2C3E50" stroke-width="1" />
+  <text x="73.000" y="337.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="middle" fill="#2C3E50">0</text>
+  <line x1="159.500" y1="310.000" x2="159.500" y2="316.000" stroke="#2C3E50" stroke-width="1" />
+  <text x="159.500" y="337.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="middle" fill="#2C3E50">0.25</text>
+  <line x1="246.000" y1="310.000" x2="246.000" y2="316.000" stroke="#2C3E50" stroke-width="1" />
+  <text x="246.000" y="337.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="middle" fill="#2C3E50">0.50</text>
+  <line x1="332.500" y1="310.000" x2="332.500" y2="316.000" stroke="#2C3E50" stroke-width="1" />
+  <text x="332.500" y="337.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="middle" fill="#2C3E50">0.75</text>
+  <line x1="419.000" y1="310.000" x2="419.000" y2="316.000" stroke="#2C3E50" stroke-width="1" />
+  <text x="419.000" y="337.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="middle" fill="#2C3E50">1</text>
+  <line x1="530.000" y1="310.000" x2="530.000" y2="316.000" stroke="#2C3E50" stroke-width="1" />
+  <text x="530.000" y="337.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="middle" fill="#2C3E50">0.20</text>
+  <line x1="644.333" y1="310.000" x2="644.333" y2="316.000" stroke="#2C3E50" stroke-width="1" />
+  <text x="644.333" y="337.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="middle" fill="#2C3E50">0.25</text>
+  <line x1="758.667" y1="310.000" x2="758.667" y2="316.000" stroke="#2C3E50" stroke-width="1" />
+  <text x="758.667" y="337.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="middle" fill="#2C3E50">0.30</text>
+  <line x1="873.000" y1="310.000" x2="873.000" y2="316.000" stroke="#2C3E50" stroke-width="1" />
+  <text x="873.000" y="337.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="middle" fill="#2C3E50">0.35</text>
+  <text x="246.000" y="366.000" font-family="Source Sans Pro, sans-serif" font-size="17" font-weight="400" text-anchor="middle" fill="#2C3E50">Share of amplitude in the first harmonic</text>
+  <text x="700.000" y="366.000" font-family="Source Sans Pro, sans-serif" font-size="17" font-weight="400" text-anchor="middle" fill="#2C3E50">Amplitude radius</text>
+  <polyline points="73.000,109.000 79.920,144.406 86.840,171.039 93.760,191.092 100.680,206.235 107.600,217.726 114.520,226.508 121.440,233.281 128.360,238.564 135.280,242.737 142.200,246.076 149.120,248.784 156.040,251.007 162.960,252.852 169.880,254.394 176.800,255.692 183.720,256.787 190.640,257.709 197.560,258.482 204.480,259.124 211.400,259.648 218.320,260.065 225.240,260.382 232.160,260.604 239.080,260.736 246.000,260.780 252.920,260.736 259.840,260.604 266.760,260.382 273.680,260.065 280.600,259.648 287.520,259.124 294.440,258.482 301.360,257.709 308.280,256.787 315.200,255.692 322.120,254.394 329.040,252.852 335.960,251.007 342.880,248.784 349.800,246.076 356.720,242.737 363.640,238.564 370.560,233.281 377.480,226.508 384.400,217.726 391.320,206.235 398.240,191.092 405.160,171.039 412.080,144.406 419.000,109.000" stroke="#916400" stroke-width="2.8" fill="none" stroke-linejoin="round" stroke-dasharray="8,5" />
+  <circle cx="73.000" cy="109.000" r="4" stroke="#916400" fill="#FFFFFF" stroke-width="1.6" />
+  <circle cx="142.200" cy="246.076" r="4" stroke="#916400" fill="#FFFFFF" stroke-width="1.6" />
+  <circle cx="211.400" cy="259.648" r="4" stroke="#916400" fill="#FFFFFF" stroke-width="1.6" />
+  <circle cx="280.600" cy="259.648" r="4" stroke="#916400" fill="#FFFFFF" stroke-width="1.6" />
+  <circle cx="349.800" cy="246.076" r="4" stroke="#916400" fill="#FFFFFF" stroke-width="1.6" />
+  <circle cx="419.000" cy="109.000" r="4" stroke="#916400" fill="#FFFFFF" stroke-width="1.6" />
+  <polyline points="73.000,188.512 79.920,205.765 86.840,218.883 93.760,228.765 100.680,236.128 107.600,241.536 114.520,245.433 121.440,248.162 128.360,249.988 135.280,251.115 142.200,251.695 149.120,251.845 156.040,251.652 162.960,251.183 169.880,250.488 176.800,249.606 183.720,248.569 190.640,247.403 197.560,246.132 204.480,244.776 211.400,243.355 218.320,241.889 225.240,240.396 232.160,238.897 239.080,237.410 246.000,235.952 252.920,234.541 259.840,233.191 266.760,231.916 273.680,230.724 280.600,229.622 287.520,228.608 294.440,227.678 301.360,226.819 308.280,226.011 315.200,225.224 322.120,224.418 329.040,223.538 335.960,222.514 342.880,221.250 349.800,219.625 356.720,217.477 363.640,214.598 370.560,210.714 377.480,205.471 384.400,198.413 391.320,188.954 398.240,176.349 405.160,159.658 412.080,137.698 419.000,109.000" stroke="#1F6968" stroke-width="2.8" fill="none" stroke-linejoin="round" />
+  <circle cx="73.000" cy="188.512" r="2.6" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="142.200" cy="251.695" r="2.6" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="211.400" cy="243.355" r="2.6" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="280.600" cy="229.622" r="2.6" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="349.800" cy="219.625" r="2.6" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="419.000" cy="109.000" r="2.6" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <polyline points="530.000,308.111 535.717,307.913 541.433,307.696 547.150,307.459 552.867,307.202 558.583,306.922 564.300,306.618 570.017,306.288 575.733,305.929 581.450,305.541 587.167,305.121 592.883,304.666 598.600,304.174 604.317,303.643 610.033,303.070 615.750,302.452 621.467,301.786 627.183,301.070 632.900,300.298 638.617,299.469 644.333,298.578 650.050,297.622 655.767,296.595 661.483,295.495 667.200,294.316 672.917,293.054 678.633,291.703 684.350,290.259 690.067,288.715 695.783,287.066 701.500,285.305 707.217,283.427 712.933,281.424 718.650,279.290 724.367,277.016 730.083,274.596 735.800,272.021 741.517,269.282 747.233,266.371 752.950,263.278 758.667,259.993 764.383,256.507 770.100,252.808 775.817,248.887 781.533,244.730 787.250,240.325 792.967,235.661 798.683,230.724 804.400,225.501 810.117,219.976 815.833,214.135 821.550,207.962 827.267,201.442 832.983,194.556 838.700,187.289 844.417,179.620 850.133,171.532 855.850,163.004 861.567,154.016 867.283,144.546 873.000,134.571" stroke="#1F6968" stroke-width="2.8" fill="none" stroke-linejoin="round" />
+  <circle cx="530.000" cy="308.111" r="2.7" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="587.167" cy="305.121" r="2.7" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="644.333" cy="298.578" r="2.7" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="701.500" cy="285.305" r="2.7" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="758.667" cy="259.993" r="2.7" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="815.833" cy="214.135" r="2.7" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <circle cx="873.000" cy="134.571" r="2.7" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <line x1="530.000" y1="269.800" x2="873.000" y2="269.800" stroke="#743E37" stroke-width="1.3" stroke-dasharray="4,4" />
+  <line x1="740.462" y1="269.800" x2="740.462" y2="310.000" stroke="#743E37" stroke-width="1.3" stroke-dasharray="4,4" />
+  <circle cx="740.462" cy="269.800" r="4" stroke="#743E37" fill="#FFFFFF" stroke-width="1.6" />
+  <line x1="22.000" y1="399.000" x2="65.000" y2="399.000" stroke="#916400" stroke-width="2.5" stroke-dasharray="8,5" />
+  <circle cx="44.000" cy="399.000" r="4" stroke="#916400" fill="#FFFFFF" stroke-width="1.6" />
+  <text x="76.000" y="405.000" font-family="Source Sans Pro, sans-serif" font-size="17" font-weight="400" text-anchor="start" fill="#2C3E50">Absolute error</text>
+  <line x1="218.000" y1="399.000" x2="262.000" y2="399.000" stroke="#1F6968" stroke-width="2.5" />
+  <circle cx="240.000" cy="399.000" r="2.6" stroke="#1F6968" fill="#1F6968" stroke-width="1.6" />
+  <text x="273.000" y="405.000" font-family="Source Sans Pro, sans-serif" font-size="17" font-weight="400" text-anchor="start" fill="#2C3E50">Relative error</text>
+  <line x1="481.000" y1="399.000" x2="518.000" y2="399.000" stroke="#743E37" stroke-width="1.3" stroke-dasharray="4,4" />
+  <circle cx="499.000" cy="399.000" r="4" stroke="#743E37" fill="#FFFFFF" stroke-width="1.6" />
+  <text x="532.000" y="405.000" font-family="Source Sans Pro, sans-serif" font-size="17" font-weight="400" text-anchor="start" fill="#2C3E50">One part per million</text>
+  <text x="22.000" y="443.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="start" fill="#1F3F60">Two separate maxima set the scales in the left panel.</text>
+  <text x="478.000" y="443.000" font-family="Source Sans Pro, sans-serif" font-size="15" font-weight="400" text-anchor="start" fill="#1F3F60">Crossing radius 0.292038608776134 to 0.292038608776135</text>
+</svg>

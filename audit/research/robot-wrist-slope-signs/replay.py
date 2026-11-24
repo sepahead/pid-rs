@@ -35,7 +35,8 @@ def study_product(source,doc):
         report["tasks"].append(dict(summary(task,len(meta["labels"])),donor_task=meta["donor_task"],label_order=meta["labels"]))
     return report
 
-def load_source(source,local,fetch):
+def read_members(source,local,fetch):
+    """Return the checked task metadata and original bytes for each of the five UCI files."""
     if fetch:
         with urlopen(Request(source["archive_url"],headers={"User-Agent":"pid-rs-robot-study/1"}),timeout=30) as response:
             final=urlparse(response.geturl())
@@ -56,8 +57,11 @@ def load_source(source,local,fetch):
             need(not info.is_dir() and not stat.S_ISLNK(mode) and info.file_size==task["bytes"]<=131072,"regular input member")
             with archive.open(info) as member: data=member.read(131073)
             need(len(data)==task["bytes"] and sha(data)==task["sha256"],"fixed data-member bytes")
-            output.append(calculate(data,task))
-    return {"schema":SCHEMA,"tasks":output}
+            output.append((task,data))
+    return output
+
+def load_source(source,local,fetch):
+    return {"schema":SCHEMA,"tasks":[calculate(data,task) for task,data in read_members(source,local,fetch)]}
 
 def replay_table(source,cert):
     need(cert["schema"]==SCHEMA and len(cert["tasks"])==len(source["tasks"])==5,"full registered field")

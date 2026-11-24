@@ -47,6 +47,7 @@ STANDALONE_LATEX_PAPERS=(
 
 STANDALONE_MARKDOWN_PAPERS=(
   "angular-four-moment-radius"
+  "angular-truncation-extremum"
   "robot-wrist-slope-signs"
   "mathematical-results-guide-current"
   "finite-copy-bootstrap-coverage"
@@ -80,6 +81,7 @@ STANDALONE_MARKDOWN_PAPERS=(
 
 STANDALONE_MARKDOWN_SOURCES=(
   "audit/research/angular-four-moment-radius/EXPOSITION.md"
+  "audit/research/angular-truncation-extremum/EXPOSITION.md"
   "audit/research/robot-wrist-slope-signs/EXPOSITION.md"
   "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md"
   "FINITE_COPY_BOOTSTRAP_COVERAGE.md"
@@ -304,7 +306,13 @@ else
   python3 -I -S -B scripts/build-current-mathematical-results-guide.py --check-committed
 fi
 
-for study in angular-four-moment-radius robot-wrist-slope-signs; do
+python3 -I -S -B scripts/check-report-source-links.py
+python3 -O -I -S -B scripts/check-report-source-links.py
+
+python3 -I -S -B audit/research/robot-wrist-slope-signs/trace_provenance.py --self-test
+python3 -O -I -S -B audit/research/robot-wrist-slope-signs/trace_provenance.py --self-test
+
+for study in angular-four-moment-radius angular-truncation-extremum robot-wrist-slope-signs; do
   study_source="audit/research/$study"
   python3 -I -S -B "$study_source/replay.py" --self-test
   python3 -O -I -S -B "$study_source/replay.py" --self-test

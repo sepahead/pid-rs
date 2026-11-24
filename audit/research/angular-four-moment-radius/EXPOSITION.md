@@ -116,7 +116,7 @@ $$
 
 The strict inequality $T(r)>\tau V(r)$ proves $\varepsilon\ge T(r)/V(r)>\tau$ for this actual atom. The first omitted index in the numerator is 5. The geometric remainders start at 13. Both choices matter for the strict tests.
 
-**Reading the threshold.** Define $R_*$ as the supremum of $\rho\in[0,1/2]$ for which $\varepsilon<\tau$ at every $0<|a|+|b|\le\rho$. One failed point belongs to every ball that contains its radius. This proves an upper bound on the supremum even if axial errors away from that point have unknown order.
+**Reading the threshold.** Define $R_*$ as the supremum of $\rho\in[0,1/2]$ for which $\varepsilon<\tau$ at every $0<|a|+|b|\le\rho$. One failed point belongs to every ball that contains its radius. This upper bound uses only the one failing point. The [24 November proof](../angular-truncation-extremum/EXPOSITION.md) shows that the largest error at each radius occurs on the first-harmonic axis and increases with radius for $0<r<1$.
 
 <!-- page -->
 ## Exact endpoints and a worked example

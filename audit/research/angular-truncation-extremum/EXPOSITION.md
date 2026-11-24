@@ -1,0 +1,159 @@
+# The worst direction for an angular information atom
+
+**Sepehr Mahmoudian · 24 November 2026**
+
+[Standalone PDF](../../../output/pdf/angular-truncation-extremum.pdf) · [Exact arithmetic record](certificate.json) · [Source and review record](EVIDENCE.md) · [Native TeX](../../formal/latex/angular-truncation-extremum/publication.tex)
+
+<!-- body -->
+## Which direction sets the accuracy requirement?
+
+A source provides a variable. A target is the variable about which we ask for information. Partial information decomposition (PID) assigns parts of that information to groups of sources. Those signed parts are called *atoms*. This study concerns the **population-averaged top atom** of continuous shared exclusions. It uses the population law exactly. The top atom is the part left at the full source set after subtraction of the lower atoms. It uses the density construction of Ehrlich and colleagues. A *gauge* fixes the coordinate units and the reference measures used for the densities. [Ehrlich et al., Sections II–III and Appendix B](https://arxiv.org/html/2311.06373v3)
+
+**Question.** An approximation uses a finite number of even moments. An even moment is the mean of an even power. Which mixture of two angular signals gives the largest fraction of the exact atom lost through truncation? A known worst case lets a developer test the approximation at one parameter direction for every fixed radius.
+
+**Symbol key.** The real numbers $a,b$ are the signed amplitudes of the first and second signals. Their amplitude radius is $r=|a|+|b|$. The integer $M\ge1$ counts the retained even moments. The exact atom is $A$, and its approximation is $A_M$. The positive truncation error is $T_M=A-A_M$. The relative error $T_M/A$ has no units. Natural logarithms give information in nats. A part per million is a fraction of $10^{-6}$.
+
+**Result.** For every $0<r<1$ and every positive integer $M$, the largest relative error occurs exactly at $b=0$, $|a|=r$. This maximum increases strictly with radius. The largest **absolute** error occurs on both pure-harmonic axes. At $M=4$ the threshold radius $R_*$ for one part per million satisfies
+
+$$
+0.292038608776134 < R_* < 0.292038608776135 .
+$$
+
+The model and the positive atom were derived in October. A later four-moment study proved a wider interval. This report proves the exact directions, the unique scalar threshold and the tighter interval for this model. [October proof](../../archive/angular-relative-bound-20261005/derivation.md.txt) · [Earlier four-moment enclosure](../angular-four-moment-radius/EXPOSITION.md)
+
+<!-- page -->
+## From four angles to one atom
+
+Use radians for the three source angles $s_1,s_2,s_3$ and target angle $t$. Each has period $L=2\pi$. Use product Lebesgue measure in these coordinates. Let $v=t-s_1$ and $u=t-s_1-s_2-s_3$ modulo $L$. Write $C=\cos v$, $D=\cos u$, and $E_0$ for uniform reference integration. The assigned population density is
+
+$$
+p(s_1,s_2,s_3,t)= L^{-4}(1+aC+bD).
+$$
+
+The inverse coordinate change gives $t=v+s_1$ and $s_3=v-u-s_2$. Its absolute Jacobian is one. Thus the phases $v,u$ are independent and uniform under $E_0$. The population expectation includes the weight $1+aC+bD$. Each source is uniform, the three sources are mutually independent, and the target is uniform. The joint density is at least $(1-r)L^{-4}>0$.
+
+Put $Y=aC+bD$ and $J(a,b)=E_0[(1+Y)\log(1+Y)]$. This is the information the full source tuple gives about the target. At fixed amplitude $a$, let
+
+$$
+R(w)=E_0[(1+aC)\log(1+awC)],\qquad 0\le w\le1 .
+$$
+
+A branch is a nonempty subset of the sources. On a proper branch, integration over an omitted source removes the second signal. The first remains exactly when the branch contains source 1. The three maximal proper branches are 12, 13 and 23, where 12 stands for sources 1 and 2. To calculate the top atom, apply inclusion–exclusion to the sets of atoms below these three branches. In each intersection the branches used in its cumulative density have size two. Their source densities agree. Thus $w$ is the fraction of the selected pairs that contain source 1.
+
+The single pairs give $w=1,1,0$. The three pairwise intersections give $1,1/2,1/2$. The triple intersection gives $2/3$. Since $R(0)=0$ and $R(1)=J(a,0)$, subtraction gives
+
+$$
+A(a,b)=J(a,b)-J(a,0)+H(|a|),\qquad H(|a|)=2R(1/2)-R(2/3).
+$$
+
+In particular $H(r)=A(r,0)$. The absolute values are valid because the phase shifts by $\pi$ reverse each cosine separately. All proper terms stay exact in $A_M$. This reduction uses the published continuous branch sums and the project's particular population law. [Multivariate definition](https://arxiv.org/html/2311.06373v3#S3.SS2) · [Derivation for this law](../../archive/angular-relative-bound-20261005/derivation.md.txt)
+
+<!-- page -->
+## Coefficients and the direction of a mixture
+
+For each integer $j\ge1$, let $c_j=\binom{2j}{j}/4^j$ and $k_j=c_j/[2j(2j-1)]$. The first is $E_0[C^{2j}]$. It is the constant Fourier coefficient of the cosine power. The odd moments of $Y$ vanish. Since $|Y|\le r<1$, a uniformly convergent power series can be integrated term by term to calculate $J$. Define $x=|a|/r$ and $y=|b|/r=1-x$. Then
+
+$$
+B_j=\sum_{i=0}^{j}\binom ji^2 x^{2i}y^{2(j-i)},\qquad
+J=\sum_{j\ge1} k_j r^{2j}B_j .
+$$
+
+Indeed $\binom{2j}{2i}c_i c_{j-i}=c_j\binom ji^2$. Independence under the uniform reference gives the second equation after expansion of $Y^{2j}$. For a pure harmonic $B_j=1$. For a mixed direction the binomial probabilities $\binom ji x^i y^{j-i}$ sum to one and at least two are positive. Their squares sum to less than one.
+
+For $q_i=\binom ji x^i y^{j-i}$ put $q_i=0$ outside $0\le i\le j$. At the next order its probability at position $i$ is $yq_i+xq_{i-1}$. By convexity its square is at most $yq_i^2+xq_{i-1}^2$. Sum in $i$ to obtain $B_{j+1}\le B_j$. Also $B_j\ge x^{2j}$ from the last summand. Thus $B_1=x^2+y^2$ and $B_2=x^4+4x^2y^2+y^4$.
+
+The log series for $R(w)$ has coefficient $k_j f_j(w)$ at $a^{2j}$, where $f_j(w)=w^{2j-1}[2j-(2j-1)w]$. The two terms come from the even log power and the odd log power multiplied by $aC$. Write $h_j=2f_j(1/2)-f_j(2/3)$. Then
+
+$$
+H(r)=\sum_{j\ge1} k_j h_j r^{2j},\qquad
+h_j=\frac{2(2j+1)}{4^j}-(j+1)(4/9)^j .
+$$
+
+Here $k_1=1/4$, $k_2=1/32$, $h_1=11/18$ and $h_2=7/216$. For $j\ge3$, the ratio $2f_j(1/2)/f_j(2/3)$ is $[3(2j+1)/(2j+2)](3/4)^{2j-1}<3(3/4)^5<1$. Therefore $h_j<0$ from $j=3$ onward.
+
+<!-- page -->
+## Why the first signal gives the largest relative error
+
+First check the denominator. The series for $J(a,b)-J(a,0)$ has nonnegative coefficients in $a^2,b^2$. Its quadratic term is $b^2/4$. Differentiation under the integral is valid because $1-r>0$. Pairing $C$ with $-C$ gives
+
+$$
+R'(w)=a^2(1-w)E_0\!\left[\frac{C^2}{1-a^2w^2C^2}\right]\ge a^2(1-w)/2 .
+$$
+
+Also $R''(w)=-a^2 E_0[(1+aC)C^2/(1+awC)^2]\le0$. Integration gives $R(1/2)\ge3a^2/16$. Concavity and $R(0)=0$ give $R(1/2)\ge3R(2/3)/4$. Hence $H(|a|)\ge a^2/8$ and $A\ge a^2/8+b^2/4>0$.
+
+Since every omitted joint order is at least two, $T_M(a,b)\le B_2T_M(r,0)$. For the matching denominator bound, the coefficient of $k_j r^{2j}$ in $A$ is $B_j-(1-h_j)x^{2j}$. Subtract $h_jB_2$ from it.
+
+- When $j=1,2$, the difference is $(1-h_j)(B_j-x^{2j})+h_j(B_j-B_2)$. Both summands are nonnegative. At $j=1$ the first summand is $(1-h_1)y^2$.
+- When $j\ge3$, the difference is $(B_j-x^{2j})+(-h_j)(B_2-x^{2j})$. Both are nonnegative, since $x^{2j}\le x^4\le B_2$.
+
+Summing gives the stronger, quantitative denominator guarantee
+
+$$
+A(a,b)-B_2H(r)\ \ge\ k_1(1-h_1)r^2y^2
+=\frac{7}{72} b^2 .
+$$
+
+For $b\ne0$ this is strict relative to $B_2H(r)$. Since $H(r)>0$ and $T_M(r,0)>0$, division proves the unique maximizing directions $b=0$, $a=\pm r$. Both pure harmonics have the same absolute tail. Only the first gives the largest relative tail.
+
+To prove strict radial increase, divide the axial numerator and denominator by $r^4$. In $H(r)/r^4$ the first term strictly decreases, the second is constant, and all later terms decrease because $h_j<0$. This positive sum strictly decreases. In $T_M(r,0)/r^4$ all coefficients are positive. At least one term strictly increases and none decreases. Their quotient therefore strictly increases on $0<r<1$.
+
+<!-- page -->
+## The sharp four-moment radius
+
+Set $M=4$ and let $\tau=10^{-6}$. Define $F(r)=T_4(r,0)-\tau H(r)$. The relative error is continuous and tends to zero as $r$ tends to zero. The previous study established a strict pass at $583/2048$ and a strict failure at $1197/4096$. The strict radial increase now gives exactly one root between them. The root equals $R_*$, the supremum of radii whose **entire closed ball**, with its origin removed, has relative error strictly below $\tau$. The strict test passes below the root. At the root the two maximizers give equality. Above it the axis fails. Other directions require their own evaluation.
+
+The exact reader evaluates
+$$
+F_N(r)=\sum_{j=1}^{N} k_j r^{2j}\bigl(\mathbf{1}_{j>4}-\tau h_j\bigr),\qquad N=40 .
+$$
+The indicator is one for $j>4$ and zero otherwise. Since $f_j$ increases from zero to one on $0\le w\le1$, $|h_j|\le2$. The positive $k_j$ decrease. Therefore
+$$
+|F-F_N|\le (1+2\tau)k_{N+1}r^{2N+2}/(1-r^2).
+$$
+Bisection on the grid with spacing $10^{-15}$ made 45 signed decisions. Each comparison used both ends of this rational interval. At the lower grid endpoint $r_-=0.292038608776134$ the outward-rounded comparison is $-812\le 10^{26}F(r_-)\le-811$. At the next grid endpoint $r_+=0.292038608776135$ it gives $35403\le 10^{26}F(r_+)\le35404$. The whole interval for the first point is negative and the whole interval for the second is positive.
+
+A second calculation sets $c=rw$, $u=\sqrt{1-c^2}$ and $\Phi_r(w)=\log((1+u)/2)+rc/(1+u)$. The first two Fourier coefficients of $\log(1+c\cos v)$ give $R(w)=\Phi_r(w)$ on the axis. Here $H=2\Phi_r(1/2)-\Phi_r(2/3)$ and $T_4=\Phi_r(1)-r^2/4-r^4/32-r^6/96-5r^8/1024$. Integer square-root intervals and 28 odd powers for the log give the same two signed bounds. The complete finite inputs and two calculations are available. [Original Fourier derivation](../../archive/angular-relative-bound-20261005/derivation.md.txt) · [Certificate](certificate.json) · [Second calculation](closed_form.py)
+
+<!-- page -->
+## A worked diagnostic for a known population
+
+![Both panels retain four even moments. The two error curves at fixed radius compare a pure second signal, mixtures and a pure first signal. The radial curve on the first axis crosses one part per million near 0.29204.](figures/angular-truncation-directions.svg)
+
+Both panels retain four even moments in the joint term. In the left panel the amplitude radius is $0.30$. The horizontal coordinate is the share $|a|/r$. Each curve is divided by its own maximum over direction. Both absolute extrema have the same magnitude. The relative error is smaller at the left endpoint because its atom is larger. The right panel uses $b=0$ and increases $|a|$ from $0.20$ to $0.35$. Connecting lines guide the eye. The continuous claims follow from the proof. [Exact plotting intervals and parameter grid](figures/draw.py)
+
+**Example.** Suppose a numerical routine for this four-angle reference must keep its analytic truncation below one part per million. At $(a,b)=(1/8,-1/8)$, $r=1/4<R_*$. The density floor is $3/(4L^4)$ and $A\ge3/512$ nats. Every direction at this radius passes. At $(0.30,0)$, the radius exceeds $R_*$ and the exact four-moment approximation fails. A failure tells a developer to use more moments or bound another approximation. Rounding, integration and errors in the proper terms need their own bounds.
+
+When $b=0$ the actual density factors into a law for $(s_1,t)$ and uniform measures for $s_2,s_3$. Conditional mutual information therefore gives zero additional information about $t$ from $(s_2,s_3)$ once $s_1$ is known. The top atom remains positive. For a sensor addition, test held-out task loss with and without the sensor. For a physiological intervention, identify the stimulus, response and intervention separately. This model supplies an exact reference for a controlled mathematical calculation. It supplies no observed record, actuator effect, clinical conclusion or benchmark superiority.
+
+<!-- page -->
+## A comparison that fails
+
+Replacing $B_2$ by the larger $B_1$ still gives an upper bound for the omitted joint tail. The proposed lower bound $A(a,b)\ge B_1H(r)$ fails. This is why a bound for absolute error alone does not settle relative error.
+
+Take $a=99999/1000000$, $b=1/1000000$. Then $r=1/10$, $x=99999/100000$, $y=1/100000$, and $B_1=4999900001/5000000000$. Put $G=A(a,b)-B_1H(r)$. The two integers below enclose the exact value after scaling.
+
+$$
+-2123 \le 10^{15}G \le -1844.
+$$
+
+To reproduce the sign, hold $a$ fixed and increase the second amplitude from zero to $b$. The first derivative of $J(a,t)$ with respect to its second argument is zero at $t=0$. Its second derivative on this segment is $E_0[D^2/(1+aC+tD)]\le1/[2(1-r)]$. Taylor's theorem thus gives
+$$
+0\le J(a,b)-J(a,0)\le b^2/[4(1-r)] .
+$$
+Use this rational interval and independent intervals for $H(a)$ and $H(r)$. Each square root is enclosed between successive multiples of $10^{-65}$. For $K=(1+u)/2$ and $d=(1-K)/(1+K)$, the negative log of $K$ is twice the sum of $d^{2i+1}/(2i+1)$ for $i\ge0$. After 28 terms, its positive remainder is at most $2d^{57}/[57(1-d^2)]$. These monotone enclosures give the negative upper endpoint above. [Executable check](closed_form.py)
+
+**Boundary cases.** At $r=0$, the exact atom and absolute error vanish and the relative error is undefined. At $r=1$, the density loses its strictly positive floor. The proof here uses $r<1$. At $r>1$ independent choices of phase give negative density on an open set. A changed gauge, a pointwise atom, another law, a different target or an approximation of a proper term changes the question. The finite categorical shared-exclusions method of Makkeh, Gutknecht and Wibral uses a different object. The two-source nearest-neighbour estimator also has a different input and output.
+
+<!-- page -->
+## Rust implementation and computational cost
+
+This study has two real amplitude inputs, four scalar angular coordinates and two independent reference-integration phases. The reported value has no training set, held-out rows, time dependence model, categorical alphabet, occupied cell counts or resamples. The Rust workspace has no public three-source population evaluator for this assigned law. Its separate two-source sample route is **pid_core::experimental::continuous::isx_redundancy_report**, under the default-off **experimental-continuous** feature. That estimator requires two source matrices, a target matrix and explicit support and resource information. [Rust source](../../../crates/pid-core/src/isx.rs) · [Engineering cost](../../../RUST_IMPLEMENTATION_AND_COST.md)
+
+The [exact reader](replay.py) uses Python integer and rational arithmetic. Bisection with a grid denominator $G$ uses $O(\log G)$ signs. Each sign uses $N$ coefficient terms. The supplied code recomputes binomial coefficients and rational powers, whose integer costs depend on their size. It keeps a constant number of rational accumulators per sign. The independent elementary calculation uses integer square roots on a scale $10^{65}$ and 28 log-series terms. The illustrative mixing grid computes $B_j$ through $j=20$ with $O(N^2)$ terms per general direction. These operations are offline. On one Apple M4 Max with macOS 26.5.1 and CPython 3.14.9, the reader and all ten altered-record checks took 0.11 s elapsed, including startup. The operating system reported a peak of 21,102,592 bytes. The measurement is for this finite workload on a shared machine. Interrupting the reader prints no completed result. An unresolved sign, unsupported evaluation domain, changed certificate or unexpected test pass raises an error.
+
+To reproduce the arithmetic, run **python3 -I -S -B replay.py --self-test** in the study directory. Repeat with **python3 -O -I -S -B replay.py --self-test**. Ten altered records test the direction of bounds, the precision, the endpoints and the false comparison. The finite calculations verify their stated inputs. The continuous inequalities rely on the printed analytic proof. The reader uses no Lean kernel or human scientific verdict.
+
+**Research provenance.** Two model-assisted lines of reasoning examined the older model. The second account was recorded after its analyst received the first reader’s sealed proof. The first public-ready analytic account gave the margin $(161/1728)b^2$. A later comparison gave the shorter termwise proof and the stronger $(7/72)b^2$ margin printed here. The previous endpoint values and proof were exposed before the publication procedure began. The evidence record identifies the selection, shared sources, first accounts, rejected route and limits of review. [Evidence and review](EVIDENCE.md)
+
+**Cite this report.** Sepehr Mahmoudian (2026), *The worst direction for an angular information atom*, pid-rs. Include the exact repository commit or release. Cite the defining paper and software separately. [Ehrlich et al. (2024)](https://doi.org/10.1103/PhysRevE.110.014115) · [Software citation](../../../CITATION.cff)
