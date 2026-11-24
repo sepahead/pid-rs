@@ -1,0 +1,39 @@
+\def\UnicodeFontFile#1#2{"[fonts/#1.otf]:#2"}
+\input{tulmr.fd}
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec}
+\defaultfontfeatures{Path=fonts/}
+\usepackage{unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox,float}
+\usepackage{pid-rs-report-tables,pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\pdfvariable minorversion=7
+\pdfvariable suppressoptionalinfo=767
+\pdfextension catalog { /Lang (en) }
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,citecolor=PidSecondary,
+  pdftitle={Two axial trends and five robot outcomes},
+  pdfauthor={Sepehr Mahmoudian},pdfdisplaydoctitle=true,
+  pdfsubject={Two finite categorical signs, five recorded robot tasks, exact information and empirical class decisions}}
+\PidSetRunningHeads{Two axial trends and five robot outcomes}{Recorded robot episodes}
+\PidWorkflowConfigureSections
+\newcounter{none}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.43em plus 0.09em minus 0.05em}
+\setlength{\emergencystretch}{3em}
+\setlist{itemsep=0.15em,topsep=0.25em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\title{\PidReportTitle{Two axial trends and five robot outcomes}{Information and decisions after detection}}
+\author{Sepehr Mahmoudian}
+\date{23 November 2026}
+\begin{document}
+\PidMakeTitle
+\input{body.tex}
+\end{document}

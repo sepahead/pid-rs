@@ -1,0 +1,64 @@
+{
+  "schema": "angular-four-moment-study-inputs-v1",
+  "population_functional": {
+    "authors": [
+      "David A. Ehrlich",
+      "Kyle Schick-Poland",
+      "Abdullah Makkeh",
+      "Felix Lanfermann",
+      "Patricia Wollstadt",
+      "Michael Wibral"
+    ],
+    "title": "Partial Information Decomposition for Continuous Variables based on Shared Exclusions: Analytical Formulation and Estimation",
+    "revision": "arXiv:2311.06373v3, 27 March 2024",
+    "doi": "10.1103/PhysRevE.110.014115",
+    "html": "https://arxiv.org/html/2311.06373v3",
+    "reviewed_html_bytes": 880908,
+    "reviewed_html_sha256": "8684a3d66ee4846645f1acc85d9c355acbf538c73a07b944f138ff47316a996f",
+    "pdf": "https://arxiv.org/pdf/2311.06373v3",
+    "reviewed_pdf_sha256": "cf785c96d24a49d793e835d70e26d94ffe67b9c71251265e6e4040753ec8f563",
+    "locations": "PDF Section II.B, Section III.A Eq. 16, Section III.B Eqs. 18–19, Appendix B Definition 3, Appendix C",
+    "role": "Defines the continuous population functional, inversion and gauge dependence."
+  },
+  "earlier_model_and_eight_moment_bound": {
+    "author": "Sepehr Mahmoudian",
+    "date": "2026-10-05",
+    "path": "audit/archive/angular-relative-bound-20261005/derivation.md.txt",
+    "commit": "788d5f9c9b44d27e6530f27112afb9d53ed03e15",
+    "bytes": 18052,
+    "sha256": "6521f04879d75762497504bda1f70ab4eb2cd887df76fc62c02d4c47e4674c7b",
+    "role": "Specifies the normalized assigned law, signed top cut and earlier eight-moment bound."
+  },
+  "prior_seven_moment_status": {
+    "path": "RESEARCH_RESULTS_2026_10_10.md",
+    "section": "Still open",
+    "commit": "f9c61fe12e35d509ac8b440596caa522a8058d7a",
+    "bytes": 5679,
+    "sha256": "602cd7f35eb8bf47f74173abd1444777869910c4b71203f2499b75e0d5560f0b",
+    "role": "Records the status of a seven-moment refinement as of the cited edition."
+  },
+  "four_moment_computation": {
+    "input": "Exact integers and rationals. One fixed analytic four-angle law, no observed or generated sample rows.",
+    "moments": 4,
+    "last_finite_index": 12,
+    "grid_denominator": 4096,
+    "grid_index_range": [
+      1,
+      2048
+    ],
+    "strict_tolerance": "1/1000000",
+    "maximum_bracket_width": "1/64",
+    "witness": "a=r,b=0",
+    "certificate": "certificate.json",
+    "certificate_bytes": 1582,
+    "certificate_sha256": "5ded26413a7dacd9955afbc38114e19e7a5cd91f29fce72bbaa2fbb22eafd3a8",
+    "reading_scope": "Local finite rational endpoint evidence. The continuum implication is the handwritten argument in the article."
+  },
+  "software_scope": {
+    "source_commit": "6f5aab85cf5034dc3132cb1ff092fcc40d80b5f7",
+    "sample_estimator_source": "crates/pid-core/src/isx.rs",
+    "sample_estimator_source_sha256": "2f8d49f17307b4cf6c8cb284287e0d5c09affff36c96e3abca82c1f2a25db79a",
+    "source_gate": "experimental-continuous",
+    "scope": "Existing two-source sampled-angle estimator, distinct from the assigned-law certificate."
+  }
+}

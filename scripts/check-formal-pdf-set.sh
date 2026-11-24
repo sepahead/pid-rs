@@ -46,6 +46,8 @@ STANDALONE_LATEX_PAPERS=(
 )
 
 STANDALONE_MARKDOWN_PAPERS=(
+  "angular-four-moment-radius"
+  "robot-wrist-slope-signs"
   "mathematical-results-guide-current"
   "finite-copy-bootstrap-coverage"
   "three-source-alphabet-counts"
@@ -77,6 +79,8 @@ STANDALONE_MARKDOWN_PAPERS=(
 )
 
 STANDALONE_MARKDOWN_SOURCES=(
+  "audit/research/angular-four-moment-radius/EXPOSITION.md"
+  "audit/research/robot-wrist-slope-signs/EXPOSITION.md"
   "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md"
   "FINITE_COPY_BOOTSTRAP_COVERAGE.md"
   "audit/research/three-source-alphabet-counts/README.md"
@@ -299,6 +303,21 @@ if [[ "$MODE" == "--exact" ]]; then
 else
   python3 -I -S -B scripts/build-current-mathematical-results-guide.py --check-committed
 fi
+
+for study in angular-four-moment-radius robot-wrist-slope-signs; do
+  study_source="audit/research/$study"
+  python3 -I -S -B "$study_source/replay.py" --self-test
+  python3 -O -I -S -B "$study_source/replay.py" --self-test
+  if [[ "$MODE" == "--exact" ]]; then
+    (
+      report_dir="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-study-pdf.XXXXXX")"
+      trap 'rm -f -- "$report_dir/report.pdf"; rmdir -- "$report_dir"' EXIT
+      python3 -I -S -B "$study_source/build.py" --output "$report_dir/report.pdf"
+      cmp "$report_dir/report.pdf" "output/pdf/$study.pdf"
+    )
+  fi
+  echo "Checked the $study report with $MODE."
+done
 
 for check in \
   audit/evidence/normalized-shannon-reports-2026-11-20/check.py \

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="440" viewBox="0 0 840 440" role="img" aria-labelledby="title desc">
+<title id="title">Four even moments on the angular model</title>
+<desc id="desc">Two linear axes show the amplitude radius. On the whole interval from zero to one half, the threshold lies just above one quarter. On an expanded scale the circle marks the all-directions guarantee through 583/2048. The diamond marks a violation at 1197/4096 with a equal to the radius and b equal to zero. The unresolved width is 31/4096. At zero the relative error is undefined.</desc>
+<rect width="840" height="440" rx="0" fill="#F7F3E9"/>
+<g font-family="Source Sans Pro, Source Sans 3, Arial, sans-serif" fill="#2C3E50">
+<text x="42.00" y="43" text-anchor="start" font-size="32" fill="#1F3F60" font-weight="600">Four even moments on the angular model</text>
+<text x="42.00" y="73" text-anchor="start" font-size="20" fill="#2C3E50" font-weight="400">Relative error tolerance 1 in 1,000,000. The amplitude radius is r = |a| + |b|.</text>
+<line x1="42.00" x2="798.00" y1="88" y2="88" stroke="#D2E0E2" stroke-width="1" />
+<text x="42.00" y="115" text-anchor="start" font-size="20" fill="#1F6968" font-weight="600">Full study range</text>
+<line x1="64.00" x2="776.00" y1="139" y2="139" stroke="#2C3E50" stroke-width="2" />
+<line x1="65.00" x2="469.37" y1="139" y2="139" stroke="#1F6968" stroke-width="5" />
+<line x1="469.37" x2="480.14" y1="139" y2="139" stroke="#916400" stroke-width="7" />
+<line x1="64.00" x2="64.00" y1="135" y2="146" stroke="#2C3E50" stroke-width="1.5" />
+<text x="64.00" y="168" text-anchor="middle" font-size="17" fill="#2C3E50" font-weight="400">0</text>
+<line x1="420.00" x2="420.00" y1="135" y2="146" stroke="#2C3E50" stroke-width="1.5" />
+<text x="420.00" y="168" text-anchor="middle" font-size="17" fill="#2C3E50" font-weight="400">1/4</text>
+<line x1="776.00" x2="776.00" y1="135" y2="146" stroke="#2C3E50" stroke-width="1.5" />
+<text x="776.00" y="168" text-anchor="middle" font-size="17" fill="#2C3E50" font-weight="400">1/2</text>
+<circle cx="64.00" cy="139" r="5" stroke="#2C3E50" fill="#F7F3E9" stroke-width="2.2"/>
+<text x="42.00" y="194" text-anchor="start" font-size="20" fill="#1F6968" font-weight="600">Expanded scale</text>
+<text x="191.00" y="194" text-anchor="start" font-size="18" fill="#2C3E50" font-weight="400">The marked endpoints bracket the unknown threshold.</text>
+<line x1="64.00" x2="776.00" y1="230" y2="230" stroke="#2C3E50" stroke-width="2" />
+<line x1="64.00" x2="325.09" y1="230" y2="230" stroke="#1F6968" stroke-width="6" />
+<line x1="325.09" x2="459.81" y1="230" y2="230" stroke="#916400" stroke-width="6" stroke-dasharray="4,4"/>
+<line x1="64.00" x2="64.00" y1="226" y2="237" stroke="#2C3E50" stroke-width="1.5" />
+<text x="64.00" y="259" text-anchor="middle" font-size="17" fill="#2C3E50" font-weight="400">0.27</text>
+<line x1="242.00" x2="242.00" y1="226" y2="237" stroke="#2C3E50" stroke-width="1.5" />
+<text x="242.00" y="259" text-anchor="middle" font-size="17" fill="#2C3E50" font-weight="400">0.28</text>
+<line x1="420.00" x2="420.00" y1="226" y2="237" stroke="#2C3E50" stroke-width="1.5" />
+<text x="420.00" y="259" text-anchor="middle" font-size="17" fill="#2C3E50" font-weight="400">0.29</text>
+<line x1="598.00" x2="598.00" y1="226" y2="237" stroke="#2C3E50" stroke-width="1.5" />
+<text x="598.00" y="259" text-anchor="middle" font-size="17" fill="#2C3E50" font-weight="400">0.30</text>
+<line x1="776.00" x2="776.00" y1="226" y2="237" stroke="#2C3E50" stroke-width="1.5" />
+<text x="776.00" y="259" text-anchor="middle" font-size="17" fill="#2C3E50" font-weight="400">0.31</text>
+<circle cx="325.09" cy="230" r="7" stroke="#1F6968" fill="#F7F3E9" stroke-width="2.2"/>
+<path d="M459.81 221 l9 9 l-9 9 l-9 -9 z" fill="#743E37"/>
+<text x="420.00" y="292" text-anchor="middle" font-size="20" fill="#916400" font-weight="600">Unresolved interval width  31/4096</text>
+<line x1="42.00" x2="798.00" y1="307" y2="307" stroke="#D2E0E2" stroke-width="1" />
+<circle cx="56.00" cy="333" r="7" stroke="#1F6968" fill="#F7F3E9" stroke-width="2.2"/>
+<text x="76.00" y="340" text-anchor="start" font-size="23" fill="#1F3F60" font-weight="600">All amplitude directions</text>
+<path d="M438.00 324 l9 9 l-9 9 l-9 -9 z" fill="#743E37"/>
+<text x="458.00" y="340" text-anchor="start" font-size="23" fill="#1F3F60" font-weight="600">One failing direction</text>
+<text x="50.00" y="371" text-anchor="start" font-size="20" fill="#2C3E50" font-weight="400">Through r = 583/2048</text>
+<text x="431.00" y="371" text-anchor="start" font-size="20" fill="#2C3E50" font-weight="400">At r = 1197/4096, a = r and b = 0</text>
+<text x="50.00" y="398" text-anchor="start" font-size="18" fill="#2C3E50" font-weight="400">Relative error is below tolerance.</text>
+<text x="431.00" y="398" text-anchor="start" font-size="18" fill="#2C3E50" font-weight="400">Actual relative error exceeds tolerance.</text>
+<text x="50.00" y="427" text-anchor="start" font-size="16" fill="#2C3E50" font-weight="400">At r = 0 the relative error is undefined. All three proper terms are kept exact.</text>
+</g>
+</svg>

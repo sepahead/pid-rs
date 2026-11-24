@@ -118,6 +118,15 @@ the change.
 **“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to
 this repository; it is not a claim of scientific novelty.** [`method-catalog.json`](method-catalog.json)
 is the machine-readable authority and [`METHODS.md`](METHODS.md) is its exhaustive human rendering.
+At first use of a substantive result, identify its defining source and say what this
+project added. Name the added theorem, bound, counterexample, proof, implementation
+or measurement, with its assumptions and the evidence for it. A paper can supply the
+functional while this project supplies a bound for one distribution. State both in
+the prose. Repeat the distinction in each standalone report, figure that introduces
+the result, and rendered companion. When a source or conclusion changes, update the
+current result guide and downstream uses. Reserve claims of priority for a documented
+comparison with the closest published work.
+
 Use the catalog's distinctions consistently:
 
 - **paper-defined** for a quantity or estimator defined by a cited publication;

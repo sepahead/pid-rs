@@ -1,0 +1,162 @@
+\section{How far do four moments reach?}\label{how-far-do-four-moments-reach}
+
+\textbf{Question.} Three circular sources and one circular target follow a specified joint law. How far can its amplitudes grow while four moments approximate an information quantity to one part per million? Each harmonic is a cosine of a combination of angles, called a phase.
+
+\textbf{Terms and symbols.} A \emph{source} supplies an angle and the \emph{target} is the angle about which we ask. The partial information decomposition (PID) used here assigns signed contributions, called \emph{atoms}, to groups of sources. Here the \emph{top atom} is the contribution left after removing all proper groups under continuous shared exclusions. The \emph{gauge} fixes units and reference measures for the densities. An \emph{even moment} averages an even power. A \emph{nat} uses the natural logarithm. The real numbers \(a,b\) weight two periodic terms. Their \emph{amplitude radius} \(r\) is the sum of their absolute values. \(A\) denotes the exact averaged top atom, \(A_4\) its four-moment approximation and \(R_*\) the supremum of radii that meet the tolerance in every direction. \href{https://arxiv.org/html/2311.06373v3}{Ehrlich et al., Sections II--III} and the \href{https://github.com/sepahead/pid-rs/blob/main/audit/archive/angular-relative-bound-20261005/ARCHIVE.md}{October angular derivation}.
+
+\textbf{Result.} Every nonzero radius through 583/2048 meets the tolerance in all directions. At 1197/4096 the first harmonic alone fails. The interval between them has width 31/4096.
+
+\par
+
+\smallskip\noindent\makebox[\linewidth][c]{\includegraphics[width=0.94\linewidth]{radius-bracket.pdf}}
+
+\par
+
+\clearpage
+
+\section{The joint law and the information atom}\label{the-joint-law-and-the-information-atom}
+
+Write \(s_1,s_2,s_3\) for source angles and \(t\) for the target. Each angle has period \(L=2\pi\) radians. Put \(v=t-s_1\) and \(u=t-s_1-s_2-s_3\) modulo \(L\). The assigned joint density, relative to product Lebesgue measure in these coordinates, is
+
+\[
+p(s_1,s_2,s_3,t)=L^{-4}(1+a\cos v+b\cos u),\qquad r=|a|+|b|.
+\]
+
+The inverse change of coordinates gives \(t=v+s_1\) and \(s_3=v-u-s_2\). Its absolute Jacobian is one. Under uniform integration the two phases are independent and uniform. Write \(E_0\) for that expectation and \(Y=a\cos v+b\cos u\). Under the model the weight is \(1+Y\). It has mean one and minimum \(1-r\). The law has positive density at every point for \(r<1\). The three sources together have constant density \(L^{-3}\) and the target marginal has constant density \(L^{-1}\).
+
+\textbf{Reduction to one joint and three proper terms.} For a proper branch \(B\) (one source subset of size \(d\)), integrating any omitted source removes the second harmonic. The joint density of the target and the retained branch retains the first harmonic exactly when source 1 belongs to \(B\). It equals \(L^{-d-1}(1+a\cos v)\) in that case and \(L^{-d-1}\) otherwise. The source density on this branch is \(L^{-d}\).
+
+Write 12 for the branch containing sources 1 and 2. A node is a collection of branches, none contained in another. A node \(\beta\) is below \(\alpha\) when each branch of \(\alpha\) contains a branch of \(\beta\). Write \(\downarrow\alpha\) for \(\alpha\) and all nodes below it. The maximal proper nodes are \(\{12\},\{13\},\{23\}\). Every proper node has a branch contained in at least one of these pairs.
+
+Choose any nonempty collection \(\mathcal C\) of the three pairs. A node is below each \(\{P\}\) for \(P\in\mathcal C\) exactly when it is below \(\mathcal C\). Thus the intersection of these lower sets is \(\downarrow\mathcal C\), whose greatest node is \(\mathcal C\). For example, the node \(\{\{1\},\{2\},\{3\}\}\) lies in all three lower sets and its branches are singletons.
+
+The cumulative value at \(\mathcal C\) sums the atoms of \textbf{all} nodes in \(\downarrow\mathcal C\). To evaluate that cumulative from densities, use the branches of its greatest node \(\mathcal C\). Those branches are pairs and therefore have equal source density. If \(w\) is the fraction of them containing source 1, the sum of the joint branch densities divided by the sum of their source densities and by the uniform target density gives \(1+aw\cos v\). Its averaged log ratio is \(R(w)\). In nats, define
+
+\[
+\begin{aligned}
+J&=E_0[(1+Y)\log(1+Y)],\\
+R(w)&=E_0[(1+a\cos v)\log(1+aw\cos v)],\qquad 0\le w\le1 .
+\end{aligned}
+\]
+
+The three single-pair nodes have weights \(1,1,0\) in the order 12, 13, 23. The greatest nodes of the pairwise intersections have weights \(1,1/2,1/2\) in the order \((12,13),(12,23),(13,23)\). The greatest node of the triple intersection has weight \(2/3\). Inclusion--exclusion of the atom sums, followed by subtraction from the full value \(J\), gives the signed, population-averaged top atom
+
+\[
+A=J-R(1)-R(2/3)+2R(1/2).
+\]
+
+The continuous functional and inversion come from Ehrlich et al., Sections III.A--B, Eqs. 16, 18--19, and Appendix B, Definition 3. The applied equal-branch reduction comes from the October derivation. The common radian gauge stays fixed. \href{https://arxiv.org/html/2311.06373v3}{Defining paper} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/archive/angular-relative-bound-20261005/derivation.md.txt}{Prior model and proof}
+
+\clearpage
+
+\section{A positive denominator and a bound in every direction}\label{a-positive-denominator-and-a-bound-in-every-direction}
+
+For \(0<r\le1/2\), write \(C=\cos v\). The power series for \((1+Y)\log(1+Y)\) converges absolutely and uniformly since \(|Y|\le1/2\). A joint phase shift by \(\pi\) kills odd powers under \(E_0\). Define \(c_j=\binom{2j}{j}/4^j=E_0[C^{2j}]\), \(d_j=2j(2j-1)\) and \(\mu_j=E_0[Y^{2j}]\) for integers \(j\ge1\). Then \(J=\sum_{j\ge1}\mu_j/d_j\). In \(J(a,b)-J(a,0)\) the pure-\(a\) terms cancel, and the surviving even monomials have nonnegative coefficients. The quadratic term alone supplies \(b^2/4\). Also \(J(a,0)=R(1)\).
+
+The positive floor permits differentiation under the integral. From \(E_0[C]=0\),
+
+\[
+\begin{aligned}
+R'(w)&=a^2(1-w)E_0[C^2/(1+awC)],\\
+R''(w)&=-a^2 E_0[(1+aC)C^2/(1+awC)^2]\le0 .
+\end{aligned}
+\]
+
+Pair \(C\) and \(-C\) in the first expectation. It becomes \(E_0[C^2/(1-a^2w^2C^2)]\ge1/2\). Integrating from 0 to \(1/2\) gives \(R(1/2)\ge3a^2/16\). Concavity between 0 and \(2/3\) gives \(R(1/2)\ge3R(2/3)/4\). Thus
+
+\[
+A\ge a^2/8+b^2/4\ge(a^2+b^2)/8>0 .
+\]
+
+\textbf{Control in every direction.} Set \(x=|a|/r\). Let \(q_j(k)=\binom{j}{k}x^k(1-x)^{j-k}\) for \(0\le k\le j\), and zero outside this range. These are binomial probabilities. Independence of the reference phases and the identity \(\binom{2j}{2k}c_kc_{j-k}=c_j\binom{j}{k}^2\) give
+
+\[
+\mu_j=c_j r^{2j}\sum_{k=0}^{j}q_j(k)^2.
+\]
+
+The recurrence \(q_{j+1}(k)=(1-x)q_j(k)+xq_j(k-1)\) and convexity of the square imply \(\sum_k q_{j+1}(k)^2\le\sum_k q_j(k)^2\) by summing over all integers. At \(j=1\) the sum is \(x^2+(1-x)^2\). This proves \(\mu_j\le c_j r^{2j-2}(a^2+b^2)\), including the two axes by continuity.
+
+Keep the proper terms exact and replace \(J\) by its first four even moments (powers 2, 4, 6 and 8). The truncation error \(A-A_4\) is the nonnegative tail \(\sum_{j=5}^{\infty}\mu_j/d_j\). Its actual relative error is \(\varepsilon=(A-A_4)/A\). The bound above cancels the common scale \(a^2+b^2\) before we approach the origin.
+
+\clearpage
+
+\section{Finite bounds in both directions}\label{finite-bounds-in-both-directions}
+
+\textbf{A sufficient radius.} Since \(c_{j+1}/c_j=(2j+1)/(2j+2)<1\) and \(d_j\) increases, the tail from \(j=13\) has a geometric upper bound. For every direction at \(0<r\le1/2\),
+
+\[
+\varepsilon\le U(r)=8\left[\sum_{j=5}^{12}\frac{c_jr^{2j-2}}{d_j}
+ +\frac{c_{13}r^{24}}{d_{13}(1-r^2)}\right].
+\]
+
+Each term is nondecreasing in \(r\). A single strict inequality \(U(r_0)<\tau\) with \(\tau=10^{-6}\) therefore covers every real radius \(0<r\le r_0\) and every amplitude pair there.
+
+\textbf{An actual failure.} Take \(a=r,b=0\). Here \(J=R(1)\), so the true atom is \(A=2R(1/2)-R(2/3)>0\). Its exact joint-term tail is at least
+
+\[
+T(r)=\sum_{j=5}^{12}\frac{c_jr^{2j}}{d_j}.
+\]
+
+To bound the denominator in the other direction, expand the logarithm in \(R(w)\). For \(0<w\le1\) the combined coefficient of \(c_jr^{2j}\) is nonnegative. Its prefix through index 12 and its upper remainder are
+
+\[
+\begin{aligned}
+P(w,r)&=\sum_{j=1}^{12}c_jr^{2j}\left(\frac{w^{2j-1}}{2j-1}-\frac{w^{2j}}{2j}\right),\\
+E(w,r)&=\frac{r^{26}w^{25}}{25(1-r^2w^2)}.
+\end{aligned}
+\]
+
+Indeed, each omitted term is at most \(r^{2j}w^{2j-1}/25\) because \(j\ge13\) and \(c_j\le1\). Apply the upper remainder to the positive term in \(A\) and use the prefix as a lower bound on the subtracted term. This gives
+
+\[
+0<A\le V(r)=2[P(1/2,r)+E(1/2,r)]-P(2/3,r).
+\]
+
+The strict inequality \(T(r)>\tau V(r)\) proves \(\varepsilon\ge T(r)/V(r)>\tau\) for this actual atom. The first omitted index in the numerator is 5. The geometric remainders start at 13. Both choices matter for the strict tests.
+
+\textbf{Reading the threshold.} Define \(R_*\) as the supremum of \(\rho\in[0,1/2]\) for which \(\varepsilon<\tau\) at every \(0<|a|+|b|\le\rho\). One failed point belongs to every ball that contains its radius. This proves an upper bound on the supremum even if axial errors away from that point have unknown order.
+
+\clearpage
+
+\section{Exact endpoints and a worked example}\label{exact-endpoints-and-a-worked-example}
+
+The arithmetic checks the rational grid \(k/4096\), \(1\le k\le2048\). The rule chooses the largest index with \(U<\tau\) and the first with \(V>0\) and \(T>\tau V\). It requires two ordered indices separated by at most \(1/64\) in radius. The recorded values are 1166 and 1197. The exact output gives
+
+\[
+\frac{583}{2048}\le R_*\le\frac{1197}{4096},
+\qquad \frac{1197-1166}{4096}=\frac{31}{4096}.
+\]
+
+At the lower endpoint, rounding the upper bound \textbf{up} gives \(U\le993860/10^{12}\). At the upper endpoint, rounding the failure ratio \textbf{down} gives \(T/V\ge1005505/10^{12}\). The comparison value on that scale is \(1000000/10^{12}\). These rounded displays preserve both strict conclusions. The \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/angular-four-moment-radius/certificate.json}{exact certificate} holds the fractions for \(\tau-U\), \(T\), \(V\) and \(T-\tau V\).
+
+\textbf{Example.} Set \(a=1/8\) and \(b=-1/8\). The radius is \(1/4\), below \(583/2048\). The density floor is at least \(3/(4L^4)\) and the atom is at least \(3/512\) nats. Hence the four-moment relative error is strictly below one part per million. This calculation uses the parameter values and the population law directly. It requires neither measured angles nor numerical logarithms. At \(a=1197/4096,b=0\) the certificate establishes failure for the same approximation.
+
+To calculate the approximation itself, sum the four joint moments and use an exact expression from the October derivation for the proper terms. Put \(c=aw\), \(h=\sqrt{1-c^2}\), \(K=(1+h)/2\) and \(z=c/(1+h)\). Then
+
+\[
+R(w)=\log K+az .
+\]
+
+Indeed \(1+c\cos v=K|1+ze^{iv}|^2\) and \(|z|<1\). In the Fourier series of its logarithm the uniform mean is \(\log K\) and the cosine-weighted mean is \(z\). The exact expression and the truncation guarantee have separate roles. \href{https://github.com/sepahead/pid-rs/blob/main/audit/archive/angular-relative-bound-20261005/derivation.md.txt}{October derivation}
+
+\textbf{Where the calculation applies.} At the origin the atom and absolute truncation error are both zero. The relative quotient is undefined. For \(1/2<r<1\) the density stays positive, but this bounded search gives no new passing threshold there. At \(r=1\) the density reaches zero and the positive-floor argument ends. At \(r>1\) continuity and independently selectable phases give an open region with negative density. Using a parameter outside the assigned law cannot produce a probability calculation.
+
+The outcome is an offline test case for an analytic formula in the specified gauge. On the failing axis the target depends only on source 1. The conditional mutual information of sources 2 and 3 with the target given source 1 is zero, yet the top atom is positive. For an incremental prediction question that conditional mutual information gives the direct answer. Sensor choice, causal interaction, control performance and sampled-angle accuracy require their own laws, comparators and evidence. Changes of units, density gauge, source grouping or approximation of a proper term also require new error control. Floating-point summation, rounding of \(a,b\), numerical quadrature and cancellation as \(A\) tends to zero are additional sources of error.
+
+\clearpage
+
+\section{Rust implementation and computational cost}\label{rust-implementation-and-computational-cost}
+
+This exact study takes two real amplitudes and a four-dimensional continuous law. The proof uses two integration phases. There are no observed rows, empirical alphabet, occupied count table, train/test split, fitted parameters or resamples. The exact check takes an integer grid size \(G=2048\), a last retained finite index \(N=12\) and a one-part-per-million tolerance. Its output is the two endpoints and the four rational witnesses. The grid counts parameter values.
+
+The standard-library Python \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/angular-four-moment-radius/replay.py}{replay} prepares the cosine and proper coefficients. With these coefficients it builds successive squared-radius powers and takes \(O(GN)\) rational operations with \(O(N)\) live rational values. Integer size affects the cost of multiplication, division and reduction. The finite scan terminates after exactly 2,048 radii. Missing or altered input, an unsupported calculation domain or failure of either inequality makes the replay exit with an error. Interruption leaves the inputs unchanged. Run from the study directory with \textbf{python3 -I -B replay.py -\/-self-test} and repeat with \textbf{python3 -I -B -O replay.py -\/-self-test}. The output includes outward-rounded bounds, 17 rejected control inputs and the certificate digest.
+
+There is no public Rust API for this three-source assigned-law certificate. The separate two-source sample estimator \texttt{pid\_core::experimental::continuous::isx\_redundancy\_report} takes two source matrices, a target matrix, configuration, provenance and a resource budget. It uses the default-off \texttt{experimental-continuous} feature. General three-source estimation and a certified floating-point evaluator remain open. \href{https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/isx.rs}{Rust source} · \href{https://github.com/sepahead/pid-rs/blob/main/RUST_IMPLEMENTATION_AND_COST.md}{Engineering cost reference}
+
+\textbf{Evidence and cost of the historical check.} One fixed task produced one candidate and one delivery. Separate program implementations evaluated direct sums and recurrence polynomials. They read the same certificate, parameters and formulas. In one 64-bit ARM Alpine 3.23.4 run with one virtual CPU and CPython 3.12.13, generation took 0.187 s and the readers took 0.459 s and 0.168 s. The process high-water figure was 15,924 KiB across children under the supervisor\textquotesingle s accounting. Each reader had a 120 s time budget and a 256 MiB address-space limit. These measurements include process startup and checks. No estimator, learner or real-time workload was timed.
+
+The paper defines the population functional. The October supplement established a positive atom and an eight-moment uniform bound through one half. An October status note also records work on seven moments. This report fixes four moments and brackets the radius using an actual failure. \href{https://github.com/sepahead/pid-rs/blob/main/audit/archive/angular-relative-bound-20261005/ARCHIVE.md}{Prior supplement} · \href{https://github.com/sepahead/pid-rs/blob/main/RESEARCH_RESULTS_2026_10_10.md}{October status}
+
+\textbf{Research evidence.} Two model-based readers examined the analytic and application steps independently before comparing conclusions. AI tools helped derive and check the argument, review the prose and prepare the figures. Shared inputs and local administration limit independence. The exact program verifies the finite comparisons. The interpretation for all real directions rests on the displayed analytic proof. Formal verification, independent human disposition and empirical calibration remain open.
+
+\textbf{Cite this study.} Sepehr Mahmoudian (2026), \emph{Four even moments for an angular information atom}, pid-rs. Include the exact repository commit or release. Cite the software and the defining paper separately. The paper is \emph{Partial Information Decomposition for Continuous Variables based on Shared Exclusions: Analytical Formulation and Estimation}, arXiv:2311.06373v3. \href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{Software citation} · \href{https://doi.org/10.1103/PhysRevE.110.014115}{D. A. Ehrlich, K. Schick-Poland, A. Makkeh, F. Lanfermann, P. Wollstadt and M. Wibral (2024)}

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="440" viewBox="0 0 840 440" role="img" aria-labelledby="title desc">
+<title id="title">Information and correct class choices after detection</title>
+<desc id="desc">For LP1 through LP5, two conditional information gains are plotted on one scale in millinats. Both are positive in every task. Exact correct counts for the better single sign and both signs are 38 and 42 of 88, 21 and 22 of 47, 24 and 24 of 47, 72 and 72 of 117, and 49 and 52 of 164. These are same-table decisions.</desc>
+<rect width="840" height="440" fill="#F7F3E9"/>
+<g font-family="Source Sans Pro, Source Sans 3, Arial, sans-serif">
+<text x="31" y="42" text-anchor="start" font-size="31" fill="#1F3F60" font-weight="600">Information and correct class choices after detection</text>
+<text x="32" y="70" text-anchor="start" font-size="20" fill="#2C3E50" font-weight="400">Five robot tasks. Each direction uses the same 15 readings of an axial channel.</text>
+<line x1="32" y1="85" x2="808" y2="85" stroke="#D2E0E2" stroke-width="1"/>
+<text x="32" y="115" text-anchor="start" font-size="23" fill="#1F6968" font-weight="600">Added class information</text>
+<text x="548" y="115" text-anchor="start" font-size="23" fill="#1F6968" font-weight="600">Correct class choices</text>
+<circle cx="39.00" cy="141" r="4" stroke="#1F6968" fill="#F7F3E9" stroke-width="2.4"/>
+<text x="52" y="147" text-anchor="start" font-size="17" fill="#2C3E50" font-weight="400">Torque given force</text>
+<path d="M227.00 136 l5 5 l-5 5 l-5 -5 z" fill="#743E37"/>
+<text x="241" y="147" text-anchor="start" font-size="17" fill="#2C3E50" font-weight="400">Force given torque</text>
+<text x="548" y="146" text-anchor="start" font-size="17" fill="#2C3E50" font-weight="400">Best single sign and both signs</text>
+<text x="32" y="180" text-anchor="start" font-size="16" fill="#1F3F60" font-weight="600">Task</text>
+<text x="410" y="180" text-anchor="middle" font-size="16" fill="#1F3F60" font-weight="600">Torque</text>
+<text x="477" y="180" text-anchor="middle" font-size="16" fill="#1F3F60" font-weight="600">Force</text>
+<text x="591" y="180" text-anchor="middle" font-size="16" fill="#1F3F60" font-weight="600">Single</text>
+<text x="679" y="180" text-anchor="middle" font-size="16" fill="#1F3F60" font-weight="600">Both</text>
+<text x="770" y="180" text-anchor="middle" font-size="16" fill="#1F3F60" font-weight="600">Episodes</text>
+<line x1="97.0" y1="186" x2="97.0" y2="333" stroke="#D2E0E2" stroke-width="1"/>
+<text x="97.00" y="179" text-anchor="middle" font-size="14" fill="#2C3E50" font-weight="400">0</text>
+<line x1="163.0" y1="186" x2="163.0" y2="333" stroke="#D2E0E2" stroke-width="1"/>
+<text x="163.00" y="179" text-anchor="middle" font-size="14" fill="#2C3E50" font-weight="400">40</text>
+<line x1="229.0" y1="186" x2="229.0" y2="333" stroke="#D2E0E2" stroke-width="1"/>
+<text x="229.00" y="179" text-anchor="middle" font-size="14" fill="#2C3E50" font-weight="400">80</text>
+<line x1="295.0" y1="186" x2="295.0" y2="333" stroke="#D2E0E2" stroke-width="1"/>
+<text x="295.00" y="179" text-anchor="middle" font-size="14" fill="#2C3E50" font-weight="400">120</text>
+<line x1="361.0" y1="186" x2="361.0" y2="333" stroke="#D2E0E2" stroke-width="1"/>
+<text x="361.00" y="179" text-anchor="middle" font-size="14" fill="#2C3E50" font-weight="400">160</text>
+<text x="32" y="211" text-anchor="start" font-size="19" fill="#1F3F60" font-weight="600">LP1</text>
+<line x1="258.93" y1="205" x2="323.25" y2="205" stroke="#2C3E50" stroke-width="1.4"/>
+<circle cx="258.93" cy="205" r="4" stroke="#1F6968" fill="#F7F3E9" stroke-width="2.4"/>
+<path d="M323.25 200 l5 5 l-5 5 l-5 -5 z" fill="#743E37"/>
+<text x="410" y="211" text-anchor="middle" font-size="19" fill="#1F6968" font-weight="600">98.1</text>
+<text x="477" y="211" text-anchor="middle" font-size="19" fill="#743E37" font-weight="600">137.1</text>
+<text x="591" y="211" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">38</text>
+<text x="679" y="211" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">42</text>
+<text x="770" y="211" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">88</text>
+<text x="32" y="241" text-anchor="start" font-size="19" fill="#1F3F60" font-weight="600">LP2</text>
+<line x1="253.64" y1="235" x2="361.13" y2="235" stroke="#2C3E50" stroke-width="1.4"/>
+<circle cx="361.13" cy="235" r="4" stroke="#1F6968" fill="#F7F3E9" stroke-width="2.4"/>
+<path d="M253.64 230 l5 5 l-5 5 l-5 -5 z" fill="#743E37"/>
+<text x="410" y="241" text-anchor="middle" font-size="19" fill="#1F6968" font-weight="600">160.1</text>
+<text x="477" y="241" text-anchor="middle" font-size="19" fill="#743E37" font-weight="600">94.9</text>
+<text x="591" y="241" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">21</text>
+<text x="679" y="241" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">22</text>
+<text x="770" y="241" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">47</text>
+<text x="32" y="271" text-anchor="start" font-size="19" fill="#1F3F60" font-weight="600">LP3</text>
+<line x1="214.40" y1="265" x2="257.36" y2="265" stroke="#2C3E50" stroke-width="1.4"/>
+<circle cx="257.36" cy="265" r="4" stroke="#1F6968" fill="#F7F3E9" stroke-width="2.4"/>
+<path d="M214.40 260 l5 5 l-5 5 l-5 -5 z" fill="#743E37"/>
+<text x="410" y="271" text-anchor="middle" font-size="19" fill="#1F6968" font-weight="600">97.2</text>
+<text x="477" y="271" text-anchor="middle" font-size="19" fill="#743E37" font-weight="600">71.2</text>
+<text x="591" y="271" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">24</text>
+<text x="679" y="271" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">24</text>
+<text x="770" y="271" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">47</text>
+<text x="32" y="301" text-anchor="start" font-size="19" fill="#1F3F60" font-weight="600">LP4</text>
+<line x1="125.91" y1="295" x2="160.71" y2="295" stroke="#2C3E50" stroke-width="1.4"/>
+<circle cx="160.71" cy="295" r="4" stroke="#1F6968" fill="#F7F3E9" stroke-width="2.4"/>
+<path d="M125.91 290 l5 5 l-5 5 l-5 -5 z" fill="#743E37"/>
+<text x="410" y="301" text-anchor="middle" font-size="19" fill="#1F6968" font-weight="600">38.6</text>
+<text x="477" y="301" text-anchor="middle" font-size="19" fill="#743E37" font-weight="600">17.5</text>
+<text x="591" y="301" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">72</text>
+<text x="679" y="301" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">72</text>
+<text x="770" y="301" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">117</text>
+<text x="32" y="331" text-anchor="start" font-size="19" fill="#1F3F60" font-weight="600">LP5</text>
+<line x1="115.27" y1="325" x2="152.46" y2="325" stroke="#2C3E50" stroke-width="1.4"/>
+<circle cx="115.27" cy="325" r="4" stroke="#1F6968" fill="#F7F3E9" stroke-width="2.4"/>
+<path d="M152.46 320 l5 5 l-5 5 l-5 -5 z" fill="#743E37"/>
+<text x="410" y="331" text-anchor="middle" font-size="19" fill="#1F6968" font-weight="600">11.1</text>
+<text x="477" y="331" text-anchor="middle" font-size="19" fill="#743E37" font-weight="600">33.6</text>
+<text x="591" y="331" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">49</text>
+<text x="679" y="331" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">52</text>
+<text x="770" y="331" text-anchor="middle" font-size="19" fill="#2C3E50" font-weight="400">164</text>
+<line x1="520" y1="157" x2="520" y2="337" stroke="#D2E0E2" stroke-width="1"/>
+<line x1="32" y1="347" x2="808" y2="347" stroke="#D2E0E2" stroke-width="1"/>
+<text x="32" y="375" text-anchor="start" font-size="19" fill="#2C3E50" font-weight="400">Information is in millinats. 1,000 millinats equal one nat.</text>
+<text x="32" y="402" text-anchor="start" font-size="19" fill="#1F3F60" font-weight="600">LP4 retains positive gains in both directions. Each modal rule gets 72 of 117 correct.</text>
+<text x="32" y="427" text-anchor="start" font-size="17" fill="#2C3E50" font-weight="400">Classes and frequencies come from the same recorded task. UCI Robot Execution Failures.</text>
+</g>
+</svg>

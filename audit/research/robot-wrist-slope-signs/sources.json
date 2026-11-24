@@ -1,0 +1,139 @@
+{
+  "archive_bytes": 59365,
+  "archive_sha256": "cdfbe0b260f4a21c5249fe0da4b1baf4041959663a9182253885ee1f41a4568e",
+  "archive_url": "https://archive.ics.uci.edu/static/public/138/robot+execution+failures.zip",
+  "authors": [
+    "Luis Seabra Lopes",
+    "Luis M. Camarinha-Matos"
+  ],
+  "dataset": "Robot Execution Failures",
+  "doi": "10.24432/C5M89N",
+  "metadata": {
+    "donor": {
+      "bytes": 6106,
+      "resolved": "https://archive.ics.uci.edu/ml/machine-learning-databases/robotfailure-mld/robotfailure.data.html",
+      "sha256": "fdf92c8f8f27014affe9442cb1273bb655b24bcf1ca575e5ca43f8e8c279c62b",
+      "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/robotfailure-mld/robotfailure.data.html"
+    },
+    "modern": {
+      "bytes": 79131,
+      "resolved": "https://archive.ics.uci.edu/dataset/138/robot+execution+failures",
+      "sha256": "3bbcaf7e7616d917b0afec830c4d7804601c285b4dae071a76d4d6986b744a78",
+      "url": "https://archive.ics.uci.edu/dataset/138/robot+execution+failures"
+    }
+  },
+  "method": {
+    "authors": [
+      "Abdullah Makkeh",
+      "Aaron J. Gutknecht",
+      "Michael Wibral"
+    ],
+    "primary_pdf_sha256": "5939ce0f4c727f1998040421c07a1689af1b8d9a35a0ee3c83fe25cd85263dc6",
+    "source": "arXiv:2002.03356v5"
+  },
+  "schema": "robot-wrist-slope-sources-v1",
+  "tasks": [
+    {
+      "bytes": 27345,
+      "class_names": [
+        "normal",
+        "collision",
+        "front collision",
+        "obstruction"
+      ],
+      "donor_task": "failures in approach to grasp position",
+      "id": "LP1",
+      "labels": [
+        "normal",
+        "collision",
+        "fr_collision",
+        "obstruction"
+      ],
+      "n": 88,
+      "name": "lp1.data",
+      "sha256": "e146de5aeaffd864f0e57ce2fe0b58e98582c3e808e6c0e8deb9b25a54ef0cb5"
+    },
+    {
+      "bytes": 14606,
+      "class_names": [
+        "normal",
+        "front collision",
+        "back collision",
+        "collision to the right",
+        "collision to the left"
+      ],
+      "donor_task": "failures in transfer of a part",
+      "id": "LP2",
+      "labels": [
+        "normal",
+        "front_col",
+        "back_col",
+        "right_col",
+        "left_col"
+      ],
+      "n": 47,
+      "name": "lp2.data",
+      "sha256": "565096a67cc8b9e4cef299316b3ab769054215a6342636e208611eafa780f950"
+    },
+    {
+      "bytes": 14512,
+      "class_names": [
+        "ok",
+        "slightly moved",
+        "moved",
+        "lost"
+      ],
+      "donor_task": "position of part after a transfer failure",
+      "id": "LP3",
+      "labels": [
+        "ok",
+        "slightly_moved",
+        "moved",
+        "lost"
+      ],
+      "n": 47,
+      "name": "lp3.data",
+      "sha256": "38e5cb0b22477772a03edee82599591375790cb945cf1256ed0a4b516cc30e1a"
+    },
+    {
+      "bytes": 33619,
+      "class_names": [
+        "normal",
+        "collision",
+        "obstruction"
+      ],
+      "donor_task": "failures in approach to ungrasp position",
+      "id": "LP4",
+      "labels": [
+        "normal",
+        "collision",
+        "obstruction"
+      ],
+      "n": 117,
+      "name": "lp4.data",
+      "sha256": "f0c901ead751ff3104d7e1aeb23165efb88270b219c1954c43bfff2344a7bb3c"
+    },
+    {
+      "bytes": 49158,
+      "class_names": [
+        "normal",
+        "bottom collision",
+        "bottom obstruction",
+        "collision in part",
+        "collision in tool"
+      ],
+      "donor_task": "failures in motion with part",
+      "id": "LP5",
+      "labels": [
+        "normal",
+        "bottom_collision",
+        "bottom_obstruction",
+        "collision_in_part",
+        "collision_in_tool"
+      ],
+      "n": 164,
+      "name": "lp5.data",
+      "sha256": "0f327415504dccec9509a84f6fa7aea9ebc28e5fa85f2f00933c90565d51108d"
+    }
+  ]
+}

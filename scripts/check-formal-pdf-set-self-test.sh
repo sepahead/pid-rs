@@ -69,6 +69,8 @@ LATEX_STANDALONE=(
   two-source-sxpid-count-atom-bridge
 )
 MARKDOWN_SOURCES=(
+  audit/research/angular-four-moment-radius/EXPOSITION.md
+  audit/research/robot-wrist-slope-signs/EXPOSITION.md
   MATHEMATICAL_RESULTS_GUIDE_CURRENT.md
   FINITE_COPY_BOOTSTRAP_COVERAGE.md
   audit/research/three-source-alphabet-counts/README.md
@@ -99,6 +101,8 @@ MARKDOWN_SOURCES=(
   SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
 )
 STANDALONE=(
+  angular-four-moment-radius
+  robot-wrist-slope-signs
   mathematical-results-guide-current
   finite-copy-bootstrap-coverage
   three-source-alphabet-counts
@@ -1603,7 +1607,7 @@ mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed
 expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
-for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage three-source-alphabet-counts three-source-w02 normalized-shannon-arithmetic three-source-six-certificate-observations three-source-supported-states two-source-synergy-bound-example mathematical-results-guide-current; do
+for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage three-source-alphabet-counts three-source-w02 normalized-shannon-arithmetic three-source-six-certificate-observations three-source-supported-states two-source-synergy-bound-example mathematical-results-guide-current angular-four-moment-radius robot-wrist-slope-signs; do
   fixture="$TEST_ROOT/missing-$bias_stem-pdf"
   make_fixture "$fixture"
   mv "$fixture/output/pdf/$bias_stem.pdf" "$fixture/removed-bias-paper.pdf"

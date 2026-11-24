@@ -1,17 +1,24 @@
 {
-  "edition": "2026-11-23",
-  "scope": "The five-page account of the six certificates, count proofs, sampling example and 184 supplied-input calls is followed by five pages on ten project results. Each result identifies its published ingredients, the project addition, the evidence and its limits. The input manifest preserves the exact 21 November profile.",
+  "edition": "2026-11-23-angular-radius-and-robot-wrist-tables",
+  "scope": "Ten project results and five recorded robot tables. The angular study gives a uniform four-moment radius bound and a failing direction for one fixed continuous law and gauge. The separate UCI application compares five empirical categorical laws, their signed MGW atoms, conditional information and same-table modal decisions. The two source reports, their PDFs and their exact certificates are edition inputs.",
   "inputs": {
-    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "48e9b65a0b3c215fc14bcbf3b40325dd4fef86491102367c9f28fcfef35133a1",
-    "audit/formal/latex/mathematical-results-guide-current/publication.tex": "888bd28f64d11359417f36de6cf63e1b5aa066121db254036f2213e9c7e729ce",
+    "MATHEMATICAL_RESULTS_GUIDE.md": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b",
+    "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md": "e9b4ec1fc49bb0acd043126920a1445c012751edc17662ecb33a1b9f013e9f89",
+    "audit/formal/latex/mathematical-results-guide-current/edition-2026-11-21.json": "c9559ad56a1adf8c27668fa2dbe99b303f9be31e8dc38a40bd79f7e74b7aef9e",
+    "audit/formal/latex/mathematical-results-guide-current/edition-2026-11-23-contributions.json": "0e73577a30c75abbdd24caf6ba4df42bcb31a7092bb9603feda37a3015bf832d",
     "audit/formal/latex/mathematical-results-guide-current/publication.lua": "a713e46272f30403799091deaaac155eed434495b6444931dab05c022b867485",
+    "audit/formal/latex/mathematical-results-guide-current/publication.tex": "592a13c035d25c621aafedb20221fa1d3580bccf4222d9ec939fed925d902d9e",
     "audit/formal/latex/pid-rs-report-tables.sty": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
     "audit/formal/latex/pid-rs-workflow-publication.sty": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
-    "MATHEMATICAL_RESULTS_GUIDE.md": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b",
+    "audit/research/angular-four-moment-radius/EXPOSITION.md": "015eb6ea112e4fe9b4b88a68124d72bd87ddeede0fc074740cbd009e5c1a8cfc",
+    "audit/research/angular-four-moment-radius/certificate.json": "5ded26413a7dacd9955afbc38114e19e7a5cd91f29fce72bbaa2fbb22eafd3a8",
+    "audit/research/robot-wrist-slope-signs/EXPOSITION.md": "8fe235bf4c6e132ddb55238133f5f64141647f49706661672ee8dcfbe3e71994",
+    "audit/research/robot-wrist-slope-signs/certificate.json": "94ba9611a6fb38c8df5c1e3aa8ff798149649e729bc4b9b02ecd960ba45c219c",
+    "output/pdf/angular-four-moment-radius.pdf": "0e23422743ff8a1650e1963c4a2e540ad9d2d847c5df46d51aa2452ab746bc9a",
     "output/pdf/mathematical-results-guide.pdf": "166dd75fc3f60b6f30feee8cbba46076bba28abc5aaaf3d33f8b1475e6ab15f1",
-    "audit/formal/latex/mathematical-results-guide-current/edition-2026-11-21.json": "c9559ad56a1adf8c27668fa2dbe99b303f9be31e8dc38a40bd79f7e74b7aef9e"
+    "output/pdf/robot-wrist-slope-signs.pdf": "f778624f0f6e9f48b8e488ca55536d3d77301da0697ef002d3e48b592971f93b"
   },
-  "pdf_sha256": "041145cbe552a55a44067e37d64c652c5ac816912b0a331c614dad1e583ca76e",
+  "pdf_sha256": "68aa4963b89980473b87250e51e9c54c5269010cd0322ccfd172a3e98cf5d969",
   "pdfinfo": {
     "Title": "Mathematical results guide for November 2026",
     "Author": "Sepehr Mahmoudian",
@@ -20,7 +27,7 @@
     "Encrypted": "no",
     "JavaScript": "no",
     "Tagged": "no",
-    "Subject": "Published methods, ten project results, numerical evidence and limits"
+    "Subject": "Ten project results, four-moment angular bounds and five recorded robot tasks"
   },
   "embedded_font_entries": 9,
   "page_text": [
@@ -31,7 +38,9 @@
       "Entries 5 and 194, counting from zero",
       "Each of the other 14 ordered samples",
       "covered probability is 1 − 17/81 = 64/81.",
-      "final five pages explain ten project results and their limits."
+      "final five pages explain ten project results and their limits.",
+      "The angular example compares four and eight moments.",
+      "The robot example compares information with classification on recorded episodes."
     ],
     [
       "What a fitted quantizer fixes",
@@ -116,9 +125,20 @@
       "Zero added CMI alone",
       "A continuous angular reference with a relative error bound",
       "use product Lebesgue measure.",
-      "Integration over source two retains the first cosine.",
       "1/1,253,376.",
-      "At the origin the relative error is undefined."
+      "the joint density of the retained sources and target keeps the first cosine.",
+      "At the origin the absolute truncation error is zero and relative error is undefined.",
+      "only four even moments",
+      "Each has only pair branches.",
+      "three proper terms exact",
+      "relative error is strictly below one part per million.",
+      "the actual error is strictly above it.",
+      "between 583/2048 and 1197/4096",
+      "width 31/4096.",
+      "An exact rational scan of 2,048 radii",
+      "Four-moment study",
+      "Report PDF",
+      "Exact certificate"
     ],
     [
       "Plug-in convergence for categorical data and a frozen transform",
@@ -131,7 +151,21 @@
       "Eight difference intervals included zero.",
       "all four worst-case conditions",
       "Model assistance supported source comparison, drafting and checking.",
-      "Software citation"
+      "Software citation",
+      "four-moment angular scan runs offline in exact arithmetic.",
+      "public Rust API has no continuous three-source evaluator for it.",
+      "Force and torque signs in five recorded robot tasks",
+      "15 wrist readings after event detection.",
+      "the least-squares slopes for force and torque",
+      "Each task has its own table.",
+      "0.038614 nat of conditional information.",
+      "Adding force to torque gives 0.017518 nat.",
+      "paired rules each classify 72 of 117 episodes correctly on this table.",
+      "Both conditional gains are positive in all five tasks.",
+      "The signed MGW unique atom for force is negative in LP4, as is the one for torque in LP5.",
+      "These recorded counts do not measure future prediction.",
+      "UCI dataset",
+      "Robot study"
     ]
   ],
   "uri_targets": [
@@ -142,6 +176,7 @@
     "https://doi.org/10.1002/rsa.20008",
     "https://doi.org/10.1103/PhysRevE.103.032149",
     "https://doi.org/10.1145/1102351.1102424",
+    "https://doi.org/10.24432/C5M89N",
     "https://doi.org/10.3931/e-rara-101019",
     "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
     "https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
@@ -162,10 +197,14 @@
     "https://github.com/sepahead/pid-rs/blob/main/audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/angular-four-moment-radius/EXPOSITION.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/angular-four-moment-radius/certificate.json",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-count-table-encoding/README.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/normalized-shannon-arithmetic/README.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/robot-wrist-slope-signs/EXPOSITION.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/research/robot-wrist-slope-signs/certificate.json",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/source-coupling-compression/EXPOSITION.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-alphabet-counts/README.md",
     "https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-six-certificate-observations/README.md",
@@ -173,7 +212,9 @@
     "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md",
     "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/obligations.md",
     "https://github.com/sepahead/pid-rs/blob/main/output/RESEARCH_NOTES_2026_10_10.md",
+    "https://github.com/sepahead/pid-rs/blob/main/output/pdf/angular-four-moment-radius.pdf",
     "https://github.com/sepahead/pid-rs/blob/main/output/pdf/mathematical-results-guide.pdf",
+    "https://github.com/sepahead/pid-rs/blob/main/output/pdf/robot-wrist-slope-signs.pdf",
     "https://www.rfc-editor.org/rfc/rfc8259"
   ]
 }

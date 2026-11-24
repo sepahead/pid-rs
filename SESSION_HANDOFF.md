@@ -1,5 +1,41 @@
 # Session handoff — updated 23 November 2026
 
+## Four even moments for a continuous angular top atom
+
+Ehrlich and coauthors defined the continuous shared-exclusions functional. The
+project's two-harmonic model uses three source angles and one target in a common
+radian scale. Write $a,b$ for the two amplitudes and $r=|a|+|b|$. Approximating
+only the joint term with four even moments keeps the relative error below one part
+per million for every direction through $r=583/2048$, with $r>0$. At
+$a=1197/4096$, $b=0$, the true error exceeds that tolerance. The project contribution
+is a two-sided interval of width $31/4096$ for the unknown uniform threshold.
+Two exact-arithmetic readers checked the endpoints. The analytic proof covers the
+intervening parameters in the guaranteed region. The origin, other gauges, finite
+samples and floating-point evaluation each need their stated treatment.
+[Study and assumptions](audit/research/angular-four-moment-radius/EXPOSITION.md) ·
+[PDF](output/pdf/angular-four-moment-radius.pdf) · [Exact certificate](audit/research/angular-four-moment-radius/certificate.json)
+
+## Axial force, torque and five robot outcomes
+
+Luis Seabra Lopes and Luis M. Camarinha-Matos recorded the UCI *Robot Execution
+Failures* data. The study uses 463 complete episodes in five separate task
+tables. Each 15-reading window starts after detection. The signs of the axial
+force and torque slopes are the two sources. The target is the donor's class for
+that task. In LP3 it describes the position of the part after a transfer failure.
+Under the categorical shared-exclusions rule of Makkeh, Gutknecht and Wibral,
+the signed unique atom is negative for force in LP4 and for torque in LP5.
+
+Each sign adds conditional information about the class in all five recorded
+tables. In LP4, adding torque given force gains 0.038614 nats and adding force
+given torque gains 0.017518 nats, rounded to six decimal places. With either
+sign, both signs, or the class counts alone, the most frequent class gives 72
+correct labels out of 117. These comparisons use the same recorded table. They
+establish no accuracy on new trials or early-warning performance.
+[UCI data and citation](https://doi.org/10.24432/C5M89N) ·
+[Study and task tables](audit/research/robot-wrist-slope-signs/EXPOSITION.md) ·
+[PDF](output/pdf/robot-wrist-slope-signs.pdf) ·
+[Exact certificate](audit/research/robot-wrist-slope-signs/certificate.json)
+
 ## The catalog count in the KSG preservation check
 
 At commit `a9ee3b5a1818e88ca7a28054365fd52ed1463040`, 46 of the 47 CI jobs passed. The KSG check stopped because it expected 50 references. The catalog had 75 entries and 51 references. The SHA-256 digest of the failed job log is `439b495bab2cca3d9ba486c9b40fb5171fca7ca0b9a4065240a95d6c550317a2`. [Original job](https://github.com/sepahead/pid-rs/actions/runs/45143816907/job/137588066862) · [Current catalog](method-catalog.json)
@@ -747,7 +783,7 @@ counts nor an excuse to remove a test.
 | PID2 revision 4 | [Represented-coordinate assurance](PID2_REPRESENTED_COORDINATE_ASSURANCE.md) describes implemented exact dyadic synergy reduction and the inclusive 32-position guard | Resolve applicable universal Rust/refinement, broader binary64/platform, estimator/calibration and consumer obligations. Do not regress to older Neumaier behavior or call the new engineering scientific novelty |
 | SxPID3 | [Current adjudication index](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md) points to [decision-v3](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md) and [matrix-v3](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md) | Claim revision stays 1; Programs A–E closed is 0/5. Finish each frozen obligation including upstream canonical-input D1, without treating bounded compatibility as closure |
 | Frontier mathematics and estimators | Detailed proof documents and [limitations](KNOWN_LIMITATIONS.md) | Examine applicable probability, dependence, drift, transformed/cross-fit, numerical and finite-sample gaps. General mixed-support and hyperbolic Sx estimators remain separate open research; preserve negative outcomes |
-| Ecosystem qualification | [Sensor/Galadriel guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md) and [capabilities](ECOSYSTEM_CAPABILITIES.md) | Benchmark justified uses against simpler baselines. Existing studies are offline synthetic/conformance evidence. No demonstrated placement, fusion, alert, or real-time superiority is inherited |
+| Ecosystem qualification | [Sensor/Galadriel guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md) and [capabilities](ECOSYSTEM_CAPABILITIES.md) | Benchmark proposed uses against simpler baselines. Synthetic fixtures and recorded office and robot tables support their stated offline comparisons. Sensor placement, fusion, alerts and real-time performance still require direct evaluation for their intended use |
 | Release, documentation, and cleanup | AGENTS, scripts guide, release-scope/identity contracts, and durability records | Finish relevant Rust/Python/platform/package/formal/publication gates, coherent MD/PDF proofs, exact hosted/mainline checks, and individual branch dispositions |
 
 For SxPID3 specifically: A has owner-controlled paper correspondence and a finite three-source
