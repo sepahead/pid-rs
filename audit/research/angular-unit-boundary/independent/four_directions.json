@@ -1,0 +1,54 @@
+{
+  "balanced_moment": "3969/65536",
+  "lower_bound_at_39_over_100": "337176583410303/327680000000000000000",
+  "lower_ppm_at_39_times_10_to_12": [
+    1028981272614,
+    1028981272615
+  ],
+  "scope": "all r from 39/100 to 1 and all directions; sufficient threshold, does not optimize the minimum over directions; extends averaged atom continuously at r=1",
+  "three_tenths_N16": {
+    "pure-first": {
+      "F_times_10_to_24": [
+        3356103110031932,
+        3356103110032155
+      ],
+      "ppm_times_10_to_12": [
+        1243953259800,
+        1243953259801
+      ]
+    },
+    "pure-second": {
+      "F_times_10_to_24": [
+        -5647796875803295,
+        -5647796875803072
+      ],
+      "ppm_times_10_to_12": [
+        751865782498,
+        751865782499
+      ]
+    }
+  },
+  "three_tenths_N22": {
+    "pure-first": {
+      "F_times_10_to_24": [
+        3356103110032151,
+        3356103110032152
+      ],
+      "ppm_times_10_to_12": [
+        1243953259800,
+        1243953259801
+      ]
+    },
+    "pure-second": {
+      "F_times_10_to_24": [
+        -5647796875803076,
+        -5647796875803075
+      ],
+      "ppm_times_10_to_12": [
+        751865782498,
+        751865782499
+      ]
+    }
+  },
+  "universal_coefficient_for_r_to_eight": "63/32768"
+}

@@ -2,7 +2,7 @@
 
 **Sepehr Mahmoudian · 24 November 2026**
 
-Which information measures come from published work, and what can pid-rs establish about their values, estimates and uses? The final six pages explain ten project results and their limits. The angular example gives a sharp error threshold. The robot example compares two targets measured on the same recorded cases. The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its [28-page PDF](output/pdf/mathematical-results-guide.pdf) cover nine result families.
+Which information measures come from published work, and what can pid-rs establish about their values, estimates and uses? The final seven pages explain ten project results and their limits. The angular example gives a sharp error threshold and the least number of moments for the full amplitude range. The robot example compares two targets measured on the same recorded cases. The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its [28-page PDF](output/pdf/mathematical-results-guide.pdf) cover nine result families.
 
 ## Reading the results
 
@@ -173,6 +173,16 @@ The project also asks how large the radius can be when only **four even moments*
 For every direction through $r=583/2048$, with $r>0$, the four-moment error is below one part per million. The point $a=1197/4096$, $b=0$ exceeds it. An exact scan of 2,048 radii gave these two bounds, separated by $31/4096$. [First four-moment study](audit/research/angular-four-moment-radius/EXPOSITION.md) · [Report PDF](output/pdf/angular-four-moment-radius.pdf) · [Exact certificate](audit/research/angular-four-moment-radius/certificate.json)
 
 Let $M$ be a positive integer. Keep the first $M$ even moments of the joint term. The proof shows that only the two first-harmonic directions $(a,b)=(r,0),(-r,0)$ give the largest relative error at each $0<r<1$. This largest error increases strictly with radius. With four moments it reaches one part per million at one radius, about 0.29203860877613. Below it every direction passes the strict test. At the threshold only the two first-harmonic directions reach equality. Above it those two directions fail. The population proof uses exact proper terms and no sampled angles. [Extremum proof](audit/research/angular-truncation-extremum/EXPOSITION.md) · [Report PDF](output/pdf/angular-truncation-extremum.pdf) · [Root certificate](audit/research/angular-truncation-extremum/certificate.json)
+
+---
+
+### How many terms suffice when the density can reach zero?
+
+In the four-angle law above, the radius is $r=|a|+|b|$. At $r=1$ the density can reach zero. A zero requires each cosine to equal $-1$ for a positive coefficient and $+1$ for a negative coefficient. A uniform phase reaches each specified extreme with probability zero. The population average weights a logarithm by its density. For a density factor $z$ between zero and two, $z\log z$ tends to zero as $z$ decreases to zero. The proper terms also have integrable weighted logarithms. The proof therefore gives the averaged top atom on the whole boundary. Its value at the origin is zero, where a relative error has no denominator.
+
+For $0<r\le1$, only $(a,b)=(\pm r,0)$ give the largest relative error at fixed $r$. That error increases with $r$. Thus testing the first axis at $r=1$ decides whether a chosen number of moments is enough at every radius and direction. Let $H$ be its exact top atom there and $T_M$ the omitted joint tail in nats after $M$ even moments. The signed excess $T_M-10^{-6}H$ is negative exactly when the strict test passes. At $M=7{,}277$ it is strictly positive. At $M=7{,}278$ it is strictly negative. All tails decrease with $M$. Hence **7,278 is the least order** that gives relative truncation error below one part per million throughout the nonzero diamond. This result assumes exact proper terms. It gives a mathematical reference for an implementation. Sampling error and rounding need separate bounds. [Unit-amplitude proof](audit/research/angular-unit-boundary/EXPOSITION.md) · [Numerical certificate](audit/research/angular-unit-boundary/certificate.json) · [Illustrated report](output/pdf/angular-unit-boundary.pdf)
+
+Four moments also give a useful pair of test inputs. At $(0.30,0)$ the error exceeds one part per million. At $(0,0.30)$ it falls below that limit. At every radius from $0.39$ through $1$ all directions fail. Consider all radii at which at least one direction passes. Their least upper bound lies strictly between $0.30$ and $0.39$. Its exact value remains open. These cases concern known population laws in a common radian scale. [Recompute both directions](audit/research/angular-unit-boundary/replay.py)
 
 ---
 

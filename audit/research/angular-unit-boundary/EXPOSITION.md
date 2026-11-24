@@ -1,0 +1,156 @@
+# Angular information at a zero of the population density
+
+**Sepehr Mahmoudian · 2026 · Population reference calculation**
+
+[Standalone PDF](../../../output/pdf/angular-unit-boundary.pdf) · [Exact signed record](certificate.json) · [Source and review record](EVIDENCE.md) · [Native TeX](../../formal/latex/angular-unit-boundary/publication.tex)
+
+<!-- body -->
+## What accuracy is possible on the full range?
+
+The largest relative error from a finite sum of moments was previously known for a strictly positive four-angle density. What happens when that density first touches zero? For the population average, only a pure first harmonic gives the largest relative error at each positive radius. Its two signs give the same error. A developer who must guarantee strictly less than one part per million on the entire admissible amplitude range needs **7,278 even joint moments**. At 7,277 moments a unit first harmonic still fails. Both counts assume exact evaluation of all proper terms. [Previous interior proof](https://github.com/sepahead/pid-rs/blob/ef705d1ed3410fd9fbbf4920cb4643f6a5140a2f/audit/research/angular-truncation-extremum/EXPOSITION.md)
+
+## Definitions and scope
+
+An *angle* is a scalar measured in radians, with endpoints identified after one full turn. A *harmonic* here is one cosine multiplied by a real amplitude. The amplitude *radius* is the sum of the two absolute amplitudes. A *population average* weights a value by the assigned probability density. An *even moment* is the mean of an even power. An *atom* is one term in a specified partial information decomposition. Here the *top atom* is what remains at the full set of three sources after subtracting all lower atoms in the continuous shared-exclusions construction of Ehrlich and coauthors. A *proper term* uses fewer than all three sources in one branch. Natural logarithms measure the atom in nats. Its relative error has no units. There are no observations, fitted parameters or sampling assumptions in this calculation. The source grouping, target, radian scale and population density are fixed. [Ehrlich et al., version 3, §§III.1–III.2 and Appendix B](https://arxiv.org/html/2311.06373v3#S3.SS2) · [Defining paper](https://doi.org/10.1103/PhysRevE.110.014115)
+
+Write $A$ for the exact top atom, $J$ for the information the complete source tuple gives about the target, and $H$ for the atom on the first-harmonic axis. For a positive integer $M$, let $T_M$ be the error that remains when only the first $M$ even moments of $J$ are used. One part per million is a fraction of $10^{-6}$.
+
+<!-- page -->
+## The population law at a zero
+
+Let the source angles be $s_1,s_2,s_3$, and let the target angle be $t$. All range over a circle of length $L=2\pi$. Use the same neighbourhood scale for each source. Let $a,b$ be real amplitudes, put $r=|a|+|b|$, and set
+
+$$v=t-s_1,\qquad u=t-s_1-s_2-s_3\pmod L,\qquad C=\cos v,\quad D=\cos u.$$
+
+The assigned density relative to product Lebesgue measure is $L^{-4}X$ with $X=1+aC+bD$. Let $E_0$ mean integration against uniform probability measure on the four-dimensional torus. The variables $v,u$ are independent uniform angles under this measure: keep $s_1,s_2$, set $t=v+s_1$ and $s_3=v-u-s_2$, and note the change has determinant of magnitude one. The assigned population weights uniform integration by $X$. Integrating over the target shows the three sources are mutually independent and uniform. Integrating over the sources gives a uniform target. For $0\le r\le1$, $0\le X\le2$ and $E_0X=1$. For $r>1$, independently choosing each active phase near the adverse cosine extremum gives negative density on an open set.
+
+### Taking an average at a zero
+
+At $r=1$ a zero requires each active cosine to attain its adverse extremum. A single uniform angle hits a specified point with probability zero. This remains true on either pure axis, where only one phase is constrained. Thus $X>0$ almost everywhere, although it has no strictly positive global lower bound. Define $g(z)=z\log z$ for $z>0$ and $g(0)=0$. The function is bounded and continuous on $[0,2]$. The full joint term $J(a,b)=E_0g(X)$ is consequently continuous up to and including the unit boundary.
+
+For $0\le w\le1$ write
+
+$$R_a(w)=E_0[(1+aC)\log(1+awC)],\qquad H(s)=2R_s(1/2)-R_s(2/3),\quad 0\le s\le1.$$
+
+To check continuity of the weighted log, put $P=1+aC$, $Q=1-w+wP$. For $0<P\le1$, $P\le Q\le1$ and $|P\log Q|\le -P\log P$. For $1\le P\le2$, $1\le Q\le2$ and $|P\log Q|\le2\log2$. Define the weighted product to be zero at $P=0$. These bounds prove bounded convergence, including at $P=0,w=1$. Integrating $X|\log Q|$ over $u$ first gives $P|\log Q|$ almost everywhere. Every required local log is thus integrable under the actual population. Its value at an individual zero need not be specified.
+
+<!-- page -->
+## From three source pairs to the joint moments
+
+A branch is a nonempty subset of the sources. Integration over an omitted source removes the second harmonic from any proper branch. The first signal survives just when the branch contains source 1. The maximal proper pairs are $12,13,23$, where $12$ means sources 1 and 2. The weight $w$ is the fraction of selected pairs containing source 1. Inclusion–exclusion on their three sets of lower atoms uses $w=1,1,0$ for the three individual pairs, $1,1/2,1/2$ for their pairwise intersections and $2/3$ for the triple intersection. All selected pairs have equal-size source marginals. The averaged top atom is therefore
+
+$$A(a,b)=J(a,b)-J(a,0)+H(|a|),\qquad J(a,0)=R_a(1).$$
+
+Each term averages the logarithm of its own density ratio under the same population distribution. The inclusion–exclusion signs subtract the three individual proper terms, add their three intersections, and subtract their triple intersection. This equality applies on the unit boundary by finite linearity of the integrals defined above. It also agrees with their limit from strictly positive densities. This report makes no pointwise prescription at any zero.
+
+### The omitted moments
+
+For each integer $j\ge1$ let $c_j=\binom{2j}{j}/4^j$ and $k_j=c_j/[2j(2j-1)]$. For $r>0$ put $x=|a|/r$, $y=|b|/r=1-x$. The squared binomial probability sum is
+
+$$B_j=\sum_{i=0}^j\binom ji^{\!2} x^{2i}y^{2(j-i)}.$$
+
+The independent uniform cosine phases make all odd moments vanish. The even-cosine mean of degree $2i$ is $c_i$. The identity $\binom{2j}{2i}c_i c_{j-i}=c_j\binom ji^2$ gives $J=\sum_{j\ge1}k_jr^{2j}B_j$. The first $M$ terms replace only $J$; their omitted tail $T_M(a,b)$ is the absolute atom error in nats. It contains positive terms. On each pure axis $B_j=1$; in any mixed direction more than one binomial probability is positive, so $B_j<1$. Thus both pure axes maximize absolute error.
+
+The proper log series has coefficient $k_j f_j(w)$ at $a^{2j}$, where $f_j(w)=w^{2j-1}[2j-(2j-1)w]$. This adds the even log term and the odd term multiplied by $aC$. Write
+
+$$h_j=2f_j(1/2)-f_j(2/3)=2(2j+1)4^{-j}-(j+1)(4/9)^j,\qquad H(r)=\sum_{j\ge1}k_jh_jr^{2j}.$$
+
+Here $h_1=11/18$, $h_2=7/216$, and $h_j<0$ for $j\ge3$, since $2f_j(1/2)/f_j(2/3)=\frac{3(2j+1)}{2j+2}\left(\frac34\right)^{2j-1}<3(3/4)^5<1$. Since $f_j(0)=0$, $f_j(1)=1$ and $f_j'(w)=2j(2j-1)w^{2j-2}(1-w)\ge0$, $|h_j|\le2$. The moment and axial series originally hold for $r<1$. Since $B_j\le1$, their terms on the closed diamond are bounded by $2k_j$. The sum of these bounds converges: $k_j\le1/[(2j-1)2j]$, a summable subseries of $1/[n(n+1)]$. Bounded convergence for the integrals identifies their values on the boundary. This argument does not require the unweighted log power series to converge uniformly at its singularity.
+
+<!-- page -->
+## Why the same direction remains worst
+
+For $|a|<1$ differentiate the proper integral with respect to $w$. Pairing the two signs of the cosine gives $R'_a(w)=a^2(1-w)E_0[C^2/(1-a^2w^2C^2)]\ge a^2(1-w)/2$. A second derivative gives $R''_a(w)=-a^2E_0[(1+aC)C^2/(1+awC)^2]\le0$. Integrate the first bound and use concavity with $R_a(0)=0$. This yields $R_a(1/2)\ge3a^2/16$ and $R_a(1/2)\ge3R_a(2/3)/4$. Hence $H(|a|)\ge a^2/8$. The joint difference $J(a,b)-J(a,0)$ contains nonnegative terms, including $b^2/4$. By continuity,
+
+$$A(a,b)\ge a^2/8+b^2/4\ge r^2/12>0\quad(0<r\le1).$$
+
+To maximize the ratio, the binomial recursion at order $j+1$ averages two adjacent probabilities at order $j$ with weights $y,x$. By convexity, the sum of their squared averages is at most $B_j$. Also $B_j\ge x^{2j}$ from its final summand. Since $M\ge1$, every omitted term has $B_j\le B_2$. Thus $T_M(a,b)\le B_2T_M(r,0)$. In $A-B_2H(r)$ the coefficient of $k_jr^{2j}$ is $B_j-(1-h_j)x^{2j}-h_jB_2$. For $j=1,2$ it equals $(1-h_j)(B_j-x^{2j})+h_j(B_j-B_2)\ge0$. For $j\ge3$ it equals $(B_j-x^{2j})+(-h_j)(B_2-x^{2j})\ge0$ since $B_2\ge x^4$. Retain the quadratic term $(1-h_1)y^2$. Summation gives
+
+$$A(a,b)-B_2H(r)\ge (7/72)b^2.$$
+
+The positive margin survives the limit at $r=1$. Dividing shows that, for every finite $M\ge1$ and $0<r\le1$, only $(a,b)=(\pm r,0)$ maximize relative error. On that axis it is $Q_M(r)=T_M(r,0)/H(r)$. Divide the numerator and denominator by $r^4$. Every term in the numerator is nondecreasing and some increase strictly. The denominator is positive and strictly decreases: the first term decreases, the second is constant and all higher coefficients are negative. This proves strict radial increase for $0<r<1$. For any $r<1$ insert an intermediate radius between $r$ and one and use continuity. Then $Q_M(r)<Q_M(1)$ as well. At the origin the atom and absolute error are zero; their ratio is undefined.
+
+<!-- page -->
+## Exact worst case at unit amplitude
+
+On the first axis write $c=sw$ and $\eta=\sqrt{1-c^2}$. For $s<1$, factor $1+cC=((1+\eta)/2)|1+c e^{iv}/(1+\eta)|^2$. For $s<1$ the last factor has log $2\operatorname{Re}\sum_{n\ge1}(-1)^{n+1}(c e^{iv}/(1+\eta))^n/n$. Its constant coefficient is zero. Its first cosine coefficient is $2c/(1+\eta)$. Since $E_0 C^2=1/2$, integration gives $R_s(w)=\log((1+\eta)/2)+sc/(1+\eta)$. The continuity just proved extends its weighted mean to the boundary. On the first axis this gives
+
+$$
+\begin{aligned}
+J(1,0)&=1-\log2,\\
+R_1(1/2)&=\log[(2+\sqrt3)/4]+2-\sqrt3,\\
+R_1(2/3)&=\log[(3+\sqrt5)/6]+(3-\sqrt5)/2.
+\end{aligned}
+$$
+
+There is another derivation of $J(1,0)$. Put $c_0=1$. Its binomial recurrence gives $k_j=c_{j-1}/(4j^2)$. Integrate $\sum_{h\ge0}c_hz^h=(1-z)^{-1/2}$ once to get $\sum_{j\ge1}c_{j-1}z^j/j=2(1-\sqrt{1-z})$. Divide by $z$ and integrate to one, using nonnegative terms. Then $J(1,0)=\tfrac12\int_0^1[1+\sqrt{1-z}]^{-1}\,dz=\int_0^1 u/(1+u)\,du=1-\log2$.
+
+Each interval below encloses $10^{18}$ times its value at $(a,b)=(1,0)$. The first three quantities are in nats. The final ratio has no units. One calculation uses rational enclosures for the radical expressions. Another sums $H$ through order 128 and bounds both remaining geometric sums with their linear factors. It uses the first 180 terms of $-\log(1-z)$ at $z=1/2$. After $N$ terms its positive remainder is at most $z^{N+1}/[(N+1)(1-z)]$ for $0\le z<1$. Directed integer square roots bound each radical from both sides. [Calculations](boundary.py) · [Exact integer pairs](boundary-values.json)
+
+$$
+\begin{aligned}
+10^{18}H(1) &\in [151448083770895237,\ 151448083770895238],\\
+10^{18}J(1,0) &\in [306852819440054690,\ 306852819440054691],\\
+10^{18}T_4(1,0) &\in [10303340273388023,\ 10303340273388024],\\
+10^{18}Q_4(1) &\in [68032160043533570,\ 68032160043533571].
+\end{aligned}
+$$
+
+Thus the unit-amplitude first-axis error at four moments is about 6.8032 percent. For any $M$ the simpler inequality $T_M(a,b)\le c_{M+1} r^{2M+2}/(2M+1)$ remains finite even at unit amplitude. To see this, replace $c_j$ by $c_{M+1}$ in the tail and sum all terms $1/[n(n+1)]$ from $n=2M+1$ instead of only the odd-indexed ones. Dividing by $r^2/12$ gives a usable uniform bound for relative error.
+
+<!-- page -->
+## Why 7,278 is the least uniform order
+
+Let $d_M=T_M(1,0)-10^{-6}H(1)$. Each additional term reduces $d_M$ by the strictly positive $k_{M+1}$. A positive sign at $M-1$ and a negative sign at $M$ therefore suffice to establish the least uniform order for the strict tolerance. The first calculation bounds $-\log k$ using $z=(1-k)/(1+k)$ and the first 56 terms of $2\sum_{i\ge0}z^{2i+1}/(2i+1)$. Its omitted part is at most $2z^{113}/[113(1-z^2)]$ for the required $0\le z\le1/3$. It then uses the recurrence $c_j=c_{j-1}(2j-1)/(2j)$ and sums $k_j$ with rounding outwards at scale $10^{48}$. It subtracts this finite sum and $10^{-6}H(1)$ from $1-\log2$. Every earlier tested order has a definite sign. [Directed partial-sum calculation](prefix_order.py)
+
+A second calculation never subtracts the large partial sum. For $j\ge2$ set $g_j=c_j/[6(j-11/10)]$. The recurrence for $c_j$ gives the exact identity
+
+$$k_j=(1-e_j)(g_j-g_{j+1}),\qquad e_j=\frac{94j-11}{5j(2j-1)(10j+3)}.$$
+
+One can check it by multiplying both sides by the denominators, substituting $c_{j+1}=c_j(2j+1)/(2j+2)$ and collecting powers of $j$. The numerator of the residual polynomial in the comparison $6(j+1)(j-11/10)(j-1/10)$ against $j(2j-1)(3j+9/10)$ is the difference $(282j-33)/50$, in the order second minus first. The ratio $g_{j+1}/g_j$ is a product of two positive factors below one, and $g_j$ tends to zero. For $j\ge2$, $e_j<2/j^2$ follows by clearing positive factors: the difference is $106j^2-29j-30>0$. Also $e_j>0$. Thus for $n=M+1\ge2$, summing the differences gives
+
+$$(1-2/n^2)g_n\le T_M(1,0)\le g_n.$$
+
+The second route uses one exact binomial integer at each adjacent order, integer square-root bounds and an ordinary log series for the proper terms. It bounds many thousands of uncomputed terms with this telescoping inequality. [Direct tail calculation and 13 altered-input tests](judge.py)
+
+At scale $10^{18}$ the intervals below enclose $d_M$ in nats. In each line the directed partial sum comes first and the telescoping bound comes second.
+
+- For $M=7{,}277$, the two intervals are $[17{,}484{,}461,17{,}484{,}462]$ and $[17{,}479{,}894,17{,}485{,}614]$. Both lower ends exceed zero. The first-axis input at $r=1$ fails.
+- For $M=7{,}278$, the intervals are $[-13{,}730{,}106,-13{,}730{,}105]$ and $[-13{,}734{,}671,-13{,}728{,}954]$. Both upper ends are below zero. Every direction at every $0<r\le1$ passes.
+
+These two sign comparisons and the maximal-direction theorem establish the minimum. They do not imply that 7,278 terms are necessary at a smaller specified radius. [Exact signed record](certificate.json)
+
+<!-- page -->
+## Four moments in different directions
+
+The earlier positive-density result still gives the exact all-direction one-part-per-million cutoff for four moments. Its radius lies strictly between 0.292038608776134 and 0.292038608776135. At this cutoff the first axis attains equality. Above it, that axis fails. This conclusion alone leaves open whether some other direction still passes. [Exact interior root and proof](https://github.com/sepahead/pid-rs/blob/ef705d1ed3410fd9fbbf4920cb4643f6a5140a2f/audit/research/angular-truncation-extremum/EXPOSITION.md)
+
+A concrete input distinguishes the two questions. At $r=3/10$ the first axis fails. A separate calculation gives a relative error between 1.243953259800 and 1.243953259801 parts per million on this axis. At the same radius on the pure second axis, $A=J\ge r^2/4$. Since all $k_j$ decrease, $T_4/A\le4k_5r^8/(1-r^2)<10^{-6}$. There the relative error lies between 0.751865782498 and 0.751865782499 parts per million. Thus some directions still pass at a radius where the uniform guarantee has failed. [Separate finite axis calculation](independent/four_directions.py)
+
+For a bound valid in every direction, $h_j<1$ at each order, so $A\le J$. Also $J\le r^2\sum_j k_j=r^2(1-\log 2)<r^2/3$, since the positive odd-power series above at $z=1/3$ starts with $2/3$. To bound the omitted moment below, expand $|(1-x)+xe^{i\theta}|^{2j}$ and average over a uniform angle $\theta$. The average is $B_j$. The squared base is $1-4x(1-x)\sin^2(\theta/2)\ge\cos^2(\theta/2)$. Hence $B_j\ge c_j$, with equality precisely at $x=1/2$. The input that minimizes a single moment need not minimize the ratio with the full atom. With $k_5=7/2560$ and $c_5=63/256$, the first omitted moment now gives
+
+$$T_4/A>3k_5c_5 r^8=(1323/655360)r^8.$$
+
+At $r=2/5$ the lower bound is $1323/10^9$. The error therefore exceeds 1.323 parts per million. Every direction fails for $2/5\le r\le1$. The radius $2/5$ **is not sharp**: already at $r=39/100$ the displayed lower bound exceeds one part per million and increases thereafter. On the other side, the strict margin for the pure second axis at $3/10$ persists a short distance above that radius. The supremum of radii permitting at least one direction to pass is strictly between $0.30$ and $0.39$. Strictness at its upper end follows from the uniform margin and the explicit increasing lower bound at $0.39$. No exact value for that supremum, or monotonicity of each mixed-direction error, is established here.
+
+<!-- page -->
+## How to read the decision limits
+
+![At four even moments all directions pass below the interior root, the two axes differ at 0.30, and all directions fail from 0.39. At r=1 the first-axis signed excess is positive at 7,277 moments and negative at 7,278.](figures/angular-boundary-decisions.svg)
+
+**Figure 1.** Left, the amplitude axis is linear and shows only part of the allowed interval. The open circle excludes the exact root from the strict uniform pass. The filled diamond marks one sufficient all-direction failure radius. The exact first radius from which every direction fails is unknown. Right, each signed value is the absolute tail minus one millionth of the exact atom, in trillionths of a nat. The input is the unit first axis. A negative value passes. Each interval in the directed calculation is narrower than the plotted marker.
+
+**Worked use.** To check a program that uses four joint moments, give it $(a,b)=(0.30,0)$ and then $(0,0.30)$. The first case must exceed one part per million. The second must fall below it. To check a routine meant for the full domain, use $(1,0)$ with the two adjacent orders. Give a claimed numerical implementation its own rounding allowance before comparing a machine result with the mathematical intervals. [Recompute the four decisions](replay.py)
+
+<!-- page -->
+## Rust implementation and computational cost
+
+Inputs are two known, dimensionless real amplitudes for a specified four-angle population. There are no sample rows, categorical alphabets, occupied cells, fitted densities, learned parameters or resampling steps. The two-source continuous nearest-neighbour report in Rust has a different input and estimator. The project has no public Rust three-source population implementation for this boundary law. No finite-precision or physical measurement guarantee follows. [Rust engineering reference](https://github.com/sepahead/pid-rs/blob/ef705d1ed3410fd9fbbf4920cb4643f6a5140a2f/RUST_IMPLEMENTATION_AND_COST.md)
+
+The direct partial-sum calculation takes $O(M)$ bounded-precision recurrence steps and keeps a constant number of integer accumulators. The tail calculation instead constructs two large central binomial integers with about $2M$ binary digits each, and uses a constant number of exact elementary-function intervals. Integer operation costs depend on their bit lengths. The calculations run offline with Python's standard library. On one arm64 macOS 26.5.1 host with CPython 3.14.9, the four sequential finite executions comprising two interpreter modes of the candidate and judge took 2.25 seconds as one group. Its maximum sampled resident memory was 35,717,120 bytes. The guard allowed 120 seconds and 1 GiB. These measurements cover the fixed verification workload. Unsupported domains, malformed certificates or undecided signs stop the check. In the study directory run `python3 -I -S -B replay.py`, then `python3 -O -I -S -B replay.py`. Add `--self-test` to check five changed radius examples as well. [Complete replay](replay.py)
+
+For a numerical implementation this gives an adversarial, exactly specified population input; it can expose truncation or denominator errors before fitting any data. At four moments the same benchmark distinguishes the two coordinate axes at radius $0.30$. This is a test that requires no sample from a sensor. The 7,278 bound concerns only truncation of the full joint term. Simulation error, fitted density error, rounding and error in the proper terms require their own bounds. When $b=0$, the other two sources add no predictive information about $t$ once $s_1$ is known, yet the population top atom is positive. A question about adding a physical sensor needs a loss, paired observations and an appropriate held-out design. No deployed robot or neural data were analyzed for this result.
+
+**Provenance.** Ehrlich and coauthors supplied the continuous shared-exclusions functional. The project supplied this angular family, the earlier strict-interior derivation and the numerical reference problem. This report adds the almost-everywhere boundary extension, the exact minimum order on the full nonzero diamond, and the separate all-direction failure bound. The continuum arguments are analytic. The finite numerical predicates have separate exact arithmetic checks. Two additional model readers computed the adjacent signs before seeing the selected order. They shared the law and its equations. Model assistance was used for derivation, checking and exposition. No stock-kernel theorem, independent human assessment or literature priority is asserted. Cite Sepehr Mahmoudian (2026), *Angular information at a zero of the population density*, and identify the exact revision in use. [Software citation](../../../CITATION.cff)
+
+**Defining paper.** D. A. Ehrlich, K. Schick-Poland, A. Makkeh, F. Lanfermann, P. Wollstadt and M. Wibral (2024). *Partial information decomposition for continuous variables based on shared exclusions: Analytical formulation and estimation*. Physical Review E 110, 014115. [Version of record](https://doi.org/10.1103/PhysRevE.110.014115) · [arXiv:2311.06373v3](https://arxiv.org/abs/2311.06373v3)

@@ -1,5 +1,9 @@
 # Session handoff — updated 24 November 2026
 
+## Unit amplitude in the four-angle population calculation
+
+The new boundary study defines the weighted integrals where the assigned density reaches zero. It gives the least number of even joint moments needed for relative error below one part per million at every positive radius and direction, with the proper terms exact. At the worst direction, 7,277 moments fail and 7,278 pass. Four moments can pass on one axis and fail on the other at radius 0.30. The exact last radius with a passing direction, sampling error and rounding remain open. [Complete argument](audit/research/angular-unit-boundary/EXPOSITION.md) · [Signed comparison](audit/research/angular-unit-boundary/certificate.json) · [Standalone PDF](output/pdf/angular-unit-boundary.pdf)
+
 ## Source correction and angular accuracy threshold
 
 The sign-notation review at `52dd47c17fb2a0ae386805d254f9a17f03f8922c` kept its own check results. Before publication on main, a reading of the original experiment established that the two transfer tasks used the same 47 cases. The current report distinguishes the donor’s case statement, identical recorded traces and physical event identifiers. [Original experiment, pp. 380–381 and 386](https://doi.org/10.1007/978-1-4615-5725-8_23) · [Review run](https://github.com/sepahead/pid-rs/actions/runs/45368479286)

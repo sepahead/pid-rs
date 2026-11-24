@@ -1,0 +1,66 @@
+{
+  "control_count_exact_initial_coefficients": 40,
+  "denominator_for_F": "F=tail - 10^-6*H(1)",
+  "doubled": {
+    "F_minimal_times_10_to_24": [
+      -13730105866028,
+      -13730105866027
+    ],
+    "F_previous_times_10_to_24": [
+      17484461667010,
+      17484461667011
+    ],
+    "H_times_10_to_24": [
+      151448083770895237130585,
+      151448083770895237130586
+    ],
+    "J_times_10_to_24": [
+      306852819440054690582767,
+      306852819440054690582768
+    ],
+    "first_omitted_power": 14558,
+    "log_terms": 96,
+    "minimal_even_terms": 7278,
+    "prior_relative_ppm_times_10_to_12": [
+      1000115448549,
+      1000115448550
+    ],
+    "selected_relative_ppm_times_10_to_12": [
+      999909341171,
+      999909341172
+    ],
+    "sqrt_precision_bits": 480
+  },
+  "method": "fixed outward integer prefix of the one-axis absolutely convergent expansion, direct elementary integral at unit amplitude",
+  "primary": {
+    "F_minimal_times_10_to_24": [
+      -13730105866028,
+      -13730105866027
+    ],
+    "F_previous_times_10_to_24": [
+      17484461667010,
+      17484461667011
+    ],
+    "H_times_10_to_24": [
+      151448083770895237130585,
+      151448083770895237130586
+    ],
+    "J_times_10_to_24": [
+      306852819440054690582767,
+      306852819440054690582768
+    ],
+    "first_omitted_power": 14558,
+    "log_terms": 96,
+    "minimal_even_terms": 7278,
+    "prior_relative_ppm_times_10_to_12": [
+      1000115448549,
+      1000115448550
+    ],
+    "selected_relative_ppm_times_10_to_12": [
+      999909341171,
+      999909341172
+    ],
+    "sqrt_precision_bits": 240
+  },
+  "schema": "independent-angular-closed-boundary-first-order-v1"
+}

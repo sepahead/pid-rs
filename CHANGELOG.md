@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Extend the continuous angular population calculation to densities that reach zero on the unit-amplitude boundary. With the proper terms exact, 7,278 even joint moments are necessary and sufficient for relative truncation error below one part per million throughout the nonzero amplitude range. Four moments give different outcomes on the two axes at radius 0.30. [Proof, signed margins and worked cases](audit/research/angular-unit-boundary/EXPOSITION.md)
+
 - Establish the sharp error threshold for the four-moment approximation of one positive, fixed-radian angular law. The proof identifies the two worst directions for each positive integer number of retained moments. [Proof, exact root bounds and application scope](audit/research/angular-truncation-extremum/EXPOSITION.md)
 
 - Correct the provenance of the robot task tables. LP2 and LP3 share their 47 transfer cases. The ordered LP5 waveforms agree with the joined LP2 and LP4 files in 163 of 164 positions. The new comparison identifies what a common source table fixes under categorical shared exclusions. [Donor experiment](https://doi.org/10.1007/978-1-4615-5725-8_23) · [Study and trace receipt](audit/research/robot-wrist-slope-signs/EXPOSITION.md)
