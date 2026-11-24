@@ -19,7 +19,7 @@ Luis Seabra Lopes and Luis M. Camarinha-Matos donated five robot learning proble
 For a channel whose ordered readings are \(x_1,\ldots,x_{15}\), define its trend sign by
 
 \[
-D(x)=\sum_{i=1}^{15}(i-8)x_i,\qquad \operatorname{sign}D(x)\in\{-1,0,1\}.
+D(x)=\sum_{i=1}^{15}(i-8)x_i,\qquad \mathrm{sign}\,D(x)\in\{-1,0,1\}.
 \]
 
 The least-squares line with an intercept has slope \(D(x)/280\) per sample index. A positive constant sample spacing preserves the sign in elapsed time. An exact zero includes a varying trace whose weighted changes cancel. No smoothing, tolerance, replacement of missing readings, deduplication or feature tuning enters the table. A change of units with positive scale preserves the sign. Rotation of the coordinate frame can change it. The records do not give a calibrated physical rate.

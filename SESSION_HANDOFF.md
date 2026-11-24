@@ -1,4 +1,8 @@
-# Session handoff — updated 23 November 2026
+# Session handoff — updated 24 November 2026
+
+## Robot wrist trend equation in web and print
+
+The first two-study review at `0f0bf7d1891247a1dd712e413ffd70c4dea150f0` passed 45 of 47 CI jobs. The PDF and release-scope jobs both stopped on the sign-function command in the wrist study. The equation now uses a form that the repository's Markdown checker accepts. The trend sign still comes from the same centered sum of 15 integer readings. [Equation and five tables](audit/research/robot-wrist-slope-signs/EXPOSITION.md#from-wrist-measurements-to-five-finite-laws) · [Original PDF job](https://github.com/sepahead/pid-rs/actions/runs/45301305664/job/138134215827) · [Original release-scope job](https://github.com/sepahead/pid-rs/actions/runs/45301305664/job/138134216618)
 
 ## Four even moments for a continuous angular top atom
 

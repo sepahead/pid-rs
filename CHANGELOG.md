@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Use portable sign notation in the equation for the robot wrist trends. [Equation and source data](audit/research/robot-wrist-slope-signs/EXPOSITION.md#from-wrist-measurements-to-five-finite-laws)
+
 - Bound the error from four even moments in a fixed-scale angular population model. The actual relative error stays below one part per million for every direction through radius 583/2048. An axial example exceeds this tolerance at 1197/4096. [Derivation and exact certificate](audit/research/angular-four-moment-radius/EXPOSITION.md)
 
 - Publish five categorical task tables from the UCI *Robot Execution Failures* data. Each axial trend supplies positive conditional information about the donor's class on each recorded table. In the fourth task, the class counts alone, either trend and both trends all give 72 correct labels out of 117 under equal costs. [Study, inputs and exact tables](audit/research/robot-wrist-slope-signs/EXPOSITION.md)

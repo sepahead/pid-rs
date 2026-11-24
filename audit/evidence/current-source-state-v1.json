@@ -388,8 +388,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "349a502bfff8b547450b120f1bd8fb195e0d5ab2231b173421e5929a4e5dc340",
-        "size_bytes": 348809
+        "sha256": "fe34f152730241806358984ac08332bd1ce96713c7bcb5b8a79baa852c21ccec",
+        "size_bytes": 349008
       },
       {
         "git_mode": "100644",
@@ -640,8 +640,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "6a002d07c4d66ab42de1f636a68dd62608df991a6c5030fc60bc12b1825e7b5b",
-        "size_bytes": 74511
+        "sha256": "844c47a223de7b389f7e1e86d282fe1d1e7aa31a1eb5aa67c7e7ad1da9d858f7",
+        "size_bytes": 75241
       },
       {
         "git_mode": "100644",
@@ -18280,7 +18280,7 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
-        "sha256": "d8ecf3b11794c7056d20afe1622aac62d1ba26b037b5c0b3fe6e671cca9884d5",
+        "sha256": "526b83644643db89dab065bdd0b96a7997bdae87dec3615d00b33389b11cda0e",
         "size_bytes": 12647
       },
       {
@@ -19216,8 +19216,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/robot-wrist-slope-signs/body.tex",
-        "sha256": "90b4b6220b68922d428d180670f9791c75e404aa72c59d06e2f09d4fc94a48fa",
-        "size_bytes": 21959
+        "sha256": "f09e2d6183496907a82acb369f706f1d0658c6bcc73cc3d9cff8bb62ebbc2c5c",
+        "size_bytes": 21955
       },
       {
         "git_mode": "100644",
@@ -31174,8 +31174,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/EXPOSITION.md",
-        "sha256": "8fe235bf4c6e132ddb55238133f5f64141647f49706661672ee8dcfbe3e71994",
-        "size_bytes": 17923
+        "sha256": "e2d5894d02bbb41ac173aa1fca7b34fe00b70b1c031225e975d1186578df9cff",
+        "size_bytes": 17919
       },
       {
         "git_mode": "100644",
@@ -37180,7 +37180,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "86c95f2e70968ff481c859eaf7b4cbcafc73c5a2e35159aaf715b468933a149f",
+        "sha256": "21fa670085dc3806ab63903faa6a21f2f606b6aeae5ea6b95dd41dd234dc6d95",
         "size_bytes": 140337
       },
       {
@@ -38174,7 +38174,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "0726d5fa674824d7aad964229e9ce5eba5b1dd3c3aa23b46cf355f0d0646c845",
+    "entries_sha256": "306c8f44e2e0a2a45e810ec96223c91ece1260eb58a2d7fefdb9bb64091b8a7b",
     "entry_count": 6338
   },
   "subprojections": [
@@ -38187,7 +38187,7 @@
       ]
     },
     {
-      "entries_sha256": "e80e3b590f27531d85bc4f3e61289ea8dbc5c963dac2fe0f5e1e4ffc7b1966a0",
+      "entries_sha256": "9e349896fa6b9e7005381a69888699c74de8dbc7ab28dfe129cd90bde96cd3d3",
       "entry_count": 2393,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -38203,7 +38203,7 @@
       ]
     },
     {
-      "entries_sha256": "629343c33aa7fb678a8fab2e470f8b85188a960c258e4adcc9feea12e29f9227",
+      "entries_sha256": "2f39c30d5995bb5c17fce447f4774f8ffc84ab2a61fae9c75229e0ba870ff7df",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
