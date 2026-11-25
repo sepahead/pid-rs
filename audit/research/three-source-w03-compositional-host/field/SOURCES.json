@@ -1,0 +1,88 @@
+{
+  "current_workflow_observation": [
+    {
+      "path": ".github/workflows/finite-three-source-stock-replay.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/three-source-original-first-three.yml",
+      "state": "active"
+    },
+    {
+      "path": ".github/workflows/three-source-original-reachable-v3.yml",
+      "state": "active"
+    }
+  ],
+  "history": {
+    ".github/workflows/finite-three-source-stock-replay.yml": {
+      "blob": "397c8c64398527b813bb1c9834e6f9d1e78cee60",
+      "bytes": 5297,
+      "sha256": "5385363ecc5358f7ccd7435a9d8a2dadd2055be4cb563ec312c06d22335927be"
+    },
+    ".github/workflows/three-source-original-first-three.yml": {
+      "blob": "025d4d3b5b0f9e54a5349cd4166be237dc70ec0b",
+      "bytes": 4834,
+      "sha256": "7e0f45658eda1469e1d91d2007cb6a5bc23ab1fb48563c49974cf54562b7ea1b"
+    },
+    ".github/workflows/three-source-original-reachable-v3.yml": {
+      "blob": "e94f6dd3b94246ff085cf75369ee24503a9c5a2f",
+      "bytes": 3938,
+      "sha256": "ef38024136325c84298b440982be0a315f55ee962c2fb4daf83a4cda859e5fc0"
+    },
+    "audit/evidence/three-original-reachable-attempt-2026-11-21/result.json": {
+      "blob": "112004e2b5c361a1ca3be15f1172b8d6710f7760",
+      "bytes": 49413,
+      "sha256": "40e4a02b404f92c277133bf0b01fa26ba710aa49026ca7e7b52850552a1d34de"
+    },
+    "audit/evidence/three-source-original-proof-attempt-2026-11-20/result.json": {
+      "blob": "dd96e8f1108d0367e272391444980a0897244b83",
+      "bytes": 29581,
+      "sha256": "befccab0caecb6e3cd9b3feb21597c7ea3adf0505b61db74ca258556644876e6"
+    },
+    "audit/formal/finite-smt39-qualification-v1/raw/W03-reflexivity/generator.stdout.smt2": {
+      "blob": "6fda0a4281e67697b8e562d6e68f93acc6638165",
+      "bytes": 39272,
+      "sha256": "c67e6ab935acc7fb8fd1dd9c25fb6e6561db30cbe0b61ac8eb9a5968861126ff"
+    },
+    "audit/research/three-source-synthetic-projection/lean/ProjectionCore.lean": {
+      "blob": "19447b613c4dc744fa4c095895cb4f11fef13ba6",
+      "bytes": 3031,
+      "sha256": "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11"
+    },
+    "audit/research/three-source-w02/lean/W02Semantics.lean": {
+      "blob": "23a8615ec3708d046a0f1f39a222ede2ffab801e",
+      "bytes": 10838,
+      "sha256": "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3"
+    },
+    "audit/research/three-source-w02/lean_literals.py": {
+      "blob": "dc57595b7dc3d5a0ecd6ce51730c56135c88939c",
+      "bytes": 2514,
+      "sha256": "73913ccab97e64878c472c52ff8b9fd1cf6f8f861dac584d58f2acd3818aa274"
+    },
+    "audit/research/three-source-w02/source_reader.py": {
+      "blob": "2d2949655554a21774b034f450d1d5a705ff5918",
+      "bytes": 7129,
+      "sha256": "8826c1380b6fd9d6f8945672c0281aa69e7431e75152652c3109650440632302"
+    },
+    "audit/research/three-source-w02/source_writer.py": {
+      "blob": "465816f62b72faf3ab497afc741a2fc175b9c45a",
+      "bytes": 9353,
+      "sha256": "38b91a375ddb237c33f06db48519654cc6d41bd27678b2e1e4a6cabd02710504"
+    }
+  },
+  "official_release": {
+    "asset": {
+      "browser_download_url": "https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst",
+      "digest": "sha256:47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+      "id": 586761733,
+      "name": "lean-4.34.1-linux.tar.zst",
+      "size": 580432872
+    },
+    "tag": "v4.34.1"
+  },
+  "public_ref": "f9c61fe12e35d509ac8b440596caa522a8058d7a",
+  "related_parthood_concept": "Gutknecht, Wibral and Makkeh, arXiv:2008.09535v2",
+  "source_defining_measure": "No numerical PID measure. Original finite project syntax and W02 interpreter.",
+  "stock_kernel_replay": "https://github.com/leanprover/lean4/blob/5045d0056413266e57c625dcd7c365b10e377c52/src/Lean/Replay.lean",
+  "stock_replay": "https://github.com/leanprover/lean4/blob/5045d0056413266e57c625dcd7c365b10e377c52/src/LeanChecker.lean"
+}

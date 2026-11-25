@@ -1,0 +1,9 @@
+{
+  "archive_bytes": 580432872,
+  "archive_sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+  "archive_url": "https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst",
+  "asset_id": 586761733,
+  "lean_revision": "5045d0056413266e57c625dcd7c365b10e377c52",
+  "lean_sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+  "leanchecker_sha256": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe"
+}

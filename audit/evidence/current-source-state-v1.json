@@ -345,6 +345,12 @@
       },
       {
         "git_mode": "100644",
+        "path": ".github/workflows/w03-source-host-qualification.yml",
+        "sha256": "556d23bc85724fb038774db20588e5f5ee955923e7e685e7a84a5cedda2f5db5",
+        "size_bytes": 8404
+      },
+      {
+        "git_mode": "100644",
         "path": ".gitignore",
         "sha256": "34e9f3a614b4bac3c8f1e7f45d381d1e376b59d61a3b2469ee09ca80b2008ee9",
         "size_bytes": 3259
@@ -33741,6 +33747,210 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/README.md",
+        "sha256": "d39a8f96b2920f9534d6affab65b3993f6927698e4034b7efac67cb58dc547e5",
+        "size_bytes": 5760
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/check_delivery.py",
+        "sha256": "b939636eb2ec8294891ccd9083ac95d81c18248706b3164df2796d743cd37cdb",
+        "size_bytes": 7442
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/FIELD.json",
+        "sha256": "4773c2363ced0c069cf0bb3cc17baae51ca94f9599be7fbf4656a589a21a8067",
+        "size_bytes": 2456
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/FIELD.md",
+        "sha256": "ed3a63a8c939965854408ddb8781f4ee8529c9a7938bac252ff6e0ce4da95024",
+        "size_bytes": 11645
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/REVIEW.md",
+        "sha256": "10f64a7baf182833cda74c8dbd2b431899f81ae54b94d04c8f50db4a7ce4c2d8",
+        "size_bytes": 6054
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/SOURCES.json",
+        "sha256": "41e44e78eaf78959645ff2fbf8f886e06a581a9576e2062ede6292485588d042",
+        "size_bytes": 3909
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/common.py",
+        "sha256": "5bced620e43c5dc80c31393a50929b41f8e353f695458644baddd64d4f17ba2e",
+        "size_bytes": 1498
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/compiler_roster.json",
+        "sha256": "b2790a509be1644561bc9d563748e3cb029c04fcf58b1535d8418690aa21a570",
+        "size_bytes": 413
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/containment.py",
+        "sha256": "c784967ed4b9d07edd33ba990557b9893f1a796faac71044e8bbd2f90a138b9c",
+        "size_bytes": 3495
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/controls.py",
+        "sha256": "bdca4c80d72d14222de13c6691dd0de1367946d0b1d38dc5c3dad53a310fd853",
+        "size_bytes": 2884
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/expressions.py",
+        "sha256": "ee76d7fddbd0469bd82ffe8610a2a3cededb97eda33e52b5169f08525a4ce5a3",
+        "size_bytes": 3003
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/inputs/W03-source.json",
+        "sha256": "df88931f4a7fbae08f9a7e311be8ce14ba3dac8d1072f2e1f67b7ce3a95873a7",
+        "size_bytes": 1208
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/inputs/W03.smt2",
+        "sha256": "c67e6ab935acc7fb8fd1dd9c25fb6e6561db30cbe0b61ac8eb9a5968861126ff",
+        "size_bytes": 39272
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/judge.py",
+        "sha256": "7732807253dbf589c8d7bae82e2b321c37e061a3cbfcb128423dabfbf8d28449",
+        "size_bytes": 10616
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/lean/ProjectionCore.lean",
+        "sha256": "9af6bc2b66707df221d254975e87db0ebdce42c8c06220741eeff3aea2f5af11",
+        "size_bytes": 3031
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/lean/W02Semantics.lean",
+        "sha256": "e47fecb9c4221c594c623551fbc018037f827fe1418741a7393fda2027ccc6e3",
+        "size_bytes": 10838
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/lean/W03Literal.lean",
+        "sha256": "71775357f33cecc343ccb07b9c8e040c9d2bf1c6502af280fc56f71f825282c3",
+        "size_bytes": 132570
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/lean/W03Scope.lean",
+        "sha256": "03971e8d51b546caac92adf7d184365ac9f9d5a22fc0de7a80ed8b27ab5e1d34",
+        "size_bytes": 3523
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/lean_literals.py",
+        "sha256": "73913ccab97e64878c472c52ff8b9fd1cf6f8f861dac584d58f2acd3818aa274",
+        "size_bytes": 2514
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/modules.py",
+        "sha256": "f17da1f7c467f2a688cb3975c1e8c2d00a01474da44d19f3ce682185c70074f1",
+        "size_bytes": 2075
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/native_resources.py",
+        "sha256": "d5dd2682156862e674ba958a172877d87ffe899241c07ca262e8718e32af5fcc",
+        "size_bytes": 6277
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/observer.py",
+        "sha256": "9c5059172d1c7c56c4b775d460a2cc355f2837312201e1c391b17f47425456dd",
+        "size_bytes": 6016
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/receipt.py",
+        "sha256": "d8db505de083b51f561a21823ab47e683652bafe7c923914e24b5d024f4f034b",
+        "size_bytes": 4666
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/recipient.py",
+        "sha256": "3d36c7166f080913d771c01fd6d3d044041e1e507df313d1e29b553526f928b2",
+        "size_bytes": 8350
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/source.py",
+        "sha256": "af784230d68a378d6bb05fe4d248e25ea293956eddc94faa9141507b1c8e29d3",
+        "size_bytes": 3238
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/source_reader.py",
+        "sha256": "8826c1380b6fd9d6f8945672c0281aa69e7431e75152652c3109650440632302",
+        "size_bytes": 7129
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/source_writer.py",
+        "sha256": "38b91a375ddb237c33f06db48519654cc6d41bd27678b2e1e4a6cabd02710504",
+        "size_bytes": 9353
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/stock.json",
+        "sha256": "8602fcfcc6eb086f3c3d035367e99bb011f92508c94bffa3faa4fc1cbad85eaa",
+        "size_bytes": 494
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/stock.py",
+        "sha256": "7678ca60e6fd64fbcdfc5ab266f555c6bb2eb760c54fa04141a406b67a36dd4d",
+        "size_bytes": 3637
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/field/terms.py",
+        "sha256": "c00955e3e305d37419928c1581b564784175703b70e4cd13f4f70cd5f8bd45c7",
+        "size_bytes": 3654
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/observe_service.py",
+        "sha256": "d943ad42eca8459a4fce3ac7e0f64ad944dff56986ad7c58029539fe9d1c702c",
+        "size_bytes": 3197
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/read_delivery.py",
+        "sha256": "72981b29d0134e1cb1b1b8a37f16442901e309c58f4a7a3b3dc253d5d8919c5c",
+        "size_bytes": 10326
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/verify_distribution.py",
+        "sha256": "d653d838724577c435fdd72e848ab587d3297213f5ae71b4470f267602435525",
+        "size_bytes": 3208
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/three-source-w03-compositional-host/w03-compositional-field-v2.tar.gz",
+        "sha256": "46fe098e7f1d2e94e29f5b9a88e93d36e156f5b6514ad8b052822933c6e865ef",
+        "size_bytes": 54046
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/two-source-synergy-bound-example/README.md",
         "sha256": "2f953b2828437aff240e17198b1476b7bd73e3e65e6b66f8ee3797786e9dd6d8",
         "size_bytes": 10353
@@ -38438,8 +38648,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "27aafcab2f588b29d3a8a895879c94ec5d9d707fc12e7ac8c1681be0abc810b5",
-    "entry_count": 6382
+    "entries_sha256": "635e4a33569746edcb187b5a02d3b09898b1d7dd0dc4ecb707abc355a65d0b39",
+    "entry_count": 6417
   },
   "subprojections": [
     {

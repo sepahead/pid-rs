@@ -1,0 +1,13 @@
+{
+  "W02Semantics": [
+    "SmtW02.Term.fold._unsafe_rec",
+    "SmtW02.Term.foldArgs._unsafe_rec",
+    "SmtW02.allDistinct._unsafe_rec",
+    "SmtW02.instReprTerm.repr._unsafe_rec",
+    "SmtW02.intChain._unsafe_rec",
+    "SmtW02.rightImplies._unsafe_rec"
+  ],
+  "isPartial": true,
+  "isUnsafe": false,
+  "source": "original pinned W02Semantics only; fixed compiler auxiliaries excluded from every formal closure"
+}

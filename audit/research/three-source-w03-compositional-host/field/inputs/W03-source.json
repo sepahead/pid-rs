@@ -1,0 +1,50 @@
+{
+  "input": {
+    "relative_path": "audit/formal/finite-smt39-qualification-v1/raw/W03-reflexivity/generator.stdout.smt2",
+    "git_blob": "6fda0a4281e67697b8e562d6e68f93acc6638165",
+    "bytes": 39272,
+    "sha256": "c67e6ab935acc7fb8fd1dd9c25fb6e6561db30cbe0b61ac8eb9a5968861126ff"
+  },
+  "structure": {
+    "annotated_sha256": "9ebaea0df413137f8157b48186b0430f8105754526fe6606a22f55b86c061421",
+    "commands": 89,
+    "evaluated": false,
+    "full_spans": 27085,
+    "lean_sha256": "71775357f33cecc343ccb07b9c8e040c9d2bf1c6502af280fc56f71f825282c3",
+    "raw_bytes": 39272,
+    "sha256": "c67e6ab935acc7fb8fd1dd9c25fb6e6561db30cbe0b61ac8eb9a5968861126ff",
+    "spans_sha256": "19bbe7c4767ba53ce0e41cfac71e449d81e2fee59e8b10ad2f57a3871bccae95",
+    "tree_sha256": "86881846fd1adf2bb6208ddfcb3a4736ef6b5945fb2828a8fe735a5855771388"
+  },
+  "assertions": [
+    [
+      "assert",
+      [
+        "valid",
+        "a"
+      ]
+    ],
+    [
+      "assert",
+      [
+        "not",
+        [
+          "leq",
+          "a",
+          "a"
+        ]
+      ]
+    ]
+  ],
+  "slots": [
+    {
+      "index": 0,
+      "name": "a",
+      "source_type": [
+        "bv",
+        7
+      ]
+    }
+  ],
+  "combinations": 128
+}
