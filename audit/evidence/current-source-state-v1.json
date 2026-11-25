@@ -291,6 +291,12 @@
       },
       {
         "git_mode": "100644",
+        "path": ".github/workflows/real-log-odd-tail.yml",
+        "sha256": "a94d4723848befea39e432fd244d5b22cbef009fd562a36cfe6373cb479c1fbc",
+        "size_bytes": 4068
+      },
+      {
+        "git_mode": "100644",
         "path": ".github/workflows/release.yml",
         "sha256": "b54e460326e57dd8da102d6e10a22f38c7c3565b602227e4680e27bcdbf01447",
         "size_bytes": 36899
@@ -30537,6 +30543,120 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/Check.lean",
+        "sha256": "09e9e4a3a7dfdd4cc0f7f7e559cac2631c88684987e382a63f6cd331ab3b4a3d",
+        "size_bytes": 1547
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/False.lean",
+        "sha256": "5462acaf1e496c2ad9a0dfaefff0088aff8373255d7e8fdc1a2eca2624168c5a",
+        "size_bytes": 228
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/Model.lean",
+        "sha256": "0b50e915428545db53e08dfb082bc44615866b099dd97eb82692ac45905374ce",
+        "size_bytes": 452
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/ProofPrefix.txt",
+        "sha256": "ac49699fe79b9cd1ae4d7cfb06a19f01441e2ff3d7d9ae6f9f40bb8d59656a72",
+        "size_bytes": 319
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/ProofSuffix.txt",
+        "sha256": "1218446e300aa1b2ec399e85dfe6ca6f2b92f6e107a70258f38b34e6c7ce3901",
+        "size_bytes": 190
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/README.md",
+        "sha256": "3d9cc9c01af4c3ede382163c6fb26e3a8775ad354dc0a1e7ba2bb404e8c638a9",
+        "size_bytes": 4814
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/ROUTES.md",
+        "sha256": "411c941878fb12f9b160be5de7d0b6395e1e6594ef41262063aacd558ad0bbb5",
+        "size_bytes": 7401
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/allowed-identifiers.txt",
+        "sha256": "4d33ab67c0d8fb28f9c5227a81c27648a4287a30e00c1a241036f56b38e38c06",
+        "size_bytes": 2196
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/attempt.json",
+        "sha256": "a7a00807f57fa8c8963f172f76399c5f071a0c31a6fc3b540a019fdfe0f625e2",
+        "size_bytes": 621
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/candidate-proof.txt",
+        "sha256": "08888f06d3dd9ac20f56612a459a6226feac5eb3c4d10ed1252a1028a80cf759",
+        "size_bytes": 2962
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/frozen.json",
+        "sha256": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9",
+        "size_bytes": 3671
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-01-REGISTERED-BEFORE-CANDIDATE.json",
+        "sha256": "8ef86733e85fc954debe49e5408543d638cb8f115e362795715f79231a934fa7",
+        "size_bytes": 551
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-01-TERMINAL.json",
+        "sha256": "e2b278992234ebdaa47d58be930e358f052ae72a8987d94f5c7c45767131ac60",
+        "size_bytes": 506
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-01-candidate-proof.txt",
+        "sha256": "5b33151c2117dcea83ff4dcd9275ea67142f21d76aee97ef73333ccd29ccdf5a",
+        "size_bytes": 3003
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-02-registered.json",
+        "sha256": "fe95944ed8866d8080250c0f02052da057ab7e6edc133c573553bd7496e5181a",
+        "size_bytes": 440
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/original-route-register.md.txt",
+        "sha256": "d21fb0917ec4eeb5954193e32b817eecb61d429408f0fd534ea58b1d0028f6de",
+        "size_bytes": 7158
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/judge.py",
+        "sha256": "6452d42d84917bc3e0431795e1a372739ab3e6b156a38e37892a3070f9f95815",
+        "size_bytes": 9645
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/self_test.py",
+        "sha256": "afa80ee0008c0dfe53e8ed965347cab14b6ef299b8afa395a65ff64536ba4c12",
+        "size_bytes": 1906
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/workflow.source.yml",
+        "sha256": "a94d4723848befea39e432fd244d5b22cbef009fd562a36cfe6373cb479c1fbc",
+        "size_bytes": 4068
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/requirements-pdf.txt",
         "sha256": "90cda7a5c8dadda7ed0b0dbb2ef3767569b970fb7f86847bd866e63600addd49",
         "size_bytes": 93
@@ -38480,8 +38600,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "defe4706d62ca9d9e424f50e6ba7f276d19499d9363f40433fdb7f47298167f8",
-    "entry_count": 6389
+    "entries_sha256": "1504dba364dcf1f09d8f834918978b6ed70202e1c007844b3c978c967f28a94d",
+    "entry_count": 6409
   },
   "subprojections": [
     {
@@ -38493,8 +38613,8 @@
       ]
     },
     {
-      "entries_sha256": "195dba262222e8618aca267c198020533dcfe301bf09a4eca13e6a44e53e9a2c",
-      "entry_count": 2406,
+      "entries_sha256": "4db584f860587a7ac0cf2b153a1b6da9341a0170285eb604fa8897dc74fb8995",
+      "entry_count": 2425,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"

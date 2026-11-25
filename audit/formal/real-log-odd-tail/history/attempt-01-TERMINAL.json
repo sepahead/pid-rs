@@ -1,0 +1,9 @@
+{
+  "accepted": false,
+  "candidate": "5b33151c2117dcea83ff4dcd9275ea67142f21d76aee97ef73333ccd29ccdf5a",
+  "contract": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9",
+  "diagnostic": "unregistered proof identifier 2",
+  "exit_stage": "restricted source grammar",
+  "native_Linux_commands": 0,
+  "route": "original candidate used numeric projections and an anonymous placeholder. The enrolled restricted source grammar refuses them. No outcome was measured for the Lean proposition."
+}

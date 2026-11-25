@@ -1,0 +1,9 @@
+
+end PIDRealTail
+
+set_option pp.fullNames true
+set_option pp.deepTerms true
+set_option pp.proofs true
+set_option pp.maxSteps 1000000
+#print PIDRealTail.sharp
+#print axioms PIDRealTail.sharp
