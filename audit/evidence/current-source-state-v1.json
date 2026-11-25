@@ -30598,14 +30598,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/real-log-odd-tail/attempt.json",
-        "sha256": "bb70949b94886dd355254848c69f393cf6b3f27b0536883cc60252b2423108a5",
-        "size_bytes": 724
+        "sha256": "df5bb48f4b0b60c052e9d5b534894d258e3b416b73c689be93f25b5039d360b0",
+        "size_bytes": 630
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/real-log-odd-tail/candidate-proof.txt",
-        "sha256": "27a7b8079d7a2f4e89d626140527c7ff5b5e419e25479999eada58ea1c58922b",
-        "size_bytes": 2987
+        "sha256": "7d79a9d29d8c0ab7cd0b19c7b765f9ed8c7d498e43c8ca5a69fe98600decb760",
+        "size_bytes": 2978
       },
       {
         "git_mode": "100644",
@@ -30669,6 +30669,30 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-03-TERMINAL.json",
+        "sha256": "70b4ac1b9359fe8e280b32b37af24ea0d16e67cb216b1d2d0882eb2d37505e80",
+        "size_bytes": 3224
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-03-attempt.json",
+        "sha256": "bb70949b94886dd355254848c69f393cf6b3f27b0536883cc60252b2423108a5",
+        "size_bytes": 724
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-03-candidate-proof.txt",
+        "sha256": "27a7b8079d7a2f4e89d626140527c7ff5b5e419e25479999eada58ea1c58922b",
+        "size_bytes": 2987
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-04-REGISTERED-BEFORE-CANDIDATE.json",
+        "sha256": "fb31df65a3647089cf87b4fee7e08242e26263df2593c8605cf823417db287fd",
+        "size_bytes": 782
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/real-log-odd-tail/history/original-route-register.md.txt",
         "sha256": "d21fb0917ec4eeb5954193e32b817eecb61d429408f0fd534ea58b1d0028f6de",
         "size_bytes": 7158
@@ -30684,6 +30708,12 @@
         "path": "audit/formal/real-log-odd-tail/self_test.py",
         "sha256": "afa80ee0008c0dfe53e8ed965347cab14b6ef299b8afa395a65ff64536ba4c12",
         "size_bytes": 1906
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/third-stock-result.md",
+        "sha256": "f3e9e909cc2618f165a1b948de28c7ecc8d8139275c376a44db83bace91c0c41",
+        "size_bytes": 481
       },
       {
         "git_mode": "100644",
@@ -38636,8 +38666,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "9cf225cd6a48d140d80ccee6d198e7a1570c66e17abbaec06c767d3fea6ab34c",
-    "entry_count": 6415
+    "entries_sha256": "3806db9335a7354ef173345ef52fde6480e32a59eea7a29bc4203096633a4586",
+    "entry_count": 6420
   },
   "subprojections": [
     {
@@ -38649,8 +38679,8 @@
       ]
     },
     {
-      "entries_sha256": "8852c3299acc36d825c91f34f90253377651dcf029f0b5310d04b8963930e2c5",
-      "entry_count": 2431,
+      "entries_sha256": "201329ddc7e0533abe51759b145e855b6e492b95feddea5918815eb077b00237",
+      "entry_count": 2436,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"

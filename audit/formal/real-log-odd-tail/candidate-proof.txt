@@ -25,7 +25,7 @@
           (y ^ (2 * n)) y := by
         apply ((hasDerivAt_pow (2 * n + 1) y).div_const (2 * (n : ℝ) + 1)).congr_deriv
         have h_exp : 2 * n + 1 - 1 = 2 * n := by omega
-        simp [h_exp, Nat.cast_add, Nat.cast_mul] <;> field_simp [h_coef] <;> ring
+        simp [h_exp, Nat.cast_add, Nat.cast_mul] <;> field_simp [h_coef]
       apply (h_power.sub (((hasDerivAt_pow 2 y).const_sub (1 : ℝ)).mul h_tail)).congr_deriv
       simp [pow_mul] <;> field_simp [h_den] <;> ring
     have h_strong : StrictMonoOn g (Icc 0 x) := by
