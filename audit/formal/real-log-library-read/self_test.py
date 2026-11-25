@@ -21,7 +21,7 @@ for key,original in names.items():
         terms += f"@{name} : {types[key]}\n"
 for key in (*names,*names.values()):
     terms += f"'{key}' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
-wrong = "False.lean:5:2: error: Type mismatch\n  this\nhas type\n  0 < 1\nbut is expected to have type\n  1 < 0\n"
+wrong = "False.lean:5:9: error: Type mismatch\n  this\nhas type\n  0 < 1\nbut is expected to have type\n  1 < 0\n"
 if len(positive(terms)) != 4:
     raise ValueError("constructed mathematical observations")
 negative(wrong)
@@ -64,6 +64,21 @@ mutants.extend([
     (positive, "Read.lean:22:0: error: Unknown option for display\n" + wrapped),
     (positive, wrapped + "extra native output\n"),
     (positive, wrapped.replace("Classical.choice, ", "")),
+])
+note = (
+    "\nNote: The following definitions were not unfolded because their definition is not exposed:\n"
+    "  Real.instLT ↦ 2\n"
+)
+negative(wrong + note)
+mutants.extend([
+    (negative, wrong + note.replace("Real.instLT", "Real.instLE")),
+    (negative, wrong + note.replace("↦ 2", "↦ 3")),
+    (negative, wrong + note + note),
+    (negative, wrong + note + "unrelated diagnostic\n"),
+    (negative, note + wrong),
+    (negative, wrong.replace("  this\n", "  otherTerm\n") + note),
+    (negative, wrong.replace("5:9", "5:2") + note),
+    (negative, wrong.replace("  1 < 0\n", "  0 < 1\n") + note),
 ])
 for index,(read,text) in enumerate(mutants):
     try:

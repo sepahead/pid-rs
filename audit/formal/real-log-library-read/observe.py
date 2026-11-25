@@ -209,15 +209,18 @@ def positive(text):
 
 
 def false_control(text):
-    rows = [i for i in text.splitlines() if re.search(r":\d+:\d+: error:",i)]
-    require(len(rows)==1 and re.match(r"^False\.lean:5:\d+: error: [Tt]ype mismatch",rows[0]),
-            "wrong negative diagnostic")
-    supplied=re.split(r"\bhas type\b",text)
-    require(len(supplied)==2,"one supplied-type role")
-    roles=re.split(r"\bbut is expected to have type\b",supplied[1])
-    require(len(roles)==2 and re.fullmatch(r"\s*0\s*<\s*1(?:\s*:\s*Prop)?\s*",roles[0])
-            and re.fullmatch(r"\s*1\s*<\s*0(?:\s*:\s*Prop)?\s*",roles[1]),
-            "supplied and required propositions in their distinct diagnostic roles")
+    # These exact lines identify the two propositions and the false source.
+    diagnostic = (
+        "False.lean:5:9: error: Type mismatch\n"
+        "  this\nhas type\n  0 < 1\n"
+        "but is expected to have type\n  1 < 0\n"
+    )
+    hidden_order = (
+        "\nNote: The following definitions were not unfolded because their definition is not exposed:\n"
+        "  Real.instLT ↦ 2\n"
+    )
+    require(text in (diagnostic, diagnostic + hidden_order),
+            "unexpected diagnostic for the false real inequality")
 
 
 def main(args, result):

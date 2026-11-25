@@ -30508,8 +30508,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/real-log-library-read/README.md",
-        "sha256": "61351eeba08e89265991c15baca6b7067b937194f3f727b51296da9629f0fd8d",
-        "size_bytes": 3702
+        "sha256": "bec57aea45517234581d617650333421e1defb82809e3f9b5424c57eaa3c4da6",
+        "size_bytes": 4207
       },
       {
         "git_mode": "100644",
@@ -30526,14 +30526,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/real-log-library-read/observe.py",
-        "sha256": "c5db89656ce42af95293f5d44657384483e494b41efae4f42e28d5953f303e11",
-        "size_bytes": 13886
+        "sha256": "26477074e6a493982062374e06bdd3c1172e2bcf285f94e13713e6fa2a86bd30",
+        "size_bytes": 13787
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/real-log-library-read/self_test.py",
-        "sha256": "d1e65d9a96f557aa5cbb827a06c2a1d35b4e9993c740fa23afd40c3701dc3d34",
-        "size_bytes": 4002
+        "sha256": "98f0a537f9dfc44540f9738eb274e7d88ccc81019d7f3616a7cc256c72be7d95",
+        "size_bytes": 4616
       },
       {
         "git_mode": "100644",
@@ -38480,7 +38480,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "8d3dc01fa0a44e3be608eae226e00907ec7d8ed9a43919f4d197240b2f743a7d",
+    "entries_sha256": "defe4706d62ca9d9e424f50e6ba7f276d19499d9363f40433fdb7f47298167f8",
     "entry_count": 6389
   },
   "subprojections": [
@@ -38493,7 +38493,7 @@
       ]
     },
     {
-      "entries_sha256": "6dd14e823a5d63e33d027afa0c13289b02325f59932d4c1cbe2207b66c8148e3",
+      "entries_sha256": "195dba262222e8618aca267c198020533dcfe301bf09a4eca13e6a44e53e9a2c",
       "entry_count": 2406,
       "name": "formal_sources_and_receipts",
       "selectors": [
