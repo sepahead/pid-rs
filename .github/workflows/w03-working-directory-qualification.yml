@@ -1,0 +1,177 @@
+name: W03 fixed working-directory host qualification
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - review/w03-working-directory/*
+
+permissions:
+  contents: read
+
+env:
+  W03_PACKAGE: audit/research/three-source-w03-compositional-host/working-directory
+  W03_FIELD: a1f23f4805c2de8dcbe8551b7bf0fb2ce606b0eb510582a824c60565c5e54978
+  W03_ARCHIVE: 47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4
+
+jobs:
+  qualify:
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.created && !github.event.deleted) }}
+    runs-on: ubuntu-24.04
+    outputs:
+      artifact_id: ${{ steps.retain.outputs.artifact-id }}
+      artifact_digest: ${{ steps.retain.outputs.artifact-digest }}
+    timeout-minutes: 115
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+          sparse-checkout: audit/research/three-source-w03-compositional-host
+
+      - name: Bind the actual event and both forms of the source
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = sepahead/pid-rs
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          if [[ "$GITHUB_EVENT_NAME" == push ]]; then
+            [[ "$GITHUB_REF" =~ ^refs/heads/review/w03-working-directory/([0-9a-f]{40})$ ]]
+            test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA ${BASH_REMATCH[1]}"
+          else
+            test "$GITHUB_EVENT_NAME/$GITHUB_REF" = workflow_dispatch/refs/heads/main
+          fi
+          [[ "$GITHUB_RUN_ID" =~ ^[0-9]+$ ]]
+          w03_root="/var/tmp/pidrs-w03d-working-directory-$GITHUB_RUN_ID"
+          out="$RUNNER_TEMP/w03-transfer"
+          mkdir "$out"
+          printf 'W03_ROOT=%s\nW03_ID=W03D-%s-1\n' "$w03_root" "$GITHUB_RUN_ID" >> "$GITHUB_ENV"
+          printf 'repository=%s\ncommit=%s\nevent=%s\nref=%s\nrun=%s\nattempt=%s\n' \
+            "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$GITHUB_EVENT_NAME" "$GITHUB_REF" \
+            "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" > "$out/event.txt"
+          python3 -I -S -B "$W03_PACKAGE/verify_distribution.py" > "$out/distribution.json"
+          python3 -O -I -S -B "$W03_PACKAGE/verify_distribution.py" | cmp - "$out/distribution.json"
+          python3 -I -S -B "$W03_PACKAGE/check_delivery.py" > "$RUNNER_TEMP/w03-control-fixtures.json"
+          python3 -O -I -S -B "$W03_PACKAGE/check_delivery.py" | cmp - "$RUNNER_TEMP/w03-control-fixtures.json"
+          cat "$RUNNER_TEMP/w03-control-fixtures.json"
+          python3 -I -S -B "$W03_PACKAGE/check_environment.py" > "$RUNNER_TEMP/w03-environment-controls.json"
+          python3 -O -I -S -B "$W03_PACKAGE/check_environment.py" | cmp - "$RUNNER_TEMP/w03-environment-controls.json"
+          cat "$RUNNER_TEMP/w03-environment-controls.json"
+          sudo test ! -e "$w03_root"
+          sudo install -d -m 0755 "$w03_root"
+          sudo install -m 0444 "$W03_PACKAGE/observe_service.py" "$w03_root/observe_service.py"
+          sudo python3 -I -S -B "$W03_PACKAGE/verify_distribution.py" --install "$w03_root/field" | cmp - "$out/distribution.json"
+
+      - name: Obtain the official Linux archive
+        run: |
+          set -euo pipefail
+          if ! command -v bwrap >/dev/null || ! command -v zstd >/dev/null; then
+            sudo timeout 240 apt-get -q update
+            sudo timeout 240 apt-get -q install --no-install-recommends -y bubblewrap zstd
+          fi
+          command -v bwrap setpriv zstd systemd-run tar curl > "$RUNNER_TEMP/w03-transfer/host-tools.txt"
+          dpkg-query -W bubblewrap zstd util-linux systemd tar curl >> "$RUNNER_TEMP/w03-transfer/host-tools.txt"
+          for tool in bwrap setpriv zstd systemd-run tar curl; do command -v "$tool" >/dev/null; done
+          archive="$RUNNER_TEMP/w03-lean-4.34.1-linux.tar.zst"
+          curl --fail --location --proto '=https' --proto-redir '=https' --tlsv1.2 --retry 3 \
+            --retry-all-errors --max-time 600 --max-filesize 580432872 --output "$archive" \
+            https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst
+          test "$(stat -c %s "$archive")" = 580432872
+          printf '%s  %s\n' "$W03_ARCHIVE" "$archive" | sha256sum --check --strict
+          sudo mv -- "$archive" "$W03_ROOT/lean.tar.zst"
+          sudo chown root:root "$W03_ROOT/lean.tar.zst"
+          sudo chmod 0444 "$W03_ROOT/lean.tar.zst"
+          df -B1 "$W03_ROOT" > "$RUNNER_TEMP/w03-transfer/disk-before.txt"
+
+      - name: Run the protected source and artificial controls
+        run: |
+          set -euo pipefail
+          sudo systemd-run --wait --pipe --unit="pidrs-w03d-$GITHUB_RUN_ID" \
+            -p MemoryAccounting=yes -p MemoryMax=4G -p MemorySwapMax=0 -p CPUQuota=100% \
+            -p PrivateNetwork=yes -p RuntimeMaxSec=5700 \
+            /usr/bin/python3 -I -S -B "$W03_ROOT/observe_service.py" \
+              --root "$W03_ROOT" --run-id "$W03_ID" \
+            2>&1 | tee "$RUNNER_TEMP/w03-transfer/service.log"
+          test -s "$W03_ROOT/evidence/terminal.json"
+
+      - name: Retain the complete output on success or failure
+        if: ${{ always() }}
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/w03-transfer"
+          mkdir -p "$out"
+          if [[ -n "${W03_ROOT:-}" && -d "$W03_ROOT/evidence" ]]; then
+            sudo tar --sort=name -C "$W03_ROOT" -cf - evidence | tee "$out/evidence.tar" >/dev/null
+            (cd "$out" && sha256sum evidence.tar > evidence.sha256)
+          fi
+          if [[ -n "${W03_ROOT:-}" ]]; then
+            for stage in before after; do
+              if [[ -f "$W03_ROOT/host-limit-$stage.json" ]]; then
+                cp -- "$W03_ROOT/host-limit-$stage.json" "$out/"
+              fi
+            done
+            systemctl show "pidrs-w03d-$GITHUB_RUN_ID" -p Result -p ExecMainCode \
+              -p ExecMainStatus -p MemoryPeak -p MemoryMax -p MemorySwapMax \
+              > "$out/service-state.txt" || true
+          fi
+
+      - id: retain
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: ${{ always() }}
+        with:
+          name: w03-working-directory-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/w03-transfer
+          if-no-files-found: error
+          compression-level: 1
+
+  receive:
+    needs: qualify
+    permissions:
+      actions: read
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+          sparse-checkout: audit/research/three-source-w03-compositional-host
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          artifact-ids: ${{ needs.qualify.outputs.artifact_id }}
+          path: ${{ runner.temp }}/w03-download
+          merge-multiple: true
+          skip-decompress: true
+          digest-mismatch: error
+      - name: Bind the provider ID and the original job
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          W03_ARTIFACT_ID: ${{ needs.qualify.outputs.artifact_id }}
+        run: |
+          set -euo pipefail
+          [[ "$W03_ARTIFACT_ID" =~ ^[0-9]+$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$W03_ARTIFACT_ID" > "$RUNNER_TEMP/w03-metadata.json"
+      - name: Reconstruct the original statement and the positive and negative controls
+        shell: bash
+        env:
+          W03_ARTIFACT_ID: ${{ needs.qualify.outputs.artifact_id }}
+          W03_UPLOAD_DIGEST: ${{ needs.qualify.outputs.artifact_digest }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          python3 -I -S -B "$W03_PACKAGE/read_delivery.py" \
+            --bundle-dir "$RUNNER_TEMP/w03-download" --metadata "$RUNNER_TEMP/w03-metadata.json" \
+            --destination "$RUNNER_TEMP/received-w03" --repository "$GITHUB_REPOSITORY" \
+            --commit "$GITHUB_SHA" --ref "$GITHUB_REF" --event "$GITHUB_EVENT_NAME" \
+            --native-run "$GITHUB_RUN_ID" --artifact-id "$W03_ARTIFACT_ID" \
+            --upload-digest "$W03_UPLOAD_DIGEST" > "$RUNNER_TEMP/w03-recipient.json"
+          cat "$RUNNER_TEMP/w03-recipient.json"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: w03-working-directory-recipient-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/w03-recipient.json
+          if-no-files-found: error
