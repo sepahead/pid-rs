@@ -1,0 +1,229 @@
+'D1Token.read_emit' depends on axioms: [propext, Quot.sound]
+'D1Token.read_sound' depends on axioms: [propext]
+'D1Token.read_iff' depends on axioms: [propext, Quot.sound]
+'D1Token.unique' depends on axioms: [propext]
+theorem D1Token.read_emit : ∀ (t rest : List UInt8), Admissible t → D1Token.read (emit t ++ rest) = some (t, rest) :=
+fun t rest h =>
+  have ht := List.all_eq_true.mp h.right.right;
+  have hq := of_decide_eq_true (id (Eq.refl true));
+  Eq.mpr
+    (id
+      (congrFun'
+        (congrArg Eq
+          (Eq.trans
+            (congrArg
+              (fun x =>
+                match 34 :: x with
+                | [] => none
+                | opener :: body => if opener = 34 then scan body else none)
+              (List.append_assoc t [34] rest))
+            (ite_congr (eq_self 34) (fun a => Eq.refl (scan (t ++ 34 :: ([] ++ rest)))) fun a => Eq.refl none)))
+        (some (t, rest))))
+    (of_eq_true
+      (Eq.trans
+        (congrFun'
+          (congrArg Eq
+            (Eq.trans (ite_eq_left_of_eq_true (scan (t ++ 34 :: ([] ++ rest))) none (Eq.refl True))
+              (Eq.trans
+                (congrArg
+                  (fun x =>
+                    match x with
+                    | [] => none
+                    | close :: suffix =>
+                      have t := List.takeWhile tokenByte (t ++ 34 :: ([] ++ rest));
+                      if close = 34 ∧ Admissible t then some (t, suffix) else none)
+                  (Eq.trans ((fun x_0 => (fun x_0 => List.dropWhile_append_of_pos ht) x_0) (34 :: rest))
+                    (congrArg
+                      (fun x =>
+                        match x with
+                        | true => List.dropWhile tokenByte rest
+                        | false => 34 :: rest)
+                      hq)))
+                (Eq.trans
+                  (ite_eq_left_of_eq_true (some (List.takeWhile tokenByte (t ++ 34 :: ([] ++ rest)), rest)) none
+                    (Eq.trans
+                      (congr (congrArg And (eq_self 34))
+                        (Eq.trans
+                          (congrArg Admissible
+                            (Eq.trans ((fun x_0 => (fun x_0 => List.takeWhile_append_of_pos ht) x_0) (34 :: rest))
+                              (Eq.trans
+                                (congrArg (HAppend.hAppend t)
+                                  (congrArg
+                                    (fun x =>
+                                      match x with
+                                      | true => 34 :: List.takeWhile tokenByte rest
+                                      | false => [])
+                                    hq))
+                                (List.append_nil t))))
+                          (eq_true h)))
+                      (and_self True)))
+                  (congrArg some
+                    (congrFun'
+                      (congrArg Prod.mk
+                        (Eq.trans ((fun x_0 => (fun x_0 => List.takeWhile_append_of_pos ht) x_0) (34 :: rest))
+                          (Eq.trans
+                            (congrArg (HAppend.hAppend t)
+                              (congrArg
+                                (fun x =>
+                                  match x with
+                                  | true => 34 :: List.takeWhile tokenByte rest
+                                  | false => [])
+                                hq))
+                            (List.append_nil t))))
+                      rest))))))
+          (some (t, rest)))
+        (eq_self (some (t, rest)))))
+theorem D1Token.read_sound : ∀ (word t rest : List UInt8),
+  D1Token.read word = some (t, rest) → Admissible t ∧ word = emit t ++ rest :=
+fun word t rest h =>
+  List.casesOn (motive := fun t_1 => word = t_1 → Admissible t ∧ word = emit t ++ rest) word
+    (fun h_1 =>
+      Eq.ndrec (motive := fun word => D1Token.read word = some (t, rest) → Admissible t ∧ word = emit t ++ rest)
+        (fun h => False.elim (Eq.mp (eq_false' fun h => False.elim (noConfusion_of_Nat Option.ctorIdx h)) h))
+        (Eq.symm h_1) h)
+    (fun head tail h_1 =>
+      Eq.ndrec (motive := fun word => D1Token.read word = some (t, rest) → Admissible t ∧ word = emit t ++ rest)
+        (fun h =>
+          if ho : head = 34 then
+            Eq.ndrec (motive := fun opener =>
+              D1Token.read (opener :: tail) = some (t, rest) → Admissible t ∧ opener :: tail = emit t ++ rest)
+              (fun h =>
+                List.casesOn (motive := fun t_1 =>
+                  List.dropWhile tokenByte tail = t_1 → Admissible t ∧ 34 :: tail = emit t ++ rest)
+                  (List.dropWhile tokenByte tail)
+                  (fun h_2 =>
+                    Eq.ndrec (motive := fun x =>
+                      List.dropWhile tokenByte tail = x → Admissible t ∧ 34 :: tail = emit t ++ rest)
+                      (fun hd =>
+                        False.elim
+                          (Eq.mp
+                            (Eq.trans
+                              (congrFun'
+                                (congrArg Eq
+                                  (Eq.trans (ite_eq_left_of_eq_true (scan tail) none (Eq.refl True))
+                                    (congrArg
+                                      (fun x =>
+                                        match x with
+                                        | [] => none
+                                        | close :: suffix =>
+                                          have t := List.takeWhile tokenByte tail;
+                                          if close = 34 ∧ Admissible t then some (t, suffix) else none)
+                                      hd)))
+                                (some (t, rest)))
+                              (eq_false' fun h => False.elim (noConfusion_of_Nat Option.ctorIdx h)))
+                            (Eq.mp
+                              (congrFun'
+                                (congrArg Eq
+                                  (ite_congr (eq_self 34) (fun a => Eq.refl (scan tail)) fun a => Eq.refl none))
+                                (some (t, rest)))
+                              h)))
+                      (Eq.symm h_2) (Eq.refl (List.dropWhile tokenByte tail)))
+                  (fun head tail_1 h_2 =>
+                    Eq.ndrec (motive := fun x =>
+                      List.dropWhile tokenByte tail = x → Admissible t ∧ 34 :: tail = emit t ++ rest)
+                      (fun hd =>
+                        if he : head = 34 ∧ Admissible (List.takeWhile tokenByte tail) then
+                          And.casesOn
+                            (Eq.mp
+                              (Eq.trans
+                                (Eq.trans
+                                  (congrFun'
+                                    (congrArg Eq
+                                      (Eq.trans (ite_eq_left_of_eq_true (scan tail) none (Eq.refl True))
+                                        (Eq.trans
+                                          (congrArg
+                                            (fun x =>
+                                              match x with
+                                              | [] => none
+                                              | close :: suffix =>
+                                                have t := List.takeWhile tokenByte tail;
+                                                if close = 34 ∧ Admissible t then some (t, suffix) else none)
+                                            (Eq.trans hd (congrFun' (congrArg List.cons he.1) tail_1)))
+                                          (ite_eq_left_of_eq_true (some (List.takeWhile tokenByte tail, tail_1)) none
+                                            (Eq.trans (congr (congrArg And (eq_self 34)) (eq_true he.2))
+                                              (and_self True))))))
+                                    (some (t, rest)))
+                                  (Option.some.injEq (List.takeWhile tokenByte tail, tail_1) (t, rest)))
+                                (Prod.mk.injEq (List.takeWhile tokenByte tail) tail_1 t rest))
+                              (Eq.mp
+                                (congrFun'
+                                  (congrArg Eq
+                                    (ite_congr (eq_self 34) (fun a => Eq.refl (scan tail)) fun a => Eq.refl none))
+                                  (some (t, rest)))
+                                h))
+                            fun left right =>
+                            left ▸
+                              right ▸
+                                And.casesOn he fun hc ht =>
+                                  Eq.ndrec (motive := fun c =>
+                                    List.dropWhile tokenByte tail = c :: tail_1 →
+                                      Admissible (List.takeWhile tokenByte tail) ∧
+                                        34 :: tail = emit (List.takeWhile tokenByte tail) ++ tail_1)
+                                    (fun hd =>
+                                      have hb := List.takeWhile_append_dropWhile;
+                                      ⟨ht,
+                                        Eq.mpr
+                                          (id
+                                            (Eq.trans
+                                              (Eq.trans
+                                                (congrArg (Eq (34 :: tail))
+                                                  (congrArg (List.cons 34)
+                                                    (List.append_assoc (List.takeWhile tokenByte tail) [34] tail_1)))
+                                                (List.cons.injEq 34 tail 34
+                                                  (List.takeWhile tokenByte tail ++ 34 :: ([] ++ tail_1))))
+                                              (Eq.trans
+                                                (congrFun' (congrArg And (eq_self 34))
+                                                  (tail = List.takeWhile tokenByte tail ++ 34 :: ([] ++ tail_1)))
+                                                (true_and
+                                                  (tail = List.takeWhile tokenByte tail ++ 34 :: ([] ++ tail_1))))))
+                                          (Eq.symm
+                                            (Eq.mp (congrArg (fun _a => List.takeWhile tokenByte tail ++ _a = tail) hd)
+                                              hb))⟩)
+                                    (Eq.symm hc) hd
+                        else
+                          False.elim
+                            (Eq.mp
+                              (Eq.trans
+                                (congrFun'
+                                  (congrArg Eq
+                                    (Eq.trans (ite_eq_left_of_eq_true (scan tail) none (Eq.refl True))
+                                      (Eq.trans
+                                        (congrArg
+                                          (fun x =>
+                                            match x with
+                                            | [] => none
+                                            | close :: suffix =>
+                                              have t := List.takeWhile tokenByte tail;
+                                              if close = 34 ∧ Admissible t then some (t, suffix) else none)
+                                          hd)
+                                        (ite_eq_right_of_eq_false (some (List.takeWhile tokenByte tail, tail_1)) none
+                                          (eq_false he)))))
+                                  (some (t, rest)))
+                                (eq_false' fun h => False.elim (noConfusion_of_Nat Option.ctorIdx h)))
+                              (Eq.mp
+                                (congrFun'
+                                  (congrArg Eq
+                                    (ite_congr (eq_self 34) (fun a => Eq.refl (scan tail)) fun a => Eq.refl none))
+                                  (some (t, rest)))
+                                h)))
+                      (Eq.symm h_2) (Eq.refl (List.dropWhile tokenByte tail)))
+                  (Eq.refl (List.dropWhile tokenByte tail)))
+              (Eq.symm ho) h
+          else
+            False.elim
+              (Eq.mp
+                (Eq.trans
+                  (congrFun' (congrArg Eq (ite_eq_right_of_eq_false (scan tail) none (eq_false ho))) (some (t, rest)))
+                  (eq_false' fun h => False.elim (noConfusion_of_Nat Option.ctorIdx h)))
+                h))
+        (Eq.symm h_1) h)
+    (Eq.refl word)
+theorem D1Token.read_iff : ∀ (word t rest : List UInt8),
+  D1Token.read word = some (t, rest) ↔ Admissible t ∧ word = emit t ++ rest :=
+fun word t rest =>
+  { mp := read_sound word t rest, mpr := fun a => And.casesOn a fun ht right => Eq.symm right ▸ read_emit t rest ht }
+theorem D1Token.unique : ∀ (word a b sa sb : List UInt8),
+  D1Token.read word = some (a, sa) → D1Token.read word = some (b, sb) → a = b ∧ sa = sb :=
+fun word a b sa sb ha hb =>
+  Eq.mp (Eq.trans (Option.some.injEq (a, sa) (b, sb)) (Prod.mk.injEq a sa b sb))
+    (Eq.mp (congrArg (fun _a => _a = some (b, sb)) ha) hb)

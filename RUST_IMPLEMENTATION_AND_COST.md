@@ -168,9 +168,19 @@ A separate 24 November 2026 study uses Python to verify a population accuracy bo
 
 Only the complete joint term is truncated. With exact proper terms, all nonzero amplitude pairs with $|a|+|b|\le 1$ satisfy the strict one-part-per-million tolerance if and only if at least 7,278 even moments are retained. The prefix reader takes $O(M)$ fixed-precision outward-rounded recurrence steps for $M$ retained terms and keeps a constant number of accumulators. The separate direct-tail reader constructs central binomial integers of about $2M$ bits. The four original candidate and judge calls in two Python modes took 2.25 seconds on one arm64 macOS 26.5.1 host with CPython 3.14.9, with 35,717,120 bytes of peak sampled group memory. These are verification costs. Sampling, estimation, floating-point implementation and online sensor latency require separate work. [Boundary report and code](audit/research/angular-unit-boundary/EXPOSITION.md) · [Exact sign record](audit/research/angular-unit-boundary/certificate.json)
 
+### Direction-wide thresholds and finite grid
+
+The four-moment study checks a fixed, known population law offline. Two rational subdivision methods used 17 and 44 terminal intervals. A separate degree-36 polynomial check counted roots on the entire unit interval. The finite numerical grid instead evaluated 2,244 and 1,860 amplitude pairs. These checks measure different objects. They supply no end-to-end timing for an estimator on sensor data. [Methods, numeric costs and limits](audit/research/angular-ray-monotonicity/EXPOSITION.md) · [Grid rules and resource limits](audit/research/angular-quadrature-grid/EXPOSITION.md)
+
+### Strict counts for two existing estimator routes
+
+One selected row and its retained neighbour rank determine two strict marginal counts. The hand calculation and five-row two-source Rust execution use the assessment rules in the study. The whole-sample mean requires all anchors. Existing Rust search costs depend on the feature, coordinates and metric used. Finite integer proof checking and the exact sample-mean calculations have different costs from a tree search on new data. [Input shape, Rust call, assumptions and finite verification costs](audit/research/strict-neighbour-count-geometry/README.md)
+
 ## Six finite categorical output certificates
 
 The portable reader evaluates six fixed tables with three categorical sources and one target. It works on distinct complete states and their multiplicities. Direct event counting for the 18 fixed nodes takes quadratically many state comparisons in the number of occupied states, with an additional dependence on token length. Exact rational arithmetic and the logarithm enclosures depend on the bit lengths and requested precision. The default Rust `discrete_sxpid3_averaged` API instead accepts the expanded observation rows and returns averaged floating-point atoms. The portable package supplies no end-to-end measurement of the Rust API. [Inputs, implementation, costs and limits](audit/research/three-source-six-certificate-observations/README.md)
+
+The separate quoted-field reader scans the leading token bytes and may read to the end before rejecting a missing closing quote. The proof allows an arbitrary following byte sequence. A separate logical tool checks 65 fixed premise assignments from 22 files and four further native cases. There is no public Rust certificate reader or solver API for these tasks. [Field resource limits](audit/research/categorical-state-token/README.md) · [Solver resource limits](audit/formal/three-source-original-premises/README.md)
 
 ## Measurement and improvement plan
 

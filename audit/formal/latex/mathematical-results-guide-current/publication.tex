@@ -2,14 +2,15 @@
 \usepackage[margin=24mm,headheight=14pt,footskip=12mm]{geometry}
 \usepackage{fontspec,unicode-math,amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
 \setmathfont{latinmodern-math.otf}
-\usepackage{microtype,ragged2e,etoolbox}
+\usepackage{microtype,ragged2e,etoolbox,float}
+\floatplacement{figure}{H}
 \usepackage{pid-rs-report-tables,pid-rs-workflow-publication}
 \usepackage{hyperref,xurl,bookmark}
 \pdfvariable minorversion=7
 \pdfvariable suppressoptionalinfo=767
 \hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,citecolor=PidSecondary,
   pdftitle={Mathematical results guide for November 2026},
-  pdfauthor={Sepehr Mahmoudian},pdfsubject={Ten project results, angular accuracy at unit amplitude and shared robot case records},
+  pdfauthor={Sepehr Mahmoudian},pdfsubject={Categorical proof inputs, exact angular accuracy thresholds, strict neighbour counts and recorded robot cases},
   pdflang={en-US},pdfdisplaydoctitle=true}
 \PidSetRunningHeads{Mathematical results guide}{November 2026}
 \PidWorkflowConfigureSections
@@ -23,9 +24,9 @@
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \newcounter{none}
 \AtBeginEnvironment{longtable}{\small\setlength{\tabcolsep}{4pt}}
-\title{\PidReportTitle{Mathematical results guide\\for November 2026}{Published methods, angular accuracy limits and robot task records}}
+\title{\PidReportTitle{Mathematical results guide\\for November 2026}{Published methods, angular accuracy and neighbour counts}}
 \author{Sepehr Mahmoudian}
-\date{24 November 2026}
+\date{25 November 2026}
 \begin{document}
 \PidMakeTitle
 \input{body.tex}

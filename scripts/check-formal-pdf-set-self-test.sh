@@ -72,6 +72,10 @@ MARKDOWN_SOURCES=(
   audit/research/angular-four-moment-radius/EXPOSITION.md
   audit/research/angular-truncation-extremum/EXPOSITION.md
   audit/research/angular-unit-boundary/EXPOSITION.md
+  audit/research/angular-quadrature-grid/EXPOSITION.md
+  audit/research/angular-ray-monotonicity/EXPOSITION.md
+  audit/research/categorical-state-token/README.md
+  audit/research/strict-neighbour-count-geometry/README.md
   audit/research/robot-wrist-slope-signs/EXPOSITION.md
   MATHEMATICAL_RESULTS_GUIDE_CURRENT.md
   FINITE_COPY_BOOTSTRAP_COVERAGE.md
@@ -106,6 +110,10 @@ STANDALONE=(
   angular-four-moment-radius
   angular-truncation-extremum
   angular-unit-boundary
+  angular-quadrature-grid
+  angular-ray-monotonicity
+  categorical-state-token
+  strict-neighbour-count-geometry
   robot-wrist-slope-signs
   mathematical-results-guide-current
   finite-copy-bootstrap-coverage
@@ -1611,7 +1619,7 @@ mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed
 expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
-for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage three-source-alphabet-counts three-source-w02 normalized-shannon-arithmetic three-source-six-certificate-observations three-source-supported-states two-source-synergy-bound-example mathematical-results-guide-current angular-four-moment-radius angular-truncation-extremum angular-unit-boundary robot-wrist-slope-signs; do
+for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage three-source-alphabet-counts three-source-w02 normalized-shannon-arithmetic three-source-six-certificate-observations three-source-supported-states two-source-synergy-bound-example mathematical-results-guide-current angular-four-moment-radius angular-truncation-extremum angular-unit-boundary robot-wrist-slope-signs angular-quadrature-grid angular-ray-monotonicity categorical-state-token strict-neighbour-count-geometry; do
   fixture="$TEST_ROOT/missing-$bias_stem-pdf"
   make_fixture "$fixture"
   mv "$fixture/output/pdf/$bias_stem.pdf" "$fixture/removed-bias-paper.pdf"

@@ -57,7 +57,7 @@ def build(output, assets):
     ET.SubElement(svg, "desc", id="desc").text = (
         "Left, with four even joint moments and exact proper terms, all directions pass at positive radii below the "
         "interior root near 0.292039, the two axes differ at radius 0.30, and all directions fail "
-        "from radius 0.39 to 1. The latter bound is sufficient. Right, at unit radius on the first "
+        "from radius 0.39 to 1. This panel shows the original sufficient bound. Right, at unit radius on the first "
         "harmonic axis the signed excess over one millionth of the exact atom is positive at "
         "7,277 moments and negative at 7,278 moments. Values are in trillionths of a nat."
     )
@@ -96,7 +96,7 @@ def build(output, assets):
     label(47, 196, "The two axes differ", 19, INK, bold=True)
     circle(x_radius(second), 218, 5, INK, INK)
     label(x_radius(second) + 13, 224, "radius 0.30", 16)
-    label(47, 268, "Every direction fails", 19, RED, bold=True)
+    label(47, 268, "Sufficient range for all to fail", 19, RED, bold=True)
     line(x_radius(outer), 289, x_radius(Fraction(42, 100)), 289, RED, 4, "8,5")
     diamond(x_radius(outer), 289, 6, RED)
     label(x_radius(outer) - 12, 295, "0.39 through 1", 16, anchor="end")

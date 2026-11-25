@@ -1,0 +1,37 @@
+{
+  "controls": 3,
+  "panels": [
+    {
+      "dimension": 2,
+      "local_checks": 572,
+      "mean_checks": 66,
+      "n_max": 12,
+      "n_min": 2,
+      "perturbed": false
+    },
+    {
+      "dimension": 2,
+      "local_checks": 572,
+      "mean_checks": 66,
+      "n_max": 12,
+      "n_min": 2,
+      "perturbed": true
+    },
+    {
+      "dimension": 3,
+      "local_checks": 572,
+      "mean_checks": 66,
+      "n_max": 12,
+      "n_min": 2,
+      "perturbed": false
+    },
+    {
+      "dimension": 3,
+      "local_checks": 572,
+      "mean_checks": 66,
+      "n_max": 12,
+      "n_min": 2,
+      "perturbed": true
+    }
+  ]
+}

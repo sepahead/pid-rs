@@ -1,0 +1,12 @@
+{
+  "limits": {
+    "cpu.max": "100000 100000",
+    "memory.current": "6778880",
+    "memory.max": "4294967296",
+    "memory.swap.max": "0"
+  },
+  "name": "/system.slice/pidrs-w03-45527884640.service",
+  "peak_bytes": 6778880,
+  "pid": 2834,
+  "uid": 0
+}

@@ -49,6 +49,10 @@ STANDALONE_MARKDOWN_PAPERS=(
   "angular-four-moment-radius"
   "angular-truncation-extremum"
   "angular-unit-boundary"
+  "angular-quadrature-grid"
+  "angular-ray-monotonicity"
+  "categorical-state-token"
+  "strict-neighbour-count-geometry"
   "robot-wrist-slope-signs"
   "mathematical-results-guide-current"
   "finite-copy-bootstrap-coverage"
@@ -84,6 +88,10 @@ STANDALONE_MARKDOWN_SOURCES=(
   "audit/research/angular-four-moment-radius/EXPOSITION.md"
   "audit/research/angular-truncation-extremum/EXPOSITION.md"
   "audit/research/angular-unit-boundary/EXPOSITION.md"
+  "audit/research/angular-quadrature-grid/EXPOSITION.md"
+  "audit/research/angular-ray-monotonicity/EXPOSITION.md"
+  "audit/research/categorical-state-token/README.md"
+  "audit/research/strict-neighbour-count-geometry/README.md"
   "audit/research/robot-wrist-slope-signs/EXPOSITION.md"
   "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md"
   "FINITE_COPY_BOOTSTRAP_COVERAGE.md"
@@ -314,10 +322,28 @@ python3 -O -I -S -B scripts/check-report-source-links.py
 python3 -I -S -B audit/research/robot-wrist-slope-signs/trace_provenance.py --self-test
 python3 -O -I -S -B audit/research/robot-wrist-slope-signs/trace_provenance.py --self-test
 
-for study in angular-four-moment-radius angular-truncation-extremum angular-unit-boundary robot-wrist-slope-signs; do
+# Exercise each finite checker in both Python modes. The two formal studies
+# have separate stock-Lean replay commands that require the registered compiler.
+for checker in \
+  audit/research/angular-four-moment-radius/replay.py \
+  audit/research/angular-truncation-extremum/replay.py \
+  audit/research/angular-unit-boundary/replay.py \
+  audit/research/robot-wrist-slope-signs/replay.py \
+  audit/research/angular-quadrature-grid/verify.py \
+  audit/research/angular-ray-monotonicity/replay.py \
+  audit/research/categorical-state-token/finite.py \
+  audit/research/strict-neighbour-count-geometry/check.py \
+  audit/formal/three-source-original-premises/replay.py; do
+  python3 -I -S -B "$checker" --self-test
+  python3 -O -I -S -B "$checker" --self-test
+done
+python3 -I -S -B audit/research/angular-ray-monotonicity/sturm_crossing.py
+python3 -O -I -S -B audit/research/angular-ray-monotonicity/sturm_crossing.py
+
+for study in \
+  angular-four-moment-radius angular-truncation-extremum angular-unit-boundary robot-wrist-slope-signs \
+  angular-quadrature-grid angular-ray-monotonicity categorical-state-token strict-neighbour-count-geometry; do
   study_source="audit/research/$study"
-  python3 -I -S -B "$study_source/replay.py" --self-test
-  python3 -O -I -S -B "$study_source/replay.py" --self-test
   if [[ "$MODE" == "--exact" ]]; then
     (
       report_dir="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-study-pdf.XXXXXX")"

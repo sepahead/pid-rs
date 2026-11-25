@@ -41,3 +41,11 @@ and custody remain shared dependencies. The separate H1 requirement in [the rout
 requires external human custody before claiming independently reproduced public assurance. It is
 an assurance condition, not a mathematical premise or a reason to stop technical work. No human
 review, external reproduction, new theorem or program closure is granted by this clarification.
+
+### One input field and ten finite pairs — 25 November 2026
+
+The unmodified Lean proof checker verified four statements. They give the two reading and writing implications for the quoted state field, their equivalence, and uniqueness of a successful parse. The field uses 1 to 128 content bytes from a fixed alphabet of 66 byte values. The proofs permit an arbitrary suffix. Independent of that theorem, the paired reader accepted the six earlier complete pairs and four additional ones. It refused a changed rational product and accepted a different valid enclosure for the same input. Nine malformed input controls exercised named rejections. The complete D1 byte-to-certificate guarantee, producer provenance and human review retain their earlier dispositions. [Exact statements, examples and limits](../../audit/research/categorical-state-token/README.md) · [Original six-pair study](../../audit/research/three-source-six-certificate-observations/README.md)
+
+## November 2026 examination of the original logical premises
+
+A separate reader tested the first assertion in each of 22 original two-assertion files. Fixed integer assignments made the chosen premise true in 44 cases and false in 21. Three premises were the constant true. Four more inputs test a second count-table example and three changes to that example. These tests give examples where specific premises hold or fail. The earlier decisions about the 22 conclusions and the complete categorical certificate keep their stated evidence and scope. [Original inputs, scope and solver replies](../../audit/formal/three-source-original-premises/README.md)

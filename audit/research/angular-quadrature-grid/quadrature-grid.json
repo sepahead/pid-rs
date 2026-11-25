@@ -1,0 +1,54 @@
+{
+  "examples": [
+    {
+      "a": 0.25,
+      "added_conditional_information_nats": 0.016289578202614452,
+      "atom_nats": 0.02584179902774309,
+      "b": 0.25,
+      "lower_bound_nats": 0.0234375,
+      "tail_bound_nats": 1.6621774577886712e-08,
+      "tail_nats": 5.248390888556997e-10
+    },
+    {
+      "a": 0.5,
+      "added_conditional_information_nats": 0.0,
+      "atom_nats": 0.03823356578609633,
+      "b": 0.0,
+      "lower_bound_nats": 0.03125,
+      "tail_bound_nats": 1.6621774577886712e-08,
+      "tail_nats": 2.8630186693634485e-09
+    }
+  ],
+  "lower": {
+    "at": [
+      0.0,
+      0.03
+    ],
+    "at_indices": [
+      0,
+      1
+    ],
+    "integer_pairs_sha256": "3692ff1ee8f2006aa7822ef55d95e938463df0b1808867c1d355913f7e1570de",
+    "minimum_margin_nats": 2.5320096953514778e-08,
+    "pairs": 2244
+  },
+  "moments": 8,
+  "numpy_version": "2.4.6",
+  "parameter_count": 67,
+  "passed": true,
+  "phase_count": 2048,
+  "tail": {
+    "at": [
+      -0.12,
+      0.0
+    ],
+    "at_indices": [
+      -4,
+      0
+    ],
+    "integer_pairs_sha256": "870c8d53a2b364a1e569a040879769135aac23b7604de4ef2f6918c8b2b5a6a8",
+    "minimum_margin_nats": -1.2054788807155145e-17,
+    "pairs": 1860
+  },
+  "tolerance_nats": 1e-15
+}

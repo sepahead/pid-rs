@@ -1,0 +1,41 @@
+{
+  "capture": "observations.json",
+  "capture_sha256": "86fdae96818a54d5da79f726feb274f6773047363c6202c0148868adb7cfbf5b",
+  "commit": "ef705d1ed3410fd9fbbf4920cb4643f6a5140a2f",
+  "original_capture_program_sha256": "e49d8d1236f24781444da6b9319ae3f25aa03e47e04b9ceff8c5e5131e158d34",
+  "original_files": {
+    "audit/formal/finite-smt39-qualification-v1/raw/W01-carrier-complete/generator.stdout.smt2": "ca064fa505a839da620431c2987dde384316eeac1535c79147a3b7cb881d9c9f",
+    "audit/formal/finite-smt39-qualification-v1/raw/W02-exactly-18-distinct/generator.stdout.smt2": "e503d85f5b6fe842c0900043283147f23055a4c5f4cf19e2914080cfbab692a0",
+    "audit/formal/finite-smt39-qualification-v1/raw/W03-reflexivity/generator.stdout.smt2": "c67e6ab935acc7fb8fd1dd9c25fb6e6561db30cbe0b61ac8eb9a5968861126ff",
+    "audit/formal/finite-smt39-qualification-v1/raw/W04-antisymmetry/generator.stdout.smt2": "58c5f4d1ae16e1ed7248f006c91ca6000a025b55a50f9bff72b1616474e1dba0",
+    "audit/formal/finite-smt39-qualification-v1/raw/W05-transitivity/generator.stdout.smt2": "9a4d9842d87ee08a8d4499eeaf85e47f152bbc1638cc58e8e3d74c419e26019c",
+    "audit/formal/finite-smt39-qualification-v1/raw/W06-zeta-all-324/generator.stdout.smt2": "d9248adf53f3f11b005b9f23c64c1fa890a9e25a175b66411de2e436fa868586",
+    "audit/formal/finite-smt39-qualification-v1/raw/W07-MZ-all-324/generator.stdout.smt2": "7033636408bab6654e2a5e92f289c3b8b07d1e2ad41951c0665e01ec3d002950",
+    "audit/formal/finite-smt39-qualification-v1/raw/W08-ZM-all-324/generator.stdout.smt2": "a8324d8489e4ec789fa3d0a48fb7e872c99d8c7a315863cae8659a5a0f6388a3",
+    "audit/formal/finite-smt39-qualification-v1/raw/W09-branch-event-equivalence/generator.stdout.smt2": "5add94fa3f5c6db7021d0dc4c316c731f3547fc1ca68c893ad34f8923bb1e6ed",
+    "audit/formal/finite-smt39-qualification-v1/raw/W10-raw-source-equivalence/generator.stdout.smt2": "9e50a6b57c8a4e2b920a011ae00024ba1e3e7a15c30edc2eb0f983ce1443d8b1",
+    "audit/formal/finite-smt39-qualification-v1/raw/W11-raw-target-restriction/generator.stdout.smt2": "72842d82667e32473ef627f62567f5f7f799a18c2085caac237d1ae83c8aa6b1",
+    "audit/formal/finite-smt39-qualification-v1/raw/W12-order-event-inclusion/generator.stdout.smt2": "e6c35a321fc2de1a92590697b60af92d0cb5c32ae78a081f644c0651c59476e4",
+    "audit/formal/finite-smt39-qualification-v1/raw/W13-key-membership/generator.stdout.smt2": "922f923b2fb7a70fcc2f1fb5f8976e913658203c93b7315d2e88821480792f16",
+    "audit/formal/finite-smt39-qualification-v1/raw/W14-supported-mass-bounds/generator.stdout.smt2": "6e90a8fe074435cc3f16f67b6c9474addf43ddf91660d175c38c0aafedc5bf99",
+    "audit/formal/finite-smt39-qualification-v1/raw/W15-full-joint-event/generator.stdout.smt2": "2175ff7776cda4b507c470fa44aa7e4d7f175fae28144f40eee36d25f144f3a5",
+    "audit/formal/finite-smt39-qualification-v1/raw/W16-singleton-event/generator.stdout.smt2": "5190be3c48a501989a12b8feaa9078771645e4693b41c0ed016b497a2433654a",
+    "audit/formal/finite-smt39-qualification-v1/raw/W17-permutation-012/generator.stdout.smt2": "897d9929779bcbada2f67e27da45b5130f1dd12cecc875fa5acacad6b755cbfc",
+    "audit/formal/finite-smt39-qualification-v1/raw/W18-permutation-021/generator.stdout.smt2": "a15dcbbfb1c0943e8d15f65eda4b40812ffadc6031aa95e71e1fccea271a24c5",
+    "audit/formal/finite-smt39-qualification-v1/raw/W19-permutation-102/generator.stdout.smt2": "9936ef74d1078ab5503ca858744b72b5a7fdd2a19935b226044058140c451909",
+    "audit/formal/finite-smt39-qualification-v1/raw/W20-permutation-120/generator.stdout.smt2": "76388b6c452fedc10ca965132a8eea0a49be2a9a9b16eeb0ed13fb1387bae820",
+    "audit/formal/finite-smt39-qualification-v1/raw/W21-permutation-201/generator.stdout.smt2": "755c650dd913e79af6abb1f6d74759c3c7d20675ebaf7e5102580c74b9e7741a",
+    "audit/formal/finite-smt39-qualification-v1/raw/W22-permutation-210/generator.stdout.smt2": "6c72e6ac5126c4b0e5c5b63960b447bb8773d89cb4b8e0b2c06c632f11cd5943"
+  },
+  "original_ground_judge_sha256": "a54ea3e9c6552c59f888f9652c7e77242d065ffaa194c90f89beebe980ab9159",
+  "original_z3": "4.16.0 - 64 bit",
+  "reference_sources": {
+    "audit/formal/finite-smt39-qualification-v1/README.md": "69b4d53ee43dfc4b99fa0596db40fb408041e25e871042efe4adfccd376c2e1f",
+    "audit/formal/finite-smt39-qualification-v1/fin3_smt.py": "62cd492b20b3d908d26e3838d9d648475d1ea92b9ba5c714bab5844e3a4e6eeb",
+    "audit/formal/finite-smt39-qualification-v1/model_checker.py": "d6e23bf5d329368cf9681c4b7ee069a2a30930c368c842514253c8d6a3476d2e",
+    "audit/formal/lean-sx-dnf-order/EXPOSITION.md": "03654e23771cafc9455abd0bda3334f3de6027e3e528a71b243bab7ce5fba9c5",
+    "claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md": "24544d7b3af575ecff706e88d20b8c8e18372c13711fc508e60cd31beffcc152"
+  },
+  "repository": "sepahead/pid-rs",
+  "schema": "pid-rs/three-source-original-premises/source-v1"
+}

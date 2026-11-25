@@ -394,8 +394,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "62da1f83014eaf740e909bcf66e04b63621c4317cffe90c62ba6ddc12290ace6",
-        "size_bytes": 350224
+        "sha256": "90e4946a911a62106288c02157d1b542b7f650cdbdb22e7ca089204782a88b1c",
+        "size_bytes": 351565
       },
       {
         "git_mode": "100644",
@@ -514,8 +514,8 @@
       {
         "git_mode": "100644",
         "path": "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md",
-        "sha256": "cff0b66521af9d4af0bba058b723c5aca3ac34d2de94d5bb9814d92eb0c3e02f",
-        "size_bytes": 35855
+        "sha256": "19712ba09dada048ec7c9ac00b341ca1eb0cae648543f29dba847c1065a89bc7",
+        "size_bytes": 43106
       },
       {
         "git_mode": "100644",
@@ -580,8 +580,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "ec03fa4b4eda5e07c28720cc5d0f6b9fe3facf8fc56a38e16b9c034fffc16985",
-        "size_bytes": 102141
+        "sha256": "dd81524f4d73cba5d71c553655ee5b1c5e7996601d94e4ce42d28cc46d960726",
+        "size_bytes": 103098
       },
       {
         "git_mode": "100644",
@@ -634,8 +634,8 @@
       {
         "git_mode": "100644",
         "path": "RUST_IMPLEMENTATION_AND_COST.md",
-        "sha256": "4f987546099322f180f6f57ee7b65be8331fe0b5fd2c7de58cacdc6125eaf5ec",
-        "size_bytes": 28614
+        "sha256": "d8748fe2d8fd816beebec85cd742af44343dd8818e29182ec19d3fa8b7cba47a",
+        "size_bytes": 30375
       },
       {
         "git_mode": "100644",
@@ -646,8 +646,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "ab0b8a4174e93f46b0cefd64d1f092e86d37da90600e9798a033613db5b0e284",
-        "size_bytes": 77936
+        "sha256": "cc88fbb6df316cc2241057963c8431b1c8f1d6b90d78468e267cdb4bef1acef2",
+        "size_bytes": 80518
       },
       {
         "git_mode": "100644",
@@ -16029,6 +16029,36 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/w03-host-origin-2026-11-25/README.md",
+        "sha256": "c1e5d07742d0c0754c9d421d001842c2835c039d1a8b9db554de443102639df4",
+        "size_bytes": 3256
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/w03-host-origin-2026-11-25/command.stderr",
+        "sha256": "8d03e516befc6e2da190d630905f3ffc52d4981db148260d624bed47c9aa257b",
+        "size_bytes": 100
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/w03-host-origin-2026-11-25/host-limit-after.json",
+        "sha256": "ef02bad148e558f4ef933687704ed26dd5f31a8128f52882b9a604ff7e5158ba",
+        "size_bytes": 261
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/w03-host-origin-2026-11-25/host-limit-before.json",
+        "sha256": "f6a8ba818a3f29343a644f22cccae93e539fe3079ad7e5df1960b206175b1094",
+        "size_bytes": 255
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/w03-host-origin-2026-11-25/terminal.json",
+        "sha256": "99c7c667dee75ef73cbb9551d645636eaa3768153908af28d8ee308e20a244cf",
+        "size_bytes": 5138
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md",
         "sha256": "9f664de65b0054d4f183ac7c7e8ed7bf02b3b3bc63ab0e3b76be0705aa2def43",
         "size_bytes": 56584
@@ -17722,8 +17752,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/angular-four-moment-radius/body.tex",
-        "sha256": "c19d6f3803b506d7e7ed966e9fab7ab61c8753d8aea939b37d296075f0f55d14",
-        "size_bytes": 17828
+        "sha256": "dc06a076bde1a7d022aae0704318b90ec2fd522f6c68b6125a724dca0f247a2c",
+        "size_bytes": 18572
       },
       {
         "git_mode": "100644",
@@ -17733,9 +17763,33 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/angular-quadrature-grid/body.tex",
+        "sha256": "ed8499b3b07760fd1122a5adea8d9ed5f4e08cb98cafde82b1bb96b5054f01fd",
+        "size_bytes": 13582
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/angular-quadrature-grid/publication.tex",
+        "sha256": "a0a0c420dc2525e47d65d52e217f4e259c6e7789e8e26e9c7120581c29c084cd",
+        "size_bytes": 1710
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/angular-ray-monotonicity/body.tex",
+        "sha256": "6d8ce72ebaf537f5bc7d78e7ffcd9dec1344b537b5663cf5138a6f2f4f9314f6",
+        "size_bytes": 20520
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/angular-ray-monotonicity/publication.tex",
+        "sha256": "b5a770f04b6c7d4fd595349df2252b6acced05cd9239359324c26b363b0382af",
+        "size_bytes": 1695
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/angular-truncation-extremum/body.tex",
-        "sha256": "a851b8a02c994746aec09ef0dfe0855feb4fd61b81c53adf43a456253ab55c13",
-        "size_bytes": 19187
+        "sha256": "fd70d169615d96ee2ce29e164c5b63ed045232a35ce2e2969cf89605a3de66c5",
+        "size_bytes": 20126
       },
       {
         "git_mode": "100644",
@@ -17746,8 +17800,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/angular-unit-boundary/body.tex",
-        "sha256": "3100753371a3dd4f0c68ef70b5a44046e86b53c7cf6dccc8db55b280d1ed7290",
-        "size_bytes": 24417
+        "sha256": "1b2a1099ac731a718489d04ee7dd0c2265c98ce5f1c3958debddc98832d2cdf4",
+        "size_bytes": 24880
       },
       {
         "git_mode": "100644",
@@ -17758,8 +17812,20 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/canonical-count-tables.tex",
-        "sha256": "924333d7d4d7ff23f11ef1b28df8f748029b6f6441772334a3609a63df23478f",
-        "size_bytes": 15414
+        "sha256": "1ec1f654c9c820486e20370c992116ab5e37fce509c610e8a18773c2fecaca7a",
+        "size_bytes": 16502
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/categorical-state-token/body.tex",
+        "sha256": "35f24ad0d3214fbb500eb82d37e1f6f4b40691d3bf1e2eaf545dc63c6bbaaade",
+        "size_bytes": 16764
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/categorical-state-token/publication.tex",
+        "sha256": "3ab7abb2121ab2687ab3c34083a14b26b40d995bd4a50307613c888c65e87f84",
+        "size_bytes": 1724
       },
       {
         "git_mode": "100644",
@@ -18327,21 +18393,27 @@
       },
       {
         "git_mode": "100644",
-        "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
+        "path": "audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-unit-amplitude-source-corrections.json",
         "sha256": "34e7570de8b59ffafe14c614cb6eaedd23b458e1573e619c8e1983defbdacc0f",
         "size_bytes": 21114
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
+        "sha256": "3771d467710b7cd11c83a2ccc13e7a27483c26364b248aa24c976abfa9697dbb",
+        "size_bytes": 39505
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/publication.lua",
-        "sha256": "16dd2b8bc83c9fdaeb80ca1fc7df930a1e41089791a452f20dae7e67584db256",
-        "size_bytes": 1025
+        "sha256": "d2a707aeddba72807dbd349b90aaddbcca1c0dc5cb1212a1aa73748f78d44d6f",
+        "size_bytes": 1684
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/publication.tex",
-        "sha256": "1e6a701e6bf61d37dbb2359b7409736e08325041850e7f321d71ec37ac41d63e",
-        "size_bytes": 1470
+        "sha256": "8e3ab44583f21ad6314f4e9ed1256946536f7efbe0a9327a0d03f3e90c52afcd",
+        "size_bytes": 1518
       },
       {
         "git_mode": "100644",
@@ -19440,6 +19512,18 @@
         "path": "audit/formal/latex/stopped-prefix-probability/publication.tex",
         "sha256": "0df9b0b9aec9cc7a736fc000b724903c244f99d16b4af367ff31c62595c88763",
         "size_bytes": 2104
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/strict-neighbour-count-geometry/body.tex",
+        "sha256": "48b2d7aa0499b89ef0c7b720fa565343e2b25414a1aab7c01c8472e7cef36cf3",
+        "size_bytes": 32090
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/strict-neighbour-count-geometry/publication.tex",
+        "sha256": "d39a35b9561174a1ebbe077668dbd12ee75db741cd7fe0584e6808a2f4c68f3b",
+        "size_bytes": 1719
       },
       {
         "git_mode": "100644",
@@ -30507,6 +30591,42 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/three-source-original-premises/README.md",
+        "sha256": "3eab2222da676009c31b8985a81063f8175014c5b13574adc903d447070ffdd0",
+        "size_bytes": 12316
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/three-source-original-premises/SOURCES.json",
+        "sha256": "31f785efdd845199cb568483dbf608658910c249b9b33509221462481e3d512f",
+        "size_bytes": 4843
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/three-source-original-premises/VALIDATION.json",
+        "sha256": "d0befd22192a0f5bbb45a9c8fbf8f4973ffde3aaf02b80858e28d0d5fefaf556",
+        "size_bytes": 1060
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/three-source-original-premises/native-result.json",
+        "sha256": "965c84dae3a1ea090e2b95649c79f2444f032ac34da101dffbd91fc2a0e26b3c",
+        "size_bytes": 858
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/three-source-original-premises/observations.json",
+        "sha256": "86fdae96818a54d5da79f726feb274f6773047363c6202c0148868adb7cfbf5b",
+        "size_bytes": 60873
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/three-source-original-premises/replay.py",
+        "sha256": "e113cbef38b1e9e9cd48cddbc343defe0384be1ce26e75334ad068fa5b489563",
+        "size_bytes": 15278
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/workflow-markdown-parser-profiles.json",
         "sha256": "9be68a7ada3370741c9b4dbc8fc9ddc08ec98cea800f4205c53b8825d2f31606",
         "size_bytes": 1059
@@ -30568,8 +30688,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/angular-four-moment-radius/EXPOSITION.md",
-        "sha256": "e9c4918a56aa01b29749195cab32fc43e3bf8c7a64ff3e07b388b35f53038011",
-        "size_bytes": 17249
+        "sha256": "e14ab24d584f3071fd6c397cf7376995f189cee8858dc4410e5012450418c387",
+        "size_bytes": 17896
       },
       {
         "git_mode": "100644",
@@ -30621,6 +30741,174 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/EVIDENCE.md",
+        "sha256": "c7b575298f9bebf2861cc5dd4b51111514f36a110167da0510eff84343be431c",
+        "size_bytes": 6310
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/EXPOSITION.md",
+        "sha256": "a33d92a28aa4e44f45d309ae0ceae3aec322bc9af0cedc41148455114a659524",
+        "size_bytes": 11891
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/build.py",
+        "sha256": "74b5117c65d5ca93338dda3a2b3090bde71a9e7b32560c60c944f0f0707c1051",
+        "size_bytes": 5113
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/figures/angular-grid-coverage.pdf",
+        "sha256": "127561d79247dfa38a6abb1abd75ef5be44085924609fc53bd2d72c7ac8d42b6",
+        "size_bytes": 12329
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/figures/angular-grid-coverage.svg",
+        "sha256": "c7a0d2e654243b054dfece934c4fe63cf9932a9d103a92a2896e081c850b01ed",
+        "size_bytes": 5782
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/figures/draw.py",
+        "sha256": "bc280a777438168ab61f7d71df33d738015111f5403d6d2b1e484e83c1a42f4f",
+        "size_bytes": 4096
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/historical-grid.json",
+        "sha256": "345eaa36d1c5cfe5da5e8f2ed45ee2d61217956807853689ad16379171a0f8b7",
+        "size_bytes": 355
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/links.lua",
+        "sha256": "240195fe00f87dd4bb147ecede159e7d511a43840a734c21a37653a4b8c11ba2",
+        "size_bytes": 700
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/quadrature-grid.json",
+        "sha256": "ba40c7e885d867368b45436235bf4ec965b171f4a85636552e2a0a0be2ae1e78",
+        "size_bytes": 1238
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/quadrature.py",
+        "sha256": "d7dfdd039c2f0839600c927ab2bdcb3a8c84810f6d6c83cbfe28ce0fd5d96d8e",
+        "size_bytes": 4974
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-quadrature-grid/verify.py",
+        "sha256": "697ec9315d00a87568f43d06b236d70964ff4fe9bf33a0e9aa09d723630e28cc",
+        "size_bytes": 8751
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/EVIDENCE.md",
+        "sha256": "f711d37c3a4618252b3ee7faa27c40dd27f83b89a07d2f686e248a0b62582108",
+        "size_bytes": 5645
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/EXPOSITION.md",
+        "sha256": "cf18f2c4eef9808cc49fbb29865547a8885519ecfb51901a9c3a607276bb1083",
+        "size_bytes": 18916
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/REVIEW.md",
+        "sha256": "62627951c4c0c6ea0f6fb2668fbae4d7534c2a8822ed432798b5ef3a4570035f",
+        "size_bytes": 8159
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/STURM-SOURCE.md",
+        "sha256": "6e17f8c553a45ab77a14070cb4320fd86bba63696f5be56f1936ce20537cdd40",
+        "size_bytes": 4992
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/bernstein-result.json",
+        "sha256": "cb75d88579871a0da4ddc39d1c526342b24aeb8b48dcf609d2e8bb545348b628",
+        "size_bytes": 26314
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/bernstein.py",
+        "sha256": "2e26e129be8e2fbb4c904e28e7e717803fc125a6e24e21d1bcb737b05e1c144c",
+        "size_bytes": 4436
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/build.py",
+        "sha256": "ecf782e20c424c84cd4a3df4c07ef107edd517ed1ea018c81f2602cbe3fb546d",
+        "size_bytes": 5122
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/expected.json",
+        "sha256": "fe9fbb5f075073335424db9cac265aa318c42de57f0dcad65bf9cc096524b1f0",
+        "size_bytes": 1827
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/figures/angular-ray-thresholds.pdf",
+        "sha256": "060dfbef9b34069cfe7b1f6a43ce257d69878664636eab978ec01c905fbd70e8",
+        "size_bytes": 43933
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/figures/angular-ray-thresholds.svg",
+        "sha256": "b594cbb29b6d91ea09140af13f9d7d7f570196ac99d3107865b65ef877870bba",
+        "size_bytes": 4135
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/figures/draw.py",
+        "sha256": "463ff28b02773a529e3079deed9b43660d11f4b6a26b249543802591337c41db",
+        "size_bytes": 2976
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/links.lua",
+        "sha256": "e25545dd13041132c6d303c36830c05ea9a5d71b69ab3a0a6743d460eb4a15d9",
+        "size_bytes": 701
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/parameters.json",
+        "sha256": "399ddc81bd4607f5cf511c05568d38cf979ebabe02a929a1e54705e0121ada45",
+        "size_bytes": 138
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/power-result.json",
+        "sha256": "5f7be9a1751223eed1a0d2c63cbac8042876b8496998ea55dbbc5a934df47712",
+        "size_bytes": 74834
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/power.py",
+        "sha256": "50b747701e92dad7cfc2fa3158e88564b83de9dee795ab11434bf3bd9d8c8e48",
+        "size_bytes": 3046
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/replay.py",
+        "sha256": "ddfaf891294bf2a5c2bd053e6a5da9c800669d755cea2650e887f7d2fe79a89c",
+        "size_bytes": 5635
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/angular-ray-monotonicity/sturm_crossing.py",
+        "sha256": "f4eaf7b66b22316cab01e47491d2e99ef1341bb57078b62f2c97f614bca26b32",
+        "size_bytes": 5254
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/angular-truncation-extremum/EVIDENCE.md",
         "sha256": "26d9e4cc2fccd219f0d1d3704f89cda84ab3d89b86e7d9a3ff84a37bb08c1d1e",
         "size_bytes": 16566
@@ -30628,8 +30916,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/angular-truncation-extremum/EXPOSITION.md",
-        "sha256": "bde7700d7706a97bd2a322b07e7c27f68bd1e71f588577c19f0a9042361d27de",
-        "size_bytes": 17721
+        "sha256": "b34898b1865fa34f86dbd46e6e72a6f8580f73b84c8b3899a11619ab620b2d23",
+        "size_bytes": 18568
       },
       {
         "git_mode": "100644",
@@ -30688,14 +30976,14 @@
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/EVIDENCE.md",
-        "sha256": "c89dd6e1996c7718d5fbd225cd5c50cbf6b368b84eef32ac9ab848e781fa4f53",
-        "size_bytes": 20636
+        "sha256": "136feee6bb72ecd9e782282e1f76aae8f9008042cafb9509d2b9521a10c48197",
+        "size_bytes": 21108
       },
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/EXPOSITION.md",
-        "sha256": "5c2d140e84e642fd605922a544ad8b0147c10f6de04805df1a451c52eb7ee4a8",
-        "size_bytes": 22957
+        "sha256": "41bfc7faac2e169e5129546ad24d77884e8a63638783955d0b031617e6b2a717",
+        "size_bytes": 23354
       },
       {
         "git_mode": "100644",
@@ -30724,20 +31012,20 @@
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/figures/angular-boundary-decisions.pdf",
-        "sha256": "64e15c7ea1db95e5ae85d20a8a92fda62601b1f77e3a7958e37ae5eff885a230",
-        "size_bytes": 12759
+        "sha256": "a7fd4fafb4417018198bbcca4b4111afb3325fd6fa4f596a6115650b13d93d65",
+        "size_bytes": 12793
       },
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/figures/angular-boundary-decisions.svg",
-        "sha256": "e2288cbf55be33e5799f8b9e854bab9b243c2f301fcc23fba4e4f7df44ae6a95",
-        "size_bytes": 7271
+        "sha256": "edc51873d4ab3b2c7b7cc6225fb0c64a86c03871b31d34b2f681d466dfc65f92",
+        "size_bytes": 7298
       },
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/figures/draw.py",
-        "sha256": "d9189f80c447ccda16fe4625f625e75f6e7d5f82d187bd6589637b13ff1657fc",
-        "size_bytes": 6757
+        "sha256": "2b447ec7ccdf4691c11283010317b19a212432f5a310b428af0450b3738a7648",
+        "size_bytes": 6784
       },
       {
         "git_mode": "100644",
@@ -30808,14 +31096,158 @@
       {
         "git_mode": "100644",
         "path": "audit/research/categorical-count-table-encoding/README.md",
-        "sha256": "2980efd3669753e1a454cc8fb5c7c50e4eb2e02117d6bb2217cf69b0fbd7aae0",
-        "size_bytes": 12481
+        "sha256": "e6434e722d6e67bfaf1886c6758396c2a54f54f6f81353f2ed3e71d8bd579840",
+        "size_bytes": 13455
       },
       {
         "git_mode": "100644",
         "path": "audit/research/categorical-count-table-encoding/wire.py",
         "sha256": "de02bbc22fb26c7d94c3cd79af7f4dee075c5096ac3bceab571756a0bd2a0608",
         "size_bytes": 5833
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/EVIDENCE.md",
+        "sha256": "813c41208a5aceef86566947a512a8eb3c9acaf1556fdda2b99e244df43e87a3",
+        "size_bytes": 10511
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/README.md",
+        "sha256": "94ee0ad39c7132bba67f53555da04f67db0e84af9a3ebd65d203ae43785d91c0",
+        "size_bytes": 14442
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/build.py",
+        "sha256": "e91660bdaaff53f6ae8ff12d5b279cb6b99f2985522cebf9475c756ba720ec2f",
+        "size_bytes": 5122
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/cases/constant-equal/B.json",
+        "sha256": "128d1e9f18c59419432be43c11e50448bc5d41804dab0540dcef614546f69686",
+        "size_bytes": 318
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/cases/constant-equal/C.json",
+        "sha256": "c0e5c73507c77965fe1ef4979e09dc19fa3d11aaf02212d1927c61cb07a473f4",
+        "size_bytes": 92194
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/cases/copy-equal/B.json",
+        "sha256": "dc0a32b6c9210880f2c2a9d3b3c88fe0d7c2e595af4f3555c6d2e28ecbce7ff9",
+        "size_bytes": 310
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/cases/copy-equal/C.json",
+        "sha256": "e5a1b348479ced5c14c3768adc876763f33a5236ecf2035aa3bbe5a4cfa20923",
+        "size_bytes": 92194
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/cases/singleton1/B.json",
+        "sha256": "9fb8db7cbbf8c09113262d0aaeb82d9cae18dd78de8d4e139e8e5d814ef314b3",
+        "size_bytes": 243
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/cases/singleton1/C.json",
+        "sha256": "1b4a456f0430e096ef8d04e3785726e715953bbedb0da38e6ed395ef1640602f",
+        "size_bytes": 88128
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/cases/singleton7/B.json",
+        "sha256": "38408f8abfd7daa2a9c5f31bc634ca1fd4d6d770a346cc1169e1d7ee468e4699",
+        "size_bytes": 243
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/cases/singleton7/C.json",
+        "sha256": "9d695955f6581ccd675edd2979f186dad258ae25e2b832031fda492a7120116d",
+        "size_bytes": 88128
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/figures/diagram.py",
+        "sha256": "3d4d4ae9d3ced4bf8d7428270d9ca5d99682af4720d62409c95a3324711da0d5",
+        "size_bytes": 5945
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/figures/quoted-token-boundaries.pdf",
+        "sha256": "eedb96823fe028f906aa5707e21827e5e5b14ad41517a0ebd86a0966dede491f",
+        "size_bytes": 11438
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/figures/quoted-token-boundaries.svg",
+        "sha256": "fa72b044cc94e1deb6521a061f9cb4e57edeb45dde58280ff6829cfa3e3d89d0",
+        "size_bytes": 5489
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/finite.py",
+        "sha256": "a13d39ca2369619b8061acec01a05b132ca79409432fdfbcc202c9c7a465d6ca",
+        "size_bytes": 6660
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/lean/Contradiction.lean",
+        "sha256": "82fb94f103e6141dd8524efd360fd1c08fe404e722df74c9b29f4ec5da281e2e",
+        "size_bytes": 93
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/lean/Model.lean",
+        "sha256": "ea5cfe90a37815a3d80a2f5fa6068c8e8dde8710991e83486d83f7624fa87793",
+        "size_bytes": 1069
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/lean/Observer.lean",
+        "sha256": "69d04b4b108b9bd247e4d6f59ae74249dd2ba685302517531c62ebee4903dc22",
+        "size_bytes": 1772
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/lean/Proof.lean",
+        "sha256": "5071098c7809b77c9cedc8ae21307a32e935668382056c7272dd4dd179867598",
+        "size_bytes": 1798
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/links.lua",
+        "sha256": "7494214605c49afba846ceb98c2cb0a72ef19239b04b0d38fc52652e198141ed",
+        "size_bytes": 767
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/observations.json",
+        "sha256": "7e3e0d29112f356e8bb83d29f6d9b24791c40d42ad79816d9e1222696200c179",
+        "size_bytes": 5618
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/proof-inputs.json",
+        "sha256": "47c1fb523a9b8e33824fcf146f4af58e95c920c64299c70025b612e936456980",
+        "size_bytes": 459
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/proof-terms.txt",
+        "sha256": "8f7db4259cfd27fe4ddd700dad811450988323ad98b8b9260462c8381ae5ffdf",
+        "size_bytes": 13131
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-state-token/replay.py",
+        "sha256": "420f579b7f1a00406b307d29ecf7bf08f50ab4955dc64a70de493ed3cbd41f86",
+        "size_bytes": 5803
       },
       {
         "git_mode": "100644",
@@ -32643,6 +33075,216 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/EVIDENCE.md",
+        "sha256": "570c32a83eaf179851ac1e4d6b5266be7239251391d569c3623f3fe159bf1fa0",
+        "size_bytes": 14826
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/PUBLICATION.md",
+        "sha256": "a1aed0a95850503c3b3df6ef72e95420b5094a3aae144af26f5b736fd8c2e5fc",
+        "size_bytes": 4363
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/README.md",
+        "sha256": "14d7ea471bbe528405d87591737ac5a832193cac384c31a4f827b738fb351705",
+        "size_bytes": 23926
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/build.py",
+        "sha256": "90c28c3dfccc095718c22a8f753ee24b81b96b9368938adeb6f72a568d064428",
+        "size_bytes": 8661
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/check.py",
+        "sha256": "8dcc397a56685e805b87001641f428b1e50b6d9f1e72abd20a5638e53d8317c8",
+        "size_bytes": 4498
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/exact-rows.json",
+        "sha256": "78c830401fc97c305c317edb2376e33af6b2bc2e0d25bf841d31e8d9b5bdd54e",
+        "size_bytes": 1079
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/expanded-proof-display.txt",
+        "sha256": "9ff9d033e843f59790d5bdf809410b138ee56e6eef52446b6e863e24bfcf7005",
+        "size_bytes": 381708
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/figures/counts-and-distances.pdf",
+        "sha256": "c02d2465a4691e179f30598a68178a8d4f4a905d5743a3fbd301c62937997b34",
+        "size_bytes": 119213
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/figures/counts-and-distances.svg",
+        "sha256": "d819d348446f6d6e0994bac77d7b3e5a4694f934163a4e33f8f9316419818369",
+        "size_bytes": 8757
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/figures/draw.py",
+        "sha256": "3985cd59f2652cf944cf22abb85f112f12195132a0e79c3c63ff3236a9ed5cc3",
+        "size_bytes": 5255
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/finite-observations.json",
+        "sha256": "ff50b5ba4ac8f8880c05333c87dc2eaae6feda8c0858065cd88f4636f91334b7",
+        "size_bytes": 3867
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/finite.py",
+        "sha256": "e56860b5fcba682d77b6307edf68c07ab918477c7309dc04d3259fa48a439fb4",
+        "size_bytes": 3506
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/integer-witnesses/construction.py",
+        "sha256": "9f0f4ebd0c4295c23410016b003652769396206d7e5915cc77b0a0f73c87dc69",
+        "size_bytes": 1130
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/integer-witnesses/geometry-judge.py",
+        "sha256": "f29556f2645580b61d613bb6c492d8909b8647fd49aa3ca7c49042644a804bc4",
+        "size_bytes": 5715
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/integer-witnesses/triangle-result.json",
+        "sha256": "d1ab26455ef5c9d23684269344464118113044e2d9fe2ef53507f6534422e1f0",
+        "size_bytes": 360
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/integer-witnesses/upper-mean.py",
+        "sha256": "c390139cbc4441edfa6450cc667121179e4d9a819484038efed172e92ceb8db7",
+        "size_bytes": 418
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/integer-witnesses/upper-result.json",
+        "sha256": "322779eaa783205cf3c84f909ebeb5733720d5baf04f881da7455512f0952374",
+        "size_bytes": 157
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/lean/Contradiction.lean",
+        "sha256": "4d7378cd045cb4f560b75b348a8cad800617fdbb5956041ee7721aa71fab5db5",
+        "size_bytes": 91
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/lean/FullDisplay.lean",
+        "sha256": "5cde2c9758c5ca5e9858a05a1c90b4174af5752f7675bee689bc036e5aac0edf",
+        "size_bytes": 352
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/lean/Model.lean",
+        "sha256": "a6e2de91d7594555cdb1d0e191d3033797f181cccf431daa6610a84718c1ae50",
+        "size_bytes": 1628
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/lean/Observer.lean",
+        "sha256": "8a0b3a1054654cc5579dc4d17cf9552c369b22790e9f55727318f320450ca5d1",
+        "size_bytes": 1472
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/lean/Proof.lean",
+        "sha256": "d7d69e2fba69115b87aff44c548dfed554cc6dc75e0099a3e103a442a3ed998b",
+        "size_bytes": 2042
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/link-ast.lua",
+        "sha256": "6297905833c42e314ae72c09e54ab8e54a69f85e0e9e60abf8dad3ffded2a29d",
+        "size_bytes": 1325
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/native/Cargo.lock",
+        "sha256": "e687bff075c9a471efd4b5384440b978b6a7d2afedf522a9fc67b42bf43b3a35",
+        "size_bytes": 9557
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/native/Cargo.toml",
+        "sha256": "c58c9ea0e90857fcb57537ed935c070a31f4ad524a192098f9b0f8b67777e0d3",
+        "size_bytes": 236
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/native/src/main.rs",
+        "sha256": "9c811fbac326076fd55267cc8410144955835f423d96c979bcaf79d4e167a10a",
+        "size_bytes": 1670
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/proof-display.txt",
+        "sha256": "6c7fc7696f604b923fd5921445a334495ffcc45df13a812d859bed18545a6eae",
+        "size_bytes": 253574
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/proof-inputs.json",
+        "sha256": "8e0afe534d2b658cc8787859851b93759d8254036492e704b70f0b3fa357249f",
+        "size_bytes": 656
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/replay.py",
+        "sha256": "e9fc2f359db94066688004cb195fe48398620b6d56de3cf5c857d22b5ec0a6b0",
+        "size_bytes": 5666
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/represented-report.json",
+        "sha256": "adf0bca48f503deb199a34171bac3a9c82f838a1b584980067ac07100f041e93",
+        "size_bytes": 1200
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/three-row-observations.json",
+        "sha256": "af1e3e6a601274b29bd97c6828f956642002f581fd9e78b190ae95b83d3fd1f4",
+        "size_bytes": 2427
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/three_rows.py",
+        "sha256": "9d1343863e16f8fd30bffa015a17e8f64e0444df98cacc1f0e1aa39cd555a9ce",
+        "size_bytes": 2124
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/two_arm.py",
+        "sha256": "564508f2f20d10e102436398358f4edf23058276bb88d29549430fe87ce0fafb",
+        "size_bytes": 8149
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/whole-upper-observations.json",
+        "sha256": "d36c9c55e1860e6aca2ea0993873bdd8b934748cfc27f42dcb81deaeba5447da",
+        "size_bytes": 632
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/strict-neighbour-count-geometry/whole_upper.py",
+        "sha256": "10190f28245919f63971ea1eb5c32f2d83a0a65d5efc4b505833d290453bf43c",
+        "size_bytes": 3002
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/support-change-mi-cusp/EXPOSITION.md",
         "sha256": "b27f3f5daf941dfbe42a65d519b8f6e291900a47a0630b8b6d8d0e66bdbcad76",
         "size_bytes": 10325
@@ -33202,8 +33844,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/three-source-six-certificate-observations/README.md",
-        "sha256": "9b9ca7d4b70d689f956aafe04d2e32ce85cdcdc333d3dbc2e7acb3f9676b1b80",
-        "size_bytes": 29879
+        "sha256": "ec2e6f8e4f2ac7563e8cd5b922010d81a9685242f478b1c5440df93f09b6d878",
+        "size_bytes": 30511
       },
       {
         "git_mode": "100644",
@@ -33748,8 +34390,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/three-source-w03-compositional-host/README.md",
-        "sha256": "d39a8f96b2920f9534d6affab65b3993f6927698e4034b7efac67cb58dc547e5",
-        "size_bytes": 5760
+        "sha256": "4ba418d98e11ab5c39841f6ea507ad3321837eddc72bdc5fc2424dcb5d834d18",
+        "size_bytes": 6059
       },
       {
         "git_mode": "100644",
@@ -35110,8 +35752,8 @@
       {
         "git_mode": "100644",
         "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md",
-        "sha256": "20d25cad6e446a9a7bc6efa4ee0612e9742bb572bc2ad9e730427924c7200d8d",
-        "size_bytes": 3656
+        "sha256": "2229bf68518c14ba31d82aa4f2ea289ded35770e58005c45040fd5c5242dfcbc",
+        "size_bytes": 5279
       },
       {
         "git_mode": "100644",
@@ -36406,8 +37048,20 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/angular-four-moment-radius.pdf",
-        "sha256": "f9f76d1d1432659bce8d084317490d2a64d97d93c84d236f2b853f30caf8078a",
-        "size_bytes": 96754
+        "sha256": "4963a09a8afc3e425cd652bfb72fe521c51b8d4a0a7d4058f7b6f3f68f513fe5",
+        "size_bytes": 98254
+      },
+      {
+        "git_mode": "100644",
+        "path": "output/pdf/angular-quadrature-grid.pdf",
+        "sha256": "cf4737317c33c1f3ebf42d10e72c07d185958022a01db6558d3477b1227e90fb",
+        "size_bytes": 80133
+      },
+      {
+        "git_mode": "100644",
+        "path": "output/pdf/angular-ray-monotonicity.pdf",
+        "sha256": "2d48f133a1a9141ec1ac2b17728ff0fc90b8cb38c54ed3120e8b8324c0cbb137",
+        "size_bytes": 132498
       },
       {
         "git_mode": "100644",
@@ -36418,20 +37072,26 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/angular-truncation-extremum.pdf",
-        "sha256": "4e0a21bdda8e61c3c1d1fc4c33a88616864e169a7f4de5d079edcfa8f366f256",
-        "size_bytes": 101819
+        "sha256": "68fc812fd5c0510a16478058f071155714e135f5786b1426ae47fc7f7aff97b1",
+        "size_bytes": 103684
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/angular-unit-boundary.pdf",
-        "sha256": "1a21481377f6c5bfd56f30e390f7790812326abf1bfdb5e04c110ad00715aabb",
-        "size_bytes": 112934
+        "sha256": "9dd5ed195a51528d0ace7bc711d3c0821e2f2214513b3d9230ad6c9153d6e19c",
+        "size_bytes": 113420
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/canonical-count-tables.pdf",
-        "sha256": "8377e2e8de2d90ab778589f8e2bf2c567b25fd8c6223a5934cab01ab9fbea9a5",
-        "size_bytes": 63370
+        "sha256": "7c59749410fbcb3859005c6d9c81e159d5d89aee73565b7fd4d1f3650c5dbcdb",
+        "size_bytes": 64723
+      },
+      {
+        "git_mode": "100644",
+        "path": "output/pdf/categorical-state-token.pdf",
+        "sha256": "6a25b3c1a1f6e888f7fbb9c0511452ac83fa13f381ccdaa1c3d226d857aa0ed3",
+        "size_bytes": 76857
       },
       {
         "git_mode": "100644",
@@ -36580,8 +37240,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-results-guide-current.pdf",
-        "sha256": "82b9e1b0a2723797b8703317aa4e4d871d2229b23b6c22ac732eac551d6ebe7c",
-        "size_bytes": 119710
+        "sha256": "8b74fbe6cf15e994006e04fc230890252b498437daec9e6a1c566b21768aca8c",
+        "size_bytes": 203424
       },
       {
         "git_mode": "100644",
@@ -36687,6 +37347,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/strict-neighbour-count-geometry.pdf",
+        "sha256": "ad6c93b9c81d1eb3033c285cd96060cdda8a36300b83d13cf85b74671c772170",
+        "size_bytes": 214114
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/support-change-mi-cusp.pdf",
         "sha256": "8d6870fac3f1e070b6b10bd2f975ba318203cc0209b6b35edf5471c40226079a",
         "size_bytes": 67794
@@ -36712,8 +37378,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/three-source-six-certificate-observations.pdf",
-        "sha256": "1ee4d2ef93899e772fa8bf3b08efa3ced1f79fde178fed1d29c8251ab2781e8d",
-        "size_bytes": 115048
+        "sha256": "20a10afa1f99d88b9e9c1ba482db26f9289bd7aac24315ade52effe132aec3c6",
+        "size_bytes": 115879
       },
       {
         "git_mode": "100644",
@@ -36760,8 +37426,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/build-current-mathematical-results-guide.py",
-        "sha256": "a23b0793cbc80cf3ffa3b7f1cf3971b87b3bee39b149ffe70d4b4ceef532c5e5",
-        "size_bytes": 5981
+        "sha256": "f706d3819f3be95c76ccc0e9e36c887a352939cb281bce3aeea54ec41bd30b2d",
+        "size_bytes": 7368
       },
       {
         "git_mode": "100755",
@@ -37048,7 +37714,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "7fd70b5043950438c25cca1896380320da42bb1c936bcadbef0e0f07877769b5",
+        "sha256": "b2d40f7c69b2211fb419ac21244940203365493cb3e30bcc12aadab3f6d23726",
         "size_bytes": 90915
       },
       {
@@ -37186,14 +37852,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "e1a448c81dde8301cd5a5378b65126cae5670b7f96538a59d416c6bdcf6b9f7e",
-        "size_bytes": 84143
+        "sha256": "b12877fdd8cd80bf087c549dc169fc3c73a6eedcfca34474014a0dd817b472fa",
+        "size_bytes": 84582
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "1240b2bdcc71494686b9d0d4e4beba7a25b2c706c913373ad5a786d50312200b",
-        "size_bytes": 38682
+        "sha256": "e8e881c6f6589d1812cd1b15a40fe8efbcad287cdded219b73af5ebf4c071cde",
+        "size_bytes": 39945
       },
       {
         "git_mode": "100755",
@@ -37648,7 +38314,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "c4f755ac2de1b6a4b777e472ef0a8cc5553b15fe41ecbc8508edef6b46107c0b",
+        "sha256": "607fa54f6615c667a9c0d360efdfd2720452236ddcf0738f0fc25b577b79717d",
         "size_bytes": 140337
       },
       {
@@ -38020,7 +38686,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-pid-discovery-verification-blueprint-pdf.sh",
-        "sha256": "f7e0da4aedea9cd0f8e8c127140ef863651fcadd31158ba161223ef01c12c26a",
+        "sha256": "59f73490b69d3ec02f6e5456131c7af677ef3810674dcb01f88ee6c3d2731f22",
         "size_bytes": 46489
       },
       {
@@ -38648,12 +39314,12 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "635e4a33569746edcb187b5a02d3b09898b1d7dd0dc4ecb707abc355a65d0b39",
-    "entry_count": 6417
+    "entries_sha256": "bd4b78646f13afe328f3ca79e0f87fee362df00e01505bcd0102b8bc7d172d76",
+    "entry_count": 6528
   },
   "subprojections": [
     {
-      "entries_sha256": "25512b6e7ba61c56c2ba9d01b3e76e828f2895fb867b88abe910e53ed8b4213f",
+      "entries_sha256": "12bfb1b9fd1e0ef52edb66210f7523f696a24e10be07a01e7f6bef48bf9ff867",
       "entry_count": 143,
       "name": "claim_packets",
       "selectors": [
@@ -38661,23 +39327,23 @@
       ]
     },
     {
-      "entries_sha256": "ba2725c8f965b5874a973324b70609354d296db178c7438915f459d3bdfb2d11",
-      "entry_count": 2400,
+      "entries_sha256": "c53491a45779e5ca8cd381360e268f6f2eac290e559a20a9b05c245f99d60d6d",
+      "entry_count": 2415,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "857272806ee7b260607fba4b13990a46b13783184cb4bc42810eeb6c0a5db84d",
-      "entry_count": 56,
+      "entries_sha256": "43594cc89af02d079155dc31c9f797665995311f39ef656bdc5d98342230f87c",
+      "entry_count": 60,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "6a3a33b15ef03a857f4a9588e7b8563635ebdf07d73761fc3b780dc3c6b5cf72",
+      "entries_sha256": "8336643c0e43a9b0895b3c1d31a1d41f58e5c1a77f93c1d5185d14ba5559fd95",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

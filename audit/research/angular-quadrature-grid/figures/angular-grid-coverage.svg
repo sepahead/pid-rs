@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg aria-labelledby="title description" xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420" role="img">
+  <title id="title">The integer amplitude grid and its earlier omissions</title>
+  <desc id="description">A solid outer diamond encloses the nonzero grid through ring 33. A dashed inner diamond encloses the nonzero grid through ring 30. Eight open circles on the inner edge identify points omitted by the earlier floating-point filter. A cross marks the excluded origin.</desc>
+  <rect width="900" height="420" fill="#FFFFFF" />
+  <text font-family="Source Sans Pro, sans-serif" font-size="23" font-weight="600" text-anchor="start" x="30" y="34" fill="#1F3F60">Integer amplitude indices</text>
+  <line x1="58" y1="213" x2="397" y2="213" stroke="#D2E0E2" stroke-width="1.6" />
+  <line x1="225" y1="55" x2="225" y2="370" stroke="#D2E0E2" stroke-width="1.6" />
+  <line x1="366.9" y1="213.0" x2="225.0" y2="71.1" stroke="#1F3F60" stroke-width="2.7" />
+  <line x1="225.0" y1="71.1" x2="83.1" y2="213.0" stroke="#1F3F60" stroke-width="2.7" />
+  <line x1="83.1" y1="213.0" x2="225.0" y2="354.9" stroke="#1F3F60" stroke-width="2.7" />
+  <line x1="225.0" y1="354.9" x2="366.9" y2="213.0" stroke="#1F3F60" stroke-width="2.7" />
+  <line x1="354.0" y1="213.0" x2="225.0" y2="84.0" stroke="#1F6968" stroke-width="2.7" stroke-dasharray="6,4" />
+  <line x1="225.0" y1="84.0" x2="96.0" y2="213.0" stroke="#1F6968" stroke-width="2.7" stroke-dasharray="6,4" />
+  <line x1="96.0" y1="213.0" x2="225.0" y2="342.0" stroke="#1F6968" stroke-width="2.7" stroke-dasharray="6,4" />
+  <line x1="225.0" y1="342.0" x2="354.0" y2="213.0" stroke="#1F6968" stroke-width="2.7" stroke-dasharray="6,4" />
+  <circle stroke-width="2.6" cx="108.900" cy="225.900" r="4.2" stroke="#743E37" fill="#FFFFFF" />
+  <circle stroke-width="2.6" cx="108.900" cy="200.100" r="4.2" stroke="#743E37" fill="#FFFFFF" />
+  <circle stroke-width="2.6" cx="143.300" cy="260.300" r="4.2" stroke="#743E37" fill="#FFFFFF" />
+  <circle stroke-width="2.6" cx="177.700" cy="294.700" r="4.2" stroke="#743E37" fill="#FFFFFF" />
+  <circle stroke-width="2.6" cx="177.700" cy="131.300" r="4.2" stroke="#743E37" fill="#FFFFFF" />
+  <circle stroke-width="2.6" cx="212.100" cy="329.100" r="4.2" stroke="#743E37" fill="#FFFFFF" />
+  <circle stroke-width="2.6" cx="237.900" cy="329.100" r="4.2" stroke="#743E37" fill="#FFFFFF" />
+  <circle stroke-width="2.6" cx="306.700" cy="260.300" r="4.2" stroke="#743E37" fill="#FFFFFF" />
+  <line x1="221" y1="209" x2="229" y2="217" stroke="#2C3E50" stroke-width="2" />
+  <line x1="221" y1="217" x2="229" y2="209" stroke="#2C3E50" stroke-width="2" />
+  <text font-family="Source Sans Pro, sans-serif" font-size="19" font-weight="600" text-anchor="start" x="373" y="206" fill="#1F3F60">i</text>
+  <text font-family="Source Sans Pro, sans-serif" font-size="19" font-weight="600" text-anchor="start" x="237" y="62" fill="#1F3F60">j</text>
+  <text font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="end" x="68" y="238" fill="#2C3E50">-33</text>
+  <text font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="start" x="377" y="238" fill="#2C3E50">33</text>
+  <text font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="start" x="236" y="359" fill="#2C3E50">-33</text>
+  <text font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="end" x="213" y="78" fill="#2C3E50">33</text>
+  <line x1="420" y1="27" x2="420" y2="376" stroke="#D2E0E2" stroke-width="1.5" />
+  <text font-family="Source Sans Pro, sans-serif" font-size="23" font-weight="600" text-anchor="start" x="452" y="42" fill="#1F3F60">Pairs in each check</text>
+  <line x1="454" y1="81" x2="502" y2="81" stroke="#1F3F60" stroke-width="3" />
+  <text font-family="Source Sans Pro, sans-serif" font-size="20" font-weight="600" text-anchor="start" x="520" y="88" fill="#1F3F60">Lower bound</text>
+  <text font-family="Source Sans Pro, sans-serif" font-size="18" font-weight="400" text-anchor="start" x="454" y="115" fill="#2C3E50">Rings 1 to 33 give 2,244 pairs.</text>
+  <line x1="454" y1="154" x2="502" y2="154" stroke="#1F6968" stroke-width="3" stroke-dasharray="6,4" />
+  <text font-family="Source Sans Pro, sans-serif" font-size="20" font-weight="600" text-anchor="start" x="520" y="161" fill="#1F6968">Eight-moment remainder</text>
+  <text font-family="Source Sans Pro, sans-serif" font-size="18" font-weight="400" text-anchor="start" x="454" y="187" fill="#2C3E50">Rings 1 to 30 give 1,860 pairs.</text>
+  <circle stroke-width="2.6" cx="477.000" cy="226.000" r="4.2" stroke="#743E37" fill="#FFFFFF" />
+  <text font-family="Source Sans Pro, sans-serif" font-size="20" font-weight="600" text-anchor="start" x="520" y="233" fill="#743E37">Earlier omissions</text>
+  <text font-family="Source Sans Pro, sans-serif" font-size="18" font-weight="400" text-anchor="start" x="454" y="259" fill="#2C3E50">Eight boundary pairs were lost.</text>
+  <line x1="473" y1="291" x2="481" y2="299" stroke="#2C3E50" stroke-width="2" />
+  <line x1="473" y1="299" x2="481" y2="291" stroke="#2C3E50" stroke-width="2" />
+  <text font-family="Source Sans Pro, sans-serif" font-size="20" font-weight="600" text-anchor="start" x="520" y="302" fill="#2C3E50">Origin</text>
+  <text font-family="Source Sans Pro, sans-serif" font-size="18" font-weight="400" text-anchor="start" x="454" y="329" fill="#2C3E50">Both comparisons exclude ring zero.</text>
+  <text font-family="Source Sans Pro, sans-serif" font-size="17" font-weight="400" text-anchor="start" x="33" y="397" fill="#2C3E50">Each index step changes its amplitude by 0.03. Axes and ring numbers have no units.</text>
+</svg>

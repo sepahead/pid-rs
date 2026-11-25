@@ -1,0 +1,9 @@
+{
+  "expanded-proof-display.txt": "9ff9d033e843f59790d5bdf809410b138ee56e6eef52446b6e863e24bfcf7005",
+  "lean/Contradiction.lean": "4d7378cd045cb4f560b75b348a8cad800617fdbb5956041ee7721aa71fab5db5",
+  "lean/FullDisplay.lean": "5cde2c9758c5ca5e9858a05a1c90b4174af5752f7675bee689bc036e5aac0edf",
+  "lean/Model.lean": "a6e2de91d7594555cdb1d0e191d3033797f181cccf431daa6610a84718c1ae50",
+  "lean/Observer.lean": "8a0b3a1054654cc5579dc4d17cf9552c369b22790e9f55727318f320450ca5d1",
+  "lean/Proof.lean": "d7d69e2fba69115b87aff44c548dfed554cc6dc75e0099a3e103a442a3ed998b",
+  "proof-display.txt": "6c7fc7696f604b923fd5921445a334495ffcc45df13a812d859bed18545a6eae"
+}

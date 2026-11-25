@@ -45,6 +45,8 @@ The three single-pair nodes have weights \(1,1,0\) in the order 12, 13, 23. The 
 A=J-R(1)-R(2/3)+2R(1/2).
 \]
 
+\textbf{Fourier calculation of a proper term.} Set \(c=aw\), \(h=\sqrt{1-c^2}\), \(K=(1+h)/2\) and \(z=c/(1+h)\). Let \(i\) be the imaginary unit, \(i^2=-1\), and write \(\mathrm{Re}\) for the real part. The factorization \(1+c\cos v=K|1+ze^{iv}|^2\) gives \(\log K+2\,\mathrm{Re}\log(1+ze^{iv})\) for its logarithm. Since \(|z|<1\), the logarithm series converges uniformly in \(v\). Its first cosine term is \(2z\cos v\). The constant term is \(\log K\). Multiplication by \(\cos v\) removes every other harmonic on averaging, and \(E_0\cos^2v=1/2\) gives mean \(z\). Thus \(R(w)=\log K+az\). \href{https://github.com/sepahead/pid-rs/blob/main/audit/archive/angular-relative-bound-20261005/derivation.md.txt}{October derivation}
+
 The continuous functional and inversion come from Ehrlich et al., Sections III.A--B, Eqs. 16, 18--19, and Appendix B, Definition 3. The applied equal-branch reduction comes from the October derivation. The common radian gauge stays fixed. \href{https://arxiv.org/html/2311.06373v3}{Defining paper} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/archive/angular-relative-bound-20261005/derivation.md.txt}{Prior model and proof}
 
 \clearpage
@@ -131,17 +133,13 @@ At the lower endpoint, rounding the upper bound \textbf{up} gives \(U\le993860/1
 
 \textbf{Example.} Set \(a=1/8\) and \(b=-1/8\). The radius is \(1/4\), below \(583/2048\). The density floor is at least \(3/(4L^4)\) and the atom is at least \(3/512\) nats. Hence the four-moment relative error is strictly below one part per million. This calculation uses the parameter values and the population law directly. It requires neither measured angles nor numerical logarithms. At \(a=1197/4096,b=0\) the certificate establishes failure for the same approximation.
 
-To calculate the approximation itself, sum the four joint moments and use an exact expression from the October derivation for the proper terms. Put \(c=aw\), \(h=\sqrt{1-c^2}\), \(K=(1+h)/2\) and \(z=c/(1+h)\). Then
-
-\[
-R(w)=\log K+az .
-\]
-
-Indeed \(1+c\cos v=K|1+ze^{iv}|^2\) and \(|z|<1\). In the Fourier series of its logarithm the uniform mean is \(\log K\) and the cosine-weighted mean is \(z\). The exact expression and the truncation guarantee have separate roles. \href{https://github.com/sepahead/pid-rs/blob/main/audit/archive/angular-relative-bound-20261005/derivation.md.txt}{October derivation}
+For this example take the first four even moments in \(J\) and use the exact Fourier expression \(R(w)=\log K+az\) just derived for each proper term.
 
 \textbf{Where the calculation applies.} At the origin the atom and absolute truncation error are both zero. The relative quotient is undefined. For \(1/2<r<1\) the density stays positive, but this bounded search gives no new passing threshold there. At \(r=1\) the density reaches zero and the positive-floor argument ends. At \(r>1\) continuity and independently selectable phases give an open region with negative density. Using a parameter outside the assigned law cannot produce a probability calculation.
 
-A subsequent study proved that the weighted population average also exists at \(r=1\). With exact proper terms, the strict one-part-per-million guarantee over the whole nonzero amplitude diamond holds if and only if at least 7,278 even joint moments are retained. This bounded scan retains its original positive-density range. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/angular-unit-boundary/EXPOSITION.md}{Unit-boundary proof}
+A subsequent study proved that the weighted population average also exists at \(r=1\). With exact proper terms, the strict one-part-per-million guarantee over the whole nonzero amplitude diamond holds if and only if at least 7,278 even joint moments are retained. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/angular-unit-boundary/EXPOSITION.md}{Unit-boundary proof}
+
+A 25 November study gives both thresholds for four moments with exact proper terms. All directions pass at positive radii below the first threshold, near \(0.292039\). From the first threshold through radii strictly below the second, some pass and some fail. At the second threshold and through \(r=1\), all fail. The second lies strictly between \(0.340315168725\) and \(0.340315168726\). \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/angular-ray-monotonicity/EXPOSITION.md}{Proof of the two radius thresholds}
 
 The outcome is an offline test case for an analytic formula in the specified gauge. On the failing axis the target depends only on source 1. The conditional mutual information of sources 2 and 3 with the target given source 1 is zero, yet the top atom is positive. For an incremental prediction question that conditional mutual information gives the direct answer. Sensor choice, causal interaction, control performance and sampled-angle accuracy require their own laws, comparators and evidence. Changes of units, density gauge, source grouping or approximation of a proper term also require new error control. Floating-point summation, rounding of \(a,b\), numerical quadrature and cancellation as \(A\) tends to zero are additional sources of error.
 

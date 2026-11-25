@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="530" viewBox="0 0 1100 530" role="img" aria-labelledby="title desc">
+<title id="title">Strict counts and two-source distances at five rows and rank two</title>
+<desc id="desc">Left: all ten possible count pairs. The boundary-only exceptional pair is two, two. The two minima are three, four and four, three. Right: the four other rows have source scores and target differences (2,3), (5,10), (19,2) and (22,7). Row 2 fixes the radius ten. Only source arm one admits row 1 and only arm two admits row 2.</desc>
+<rect width="1100" height="530" fill="white"/>
+<g font-family="DejaVu Sans, Arial, sans-serif" fill="#2C3E50">
+<text x="42" y="43" text-anchor="start" font-size="27" font-weight="bold" fill="#1F3F60">One query row, five observations, rank two</text>
+<line x1="42" y1="61" x2="1062" y2="61" stroke="#D2E0E2" stroke-width="1"/>
+<text x="55" y="98" text-anchor="start" font-size="20" font-weight="bold" fill="#1F6968">Which counts are possible?</text>
+<text x="548" y="98" text-anchor="start" font-size="20" font-weight="bold" fill="#1F6968">Which rows enter the two strict counts?</text>
+<text x="55" y="124" text-anchor="start" font-size="15" font-weight="normal" fill="#2C3E50">x and y each include the query row.</text>
+<text x="548" y="124" text-anchor="start" font-size="15" font-weight="normal" fill="#2C3E50">Row 0 is the query row. Each point is another row.</text>
+<line x1="130" y1="355" x2="130" y2="178" stroke="#D2E0E2" stroke-width="1"/>
+<line x1="130" y1="355" x2="397" y2="355" stroke="#D2E0E2" stroke-width="1"/>
+<text x="130" y="381" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50">2</text>
+<text x="109" y="360" text-anchor="end" font-size="15" font-weight="normal" fill="#2C3E50">2</text>
+<line x1="219" y1="355" x2="219" y2="178" stroke="#D2E0E2" stroke-width="1"/>
+<line x1="130" y1="296" x2="397" y2="296" stroke="#D2E0E2" stroke-width="1"/>
+<text x="219" y="381" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50">3</text>
+<text x="109" y="301" text-anchor="end" font-size="15" font-weight="normal" fill="#2C3E50">3</text>
+<line x1="308" y1="355" x2="308" y2="178" stroke="#D2E0E2" stroke-width="1"/>
+<line x1="130" y1="237" x2="397" y2="237" stroke="#D2E0E2" stroke-width="1"/>
+<text x="308" y="381" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50">4</text>
+<text x="109" y="242" text-anchor="end" font-size="15" font-weight="normal" fill="#2C3E50">4</text>
+<line x1="397" y1="355" x2="397" y2="178" stroke="#D2E0E2" stroke-width="1"/>
+<line x1="130" y1="178" x2="397" y2="178" stroke="#D2E0E2" stroke-width="1"/>
+<text x="397" y="381" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50">5</text>
+<text x="109" y="183" text-anchor="end" font-size="15" font-weight="normal" fill="#2C3E50">5</text>
+<line x1="130" y1="355" x2="409" y2="355" stroke="#2C3E50" stroke-width="1.7"/>
+<line x1="130" y1="355" x2="130" y2="168" stroke="#2C3E50" stroke-width="1.7"/>
+<line x1="130" y1="178" x2="397" y2="355" stroke="#916400" stroke-width="1.8" stroke-dasharray="6 5"/>
+<path d="M130 346 l9 9 -9 9 -9 -9 z" fill="white" stroke="#743E37" stroke-width="2.7"/>
+<circle cx="130" cy="296" r="7" fill="#1F6968"/>
+<circle cx="130" cy="237" r="7" fill="#1F6968"/>
+<circle cx="130" cy="178" r="7" fill="#1F6968"/>
+<circle cx="219" cy="355" r="7" fill="#1F6968"/>
+<circle cx="219" cy="296" r="7" fill="#1F6968"/>
+<rect x="212" y="230" width="14" height="14" fill="#1F3F60"/>
+<circle cx="308" cy="355" r="7" fill="#1F6968"/>
+<rect x="301" y="289" width="14" height="14" fill="#1F3F60"/>
+<circle cx="397" cy="355" r="7" fill="#1F6968"/>
+<text x="261" y="407" text-anchor="middle" font-size="16" font-weight="normal" fill="#2C3E50">Source count x</text>
+<text x="65" y="269" text-anchor="middle" font-size="16" font-weight="normal" fill="#2C3E50" transform="rotate(-90 65 269)">Target count y</text>
+<circle cx="67" cy="439" r="7" fill="#1F6968"/>
+<text x="84" y="445" text-anchor="start" font-size="15" font-weight="normal" fill="#2C3E50">Other open pairs</text>
+<rect x="243" y="432" width="14" height="14" fill="#1F3F60"/>
+<text x="267" y="445" text-anchor="start" font-size="15" font-weight="normal" fill="#2C3E50">Minimum local term</text>
+<path d="M67 461 l9 9 -9 9 -9 -9 z" fill="white" stroke="#743E37" stroke-width="2.7"/>
+<text x="84" y="475" text-anchor="start" font-size="15" font-weight="normal" fill="#2C3E50">Exceptional pair</text>
+<line x1="258" y1="469" x2="285" y2="469" stroke="#916400" stroke-width="1.8" stroke-dasharray="6 5"/>
+<text x="295" y="475" text-anchor="start" font-size="15" font-weight="normal" fill="#2C3E50">x + y = 7</text>
+<line x1="621.0" y1="355.0" x2="621.0" y2="173.5" stroke="#D2E0E2" stroke-width="1"/>
+<text x="621.0" y="381" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50">0</text>
+<line x1="697.0" y1="355.0" x2="697.0" y2="173.5" stroke="#D2E0E2" stroke-width="1"/>
+<text x="697.0" y="381" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50">5</text>
+<line x1="773.0" y1="355.0" x2="773.0" y2="173.5" stroke="#D2E0E2" stroke-width="1"/>
+<text x="773.0" y="381" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50">10</text>
+<line x1="849.0" y1="355.0" x2="849.0" y2="173.5" stroke="#D2E0E2" stroke-width="1"/>
+<text x="849.0" y="381" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50">15</text>
+<line x1="925.0" y1="355.0" x2="925.0" y2="173.5" stroke="#D2E0E2" stroke-width="1"/>
+<text x="925.0" y="381" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50">20</text>
+<line x1="1001.0" y1="355.0" x2="1001.0" y2="173.5" stroke="#D2E0E2" stroke-width="1"/>
+<text x="1001.0" y="381" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50">25</text>
+<line x1="621.0" y1="355.0" x2="1001.0" y2="355.0" stroke="#D2E0E2" stroke-width="1"/>
+<text x="605" y="360.0" text-anchor="end" font-size="15" font-weight="normal" fill="#2C3E50">0</text>
+<line x1="621.0" y1="294.5" x2="1001.0" y2="294.5" stroke="#D2E0E2" stroke-width="1"/>
+<text x="605" y="299.5" text-anchor="end" font-size="15" font-weight="normal" fill="#2C3E50">5</text>
+<line x1="621.0" y1="234.0" x2="1001.0" y2="234.0" stroke="#D2E0E2" stroke-width="1"/>
+<text x="605" y="239.0" text-anchor="end" font-size="15" font-weight="normal" fill="#2C3E50">10</text>
+<line x1="621.0" y1="173.5" x2="1001.0" y2="173.5" stroke="#D2E0E2" stroke-width="1"/>
+<text x="605" y="178.5" text-anchor="end" font-size="15" font-weight="normal" fill="#2C3E50">15</text>
+<line x1="621.0" y1="355.0" x2="1009.0" y2="355.0" stroke="#2C3E50" stroke-width="1.7"/>
+<line x1="621.0" y1="355.0" x2="621.0" y2="165.5" stroke="#2C3E50" stroke-width="1.7"/>
+<line x1="773.0" y1="355.0" x2="773.0" y2="173.5" stroke="#916400" stroke-width="2" stroke-dasharray="7 4"/>
+<line x1="621.0" y1="234.0" x2="1001.0" y2="234.0" stroke="#916400" stroke-width="2" stroke-dasharray="7 4"/>
+<text x="781.0" y="179.5" text-anchor="start" font-size="14" font-weight="normal" fill="#916400">S = 10</text>
+<text x="999.48" y="226.0" text-anchor="end" font-size="14" font-weight="normal" fill="#916400">T = 10</text>
+<circle cx="651.4" cy="318.7" r="7" fill="#1F6968"/>
+<text x="663.4" y="310.7" text-anchor="start" font-size="14" font-weight="bold" fill="#2C3E50">row 1</text>
+<path d="M697.0 225.0 l9 16 h-18 z" fill="#1F3F60"/>
+<text x="709.0" y="226.0" text-anchor="start" font-size="14" font-weight="bold" fill="#2C3E50">row 2</text>
+<circle cx="909.8" cy="330.8" r="7" fill="#1F6968"/>
+<text x="921.8" y="322.8" text-anchor="start" font-size="14" font-weight="bold" fill="#2C3E50">row 3</text>
+<circle cx="955.4" cy="270.3" r="7" fill="#1F6968"/>
+<text x="967.4" y="262.3" text-anchor="start" font-size="14" font-weight="bold" fill="#2C3E50">row 4</text>
+<text x="806" y="407" text-anchor="middle" font-size="16" font-weight="normal" fill="#2C3E50">Source score S (raw units)</text>
+<text x="560" y="265" text-anchor="middle" font-size="15" font-weight="normal" fill="#2C3E50" transform="rotate(-90 560 265)">Target difference T (raw units)</text>
+<text x="550" y="445" text-anchor="start" font-size="15" font-weight="normal" fill="#2C3E50">Left of S = 10: rows 1 and 2, one per source arm.</text>
+<text x="550" y="474" text-anchor="start" font-size="15" font-weight="normal" fill="#2C3E50">Below T = 10: rows 1, 3 and 4. Row 2 fixes the radius.</text>
+<line x1="42" y1="494" x2="1062" y2="494" stroke="#D2E0E2" stroke-width="1"/>
+<text x="42" y="517" text-anchor="start" font-size="15" font-weight="bold" fill="#2C3E50">At row 0 the two counts are (3, 4). Its exact local contribution is −1/4 nat.</text>
+</g>
+</svg>

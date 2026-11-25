@@ -669,7 +669,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "3f4f4b1191268db93c79e0e568f9e88b5207f390a5676f11a0512559ae7ef986",
-    "CHANGELOG.md": "62da1f83014eaf740e909bcf66e04b63621c4317cffe90c62ba6ddc12290ace6",
+    "CHANGELOG.md": "90e4946a911a62106288c02157d1b542b7f650cdbdb22e7ca089204782a88b1c",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "6ef6a9d1c81468db3c3698ccb5f65f1879d22c97db65ec5dd74b799a6ab62be7"
     ),
@@ -707,7 +707,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        '7fd70b5043950438c25cca1896380320da42bb1c936bcadbef0e0f07877769b5'
+        'b2d40f7c69b2211fb419ac21244940203365493cb3e30bcc12aadab3f6d23726'
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -716,7 +716,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
     ),
     "scripts/check-formal-pdf-set.sh": (
-        "1240b2bdcc71494686b9d0d4e4beba7a25b2c706c913373ad5a786d50312200b"
+        "e8e881c6f6589d1812cd1b15a40fe8efbcad287cdded219b73af5ebf4c071cde"
     ),
     "scripts/build-finite-target-copy-mgw-pdf.py": (
         "7aba9fdee6135a84ea68ebddef05d631aabcd47be92251e53380df1459d40af6"

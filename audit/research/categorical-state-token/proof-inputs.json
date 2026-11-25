@@ -1,0 +1,7 @@
+{
+  "lean/Contradiction.lean": "82fb94f103e6141dd8524efd360fd1c08fe404e722df74c9b29f4ec5da281e2e",
+  "lean/Model.lean": "ea5cfe90a37815a3d80a2f5fa6068c8e8dde8710991e83486d83f7624fa87793",
+  "lean/Observer.lean": "69d04b4b108b9bd247e4d6f59ae74249dd2ba685302517531c62ebee4903dc22",
+  "lean/Proof.lean": "5071098c7809b77c9cedc8ae21307a32e935668382056c7272dd4dd179867598",
+  "proof-terms.txt": "8f7db4259cfd27fe4ddd700dad811450988323ad98b8b9260462c8381ae5ffdf"
+}

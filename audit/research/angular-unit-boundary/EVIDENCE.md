@@ -89,3 +89,7 @@ Cite Sepehr Mahmoudian (2026), *Angular information at a zero of the population 
 On 25 November 2026 the repository Markdown check found 13 notation errors in the first source. Ten displayed equations had delimiters on their equation line. Two long inline equations needed display form. One real-part operator needed supported notation. The current source also gives the full failure interval from radius 0.39 through 1 and names the two cosine directions in the figure. The signed numerical records and their exact arithmetic apply to the same inputs as before.
 
 The integral at unit amplitude now gives its change of variables and both limits. The Fourier calculation defines the imaginary unit and the real part before using them.
+
+A separate [finite-grid report](../angular-quadrature-grid/EXPOSITION.md) compares an eight-moment approximation with a periodic quadrature. Its exact amplitude indices, signed numerical margins and failure checks give a distinct software result.
+
+The 25 November [fixed-direction study](../angular-ray-monotonicity/EXPOSITION.md) proves the second sharp four-moment threshold on the same population law. The displayed $0.39$ bound here is the earlier sufficient result.

@@ -1,0 +1,22 @@
+{
+  "all_rows_checked": 7236,
+  "count_by_type": {
+    "corner": 36,
+    "open": 450
+  },
+  "exact_records_sha256": "9dbe456012ecb342144a387e4a87a30beeaa525ec851736149727aeab8d02b7f",
+  "mean_and_anchor_records": 972,
+  "ranks": 36,
+  "rectangle_outside": 330,
+  "sizes": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "witness_arrays": 486
+}

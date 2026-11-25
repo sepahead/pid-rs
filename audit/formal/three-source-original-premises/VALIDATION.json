@@ -1,0 +1,26 @@
+{
+  "all_controls_and_worked_examples": true,
+  "distinct_reference_links_checked": 14,
+  "fresh_execution_modes": [
+    "normal",
+    "optimized"
+  ],
+  "input_files": {
+    "README.md": "3eab2222da676009c31b8985a81063f8175014c5b13574adc903d447070ffdd0",
+    "SOURCES.json": "31f785efdd845199cb568483dbf608658910c249b9b33509221462481e3d512f",
+    "observations.json": "86fdae96818a54d5da79f726feb274f6773047363c6202c0148868adb7cfbf5b",
+    "replay.py": "e113cbef38b1e9e9cd48cddbc343defe0384be1ce26e75334ad068fa5b489563"
+  },
+  "native_stdout_sha256": "965c84dae3a1ea090e2b95649c79f2444f032ac34da101dffbd91fc2a0e26b3c",
+  "original_capture_modes": [
+    "normal",
+    "optimized"
+  ],
+  "original_source_rows": 22,
+  "python": "Python 3.11.15",
+  "reconstructed_file_and_return_pairs_per_capture": 65,
+  "schema": "pid-rs/original-smt-premise-models/replay-v1",
+  "semantic_stdout_sha256": "bc9d7d8577ddf8b192821c103cea6f682bd7087dd3ac4bcf37ab7fb6d7b61d6c",
+  "source_commit": "ef705d1ed3410fd9fbbf4920cb4643f6a5140a2f",
+  "z3": "Z3 version 4.16.0 - 64 bit"
+}

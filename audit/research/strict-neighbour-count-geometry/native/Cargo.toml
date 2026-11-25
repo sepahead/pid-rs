@@ -1,0 +1,11 @@
+[package]
+name = "ehrlich-two-arm-count-check"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+pid-core = { path = "../../../../crates/pid-core", features = ["experimental-continuous"] }
+serde_json = "1"

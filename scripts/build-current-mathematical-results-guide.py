@@ -8,6 +8,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+from xml.sax.saxutils import escape
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -67,10 +68,37 @@ def verify(path, profile):
         raise ValueError("PDF, Markdown and reviewed link destinations differ")
 
 
+def build_figures(work, env):
+    """Use the two original SVGs with the guide's embedded Source Sans Pro fonts."""
+    font_dir = work / "guide-fonts"
+    font_dir.mkdir()
+    archive = STYLE / "source-coupling-compression/fonts"
+    for name in ("SourceSansPro-Regular.otf", "SourceSansPro-Semibold.otf"):
+        shutil.copyfile(archive / name, font_dir / name)
+    config = work / "guide-fonts.conf"
+    config.write_text(
+        '<?xml version="1.0"?><!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">'
+        f'<fontconfig><dir>{escape(str(font_dir))}</dir>'
+        f'<cachedir>{escape(str(work / "font-cache"))}</cachedir></fontconfig>',
+        encoding="utf-8",
+    )
+    sheet = work / "figure-font.css"
+    sheet.write_text('text { font-family: "Source Sans Pro"; }\n', encoding="utf-8")
+    render_env = {**env, "FONTCONFIG_FILE": str(config), "PANGOCAIRO_BACKEND": "fc"}
+    for study, diagram in (
+        ("angular-ray-monotonicity", "angular-ray-thresholds"),
+        ("strict-neighbour-count-geometry", "counts-and-distances"),
+    ):
+        source = ROOT / "audit/research" / study / "figures" / (diagram + ".svg")
+        command(["rsvg-convert", "--format=pdf", "--stylesheet", str(sheet),
+                 "--output", str(work / (diagram + ".pdf")), str(source)], work=work, env=render_env)
+
+
 def build(work):
     env = {**os.environ, "TZ": "UTC", "LC_ALL": "C", "SOURCE_DATE_EPOCH": "1795046400",
            "FORCE_SOURCE_DATE": "1", "TEXINPUTS": str(STYLE) + os.pathsep}
     shutil.copyfile(PROFILE_DIR / "publication.tex", work / "publication.tex")
+    build_figures(work, env)
     command(["pandoc", str(SOURCE), "--from=markdown", "--to=latex", "--lua-filter",
              str(PROFILE_DIR / "publication.lua"), "--output", "body.tex"], work=work, env=env)
     for _ in range(2):

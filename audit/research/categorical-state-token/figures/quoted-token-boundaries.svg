@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="294" viewBox="0 0 850 294" role="img" aria-labelledby="title desc">
+  <title id="title">Reading one quoted state token</title>
+  <desc id="desc">The accepted word starts with bytes 34, 65, 49, 34. It returns token A1 and leaves bytes 44 and 255. The second word has byte 44 where the closing quote is required and fails.</desc>
+  <rect width="850" height="294" fill="#FFFFFF" />
+  <text x="18" y="27" fill="#1F3F60" font-family="Source Sans Pro, sans-serif" font-size="26" font-weight="600" text-anchor="start">Read one quoted token</text>
+  <text x="832" y="27" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="end">Decimal byte values</text>
+  <text x="18" y="65" fill="#1F6968" font-family="Source Sans Pro, sans-serif" font-size="20" font-weight="600" text-anchor="start">Accepted</text>
+  <text x="173" y="69" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">34</text>
+  <text x="173" y="95" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">open</text>
+  <text x="270" y="69" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">65</text>
+  <text x="270" y="95" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">A</text>
+  <text x="351" y="69" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">49</text>
+  <text x="351" y="95" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">1</text>
+  <text x="443" y="69" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">34</text>
+  <text x="443" y="95" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">close</text>
+  <text x="572" y="69" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">44</text>
+  <text x="572" y="95" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">comma</text>
+  <text x="705" y="69" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">255</text>
+  <text x="705" y="95" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">byte 255</text>
+  <line x1="142" y1="107" x2="474" y2="107" stroke="#1F6968" stroke-width="3" />
+  <line x1="142" y1="101" x2="142" y2="112" stroke="#1F6968" stroke-width="2" />
+  <line x1="474" y1="101" x2="474" y2="112" stroke="#1F6968" stroke-width="2" />
+  <text x="308" y="132" fill="#1F6968" font-family="Source Sans Pro, sans-serif" font-size="18" font-weight="600" text-anchor="middle">Consumed word</text>
+  <line x1="524" y1="107" x2="757" y2="107" stroke="#1F3F60" stroke-width="3" />
+  <line x1="524" y1="101" x2="524" y2="112" stroke="#1F3F60" stroke-width="2" />
+  <line x1="757" y1="101" x2="757" y2="112" stroke="#1F3F60" stroke-width="2" />
+  <text x="641" y="132" fill="#1F3F60" font-family="Source Sans Pro, sans-serif" font-size="18" font-weight="600" text-anchor="middle">Untouched suffix</text>
+  <line x1="18" y1="154" x2="820" y2="154" stroke="#A7B6B8" stroke-width="1" />
+  <text x="18" y="191" fill="#743E37" font-family="Source Sans Pro, sans-serif" font-size="20" font-weight="600" text-anchor="start">Rejected</text>
+  <text x="173" y="194" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">34</text>
+  <text x="173" y="220" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">open</text>
+  <text x="270" y="194" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">65</text>
+  <text x="270" y="220" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">A</text>
+  <text x="351" y="194" fill="#743E37" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">44</text>
+  <text x="351" y="220" fill="#743E37" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">comma</text>
+  <text x="443" y="194" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">49</text>
+  <text x="443" y="220" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">1</text>
+  <text x="572" y="194" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="25" font-weight="600" text-anchor="middle">34</text>
+  <text x="572" y="220" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="16" font-weight="400" text-anchor="middle">quote</text>
+  <line x1="322" y1="231" x2="380" y2="231" stroke="#743E37" stroke-width="3" />
+  <text x="18" y="263" fill="#2C3E50" font-family="Source Sans Pro, sans-serif" font-size="18" font-weight="400" text-anchor="start">Byte 44 stops the scan. The reader needs byte 34 at that position and refuses this word.</text>
+</svg>

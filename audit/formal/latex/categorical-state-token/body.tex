@@ -1,0 +1,109 @@
+\section{Which bytes belong to a state name?}\label{which-bytes-belong-to-a-state-name}
+
+A count table can identify the state of a sensor with text such as \texttt{A1}. When one program writes that name and another reads it, they must agree where the name ends. Otherwise, the reader can change the state or consume part of the next field. This study gives a formal proof of that boundary for one field of the project\textquotesingle s three-source categorical format. It also tests exceptions in complete count tables and numerical certificates.
+
+A \textbf{byte} is an integer from 0 through 255. The \textbf{American Standard Code for Information Interchange} (ASCII) assigns numbers to characters. A \textbf{word} is a finite ordered list of bytes. A \textbf{token} is one state name component. A \textbf{prefix} is an initial sequence of bytes. A \textbf{suffix} is the part of a word that remains after the reader consumes its first token. \textbf{Canonical} means that the format specifies the exact spelling, including all delimiters. Here the double quote has byte value 34. The complete input uses JavaScript Object Notation (JSON). The cited format specifications appear in the Request for Comments (RFC) series. \href{https://datatracker.ietf.org/doc/html/rfc20\#section-2}{ASCII table, RFC 20 §2} · \href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md}{Project input specification} · \href{https://datatracker.ietf.org/doc/html/rfc8259\#section-7}{JSON strings, RFC 8259 §7}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+A token may contain & Decimal byte codes, inclusive \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Uppercase and lowercase Latin letters & 65--90 and 97--122 \\
+Digits & 48--57 \\
+Period, underscore, colon, hyphen & 46, 95, 58, 45 \\
+\end{longtable}
+}
+
+There are 66 allowed codes. A token has \textbf{1 through 128 bytes}, before the two surrounding quotes. A digit is legal at any position. An empty token, a comma, a space, a backslash and each byte above 127 fail inside a token. After a closing quote, these bytes can occur in the arbitrary suffix of the field theorem. The enclosing format separately determines whether that suffix is legal there.
+
+A \textbf{state} contains 1 through 64 ordered tokens. Each occupied table row names three ordered source states, one ordered target state and a positive integer count. The format requires distinct, strictly ordered state tuples. The complete table contains 1 through 1,024 occupied rows. A count has at most 4,096 decimal digits, the total count has at most 8,192 bits, and the complete input including its final line feed has at most 4 mebibytes (MiB), or \(4\times2^{20}\) bytes. The field proof only needs the token rules. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-count-table-encoding/README.md}{Whole-input grammar and proof} · \href{https://datatracker.ietf.org/doc/html/rfc8785\#section-3.2}{Canonical JSON spelling, RFC 8785 §3.2}
+
+\clearpage
+
+\section{The exact field theorem}\label{the-exact-field-theorem}
+
+Let \(w\) be any word, \(t\) a candidate token and \(s\) any suffix. Write \(u\mathbin{+\!+}v\) for concatenation, which places the bytes of \(v\) after those of \(u\). Write \(E(t)\) for byte 34, then \(t\), then byte 34. The reader \(D\) returns either a pair consisting of a token and a suffix, or failure. The input word, token and suffix are byte lists. They carry no information units.
+
+\[
+D(w)=(t,s)\quad\Longleftrightarrow\quad
+t\text{ is admissible and }w=E(t)\mathbin{+\!+}s.
+\]
+
+\textbf{Read after writing.} Suppose \(t\) is admissible. The first byte is the opening quote. Scan the longest prefix of allowed bytes in the remaining word. Every byte of \(t\) is allowed. The next byte, 34, is outside the alphabet. Thus the scan consumes exactly \(t\). The reader accepts its length, consumes the closing quote and returns \(s\) intact. This includes the empty suffix.
+
+\textbf{Write after reading.} Suppose the reader succeeds. Its first byte was 34. Splitting the remaining word at the first disallowed byte gives the scanned prefix followed by the unconsumed bytes. Success requires an admissible prefix and byte 34 next. Removing that quote leaves exactly the returned suffix. Joining these parts recovers every byte of \(w\). Two successful readings of the same word have the same token and suffix because the reader is a function. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-state-token/lean/Model.lean}{Definitions} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-state-token/lean/Proof.lean}{Two directions and two corollaries}
+
+\par
+
+\smallskip\noindent\makebox[\linewidth][c]{\includegraphics[width=0.94\linewidth]{quoted-token-boundaries.pdf}}
+
+\par
+
+The upper word returns the two bytes of \texttt{A1} and leaves the comma and byte 255 untouched. The lower word encounters a comma before the closing quote and fails. An application can use this distinction to test a parser before it accepts a field.
+
+\clearpage
+
+\section{From state names to complete numerical examples}\label{from-state-names-to-complete-numerical-examples}
+
+\textbf{Partial information decomposition} (PID) separates contributions of several source variables to information about a target. Here the \textbf{categorical shared-exclusions} rule is the finite construction of Makkeh, Gutknecht and Wibral. Three sources take named discrete states. Assign probability equal to count divided by the total \(N\) on each occupied joint source and target row. These examples specify that complete empirical law. There is no training sample, independent test sample or assumption about a population beyond these rows. \href{https://doi.org/10.1103/PhysRevE.103.032149}{Makkeh, Gutknecht and Wibral (2021)} · \href{https://arxiv.org/abs/2002.03356v5}{Exact revision}
+
+At a given row, a \textbf{matching event} requires a match on a chosen nonempty group of sources. A \textbf{disjunction} \(U\) accepts at least one of its matching events. Write \(P(U)\) for its probability and \(P(U\mid y)\) for its probability given the observed target state \(y\). The row\textquotesingle s \textbf{informative part} is \(-\ln P(U)\). Its \textbf{misinformative part} is \(-\ln P(U\mid y)\). Its \textbf{net} is the first part minus the second. The natural logarithm gives units of \textbf{nats}. Each observed row satisfies its matching event, so both probabilities are positive.
+
+A cumulative coordinate averages one part over the occupied rows. Each row has weight equal to its count divided by the total count. An atom coordinate removes contributions assigned below its node in the ordering of source events. The three-source specification has 18 combinations of source groups, with no group contained in another within one combination. It records the three parts at all 18 nodes, in both cumulative and atom form. This gives 108 coordinates. Each coordinate equals \((\ln Q)/N\) for its own exact positive rational product \(Q\). The certificate also states a narrow interval with endpoints that are integer multiples of powers of two. \href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md}{Node order and exact construction} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-six-certificate-observations/README.md}{Previous six worked tables}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Occupied rows
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Matching probabilities at each row
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+All 18 cumulative products, informative / misinformative / net
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+One row with count 1 or 7 & Both equal 1 & 1 / 1 / 1 \\
+Two equal counts, three identical sources, constant target & Both equal one half & 4 / 4 / 1 \\
+Same sources, target copies their value & One half and 1, respectively & 4 / 1 / 4 \\
+\end{longtable}
+}
+
+For the two-row examples let the three sources all be \texttt{A} on the first row and all be \texttt{B} on the second. Each row has count 1. Every nonempty matching group selects just that row. With a constant target, conditioning preserves its probability of one half. With a copied target, conditioning assigns it probability 1. Thus a cumulative contribution of \(\ln 2\) corresponds to \(Q=4\) because \(N=2\). When the target is constant all 36 net products, including those for atoms, equal 1.
+
+\clearpage
+
+\section{When should a certificate fail?}\label{when-should-a-certificate-fail}
+
+Call the complete input byte word \(B\) and a complete numerical certificate \(C\). Each coordinate of \(C\) identifies its source groups and component, states an exact reduced rational product and its sign relative to 1, gives an interval, and binds the input and method records. The historical native producer wrote a new \(C\) for each of the four tables on the preceding page. The paired observer recalculated 108 products and checked interval containment. The singly occupied cases have different \(B\) and different totals, yet all 108 products equal 1 in both. \href{https://github.com/sepahead/pid-rs/tree/main/audit/research/categorical-state-token/cases}{Four input and output pairs} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-state-token/observations.json}{Detailed numerical records}
+
+\textbf{An incorrect result with valid syntax.} For the two-row copy law, select the cumulative net coordinate of the first source alone. Its product must be \(4/1\). Replace it by \(3/1\), keep the positive sign, and leave all other fields intact. The new certificate passes structural decoding. The paired observer refuses specifically at this product. A second arithmetic reader also refuses there. This is a substantive false case because both records give a reduced positive fraction with a positive sign.
+
+\textbf{Two admissible certificates for one input.} For the same coordinate start with the correct certificate. Move each interval endpoint outward by \(2^{-190}\) nats. The new width still meets the \(2^{-160}\)-nat maximum. Both observers accept the new certificate and the original for the same \(B\). The field theorem assigns one interpretation to each accepted field. An interval rule that requires width and containment leaves a choice of interval. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-state-token/finite.py}{Reproducible arithmetic and mutations}
+
+Both modes of the historical paired observer accepted the six earlier complete pairs and the four new ones. The earlier three-row example gives \(Q=9/16\) at a signed cumulative coordinate. Its value \(\ln(9/16)/3\) is negative. These cases exercise zero, positive and negative values. Nine whole-input controls refused the empty byte sequence, empty rows, empty state, empty token, space inside a token, 129-byte token, zero count, duplicate row and missing final line feed. The external input identity matched the actual adverse bytes in each trial. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-state-token/EVIDENCE.md}{Finite evidence and scope}
+
+The token theorem applies to finite byte lists of any length. The complete-pair observations apply to the named bytes and tool versions. The earlier ordinary mathematical proof treats the entire specified input grammar. A formal whole-input parser proof, the complete output grammar, agreement of the full independent verifier and producer for the claimed domain, resource enforcement, external source review and executable correspondence remain open. The project\textquotesingle s numerical obligation, called Program C, requires exact products and lower and upper bounds for the logarithms throughout the admitted domain. These results do not qualify a new PID estimator. \href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/obligations.md}{Original specification and open obligations} · \href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md}{Decision 3}
+
+\clearpage
+
+\section{Rust implementation and computational cost}\label{rust-implementation-and-computational-cost}
+
+The field proof relates two functions on lists of unsigned bytes in stock Lean 4.34.1. A \textbf{kernel} checks a formal proof against the precise statement and its definitions. Two declarations establish the two inverse directions. Two further declarations give the equivalence and uniqueness of the output. A separate stock consumer checked twelve concrete word examples and a designated false proposition. An additional consumer checked all 256 byte codes against a literal alphabet. It accepted 66 codes and rejected 190. The forward and equivalence proofs use propositional extensionality (equivalent propositions are equal) and quotient soundness (related representatives have equal quotient images). Soundness and uniqueness use propositional extensionality alone. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-state-token/lean/Observer.lean}{Lean observer} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-state-token/replay.py}{Stock replay}
+
+The field scan takes time proportional to the leading sequence examined, plus constant work for the delimiters. Materializing the prefix takes at most linear space in that length. A long sequence of otherwise legal letters without a closing quote can be scanned before refusal. The field theorem permits any input word length. It supplies no streaming memory limit. The whole-input numerical limits and first-party Rust implementation have separate obligations.
+
+The inputs to the native examples contain one or two occupied joint rows in four categorical columns. Each of the three sources and the target has at most two observed states. The totals are 1, 2 or 7. The earlier signed example has total 3. The research producer reads a canonical \(B\) and a source manifest, forms 108 exact rational products, and computes bounds for their normalized logarithms. Large integer cost depends on count sizes, the product terms and their exponents. The published arithmetic reader\textquotesingle s row cap is 8. The project\textquotesingle s research certificate format has no stable public Rust certification application programming interface (API) or feature gate. The stable \texttt{discrete\_sxpid3\_averaged} API processes categorical observations and returns an averaged report under its own numerical contract. \href{https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/sxpid.rs}{Rust API source} · \href{https://github.com/sepahead/pid-rs/blob/main/RUST_IMPLEMENTATION_AND_COST.md}{Engineering cost reference}
+
+Model-assisted construction and review used visible sources, checks and earlier findings. The earlier grammar study already supplied the ordinary inverse argument. The new work gives concrete stock proof terms for the token and new complete-word examples. On Apple arm64, the selected four-theorem replay used 8.18 seconds and a peak sampled process-group resident set of 164 megabytes. One megabyte equals 1,000,000 bytes. The joint finite trial took 15.52 seconds and 54.2 megabytes. These are sample measurements of the checking processes. No estimator speed, statistical error, online deadline or hardware scaling follows. The runs used one serial group, a 180-second wall limit, a memory limit of one gibibyte (GiB), or \(2^{30}\) bytes, and a memory-pressure stop. No training, inference, resampling or physical sensor trial took place. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-state-token/proof-terms.txt}{Proof terms} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/categorical-state-token/EVIDENCE.md}{Trust and reproduction}
+
+\textbf{Citation.} Sepehr Mahmoudian (2026), \emph{Reading quoted categorical state tokens}. Include the exact repository commit or release you used. Cite the defining scientific paper separately. \href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{Software citation} · \href{https://doi.org/10.1103/PhysRevE.103.032149}{Categorical functional}

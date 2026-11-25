@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="365" viewBox="0 0 960 365" role="img" aria-labelledby="title description">
+<title id="title">Two distinct amplitude thresholds for four moments</title>
+<desc id="description">The first threshold is about 0.292039. Below it every direction passes. The second threshold is about 0.340315. At and above it no direction passes. In between, the direction changes the decision. At one millionth relative error equality fails the strict test.</desc>
+<rect width="960" height="365" fill="white"/><g font-family="DejaVu Sans, sans-serif">
+<text x="38" y="42" font-size="25" font-weight="bold" fill="#1F3F60" text-anchor="start">Four even joint moments at a fixed common radian scale</text>
+<text x="38" y="73" font-size="17" font-weight="normal" fill="#2C3E50" text-anchor="start">A direction passes if the relative error is strictly below one part per million.</text>
+<path d="M38 91 L920 91" stroke="#D2E0E2" stroke-width="2" fill="none"/>
+<text x="43" y="140" font-size="18" font-weight="bold" fill="#2C3E50" text-anchor="start">Every direction passes</text>
+<text x="43" y="189" font-size="18" font-weight="bold" fill="#2C3E50" text-anchor="start">Some pass, some fail</text>
+<text x="43" y="238" font-size="18" font-weight="bold" fill="#2C3E50" text-anchor="start">No direction passes</text>
+<path d="M302.0 135 L405.1881 135" stroke="#1F6968" stroke-width="4" fill="none"/>
+<circle cx="405.1881" cy="135" r="5" fill="white" stroke="#1F6968" stroke-width="2.2"/>
+<path d="M405.1881 184 L818.9872 184" stroke="#916400" stroke-width="4" fill="none"/>
+<circle cx="405.1881" cy="184" r="5" fill="#916400" stroke="#916400" stroke-width="2.2"/>
+<circle cx="818.9872" cy="184" r="5" fill="white" stroke="#916400" stroke-width="2.2"/>
+<path d="M818.9872 233 L902.0 233" stroke="#743E37" stroke-width="4" fill="none"/>
+<circle cx="818.9872" cy="233" r="5" fill="#743E37" stroke="#743E37" stroke-width="2.2"/>
+<path d="M405.1881 104 L405.1881 252" stroke="#D2E0E2" stroke-width="1.5" fill="none" stroke-dasharray="3 5"/>
+<path d="M818.9872 104 L818.9872 252" stroke="#D2E0E2" stroke-width="1.5" fill="none" stroke-dasharray="3 5"/>
+<path d="M302.0 259 L902.0 259" stroke="#2C3E50" stroke-width="2" fill="none"/>
+<path d="M302.0 259 L302.0 266" stroke="#2C3E50" stroke-width="2" fill="none"/>
+<text x="302.0" y="287" font-size="15" font-weight="normal" fill="#2C3E50" text-anchor="middle">0.28</text>
+<path d="M387.7143 259 L387.7143 266" stroke="#2C3E50" stroke-width="2" fill="none"/>
+<text x="387.7143" y="287" font-size="15" font-weight="normal" fill="#2C3E50" text-anchor="middle">0.29</text>
+<path d="M473.4286 259 L473.4286 266" stroke="#2C3E50" stroke-width="2" fill="none"/>
+<text x="473.4286" y="287" font-size="15" font-weight="normal" fill="#2C3E50" text-anchor="middle">0.30</text>
+<path d="M559.1429 259 L559.1429 266" stroke="#2C3E50" stroke-width="2" fill="none"/>
+<text x="559.1429" y="287" font-size="15" font-weight="normal" fill="#2C3E50" text-anchor="middle">0.31</text>
+<path d="M644.8571 259 L644.8571 266" stroke="#2C3E50" stroke-width="2" fill="none"/>
+<text x="644.8571" y="287" font-size="15" font-weight="normal" fill="#2C3E50" text-anchor="middle">0.32</text>
+<path d="M730.5714 259 L730.5714 266" stroke="#2C3E50" stroke-width="2" fill="none"/>
+<text x="730.5714" y="287" font-size="15" font-weight="normal" fill="#2C3E50" text-anchor="middle">0.33</text>
+<path d="M816.2857 259 L816.2857 266" stroke="#2C3E50" stroke-width="2" fill="none"/>
+<text x="816.2857" y="287" font-size="15" font-weight="normal" fill="#2C3E50" text-anchor="middle">0.34</text>
+<path d="M902.0 259 L902.0 266" stroke="#2C3E50" stroke-width="2" fill="none"/>
+<text x="902.0" y="287" font-size="15" font-weight="normal" fill="#2C3E50" text-anchor="middle">0.35</text>
+<text x="610" y="315" font-size="17" font-weight="bold" fill="#1F3F60" text-anchor="middle">Sum of the two absolute amplitudes</text>
+<text x="43" y="347" font-size="16" font-weight="normal" fill="#2C3E50" text-anchor="start">Open circle excludes equality. Filled circle includes the endpoint shown.</text>
+</g>
+</svg>
