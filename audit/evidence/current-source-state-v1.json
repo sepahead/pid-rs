@@ -196,8 +196,8 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/ci.yml",
-        "sha256": "a7399b7f3b029bcc81271d71926d4cbf8050b6d20f651ded9e86b53303f1b5d1",
-        "size_bytes": 103491
+        "sha256": "81cbeed0cdbb7d94a262946ccb1cf04cc2296142da78995f88b2feecdae85816",
+        "size_bytes": 103786
       },
       {
         "git_mode": "100644",
@@ -358,8 +358,8 @@
       {
         "git_mode": "100644",
         "path": ".gitleaks.toml",
-        "sha256": "2567ed22e90ba46b671688c465628d5824a7bc7cb398cb14eb76c63e0cfd9681",
-        "size_bytes": 4449
+        "sha256": "9d3e64a1fcd3a460ab235545473a5563075ca9ac481f39880e1e259053151a77",
+        "size_bytes": 7108
       },
       {
         "git_mode": "100644",
@@ -394,8 +394,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "90e4946a911a62106288c02157d1b542b7f650cdbdb22e7ca089204782a88b1c",
-        "size_bytes": 351565
+        "sha256": "eb802ebc0e8e0e72ca4bd53b6e6af6db8dad1a3abd88415083f5490b9a4525f7",
+        "size_bytes": 351883
       },
       {
         "git_mode": "100644",
@@ -4944,6 +4944,12 @@
         "path": "audit/evidence/gradient-publication-ci-dependency-correction-2026-09-19.md",
         "sha256": "a1104635612bf98f330538a2148ccdb861f672651901b2e5aea73600dc724b78",
         "size_bytes": 3366
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/guide-artifact-checksum-scan-2026-11-25/README.md",
+        "sha256": "1ccf6b7335cd07a5320de275e5df663d749e9fca36f8570e0df46522d8c5b911",
+        "size_bytes": 2346
       },
       {
         "git_mode": "100644",
@@ -37714,7 +37720,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "b2d40f7c69b2211fb419ac21244940203365493cb3e30bcc12aadab3f6d23726",
+        "sha256": "9225eef1cafdefe84dbb8135a9633d379ef8e2c2b4daad6d691a4069ff9d6a33",
         "size_bytes": 90915
       },
       {
@@ -37896,6 +37902,12 @@
         "path": "scripts/check-github-action-pins.py",
         "sha256": "c2b160fd385f884d4064309e5a44c62a66d392269dc93f7e6896f0cb656bd189",
         "size_bytes": 12496
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-guide-artifact-checksum-scan.py",
+        "sha256": "a83900ecbcf31c621172652a09e9233638201c0a3f445507e7be5f0d94acf059",
+        "size_bytes": 7669
       },
       {
         "git_mode": "100755",
@@ -38314,7 +38326,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "607fa54f6615c667a9c0d360efdfd2720452236ddcf0738f0fc25b577b79717d",
+        "sha256": "33f88d3dccde54f2e5cec96925d14f17dddcbc780e4f4f82df17099005f48935",
         "size_bytes": 140337
       },
       {
@@ -39314,8 +39326,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "bd4b78646f13afe328f3ca79e0f87fee362df00e01505bcd0102b8bc7d172d76",
-    "entry_count": 6528
+    "entries_sha256": "d4351a7918ecc8a0462f7fa1574ae2a4cde992900ca1b4c7721ead5442159c79",
+    "entry_count": 6530
   },
   "subprojections": [
     {
@@ -39343,7 +39355,7 @@
       ]
     },
     {
-      "entries_sha256": "8336643c0e43a9b0895b3c1d31a1d41f58e5c1a77f93c1d5185d14ba5559fd95",
+      "entries_sha256": "f810f868918d07e4666c15cce091cae0f1ed60e6975113c542da25e1f348821b",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
