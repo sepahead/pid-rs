@@ -4,7 +4,7 @@
   "module_sha256": "8d89d4b427d64327c296cf27bc14d4e3af4cfefbae6832b261b5da2bb8d5d834",
   "observers": {
     "False.lean": "8c8bfbe685d70fd08aa99aba0406457b1609d9c4bca8a3cdcde56b596598b717",
-    "Read.lean": "b18017c3eccc43703da30f36b7d8cc8d0f9046c35cd4aa0e95b698df5ee54429"
+    "Read.lean": "72c32df5c2f548eae165ce6079ffd927a18d5faf5c4bfbce7e0239919333a145"
   },
   "package_revisions": {
     "Cli": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204",

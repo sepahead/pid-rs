@@ -97,14 +97,14 @@ def natural_type(text):
     # Keep the variable names, arithmetic, constants, arrows, and the two orders.
     compact = "".join(text.split())
     for name, replacement in (("Real.log", "log"), ("Finset.range", "range"),
-                              ("Real", "ℝ"), ("Nat", "ℕ"), ("↑", "")):
+                              ("Real", "ℝ"), ("Nat", "ℕ")):
         compact = compact.replace(name, replacement)
     return compact
 
 
 def formula_tree(text):
     """Retain arithmetic grouping, exponent association, the log argument and sum scope."""
-    tokens = re.findall(r"range|log|[0-9]+|[inx∑∈(),+*/^-]", text)
+    tokens = re.findall(r"range|log|[0-9]+|[inx∑∈↑(),+*/^-]", text)
     require("".join(tokens)==text, "unrecognized printed expression")
     pos = 0
     precedence = {"+":1, "-":1, "*":2, "/":2, "^":3}
@@ -122,12 +122,17 @@ def formula_tree(text):
             value=expression(0)
             take(")")
             return value
+        if word=="↑":
+            return ("cast", atom())
         if word=="log":
             return ("log", atom())
         if word=="∑":
             for symbol in ("i","∈","range","n",","):
                 take(symbol)
-            return ("sum_i_range_n", expression(0))
+            # The pinned Mathlib notation uses term:67. Lean gives + and -
+            # precedence 65, * and / 70, and ^ 80. Parentheses can
+            # extend the summand to include an otherwise external addition.
+            return ("sum_i_range_n", expression(precedence["*"]))
         require(word in {"x","i","n"} or word.isdecimal(),"printed operand")
         return word
 
@@ -152,7 +157,7 @@ def check_domain_and_body(name, whole):
     body = typ[match.end():]
     require("→" not in body and body.count("≤")==1, f"unexpected additional hypothesis or conclusion {name}")
     left,right = body.split("≤")
-    odd_sum="∑i∈rangen,x^(2*i+1)/(2*i+1)"
+    odd_sum="∑i∈rangen,x^(2*i+1)/(2*↑i+1)"
     logarithm="1/2*log((1+x)/(1-x))"
     tail="x^(2*n+1)/(1-x^2)"
     forms=(odd_sum,logarithm) if name.endswith(".lower") else (logarithm,"("+odd_sum+")+"+tail)
@@ -162,27 +167,33 @@ def check_domain_and_body(name, whole):
 
 
 def positive(text):
+    ordered_names = [key for pair in NAMES.items() for key in pair]
+    # Each #check starts at the left margin and can span several lines.
+    # A new top-level command ends a block. The complete text of each
+    # proposition must parse before the wrapper proof can count.
+    markers = list(re.finditer(r"(?m)^@([A-Za-z][A-Za-z0-9_.]*)[ \t]*:[ \t]*", text))
+    require([m[1] for m in markers] == ordered_names, "four ordered stock type observations")
+    axiom_start = re.search(r"(?m)^'", text[markers[-1].end():])
+    require(axiom_start is not None, "axiom observations must follow the types")
+    start = markers[-1].end() + axiom_start.start()
     witnesses = {}
-    all_names = set(NAMES) | set(NAMES.values())
-    first_check = None
-    for match in re.finditer(r"^@?([A-Za-z][A-Za-z0-9_.]*)\s*:\s*(.+)$",text,re.M):
-        name=match[1]
-        if name in all_names:
-            require(name not in witnesses, f"repeated type observation {name}")
-            witnesses[name]=match[2].strip()
-            first_check = match.start() if first_check is None else min(first_check,match.start())
-    require(set(witnesses)==all_names and first_check is not None, "four explicit native type observations")
-    body=text[:first_check]
-    marks=list(re.finditer(r"^theorem (PIDLogLibrary\.(?:lower|upper))\s*:\s*",body,re.M))
-    require([m[1] for m in marks]==list(NAMES), "the two separate printed theorems")
+    for index, mark in enumerate(markers):
+        stop = markers[index+1].start() if index+1<len(markers) else start
+        witnesses[mark[1]] = text[mark.end():stop].strip()
+    body = text[:markers[0].start()]
+    marks = list(re.finditer(r"^theorem (PIDLogLibrary\.(?:lower|upper))\s*:\s*", body, re.M))
+    require([m[1] for m in marks] == list(NAMES) and not body[:marks[0].start()].strip(),
+            "the two separate printed theorems with a clean start")
+    all_axiom_lines = text[start:].strip().splitlines()
+    require(len(all_axiom_lines) == len(ordered_names), "exactly four axiom rows and no extra output")
     axioms={}
     for index, mark in enumerate(marks):
         name=mark[1]
         original=NAMES[name]
         end=marks[index+1].start() if index+1<len(marks) else len(body)
         statement, sep, proof=body[mark.end():end].partition(":=")
-        require(sep and len(re.findall(r"\b"+re.escape(original)+r"\b",proof))==1,
-                f"one typed use of the original declaration {name}")
+        require(sep and " ".join(proof.split()) == f"fun {{x}} h₀ h n => {original} h₀ h n",
+                f"complete direct proof and argument order {name}")
         expected=check_domain_and_body(name, witnesses[original])
         require(natural_type(statement)==natural_type(witnesses[name])==expected,
                 f"complete original type, observed type and printed statement {name}")
@@ -190,7 +201,7 @@ def positive(text):
             ax=re.findall(r"^'"+re.escape(item)+r"' depends on axioms: \[([^\]]*)\]$",text,re.M)
             require(len(ax)==1, f"exact axiom line {item}")
             parts=ax[0].split(", ")
-            require(len(parts)==len(set(parts)) and set(parts)<=ALLOWED, f"unapproved axiom {item}")
+            require(len(parts)==len(set(parts)) and set(parts)==ALLOWED, f"unapproved axiom {item}")
             axioms[item]=sorted(parts)
         require(axioms[name]==axioms[original], f"wrapper introduced extra trust {name}")
     require("⋯" not in text and "sorry" not in text and "..." not in text, "elided or admitted output")

@@ -19,7 +19,6 @@ theorem upper {x : ℝ} (h₀ : 0 ≤ x) (h : x < 1) (n : ℕ) :
 end PIDLogLibrary
 
 set_option pp.fullNames true
-set_option pp.width 8192
 set_option pp.deepTerms true
 set_option pp.proofs true
 set_option pp.maxSteps 1000000

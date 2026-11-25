@@ -14,7 +14,7 @@ lower = domain + sum_terms + " ≤ " + log_term
 upper = domain + log_term + " ≤ (" + sum_terms + ") + " + upper_tail
 names = checks["NAMES"]
 types = dict(zip(names, (lower,upper)))
-terms = "".join(f"theorem {key} : {types[key]} :=\nfun h => {original} h\n"
+terms = "".join(f"theorem {key} : {types[key]} :=\nfun {{x}} h₀ h n => {original} h₀ h n\n"
                 for key,original in names.items())
 for key,original in names.items():
     for name in (key,original):
@@ -26,7 +26,7 @@ if len(positive(terms)) != 4:
     raise ValueError("constructed mathematical observations")
 negative(wrong)
 mutants = [
-    (positive, terms.replace("Real.sum_range_le_log_div h\n", "Real.other h\n", 1)),
+    (positive, terms.replace("Real.sum_range_le_log_div h₀ h n\n", "Real.other h₀ h n\n", 1)),
     (positive, terms.replace("propext","sorryAx",1)),
     (positive, terms+terms),
     (positive, terms.replace("Classical.choice, ","",1)),
@@ -49,6 +49,22 @@ mutants = [
     (negative, wrong.replace("but is expected to have type", "and also contains")),
     (negative, wrong + wrong),
 ]
+# The stock printer can omit the parentheses around the whole sum.
+# Exercise the grammar for that form on a line-wrapped controlled transcript.
+wrapped = terms.replace("(" + sum_terms + ") + ", sum_terms + " + ").replace("0 ≤ x →", "0 ≤ x →\n  ")
+if positive(wrapped) != positive(terms):
+    raise ValueError("explicit and implicit sum grouping")
+mutants.extend([
+    (positive, terms.replace("(2 * ↑i + 1)", "(2 * i + 1)")),
+    (positive, terms.replace("x ^ (2 * i + 1)", "x ^ (2 * ↑i + 1)")),
+    (positive, terms.replace("x ^ (2 * n + 1)", "x ^ (2 * ↑n + 1)")),
+    (positive, wrapped.replace("x ^ (2 * i + 1) / (2 * ↑i + 1) + " + upper_tail,
+                               "(x ^ (2 * i + 1) / (2 * ↑i + 1) + " + upper_tail + ")")),
+    (positive, wrapped.replace("Real.log_div_le_sum_range_add h₀ h n", "Real.log_div_le_sum_range_add h h₀ n", 1)),
+    (positive, "Read.lean:22:0: error: Unknown option for display\n" + wrapped),
+    (positive, wrapped + "extra native output\n"),
+    (positive, wrapped.replace("Classical.choice, ", "")),
+])
 for index,(read,text) in enumerate(mutants):
     try:
         read(text)
