@@ -285,6 +285,12 @@
       },
       {
         "git_mode": "100644",
+        "path": ".github/workflows/real-log-library-read.yml",
+        "sha256": "9dc77190b78e33bf1f6c39dc358804fb8ae83b4baf17fb7f75d4b8fc1e249527",
+        "size_bytes": 4053
+      },
+      {
+        "git_mode": "100644",
         "path": ".github/workflows/release.yml",
         "sha256": "b54e460326e57dd8da102d6e10a22f38c7c3565b602227e4680e27bcdbf01447",
         "size_bytes": 36899
@@ -30495,6 +30501,42 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/real-log-library-read/False.lean",
+        "sha256": "8c8bfbe685d70fd08aa99aba0406457b1609d9c4bca8a3cdcde56b596598b717",
+        "size_bytes": 142
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-library-read/README.md",
+        "sha256": "fd5a4aea95e4b376a37f20f44c0a57d856227ca92697cb291158dfc67a6c104e",
+        "size_bytes": 2822
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-library-read/Read.lean",
+        "sha256": "b18017c3eccc43703da30f36b7d8cc8d0f9046c35cd4aa0e95b698df5ee54429",
+        "size_bytes": 1097
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-library-read/identities.json",
+        "sha256": "33c2728cacc4f0fad5e1fda51fb3e64e9750eb64cc255c2ba7fcecd26eade15b",
+        "size_bytes": 1166
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-library-read/observe.py",
+        "sha256": "fd96946dc7de39d28946a8beb17fae38f9cb3eb85e9f9c22c2bdcdb0f788da10",
+        "size_bytes": 13054
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-library-read/self_test.py",
+        "sha256": "f55b18154905aa8d8f69cd4bdcbfa563b75852ce15adb2d64bfc9e49de6eae23",
+        "size_bytes": 2898
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/requirements-pdf.txt",
         "sha256": "90cda7a5c8dadda7ed0b0dbb2ef3767569b970fb7f86847bd866e63600addd49",
         "size_bytes": 93
@@ -38438,8 +38480,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "27aafcab2f588b29d3a8a895879c94ec5d9d707fc12e7ac8c1681be0abc810b5",
-    "entry_count": 6382
+    "entries_sha256": "88ab8a5e2cf5c433add1316b15f244f010edac682c68e44158454bad226b1998",
+    "entry_count": 6389
   },
   "subprojections": [
     {
@@ -38451,8 +38493,8 @@
       ]
     },
     {
-      "entries_sha256": "ba2725c8f965b5874a973324b70609354d296db178c7438915f459d3bdfb2d11",
-      "entry_count": 2400,
+      "entries_sha256": "ee367e3567e59c13f7b220575d1e80719f47cfd04cbf6eeda4c20f600e3219e0",
+      "entry_count": 2406,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
