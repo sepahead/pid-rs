@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <svg aria-labelledby="title desc" xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420" role="img">
   <title id="title">Radius and order decisions for the angular population</title>
-  <desc id="desc">Left, with four even joint moments and exact proper terms, all directions pass below the interior root near 0.292039, the two axes differ at radius 0.30, and all directions fail from radius 0.39 to 1. The latter bound is sufficient. Right, at unit radius on the first harmonic axis the signed excess over one millionth of the exact atom is positive at 7,277 moments and negative at 7,278 moments. Values are in trillionths of a nat.</desc>
+  <desc id="desc">Left, with four even joint moments and exact proper terms, all directions pass at positive radii below the interior root near 0.292039, the two axes differ at radius 0.30, and all directions fail from radius 0.39 to 1. The latter bound is sufficient. Right, at unit radius on the first harmonic axis the signed excess over one millionth of the exact atom is positive at 7,277 moments and negative at 7,278 moments. Values are in trillionths of a nat.</desc>
   <rect width="900" height="420" fill="#FFFFFF" />
   <text x="35.000" y="47" font-family="Source Sans Pro, sans-serif" font-size="25" fill="#1F3F60" text-anchor="start" font-weight="600">Four moments across directions</text>
   <text x="35.000" y="75" font-family="Source Sans Pro, sans-serif" font-size="17" fill="#2C3E50" text-anchor="start" font-weight="400">Strict error below one part per million</text>
   <text x="472.000" y="47" font-family="Source Sans Pro, sans-serif" font-size="25" fill="#1F3F60" text-anchor="start" font-weight="600">Two adjacent orders at unit radius</text>
-  <text x="472.000" y="75" font-family="Source Sans Pro, sans-serif" font-size="17" fill="#2C3E50" text-anchor="start" font-weight="400">First harmonic only, exact proper terms</text>
+  <text x="472.000" y="75" font-family="Source Sans Pro, sans-serif" font-size="17" fill="#2C3E50" text-anchor="start" font-weight="400">b = 0, |a| = 1, exact proper terms</text>
   <line x1="447.000" y1="27" x2="447.000" y2="391" stroke="#D2E0E2" stroke-width="1.3" />
   <text x="47.000" y="123" font-family="Source Sans Pro, sans-serif" font-size="19" fill="#1F6968" text-anchor="start" font-weight="600">Every direction passes</text>
   <line x1="57.000" y1="145" x2="108.423" y2="145" stroke="#1F6968" stroke-width="4" />
@@ -18,7 +18,7 @@
   <text x="47.000" y="268" font-family="Source Sans Pro, sans-serif" font-size="19" fill="#743E37" text-anchor="start" font-weight="600">Every direction fails</text>
   <line x1="337.000" y1="289" x2="407.000" y2="289" stroke="#743E37" stroke-width="4" stroke-dasharray="8,5" />
   <path d="M337.000 283 l6 6 l-6 6 l-6 -6 z" fill="#743E37" />
-  <text x="325.000" y="295" font-family="Source Sans Pro, sans-serif" font-size="16" fill="#2C3E50" text-anchor="end" font-weight="400">sufficient from 0.39</text>
+  <text x="325.000" y="295" font-family="Source Sans Pro, sans-serif" font-size="16" fill="#2C3E50" text-anchor="end" font-weight="400">0.39 through 1</text>
   <line x1="57.000" y1="326" x2="407.000" y2="326" stroke="#2C3E50" stroke-width="1.3" />
   <line x1="57.000" y1="326" x2="57.000" y2="332" stroke="#2C3E50" stroke-width="1.3" />
   <text x="57.000" y="351" font-family="Source Sans Pro, sans-serif" font-size="15" fill="#2C3E50" text-anchor="middle" font-weight="400">0.27</text>

@@ -2,7 +2,7 @@
 
 ## Unit amplitude in the four-angle population calculation
 
-The new boundary study defines the weighted integrals where the assigned density reaches zero. It gives the least number of even joint moments needed for relative error below one part per million at every positive radius and direction, with the proper terms exact. At the worst direction, 7,277 moments fail and 7,278 pass. Four moments can pass on one axis and fail on the other at radius 0.30. The exact last radius with a passing direction, sampling error and rounding remain open. [Complete argument](audit/research/angular-unit-boundary/EXPOSITION.md) · [Signed comparison](audit/research/angular-unit-boundary/certificate.json) · [Standalone PDF](output/pdf/angular-unit-boundary.pdf)
+The new boundary study defines the weighted integrals where the assigned density reaches zero. It gives the least number of even joint moments needed for relative error below one part per million at every positive radius and direction, with the proper terms exact. At the worst direction, 7,277 moments fail and 7,278 pass. Four moments can pass on one axis and fail on the other at radius 0.30. The least upper bound of the radii with a passing direction lies strictly between 0.30 and 0.39. Every direction fails from 0.39 through 1. Above 1 the assigned function is negative on an open set. The exact least upper bound, sampling error and rounding remain open. [Complete argument](audit/research/angular-unit-boundary/EXPOSITION.md) · [Signed comparison](audit/research/angular-unit-boundary/certificate.json) · [Standalone PDF](output/pdf/angular-unit-boundary.pdf)
 
 ## Source correction and angular accuracy threshold
 

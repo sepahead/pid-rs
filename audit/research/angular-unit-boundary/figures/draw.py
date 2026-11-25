@@ -55,7 +55,7 @@ def build(output, assets):
                      viewBox="0 0 900 420", role="img", attrib={"aria-labelledby": "title desc"})
     ET.SubElement(svg, "title", id="title").text = "Radius and order decisions for the angular population"
     ET.SubElement(svg, "desc", id="desc").text = (
-        "Left, with four even joint moments and exact proper terms, all directions pass below the "
+        "Left, with four even joint moments and exact proper terms, all directions pass at positive radii below the "
         "interior root near 0.292039, the two axes differ at radius 0.30, and all directions fail "
         "from radius 0.39 to 1. The latter bound is sufficient. Right, at unit radius on the first "
         "harmonic axis the signed excess over one millionth of the exact atom is positive at "
@@ -86,7 +86,7 @@ def build(output, assets):
     label(35, 47, "Four moments across directions", 25, LAPIS, bold=True)
     label(35, 75, "Strict error below one part per million", 17)
     label(472, 47, "Two adjacent orders at unit radius", 25, LAPIS, bold=True)
-    label(472, 75, "First harmonic only, exact proper terms", 17)
+    label(472, 75, "b = 0, |a| = 1, exact proper terms", 17)
     line(447, 27, 447, 391, GREY)
     label(47, 123, "Every direction passes", 19, TEAL, bold=True)
     x_cut = x_radius((root_lo + root_hi) / 2)
@@ -99,7 +99,7 @@ def build(output, assets):
     label(47, 268, "Every direction fails", 19, RED, bold=True)
     line(x_radius(outer), 289, x_radius(Fraction(42, 100)), 289, RED, 4, "8,5")
     diamond(x_radius(outer), 289, 6, RED)
-    label(x_radius(outer) - 12, 295, "sufficient from 0.39", 16, anchor="end")
+    label(x_radius(outer) - 12, 295, "0.39 through 1", 16, anchor="end")
     line(57, 326, 407, 326)
     for hundredths in (27, 30, 33, 36, 39, 42):
         x = x_radius(Fraction(hundredths, 100))

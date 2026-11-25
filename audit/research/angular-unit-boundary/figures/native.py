@@ -37,6 +37,11 @@ def escaped_text(text):
 
 def tikz_from_svg(path):
     root = ET.parse(path).getroot()
+    title = root.findtext("{http://www.w3.org/2000/svg}title")
+    if title is None or not re.fullmatch(r"[A-Za-z0-9 ,.-]+", title):
+        raise ValueError("the SVG requires a plain publication title")
+    if root.get("viewBox") != "0 0 900 420":
+        raise ValueError("expected the 900 by 420 figure profile")
     items = []
     colors = set()
     for element in root.iter():
@@ -119,7 +124,7 @@ def tikz_from_svg(path):
             r"\setmainfont[Path=fonts/,BoldFont=SourceSansPro-Semibold.otf]{SourceSansPro-Regular.otf}",
             r"\pdfvariable minorversion=4",
             r"\pdfvariable suppressoptionalinfo=767",
-            r"\pdfextension info { /Title (Radius and order decisions for the angular population) /Author (Sepehr Mahmoudian) }",
+            rf"\pdfextension info {{ /Title ({title}) /Author (Sepehr Mahmoudian) }}",
             definitions,
             r"\begin{document}",
             r"\begin{tikzpicture}[x=0.75bp,y=-0.75bp]",
@@ -132,7 +137,7 @@ def tikz_from_svg(path):
     )
 
 
-def build(output, assets):
+def build(output, assets, svg=HERE / "angular-boundary-decisions.svg"):
     with tempfile.TemporaryDirectory(prefix="angular-boundary-figure-") as temp:
         work = Path(temp)
         fonts = work / "fonts"
@@ -140,7 +145,7 @@ def build(output, assets):
         for name in ("SourceSansPro-Regular.otf", "SourceSansPro-Semibold.otf"):
             shutil.copyfile(assets / FONTS / name, fonts / name)
         (work / "figure.tex").write_text(
-            tikz_from_svg(HERE / "angular-boundary-decisions.svg"), encoding="utf-8"
+            tikz_from_svg(svg), encoding="utf-8"
         )
         proc = subprocess.run(
             [
@@ -163,5 +168,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--assets-root", type=Path, default=ROOT)
+    parser.add_argument("--svg", type=Path, default=HERE / "angular-boundary-decisions.svg")
     args = parser.parse_args()
-    build(args.output, args.assets_root)
+    build(args.output, args.assets_root, args.svg)

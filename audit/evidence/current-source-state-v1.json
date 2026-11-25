@@ -640,8 +640,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "99dc0ed9742ddaf5c4fb7bfe2bbc11edbcb8a055b36425923ac733b45f42c264",
-        "size_bytes": 77757
+        "sha256": "ab0b8a4174e93f46b0cefd64d1f092e86d37da90600e9798a033613db5b0e284",
+        "size_bytes": 77936
       },
       {
         "git_mode": "100644",
@@ -17740,8 +17740,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/angular-unit-boundary/body.tex",
-        "sha256": "259e6d4cb2773f31419785896ddd50943dc1cfa4d74ff1c1cd2dff9111a39267",
-        "size_bytes": 23652
+        "sha256": "3100753371a3dd4f0c68ef70b5a44046e86b53c7cf6dccc8db55b280d1ed7290",
+        "size_bytes": 24417
       },
       {
         "git_mode": "100644",
@@ -18322,7 +18322,7 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
-        "sha256": "89da4ae5ba788760606eff1bb4b99b305a19b8ed9052fae348178d2629ae419b",
+        "sha256": "34e7570de8b59ffafe14c614cb6eaedd23b458e1573e619c8e1983defbdacc0f",
         "size_bytes": 21114
       },
       {
@@ -30682,14 +30682,14 @@
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/EVIDENCE.md",
-        "sha256": "21738e0fa02cd37d52ff53e2ea9938a4c4900058425258b8133acbeec7b1a839",
-        "size_bytes": 19982
+        "sha256": "c89dd6e1996c7718d5fbd225cd5c50cbf6b368b84eef32ac9ab848e781fa4f53",
+        "size_bytes": 20636
       },
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/EXPOSITION.md",
-        "sha256": "cd8fd15f0c03d809014173c1a6ef9cc8607a50d68466ba0578c4b757a83dab69",
-        "size_bytes": 22180
+        "sha256": "5c2d140e84e642fd605922a544ad8b0147c10f6de04805df1a451c52eb7ee4a8",
+        "size_bytes": 22957
       },
       {
         "git_mode": "100644",
@@ -30718,26 +30718,26 @@
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/figures/angular-boundary-decisions.pdf",
-        "sha256": "73037dbaf881ca207c715ced4db52fc08f37c8077047a47bfd2356d729ac10c4",
-        "size_bytes": 12738
+        "sha256": "64e15c7ea1db95e5ae85d20a8a92fda62601b1f77e3a7958e37ae5eff885a230",
+        "size_bytes": 12759
       },
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/figures/angular-boundary-decisions.svg",
-        "sha256": "000ed7f144a0a912e001afcd42f4925ddd6818b07e124686391031933ed3cd79",
-        "size_bytes": 7264
+        "sha256": "e2288cbf55be33e5799f8b9e854bab9b243c2f301fcc23fba4e4f7df44ae6a95",
+        "size_bytes": 7271
       },
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/figures/draw.py",
-        "sha256": "e3785bb290c8ade6c056b8a6b4394f07e66e9b249a91c159e9235bad2b32309b",
-        "size_bytes": 6750
+        "sha256": "d9189f80c447ccda16fe4625f625e75f6e7d5f82d187bd6589637b13ff1657fc",
+        "size_bytes": 6757
       },
       {
         "git_mode": "100644",
         "path": "audit/research/angular-unit-boundary/figures/native.py",
-        "sha256": "a9e45f1a3f3d1d55912cee211266903e8fd884802228bfa482c048e27324218f",
-        "size_bytes": 6698
+        "sha256": "acce759d36855b63750c38106071783d447a2822053714973768f084e1892cef",
+        "size_bytes": 7083
       },
       {
         "git_mode": "100644",
@@ -36214,8 +36214,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/angular-unit-boundary.pdf",
-        "sha256": "67f7ea16e3e0d3b63892a30f4dddb260d56bb4c9ecfa4dc58c98f715a1bf8e7b",
-        "size_bytes": 111944
+        "sha256": "1a21481377f6c5bfd56f30e390f7790812326abf1bfdb5e04c110ad00715aabb",
+        "size_bytes": 112934
       },
       {
         "git_mode": "100644",
@@ -38438,7 +38438,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "d70638b611d4a0ef4c86f03137e6fbac3a7bb08d539e9f189daaca6f79f3cd4b",
+    "entries_sha256": "27aafcab2f588b29d3a8a895879c94ec5d9d707fc12e7ac8c1681be0abc810b5",
     "entry_count": 6382
   },
   "subprojections": [
@@ -38451,7 +38451,7 @@
       ]
     },
     {
-      "entries_sha256": "103b92fa0b2defecb0436e42069f1cf05d6852fe5fe9a2630546ed4b3b82584f",
+      "entries_sha256": "ba2725c8f965b5874a973324b70609354d296db178c7438915f459d3bdfb2d11",
       "entry_count": 2400,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -38459,7 +38459,7 @@
       ]
     },
     {
-      "entries_sha256": "9b5b6448010695f591e939aa814ce240a6adc7c313e3a5c8baa89108857053bc",
+      "entries_sha256": "857272806ee7b260607fba4b13990a46b13783184cb4bc42810eeb6c0a5db84d",
       "entry_count": 56,
       "name": "generated_pdf_set",
       "selectors": [
