@@ -1,9 +1,10 @@
 {
-  "attempt": "real-tail-02",
-  "candidate_sha256": "08888f06d3dd9ac20f56612a459a6226feac5eb3c4d10ed1252a1028a80cf759",
+  "attempt": "real-tail-03",
+  "candidate_sha256": "27a7b8079d7a2f4e89d626140527c7ff5b5e419e25479999eada58ea1c58922b",
   "contract_sha256": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9",
-  "created_utc": "2026-11-25T06:05:29.048290+00:00",
-  "observed": "Only the source grammar has passed locally. The stock Linux compiler, fresh proof replay, independent controls and public integration are pending.",
-  "pre_registration_sha256": "fe95944ed8866d8080250c0f02052da057ab7e6edc133c573553bd7496e5181a",
-  "prior_original_failure": "e2b278992234ebdaa47d58be930e358f052ae72a8987d94f5c7c45767131ac60"
+  "created_utc": "2026-11-25T08:08:29.592082+00:00",
+  "independent_failure_sha256": "fc0220d6d5665b6d66b05ff6f439e67cea59fb0c366b923e72bbf6b12005d047",
+  "observed": "The original source grammar accepts this body. Genuine Linux compilation, fresh kernel replay and negative controls are separate open obligations.",
+  "pre_registration_sha256": "86d0ea2146278bd0836e7e79f952e668192c77cdd96d2583260f4e3de5f741d1",
+  "previous_original_failure": "6fd533c8fd9ff2cd098612bde191a7e7c97553704e28acc412c9fd1c98b3fe3c"
 }

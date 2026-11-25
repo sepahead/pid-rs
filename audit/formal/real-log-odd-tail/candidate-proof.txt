@@ -7,7 +7,7 @@
   by_cases h_zero : x = 0
   · rw [h_zero]
     simp [halfTail, upper]
-  · have h_pos : 0 < x := lt_of_le_of_ne h₀ h_zero.symm
+  · have h_pos : 0 < x := lt_of_le_of_ne h₀ (fun h_equal => h_zero h_equal.symm)
     let g (t : ℝ) := t ^ (2 * n + 1) / (2 * (n : ℝ) + 1) - (1 - t ^ 2) * halfTail n t
     have h_square (y : ℝ) (h_a : 0 ≤ y) (h_b : y < 1) : 0 < 1 - y ^ 2 := by
       have h_minus : 0 < 1 - y := by linarith

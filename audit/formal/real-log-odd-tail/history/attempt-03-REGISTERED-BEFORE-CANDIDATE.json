@@ -1,0 +1,21 @@
+{
+  "before_candidate": true,
+  "contract": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9",
+  "id": "real-tail-03",
+  "permitted_only": "candidate-proof.txt",
+  "previous_field": {
+    "archive": "d35d2dd787402a7ef2c1a963831e2b499980ac65cfe5f800e1ad61906900d5f7",
+    "artifact": 15001035585,
+    "commit": "f5bf4607b98156adc4e2aa4c2c1f521224371e01",
+    "exit": 1,
+    "first_error": [
+      "Proof.lean:24:51: error(lean.invalidField): Invalid field `symm`: The environment does not contain `Function.symm`, so it is not possible to project the field `symm` from an expression"
+    ],
+    "job": 139046511327,
+    "run": 45567721612,
+    "stdout": "6f34580204c7dcb7f610849d736043636c3c07786677978bc1dbdc1d35f57e68",
+    "terminal_record": "6fd533c8fd9ff2cd098612bde191a7e7c97553704e28acc412c9fd1c98b3fe3c"
+  },
+  "route": "Preserve the first two failed predicates. Replace the invalid projection from a proof of inequality with explicit elimination of a hypothetical reversed equality. Keep the original full declaration, judge, restrictions, negative case and stock replay.",
+  "utc": "2026-11-25T07:49:24.012276+00:00"
+}

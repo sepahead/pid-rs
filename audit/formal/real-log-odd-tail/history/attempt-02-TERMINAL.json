@@ -1,0 +1,133 @@
+{
+  "artifacts": {
+    "odd-power-tail-f5bf4607b98156adc4e2aa4c2c1f521224371e01": {
+      "id": 15001035585,
+      "members": 17,
+      "sha256": "d35d2dd787402a7ef2c1a963831e2b499980ac65cfe5f800e1ad61906900d5f7"
+    }
+  },
+  "attempt": 1,
+  "commit": "f5bf4607b98156adc4e2aa4c2c1f521224371e01",
+  "conclusion": "failure",
+  "enrolled_candidate_count": 1,
+  "job": 139046511327,
+  "native": {
+    "actual_failure": [
+      {
+        "actual_reason": "native return for proof: 1",
+        "archive": 15001035585,
+        "emitted_native_success": false,
+        "native_actions": [
+          {
+            "exit": 0,
+            "label": "model",
+            "max_sampled_group_rss_bytes": 1894539264,
+            "resource_stop": null,
+            "samples": 11
+          },
+          {
+            "exit": 1,
+            "label": "proof",
+            "max_sampled_group_rss_bytes": 1955303424,
+            "resource_stop": null,
+            "samples": 25
+          }
+        ],
+        "source_sha256": "66e6182b3a14313c5c5e8277624c66265aa8d358058877753027db2e2feb81b8"
+      }
+    ],
+    "job_steps": [
+      [
+        1,
+        "Set up job",
+        "success"
+      ],
+      [
+        2,
+        "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+        "success"
+      ],
+      [
+        3,
+        "Record the host and verify the original stock archive",
+        "success"
+      ],
+      [
+        4,
+        "Acquire the pinned source and the targeted compiled library",
+        "success"
+      ],
+      [
+        5,
+        "Check the contract, actual proof, independent types and a false bound",
+        "failure"
+      ],
+      [
+        6,
+        "Retain available native observations and failures",
+        "success"
+      ],
+      [
+        12,
+        "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+        "success"
+      ],
+      [
+        13,
+        "Complete job",
+        "success"
+      ]
+    ],
+    "positive_credit": false,
+    "reopen": "An unchanged field can proceed only on its own new actual permitted event. A changed source or predicate needs its own registration and first read."
+  },
+  "native_event": "push",
+  "run": 45567721612,
+  "runner": 1000055722,
+  "science_positive_credit": false,
+  "source": "c9bfbe711de2248e6349b3e470369f9e4be5e8430fb86b311bc2641d37cc1111",
+  "steps": [
+    [
+      1,
+      "Set up job",
+      "success"
+    ],
+    [
+      2,
+      "Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+      "success"
+    ],
+    [
+      3,
+      "Record the host and verify the original stock archive",
+      "success"
+    ],
+    [
+      4,
+      "Acquire the pinned source and the targeted compiled library",
+      "success"
+    ],
+    [
+      5,
+      "Check the contract, actual proof, independent types and a false bound",
+      "failure"
+    ],
+    [
+      6,
+      "Retain available native observations and failures",
+      "success"
+    ],
+    [
+      12,
+      "Post Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0",
+      "success"
+    ],
+    [
+      13,
+      "Complete job",
+      "success"
+    ]
+  ],
+  "tree": "9b5b3b78e3cea63bd066affb7ce58247ef7797a5",
+  "utc": "2026-11-25T07:32:46.565041+00:00"
+}

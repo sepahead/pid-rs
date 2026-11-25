@@ -30591,15 +30591,21 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/attempt-history.md",
+        "sha256": "339f4a6999d8ae430b5c31395873e2a4ecb4ad38aab30d094773515a2ce47a20",
+        "size_bytes": 724
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/real-log-odd-tail/attempt.json",
-        "sha256": "a7a00807f57fa8c8963f172f76399c5f071a0c31a6fc3b540a019fdfe0f625e2",
-        "size_bytes": 621
+        "sha256": "bb70949b94886dd355254848c69f393cf6b3f27b0536883cc60252b2423108a5",
+        "size_bytes": 724
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/real-log-odd-tail/candidate-proof.txt",
-        "sha256": "08888f06d3dd9ac20f56612a459a6226feac5eb3c4d10ed1252a1028a80cf759",
-        "size_bytes": 2962
+        "sha256": "27a7b8079d7a2f4e89d626140527c7ff5b5e419e25479999eada58ea1c58922b",
+        "size_bytes": 2987
       },
       {
         "git_mode": "100644",
@@ -30627,9 +30633,39 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-02-REGISTERED-BEFORE-CANDIDATE.json",
+        "sha256": "fe95944ed8866d8080250c0f02052da057ab7e6edc133c573553bd7496e5181a",
+        "size_bytes": 440
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-02-TERMINAL.json",
+        "sha256": "6fd533c8fd9ff2cd098612bde191a7e7c97553704e28acc412c9fd1c98b3fe3c",
+        "size_bytes": 3225
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-02-attempt.json",
+        "sha256": "a7a00807f57fa8c8963f172f76399c5f071a0c31a6fc3b540a019fdfe0f625e2",
+        "size_bytes": 621
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-02-candidate-proof.txt",
+        "sha256": "08888f06d3dd9ac20f56612a459a6226feac5eb3c4d10ed1252a1028a80cf759",
+        "size_bytes": 2962
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/real-log-odd-tail/history/attempt-02-registered.json",
         "sha256": "fe95944ed8866d8080250c0f02052da057ab7e6edc133c573553bd7496e5181a",
         "size_bytes": 440
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/attempt-03-REGISTERED-BEFORE-CANDIDATE.json",
+        "sha256": "86d0ea2146278bd0836e7e79f952e668192c77cdd96d2583260f4e3de5f741d1",
+        "size_bytes": 1145
       },
       {
         "git_mode": "100644",
@@ -38600,8 +38636,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "1504dba364dcf1f09d8f834918978b6ed70202e1c007844b3c978c967f28a94d",
-    "entry_count": 6409
+    "entries_sha256": "9cf225cd6a48d140d80ccee6d198e7a1570c66e17abbaec06c767d3fea6ab34c",
+    "entry_count": 6415
   },
   "subprojections": [
     {
@@ -38613,8 +38649,8 @@
       ]
     },
     {
-      "entries_sha256": "4db584f860587a7ac0cf2b153a1b6da9341a0170285eb604fa8897dc74fb8995",
-      "entry_count": 2425,
+      "entries_sha256": "8852c3299acc36d825c91f34f90253377651dcf029f0b5310d04b8963930e2c5",
+      "entry_count": 2431,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
