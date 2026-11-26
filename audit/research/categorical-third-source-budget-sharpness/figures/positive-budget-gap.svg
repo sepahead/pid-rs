@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 318" width="750" height="318" role="img" aria-labelledby="fig-title fig-desc">
+  <title id="fig-title">The smallest positive third-source budget gap for six observations</title>
+  <desc id="fig-desc">At left, the first source is copied to the target and the second source is constant. The first-source groups have third-source counts [1,1], [2,0], and [0,2]. At right, the exact least positive gap increases from 0.192 to 0.462 nats as the number of occupied third labels rises from two to six. Each marker fixes only the total count and the number of occupied third labels. The other source and target alphabets can vary.</desc>
+  <rect x="0" y="0" width="750" height="318" fill="white" stroke="none" />
+  <g font-family="DejaVu Sans, sans-serif">
+    <text x="16" y="23" font-size="18" fill="#1F3F60" font-weight="650" text-anchor="start">The smallest positive gap for six observations</text>
+    <text x="16" y="43" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="start">A is the entropy of source 3 given sources 1 and 2. B also conditions on the target. The gap is A + B − M in nats.</text>
+    <text x="16" y="61" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="start">M sums the absolute values of the five signed mean atoms whose every source group contains source 3.</text>
+    <g transform="translate(0,18)">
+      <line x1="16" y1="56" x2="732" y2="56" stroke="#D2E0E2" stroke-width="1" />
+      <text x="16" y="83" font-size="15" fill="#1F6968" font-weight="650" text-anchor="start">One table that attains the minimum</text>
+      <text x="16" y="102" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="start">The target copies source 1. Source 2 is constant.</text>
+      <text x="16" y="134" font-size="12" fill="#1F3F60" font-weight="650" text-anchor="start">Source 1</text>
+      <text x="157" y="118" font-size="12" fill="#1F3F60" font-weight="650" text-anchor="middle">Source 3</text>
+      <text x="137" y="135" font-size="12" fill="#2C3E50" font-weight="600" text-anchor="middle">a</text>
+      <text x="178" y="135" font-size="12" fill="#2C3E50" font-weight="600" text-anchor="middle">b</text>
+      <text x="17" y="160" font-size="13" fill="#2C3E50" font-weight="600" text-anchor="start">shared</text>
+      <rect x="115" y="143" width="42" height="27" fill="#1F6968" stroke="white" />
+      <text x="136" y="161" font-size="13" fill="white" font-weight="600" text-anchor="middle">1</text>
+      <rect x="157" y="143" width="42" height="27" fill="#1F6968" stroke="white" />
+      <text x="178" y="161" font-size="13" fill="white" font-weight="600" text-anchor="middle">1</text>
+      <text x="17" y="187" font-size="13" fill="#2C3E50" font-weight="400" text-anchor="start">only a</text>
+      <rect x="115" y="170" width="42" height="27" fill="white" stroke="#D2E0E2" />
+      <text x="136" y="188" font-size="13" fill="#2C3E50" font-weight="600" text-anchor="middle">2</text>
+      <rect x="157" y="170" width="42" height="27" fill="white" stroke="#D2E0E2" />
+      <text x="178" y="188" font-size="13" fill="#2C3E50" font-weight="400" text-anchor="middle">0</text>
+      <text x="17" y="214" font-size="13" fill="#2C3E50" font-weight="400" text-anchor="start">only b</text>
+      <rect x="115" y="197" width="42" height="27" fill="white" stroke="#D2E0E2" />
+      <text x="136" y="215" font-size="13" fill="#2C3E50" font-weight="400" text-anchor="middle">0</text>
+      <rect x="157" y="197" width="42" height="27" fill="white" stroke="#D2E0E2" />
+      <text x="178" y="215" font-size="13" fill="#2C3E50" font-weight="600" text-anchor="middle">2</text>
+      <text x="212" y="157" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="start">Two labels occur</text>
+      <text x="212" y="174" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="start">in the shared row.</text>
+      <text x="16" y="252" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="start">Both third labels have total count 3.</text>
+      <text x="16" y="274" font-size="13" fill="#1F3F60" font-weight="650" text-anchor="start">Gap = ln(256/81)/6 ≈ 0.192 nats.</text>
+      <line x1="345" y1="75" x2="345" y2="282" stroke="#D2E0E2" stroke-width="1" />
+      <text x="364" y="83" font-size="15" fill="#1F6968" font-weight="650" text-anchor="start">What changes with more third labels?</text>
+      <text x="364" y="104" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="start">Least positive gap (nats)</text>
+      <line x1="401" y1="235.0" x2="708" y2="235.0" stroke="#D2E0E2" stroke-width="0.8" />
+      <text x="393" y="239.0" font-size="11" fill="#2C3E50" font-weight="400" text-anchor="end">0</text>
+      <line x1="401" y1="213.2" x2="708" y2="213.2" stroke="#D2E0E2" stroke-width="0.8" />
+      <text x="393" y="217.2" font-size="11" fill="#2C3E50" font-weight="400" text-anchor="end">0.1</text>
+      <line x1="401" y1="191.4" x2="708" y2="191.4" stroke="#D2E0E2" stroke-width="0.8" />
+      <text x="393" y="195.4" font-size="11" fill="#2C3E50" font-weight="400" text-anchor="end">0.2</text>
+      <line x1="401" y1="169.60000000000002" x2="708" y2="169.60000000000002" stroke="#D2E0E2" stroke-width="0.8" />
+      <text x="393" y="173.60000000000002" font-size="11" fill="#2C3E50" font-weight="400" text-anchor="end">0.3</text>
+      <line x1="401" y1="147.8" x2="708" y2="147.8" stroke="#D2E0E2" stroke-width="0.8" />
+      <text x="393" y="151.8" font-size="11" fill="#2C3E50" font-weight="400" text-anchor="end">0.4</text>
+      <line x1="401" y1="126.0" x2="708" y2="126.0" stroke="#D2E0E2" stroke-width="0.8" />
+      <text x="393" y="130.0" font-size="11" fill="#2C3E50" font-weight="400" text-anchor="end">0.5</text>
+      <line x1="401" y1="235" x2="708" y2="235" stroke="#1F3F60" stroke-width="1.2" />
+      <line x1="401" y1="235" x2="401" y2="126" stroke="#1F3F60" stroke-width="1.2" />
+      <line x1="401.0" y1="235" x2="401.0" y2="193.19020547034117" stroke="#1F6968" stroke-width="2" />
+      <circle cx="401.0" cy="193.190" r="4" fill="#743E37" />
+      <text x="410.0" y="183.19020547034117" font-size="10.5" fill="#743E37" font-weight="600" text-anchor="middle">0.192</text>
+      <text x="401.0" y="252" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="middle">2</text>
+      <line x1="477.75" y1="235" x2="477.75" y2="184.63130487931065" stroke="#1F6968" stroke-width="2" />
+      <circle cx="477.75" cy="184.631" r="4" fill="#743E37" />
+      <text x="477.75" y="174.63130487931065" font-size="10.5" fill="#743E37" font-weight="600" text-anchor="middle">0.231</text>
+      <text x="477.75" y="252" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="middle">3</text>
+      <line x1="554.5" y1="235" x2="554.5" y2="176.0724042882801" stroke="#1F6968" stroke-width="2" />
+      <circle cx="554.5" cy="176.072" r="4" fill="#743E37" />
+      <text x="554.5" y="166.0724042882801" font-size="10.5" fill="#743E37" font-weight="600" text-anchor="middle">0.270</text>
+      <text x="554.5" y="252" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="middle">4</text>
+      <line x1="631.25" y1="235" x2="631.25" y2="155.1675070234507" stroke="#1F6968" stroke-width="2" />
+      <circle cx="631.25" cy="155.168" r="4" fill="#743E37" />
+      <text x="631.25" y="145.1675070234507" font-size="10.5" fill="#743E37" font-weight="600" text-anchor="middle">0.366</text>
+      <text x="631.25" y="252" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="middle">5</text>
+      <line x1="708.0" y1="235" x2="708.0" y2="134.2626097586213" stroke="#1F6968" stroke-width="2" />
+      <circle cx="708.0" cy="134.263" r="4" fill="#743E37" />
+      <text x="705.0" y="124.2626097586213" font-size="10.5" fill="#743E37" font-weight="600" text-anchor="middle">0.462</text>
+      <text x="708.0" y="252" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="middle">6</text>
+      <text x="554.5" y="273" font-size="12" fill="#1F3F60" font-weight="500" text-anchor="middle">Number of occupied source 3 labels</text>
+      <text x="16" y="293" font-size="12" fill="#2C3E50" font-weight="400" text-anchor="start">Each point fixes only the total and the number of occupied third labels. Other source and target alphabets can vary.</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+{
+  "archive_force_and_torque_swapped": "117 original episode identities, signed labels and source order",
+  "archive_sign_code_reversed": "117 original episode identities, signed labels and source order",
+  "donor_as_target": "117 original episode identities, signed labels and source order",
+  "erase_MGW_05": "wrong native value or mask mgw/05",
+  "exchange_source_1_and_3_masks_on_both_reports": "wrong native value or mask mgw/04",
+  "missing_MGW_05_06": "all 18 source rules",
+  "nonfinite_imin_07": "nonfinite native value",
+  "replace_imin_06_by_one": "wrong native value or mask imin/06",
+  "reverse_MGW_04_sign": "wrong native value or mask mgw/04"
+}

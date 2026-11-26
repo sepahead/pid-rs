@@ -1,0 +1,82 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "chart": {
+    "force-copy-atoms.pdf": "d83da486784e141d853c8ffcbf13d7a319ff28f3e33471d44ee51bd64389081a",
+    "force-copy-atoms.svg": "bdd45395247047c695218cfb41ed1133fbe0c6302f862707370aba74203a2964"
+  },
+  "donor_chapter": {
+    "author_copy_sha256": "418c35877a6e3f0d9f8c202ee02fff08fb8710adf601c27fec46e3800c4996cf",
+    "doi": "10.1007/978-1-4615-5725-8_23",
+    "pages": [
+      382,
+      386
+    ]
+  },
+  "measure": {
+    "doi": "10.1103/PhysRevE.103.032149",
+    "project_display_units": "nats",
+    "source": "arXiv:2002.03356v5"
+  },
+  "object": "Ordered entries of the 117 original LP4 records with target equal to force-sign source, second source constant, third source torque sign. Natural-log signed averaged categorical atoms.",
+  "original_application_packet_sha256": "75c65b3243526293fa326150844452555b2bcc7b8544044a37437a4e99847dcd",
+  "original_event_reader": "c8483911e40c69292258f55c91e0223721db35cf0c939769dbb8fe00a7f61e37",
+  "original_support_reader": "e2ef22b35518fa1b051c4a2b71d506b7321c405c8f0958077e261ad38aa8e229",
+  "outputs": {
+    "comparison-receipt.json": "ff4c635ca3287c22ec6097032fc753af8b6120602d4ec89970a7e5df09e956ba",
+    "first-support-run.json": "fe45d21e3d9d46bb45665d5c11aceb1af6cbddcf8e494fbfdbb6427eca49fab5",
+    "lattice-optimized.json": "4b05b519d580f03c4ab7c0ff73523a2e085793b1a0861d9a54f99ebf1edd13ad",
+    "lattice-ordinary.json": "4b05b519d580f03c4ab7c0ff73523a2e085793b1a0861d9a54f99ebf1edd13ad",
+    "replay-self-test.json": "e4ac6eddb36d1105f4c977f958fcc33eb99927e2a62a88439d252f2736424335",
+    "support-optimized.json": "739aad4f1e2895973edadf3eae8dc0349a03a6f85329b3a8e064b742c9759050",
+    "support-ordinary.json": "739aad4f1e2895973edadf3eae8dc0349a03a6f85329b3a8e064b742c9759050"
+  },
+  "previous_case": "../robot-wrist-slope-signs/EXPOSITION.md",
+  "prior_project_two_source_result": {
+    "antecedents": "Equations (1) and (2) give the local and averaged synergy. Equation (17) gives averaged shared information minus source mutual information. Equation (19) factors the difference as (a-j)(c-j). Equations (28)-(29) evaluate exactly the same noisy-copy probabilities and ratios.",
+    "blob": "bcf77a10de1976b10b27684b76f62a09cf54e03c",
+    "global_copy": "Two finite sources with target (source one, arbitrary residual) on positive support.",
+    "new_scope": "With a constant middle source and the target equal to source one, the later article places the two-source atoms in the 18-position order, reads off the five-slot support criterion and gives a matched-entropy pair. LP4 applies it to measurements.",
+    "sha256": "caf8746947013ea37ff53f1e1821b8d5564b15c2d1419688d446d3c58cb6b26b",
+    "url": "https://github.com/sepahead/pid-rs/blob/6a9f087be84bc21a89ff51e7da8e626e6883d73e/audit/evidence/finite-target-copy-mgw-synergy.md"
+  },
+  "public_implementation_revision": "6a9f087be84bc21a89ff51e7da8e626e6883d73e",
+  "published_noisy_copy_example": {
+    "cell_probabilities": {
+      "each_matching_cell": "3/8",
+      "each_mismatch": "1/8"
+    },
+    "input_attribution": "Finn and Lizier, Entropy 20, 297 (2018), section 5.4. Their numerical decomposition uses their different specificity and ambiguity measures.",
+    "input_source": "https://doi.org/10.3390/e20040297",
+    "printed_signed_means_bits": {
+      "joint_only": "+0.367",
+      "unique_noisy_source": "-0.367"
+    },
+    "source": "Makkeh, Gutknecht and Wibral, arXiv:2002.03356v5, section VI.C, Table III, printed page 11",
+    "source_comparison": "../categorical-third-source-budget-sharpness/independent/copy-target/PRIOR-EXAMPLE.md",
+    "source_pdf_sha256": "5939ce0f4c727f1998040421c07a1689af1b8d9a35a0ee3c83fe25cd85263dc6",
+    "support_derivation": "../categorical-third-source-budget-sharpness/independent/copy-target/COPY-TARGET.md",
+    "target": "copy of first source",
+    "url": "https://arxiv.org/pdf/2002.03356v5#page=11"
+  },
+  "rust_10_bound": {
+    "labeled_interval_result_sha256": "aaaf4420eb433e9706803859696ada6cfbb94488e2b3398f4dca18571495eace",
+    "public_supplement_manifest_sha256": "823aa63b66875604e62b230d6e4b7d36512c0087c1e69977aeccc9c84ea36d6f",
+    "public_supplement_members": 21,
+    "retained_raw_sha256": "83b84ef9299aef38991ddeb802886f8264cd5fdba558957375d74cf78288f958",
+    "source_packet_sha256": "97079acc07478d895a401d9eeb5ee46f10d6311b00b5bfb9241f8cd0a8fe480d"
+  },
+  "selection": "Prior donor and copied-target proposition exposed. One fixed finite candidate and two calculations on the same data. Model assistance with shared source, estimand and machine.",
+  "source_archive": {
+    "bytes": 59365,
+    "doi": "10.24432/C5M89N",
+    "license": "CC BY 4.0",
+    "member": "lp4.data",
+    "member_bytes": 33619,
+    "member_sha256": "f0c901ead751ff3104d7e1aeb23165efb88270b219c1954c43bfff2344a7bb3c",
+    "sha256": "cdfbe0b260f4a21c5249fe0da4b1baf4041959663a9182253885ee1f41a4568e",
+    "url": "https://archive.ics.uci.edu/static/public/138/robot+execution+failures.zip"
+  },
+  "title": "When a robot wrist signal is also the target",
+  "written_support_proposition": "../categorical-third-source-budget-sharpness/independent/copy-target/COPY-TARGET.md",
+  "year": 2026
+}

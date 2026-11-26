@@ -1,0 +1,54 @@
+{
+  "censuses": [
+    {
+      "largest_cell_count": 2,
+      "local_signed_comparisons": 3888,
+      "positive_mass": 48,
+      "shape": [
+        2,
+        2
+      ],
+      "zero_mass": 32
+    },
+    {
+      "largest_cell_count": 2,
+      "local_signed_comparisons": 52488,
+      "positive_mass": 592,
+      "shape": [
+        2,
+        3
+      ],
+      "zero_mass": 136
+    },
+    {
+      "largest_cell_count": 1,
+      "local_signed_comparisons": 41472,
+      "positive_mass": 409,
+      "shape": [
+        3,
+        3
+      ],
+      "zero_mass": 102
+    }
+  ],
+  "controls": {
+    "complete_uniform_exp_NM": "65536/6561",
+    "constant_target_exp_NM": "1",
+    "domain_refusals": [
+      "negative",
+      "boolean",
+      "fractional count",
+      "zero total",
+      "ragged"
+    ],
+    "duplicate_middle_source_exp_NM": "1",
+    "paired_exp_four_M": [
+      "16/9",
+      "1"
+    ],
+    "target_copies_third_exp_NM": "16",
+    "weighted_same_support_exp_NM": "282475249/2985984"
+  },
+  "factor": "exp(N M), with M in nats and N the input total",
+  "general_reference_sha256": "00b52c8e5e514d3bac05190352489aa6954814e06efff0b321cacafdb7122940"
+}

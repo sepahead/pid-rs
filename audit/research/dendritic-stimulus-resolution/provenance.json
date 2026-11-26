@@ -1,0 +1,89 @@
+{
+  "calculator": "36ddf15ab089149c38aec544c6a872eab924df3226db95dec256b5e255b084b9",
+  "frozen_field": "717fbd812c90b96475d3d943f58f1d32bb9008dc800104b7cb700b52a9f802f4",
+  "input_sha256": "718e40b0509f077d8d667187c22d3fe7df7746f5489dc40bd983742a4bcbb467",
+  "ordinary_and_optimized": "identical complete native calculator output and reference summaries. A new cross-platform read can check the same mathematical values.",
+  "original_sources_and_code": {
+    "data/PhenomModels.m": {
+      "bytes": 1130,
+      "sha256": "670a6a59040e41a6dd8cbc33f3bcf94dbcbc580775717fb320a9d7ed90924763",
+      "url": "https://raw.githubusercontent.com/ModelDBRepository/180373/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/data/PhenomModels.m"
+    },
+    "data/freq_.dat": {
+      "bytes": 5890,
+      "sha256": "1f687988986ba10ea0c69ec63f2f28f9899f5c7e253973e546126f96e59a4c56",
+      "url": "https://raw.githubusercontent.com/ModelDBRepository/180373/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/data/freq_.dat"
+    },
+    "data/spikes_.dat": {
+      "bytes": 5890,
+      "sha256": "718e40b0509f077d8d667187c22d3fe7df7746f5489dc40bd983742a4bcbb467",
+      "url": "https://raw.githubusercontent.com/ModelDBRepository/180373/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/data/spikes_.dat"
+    },
+    "data/spikes_noCa.dat": {
+      "bytes": 5890,
+      "sha256": "355ed2da6f6860cd6791915255350161d97dc91afbd0508c0b6ed44f46dfc469",
+      "url": "https://raw.githubusercontent.com/ModelDBRepository/180373/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/data/spikes_noCa.dat"
+    },
+    "readme.html": {
+      "bytes": 1670,
+      "sha256": "4156ee7a419a9c2fba0300f566ddccc18446ed059681d8ff414fd2402cec7111",
+      "url": "https://raw.githubusercontent.com/ModelDBRepository/180373/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/readme.html"
+    }
+  },
+  "primary_axes": {
+    "Fig3A.hoc": {
+      "bytes": 7380,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "758d81807fbfecd936b1180d6090c68729a14f2e09cad6118772512953bf58c5",
+      "status": "retrieved",
+      "url": "https://raw.githubusercontent.com/ModelDBRepository/180373/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/simulationcode/Fig3A.hoc"
+    },
+    "Run.hoc": {
+      "bytes": 9120,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "614f1a31b495ab395b8fee4ab8fcbbaa7d43b63ee896bef0f61318f1c11bb642",
+      "status": "retrieved",
+      "url": "https://raw.githubusercontent.com/ModelDBRepository/180373/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/simulationcode/Run.hoc"
+    },
+    "compSig.m": {
+      "bytes": 295,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "2e8a9b5825fae2b62cd6f0abc058277f095d4400a67e46db8de20bd0d7b73fc8",
+      "status": "retrieved",
+      "url": "https://raw.githubusercontent.com/ModelDBRepository/180373/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/compSig.m"
+    },
+    "shai-published-figure-4.png": {
+      "bytes": 927725,
+      "content_type": "image/png",
+      "sha256": "f93b19964456a427f93cf0b62e7fa200a697d14b567d9477e2aeab27c9f560d7",
+      "status": "retrieved",
+      "url": "https://journals.plos.org/ploscompbiol/article/figure/image?size=large&id=10.1371/journal.pcbi.1004090.g004"
+    },
+    "shai-published-figure-5.png": {
+      "bytes": 1475269,
+      "content_type": "image/png",
+      "sha256": "5cfd54b6762dfa6d844fc3c6c10edd6ea5882684295024e4c0dfd62fb5847a66",
+      "status": "retrieved",
+      "url": "https://journals.plos.org/ploscompbiol/article/figure/image?size=large&id=10.1371/journal.pcbi.1004090.g005"
+    },
+    "shai.xml": {
+      "bytes": 110868,
+      "content_type": "text/xml",
+      "sha256": "497d04fe34c2991416a88cac761950674c23ad8386e912519a824665a77bbd90",
+      "status": "retrieved",
+      "url": "https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1004090&type=manuscript"
+    }
+  },
+  "raw_calculator_output": "c4cff8933d60c93e52dc501fc2a2bdc48433443da10f3e73875761a53e247ae1",
+  "reference_transport": {
+    "original_checker_sha256": "19eea4c95365e525f87e0ba13920ab3513174a853c0ae69938df615626e118df",
+    "portable_mathematical_functions_sha256": "bcd51ba889e44fa4a13cb35149daee0d49fc04cd2c8f1e1254d755c822887ac5",
+    "scope": "same numerical functions, former machine-specific orchestration removed; new public caller checks full retained records and both construction paths"
+  },
+  "registered_attempt": "ec062dfbc67ecbe878d74aece59c175a2cd469ed016fd8e096874500f7b65bdd",
+  "resources": "One monitored worker. Exact-signed output classified with positive rational products. Whole-group sampling at one-second intervals does not measure short-lived memory peaks.",
+  "review": "Two independent-first model assessments. Both share total design, original study and PID definitions. A later source inspection corrected one first reader's axis names. Outcomes were not used to select among these resolutions.",
+  "revision": "655ac03999ecb5ce2b15f3b04cee4c250358a2ff",
+  "source_dataset": "ModelDB 180373",
+  "two_mode_result": "274bbc92cb6662b8a033f896566eac3f0e2688b6739be494402165bea699f1d9"
+}

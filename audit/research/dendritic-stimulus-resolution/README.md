@@ -1,0 +1,168 @@
+# Does one more recorded stimulus bit help predict a neuron's response?
+
+**Sepehr Mahmoudian · 2026**
+
+<!-- body -->
+
+A laboratory can save two exact stimulus settings or just the ranges into which they fall. Suppose it can also save one bit that says which setting was larger. Does that bit improve a prediction of the cell's response? Does it provide evidence on its own, or through its relation to the two ranges? The first question needs a prediction task and a loss. The second needs a definition of shared information. This report answers both on a published simulation table.
+
+**Result.** At the coarsest tested resolution, reading the bit kept the best three-class score at **486 of 651**. It changed the probabilities assigned to the classes. In the finite categorical shared-exclusions decomposition, the signed contribution at the bit-alone position was **−0.05962 nats**. Four positive contributions offset it. The Williams–Beer minimum-specific-information decomposition assigned the same total to a different set of parts. Under both ways of withholding an input level, the mean logarithmic loss decreased slightly at this resolution. At width 50 both mean losses increased when the fitted forecasts used the bit. All three resolutions, both evaluation procedures and the full-resolution negative control are reported below.
+
+**What is new in pid-rs.** This study tests the project's five-position result for a third source on an archived neural simulation. It gives exact signs, a comparison with another partial information decomposition (PID), a decision with a specified cost, and a test on withheld input levels. Shai and colleagues built the neuron model. Kay, Schulz and Phillips already applied five two-input PIDs, including categorical shared exclusions, to its outputs. The added question here concerns what is lost when stimulus records are coarsened and whether one input-only comparison bit restores useful information. The observations concern the archived simulation grid. [Shai et al.](https://doi.org/10.1371/journal.pcbi.1004090) · [ModelDB 180373](https://modeldb.science/180373) · [Kay, Schulz and Phillips](https://doi.org/10.3390/e24081021)
+
+<!-- page -->
+
+## Measurements, terms and symbols
+
+| Term or symbol | Meaning in this study |
+|---|---|
+| Source, target, observation | A source is a variable that supplies an input. The target is the variable to predict. One observation here is one simulated output at one pair of settings. |
+| $B,A,T$ | $B$ is the nominal number of basal inputs and $A$ is the nominal number of inputs to the apical tuft. Both are parts of the neuron's dendrites. $T$ is the output class defined from the number of action potentials, or spikes, in the simulation. |
+| $w,X_1,X_2,C$ | $w$ is the width of a recorded input range in nominal input counts. $X_1,X_2$ are the two range labels. $C$ is the stored bit computed from the two original settings. $X$ means the ordered pair of range labels. |
+| Distribution, support, count | Give each original setting equal probability. Several settings can give the same three source values and target class. Their count is their multiplicity. The support comprises the distinct combinations with positive count. |
+| Information, entropy, nat | Entropy is the average negative logarithm of an outcome probability. For conditional entropy, calculate the entropy in each group defined by the conditioning variables. Average these entropies using the group probabilities. A natural logarithm gives nats. One bit of information is $\ln 2$ nats. The metadata bit $C$ has two possible values. Its entropy depends on their probabilities. |
+| Partial information decomposition (PID), atom | A PID assigns parts of the information in several sources about one target to specified groups of sources. An atom is the part assigned to one position after subtracting contributions from all lower positions. MGW denotes the finite categorical measure of Makkeh, Gutknecht and Wibral. $I_{\min}$ denotes the different finite measure of Williams and Beer. |
+| Prediction and loss | A class prediction selects one of the three response classes. Its loss is one for a wrong choice and zero otherwise. A probability forecast assigns a probability to each class. Its logarithmic loss is the negative natural logarithm of the probability it assigned to the observed class. Smaller loss is better. |
+
+The units of the stimulus axes are requested input counts. The units of the response are spikes before grouping. All information quantities below use nats per setting unless the text specifies bits. [Shannon](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x) · [Williams and Beer](https://arxiv.org/abs/1004.2515v1) · [Makkeh, Gutknecht and Wibral](https://arxiv.org/abs/2002.03356v5)
+
+<!-- page -->
+
+## From the simulator to the three source variables
+
+Read the control file `data/spikes_.dat` at ModelDB revision `655ac03999ecb5ce2b15f3b04cee4c250358a2ff`. The file has 31 rows and 21 columns. The first row has basal setting zero. Moving down one row adds ten basal inputs. Moving right one column adds ten tuft inputs from zero to 200. For each count, set $T=0$ for zero spikes, $T=1$ for one or two, and $T=2$ for three or four. The class counts are 163, 192 and 296. Each of the 651 pairs of settings has probability $1/651$. This is the distribution of a uniformly selected point on this grid. It gives no sampling distribution over neurons or repeat trials. [Original output](https://github.com/ModelDBRepository/180373/blob/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/data/spikes_.dat) · [Earlier output classes and weights](https://doi.org/10.3390/e24081021)
+
+Two comments in the plotting script reverse the basal and tuft labels. The simulator's outer loop runs over 31 basal settings and its inner loop over 21 tuft settings. It starts a new line after the inner loop. The published Figure 4 shows up to 300 basal and 200 tuft inputs. We used this orientation. The simulator samples contact indices. A repeated index can refer to a previously selected contact. Thus an axis describes the requested setting. The file gives no separate count of distinct active contacts. The distributed simulator prints the spike count and has two commented numerical file-write lines. We used the archived control output. Its identified axes and count do not establish a new run with the publication's original parameters. [Simulator](https://github.com/ModelDBRepository/180373/blob/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/simulationcode/Run.hoc) · [Plotting script](https://github.com/ModelDBRepository/180373/blob/655ac03999ecb5ce2b15f3b04cee4c250358a2ff/data/PhenomModels.m) · [Published model](https://doi.org/10.1371/journal.pcbi.1004090)
+
+At acquisition, set $C=1$ when $B>A$ and $C=0$ otherwise. For an integer width $w$ in $\{10,50,100\}$, store $X_1=\lfloor B/w\rfloor$ and $X_2=\lfloor A/w\rfloor$. A value exactly on a boundary enters the range that starts there. Include the final settings, 300 and 200. For example, when $w=100$, the last basal range contains just 300. The bit uses the original values before they are grouped. It does not use the spike count. No thresholds are fitted. The nominal inputs are independent under the uniform rectangular design. The bit generally depends on both inputs. Samples drawn in a different proportion would define a different study.
+
+![Nominal stimulus settings and spike-count classes. Every square is one setting. The dashed lines mark the groups used at width 100.](figures/stimulus-settings.svg)
+
+<!-- page -->
+
+## A decision that can be checked by counting
+
+Consider the 100 settings where both input counts lie between 100 and 190 inclusive. Ignoring the comparison bit gives 0 settings in the zero-spike class, 30 in the middle class and 70 in the high class. Predicting the high class gives 70 correct. The following counts use the same 100 settings.
+
+| Comparison at the original settings | Zero spikes | One or two | Three or four | Total |
+|---|---:|---:|---:|---:|
+| Basal less than or equal to tuft | 0 | 24 | 31 | 55 |
+| Basal greater than tuft | 0 | 6 | 39 | 45 |
+| All settings in these ranges | 0 | 30 | 70 | 100 |
+
+The high class remains the most frequent in both groups, giving $31+39=70$ correct. Its probability changes from $70/100$ to $31/55$ or $39/45$. A forecaster evaluated by logarithmic loss can use that change. To check its size, write $h(p)=-p\ln p-(1-p)\ln(1-p)$ for the entropy of two classes of probabilities $p$ and $1-p$. The third class has zero probability here. The decrease in expected log loss within these ranges is $h(0.7)-0.55h(31/55)-0.45h(39/45)=0.0573965$ nats. With weight $100/651$, this pair of ranges contributes 0.0088167 nats to the whole-grid decrease.
+
+For any recorded pair $x$, let $n_{x,c,t}$ count its settings with bit $c$ and class $t$. A missing index means a sum over that index. The best class under unit error loss is one with the largest count. Use the lowest class at a tie. The difference in the number correct from reading the bit at $x$ is
+$$
+      \sum_c\max_t n_{x,c,t}-\max_t \sum_c n_{x,c,t}.
+$$
+It is nonnegative because the predictor that sees the bit can choose the same class at both bit values. It was **zero at every occupied pair of ranges for all three widths**. A policy deciding whether to retain the bit separately for each range pair therefore also gains zero correct classes on this distribution. It is strictly preferable to omit the bit wherever its acquisition has positive cost measured in units of a wrong class decision. At zero cost the two choices tie on that objective. A different loss, class weighting or stimulus distribution requires new counts.
+
+<!-- page -->
+
+## The information in the comparison bit
+
+At each supported outcome $z=(x_1,x_2,c,t)$, a source group matches when every source in it equals the value at $z$. A source rule lists one or more groups and accepts any observation matching at least one whole group. Omit redundant groups that contain another listed group. There are 18 such nonempty rules for three sources. Their order specifies which contributions must be included when a rule matches. A rule $\beta$ lies below $\alpha$ when every group in $\alpha$ contains some group in $\beta$. [Williams and Beer, Eq. (5)](https://arxiv.org/abs/1004.2515v1) · [Logical interpretation](https://doi.org/10.1098/rspa.2021.0110)
+
+For a rule $\alpha$, write $E_\alpha(z)$ for its matching event. Let $N=651$, $U$ be the number of matching settings, $n_t$ the number in target class $t$, and $V$ the number that meet both conditions. The reference outcome itself guarantees $0<V\le U$ and $V\le n_t$. The MGW informative part of its redundancy value is $\ln(N/U)$. Its misinformative part is $\ln(n_t/V)$. Subtract the latter from the former for the signed value. Both component values can be positive at the same rule. In each part, obtain the atom at a rule by subtracting the atoms at all strictly lower rules from that rule's redundancy value. Average using the fraction of settings at each distinct reference outcome. [MGW, Eqs. (5)–(8), Theorem IV.3](https://arxiv.org/abs/2002.03356v5)
+
+The downset of the input-pair rule consists of that rule and every rule below it. Summing over a downset recovers its redundancy value. Exactly five positions lie outside the input-pair downset. In every group of each of these five, the comparison bit occurs. Write $P_k,Q_k,d_k=P_k-Q_k$ for the informative, misinformative and signed mean atoms at position $k$. Put $A_C=H(C\mid X)$, $B_C=H(C\mid X,T)$ and $J=A_C-B_C=I(C;T\mid X)$. Subtracting the two-input downset sum from the full three-input sum gives
+$$
+       \sum_k P_k=A_C,\qquad \sum_k Q_k=B_C,\qquad \sum_k d_k=J.
+$$
+For example, the probability of matching all three inputs divided by that of matching the original two is the conditional probability of this bit given $X$. Its negative logarithm averaged over settings gives $A_C$. Conditioning both match probabilities on the target gives $B_C$. This derivation uses categorical shared exclusions at supported values. When $C$ is determined by $X$, both entropies vanish. Each informative and misinformative local atom is nonnegative. All supported outcomes have positive weight. A sum of these terms can be zero only if each term vanishes. This proves the result at every supported outcome. This applies at width 10. [Five-position bound and proof](../categorical-third-source-budget-sharpness/EXPOSITION.md) · [Defining categorical functional](https://doi.org/10.1103/PhysRevE.103.032149)
+
+<!-- page -->
+
+## How much signed information cancels?
+
+Define $D=\sum_k\max(-d_k,0)$, the magnitude of the negative signed mean atoms among these five. Then $\sum_k |d_k|=J+2D$. The identity follows from $|v|=v+2\max(-v,0)$. A positive $D$ locates offsetting contributions under this particular PID. A negative signed atom has a larger misinformative than informative mean at that position. It does not mean that having the bit must worsen the best prediction.
+
+| Range width $w$ | Occupied outcomes | $A_C$ | $B_C$ | Added information $J$ | Negative magnitude $D$ | Best correct without / with bit |
+|---:|---:|---:|---:|---:|---:|---:|
+| 10 | 651 | 0 | 0 | 0 | 0 | 651 / 651 |
+| 50 | 59 | 0.107225 | 0.102920 | 0.004304 | 0.020092 | 565 / 565 |
+| 100 | 27 | 0.216403 | 0.204849 | 0.011554 | 0.059624 | 486 / 486 |
+
+All displayed decimals in the information columns are rounded nats. When the bit is fully determined the zeros are exact. A higher correct count at width 10 uses the observed one-output-per-setting distribution and all original settings. The held-level test below addresses a different prediction question.
+
+### What the competing decompositions say
+
+At width 100, the informative part of the bit-alone atom was 0.047178 nats and its misinformative part was 0.106803. Their difference is the negative contribution in the first line below. The other four signed contributions have positive signs. At width 50, three of the five signs are negative. The sum of their magnitudes exceeds the net gain at both coarse resolutions.
+
+| Position in the three-source lattice | MGW, width 50 | $I_{\min}$, width 50 | MGW, width 100 | $I_{\min}$, width 100 |
+|---|---:|---:|---:|---:|
+| Bit alone | −0.010793 | 0 | −0.059624 | 0 |
+| Basal range and bit together | +0.002007 | 0 | +0.032757 | 0 |
+| Tuft range and bit together | −0.006642 | 0 | +0.002725 | 0 |
+| Information shared by the basal–bit and tuft–bit pairs | −0.002656 | 0 | +0.014511 | 0 |
+| All three together | +0.022389 | +0.004304 | +0.021187 | +0.011554 |
+
+The zeros in the two $I_{\min}$ columns are exact integer-product comparisons. The name of a position specifies its groups in the lattice. The atom at that position excludes the contributions already assigned below it. “Bit alone” therefore differs from the ordinary mutual information of the bit with the target, which is nonnegative. A different nonnegative PID need not give the same table as $I_{\min}$.
+
+<!-- page -->
+
+## Comparison with minimum specific information
+
+![Signed atoms and the minimum-specific-information comparator on the same 100-count data. Each offset and its sign have an explicit label.](figures/five-contributions.svg)
+
+For the alternative PID, use Williams and Beer's target-specific information. For a source group with value $u$, let $n_{u,t}$ be its joint count with target $t$, and let $n_u$ and $n_t$ be its marginal counts. For each present $t$, its specific information from that group is
+$$
+ \sum_{u:n_{u,t}>0}\frac{n_{u,t}}{n_t}\ln\!\frac{Nn_{u,t}}{n_un_t}.
+$$
+At each rule, choose the least specific information among its listed groups for that same target. Average the minima over targets using $n_t/N$. Invert these redundancy values on the same lattice. To compare two groups exactly, exponentiate each specific information times $n_t$. This gives the positive fraction $\prod_{u:n_{u,t}>0}(Nn_{u,t}/(n_un_t))^{n_{u,t}}$. Compare fractions by cross multiplication. Multiply the minimizing products over all present target classes. The result is the exponential of 651 times the averaged redundancy. Divide by products at lower rules to invert the order. For an atom product $Q$, $(\ln Q)/651$ gives the mean atom in nats. Williams and Beer's atoms are nonnegative. Their allocation cannot display MGW's signed cancellation. Neither allocation by itself chooses a class, estimates the cost of storing a bit, or identifies a causal pathway. [Williams and Beer, Eqs. (1)–(6)](https://arxiv.org/abs/1004.2515v1)
+
+<!-- page -->
+
+## Performance when an input level is withheld
+
+Leave out all 21 settings of one basal level, or all 31 settings of one tuft level. Repeat until each setting has been evaluated once in each procedure. For each remaining training group, estimate the probability of class $t$ by $(n_t+1)/(n+3)$, where $n_t$ and $n$ are its training counts. A group missing from training gives probability $1/3$ to every class. Fit a separate table for each choice of inputs. Each test uses the same omitted levels, targets and scoring rules for both forecasts.
+
+| Width | Omitted level | Correct without / with bit | Mean log loss without | Mean log loss with bit |
+|---:|---|---:|---:|---:|
+| 10 | Basal | 163 / 163 | 1.098612 | 1.098612 |
+| 10 | Tuft | 163 / 163 | 1.098612 | 1.098612 |
+| 50 | Basal | 515 / 506 | 0.420428 | 0.433094 |
+| 50 | Tuft | 519 / 519 | 0.412885 | 0.421415 |
+| 100 | Basal | 465 / 464 | 0.623236 | 0.621634 |
+| 100 | Tuft | 461 / 454 | 0.597830 | 0.596610 |
+
+Each correct count has denominator 651. For width 10 the two-input group is missing whenever its precise basal or tuft level is withheld. Both forecasts default to $1/3$ and predict class zero at each tie. At width 100 the two error counts favour omitting the bit. The probability scores favour keeping it by 0.001602 and 0.001221 nats per setting. At width 50 the corresponding probability scores favour omitting it. There is one published grid and no independent sample of neurons. These comparisons do not provide a population confidence interval. [Scoring probability forecasts](https://doi.org/10.1198/016214506000001437)
+
+![Gains in held-level mean logarithmic score. The sign changes with stimulus recording resolution.](figures/prediction-gain.svg)
+
+<!-- page -->
+
+## Choosing what to store
+
+**Action under stated costs.** If the only task is to maximize the number of correct classes on the assigned distribution, the direct counts give no reason to pay a positive cost for this bit. If the target is probabilistic prediction and the full grid frequencies are available, the best achievable improvement in mean log loss is $J$. A uniform acquisition cost measured in nats per scored setting is justified when it is below $J$, with a tie at equality. A cost measured in time, energy or currency needs a utility model to convert units. When transfer to a missing input level is the task, use the corresponding held-level score. The small positive gains at width 100 and the losses at width 50 delimit the evidence for this particular fitted forecast.
+
+**Action in a scientific interpretation.** When reporting coarse stimulus metadata, specify both original input variables, the bin widths, the bit definition and the PID. Calling the extra conditional information uniquely supplied by the metadata would give the wrong account under both computed decompositions here. Under MGW the bit-alone atom is negative. Under $I_{\min}$ it is exactly zero. Both give the same positive conditional information. To decide whether the archive should preserve the precise settings for an attribution analysis, the chart shows which signed contributions will change. To decide whether it should spend storage on this bit for prediction, use the measured loss and cost. An analyst with the whole probability table can compute all these numbers. No advantage over every possible classical analysis or every other PID is claimed.
+
+## Rust implementation and computational cost
+
+At three sources the public interfaces exercised with no optional features are `pid_core::stable::categorical::discrete_sxpid3_averaged` and `pid_core::stable::imin::imin_pid3`. Each takes four aligned categorical matrices. For this benchmark each has 651 rows and one label per row. The row is one design setting with its realized class. Only the MGW routine has informative and misinformative atoms. The Williams–Beer routine returns its own mean atoms, which are nonnegative in exact arithmetic. Both implementations operate on an empirical categorical distribution. They use machine integers and binary64, the standard 64-bit binary floating-point format, for their numerical outputs. The two exact Python calculations in this report are research references. They calculate on counts without estimating a continuous variable or fitting a model neuron. [Categorical implementation](https://github.com/sepahead/pid-rs/blob/6a9f087be84bc21a89ff51e7da8e626e6883d73e/crates/pid-core/src/sxpid.rs) · [$I_{\min}$ implementation](https://github.com/sepahead/pid-rs/blob/6a9f087be84bc21a89ff51e7da8e626e6883d73e/crates/pid-core/src/discrete_pid.rs) · [Resource estimates](https://github.com/sepahead/pid-rs/blob/6a9f087be84bc21a89ff51e7da8e626e6883d73e/RUST_IMPLEMENTATION_AND_COST.md)
+
+There are 31 possible original basal levels, 21 tuft levels, two bit values and three target classes. The count of occupied complete states varies from 27 to 651. Let $K$ be that count. On a fixed three-source lattice, a direct comparison of every pair of complete states uses order $K^2$ state comparisons. A reference calculation in this study instead counts the seven possible nonempty groups of inputs and their target-specific counts. Each union uses at most seven inclusion–exclusion terms. Each inversion needs at most $18^2$ predecessor checks. With indexed counts and fixed label lengths the number of elementary lookups and multiplications is linear in $K$, apart from reading the 651 original settings and constructing the tables. Exact powers and rational multiplication can involve large integers. A multiplication on such integers has a cost that depends on their bit lengths. The stored complete state counts and projection tables are bounded by a constant times $K$. Materializing pointwise results costs additional memory. The implementation and output sizes differ between routes.
+
+<!-- page -->
+
+The fitted classifier trains and evaluates 31 basal and 21 tuft folds at each of three widths, for each of two predictor choices. The reference explicitly withholds each level. The second program subtracts that level's counts from training totals. It stores one output per tested setting, split direction and width. Each original run used one worker, a 90-second candidate limit and a 300-second outer limit. A failed or timed-out run returns no result. Integer comparisons decide the atom signs. The decimals are for presentation. This work qualifies an offline analysis of a small, finite grid. It gives no sensor-hardware latency or real-time deadline.
+
+## What the Rust methods returned
+
+Each method returns a list of source groups for every atom. Use the actual list to identify the rule. Add 1 for basal, 2 for tuft and 4 for the comparison bit to form each group label. For example, 3 denotes the group containing basal and tuft. Both Rust outputs list group 4 before group 3. The exact reference lists group 3 before group 4. Comparing the numbers by list position would exchange these two labels.
+
+The comparison covers the three widths, all 18 rules and four outputs per rule. Three outputs are MGW informative, misinformative and signed atoms. The fourth is the Williams–Beer atom. For each of the 216 positions the reference encloses $(\ln Q)/651$, where $Q$ is the positive exact rational product. Each rational endpoint has a denominator that divides $2^{256}$. The measured binary64 number was within $10^{-12}$ nat of both endpoints in every case. The largest error bound was below $6.404\times10^{-16}$ nat, for the width-10 signed MGW atom at the single group containing basal and tuft. Of the 42 unit products, 37 corresponding Rust outputs were exactly zero. The other five were small floating-point residuals. [Complete returned values and error bounds](rust-comparison/result.json)
+
+The new offline development build of the original Rust source took 20.66 seconds on one Apple arm64 computer with Rust 1.99.1. The largest sampled resident memory of the build process group was 447,840,256 bytes. Two fresh runs of the same binary took 1.18 and 0.98 seconds each, including start-up, input parsing, all six method calls and writing the results. The complete comparisons took 2.06 seconds each. These measurements include the stated fixed 651-setting workload. The two callers shared the same binary and hardware. The 20 altered data and report checks and two native refusal controls each gave the expected rejection. Reversing the order of correctly labeled outputs preserved the decisions. [Exact instructions](rust-comparison/README.md) · [Compiler and resource record](rust-comparison/resources.json)
+
+<!-- page -->
+
+## Reproduction and scope
+
+The two Python implementations read the same archived control data. One used unions of matching observations and an integer Möbius matrix after averaging. The other used inclusion–exclusion on counts, divided out all lower atom factors for each distinct outcome, then applied its multiplicity. They agreed exactly on 216 atom products across the three widths and the four reported channels. They also agreed on the two predictors' class choices and smoothed counts for every setting, at every width and for both blocked evaluations. Normal and optimized Python reproduced the full 385,704-byte answer. The full-grid mutual information from basal input, tuft input, basal conditional on tuft, tuft conditional on basal, and both inputs is 0.74, 0.16, 1.37, 0.79 and 1.54 bits, respectively. Interaction information in the sign convention of Kay et al. is 0.63 bit. Target entropy is 1.54 bits. All seven results agree with their Table 5 to two decimals. [Earlier Table 5](https://doi.org/10.3390/e24081021) The two programs share the published observations, definitions and the standard Python fraction type. Their agreement verifies this calculation on these inputs. The finite comparison shares the same observations, inputs and formal definitions. No human scientific review of this study was available.
+
+**Limits that matter in use.** A model grid gives no trial-to-trial firing variability at a repeated setting. Equality of the two nominal counts gives a zero flag. A different tie policy, input distribution, bin width, spike-count grouping or forecast changes the question. The conditional gain can change when the recorded variables are coarsened. There is no proved monotone relationship between that gain and coarsening in general. Data that compare calcium conductances, frequency values, recordings from rat neurons, human cue conflicts or robot sensor failures need their own acquisition and sampling assumptions. Conditional mutual information, predictive accuracy, and average signed PID atoms describe different properties. Positive conditional gain is compatible with the observed ties in class accuracy. It is also compatible with a lower accuracy or worse log score for a fitted predictor.
+
+**Reproduction and citation.** The offline checker recomputes the two exact methods from the 651 recorded response classes. Supply the original spike-count file to check the input word as well. A separate command builds and runs the two Rust methods on that exact file. The graphic shows every target class used in the analysis. The exact product file gives numerator and denominator, node and component. The forecast records identify the actual test setting. A source-axis discrepancy and an initial mistaken reading are retained with the physical evidence that resolved them. Cite this report as *Sepehr Mahmoudian (2026), Does one more recorded stimulus bit help predict a neuron's response?* Include the exact pid-rs commit or release. Cite the two original neuroscience papers and each defining PID paper separately. [Reproduction commands](REPRODUCE.md) · [Exact products and predictions](products-and-predictions.json) · [Software citation](../../../CITATION.cff)

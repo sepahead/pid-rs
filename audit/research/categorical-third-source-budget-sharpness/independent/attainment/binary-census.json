@@ -1,0 +1,169 @@
+{
+  "binary_tuple_order": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0,
+      1
+    ],
+    [
+      1,
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "boundary": "The reported minimum is exact only on the enumerated binary tables. The uniform N bound is an inequality for arbitrary finite source/target alphabets with integer counts.",
+  "by_total": {
+    "1": {
+      "lexicographic_minimizer_indices": null,
+      "minimum_exponentiated_N_slack_observed": null,
+      "positive_B": 0,
+      "total": 16,
+      "uniform_valid_lower_bound": null,
+      "zero_B": 16
+    },
+    "2": {
+      "lexicographic_minimizer_indices": [
+        0,
+        2
+      ],
+      "minimum_exponentiated_N_slack_observed": "16",
+      "positive_B": 8,
+      "total": 136,
+      "uniform_valid_lower_bound": "16",
+      "zero_B": 128
+    },
+    "3": {
+      "lexicographic_minimizer_indices": [
+        0,
+        2,
+        5
+      ],
+      "minimum_exponentiated_N_slack_observed": "9",
+      "positive_B": 128,
+      "total": 816,
+      "uniform_valid_lower_bound": "9",
+      "zero_B": 688
+    },
+    "4": {
+      "lexicographic_minimizer_indices": [
+        0,
+        2,
+        5,
+        11
+      ],
+      "minimum_exponentiated_N_slack_observed": "81/16",
+      "positive_B": 1060,
+      "total": 3876,
+      "uniform_valid_lower_bound": "81/16",
+      "zero_B": 2816
+    }
+  },
+  "exact_counted_tables": 4844,
+  "extra_B_and_slack_products": [
+    [
+      "3125/108",
+      "9765625/11664"
+    ],
+    [
+      "1",
+      "1"
+    ],
+    [
+      "4",
+      "16"
+    ],
+    [
+      "4",
+      "16"
+    ]
+  ],
+  "positive_conditional_entropy": 1196,
+  "schema": "arbitrary-finite-five-slot-attainment-census-v1",
+  "zero_conditional_entropy": 3648
+}

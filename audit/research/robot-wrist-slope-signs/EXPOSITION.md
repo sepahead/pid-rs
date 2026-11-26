@@ -1,20 +1,22 @@
 # Two axial trends and five robot outcomes
 
-**Sepehr Mahmoudian · 24 November 2026**
+**Sepehr Mahmoudian · 24 November 2026 · Revised 26 November 2026**
 
 [Standalone PDF](../../../output/pdf/robot-wrist-slope-signs.pdf) · [Exact certificate](certificate.json) · [All numerical intervals](results.json) · [Full sensor trace comparison](trace-provenance.json)
 
 <!-- body -->
 **Research question.** The wrist sensor records three components of force and three of torque. Here *axial* means the recorded $z$ component of either measurement. After a robot event has been detected, does the trend in axial torque change what the recorded axial force trend tells us about the event class? Does force add information to torque? The two directions reduce class uncertainty in all five recorded tasks. The reduction sometimes leaves every class decision unchanged.
 
-**Terms and symbols.** The donors call the five learning problems LP1 to LP5. A *trace* is an ordered array of 15 samples from six sensor channels. An *episode record* pairs one trace with one task label. A *class* is a possible label for that task. Some records in different tasks contain the same trace. $F$ and $Q$ denote negative, zero or positive trends in axial force and torque. $Y$ is the class. An *empirical law* assigns a probability through the frequency in one recorded table. *Entropy* measures uncertainty in $Y$. *Mutual information* (MI) measures the reduction from observing a sign. *Conditional mutual information* (CMI) measures the further reduction in this uncertainty after observing another sign. A *nat* uses natural logarithms. Partial information decomposition (PID) allocates the joint information to signed components, called *atoms*, under a specified redundancy rule. [UCI donor description](https://archive.ics.uci.edu/ml/machine-learning-databases/robotfailure-mld/robotfailure.data.html) · [Shannon, 1948](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x) · [Makkeh, Gutknecht and Wibral, 2021](https://arxiv.org/abs/2002.03356v5)
+**Terms and symbols.** The donors call the five learning problems LP1 to LP5. A *trace* is an ordered array of 15 samples from six sensor channels. An *episode record* pairs one trace with one task label. A *class* is a possible label for that task. Some records in different tasks contain the same trace. $F$ and $Q$ denote negative, zero or positive trends in axial force and torque. $Y$ is the class. An *empirical probability distribution* assigns each combination of signs and class its share of recorded episodes. A probability distribution is also called a *law*. *Entropy* measures uncertainty in $Y$. *Mutual information* (MI) measures the reduction from observing a sign. *Conditional mutual information* (CMI) measures the further reduction in this uncertainty after observing another sign. A *nat* uses natural logarithms. Partial information decomposition (PID) allocates the joint information to signed components, called *atoms*, under a specified redundancy rule. [UCI donor description](https://archive.ics.uci.edu/ml/machine-learning-databases/robotfailure-mld/robotfailure.data.html) · [Shannon, 1948](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x) · [Makkeh, Gutknecht and Wibral, 2021](https://arxiv.org/abs/2002.03356v5)
 
 ![LP1 to LP5 are five learning problems. Both conditional information gains for the recorded z components of force and torque are positive in each task. Comparing the best single sign with both signs gives 38 and 42 correct in LP1, 21 and 22 in LP2, 24 and 24 in LP3, 72 and 72 in LP4, and 49 and 52 in LP5.](figures/information-and-decisions.svg)
 
 The figure compares changes in class probabilities with changes in the most frequent class. Each row uses the original labels and record count for one task. Some rows use the same underlying measurements.
 
 <!-- page -->
-## From wrist measurements to five finite laws
+<a id="from-wrist-measurements-to-five-finite-laws"></a>
+
+## From wrist measurements to five counted task tables
 
 Luis Seabra Lopes and Luis M. Camarinha-Matos donated five robot learning problems. The reported window lasts 315 milliseconds, starts immediately after detection, and contains 15 regularly spaced readings. Each reading gives six integers in the order $F_x,F_y,F_z,T_x,T_y,T_z$. One complete episode contributes one observation of the two signs and the donor class. The study uses $F_z$ and $T_z$ in the recorded instrument coordinates. All six channels enter the trace comparison below. Only the two axial channels enter the sign summaries. [Original donor description and class definitions](https://archive.ics.uci.edu/ml/machine-learning-databases/robotfailure-mld/robotfailure.data.html)
 
@@ -67,7 +69,7 @@ LP1, LP2 and LP4 share no complete traces with each other. Together they give $8
 <!-- page -->
 ## The full recorded class distributions
 
-Each cell below lists integer class counts given a sign pair. Use the donor class order in the task table under “From wrist measurements to five finite laws.” To get the conditional class distribution, divide an occupied vector by the sum of its entries. To get joint probabilities, divide by the total for that task. An all-zero vector describes an unobserved pair. Such a pair could occur in another recording.
+Each cell below lists integer class counts given a sign pair. Use the donor class order in the task table under “From wrist measurements to five counted task tables.” To get the conditional class distribution, divide an occupied vector by the sum of its entries. To get joint probabilities, divide by the total for that task. An all-zero vector describes an unobserved pair. Such a pair could occur in another recording.
 
 | F, Q | LP1 | LP2 | LP3 | LP4 | LP5 |
 | --- | --- | --- | --- | --- | --- |
@@ -98,7 +100,7 @@ For each conditioning choice, average the class entropy of its occupied states u
 <!-- page -->
 ## Which information does a second sign add?
 
-Let $n$ be one task's record count and $n_{fqy}$ the count at signs $f,q$ and class $y$. Omitting subscripts means summing over them. The row weight is $n_{fqy}/n$. For class counts $n_y$, the target entropy is $H(Y)=-\sum_{y:n_y>0}(n_y/n)\ln(n_y/n)$. Conditional entropy averages that expression over the conditioning states. Write $I_F=H(Y)-H(Y\mid F)$, $I_Q=H(Y)-H(Y\mid Q)$ and $I_{FQ}=H(Y)-H(Y\mid F,Q)$. In nats, the torque and force gains are
+Let $n$ be one task's record count and $n_{fqy}$ the count at signs $f,q$ and class $y$. Omitting subscripts means summing over them. One entry counts episodes with the same two signs and class. Its weight in a mean is $n_{fqy}/n$. For class counts $n_y$, the target entropy is $H(Y)=-\sum_{y:n_y>0}(n_y/n)\ln(n_y/n)$. Conditional entropy averages that expression over the conditioning states. Write $I_F=H(Y)-H(Y\mid F)$, $I_Q=H(Y)-H(Y\mid Q)$ and $I_{FQ}=H(Y)-H(Y\mid F,Q)$. In nats, the torque and force gains are
 
 $$
 I(Q;Y\mid F)=I_{FQ}-I_F,\qquad I(F;Y\mid Q)=I_{FQ}-I_Q.
@@ -129,7 +131,7 @@ LP2 has one tied joint-sign state. LP5 has one tied torque-only state. The other
 <!-- page -->
 ## Four signed shared-exclusion atoms
 
-For a supported triple, the union of all episodes matching force sign $f$ **or** torque sign $q$ has size $u=n_f+n_q-n_{fq}$. Its class-$y$ subset has size $u_y=n_{fy}+n_{qy}-n_{fqy}$. The categorical construction of Makkeh, Gutknecht and Wibral (MGW) measures the local change from the prior class probability to its probability conditional on this union. Its empirical signed redundancy $R$ in nats and the three residual atoms are
+For a combination of two signs and one class that occurs in the task, the union of all episodes matching force sign $f$ **or** torque sign $q$ has size $u=n_f+n_q-n_{fq}$. Its class-$y$ subset has size $u_y=n_{fy}+n_{qy}-n_{fqy}$. The categorical construction of Makkeh, Gutknecht and Wibral (MGW) measures the local change from the prior class probability to its probability conditional on this union. Its empirical signed redundancy $R$ in nats and the three residual atoms are
 
 $$
 \begin{aligned}
@@ -155,6 +157,23 @@ LP4 has strictly negative force-unique information, between $-0.000415318$ and $
 **Two targets on the same transfer traces.** The informative part of two-source MGW redundancy averages the negative logarithm of the matching source union’s probability. An occupied pair contributes $(n_{fq}/47)\ln(47/u)$. This part depends only on the joint sign counts. For LP2 and LP3 the five occupied pairs give $(n_{fq},u)=(9,33),(15,38),(1,29),(9,31),(13,38)$ in table order. For example, the first union has $24+18-9=33$ records. Each task thus gives the same informative part, about 0.284314 nat. The misinformative part averages $\ln(n_y/u_y)$ over occupied triples with weights $n_{fqy}/47$. It depends on the task label. Subtracting this part from the informative part gives signed redundancies of 0.063624 and 0.014394 nat in LP2 and LP3. This applies the existing source-marginal factorization to these two empirical laws under the same source event and logarithm base. [Prior factorization](../../../SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md) · [Exact source terms](trace-provenance.json)
 
 To reconstruct a local term, take the LP4 collision example with both signs negative. Of 117 episodes, 77 match the force sign, 75 match the torque sign, and 52 match both. Their union contains 100 episodes, including 59 collisions. The local ratio is $(59/100)/(72/117)=767/800$. Its logarithm is negative even though the averaged $R$ is positive. [Exact signed products](certificate.json)
+
+<!-- page -->
+## What changes with a different definition of shared information?
+
+Williams and Beer ask how much each source tells us about one class. For a fixed class, compare its distribution of force signs with the distribution of force signs over all task records. For a sign value $s$ and class $y$, write $p(s)$ for the overall sign frequency and $p(s\mid y)$ for its frequency within that class. The specific information is the sum of $p(s\mid y)\ln[p(s\mid y)/p(s)]$ over sign values observed in class $y$. Use the same comparison for torque. Take the smaller of the two amounts for this class. Weight it by the class frequency, then add across classes. This gives the redundancy called $I_{\min}$. Its four atoms and the four shared-exclusion atoms use the same joint mutual information. Their definitions allocate it differently. [Williams and Beer, Eqs. 2–4](https://arxiv.org/abs/1004.2515v1) · [Makkeh, Gutknecht and Wibral](https://arxiv.org/abs/2002.03356v5)
+
+| Task | $I_{\min}$ redundancy | Force unique | Torque unique | Synergy |
+| --- | ---: | ---: | ---: | ---: |
+| LP1 | 0.030584 | 0.092257 | 0.053276 | 0.044862 |
+| LP2 | 0.039733 | 0.035604 | 0.100751 | 0.059328 |
+| LP3 | 0.029203 | 0.004650 | 0.030682 | 0.066503 |
+| LP4 | 0.003870 | 0.000000 | 0.021095 | 0.017518 |
+| LP5 | 0.001564 | 0.022540 | 0.000000 | 0.011070 |
+
+The entries are nats per recorded episode. In LP4, force gives the smaller amount in all three classes. Its $I_{\min}$ unique atom is exactly zero. Its signed shared-exclusion unique atom is about $-0.000415318$ nat. Adding the respective synergy gives the same conditional force gain of $0.017518341$ nat in both decompositions. The most frequent class remains collision in every observed sign pair. Prior-only, force-only, torque-only and two-sign predictions therefore each give 72 correct classifications among 117 records. Conditional information detects the changed class probabilities. The modal count answers the specified equal-cost decision question on these records.
+
+In LP5, torque gives the smaller amount in all five classes. Its $I_{\min}$ unique atom is exactly zero and its signed shared-exclusion unique atom is about $-0.000804410$ nat. The exact tests compare class-specific products before averaging. A separate control uses two independent fair bits as sources and their ordered pair as target. Both sources give one bit for each target outcome, although one source reveals the first bit and the other reveals the second. Equal amounts of specific information need not identify a shared piece of the target. [Exact five-task products and class choices](imin-comparison.json) · [Calculation and controls](compare_imin.py)
 
 <!-- page -->
 ## Reproduce the exact arithmetic
@@ -183,6 +202,8 @@ The default-feature production entry point `discrete_sxpid2` in the stable categ
 The transformation reads $15\times6$ integers per episode. Its cost grows linearly in the number of episodes. Each dense task table has $9K$ cells for $K$ from three to five classes, with $n$ from 47 to 164. The primary reader stores parsed sign tuples and counts, then factors positive integers no larger than $n$. The separate recipient uses order $n^2$ row comparisons to construct the unions directly. The cost of exact integer products also depends on the lengths of their numerators and denominators. The replay stops on malformed input, an unknown class, the wrong length, a source-hash mismatch or a certificate disagreement. The registered run limited each scientific process to one CPU, 256 MiB of address space and 120 seconds. The separate trace check stores 463 arrays of 90 integers and their labels. It counts repeated arrays and compares ten file pairs. It uses Python integer equality. Its time and memory grow with the number of stored readings for these five tasks, under the usual average-case cost of a hash lookup. No resampling or classifier training enters either calculation.
 
 On the registered single-CPU aarch64 Linux guest with Alpine 3.23.4 and CPython 3.12.13, the generator completed all five tasks in 0.069 s elapsed including process launch; its recorded peak was 15,268 KiB. The primary and recipient scientific loops took 0.022 s and 0.024 s, with process peaks of 16,160 and 17,060 KiB. These measurements cover the original offline information calculation. No release timing is reported for the complete-trace comparison or for a Rust estimator on this workload.
+
+The two stable categorical Rust functions use the original signs and class labels. The Python bindings are `compute_categorical_sxpid2` and `compute_categorical_imin_pid2`. Each accepts three integer matrices, one column per variable here and one row per episode. Each method uses 47 to 164 records and 12 to 21 distinct joint keys per task. All four atom means and three mutual information values from each native route agreed with the count-based calculations to within two trillionths of a nat. The exact reference compares integer products and ratios for up to nine sign pairs per class. Numerators and denominators grow with the counts. It fits no predictor, uses no resampling and reports no new timing. [Public Rust route](../../../crates/pid-core/src/discrete_pid.rs) · [Native comparison](compare_imin_native.py)
 
 **Application boundary.** This repository contribution applies established information measures to a fixed pair of axial signs. The donor examined other feature transformations in its earlier classifier work. The resulting comparison can show how a conditional distribution, equal-cost decisions and a named allocation of information differ after a recorded event. The experiment used operator labels. The sources give no class reliability study, independent trial groups, physical calibration or trigger rule for normal records. Equal traces can cross task boundaries. Even different traces can contain common samples, as row 37 shows. To test prediction, keep known related acquisitions together and test on independently acquired groups. A random split of task rows could give the model access to the same readings during fitting and testing. No analysis here establishes population prevalence, an effect of removing a physical sensor, early warning, or a continuous-estimator result. A sensor removal study would also require a defined intervention and a loss for wrong decisions.
 

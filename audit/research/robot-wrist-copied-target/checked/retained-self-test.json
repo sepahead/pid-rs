@@ -1,0 +1,19 @@
+{
+  "absolute_mass_nats_per_episode": "0.488673935703691",
+  "bounded_native_means_checked_from_saved_words": 10,
+  "checked_original_modes": [
+    "ordinary",
+    "optimized"
+  ],
+  "complete_rational_products": 108,
+  "rational_record_sha256": "4b05b519d580f03c4ab7c0ff73523a2e085793b1a0861d9a54f99ebf1edd13ad",
+  "refused": [
+    "exchange the two signed exact products",
+    "change an unplotted atom while preserving all signed quotients",
+    "reverse a measured Rust sign",
+    "change one accepted binary digit in the original measured word"
+  ],
+  "source": "saved original records",
+  "support_record_sha256": "739aad4f1e2895973edadf3eae8dc0349a03a6f85329b3a8e064b742c9759050",
+  "ten_result_sha256": "aaaf4420eb433e9706803859696ada6cfbb94488e2b3398f4dca18571495eace"
+}

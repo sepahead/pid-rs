@@ -370,8 +370,8 @@
       {
         "git_mode": "100644",
         "path": ".gitleaks.toml",
-        "sha256": "9d3e64a1fcd3a460ab235545473a5563075ca9ac481f39880e1e259053151a77",
-        "size_bytes": 7108
+        "sha256": "789086bd0e3e3a2844efcea49876f1739fcb0a87d7b959e020d555dfab864857",
+        "size_bytes": 7501
       },
       {
         "git_mode": "100644",
@@ -406,8 +406,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "57454b514bbc213b412e15b2dab162f7d1674a838352a628d459da7cff2d77de",
-        "size_bytes": 354193
+        "sha256": "c77d87f35f495202942657329605725049432e4648574f4081d8f3997eb1c605",
+        "size_bytes": 355449
       },
       {
         "git_mode": "100644",
@@ -526,8 +526,8 @@
       {
         "git_mode": "100644",
         "path": "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md",
-        "sha256": "41b74bceca8e8d6061481661702f570510c21b7dd8080f3d17a8da2d7cc34572",
-        "size_bytes": 50554
+        "sha256": "c92aae43f611e51f8dcd9dd2107a435f1a9aa1d5f1f53c97244c3341b02afabb",
+        "size_bytes": 58724
       },
       {
         "git_mode": "100644",
@@ -592,8 +592,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "a01d2ec30a80e15f53619f94ca0b3c0bef27a54c73e32b1dc58505bae27aed2d",
-        "size_bytes": 104191
+        "sha256": "82b40a2fbd614049d61c980d27f7b15e66be318b2f949d874def78ec92a672df",
+        "size_bytes": 109263
       },
       {
         "git_mode": "100644",
@@ -658,8 +658,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "5723ed0df07736fcfbf0ec88dae8aaed55af5577d4f24a491ba4f2463387f8ce",
-        "size_bytes": 83715
+        "sha256": "e07dfb33d1500b1b43b603be4b7d15f578d2ccc890b7aaf9632e52592605943f",
+        "size_bytes": 85132
       },
       {
         "git_mode": "100644",
@@ -4990,8 +4990,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/finite-target-copy-mgw-synergy.md",
-        "sha256": "caf8746947013ea37ff53f1e1821b8d5564b15c2d1419688d446d3c58cb6b26b",
-        "size_bytes": 33501
+        "sha256": "6ba1fd84da88c3820ed03e48f647e2d64ba065fab946ebf6be35cc5087b06952",
+        "size_bytes": 34442
       },
       {
         "git_mode": "100644",
@@ -17925,6 +17925,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/categorical-third-source-budget-sharpness/body.tex",
+        "sha256": "76f6ce3d12c26174a2a836b6209e2c93d083e9a439c7234438840cb0466e9157",
+        "size_bytes": 29939
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/categorical-third-source-budget-sharpness/publication.tex",
+        "sha256": "459c32d02494ad15d96bee8ec9bde463673f4041d723d4966960729762a010cc",
+        "size_bytes": 1718
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
         "sha256": "3fd115f468d251294636dde447316fc43ff6fdce1579ebc39f043aefdc2912e5",
         "size_bytes": 87628
@@ -17940,6 +17952,18 @@
         "path": "audit/formal/latex/cross-implementation-reverification/publication.tex",
         "sha256": "42296609d5cafbef82649e932b9778aa62ad93d69b3e65adebc7c9fe91ccadc8",
         "size_bytes": 2314
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/dendritic-stimulus-resolution/body.tex",
+        "sha256": "abaa4f3e80a762944ad33c5f6c71ffa8f4b5e28f7cddfa3048fc0f6c2a5591a9",
+        "size_bytes": 33876
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/dendritic-stimulus-resolution/publication.tex",
+        "sha256": "98055f7ec8f096ed8a77007a43f80aff1f5b6df266a43381c163c5a0e97f1fdb",
+        "size_bytes": 1771
       },
       {
         "git_mode": "100644",
@@ -18244,8 +18268,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mgw-target-copy/event-union.svg",
-        "sha256": "280d19e9b63659ebe9aeaba74e09d11476be729a784c612f0a69679e05d3a22c",
-        "size_bytes": 5069
+        "sha256": "f6b40f2d4cff1ba965358f8057c25083fc54698196f165a1baae875a4096d423",
+        "size_bytes": 5111
       },
       {
         "git_mode": "100644",
@@ -18495,6 +18519,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-logarithm-library-and-numerical-checks.json",
+        "sha256": "e00a88025cbea2d823137582e2539fb8e8ba6b92792593329e05ba23983923c1",
+        "size_bytes": 89445
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-nested-categorical-and-signed-logarithm-bounds.json",
         "sha256": "d5ba3c5c74fb1ad0948ee29d25c2517005d5892568fd0c2a980c114249b71d8d",
         "size_bytes": 77825
@@ -18508,20 +18538,20 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
-        "sha256": "e00a88025cbea2d823137582e2539fb8e8ba6b92792593329e05ba23983923c1",
-        "size_bytes": 89445
+        "sha256": "660b6fb8ff944ea803f451d89b46754d71b1da791d13f74f1e9bbaed490c17e5",
+        "size_bytes": 113055
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/publication.lua",
-        "sha256": "32cd3032494d44ef7f5d3026c9b5b4628e55e3265246cf6be71e0e626a35be90",
-        "size_bytes": 1904
+        "sha256": "cdc3f2c153ac0bfd908c957212f49f409760614071951753fd9cefa7c202553e",
+        "size_bytes": 2256
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/publication.tex",
-        "sha256": "af8b12b64cd30b23b338c3775ce06e2be349692e28ddd4315e0a3fb4bf6d9754",
-        "size_bytes": 1539
+        "sha256": "cfda213d048a4b2d48a5a16fbe24982f5c48055e4c3e2690ce1d4f73c9857778",
+        "size_bytes": 1535
       },
       {
         "git_mode": "100644",
@@ -18922,8 +18952,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mgw-target-copy/filter.lua",
-        "sha256": "8589cec3ff89109c12288ca4c9fb85beff0debd4bfb5de9f0dba65fa7490b897",
-        "size_bytes": 1900
+        "sha256": "e40ed05bc9accb98b9b606e5ee4589b171bf15607892090332558b6e9518aaca",
+        "size_bytes": 2037
       },
       {
         "git_mode": "100644",
@@ -18945,9 +18975,15 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-target-copy/publication-inputs-v6.json",
+        "sha256": "79662000bbaccb56770d08006a4815a34c0505e5fa1767bea791d40c5b3dded9",
+        "size_bytes": 44532
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/mgw-target-copy/publication.tex",
-        "sha256": "c9b006e64a774d27ce74aa3a31d83c9953da5e8f995414467669f5f0441df700",
-        "size_bytes": 2182
+        "sha256": "a7df64486e9bb52c95b7ea2734bcecd5dea95d4e604efdd7f4b0b7e78aff1012",
+        "size_bytes": 2226
       },
       {
         "git_mode": "100644",
@@ -19461,15 +19497,27 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/robot-wrist-copied-target/body.tex",
+        "sha256": "724d5ef33859a6fe53df38e3549297cf73d1511c49c1a2df846207fa678cec24",
+        "size_bytes": 18776
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/robot-wrist-copied-target/publication.tex",
+        "sha256": "b40720811495d5480b1a5bfb358398d4ab655443b549395beb2ee9308d27dcdc",
+        "size_bytes": 1712
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/robot-wrist-slope-signs/body.tex",
-        "sha256": "de2fc620d2d739c99542e09cbda318841707ab4ee1e48c751475fe5e4e14fb42",
-        "size_bytes": 27673
+        "sha256": "bb8ab9d1220b96a02c9ee85795835a9bf49115e4aeaa61084c9cbfa89b87045a",
+        "size_bytes": 32664
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/robot-wrist-slope-signs/publication.tex",
-        "sha256": "a90d8a90c29d08dca5ceae35fe91605a1c6a09e0d68a8dd5d3469b2ad8946502",
-        "size_bytes": 1643
+        "sha256": "89217ff21ec67593561b6d5bcc3934bbebdb21fa8ca3f4442414bdcc42022192",
+        "size_bytes": 1674
       },
       {
         "git_mode": "100644",
@@ -20524,8 +20572,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/lean-mgw-target-copy/PUBLICATION.md",
-        "sha256": "315eb7564479e34d3cfac97d0b9fcb0d17cf1476cb1ed9e319df222cb0e68d6c",
-        "size_bytes": 8165
+        "sha256": "6f30c2be2700d9a65bb573c7a849ee4253cf8884741e715b087d39173508fe6d",
+        "size_bytes": 9823
       },
       {
         "git_mode": "100644",
@@ -31431,6 +31479,468 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/ALPHABET-SCOPE.json",
+        "sha256": "09dd323342eeb28a53d548aeeb7e4b5890d6bdb6ea12268db4a0dc251dcef455",
+        "size_bytes": 675
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/EVIDENCE.md",
+        "sha256": "1c283ae8b81598458059141098994bedc8b223c72629f60d5ac2db9401f57ec0",
+        "size_bytes": 14218
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/EXPOSITION.md",
+        "sha256": "8e15a33c363fdf831ad51630d77f9d9a0c5badfea6650f1535f2336ced370e0f",
+        "size_bytes": 27724
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/README.md",
+        "sha256": "bd35fa04283a77a7a700bb91b558128db29a2223f0d14f8962d1071a876fd5b4",
+        "size_bytes": 3483
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/RESULT.json",
+        "sha256": "29a5f56546520458e3590c46bbcb477849984f19bbc8653815d0e2e3a02eb5f2",
+        "size_bytes": 9659
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/alphabet_scope.py",
+        "sha256": "c037d570481ceb93fba3c7b2d21e9a114f5c33a5582263c06d56bb55c0dd0980",
+        "size_bytes": 3471
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/build.py",
+        "sha256": "531133fa509fab93d9a54c82c2eeb61e521d5f17f454839ef4076bd5fde19f95",
+        "size_bytes": 5321
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/figures/copy-target-counts.pdf",
+        "sha256": "7751772127e735764a20df1f3a6e15e233516e75f1da1a030f048d69cdb1aa44",
+        "size_bytes": 36266
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/figures/copy-target-counts.svg",
+        "sha256": "02b1969a710897232a567f5b02457b1f881cd1fe14aebaf5abf188679599fb76",
+        "size_bytes": 7402
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/figures/draw.py",
+        "sha256": "31480bca23e232464a73caf79bd91f4cc4fa66564b57b4b0877bbaebc7b0be00",
+        "size_bytes": 6695
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/figures/matrix_figure.py",
+        "sha256": "917b8ea97b7e9c543d29827d5eecc1d3db2c8888c6e71f3b79287c672af0dda7",
+        "size_bytes": 4332
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/figures/positive-budget-gap.pdf",
+        "sha256": "ddf9ca572ef3d283c6963138b2eb13584c79460edd9c5c16248ba2836fcf37e6",
+        "size_bytes": 61389
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/figures/positive-budget-gap.svg",
+        "sha256": "b23f9a84b81225f5430ba471631c4eafb210154330798e464a85cfa867298f2b",
+        "size_bytes": 8384
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/FIXED-DISTRIBUTION.md",
+        "sha256": "19fa1c621fb088832629b57c70e171587443a7e8ae1d0e764ad6b22a73b0b630",
+        "size_bytes": 7329
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/README.md",
+        "sha256": "3e5ae96e9e124a82d88a84c0f38e799399e217b3e8e58f1165db138e1c131426",
+        "size_bytes": 1797
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/attainment/UNRESTRICTED-CHECK.md",
+        "sha256": "aacad496664a10eed2a5cb1954361aa8f2517d27af3eb2a3eac9bf89911479b0",
+        "size_bytes": 5236
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/attainment/attaining-family.json",
+        "sha256": "09a16c66fb04c9ab088ee8baaba24f8fa26003f14ed720b62ec76e4a2b7b9b20",
+        "size_bytes": 308
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/attainment/binary-census.json",
+        "sha256": "109ab2ab285e5baa53184b2001a606d62a7a18da5054cbdc9c5a40c270061185",
+        "size_bytes": 2388
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/attainment/check_finite_attainment.py",
+        "sha256": "e3be550972c126f887797fb771a42d5e7ff6c11d39317ed4cd3aa96d6e5a58b2",
+        "size_bytes": 4705
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/attainment/fixed_counts.py",
+        "sha256": "82e00cb4f4763e5657d7b90872a558d2c2c61c20c5e0da025d2c368b4fa29cdd",
+        "size_bytes": 1798
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/binary-counts.json",
+        "sha256": "1979d1f7b4c0e9c00120f07d6108377130f602db4ba2fa42b9f46530184a1a42",
+        "size_bytes": 589
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/check_product_family.py",
+        "sha256": "37d0bee4842e395181686de014b5031b98a665f2f7ef4e23657626c94bce5c24",
+        "size_bytes": 6634
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/copy-target/COPY-SUPPORT.json",
+        "sha256": "6f882ac22155b3d5c6d5abb0989536a312d6af476592ee786816d5b4861d0362",
+        "size_bytes": 1155
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/copy-target/COPY-TARGET.md",
+        "sha256": "6c1f4278a07fb29e2bfe42651aae01aed07e75645800c2a0b007078490870311",
+        "size_bytes": 10098
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/copy-target/PAIRED-COUNTS.json",
+        "sha256": "61030c1132d88c21808351a845fcdb0080578d2c8e75137b8fa95c3d4071a36c",
+        "size_bytes": 2200
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/copy-target/PRIOR-EXAMPLE.md",
+        "sha256": "983157457749103dc013637aa4f0e8950299cc3e0f7e7d394e78a8bdb0db76ca",
+        "size_bytes": 6384
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/copy-target/REPRODUCE.md",
+        "sha256": "96f067396b11cb89aa0e66b871d93e04aa6db532e9ac387b5370757e403addde",
+        "size_bytes": 1704
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/copy-target/SIGNIFICANCE.md",
+        "sha256": "271185b233cd8ef9f8fd91c3e2cb972a004c5bdf5ba2eb1b6f7721eccff8ac16",
+        "size_bytes": 10151
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/copy-target/copy_support.py",
+        "sha256": "7c0af2203ad479e8e3918e99e71e271dcb1c5e68c7593968790d7f6ca4257ae5",
+        "size_bytes": 6684
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/copy-target/paired_counts.py",
+        "sha256": "fcf4abbe5548ef7d891d1600bb17ec3bd166c0d74f6d49245b9b17c6900ea772",
+        "size_bytes": 5709
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/expected.json",
+        "sha256": "3865f256cb2b7be1069dbf2953304aa7ca34b88b2fe95b837a471eb5e0ef8b4b",
+        "size_bytes": 586
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/independent_count_products.py",
+        "sha256": "779b66302ae5a493e09925747a60ecef2afd577180540cba814732ac69fb8e7c",
+        "size_bytes": 6004
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/paired-entropy/matched-normal.json",
+        "sha256": "6cb9cc438cd9c8fe95b8d742ecfb112382de8b9ac088582c6f96c511571604c2",
+        "size_bytes": 3445
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/independent/paired-entropy/matched_shannon.py",
+        "sha256": "f320ec5168a458bf22cfe13232b7404d885abd2a0b91dd2fd5ed9f84db7d6559",
+        "size_bytes": 4404
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/links.lua",
+        "sha256": "0b732bd15149a04efd8f93947aa8b1c099a8b2e75a09b7e8b16f6be84b899e97",
+        "size_bytes": 718
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/replay.py",
+        "sha256": "aea2baf6c4244d6d5169d0ec110a498072a0e9c633d9124ea0536989f12b9e0f",
+        "size_bytes": 5903
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/categorical-third-source-budget-sharpness/verify.py",
+        "sha256": "00b52c8e5e514d3bac05190352489aa6954814e06efff0b321cacafdb7122940",
+        "size_bytes": 11828
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/EVIDENCE.md",
+        "sha256": "e2c79a38c1f7789e0e2c2e904ca3b862bc6a68c31034675eb4efb255217ece13",
+        "size_bytes": 4250
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/README.md",
+        "sha256": "db2b8dd6d4c726ec7bbe00a8174dc55e27db5871ea1e59a179d8d55619bcff92",
+        "size_bytes": 28365
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/REPRODUCE.md",
+        "sha256": "4a4c0274406cb3803a5599b012be23306cdeba22b78bff8ef899aabfcc3be5d0",
+        "size_bytes": 3390
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/alternatives.md",
+        "sha256": "700cc8dd70961e65c26a2fd7e25ee54b4dac26219e652be38927df117315563b",
+        "size_bytes": 4829
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/analyze.py",
+        "sha256": "36ddf15ab089149c38aec544c6a872eab924df3226db95dec256b5e255b084b9",
+        "size_bytes": 5413
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/arithmetic.py",
+        "sha256": "b8e01525e86297b370b845c0d63be5a21b1bcccc702c9d172a9af3664cc9f6e2",
+        "size_bytes": 10423
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/build.py",
+        "sha256": "df396e8b855333a52f4b0235609202c803567305eb751b1c7e5176e117bb7804",
+        "size_bytes": 5424
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/check.py",
+        "sha256": "a63ef6f4a7317bb9874d9e06626638005ec609221821aa898c2bf77539ee22d7",
+        "size_bytes": 8201
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/draw.py",
+        "sha256": "a0b8c901af175278238c87234d09b1354306055f9f05a8bd135f74d7caa16dbe",
+        "size_bytes": 10228
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/figures/five-contributions.pdf",
+        "sha256": "58386ec6d1ff5474fd7ec7c4933b48bcdc6ebb82679a8776018ffc64f8b54128",
+        "size_bytes": 52715
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/figures/five-contributions.svg",
+        "sha256": "d1385e13c9e629cd02193acac6b0d8d04b9df16b5a8a33101dd19f848c0df831",
+        "size_bytes": 5460
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/figures/prediction-gain.pdf",
+        "sha256": "0fd99c984fcf5fe6728f82e10a3b92558a5df4ab6bdb9c3b82e3de6ba78b922d",
+        "size_bytes": 52138
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/figures/prediction-gain.svg",
+        "sha256": "0a805df029695a994c40e5f2bc164ff8dcda1e1a29a4a0f881dfeae4b804f48c",
+        "size_bytes": 4077
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/figures/stimulus-settings.pdf",
+        "sha256": "54fd6fac117c472a911450accb3a0ab0e8387c105f469541053f5391b1743d62",
+        "size_bytes": 49656
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/figures/stimulus-settings.svg",
+        "sha256": "536fe809649e1d067b03fcc4d5e65cae2726a6c77216ba90cd104871051011fd",
+        "size_bytes": 85878
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/links.lua",
+        "sha256": "5ef926d3b122c66d462ddcfdb43b0178628a15457ae6191ead740016c19e22c9",
+        "size_bytes": 1652
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/output-format.md",
+        "sha256": "192ec1da9149a0c3e70803cf609844bcab6f909df4f470ab24af85edda99a53e",
+        "size_bytes": 2785
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/products-and-predictions.json",
+        "sha256": "c4cff8933d60c93e52dc501fc2a2bdc48433443da10f3e73875761a53e247ae1",
+        "size_bytes": 385704
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/provenance.json",
+        "sha256": "fe57887aca5e5ed43301aef68724ef96ab3a8bd915807c8a4f7261645e89de27",
+        "size_bytes": 5070
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/reference.py",
+        "sha256": "bcd51ba889e44fa4a13cb35149daee0d49fc04cd2c8f1e1254d755c822887ac5",
+        "size_bytes": 5854
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/results.json",
+        "sha256": "274bbc92cb6662b8a033f896566eac3f0e2688b6739be494402165bea699f1d9",
+        "size_bytes": 5450
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/FROZEN.json",
+        "sha256": "5432613b8b8706c8726be11793900e65a4f73df76c003ae939b2cd1585429196",
+        "size_bytes": 1372
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/PROTOCOL.md",
+        "sha256": "76a49caa728ef3e6d60828840fcb31d5c67ee5d14a38c04011130a1136c0e7ce",
+        "size_bytes": 5998
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/README.md",
+        "sha256": "400f8d77608fe2c50ec450d826c6d88c2425a371a112253200f8c18e8cf53173",
+        "size_bytes": 3725
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/ROUTES.md",
+        "sha256": "f2688b651960f46e6891296f06c63e2ebd852dff49d59f43af12c389e5261bfc",
+        "size_bytes": 4887
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/SOURCE.json",
+        "sha256": "5c5c882cff4646131d13c9a602dacdf7a433e453dd69d100ffd71de278e0c861",
+        "size_bytes": 16789
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/TOOLCHAIN.json",
+        "sha256": "6164156f4e1254cf7c8ee941f8ba2be5edef214f95a5be499916f04483553d1f",
+        "size_bytes": 471
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/build-result.json",
+        "sha256": "7175037c83d595d09330106b5d2e031a33ced5f8e2ec852ab29a6c4cd768ac9a",
+        "size_bytes": 886
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/compare.py",
+        "sha256": "0ac01f65214759a98ac7b49cb686bd5b44b504aba0502e1c65b39974a5b7b86f",
+        "size_bytes": 7993
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/controls.py",
+        "sha256": "85f0085f6aa2ed57a8123bfc85a102e7a6ec3bdff3ddbc6334bf3b07b7cf0262",
+        "size_bytes": 3871
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/measurement.rs",
+        "sha256": "995b23e906a8ef643021ff01699174a7c65c8422afd3638c47e2157878e14c9d",
+        "size_bytes": 3349
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/payload.json",
+        "sha256": "7327d4566b6c4a43c2711e153a3cab5e539dc29f23547a5a5d09a8ce032a4084",
+        "size_bytes": 274
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/prepare.py",
+        "sha256": "0dce2ff79049fbaefb1f1ead97ed4aa3d52e4eff84b6f4bbfe4e1f34265ad5dc",
+        "size_bytes": 1124
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/registered.json",
+        "sha256": "d9e79e39e5a29962f878faeab497d0dfe3c39cdf69adb1b060d1889156c8c1f4",
+        "size_bytes": 349
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/replay.py",
+        "sha256": "131678f23807cc7562a8bc1fe89c6869808e01b8801591c1aa5e27a99f9091e4",
+        "size_bytes": 9892
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/resources.json",
+        "sha256": "b2fde5c6498ce93ca6dd343acf62f0a83b5fba80d026e23cd8da26c614a7b654",
+        "size_bytes": 2487
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/result.json",
+        "sha256": "c8d11e3b5b765f09c8fae87d543c3a34e52a4f2954e474da9a576ef0e31425be",
+        "size_bytes": 11726
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/rust-comparison/returned-rust.json",
+        "sha256": "3071e5ee948b07d36d2266b943138a96841f232c028dee4fb2021e3ffbea788b",
+        "size_bytes": 9084
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/source-axes.md",
+        "sha256": "b560f05d7e3127185294f9ac43994c1187ffa314906db16536fd233f97859a21",
+        "size_bytes": 2038
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/dendritic-stimulus-resolution/study-design.md",
+        "sha256": "2abdd08c740f741e4fd9cee1110fa18f3c29512f9a1b4ecd0d523f9d2ed6c8c3",
+        "size_bytes": 5514
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/embodied-sensor-utility/EXPOSITION.md",
         "sha256": "4ac6b58f4a1a0f4a010f6b5fc8c1bc1610374b425ab68d106900adc8bdb7b96f",
         "size_bytes": 89538
@@ -32619,9 +33129,261 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/EVIDENCE.md",
+        "sha256": "1762cc2f09130b1f14ac6a4bea42e5adce0fac2aff82fecc3f19b3c43f5c36d5",
+        "size_bytes": 10716
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/README.md",
+        "sha256": "4d71911388c7b2e63e29f01fda2bfbba60e91b5c52195e6bb61c0f883dfb3956",
+        "size_bytes": 16522
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/audit_results.py",
+        "sha256": "3992f0fc7f987895f6818a0261ede66d5524240d90948d4ed2903e4108856299",
+        "size_bytes": 9280
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/build.py",
+        "sha256": "3d0c6284818589057870fd6d2c2ba3ef9285ccd71ac0deed1018ccf89845477c",
+        "size_bytes": 5132
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/check_lattice.py",
+        "sha256": "c8483911e40c69292258f55c91e0223721db35cf0c939769dbb8fe00a7f61e37",
+        "size_bytes": 7110
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/checked/comparison-receipt.json",
+        "sha256": "ff4c635ca3287c22ec6097032fc753af8b6120602d4ec89970a7e5df09e956ba",
+        "size_bytes": 488
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/checked/first-support-run.json",
+        "sha256": "fe45d21e3d9d46bb45665d5c11aceb1af6cbddcf8e494fbfdbb6427eca49fab5",
+        "size_bytes": 691
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/checked/lattice-optimized.json",
+        "sha256": "4b05b519d580f03c4ab7c0ff73523a2e085793b1a0861d9a54f99ebf1edd13ad",
+        "size_bytes": 24794
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/checked/lattice-ordinary.json",
+        "sha256": "4b05b519d580f03c4ab7c0ff73523a2e085793b1a0861d9a54f99ebf1edd13ad",
+        "size_bytes": 24794
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/checked/replay-self-test.json",
+        "sha256": "e4ac6eddb36d1105f4c977f958fcc33eb99927e2a62a88439d252f2736424335",
+        "size_bytes": 1030
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/checked/retained-self-test.json",
+        "sha256": "60ed85dd281dc05f54d22c1c4780a7162b8a66f0ea801ff598b9d229472e3514",
+        "size_bytes": 780
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/checked/support-optimized.json",
+        "sha256": "739aad4f1e2895973edadf3eae8dc0349a03a6f85329b3a8e064b742c9759050",
+        "size_bytes": 2701
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/checked/support-ordinary.json",
+        "sha256": "739aad4f1e2895973edadf3eae8dc0349a03a6f85329b3a8e064b742c9759050",
+        "size_bytes": 2701
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/figures/check.py",
+        "sha256": "642fa08c9e85b5cd6d3fa72076af9300b198310d937958664670a5457cf6c368",
+        "size_bytes": 2484
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/figures/draw.py",
+        "sha256": "2ddc2a91d31841f213e79f5253cb650aed45875c3dd87d796e735e4cd52f04de",
+        "size_bytes": 5506
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/figures/force-copy-atoms.pdf",
+        "sha256": "d83da486784e141d853c8ffcbf13d7a319ff28f3e33471d44ee51bd64389081a",
+        "size_bytes": 123546
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/figures/force-copy-atoms.svg",
+        "sha256": "bdd45395247047c695218cfb41ed1133fbe0c6302f862707370aba74203a2964",
+        "size_bytes": 10024
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/links.lua",
+        "sha256": "eec1297195847fe678747cc3f8e3adc4af1769d444f061f1e3b622ea56350b55",
+        "size_bytes": 773
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/replay.py",
+        "sha256": "ef3c30d0177384092482fc36ab353ade36c08a4af34dd080f21fd0f8d83eb977",
+        "size_bytes": 7227
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/OBSERVATION.json",
+        "sha256": "b9c542dd0511f71ffc07e46f8ac8831e2bc7fc41c30abeb8873cbf02844d8751",
+        "size_bytes": 4887
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/README.md",
+        "sha256": "8335a3588229c2c640ebe12a138ca282c36c8de3bf0091d1f531cc3e31013ee3",
+        "size_bytes": 5581
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/observed/episode-signs.json",
+        "sha256": "e5850458e57376fc6b0e90dee91cd0f1150bf5c2a001940f9bd7a28b7f00fcd6",
+        "size_bytes": 1172
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/observed/existing-binary-replay.json",
+        "sha256": "e6cfb138797e164a80356050e22b402d209dee5dcc8f560d0a61aae56012bd00",
+        "size_bytes": 467
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/observed/hostile-comparisons.json",
+        "sha256": "c1cdb12795ebe236372ca9901b513ecb30553665c94d025dbb03067dd48d2c9d",
+        "size_bytes": 661
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/observed/native-words.json",
+        "sha256": "83b84ef9299aef38991ddeb802886f8264cd5fdba558957375d74cf78288f958",
+        "size_bytes": 3018
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/observed/previous-neuron-native-refusal.txt",
+        "sha256": "0e7c99450ab574cf9236aa84c04d906931b7d7a7c88c71ec506eb42953df35b4",
+        "size_bytes": 56
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/observed/retained-replay.json",
+        "sha256": "90f40691f7079a91af04de9a36146b91e7a1a81c272a86a0963380781306ed39",
+        "size_bytes": 471
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/observed/ten-results.json",
+        "sha256": "aaaf4420eb433e9706803859696ada6cfbb94488e2b3398f4dca18571495eace",
+        "size_bytes": 8709
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/observed/wrong-rows-refusal.txt",
+        "sha256": "86d857fe344fb9845b1ebe5eea0e194a962ae308d5329c8ebca804d65ecd23f6",
+        "size_bytes": 38
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/observed/wrong-target-refusal.txt",
+        "sha256": "e137cf9c1b7fc5c681fa1b104c0d650e77ddc681ae4bb1a470fbd0372bf9d972",
+        "size_bytes": 87
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/original/FROZEN.json",
+        "sha256": "97079acc07478d895a401d9eeb5ee46f10d6311b00b5bfb9241f8cd0a8fe480d",
+        "size_bytes": 9076
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/original/run.py",
+        "sha256": "d7a3ef1351a8c914018abc5e8b653ab985e42702ecf3744551a6453e25d8819d",
+        "size_bytes": 5881
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/portable/PROTOCOL.md",
+        "sha256": "fdd7b153082ae09a177860b40df3b5b19c6cdaaf5751a72fbad41613ca669e35",
+        "size_bytes": 3876
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/portable/compare.py",
+        "sha256": "ab45275c4057edade645f24566e51970af1d4be5ec23ee3deb6eb69434246f9a",
+        "size_bytes": 8427
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/portable/controls.py",
+        "sha256": "6686f818e3134933711777d0aacc88ca9dda2982010288dd154249a9873c8360",
+        "size_bytes": 2167
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/portable/direct-oracle.json",
+        "sha256": "4b05b519d580f03c4ab7c0ff73523a2e085793b1a0861d9a54f99ebf1edd13ad",
+        "size_bytes": 24794
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/portable/measurement.rs",
+        "sha256": "87e523a249807a640bde79285b9d2ff96aca8f5e37bc3b41502243898cc1f5ef",
+        "size_bytes": 3242
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/portable/original-shai-source.json",
+        "sha256": "5c5c882cff4646131d13c9a602dacdf7a433e453dd69d100ffd71de278e0c861",
+        "size_bytes": 16789
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/portable/original-toolchain.json",
+        "sha256": "6164156f4e1254cf7c8ee941f8ba2be5edef214f95a5be499916f04483553d1f",
+        "size_bytes": 471
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/rust/replay.py",
+        "sha256": "f4e1c505ab5dcf54a667aa5832b181cd3dd43cf30bc96e1bebd9bc51dd527a19",
+        "size_bytes": 5059
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/source_counts.py",
+        "sha256": "e2ef22b35518fa1b051c4a2b71d506b7321c405c8f0958077e261ad38aa8e229",
+        "size_bytes": 4348
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-copied-target/sources.json",
+        "sha256": "d00a6abd3af0b739d7316d4e68f621790ec1bb2fc046d449be079c5cea16a1aa",
+        "size_bytes": 5197
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/EXPOSITION.md",
-        "sha256": "0f4e91570c61e1d7450b303349039c3c2f4fa3319be931a24fe5f421a6a37c41",
-        "size_bytes": 23149
+        "sha256": "c5f1280b00d0de5e62260b8681b5c8bb8f3801300f3aeba43d1a7ba3a7e12d60",
+        "size_bytes": 26964
       },
       {
         "git_mode": "100644",
@@ -32643,27 +33405,45 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/robot-wrist-slope-signs/compare_imin.py",
+        "sha256": "61058ec5ab8207792b9abc5b05e1de846c50d4cbd7a4f71ba3dcab10ba5b2bf1",
+        "size_bytes": 9585
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-slope-signs/compare_imin_native.py",
+        "sha256": "fb19a172108c53173537910c0db2bc34d7e096e8607a363a50824b955bccc803",
+        "size_bytes": 2976
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/figures/draw.py",
-        "sha256": "8dbe9284eb143bd31bf7f46865e10f9d9068199e1aaf1a2adb35d87451d1cd00",
-        "size_bytes": 4539
+        "sha256": "75d14982defd26ec07abade67e8a244e57cb17af94023e23374019121c41f710",
+        "size_bytes": 4583
       },
       {
         "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/figures/information-and-decisions.pdf",
-        "sha256": "7b31e87d43756a319a9e70dcbe4b1839674ac0f7941966d562cdb5f213157700",
-        "size_bytes": 15342
+        "sha256": "5fbabe229689f03092627926ead2f0de6e9265a50178410bd146c0f9a5f6d627",
+        "size_bytes": 15202
       },
       {
         "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/figures/information-and-decisions.svg",
-        "sha256": "dd89d789e2b4067f6235c711af580d2ac020e865856170671998e6d3b94b4d38",
-        "size_bytes": 8420
+        "sha256": "5972e27878437ba21a83ff051a9aed99fb61cc64118fd9dddf1202ceed102fb8",
+        "size_bytes": 8464
       },
       {
         "git_mode": "100644",
         "path": "audit/research/robot-wrist-slope-signs/figures/native.py",
         "sha256": "4310b596e5f682af306fa04fdfed83c5b2e97f2e8df902988009d5d7b2735b7f",
         "size_bytes": 5944
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/robot-wrist-slope-signs/imin-comparison.json",
+        "sha256": "2e25909f93b116e8faec1e03c64b36f9bc10d3ad1f9c47253983d10903ad5785",
+        "size_bytes": 25736
       },
       {
         "git_mode": "100644",
@@ -38751,6 +39531,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/categorical-third-source-budget-sharpness.pdf",
+        "sha256": "76b94cebebaa383981f82ca04b85487b487b433be47452cdf6a472f62dbc2989",
+        "size_bytes": 190920
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/certified-sxpid2-executable-assurance.pdf",
         "sha256": "1d8d38809f877dd4499b8fe79ebe9e469fa116aa1ba4cbc2d5d4e35bafd76800",
         "size_bytes": 481102
@@ -38760,6 +39546,12 @@
         "path": "output/pdf/cross-implementation-reverification.pdf",
         "sha256": "0f9a5d834852a3ad9b0c40b2177b545c5c3161823da50da54d60e097651fe447",
         "size_bytes": 544406
+      },
+      {
+        "git_mode": "100644",
+        "path": "output/pdf/dendritic-stimulus-resolution.pdf",
+        "sha256": "dcd2b33d50cef22a61d037fe92e5d1c25d95b68c248933121b77abf08f92f785",
+        "size_bytes": 254780
       },
       {
         "git_mode": "100644",
@@ -38818,8 +39610,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/finite-target-copy-mgw-synergy.pdf",
-        "sha256": "91015d09176201aa0059c16f535a775382f680a807c1e70fb964edb704955c6b",
-        "size_bytes": 182625
+        "sha256": "46fc258d58ada67e896f4cf5cedda543832ae52b568ca997edcd6f2e8971c586",
+        "size_bytes": 184545
       },
       {
         "git_mode": "100644",
@@ -38896,8 +39688,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-results-guide-current.pdf",
-        "sha256": "6f6bed37f349aa65f0a17c78853f222121249377d3bf2f4dfecb7e99325fc1c9",
-        "size_bytes": 308503
+        "sha256": "deed7ca4f110fc0a76aee0a79521cd1c6cba8c39141811fdaa97fa18ceabd765",
+        "size_bytes": 465075
       },
       {
         "git_mode": "100644",
@@ -38991,9 +39783,15 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/robot-wrist-copied-target.pdf",
+        "sha256": "90d44d5fd56c669142c64ad06092c79ef0d875994413d060352c58caecd03dab",
+        "size_bytes": 188092
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/robot-wrist-slope-signs.pdf",
-        "sha256": "9e1ba06f91bd9cab9e3d3f03cbb5ad9c5c04b14cc0017991399a7a11ab974691",
-        "size_bytes": 110128
+        "sha256": "be4fe845c41a9c82714a3dc5bf8794190da55e707c680cfe4788e922ec139218",
+        "size_bytes": 117248
       },
       {
         "git_mode": "100644",
@@ -39094,8 +39892,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/build-current-mathematical-results-guide.py",
-        "sha256": "e38694a2c3b25c91e62e6735f889b17b79c95132b7fb8c0ec6733484a7f3b423",
-        "size_bytes": 7488
+        "sha256": "a42899398f5b5299667c84e8d1af1e3fb041f5b1cf2430f2e1372080bd6a13b2",
+        "size_bytes": 7689
       },
       {
         "git_mode": "100755",
@@ -39118,7 +39916,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/build-finite-target-copy-mgw-pdf.py",
-        "sha256": "7aba9fdee6135a84ea68ebddef05d631aabcd47be92251e53380df1459d40af6",
+        "sha256": "fc30e56a969b91cbbff5510fb77f63192c8d5bd22fcbc15ee9696e7f31b6e2a5",
         "size_bytes": 11100
       },
       {
@@ -39382,7 +40180,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "7f7d38f374eb60e49b98b02e94f747c37ada0d5761c65ae098a740eb6e720cd6",
+        "sha256": "d6bfcc0e5af30fc19f0979d6e1ac0a6bc4c10c1c242d8ea75de1340e58daed6d",
         "size_bytes": 90915
       },
       {
@@ -39526,8 +40324,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "db7db66b4d01fe6044237c2362caee10a33c7e4a5058535b027295ea694763ca",
-        "size_bytes": 41798
+        "sha256": "2dd3390cb22e166272923dc96dd8b4649ac26d455783d3b950a4038caf2cc5a3",
+        "size_bytes": 44146
       },
       {
         "git_mode": "100755",
@@ -39568,8 +40366,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-guide-artifact-checksum-scan.py",
-        "sha256": "a83900ecbcf31c621172652a09e9233638201c0a3f445507e7be5f0d94acf059",
-        "size_bytes": 7669
+        "sha256": "4383076a25fb2b18d14ee7b9ce3e90c197942c6314ab148dbd32343419b104cd",
+        "size_bytes": 7747
       },
       {
         "git_mode": "100755",
@@ -39988,7 +40786,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "4164d3faa1a63d7614e20384358efd83dcd729f97ed4e1eed6c1c39dccceef51",
+        "sha256": "4690a3055675d6ca9ee65dacdf5b57c33b687bb67820c9a20ef7d1f032c557ee",
         "size_bytes": 140337
       },
       {
@@ -40994,8 +41792,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "31f3640daba70d5722c1fcefde0bf2a15d0bc43f6655ed3e3c979651821b67d3",
-    "entry_count": 6808
+    "entries_sha256": "1ab3404fbd55670fcc9bfbe996288d60f60e4ed3f1e9343da1294dbed4030a69",
+    "entry_count": 6941
   },
   "subprojections": [
     {
@@ -41007,23 +41805,23 @@
       ]
     },
     {
-      "entries_sha256": "ac91b65a3d903ad06f3ff5ffe58bc38878685eff5fd5470d6880536d8c038bb5",
-      "entry_count": 2429,
+      "entries_sha256": "9126c19c3e899f4d263a9a91645162aad87f7f480af71e2f2741c223e2570b04",
+      "entry_count": 2437,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "212c3e1e0518faec28ac5c6cbedf07bf8bb91d3b6d2e13f257ac3f03cdb64364",
-      "entry_count": 62,
+      "entries_sha256": "2bcf0716a52529d04a33b97881620e18b915fda86f3c29afe5e677b7589bfa38",
+      "entry_count": 65,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "03ec312bcbaccf5e56b317449eef6c0d7db513c55fcce4ea199c4eccae072c0d",
+      "entries_sha256": "70485f217c71c995f9c259b30e3e888bd0ec545a592863a60044283150ca46f1",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

@@ -1,0 +1,26 @@
+{
+  "absolute_mass_nats_per_episode": "0.488673935703691",
+  "episode_count": 117,
+  "exact_categorical_coordinates": 108,
+  "lattice_output_sha256": "4b05b519d580f03c4ab7c0ff73523a2e085793b1a0861d9a54f99ebf1edd13ad",
+  "nonzero_added_source_signed_means": 2,
+  "rejected_controls": [
+    "replace five with zero",
+    "exchange opposite signs",
+    "change a positive count",
+    "accept a Boolean as a count",
+    "remove positive cell",
+    "treat a flat trend as observed",
+    "wrong support decision",
+    "drop count powers",
+    "use signed sum as absolute mass",
+    "store rounded magnitude as exact",
+    "substitute a cumulative for its atom",
+    "drop a component",
+    "change unplotted exact coordinates",
+    "alter original donor bytes for the support reader",
+    "alter original donor bytes for the full event reader"
+  ],
+  "source_zip_sha256": "cdfbe0b260f4a21c5249fe0da4b1baf4041959663a9182253885ee1f41a4568e",
+  "support_output_sha256": "739aad4f1e2895973edadf3eae8dc0349a03a6f85329b3a8e064b742c9759050"
+}

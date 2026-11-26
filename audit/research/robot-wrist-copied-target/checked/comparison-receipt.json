@@ -1,0 +1,12 @@
+{
+  "candidate": "739aad4f1e2895973edadf3eae8dc0349a03a6f85329b3a8e064b742c9759050",
+  "direct": "4b05b519d580f03c4ab7c0ff73523a2e085793b1a0861d9a54f99ebf1edd13ad",
+  "observed_comparisons": [
+    "eighteen-node direct evaluation",
+    "both inverse reconstructions",
+    "independent published force/torque/class margins",
+    "all-zero shortcut rejected",
+    "wrong positions rejected"
+  ],
+  "scope": "one 117-episode recorded empirical table; target copied; no forecast advantage"
+}

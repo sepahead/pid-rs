@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="840" height="440" viewBox="0 0 840 440" role="img" aria-labelledby="title desc">
 <title id="title">Information and correct class choices after detection</title>
-<desc id="desc">LP1 to LP5 are five learning problems. Both slope signs use the recorded z components of wrist force and torque. The two conditional information gains are plotted on one scale in millinats. Both are positive in every task. Exact correct counts for the better single sign and both signs are 38 and 42 of 88, 21 and 22 of 47, 24 and 24 of 47, 72 and 72 of 117, and 49 and 52 of 164. The five tasks share some complete sensor traces. The counts use the original task labels.</desc>
+<desc id="desc">LP1 to LP5 are five learning problems. Both slope signs use the recorded z components of wrist force and torque. A row of the figure represents one donor task. The two conditional information gains are plotted on one scale in millinats. Both are positive in every task. Exact correct counts for the better single sign and both signs are 38 and 42 of 88, 21 and 22 of 47, 24 and 24 of 47, 72 and 72 of 117, and 49 and 52 of 164. The five tasks share some complete sensor traces. The counts use the original task labels.</desc>
 <rect width="840" height="440" fill="#F7F3E9"/>
 <g font-family="Source Sans Pro, Source Sans 3, Arial, sans-serif">
 <text x="31" y="42" text-anchor="start" font-size="31" fill="#1F3F60" font-weight="600">Information and correct class choices after detection</text>
@@ -78,6 +78,6 @@
 <line x1="32" y1="347" x2="808" y2="347" stroke="#D2E0E2" stroke-width="1"/>
 <text x="32" y="375" text-anchor="start" font-size="19" fill="#2C3E50" font-weight="400">Information is in millinats. 1,000 millinats equal one nat.</text>
 <text x="32" y="402" text-anchor="start" font-size="19" fill="#1F3F60" font-weight="600">LP4 has two positive gains. Each sign alone and the pair give 72 of 117 correct.</text>
-<text x="32" y="427" text-anchor="start" font-size="17" fill="#2C3E50" font-weight="400">Some tasks share traces. Counts use the original task labels. Source | UCI Robot Execution Failures.</text>
+<text x="32" y="427" text-anchor="start" font-size="17" fill="#2C3E50" font-weight="400">Correct counts use the records that set the class choices. Some tasks share traces. Source | UCI.</text>
 </g>
 </svg>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="810" viewBox="0 0 960 810" role="img" aria-labelledby="title desc">
   <title id="title">The source joint law determines target-copy synergy</title>
-  <desc id="desc">A finite categorical MGW example with target T equal to the first source S₁ together with an arbitrary residual U. Two tables show the same joint source law: diagonal cells have mass three eighths and off-diagonal cells one eighth. The row-or-column union has mass five eighths for a diagonal anchor and seven eighths for an off-diagonal anchor. The corresponding local synergy values are log sixteen fifteenths and log sixteen sevenths. The average uses total diagonal weight three quarters and off-diagonal weight one quarter. A lower panel shows cancellation of the positive full-key and target-event masses from the synergy formula.</desc>
+  <desc id="desc">A finite categorical MGW example with target T equal to the first source S₁ together with an arbitrary residual U. Two tables show the same joint source law: diagonal cells have mass three eighths and off-diagonal cells one eighth. The row-or-column union has mass five eighths for a diagonal anchor and seven eighths for an off-diagonal anchor. The corresponding local synergy values are log sixteen fifteenths and log sixteen sevenths. The average uses total diagonal weight three quarters and off-diagonal weight one quarter. A lower panel shows cancellation of the positive probabilities of the observed triple and target from the synergy formula.</desc>
   <style>
     text { font-family: "Source Sans Pro", sans-serif; fill: #2C3E50; }
     .title { font-size: 28px; font-weight: 600; fill: #1F3F60; }
@@ -12,7 +12,7 @@
   </style>
   <rect width="960" height="810" fill="#F7F3E9"/>
   <text x="34" y="43" class="title">The source joint law determines target-copy synergy</text>
-  <text x="34" y="77" class="label">Categorical MGW · target T = (S₁, U) · arbitrary finite law · nats</text>
+  <text x="34" y="77" class="label">Categorical MGW · target T = (S₁, U) · local synergy s and its mean S in nats</text>
   <line x1="34" y1="96" x2="926" y2="96" stroke="#916400" stroke-width="2"/>
   <text x="34" y="126" class="label">At an anchor (x, y): a = P(S₁ = x), c = P(S₂ = y), j = P(S₁ = x, S₂ = y).</text>
   <text x="34" y="156" class="label">The union D = {S₁ = x} OR {S₂ = y} has probability d = a + c − j.</text>
@@ -56,10 +56,10 @@
   <text x="386" y="566" class="small">Anchor: inner frame</text>
   <text x="651" y="566" class="small">Numbers give cell masses.</text>
   <text x="34" y="602" class="label">Both diagonal cells weigh 3/4 in total; both off-diagonal cells weigh 1/4.</text>
-  <text x="34" y="638" class="formula">Joint-law average: S = (3/4) ln(16/15) + (1/4) ln(16/7).</text>
+  <text x="34" y="638" class="formula">Mean synergy S = (3/4) ln(16/15) + (1/4) ln(16/7).</text>
   <line x1="34" y1="658" x2="926" y2="658" stroke="#916400" stroke-width="2"/>
   <text x="34" y="689" class="heading">Why the residual target channel disappears</text>
-  <text x="34" y="720" class="small">At a positive full key, let ρ = P(S₁ = x, S₂ = y, U = u) and τ = P(T = (x, u)).</text>
+  <text x="34" y="720" class="small">At an outcome (x, y, u) with positive probability, ρ = P(S₁ = x, S₂ = y, U = u) and τ = P(T = (x, u)).</text>
   <text x="34" y="756" class="formula">s = ln[ρ/(jτ)] + ln a − ln[ρ/(cτ)] − ln d = ln[ac/(jd)].</text>
   <text x="34" y="789" class="small">The positive masses ρ and τ cancel. The full joint source law remains essential.</text>
 </svg>

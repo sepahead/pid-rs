@@ -1,0 +1,28 @@
+{
+  "binary_tables": {
+    "1": {
+      "least_positive_exponential": null,
+      "tables": 16
+    },
+    "2": {
+      "conflicting": 8,
+      "least_positive_exponential": "16",
+      "tables": 136
+    },
+    "3": {
+      "conflicting": 128,
+      "least_positive_exponential": "9",
+      "tables": 816
+    },
+    "4": {
+      "conflicting": 1060,
+      "least_positive_exponential": "81/16",
+      "tables": 3876
+    }
+  },
+  "explicit_sharp_witnesses": 153,
+  "largest_witness_total": 18,
+  "pairwise_product_prediction": "5/8",
+  "parity_actual_union": "1/2",
+  "total_tables": 4844
+}

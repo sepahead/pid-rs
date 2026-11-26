@@ -1,0 +1,10 @@
+{
+  "absolute_tolerance_nats": "1/1000000000000",
+  "coordinates": 10,
+  "matches_original_measured_results": true,
+  "matches_original_native_bytes": true,
+  "numerical_result_sha256": "aaaf4420eb433e9706803859696ada6cfbb94488e2b3398f4dca18571495eace",
+  "origin": "new native execution",
+  "raw_sha256": "83b84ef9299aef38991ddeb802886f8264cd5fdba558957375d74cf78288f958",
+  "source_rows_sha256": "e5850458e57376fc6b0e90dee91cd0f1150bf5c2a001940f9bd7a28b7f00fcd6"
+}

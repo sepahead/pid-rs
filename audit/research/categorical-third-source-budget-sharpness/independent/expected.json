@@ -1,0 +1,20 @@
+{
+  "exact_local_atoms_checked": 11034,
+  "fair_constant_U_L2": {
+    "deficit": "6561/256",
+    "delta": "1",
+    "mass": "65536/6561",
+    "n": "4",
+    "r": "256/81"
+  },
+  "fixed_family_cases": 55,
+  "independent_pairwise_only_counterexample_products": [
+    16,
+    256
+  ],
+  "occupied_local_rows": 613,
+  "positive_conditional_entropy_cases": 40,
+  "scope": "Exact finite categorical signed pointwise and averaged MGW products. All rows construct the distribution. No sampling or external measurements.",
+  "sharp_uniform_attainers": 25,
+  "zero_conditional_entropy_cases": 15
+}

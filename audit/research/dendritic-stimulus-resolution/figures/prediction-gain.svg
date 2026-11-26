@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512pt" height="204pt" viewBox="0 0 512 204" role="img" aria-labelledby="title desc">
+<title id="title">HELD-LEVEL FORECAST SCORES</title><desc id="desc">Gains in mean held-out logarithmic loss have different signs at widths 50 and 100. Positive values favour using the flag. At width 10 both fitted predictors use a uniform fallback on the held-out settings.</desc>
+<g font-family="Source Sans Pro, Arial, sans-serif">
+<rect x="0" y="0" width="512" height="204" fill="#FFFFFF" stroke="none" stroke-width="0.55"/>
+<rect x="14" y="10" width="2.5" height="8" fill="#B28218" stroke="none" stroke-width="0.55"/>
+<text x="22" y="17" font-size="8.1" text-anchor="start" fill="#916400" font-weight="700">HELD-LEVEL FORECAST SCORES</text>
+<text x="15" y="38" font-size="14" text-anchor="start" fill="#1F3F60" font-weight="700">Withhold one complete input level at a time</text>
+<text x="15" y="54" font-size="9" text-anchor="start" fill="#2C3E50">Widths count nominal stimulus inputs. Forecasts add one training count per spike class.</text>
+<line x1="196.765" y1="70" x2="196.765" y2="158" stroke="#D2E0E2" stroke-width="0.6"/>
+<text x="196.765" y="170" font-size="7.3" text-anchor="middle" fill="#596A73">-0.012</text>
+<line x1="244.294" y1="70" x2="244.294" y2="158" stroke="#D2E0E2" stroke-width="0.6"/>
+<text x="244.294" y="170" font-size="7.3" text-anchor="middle" fill="#596A73">-0.008</text>
+<line x1="291.824" y1="70" x2="291.824" y2="158" stroke="#D2E0E2" stroke-width="0.6"/>
+<text x="291.824" y="170" font-size="7.3" text-anchor="middle" fill="#596A73">-0.004</text>
+<line x1="339.353" y1="70" x2="339.353" y2="158" stroke="#2C3E50" stroke-width="1"/>
+<text x="339.353" y="170" font-size="7.3" text-anchor="middle" fill="#596A73">0</text>
+<line x1="363.118" y1="70" x2="363.118" y2="158" stroke="#D2E0E2" stroke-width="0.6"/>
+<text x="363.118" y="170" font-size="7.3" text-anchor="middle" fill="#596A73">+0.002</text>
+<text x="15" y="70" font-size="8" text-anchor="start" fill="#1F6968" font-weight="700">Width  ·  omitted level</text>
+<text x="490" y="70" font-size="8" text-anchor="end" fill="#1F6968" font-weight="700">Gain (nats)</text>
+<text x="16" y="84" font-size="8.7" text-anchor="start" fill="#2C3E50">10  ·  basal</text>
+<circle cx="339.353" cy="82" r="2.1" fill="#2C3E50"/>
+<text x="490" y="84" font-size="8.6" text-anchor="end" fill="#2C3E50">0</text>
+<text x="16" y="98" font-size="8.7" text-anchor="start" fill="#2C3E50">10  ·  tuft</text>
+<circle cx="339.353" cy="96" r="2.1" fill="#2C3E50"/>
+<text x="490" y="98" font-size="8.6" text-anchor="end" fill="#2C3E50">0</text>
+<text x="16" y="112" font-size="8.7" text-anchor="start" fill="#2C3E50">50  ·  basal</text>
+<rect x="188.858" y="107.6" width="150.495" height="4.8" fill="#743E37" stroke="none" stroke-width="0.55"/>
+<text x="490" y="112" font-size="8.6" text-anchor="end" fill="#2C3E50">-0.01267</text>
+<text x="16" y="126" font-size="8.7" text-anchor="start" fill="#2C3E50">50  ·  tuft</text>
+<rect x="237.994" y="121.6" width="101.359" height="4.8" fill="#743E37" stroke="none" stroke-width="0.55"/>
+<text x="490" y="126" font-size="8.6" text-anchor="end" fill="#2C3E50">-0.00853</text>
+<text x="16" y="140" font-size="8.7" text-anchor="start" fill="#2C3E50">100  ·  basal</text>
+<rect x="339.353" y="135.6" width="19.0406" height="4.8" fill="#1F6968" stroke="none" stroke-width="0.55"/>
+<text x="490" y="140" font-size="8.6" text-anchor="end" fill="#2C3E50">+0.00160</text>
+<text x="16" y="154" font-size="8.7" text-anchor="start" fill="#2C3E50">100  ·  tuft</text>
+<rect x="339.353" y="149.6" width="14.5033" height="4.8" fill="#1F6968" stroke="none" stroke-width="0.55"/>
+<text x="490" y="154" font-size="8.6" text-anchor="end" fill="#2C3E50">+0.00122</text>
+<line x1="15" y1="181" x2="497" y2="181" stroke="#D2E0E2" stroke-width="0.65"/>
+<text x="15" y="195" font-size="8.4" text-anchor="start" fill="#1F3F60">Gain = mean loss without the bit minus mean loss with it. Positive values favour recording the bit for this task.</text>
+</g></svg>

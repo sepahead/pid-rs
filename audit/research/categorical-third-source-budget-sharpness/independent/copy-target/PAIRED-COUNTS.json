@@ -1,0 +1,128 @@
+{
+  "counts": [
+    [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        0
+      ]
+    ],
+    [
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        0,
+        1,
+        0
+      ]
+    ]
+  ],
+  "first": {
+    "entropy_factors": {
+      "S1": "64",
+      "S1,S2": "64",
+      "S1,S2,S3": "256",
+      "S1,S2,S3,T": "256",
+      "S1,S2,T": "64",
+      "S1,S3": "256",
+      "S1,S3,T": "256",
+      "S1,T": "64",
+      "S2": "1",
+      "S2,S3": "64",
+      "S2,S3,T": "256",
+      "S2,T": "64",
+      "S3": "64",
+      "S3,T": "256",
+      "T": "64",
+      "empty": "1"
+    },
+    "exp_four_A": "4",
+    "exp_four_B": "4",
+    "exp_four_G": "9",
+    "exp_four_M": "16/9",
+    "five_signed_factors": {
+      "(4,)": "3/4",
+      "(5, 6)": "1",
+      "(5,)": "4/3",
+      "(6,)": "1",
+      "(7,)": "1"
+    },
+    "local_components": 144,
+    "match_counts": [
+      1,
+      3,
+      2,
+      2
+    ],
+    "shared_x_or_w_factor": "64/3",
+    "x_w_mutual_information_factor": "16"
+  },
+  "refused": [
+    "swapped tables",
+    "missing observation",
+    "additional observation",
+    "moved cell",
+    "constant target",
+    "conditional mutual information for absolute mass",
+    "missing count exponent"
+  ],
+  "second": {
+    "entropy_factors": {
+      "S1": "64",
+      "S1,S2": "64",
+      "S1,S2,S3": "256",
+      "S1,S2,S3,T": "256",
+      "S1,S2,T": "64",
+      "S1,S3": "256",
+      "S1,S3,T": "256",
+      "S1,T": "64",
+      "S2": "1",
+      "S2,S3": "64",
+      "S2,S3,T": "256",
+      "S2,T": "64",
+      "S3": "64",
+      "S3,T": "256",
+      "T": "64",
+      "empty": "1"
+    },
+    "exp_four_A": "4",
+    "exp_four_B": "4",
+    "exp_four_G": "16",
+    "exp_four_M": "1",
+    "five_signed_factors": {
+      "(4,)": "1",
+      "(5, 6)": "1",
+      "(5,)": "1",
+      "(6,)": "1",
+      "(7,)": "1"
+    },
+    "local_components": 144,
+    "match_counts": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "shared_x_or_w_factor": "16",
+    "x_w_mutual_information_factor": "16"
+  },
+  "units": "Every factor is exp(4 times the quantity in nats)."
+}

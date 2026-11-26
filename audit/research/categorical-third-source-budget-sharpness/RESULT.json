@@ -1,0 +1,664 @@
+{
+  "adverse_controls": {
+    "both_conditioning_sources": true,
+    "converse_support_implication_refuted": true,
+    "count_repetition": true,
+    "overstated_or_unoccupied_bound_refuted": true,
+    "rejected_invalid_count_inputs": 6,
+    "signed_component_dominance_refuted": true,
+    "target_conditioning": true,
+    "zero_count_ignored": true
+  },
+  "all18_local_component_checks_on_census_and_witnesses": 125208,
+  "binary_labelled_census": [
+    {
+      "B_positive": 0,
+      "B_zero": 16,
+      "N": 1,
+      "tables": 16
+    },
+    {
+      "B_positive": 8,
+      "B_zero": 128,
+      "N": 2,
+      "tables": 136
+    },
+    {
+      "B_positive": 128,
+      "B_zero": 688,
+      "N": 3,
+      "tables": 816
+    }
+  ],
+  "binary_observed_minima": [
+    {
+      "N": 2,
+      "ell": 2,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 3,
+      "ell": 2,
+      "exp_N_gap": "9"
+    }
+  ],
+  "sharp_witness_count": 123,
+  "sharp_witnesses": [
+    {
+      "N": 2,
+      "ell": 2,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 3,
+      "ell": 2,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 3,
+      "ell": 3,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 4,
+      "ell": 2,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 4,
+      "ell": 3,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 4,
+      "ell": 4,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 5,
+      "ell": 2,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 5,
+      "ell": 3,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 5,
+      "ell": 4,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 5,
+      "ell": 5,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 6,
+      "ell": 2,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 6,
+      "ell": 3,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 6,
+      "ell": 4,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 6,
+      "ell": 5,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 6,
+      "ell": 6,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 7,
+      "ell": 2,
+      "exp_N_gap": "25/9"
+    },
+    {
+      "N": 7,
+      "ell": 3,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 7,
+      "ell": 4,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 7,
+      "ell": 5,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 7,
+      "ell": 6,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 7,
+      "ell": 7,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 8,
+      "ell": 2,
+      "exp_N_gap": "625/256"
+    },
+    {
+      "N": 8,
+      "ell": 3,
+      "exp_N_gap": "25/9"
+    },
+    {
+      "N": 8,
+      "ell": 4,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 8,
+      "ell": 5,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 8,
+      "ell": 6,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 8,
+      "ell": 7,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 8,
+      "ell": 8,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 9,
+      "ell": 2,
+      "exp_N_gap": "9/4"
+    },
+    {
+      "N": 9,
+      "ell": 3,
+      "exp_N_gap": "625/256"
+    },
+    {
+      "N": 9,
+      "ell": 4,
+      "exp_N_gap": "25/9"
+    },
+    {
+      "N": 9,
+      "ell": 5,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 9,
+      "ell": 6,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 9,
+      "ell": 7,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 9,
+      "ell": 8,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 9,
+      "ell": 9,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 10,
+      "ell": 2,
+      "exp_N_gap": "1296/625"
+    },
+    {
+      "N": 10,
+      "ell": 3,
+      "exp_N_gap": "9/4"
+    },
+    {
+      "N": 10,
+      "ell": 4,
+      "exp_N_gap": "625/256"
+    },
+    {
+      "N": 10,
+      "ell": 5,
+      "exp_N_gap": "25/9"
+    },
+    {
+      "N": 10,
+      "ell": 6,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 10,
+      "ell": 7,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 10,
+      "ell": 8,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 10,
+      "ell": 9,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 10,
+      "ell": 10,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 11,
+      "ell": 2,
+      "exp_N_gap": "49/25"
+    },
+    {
+      "N": 11,
+      "ell": 3,
+      "exp_N_gap": "1296/625"
+    },
+    {
+      "N": 11,
+      "ell": 4,
+      "exp_N_gap": "9/4"
+    },
+    {
+      "N": 11,
+      "ell": 5,
+      "exp_N_gap": "625/256"
+    },
+    {
+      "N": 11,
+      "ell": 6,
+      "exp_N_gap": "25/9"
+    },
+    {
+      "N": 11,
+      "ell": 7,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 11,
+      "ell": 8,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 11,
+      "ell": 9,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 11,
+      "ell": 10,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 11,
+      "ell": 11,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 12,
+      "ell": 2,
+      "exp_N_gap": "2401/1296"
+    },
+    {
+      "N": 12,
+      "ell": 3,
+      "exp_N_gap": "49/25"
+    },
+    {
+      "N": 12,
+      "ell": 4,
+      "exp_N_gap": "1296/625"
+    },
+    {
+      "N": 12,
+      "ell": 5,
+      "exp_N_gap": "9/4"
+    },
+    {
+      "N": 12,
+      "ell": 6,
+      "exp_N_gap": "625/256"
+    },
+    {
+      "N": 12,
+      "ell": 7,
+      "exp_N_gap": "25/9"
+    },
+    {
+      "N": 12,
+      "ell": 8,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 12,
+      "ell": 9,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 12,
+      "ell": 10,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 12,
+      "ell": 11,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 12,
+      "ell": 12,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 13,
+      "ell": 2,
+      "exp_N_gap": "16/9"
+    },
+    {
+      "N": 13,
+      "ell": 3,
+      "exp_N_gap": "2401/1296"
+    },
+    {
+      "N": 13,
+      "ell": 4,
+      "exp_N_gap": "49/25"
+    },
+    {
+      "N": 13,
+      "ell": 5,
+      "exp_N_gap": "1296/625"
+    },
+    {
+      "N": 13,
+      "ell": 6,
+      "exp_N_gap": "9/4"
+    },
+    {
+      "N": 13,
+      "ell": 7,
+      "exp_N_gap": "625/256"
+    },
+    {
+      "N": 13,
+      "ell": 8,
+      "exp_N_gap": "25/9"
+    },
+    {
+      "N": 13,
+      "ell": 9,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 13,
+      "ell": 10,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 13,
+      "ell": 11,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 13,
+      "ell": 12,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 13,
+      "ell": 13,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 14,
+      "ell": 2,
+      "exp_N_gap": "4096/2401"
+    },
+    {
+      "N": 14,
+      "ell": 3,
+      "exp_N_gap": "16/9"
+    },
+    {
+      "N": 14,
+      "ell": 4,
+      "exp_N_gap": "2401/1296"
+    },
+    {
+      "N": 14,
+      "ell": 5,
+      "exp_N_gap": "49/25"
+    },
+    {
+      "N": 14,
+      "ell": 6,
+      "exp_N_gap": "1296/625"
+    },
+    {
+      "N": 14,
+      "ell": 7,
+      "exp_N_gap": "9/4"
+    },
+    {
+      "N": 14,
+      "ell": 8,
+      "exp_N_gap": "625/256"
+    },
+    {
+      "N": 14,
+      "ell": 9,
+      "exp_N_gap": "25/9"
+    },
+    {
+      "N": 14,
+      "ell": 10,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 14,
+      "ell": 11,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 14,
+      "ell": 12,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 14,
+      "ell": 13,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 14,
+      "ell": 14,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 15,
+      "ell": 2,
+      "exp_N_gap": "81/49"
+    },
+    {
+      "N": 15,
+      "ell": 3,
+      "exp_N_gap": "4096/2401"
+    },
+    {
+      "N": 15,
+      "ell": 4,
+      "exp_N_gap": "16/9"
+    },
+    {
+      "N": 15,
+      "ell": 5,
+      "exp_N_gap": "2401/1296"
+    },
+    {
+      "N": 15,
+      "ell": 6,
+      "exp_N_gap": "49/25"
+    },
+    {
+      "N": 15,
+      "ell": 7,
+      "exp_N_gap": "1296/625"
+    },
+    {
+      "N": 15,
+      "ell": 8,
+      "exp_N_gap": "9/4"
+    },
+    {
+      "N": 15,
+      "ell": 9,
+      "exp_N_gap": "625/256"
+    },
+    {
+      "N": 15,
+      "ell": 10,
+      "exp_N_gap": "25/9"
+    },
+    {
+      "N": 15,
+      "ell": 11,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 15,
+      "ell": 12,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 15,
+      "ell": 13,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 15,
+      "ell": 14,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 15,
+      "ell": 15,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 16,
+      "ell": 2,
+      "exp_N_gap": "6561/4096"
+    },
+    {
+      "N": 16,
+      "ell": 3,
+      "exp_N_gap": "81/49"
+    },
+    {
+      "N": 16,
+      "ell": 4,
+      "exp_N_gap": "4096/2401"
+    },
+    {
+      "N": 16,
+      "ell": 5,
+      "exp_N_gap": "16/9"
+    },
+    {
+      "N": 16,
+      "ell": 6,
+      "exp_N_gap": "2401/1296"
+    },
+    {
+      "N": 16,
+      "ell": 7,
+      "exp_N_gap": "49/25"
+    },
+    {
+      "N": 16,
+      "ell": 8,
+      "exp_N_gap": "1296/625"
+    },
+    {
+      "N": 16,
+      "ell": 9,
+      "exp_N_gap": "9/4"
+    },
+    {
+      "N": 16,
+      "ell": 10,
+      "exp_N_gap": "625/256"
+    },
+    {
+      "N": 16,
+      "ell": 11,
+      "exp_N_gap": "25/9"
+    },
+    {
+      "N": 16,
+      "ell": 12,
+      "exp_N_gap": "256/81"
+    },
+    {
+      "N": 16,
+      "ell": 13,
+      "exp_N_gap": "4"
+    },
+    {
+      "N": 16,
+      "ell": 14,
+      "exp_N_gap": "81/16"
+    },
+    {
+      "N": 16,
+      "ell": 15,
+      "exp_N_gap": "9"
+    },
+    {
+      "N": 16,
+      "ell": 16,
+      "exp_N_gap": "16"
+    },
+    {
+      "N": 25,
+      "ell": 2,
+      "exp_N_gap": "49/36"
+    },
+    {
+      "N": 25,
+      "ell": 3,
+      "exp_N_gap": "28561/20736"
+    },
+    {
+      "N": 25,
+      "ell": 25,
+      "exp_N_gap": "16"
+    }
+  ],
+  "units": "All listed ratios are exp(N times the quantity in nats)."
+}

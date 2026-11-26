@@ -1,0 +1,6 @@
+{
+  "all_occupied_label_counts_between_N2_and_N16": 120,
+  "all_two_label_splits_between_N2_and_N35": 595,
+  "basis": "The underlying checker calculates positive and negative component products from all 18 original match events at every occupied row.",
+  "conditional_product_for_balanced_construction": 4
+}

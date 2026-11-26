@@ -8,14 +8,26 @@ signed MGW synergy from additional Shannon information. Its eleven local Lean
 targets are unchanged. Scientific priority for the repository derivations has
 not been established.
 
-## Current source and PDF
+## November attribution and current edition
+
+The revised note credits the four-cell RndErr example of Finn and Lizier and its MGW analysis. The figure shows this same table. Equations (19) and (28)–(29) supply the earlier two-source factorization and numerical example. The [November SVG](../latex/figures/mgw-target-copy/event-union.svg) defines local synergy and its mean. It specifies which observation has positive probability. All displayed equations and cell probabilities retain their September values. [Finn–Lizier, §5.4](https://doi.org/10.3390/e20040297) · [MGW, §VI.C, Table III](https://arxiv.org/pdf/2002.03356v5#page=11).
+
+| Current file | Bytes | SHA-256 |
+|---|---:|---|
+| [Markdown](../../evidence/finite-target-copy-mgw-synergy.md) | 34,442 | `6ba1fd84da88c3820ed03e48f647e2d64ba065fab946ebf6be35cc5087b06952` |
+| [13-page A4 PDF](../../../output/pdf/finite-target-copy-mgw-synergy.pdf) | 184,545 | `46fc258d58ada67e896f4cf5cedda543832ae52b568ca997edcd6f2e8971c586` |
+| [v6 input profile](../latex/mgw-target-copy/publication-inputs-v6.json) | 44,532 | `79662000bbaccb56770d08006a4815a34c0505e5fa1767bea791d40c5b3dded9` |
+
+The v6 profile selects the same six tool binaries, TeX files and source epoch. The software-citation link, figure caption, text and revision date belong to this edition. The original alternate-toolchain mode still declines unreviewed combinations.
+
+## September source and PDF
 
 | Artifact | Bytes | SHA-256 |
 |---|---:|---|
-| [Markdown](../../evidence/finite-target-copy-mgw-synergy.md) | 33,501 | `caf8746947013ea37ff53f1e1821b8d5564b15c2d1419688d446d3c58cb6b26b` |
-| [13-page A4 PDF](../../../output/pdf/finite-target-copy-mgw-synergy.pdf) | 182,625 | `91015d09176201aa0059c16f535a775382f680a807c1e70fb964edb704955c6b` |
+| [September Markdown](https://github.com/sepahead/pid-rs/blob/287a2857269102eac6b17b0a7d752d7b2b67b4cd/audit/evidence/finite-target-copy-mgw-synergy.md) | 33,501 | `caf8746947013ea37ff53f1e1821b8d5564b15c2d1419688d446d3c58cb6b26b` |
+| [September 13-page A4 PDF](https://github.com/sepahead/pid-rs/blob/287a2857269102eac6b17b0a7d752d7b2b67b4cd/output/pdf/finite-target-copy-mgw-synergy.pdf) | 182,625 | `91015d09176201aa0059c16f535a775382f680a807c1e70fb964edb704955c6b` |
 
-The [SVG](../latex/figures/mgw-target-copy/event-union.svg) is unchanged, with
+The [September SVG](https://github.com/sepahead/pid-rs/blob/287a2857269102eac6b17b0a7d752d7b2b67b4cd/audit/formal/latex/figures/mgw-target-copy/event-union.svg) had
 SHA-256 `280d19e9b63659ebe9aeaba74e09d11476be729a784c612f0a69679e05d3a22c`.
 Its two source-law grids distinguish the source-match OR event from the anchor
 cell. The formula below them shows why the positive target-event and full-key

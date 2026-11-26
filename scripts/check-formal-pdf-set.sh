@@ -56,6 +56,9 @@ STANDALONE_MARKDOWN_PAPERS=(
   "nested-categorical-sources"
   "signed-log-certificate-enclosure"
   "robot-wrist-slope-signs"
+  "dendritic-stimulus-resolution"
+  "categorical-third-source-budget-sharpness"
+  "robot-wrist-copied-target"
   "mathematical-results-guide-current"
   "finite-copy-bootstrap-coverage"
   "three-source-alphabet-counts"
@@ -97,6 +100,9 @@ STANDALONE_MARKDOWN_SOURCES=(
   "audit/research/nested-categorical-sources/EXPOSITION.md"
   "audit/research/signed-log-certificate-enclosure/EXPOSITION.md"
   "audit/research/robot-wrist-slope-signs/EXPOSITION.md"
+  "audit/research/dendritic-stimulus-resolution/README.md"
+  "audit/research/categorical-third-source-budget-sharpness/EXPOSITION.md"
+  "audit/research/robot-wrist-copied-target/README.md"
   "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md"
   "FINITE_COPY_BOOTSTRAP_COVERAGE.md"
   "audit/research/three-source-alphabet-counts/README.md"
@@ -333,6 +339,9 @@ for checker in \
   audit/research/angular-truncation-extremum/replay.py \
   audit/research/angular-unit-boundary/replay.py \
   audit/research/robot-wrist-slope-signs/replay.py \
+  audit/research/robot-wrist-slope-signs/compare_imin.py \
+  audit/research/dendritic-stimulus-resolution/check.py \
+  audit/research/categorical-third-source-budget-sharpness/replay.py \
   audit/research/angular-quadrature-grid/verify.py \
   audit/research/angular-ray-monotonicity/replay.py \
   audit/research/categorical-state-token/finite.py \
@@ -362,12 +371,40 @@ python3 -O -I -S -B audit/research/signed-log-certificate-enclosure/check.py
   python3 -O -I -S -B audit/research/signed-log-certificate-enclosure/counted-examples/replay.py --out "$counted_root/optimized"
 )
 
+(
+  budget_work="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-five-categorical-positions.XXXXXX")"
+  trap 'rm -rf -- "$budget_work"' EXIT
+  cd audit/research/categorical-third-source-budget-sharpness
+  compare_count_record() {
+    local expected=$1
+    shift
+    "$@" > "$budget_work/observed.json"
+    cmp "$expected" "$budget_work/observed.json"
+  }
+  for mode in ordinary optimized; do
+    reader=(python3)
+    if [[ "$mode" == optimized ]]; then reader+=(-O); fi
+    reader+=(-I -S -B)
+    compare_count_record ALPHABET-SCOPE.json "${reader[@]}" alphabet_scope.py --self-test
+    compare_count_record independent/binary-counts.json "${reader[@]}" independent/independent_count_products.py
+    compare_count_record independent/expected.json "${reader[@]}" independent/check_product_family.py
+    compare_count_record independent/attainment/binary-census.json "${reader[@]}" independent/attainment/check_finite_attainment.py
+    compare_count_record independent/attainment/attaining-family.json "${reader[@]}" independent/attainment/fixed_counts.py
+    compare_count_record independent/copy-target/PAIRED-COUNTS.json "${reader[@]}" independent/copy-target/paired_counts.py --reference verify.py --self-test
+    compare_count_record independent/copy-target/COPY-SUPPORT.json "${reader[@]}" independent/copy-target/copy_support.py --reference verify.py
+    compare_count_record independent/paired-entropy/matched-normal.json "${reader[@]}" independent/paired-entropy/matched_shannon.py
+    echo "Eight complete finite categorical records match in $mode Python."
+  done
+)
+
+python3 -I -S -B audit/research/robot-wrist-copied-target/audit_results.py --recorded --self-test
+python3 -O -I -S -B audit/research/robot-wrist-copied-target/audit_results.py --recorded --self-test
 python3 -I -S -B scripts/check-research-report-publication.py --self-test
 python3 -O -I -S -B scripts/check-research-report-publication.py --self-test
 
 for study in \
   angular-four-moment-radius angular-truncation-extremum angular-unit-boundary robot-wrist-slope-signs \
-  angular-quadrature-grid angular-ray-monotonicity categorical-state-token strict-neighbour-count-geometry nested-categorical-sources signed-log-certificate-enclosure; do
+  angular-quadrature-grid angular-ray-monotonicity categorical-state-token strict-neighbour-count-geometry nested-categorical-sources signed-log-certificate-enclosure dendritic-stimulus-resolution categorical-third-source-budget-sharpness robot-wrist-copied-target; do
   study_source="audit/research/$study"
   python3 -I -S -B scripts/check-research-report-publication.py --study "$study"
   if [[ "$MODE" == "--exact" ]]; then

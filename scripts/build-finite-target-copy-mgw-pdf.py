@@ -21,8 +21,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = "audit/formal/latex/mgw-target-copy/"
-PROFILE = ASSETS + "publication-inputs-v5.json"
-PROFILE_SHA = "b1a71987523e3df71c138d477d37b10e23818706c15edcbf969971324c87f648"
+PROFILE = ASSETS + "publication-inputs-v6.json"
+PROFILE_SHA = "79662000bbaccb56770d08006a4815a34c0505e5fa1767bea791d40c5b3dded9"
 MD = "audit/evidence/finite-target-copy-mgw-synergy.md"
 SVG = "audit/formal/latex/figures/mgw-target-copy/event-union.svg"
 PDF = "output/pdf/finite-target-copy-mgw-synergy.pdf"

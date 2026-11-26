@@ -1,0 +1,435 @@
+{
+  "absolute_tolerance_nats": "1/1000000000000",
+  "controls": {
+    "native_rejections": [
+      "650 direct rows",
+      "100001 input bytes"
+    ],
+    "positive_control": "all record and mask lists reversed, with labels retained",
+    "rejections": {
+      "NaN": "nonfinite output",
+      "assign one to an equal-input tie": "original row order, axes, strict flag or thresholds",
+      "boolean source label": "strict four categorical labels",
+      "change zero-spike class": "original row order, axes, strict flag or thresholds",
+      "compute flag after grouping": "original row order, axes, strict flag or thresholds",
+      "drop I_min atom": "native 18 atom records",
+      "drop an input row": "651 separately weighted cells",
+      "exchange basal and tuft after grouping": "original row order, axes, strict flag or thresholds",
+      "exchange informative and misinformative": "absolute error at 100/informative/04",
+      "false pointwise inclusion": "averaged-only scope",
+      "finite overshoot at an exact zero": "absolute error at 10/signed/04",
+      "omit normalization by observation count": "absolute error at 100/signed/04",
+      "positive infinity": "nonfinite output",
+      "repeated JSON key": "duplicate object key",
+      "replace counts by occupied support": "651 separately weighted cells",
+      "reverse signed coordinate": "absolute error at 100/signed/04",
+      "source-key substitution at a nonzero atom": "duplicate coordinate",
+      "typed count": "native rows",
+      "use Williams-Beer in the signed shared-exclusions slot": "absolute error at 100/signed/04",
+      "use bits instead of nats": "absolute error at 100/signed/04"
+    }
+  },
+  "data_sha256": "718e40b0509f077d8d667187c22d3fe7df7746f5489dc40bd983742a4bcbb467",
+  "measured_source": "6a9f087be84bc21a89ff51e7da8e626e6883d73e",
+  "output_coordinates": 216,
+  "raw_native_sha256": "3071e5ee948b07d36d2266b943138a96841f232c028dee4fb2021e3ffbea788b",
+  "reference_sha256": "c4cff8933d60c93e52dc501fc2a2bdc48433443da10f3e73875761a53e247ae1",
+  "returned_key_order": {
+    "10": {
+      "imin": [
+        "01",
+        "02",
+        "04",
+        "03",
+        "05",
+        "06",
+        "07",
+        "01+02",
+        "01+04",
+        "01+06",
+        "02+04",
+        "02+05",
+        "03+04",
+        "03+05",
+        "03+06",
+        "05+06",
+        "01+02+04",
+        "03+05+06"
+      ],
+      "mgw": [
+        "01",
+        "02",
+        "04",
+        "03",
+        "05",
+        "06",
+        "07",
+        "01+02",
+        "01+04",
+        "01+06",
+        "02+04",
+        "02+05",
+        "03+04",
+        "03+05",
+        "03+06",
+        "05+06",
+        "01+02+04",
+        "03+05+06"
+      ]
+    },
+    "100": {
+      "imin": [
+        "01",
+        "02",
+        "04",
+        "03",
+        "05",
+        "06",
+        "07",
+        "01+02",
+        "01+04",
+        "01+06",
+        "02+04",
+        "02+05",
+        "03+04",
+        "03+05",
+        "03+06",
+        "05+06",
+        "01+02+04",
+        "03+05+06"
+      ],
+      "mgw": [
+        "01",
+        "02",
+        "04",
+        "03",
+        "05",
+        "06",
+        "07",
+        "01+02",
+        "01+04",
+        "01+06",
+        "02+04",
+        "02+05",
+        "03+04",
+        "03+05",
+        "03+06",
+        "05+06",
+        "01+02+04",
+        "03+05+06"
+      ]
+    },
+    "50": {
+      "imin": [
+        "01",
+        "02",
+        "04",
+        "03",
+        "05",
+        "06",
+        "07",
+        "01+02",
+        "01+04",
+        "01+06",
+        "02+04",
+        "02+05",
+        "03+04",
+        "03+05",
+        "03+06",
+        "05+06",
+        "01+02+04",
+        "03+05+06"
+      ],
+      "mgw": [
+        "01",
+        "02",
+        "04",
+        "03",
+        "05",
+        "06",
+        "07",
+        "01+02",
+        "01+04",
+        "01+06",
+        "02+04",
+        "02+05",
+        "03+04",
+        "03+05",
+        "03+06",
+        "05+06",
+        "01+02+04",
+        "03+05+06"
+      ]
+    }
+  },
+  "row_source_sha256": "0dce2ff79049fbaefb1f1ead97ed4aa3d52e4eff84b6f4bbfe4e1f34265ad5dc",
+  "summary": {
+    "10": {
+      "imin": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [],
+        "max_error_upper_exact": [
+          "11277231811993859005087819648097657249337585352551689679946025",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639936"
+        ],
+        "max_error_upper_nats": 9.73920747632521e-17,
+        "native_zeros_at_units": [
+          "02",
+          "02+04",
+          "02+05",
+          "03+04",
+          "03+06",
+          "04",
+          "05+06",
+          "06",
+          "07"
+        ],
+        "resolved_signs": 8,
+        "unit_products": [
+          "02",
+          "02+04",
+          "02+05",
+          "03+04",
+          "03+06",
+          "04",
+          "05",
+          "05+06",
+          "06",
+          "07"
+        ],
+        "worst_key": "03"
+      },
+      "informative": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [],
+        "max_error_upper_exact": [
+          "9266566447544113992778421620397237979951090513002877456863723",
+          "14474011154664524427946373126085988481658748083205070504932198000989141204992"
+        ],
+        "max_error_upper_nats": 6.402210381437897e-16,
+        "native_zeros_at_units": [
+          "04",
+          "05",
+          "05+06",
+          "06",
+          "07"
+        ],
+        "resolved_signs": 13,
+        "unit_products": [
+          "04",
+          "05",
+          "05+06",
+          "06",
+          "07"
+        ],
+        "worst_key": "03"
+      },
+      "misinformative": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [],
+        "max_error_upper_exact": [
+          "6118129525387729972696457263357970180962964798317036507748615",
+          "57896044618658097711785492504343953926634992332820282019728792003956564819968"
+        ],
+        "max_error_upper_nats": 1.0567439564629683e-16,
+        "native_zeros_at_units": [
+          "04",
+          "05+06",
+          "06"
+        ],
+        "resolved_signs": 13,
+        "unit_products": [
+          "04",
+          "05",
+          "05+06",
+          "06",
+          "07"
+        ],
+        "worst_key": "01"
+      },
+      "signed": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [
+          "02",
+          "02+04",
+          "03+04"
+        ],
+        "max_error_upper_exact": [
+          "37071734343448727086136395821054851178245475833821440471121077",
+          "57896044618658097711785492504343953926634992332820282019728792003956564819968"
+        ],
+        "max_error_upper_nats": 6.403154928394134e-16,
+        "native_zeros_at_units": [
+          "04",
+          "05+06",
+          "06"
+        ],
+        "resolved_signs": 13,
+        "unit_products": [
+          "04",
+          "05",
+          "05+06",
+          "06",
+          "07"
+        ],
+        "worst_key": "03"
+      }
+    },
+    "100": {
+      "imin": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [],
+        "max_error_upper_exact": [
+          "2273343869051835354226604953818299947205371728361711121984923",
+          "28948022309329048855892746252171976963317496166410141009864396001978282409984"
+        ],
+        "max_error_upper_nats": 7.853192334728882e-17,
+        "native_zeros_at_units": [
+          "02",
+          "02+04",
+          "02+05",
+          "03+04",
+          "04",
+          "05",
+          "05+06",
+          "06"
+        ],
+        "resolved_signs": 10,
+        "unit_products": [
+          "02",
+          "02+04",
+          "02+05",
+          "03+04",
+          "04",
+          "05",
+          "05+06",
+          "06"
+        ],
+        "worst_key": "07"
+      },
+      "informative": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [],
+        "max_error_upper_exact": [
+          "2620822319570038462188181195303497928689906906212908148776365",
+          "28948022309329048855892746252171976963317496166410141009864396001978282409984"
+        ],
+        "max_error_upper_nats": 9.05354532190418e-17,
+        "native_zeros_at_units": [],
+        "resolved_signs": 18,
+        "unit_products": [],
+        "worst_key": "03"
+      },
+      "misinformative": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [],
+        "max_error_upper_exact": [
+          "3257971861558905316622021878664382290352360162062101757529515",
+          "57896044618658097711785492504343953926634992332820282019728792003956564819968"
+        ],
+        "max_error_upper_nats": 5.627278828835506e-17,
+        "native_zeros_at_units": [],
+        "resolved_signs": 18,
+        "unit_products": [],
+        "worst_key": "01"
+      },
+      "signed": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [
+          "02",
+          "02+04",
+          "04"
+        ],
+        "max_error_upper_exact": [
+          "9767003524008943949336728742652624271771154724943894102398759",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639936"
+        ],
+        "max_error_upper_nats": 8.434948871154267e-17,
+        "native_zeros_at_units": [],
+        "resolved_signs": 18,
+        "unit_products": [],
+        "worst_key": "03"
+      }
+    },
+    "50": {
+      "imin": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [],
+        "max_error_upper_exact": [
+          "14138601680277130938883131309715086245053486872044739431452057",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639936"
+        ],
+        "max_error_upper_nats": 1.2210334724421483e-16,
+        "native_zeros_at_units": [
+          "02",
+          "02+04",
+          "02+05",
+          "03+04",
+          "03+06",
+          "04",
+          "05",
+          "05+06",
+          "06"
+        ],
+        "resolved_signs": 9,
+        "unit_products": [
+          "02",
+          "02+04",
+          "02+05",
+          "03+04",
+          "03+06",
+          "04",
+          "05",
+          "05+06",
+          "06"
+        ],
+        "worst_key": "03+05"
+      },
+      "informative": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [],
+        "max_error_upper_exact": [
+          "16844889974701739675630893870575095254020300777152749379783321",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639936"
+        ],
+        "max_error_upper_nats": 1.4547530911354483e-16,
+        "native_zeros_at_units": [],
+        "resolved_signs": 18,
+        "unit_products": [],
+        "worst_key": "01"
+      },
+      "misinformative": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [],
+        "max_error_upper_exact": [
+          "4832087971847997700334403759822800803491389864138959188980319",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639936"
+        ],
+        "max_error_upper_nats": 4.173072619792377e-17,
+        "native_zeros_at_units": [],
+        "resolved_signs": 18,
+        "unit_products": [],
+        "worst_key": "01"
+      },
+      "signed": {
+        "coordinates": 18,
+        "exact_negative_product_logs": [
+          "02",
+          "03+04",
+          "04",
+          "05+06",
+          "06"
+        ],
+        "max_error_upper_exact": [
+          "2709622243318717171995662203799737007188961330161463571095455",
+          "14474011154664524427946373126085988481658748083205070504932198000989141204992"
+        ],
+        "max_error_upper_nats": 1.8720603531146858e-16,
+        "native_zeros_at_units": [],
+        "resolved_signs": 18,
+        "unit_products": [],
+        "worst_key": "01"
+      }
+    }
+  }
+}

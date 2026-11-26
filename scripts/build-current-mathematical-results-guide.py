@@ -86,6 +86,9 @@ def build_figures(work, env):
     sheet.write_text('text { font-family: "Source Sans Pro"; }\n', encoding="utf-8")
     render_env = {**env, "FONTCONFIG_FILE": str(config), "PANGOCAIRO_BACKEND": "fc"}
     for study, diagram in (
+        ("robot-wrist-copied-target", "force-copy-atoms"),
+        ("dendritic-stimulus-resolution", "five-contributions"),
+        ("categorical-third-source-budget-sharpness", "copy-target-counts"),
         ("angular-ray-monotonicity", "angular-ray-thresholds"),
         ("strict-neighbour-count-geometry", "counts-and-distances"),
         ("nested-categorical-sources", "partitions-and-margin"),

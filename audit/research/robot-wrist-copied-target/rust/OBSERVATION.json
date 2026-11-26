@@ -1,0 +1,107 @@
+{
+  "compiler": {
+    "sha256": "1ba7bb8e273bd64125f4048d2ecce530e0a6470e565ab1b3aecf0b82b532f7b1",
+    "version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1"
+  },
+  "current_binary": "01e82e4bbc280c083c2b1b60692d8f78b893212971d0e30d819b0c0040ab7150",
+  "earlier_permitted_src": {
+    "git_source_141": 141,
+    "neuron_binary": "e763de8d478b5c97db658d55d8238cf943d9d559680dcf08ad969568dd4c25ef",
+    "pinned_native_inputs": 70
+  },
+  "frozen_original": "97079acc07478d895a401d9eeb5ee46f10d6311b00b5bfb9241f8cd0a8fe480d",
+  "hostile_sha256": "c1cdb12795ebe236372ca9901b513ecb30553665c94d025dbb03067dd48d2c9d",
+  "measurement_sha256": "87e523a249807a640bde79285b9d2ff96aca8f5e37bc3b41502243898cc1f5ef",
+  "normal_optimized_all_raw_and_expected_identical": true,
+  "original_commit": "6a9f087be84bc21a89ff51e7da8e626e6883d73e",
+  "original_opcodes": {
+    "actual-native-116": {
+      "seconds": 0.002589707961305976,
+      "status": 1,
+      "stderr": "86d857fe344fb9845b1ebe5eea0e194a962ae308d5329c8ebca804d65ecd23f6",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "actual-native-wrong-target": {
+      "seconds": 0.0030315829208120704,
+      "status": 1,
+      "stderr": "e137cf9c1b7fc5c681fa1b104c0d650e77ddc681ae4bb1a470fbd0372bf9d972",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile": {
+      "seconds": 0.577950167004019,
+      "status": 0,
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "optimized-controls": {
+      "seconds": 0.05597345903515816,
+      "status": 0,
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "c1cdb12795ebe236372ca9901b513ecb30553665c94d025dbb03067dd48d2c9d"
+    },
+    "optimized-native": {
+      "seconds": 0.009360207943245769,
+      "status": 0,
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "83b84ef9299aef38991ddeb802886f8264cd5fdba558957375d74cf78288f958"
+    },
+    "optimized-rows": {
+      "seconds": 0.044034208985976875,
+      "status": 0,
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e5850458e57376fc6b0e90dee91cd0f1150bf5c2a001940f9bd7a28b7f00fcd6"
+    },
+    "optimized-scientific": {
+      "seconds": 0.04865754197817296,
+      "status": 0,
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "aaaf4420eb433e9706803859696ada6cfbb94488e2b3398f4dca18571495eace"
+    },
+    "ordinary-controls": {
+      "seconds": 0.047928875079378486,
+      "status": 0,
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "c1cdb12795ebe236372ca9901b513ecb30553665c94d025dbb03067dd48d2c9d"
+    },
+    "ordinary-native": {
+      "seconds": 0.294516583904624,
+      "status": 0,
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "83b84ef9299aef38991ddeb802886f8264cd5fdba558957375d74cf78288f958"
+    },
+    "ordinary-rows": {
+      "seconds": 0.037755000055767596,
+      "status": 0,
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e5850458e57376fc6b0e90dee91cd0f1150bf5c2a001940f9bd7a28b7f00fcd6"
+    },
+    "ordinary-scientific": {
+      "seconds": 0.03881025000009686,
+      "status": 0,
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "aaaf4420eb433e9706803859696ada6cfbb94488e2b3398f4dca18571495eace"
+    },
+    "previous-native-fixed-width-refusal": {
+      "seconds": 0.00542237504851073,
+      "status": 1,
+      "stderr": "0e7c99450ab574cf9236aa84c04d906931b7d7a7c88c71ec506eb42953df35b4",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "profile": "dev, default features off, no debug info",
+  "ratios": "Q inverse, Q, 1, 1, 1. All five Williams\u2013Beer means are zero.",
+  "raw_sha256": "83b84ef9299aef38991ddeb802886f8264cd5fdba558957375d74cf78288f958",
+  "resource": {
+    "elapsed_seconds": 2.0594269579742104,
+    "max_sampled_group_rss_bytes": 44449792,
+    "rss_limit_bytes": 1073741824,
+    "samples": 2,
+    "start_utc": "2026-11-26T21:22:31.316965+00:00",
+    "status": 0,
+    "wall_limit_seconds": 150
+  },
+  "single_new_offline_rustc_call": true,
+  "source_rows_sha256": "e5850458e57376fc6b0e90dee91cd0f1150bf5c2a001940f9bd7a28b7f00fcd6",
+  "ten_results_sha256": "aaaf4420eb433e9706803859696ada6cfbb94488e2b3398f4dca18571495eace",
+  "tree": "939c12c0fd9de128cbb656a13760bb19086aaaff"
+}

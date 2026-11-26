@@ -1,0 +1,19 @@
+{
+  "attempt": "LP4-COPIED-FORCE:r1:1",
+  "candidate": "e2ef22b35518fa1b051c4a2b71d506b7321c405c8f0958077e261ad38aa8e229",
+  "executions": {
+    "ordinary": {
+      "code": 0,
+      "elapsed_seconds": 0.07706266699824482,
+      "stdout": "739aad4f1e2895973edadf3eae8dc0349a03a6f85329b3a8e064b742c9759050",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "optimized": {
+      "code": 0,
+      "elapsed_seconds": 0.0765275409212336,
+      "stdout": "739aad4f1e2895973edadf3eae8dc0349a03a6f85329b3a8e064b742c9759050",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "max_child_rss_bytes": 30638080
+}

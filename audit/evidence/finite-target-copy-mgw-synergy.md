@@ -6,8 +6,8 @@ author: "Sepehr Mahmoudian"
 
 ## Result, scope, and evidence status
 
-This note gives an exact finite-law calculation for the categorical shared-exclusions PID of
-Makkeh, Gutknecht, and Wibral (MGW). The target copies source one and can contain an arbitrary
+A finite probability law assigns probabilities to a finite set of outcomes. This note calculates
+shared exclusions, a partial information decomposition (PID) defined by Makkeh, Gutknecht and Wibral (MGW). The target copies source one and can contain an arbitrary
 residual coordinate:
 
 $$
@@ -28,7 +28,7 @@ a=P(S_1=x),\qquad c=P(S_2=y),\qquad
 j=P(S_1=x,S_2=y),\qquad d=a+c-j.
 $$
 
-The local signed-net two-source MGW synergy is
+Write $s$ for the local signed synergy of the two sources at one outcome. Its MGW value is
 
 $$
 \boxed{
@@ -45,7 +45,7 @@ q(x,y)=P(S_1=x,S_2=y),\quad
 q_1(x)=\sum_y q(x,y),\quad q_2(y)=\sum_x q(x,y),
 $$
 
-then the averaged synergy is
+then $S(P)$ is the mean of $s$ under the joint distribution $P$. It is
 
 $$
 \boxed{
@@ -103,6 +103,7 @@ count as redundant. This documents earlier use; it attributes neither invention 
 repository nor first priority to Harder and coauthors.
 [Harder–Salge–Polani, version 3](https://arxiv.org/pdf/1207.2080v3#page=8).
 
+In the published RndErr example, the target copies one source and the other is noisy. Equation (28) below uses that same law.
 Here the target may contain only the copied source, both sources, or another residual observation.
 The ordinary-world construction below assigns a joint mass $w(x,y,u)$ to possible observations
 and then records the source pair and target. It covers dependent as well as independent worlds;
@@ -513,7 +514,9 @@ unchanged for any residual channel compatible with the copied sources.
 
 ### 3. A dependent $2\times2$ source law
 
-Let $A=C=\{0,1\}$, take a singleton residual alphabet, and use the source law
+Finn and Lizier give this four-cell law in their RndErr example. MGW apply shared exclusions to the same law and obtain negative unique information from the noisy source, balanced by positive synergy. The two papers use different decompositions. [Finn–Lizier, §5.4, Figure 6](https://doi.org/10.3390/e20040297) · [MGW, §VI.C, Table III](https://arxiv.org/pdf/2002.03356v5#page=11).
+
+Let $A=C=\{0,1\}$ and let the residual have one possible value. The source probabilities are
 
 $$
 \begin{array}{c|cc}
@@ -563,7 +566,7 @@ $$
 The example isolates why the invariance theorem requires the exact joint source law $q$, not only
 $q_1$ and $q_2$.
 
-![The complete source joint law determines target-copy synergy. Shading shows the OR event, and the inner frame marks the anchor cell. The two grids use the same joint law; changing the anchor changes its intersection mass and union mass. The lower calculation shows why positive target masses cancel.](../formal/latex/figures/mgw-target-copy/event-union.svg)
+![Both grids show the four-cell RndErr law of Finn and Lizier, used in MGW Table III. Shading marks either source label matching. The frame marks their joint cell. Lowercase $s$ is local synergy. Capital $S$ is its mean. Changing the reference cell changes its mass and the union mass. The expression below shows why the positive target masses cancel.](../formal/latex/figures/mgw-target-copy/event-union.svg)
 
 ## Comparing definitions on the copy benchmark
 
@@ -739,6 +742,8 @@ statistical calibration, application value, independent replay, or publication o
 mainline.
 
 ## References
+
+Cite Sepehr Mahmoudian, *Finite target-copy identities and entropy bounds for categorical MGW synergy* (2026). Include the exact repository commit or release. [Software citation](../../CITATION.cff).
 
 Abdullah Makkeh, Aaron J. Gutknecht, and Michael Wibral, “Introducing a Differentiable Measure of
 Pointwise Shared Information,” *Physical Review E* **103**, 032149 (2021),

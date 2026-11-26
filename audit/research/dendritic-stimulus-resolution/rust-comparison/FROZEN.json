@@ -1,0 +1,19 @@
+{
+  "candidate": "one standard-library Python file converting the raw spike-count word to 1,953 labeled tuples",
+  "files": {
+    "PROTOCOL.md": "76a49caa728ef3e6d60828840fcb31d5c67ee5d14a38c04011130a1136c0e7ce",
+    "ROUTES.md": "f2688b651960f46e6891296f06c63e2ebd852dff49d59f43af12c389e5261bfc",
+    "SOURCE.json": "5c5c882cff4646131d13c9a602dacdf7a433e453dd69d100ffd71de278e0c861",
+    "TOOLCHAIN.json": "6164156f4e1254cf7c8ee941f8ba2be5edef214f95a5be499916f04483553d1f",
+    "compare.py": "0ac01f65214759a98ac7b49cb686bd5b44b504aba0502e1c65b39974a5b7b86f",
+    "controls.py": "85f0085f6aa2ed57a8123bfc85a102e7a6ec3bdff3ddbc6334bf3b07b7cf0262",
+    "measurement.rs": "995b23e906a8ef643021ff01699174a7c65c8422afd3638c47e2157878e14c9d",
+    "replay.py": "131678f23807cc7562a8bc1fe89c6869808e01b8801591c1aa5e27a99f9091e4"
+  },
+  "recorded_before_first_candidate": true,
+  "selection": "first two-mode pass on the frozen criteria; up to four documented candidates",
+  "separate_criteria": "b7ef0ede36751604b3a33b807f7f7c8652374da4ab66515dcb3163765e2c31ac",
+  "source_erratum": "b8f2366bee1ff39051e40d157d105de176764e12bb5b9aa9fa8129f551b74566",
+  "source_first": "2ee0d7cacd2b8fd8119252012db766d31742e1381c16134c9540cc576be0f878",
+  "task": "Finite comparison of 216 labeled Rust atoms on the published Shai control grid; 3 widths \u00d7 18 rules \u00d7 4 atom channels"
+}

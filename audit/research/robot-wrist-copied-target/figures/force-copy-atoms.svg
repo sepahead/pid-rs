@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 828 376" width="828" height="376" role="img" aria-labelledby="title desc">
+<title id="title">Force and torque trends produce two cancelling signed means</title>
+<desc id="desc">In 117 LP4 robot wrist episodes the target is a software copy of the force trend. Force and torque trend counts are 52 down/down, 25 down/up, 23 up/down, and 17 up/up; no flat trends occurred. Each occupied cell shares both a row and a column with another. In nats per episode the torque-only signed atom is minus 0.244337 and the force–torque signed atom is plus 0.244337. Three other added-source atom means are zero. Force predicts 117 of 117 copies perfectly and conditional mutual information from torque is zero.</desc>
+<rect width="828" height="376" fill="#FFFFFF"/>
+<text x="14" y="29" fill="#1F3F60" font-family="Liberation Sans,Arial,sans-serif" font-size="24" font-weight="bold" text-anchor="start">Force and torque trends in 117 wrist episodes</text>
+<text x="15" y="52" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="normal" text-anchor="start">The target copies the force trend. The middle source is constant.</text>
+<line x1="14" y1="66" x2="814" y2="66" stroke="#D2E0E2" stroke-width="1.4"/>
+<text x="15" y="92" fill="#1F6968" font-family="Liberation Sans,Arial,sans-serif" font-size="19" font-weight="bold" text-anchor="start">Observed episode counts</text>
+<text x="180" y="115" fill="#1F3F60" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">Torque trend</text>
+<text x="16" y="141" fill="#1F3F60" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="start">Force trend</text>
+<text x="136.5" y="141" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="middle">Down</text>
+<text x="197.5" y="141" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="middle">Flat</text>
+<text x="258.5" y="141" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="middle">Up</text>
+<text x="325" y="141" fill="#1F3F60" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">Total</text>
+<text x="16" y="172" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="start">Down</text>
+<rect x="106" y="151" width="57" height="26" fill="#D2E0E2" stroke="#1F3F60" stroke-width="1"/>
+<rect x="109" y="154" width="51" height="20" fill="none" stroke="#1F3F60" stroke-width="1"/>
+<text x="134.5" y="170" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="bold" text-anchor="middle">52</text>
+<rect x="167" y="151" width="57" height="26" fill="#FFFFFF" stroke="#E4E7E8" stroke-width="1"/>
+<text x="195.5" y="170" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="normal" text-anchor="middle">0</text>
+<rect x="228" y="151" width="57" height="26" fill="#D2E0E2" stroke="#1F3F60" stroke-width="1"/>
+<rect x="231" y="154" width="51" height="20" fill="none" stroke="#1F3F60" stroke-width="1"/>
+<text x="256.5" y="170" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="bold" text-anchor="middle">25</text>
+<text x="325" y="171" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="middle">77</text>
+<text x="16" y="201" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="start">Flat</text>
+<rect x="106" y="180" width="57" height="26" fill="#FFFFFF" stroke="#E4E7E8" stroke-width="1"/>
+<text x="134.5" y="199" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="normal" text-anchor="middle">0</text>
+<rect x="167" y="180" width="57" height="26" fill="#FFFFFF" stroke="#E4E7E8" stroke-width="1"/>
+<text x="195.5" y="199" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="normal" text-anchor="middle">0</text>
+<rect x="228" y="180" width="57" height="26" fill="#FFFFFF" stroke="#E4E7E8" stroke-width="1"/>
+<text x="256.5" y="199" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="normal" text-anchor="middle">0</text>
+<text x="325" y="200" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="middle">0</text>
+<text x="16" y="230" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="start">Up</text>
+<rect x="106" y="209" width="57" height="26" fill="#D2E0E2" stroke="#1F3F60" stroke-width="1"/>
+<rect x="109" y="212" width="51" height="20" fill="none" stroke="#1F3F60" stroke-width="1"/>
+<text x="134.5" y="228" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="bold" text-anchor="middle">23</text>
+<rect x="167" y="209" width="57" height="26" fill="#FFFFFF" stroke="#E4E7E8" stroke-width="1"/>
+<text x="195.5" y="228" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="normal" text-anchor="middle">0</text>
+<rect x="228" y="209" width="57" height="26" fill="#D2E0E2" stroke="#1F3F60" stroke-width="1"/>
+<rect x="231" y="212" width="51" height="20" fill="none" stroke="#1F3F60" stroke-width="1"/>
+<text x="256.5" y="228" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="bold" text-anchor="middle">17</text>
+<text x="325" y="229" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="middle">40</text>
+<text x="16" y="262" fill="#1F3F60" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="start">Total</text>
+<text x="134.5" y="262" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">75</text>
+<text x="195.5" y="262" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">0</text>
+<text x="256.5" y="262" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">42</text>
+<text x="325" y="262" fill="#1F3F60" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="bold" text-anchor="middle">117</text>
+<text x="16" y="286" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="14" font-weight="normal" text-anchor="start">All four occupied cells share their row and</text>
+<text x="16" y="304" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="14" font-weight="normal" text-anchor="start">their column with other occupied cells.</text>
+<line x1="390" y1="85" x2="390" y2="304" stroke="#D2E0E2" stroke-width="1"/>
+<text x="410" y="92" fill="#1F6968" font-family="Liberation Sans,Arial,sans-serif" font-size="19" font-weight="bold" text-anchor="start">Signed atom means</text>
+<text x="410" y="115" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="start">Nats per episode</text>
+<line x1="623" y1="138" x2="623" y2="236" stroke="#2C3E50" stroke-width="1"/>
+<text x="410" y="143" fill="#1F3F60" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="bold" text-anchor="start">Torque alone</text>
+<rect x="512.559690530966" y="154" width="110.44030946903393" height="11" fill="#1F3F60" stroke="none" stroke-width="1"/>
+<text x="797" y="166" fill="#1F3F60" font-family="Liberation Sans,Arial,sans-serif" font-size="17" font-weight="bold" text-anchor="end">−0.244337</text>
+<text x="410" y="196" fill="#1F6968" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="bold" text-anchor="start">Force and torque together</text>
+<rect x="623" y="207" width="110.44030946903393" height="11" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+<text x="797" y="232" fill="#1F6968" font-family="Liberation Sans,Arial,sans-serif" font-size="17" font-weight="bold" text-anchor="end">+0.244337</text>
+<line x1="510" y1="246" x2="736" y2="246" stroke="#2C3E50" stroke-width="1"/>
+<line x1="510" y1="242" x2="510" y2="250" stroke="#2C3E50" stroke-width="1"/>
+<text x="510" y="266" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="13" font-weight="normal" text-anchor="middle">−0.25</text>
+<line x1="623" y1="242" x2="623" y2="250" stroke="#2C3E50" stroke-width="1"/>
+<text x="623" y="266" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="13" font-weight="normal" text-anchor="middle">0</text>
+<line x1="736" y1="242" x2="736" y2="250" stroke="#2C3E50" stroke-width="1"/>
+<text x="736" y="266" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="13" font-weight="normal" text-anchor="middle">+0.25</text>
+<text x="410" y="286" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="14" font-weight="normal" text-anchor="start">The other three added-source means are zero.</text>
+<text x="410" y="304" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="14" font-weight="normal" text-anchor="start">The two nonzero signed means sum to zero.</text>
+<line x1="14" y1="318" x2="814" y2="318" stroke="#D2E0E2" stroke-width="1.4"/>
+<text x="15" y="341" fill="#1F3F60" font-family="Liberation Sans,Arial,sans-serif" font-size="16" font-weight="bold" text-anchor="start">Force reproduces 117 of 117 copied targets.</text>
+<text x="15" y="364" fill="#2C3E50" font-family="Liberation Sans,Arial,sans-serif" font-size="15" font-weight="normal" text-anchor="start">After force is known, the conditional mutual information from torque is exactly 0 nats.</text>
+</svg>

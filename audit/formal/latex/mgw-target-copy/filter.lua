@@ -17,6 +17,10 @@ function Image(e)
 end
 function Link(e)
   if e.target:match("^https://") or e.target:match("^#") then return e end
+  if e.target == "../../CITATION.cff" then
+    e.target = "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff"
+    return e
+  end
   local target = e.target
   if target:match("^%.%./") then target = "audit/" .. target:gsub("^%.%./", "") end
   if not target:match("^audit/") then target = "audit/evidence/" .. target end

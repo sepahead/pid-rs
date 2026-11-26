@@ -1,8 +1,8 @@
 # Mathematical results guide for November 2026
 
-**Sepehr Mahmoudian · 25 November 2026**
+**Sepehr Mahmoudian · 26 November 2026**
 
-Which information measures come from published work, and what can pid-rs establish about their values, estimates and uses? The guide covers categorical counts, rounded logarithms, nested readings, angular approximation and strict neighbour counts. The angular example gives two sharp pass thresholds and the least number of moments for the full amplitude range. The robot example compares two sets of class labels for the same 47 recorded cases. The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its [28-page PDF](output/pdf/mathematical-results-guide.pdf) cover nine result families.
+Which claims about information measures can the project check? Pages 2–5 compare neuron stimuli, robot failure labels, matched count tables and a target copied from measured force. Later sections cover counts, logarithms, nested sources and strict neighbour counts. The angular example gives two sharp thresholds and the fewest moments for the full range. LP2 and LP3 assign different class labels to the same 47 recorded cases. The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its [28-page PDF](output/pdf/mathematical-results-guide.pdf) cover nine result families.
 
 ## Reading the results
 
@@ -19,6 +19,54 @@ $$
 Set $0\ln0=0$. Each **bootstrap resample** draws four original rows with replacement. With $k$ ones it gives $H(k/4)$. For each original sample, seed 7 and block length one give 200 resamples. Sort their entropies in increasing order. Entries 5 and 194, counting from zero, give the nominal 95% range. [Derivation and software scope](FINITE_COPY_BOOTSTRAP_COVERAGE.md)
 
 Both constant samples give $[0,0]$. Their total probability is $(1-p)^4+p^4=17/81$. Each of the other 14 ordered samples gave endpoints zero and approximately $\ln2$ nats, enclosing $H(1/3)$. The covered probability is $1-17/81=64/81$. [Exact table and stored endpoints](audit/evidence/finite-copy-bootstrap-coverage/README.md)
+
+---
+
+## A stored bit on 651 neuron simulation settings
+
+Shai and colleagues simulated a neuron at 31 basal input levels and 21 tuft input levels. Give each of the 651 settings equal weight. The target groups the spike counts into three classes. They contain zero, one or two, and three or four spikes, respectively. The two recorded sources are the basal and tuft counts rounded down to multiples of 100. A third source stores a bit equal to one when the original basal count exceeds the original tuft count. [Original control data and study](audit/research/dendritic-stimulus-resolution/EVIDENCE.md)
+
+Predict the most frequent class at each pair of recorded input ranges. Adding the bit leaves **486 of 651** predictions correct. It still changes probabilities. In one pair of ranges the high-spike class occurs at 70 of 100 settings. Splitting by the bit gives 31 of 55 and 39 of 45. It remains the most frequent class in both groups. Over the whole grid the bit adds **0.011554 nats** of conditional mutual information, the reduction in mean log loss when the empirical class probabilities are known.
+
+![Mean signed contributions and Williams–Beer values for the five positions at input width 100.](audit/research/dendritic-stimulus-resolution/figures/five-contributions.svg)
+
+The Makkeh–Gutknecht–Wibral (MGW) mean contribution at the bit-alone position is **−0.059624 nats**. Four other positions have positive values. Williams and Beer's minimum-specific-information decomposition assigns the whole gain to the position for all three sources together, and exactly zero to each of the other four. A separate test fitted probabilities after removing one entire input level at a time. Adding the bit reduced average log loss in both procedures at width 100 and increased it in both procedures at width 50. A choice about storing the bit can use that test and a cost for storage. The signed values explain how this empirical decomposition assigns the gain. [All five values and prediction results](audit/research/dendritic-stimulus-resolution/README.md) · [Report](output/pdf/dendritic-stimulus-resolution.pdf)
+
+---
+
+## Force and torque in the robot failure records
+
+One observation is one recorded robot episode. The two sources are the signs of its axial force and torque trends. The target is the recorded task-specific outcome class. Count the episodes with the same signs and class, then divide by the number of episodes to obtain their empirical probabilities. Each task has its own table. [Donor records and construction](audit/research/robot-wrist-slope-signs/EXPOSITION.md)
+
+In task **LP4**, four ways to predict the most frequent class give **72 correct out of 117**. These use the overall class counts, force alone, torque alone and both signs. Conditional mutual information measures the **0.017518 nats per episode** that force adds given torque. How much of that total is unique to force depends on the decomposition. Williams and Beer's minimum uses force in each of the three target classes. Its force-unique contribution is exactly **zero**. MGW assigns **−0.000415 nats** to force alone and **+0.017934 nats** to the joint-only position. The two signed values sum to the same added information, to the precision shown.
+
+In **LP5**, the overall class counts give 47 correct out of 164, force gives 49, torque gives 47 and both signs give 52. Here torque is the class-specific Williams–Beer minimum for each of the five classes. Its torque-unique contribution is exactly **zero**. MGW assigns **−0.000804 nats** to this position. The comparison uses the same episode labels and source grouping. To evaluate a future failure classifier, specify its training and test episodes and score its predictions. [Five task tables and exact class-specific comparisons](audit/research/robot-wrist-slope-signs/imin-comparison.json) · [Report](output/pdf/robot-wrist-slope-signs.pdf)
+
+---
+
+## Two perfectly predicted targets with identical subset entropies
+
+In the RndErr example of Makkeh, Gutknecht and Wibral, a noisy source has negative unique information balanced by positive synergy. The other source gives the target exactly. The two matching cells in Finn and Lizier’s original table have probability 3/8 each, and the mismatches have probability 1/8 each. [MGW §VI.C, Table III](https://arxiv.org/pdf/2002.03356v5#page=11) · [Finn–Lizier §5.4](https://doi.org/10.3390/e20040297)
+
+In the project’s two tables below, the target copies the first source, the second is constant and the third labels the columns. Each table has four equiprobable occupied cells. Either target can be predicted perfectly from its first source. The third adds zero conditional information.
+
+![Four observations in each of two counted tables with identical Shannon subset entropies.](audit/research/categorical-third-source-budget-sharpness/figures/copy-target-counts.svg)
+
+Both tables have row and column totals $(1,2,1)$. Delete the constant and identify the copied labels. Each subset then contains neither variable, the first alone, the third alone or both. Thus **all 16** subset entropies agree.
+
+Five positions require the third source in every alternative group. Adding their signed means gives zero. The earlier two-source formula, Eq. (19), shows that each occupied cell contributes nonnegative synergy. Its Eqs. (28)–(29) give the RndErr example. The sum of their absolute values is **one-half ln(4/3)** nats in the first table and **zero** in the second. For any finite table under these assumptions, all five vanish exactly when every occupied cell is alone in its row or alone in its column. The same entropies can therefore give different sums. [Earlier two-source factorization and example](audit/evidence/finite-target-copy-mgw-synergy.md) · [Proof for finite tables](audit/research/categorical-third-source-budget-sharpness/independent/copy-target/COPY-TARGET.md) · [Worked signs and alternatives](audit/research/categorical-third-source-budget-sharpness/independent/copy-target/SIGNIFICANCE.md) · [Report](output/pdf/categorical-third-source-budget-sharpness.pdf)
+
+---
+
+## A software check on measured force and torque
+
+Return to the **same 117 LP4 episodes**. Change the question. Set the first source to the force-trend sign, the second source to a constant and the third to the torque-trend sign. Make the target a software copy of the first source. Force alone then predicts this target in **117 of 117** episodes. The added conditional mutual information from torque is exactly zero. These numbers concern the copied force sign. The preceding LP4 failure-label result uses the donor's recorded diagnoses.
+
+The project takes the sign of the least-squares slope fitted to all 15 axial readings in an episode. The donor's published trend rule compares the averages of the first five and last five readings. Using the project's rule, the force-by-torque counts are 52, 25, 23 and 17, in row order down then up and column order down then up. Each of the four occupied cells shares its row and its column. The preceding support test therefore requires nonzero contributions even though their signed sum is zero. [Original feature, Eq. 23.3](https://doi.org/10.1007/978-1-4615-5725-8_23) · [Data and two count calculations](audit/research/robot-wrist-copied-target/README.md)
+
+![Signed contributions for a target that copies the force-trend sign in the 117 records.](audit/research/robot-wrist-copied-target/figures/force-copy-atoms.svg)
+
+The torque-only mean is **−0.244337 nats per episode**. The force-with-torque mean is **+0.244337**, and the other three relevant means are exactly zero. Their signed sum is zero and the sum of their absolute values is **0.488674 nats**. A program that sets every torque-dependent mean to zero when conditional mutual information vanishes would pass the prediction check and fail this measured count-table check. Two separately implemented calculations read the raw observations. The Rust comparison checks all ten values returned by the two decompositions. [Recorded evidence and numerical limits](audit/research/robot-wrist-copied-target/EVIDENCE.md) · [Report](output/pdf/robot-wrist-copied-target.pdf)
 
 ---
 

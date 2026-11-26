@@ -1,0 +1,27 @@
+# Ten Rust information values on the copied-force target
+
+This bounded calculation tests two public Rust functions on 117 observed robot episodes. One input is the sign of axial force trend, another is constant, and the third is the sign of axial torque trend. The target is a copy of the force sign. Reading force alone predicts all 117 copies. The task-specific donor failure labels define a different question. The data come from *Robot Execution Failures*, donated by Luís Seabra Lopes and Luís M. Camarinha-Matos. [UCI data and licensing](https://doi.org/10.24432/C5M89N)
+
+Commit `6a9f087be84bc21a89ff51e7da8e626e6883d73e` provides the two stable empirical functions. The 117 episode signs are reconstructed in donor-file order from the original ZIP. Negative and positive signs have the integer codes 0 and 1. Each of four categorical input matrices has 117 rows and one column. The two counts by torque sign are 52 and 25 at negative force, and 23 and 17 at positive force. Bit masks 1, 2 and 4 select force, the constant and torque. A mask list with more than one mask has one entry per alternative source group. For each method, the checker reads the labels returned with all 18 atoms, then compares five named positions. The five MGW values are empirical means of signed atoms after inversion. The five Williams–Beer values are empirical atoms of minimum specific information. [Categorical shared exclusions](https://doi.org/10.1103/PhysRevE.103.032149) · [Williams–Beer minimum specific information](https://arxiv.org/abs/1004.2515v1) · [Stable source](https://github.com/sepahead/pid-rs/blob/6a9f087be84bc21a89ff51e7da8e626e6883d73e/crates/pid-core/src/lib.rs)
+
+| Returned mask | Exact mean from the shared-exclusions product | Rust shared-exclusions mean, nats | Absolute error, nats | Rust Williams–Beer mean, nats |
+| --- | --- | ---: | ---: | ---: |
+| 04 | −ln(Q)/117 | −0.244336967851845388 | 1.196 × 10⁻¹⁶ | 0 |
+| 05 | +ln(Q)/117 | +0.244336967851845305 | 3.630 × 10⁻¹⁷ | 0 |
+| 06 | 0 | 0 | 0 | 0 |
+| 05+06 | 0 | −1.826648993507202 × 10⁻¹⁷ | 1.827 × 10⁻¹⁷ | 0 |
+| 07 | 0 | +5.930678550348058 × 10⁻¹⁸ | 5.931 × 10⁻¹⁸ | 0 |
+
+The exact positive product is Q = (231/208)⁵² (1617/1175)²⁵ (750/529)²³ (336/221)¹⁷. It gives ln(Q)/117 ≈ 0.244336967851845268 nats. For Williams–Beer, the target value fixes force. Any group with force has that target's full surprisal. A group with torque and no force has the specific information in torque when the target is known. The constant has zero. The torque-specific information lies between zero and the surprisal of the target. Apply this ordering to take the minimum for every rule and invert the two coefficients at all 18 nodes. Both coefficients vanish at every one of the five selected nodes. Thus all five Williams–Beer means are exactly zero here. The observed MGW outputs contain two signed residuals at mathematical zero. The five Williams–Beer binary64 words are all positive zero. [Original words](observed/native-words.json) · [Ten labeled results and absolute errors](observed/ten-results.json) · [Numeric and input controls](observed/hostile-comparisons.json)
+
+## Rust implementation and computational cost
+
+The original calculation called `pid_core::stable::categorical::discrete_sxpid3_averaged` and `pid_core::stable::imin::imin_pid3` on four observed complete keys with cardinalities 2, 1, 2 and 2. It reused the original feature-free Rust library from the pinned 141-file source. The Shai client has a 651-row requirement, which rejected the 117-row input. One separate offline compiler call built the LP4 client. The shared guard allowed 1,073,741,824 bytes and 150 seconds. It recorded 44,449,792 bytes in its largest of two samples over 2.06 seconds. Sampling does not measure intermediate peaks. The new client compile took 0.58 seconds on that machine with the existing library. Normal and optimized Python checks invoked the same new binary and received the same raw words. These durations include orchestration specific to this host. The two empirical methods use their original Rust allocation policy. No fit, held-out forecast or statistical error interval is involved. [Registered measurement and exact threshold](portable/PROTOCOL.md) · [Observed resource and operation record](OBSERVATION.json) · [New native caller](portable/measurement.rs)
+
+With Python 3.11 or later and the original UCI download, the following command rechecks all 117 signs, every named value against the frozen 10⁻¹²-nat tolerance, and the opposed cases. Replace `robot+execution+failures.zip` by the path of that original file. Include `-O` immediately after `python3` to repeat the check with optimized Python.
+
+```sh
+python3 -I -S -B replay.py --archive robot+execution+failures.zip --recorded
+```
+
+Use `--binary PATH` in place of `--recorded` to execute an existing LP4 client. The retained native stream and this executable route were each checked twice. For a separate cold build, `--repository PATH` extracts the original 141 Git blobs in a fresh temporary directory and builds one caller with Cargo, `--locked`, `--offline`, no default features and one job. This optional route requires an offline crate cache, Rust and Cargo. The original measured job linked the already audited native libraries. On another toolchain or machine the program records exact raw-word agreement separately from the ten bounded comparisons. [Repository citation](https://github.com/sepahead/pid-rs/blob/6a9f087be84bc21a89ff51e7da8e626e6883d73e/CITATION.cff)

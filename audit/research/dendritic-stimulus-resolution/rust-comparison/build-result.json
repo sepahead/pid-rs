@@ -1,0 +1,19 @@
+{
+  "binary_sha256": "e763de8d478b5c97db658d55d8238cf943d9d559680dcf08ad969568dd4c25ef",
+  "compiler": {
+    "cargo": {
+      "sha256": "6d576d8058f8ca643e8fce55b64ee3c614ba64c9da2e536bae843e6a2e1f3951",
+      "version": "cargo 1.99.1 (5f94df478 2026-08-27)"
+    },
+    "rustc": {
+      "sha256": "1ba7bb8e273bd64125f4048d2ecce530e0a6470e565ab1b3aecf0b82b532f7b1",
+      "version": "rustc 1.99.1 (58cf8f9c3 2026-10-13)\nbinary: rustc\ncommit-hash: 58cf8f9c35b355199727627d07ae34a4e2846d67\ncommit-date: 2026-10-13\nhost: aarch64-apple-darwin\nrelease: 1.99.1\nLLVM version: 23.1.1"
+    }
+  },
+  "features": [],
+  "git": "6a9f087be84bc21a89ff51e7da8e626e6883d73e",
+  "measurement_sha256": "995b23e906a8ef643021ff01699174a7c65c8422afd3638c47e2157878e14c9d",
+  "original_source_files": 141,
+  "profile": "dev, debug information off",
+  "tree": "939c12c0fd9de128cbb656a13760bb19086aaaff"
+}

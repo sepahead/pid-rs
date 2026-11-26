@@ -3,7 +3,7 @@ function Pandoc(doc)
   if doc.blocks[1].t ~= "Header" or pandoc.utils.stringify(doc.blocks[1]) ~= "Mathematical results guide for November 2026" then
     error("unexpected current guide title")
   end
-  if pandoc.utils.stringify(doc.blocks[2]) ~= "Sepehr Mahmoudian · 25 November 2026" then
+  if pandoc.utils.stringify(doc.blocks[2]) ~= "Sepehr Mahmoudian · 26 November 2026" then
     error("unexpected current guide byline")
   end
   doc.blocks:remove(1)
@@ -13,6 +13,9 @@ function Pandoc(doc)
     HorizontalRule = function() return pandoc.RawBlock("latex", "\\clearpage") end,
     Image = function(image)
       local figures = {
+        ["audit/research/robot-wrist-copied-target/figures/force-copy-atoms.svg"] = "force-copy-atoms.pdf",
+        ["audit/research/dendritic-stimulus-resolution/figures/five-contributions.svg"] = "five-contributions.pdf",
+        ["audit/research/categorical-third-source-budget-sharpness/figures/copy-target-counts.svg"] = "copy-target-counts.pdf",
         ["audit/research/angular-ray-monotonicity/figures/angular-ray-thresholds.svg"] = "angular-ray-thresholds.pdf",
         ["audit/research/signed-log-certificate-enclosure/figures/intervals.svg"] = "intervals.pdf",
         ["audit/research/nested-categorical-sources/figures/partitions-and-margin.svg"] = "partitions-and-margin.pdf",

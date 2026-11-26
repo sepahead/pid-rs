@@ -98,7 +98,7 @@ id = "generic-api-key"
   # Each value below is the SHA-256 of a public report or figure. The separate
   # rule for each file binds its full manifest key, its content digest and its value.
   [[rules.allowlists]]
-  description = "Exact public content checksum of the quoted-state figure PDF in three named guide manifests"
+  description = "Exact public content checksum of the quoted-state figure PDF in four named guide manifests"
   condition = "AND"
   regexTarget = "line"
   regexes = ['''(?m)^[ \t]*"audit/research/categorical-state-token/figures/quoted-token-boundaries[.]pdf":[ \t]*"eedb96823fe028f906aa5707e21827e5e5b14ad41517a0ebd86a0966dede491f",?[ \t]*$''']
@@ -107,10 +107,11 @@ id = "generic-api-key"
     '''^audit/formal/latex/mathematical-results-guide-current/edition[.]json$''',
     '''^audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-categorical-inputs-angular-decisions-and-neighbour-counts[.]json$''',
     '''^audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-nested-categorical-and-signed-logarithm-bounds[.]json$''',
+    '''^audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-logarithm-library-and-numerical-checks[.]json$''',
   ]
 
   [[rules.allowlists]]
-  description = "Exact public content checksum of the quoted-state figure SVG in three named guide manifests"
+  description = "Exact public content checksum of the quoted-state figure SVG in four named guide manifests"
   condition = "AND"
   regexTarget = "line"
   regexes = ['''(?m)^[ \t]*"audit/research/categorical-state-token/figures/quoted-token-boundaries[.]svg":[ \t]*"fa72b044cc94e1deb6521a061f9cb4e57edeb45dde58280ff6829cfa3e3d89d0",?[ \t]*$''']
@@ -119,10 +120,11 @@ id = "generic-api-key"
     '''^audit/formal/latex/mathematical-results-guide-current/edition[.]json$''',
     '''^audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-categorical-inputs-angular-decisions-and-neighbour-counts[.]json$''',
     '''^audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-nested-categorical-and-signed-logarithm-bounds[.]json$''',
+    '''^audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-logarithm-library-and-numerical-checks[.]json$''',
   ]
 
   [[rules.allowlists]]
-  description = "Exact public content checksum of the categorical state-token report in three named guide manifests"
+  description = "Exact public content checksum of the categorical state-token report in four named guide manifests"
   condition = "AND"
   regexTarget = "line"
   regexes = ['''(?m)^[ \t]*"output/pdf/categorical-state-token[.]pdf":[ \t]*"6a25b3c1a1f6e888f7fbb9c0511452ac83fa13f381ccdaa1c3d226d857aa0ed3",?[ \t]*$''']
@@ -131,4 +133,5 @@ id = "generic-api-key"
     '''^audit/formal/latex/mathematical-results-guide-current/edition[.]json$''',
     '''^audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-categorical-inputs-angular-decisions-and-neighbour-counts[.]json$''',
     '''^audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-nested-categorical-and-signed-logarithm-bounds[.]json$''',
+    '''^audit/formal/latex/mathematical-results-guide-current/edition-2026-11-25-logarithm-library-and-numerical-checks[.]json$''',
   ]

@@ -1,0 +1,8 @@
+{
+  "attempt": "01",
+  "created_utc": "2026-11-26T10:50:31.875454+00:00",
+  "field": "5432613b8b8706c8726be11793900e65a4f73df76c003ae939b2cd1585429196",
+  "permitted": "candidate/prepare.py",
+  "purpose": "parse unaltered numerical file; derive tuples; no reference input and no estimator calls",
+  "state": "registered before candidate creation"
+}

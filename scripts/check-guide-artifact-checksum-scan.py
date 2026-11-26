@@ -16,6 +16,7 @@ PROFILES = (
     GUIDE + "edition.json",
     GUIDE + "edition-2026-11-25-categorical-inputs-angular-decisions-and-neighbour-counts.json",
     GUIDE + "edition-2026-11-25-nested-categorical-and-signed-logarithm-bounds.json",
+    GUIDE + "edition-2026-11-25-logarithm-library-and-numerical-checks.json",
 )
 FIGURES = "audit/research/categorical-state-token/figures/"
 # The first review commit contains these three published files and their first guide profile.
