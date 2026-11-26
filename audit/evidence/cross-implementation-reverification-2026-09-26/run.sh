@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Reproduce the cross-implementation re-verification checks of 26 September 2026.
+# Reproduce the September 2026 checks with the November 2026 hostile-input observer.
 #
 # Usage: run.sh <commit> <fresh-work-dir> [--with-test-suite]
 #
@@ -36,6 +36,10 @@ case "$work/" in
   "$repo"/*) echo "run.sh: work directory must lie outside the checkout: $work" >&2; exit 2 ;;
 esac
 full_commit="$(git -C "$repo" rev-parse --verify "$commit^{commit}")"
+if ! python3 -c 'import numpy' >/dev/null; then
+  echo "run.sh: install NumPy for the selected Python interpreter." >&2
+  exit 2
+fi
 
 mkdir -p "$work/src" "$work/out"
 export CARGO_TARGET_DIR="$work/target"
@@ -70,14 +74,33 @@ python3 "$here/python/check_continuous.py" "$work/out/continuous_dump.json" \
 stamp "check_continuous" "$step"
 step="$(date +%s)"
 python3 "$here/python/check_one_lambda.py" >"$work/out/check_one_lambda.txt"
+for mode in ordinary optimized; do
+  flags=(-I -S -B)
+  if [[ "$mode" == optimized ]]; then flags=(-O -I -S -B); fi
+  python3 "${flags[@]}" "$here/python/check_one_lambda_integer.py" --self-test >"$work/out/one_lambda_integer.$mode.json"
+  python3 "${flags[@]}" "$here/python/exact_local_bound.py" >"$work/out/one_lambda_independent.$mode.json"
+  python3 "${flags[@]}" "$here/python/original_panel_identity.py" "$here/python/check_one_lambda.py" \
+    "$work/out/one_lambda_independent.$mode.json" >"$work/out/one_lambda_original_panel.$mode.json"
+done
 stamp "check_one_lambda" "$step"
 step="$(date +%s)"
 python3 "$here/python/check_percentile_index.py" >"$work/out/check_percentile_index.txt"
 stamp "check_percentile_index" "$step"
 step="$(date +%s)"
-python3 "$here/python/checker_self_test.py" "$work/out/discrete_dump.json" \
-  "$work/out/continuous_dump.json" >"$work/out/checker_self_test.txt"
-stamp "checker_self_test" "$step"
+# The original positive data and each changed input must receive their own
+# numerical result or the expected input diagnostic in both interpreter modes.
+PYTHONOPTIMIZE=0 python3 -B "$here/python/checker_self_test_v2.py" \
+  "$work/out/discrete_dump.json" "$work/out/continuous_dump.json" >"$work/out/checker_self_test_v2.txt"
+PYTHONOPTIMIZE=0 python3 -O -B "$here/python/checker_self_test_v2.py" \
+  "$work/out/discrete_dump.json" "$work/out/continuous_dump.json" >"$work/out/checker_self_test_v2.optimized.txt"
+cmp "$work/out/checker_self_test_v2.txt" "$work/out/checker_self_test_v2.optimized.txt"
+PYTHONOPTIMIZE=0 python3 -B "$here/python/checker_self_test_v2_controls.py" \
+  >"$work/out/checker_self_test_v2_controls.txt"
+PYTHONOPTIMIZE=0 python3 -O -B "$here/python/checker_self_test_v2_controls.py" \
+  >"$work/out/checker_self_test_v2_controls.optimized.txt"
+cmp "$work/out/checker_self_test_v2_controls.txt" "$work/out/checker_self_test_v2_controls.optimized.txt"
+stamp "checker_self_test_v2" "$step"
+
 step="$(date +%s)"
 python3 "$here/python/check_smt_obligations.py" "$work/src" >"$work/out/check_smt_obligations.txt"
 stamp "check_smt_obligations" "$step"
@@ -119,10 +142,14 @@ compare() {
     status=1
   fi
 }
+for name in one_lambda_integer one_lambda_independent one_lambda_original_panel; do
+  compare "$work/out/$name.ordinary.json" "$here/results/$name.json"
+  compare "$work/out/$name.optimized.json" "$here/results/$name.json"
+done
 compare "$work/out/discrete_dump.json" "$here/inputs/discrete_dump.json"
 compare "$work/out/continuous_dump.json" "$here/inputs/continuous_dump.json"
 for name in check_discrete check_continuous check_one_lambda check_percentile_index \
-    checker_self_test check_smt_obligations check_smt_obligations_self_test; do
+    checker_self_test_v2 checker_self_test_v2_controls check_smt_obligations check_smt_obligations_self_test; do
   compare "$work/out/$name.txt" "$here/results/$name.txt"
 done
 compare "$work/out/diagnose_one_lambda_binary64_v1.txt" \

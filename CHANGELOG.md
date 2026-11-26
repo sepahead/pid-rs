@@ -8,6 +8,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 - Verify three checksums in the mathematical results guide against the published files that produced them. The full-history credential scan retains the original failed job and checks the exact fields and their neighbors. [Source and repeatable checks](audit/evidence/guide-artifact-checksum-scan-2026-11-25/README.md)
+- Clarify the joint product-law premise in the [five-position entropy-ceiling proof](output/RESEARCH_NOTES_2026_10_10.md#the-entropy-ceiling-can-be-approached-not-always-attained). A fair exclusive-or example satisfies pairwise independence and fails the required equality. [Finding 168 and source history](audit/evidence/corrections-and-counterexamples.md)
+
+- Added a [public index of corrections and counterexamples](audit/evidence/corrections-and-counterexamples.md). It links individual findings to a statement, a reproducible example or an original source. The November integer check compares local cumulative shared-exclusions values, before subtraction of lower contributions gives the atoms. It proves 39 informative and 51 misinformative equalities on the original finite continuity panel. All 634,112 signed comparisons are strict. [Exact finite records](audit/evidence/cross-implementation-reverification-2026-09-26/results/one_lambda_independent.json)
+
+- Corrected the September finite-comparison observer. It now verifies both original numerical outputs and the expected reason for each of 17 changed inputs in ordinary and optimized Python. The original test and its two reproduced false successes remain available.
+- Recorded three stock Linux checks of two existing Mathlib logarithm bounds, including the two earlier failed fields and the complete successful field. [Statements and results](audit/formal/real-log-library-read/HOSTED-RESULTS.md)
+
 - Bound the width for each returned coordinate from an admitted categorical table with up to 1,024 occupied rows. Two occupied rows attain the maximum of two output grid units at each scheduled precision. The [signed logarithm study](audit/research/signed-log-certificate-enclosure/EXPOSITION.md) includes 13 stock statements about finite sums and nine about final signed rounding. Its real logarithm proof and earlier rejected attempts have separate records.
 
 - Give the 108 exact coordinates of finite categorical shared exclusions for three nested source readings and an arbitrary target. Prove the smallest product that can expose a failed map for each number of occupied fine labels. Six stock kernel proofs cover finite event and order statements and an integer sum. [Study and evidence](audit/research/nested-categorical-sources/EXPOSITION.md)
@@ -355,7 +362,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   second implementation written from the published definitions reproduced the categorical MGW
   and Williams-Beer atoms (60 seeded systems, 2-4 sources) and the continuous KSG1, Ehrlich,
   PID2 and PID3 values (6 systems) within 8.9e-16 nats on commits `d1f401a` and `0e96b2b`. An
-  exact-rational test found no violation of the one-Lambda bound in 634,112 evaluations; an
+  original test compared rounded logarithms on integer laws in 634,112 evaluations; an
   archived binary64 version and an exact diagnostic show that its apparent violations came from
   a construction that broke the total-mass premise. The report records the independence limits,
   both review rounds, eleven routes and the fixes above. `run.sh` reproduces every retained

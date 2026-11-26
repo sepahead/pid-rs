@@ -124,7 +124,7 @@ fixed seed. Its 3,216 categorical callback evaluations gave exact outer-law cove
 The measured release-stage times and locked standalone driver are in the
 [finite copy-law study](FINITE_COPY_BOOTSTRAP_COVERAGE.md).
 
-A scalar continuity modulus or a fixed-form confidence bound is usually cheap to evaluate once all required constants are supplied. Obtaining justified constants can be the difficult part. An observed minimum cell count does not establish a population mass floor. A declared dependence coloring does not establish independence within each color.
+A scalar continuity modulus or a fixed-form confidence bound is usually cheap to evaluate once all required constants are supplied. Obtaining justified constants can be the difficult part. The [finite local-bound check](audit/evidence/cross-implementation-reverification-2026-09-26.md) checks common support and exact total mass, then compares integer products at every occupied row and source family. Its 3,999 pairs of laws are an offline Python panel with up to 81 joint cells per law. An observed minimum cell count does not establish a population mass floor. A declared dependence coloring does not establish independence within each color.
 
 Formula evaluation cost does not imply that a matching Rust helper exists. Each study must name its actual implementation or state that the formula remains a proposed implementation.
 
@@ -193,3 +193,7 @@ Given a positive rational product, a positive total and output precision $p$, th
 The repository has [Criterion benchmarks](crates/pid-core/benches/estimators.rs) for continuous kernels, quantization and small categorical cases. They are a starting point, not an end-to-end robotics qualification. Record an exact release build and its source revision, compiler/features, hardware, $N,K,D,s$, alphabets and occupancy, selected API, preprocessing cost, thread count, resource limits, warm-up, repetitions, elapsed-time distribution, peak memory and refused or cancelled cases. Keep estimator time separate from model inference, compilation and Lean/checker execution. No current timing number is asserted in this note.
 
 The first optimization candidates are caching the fixed lattice and its predecessor relation, reusing exact integer event counts, and computing only the MI quantities required by the task. For a fixed lattice and a common finite PMF, Möbius inversion is linear, so averaging cumulative values before inversion is valid in exact arithmetic. It changes the current floating-point evaluation order and it needs an explicit numerical contract and comparison before adoption. Sample or prefix approximations also need bias, variance and stopping-cost evidence. No optimization is marked implemented by being listed here.
+
+### Stock proof check of two existing logarithm bounds
+
+The Linux proof job compiled two uses of existing Mathlib inequalities. Its separate stock checker took 247.057 seconds with a maximum sampled process-group resident memory of 2,883,604,480 bytes. One Lean worker ran at a time. This measures proof checking on the recorded host. The categorical estimator has its own input, run time and memory costs. [Host, versions, original failures and successful result](audit/formal/real-log-library-read/HOSTED-RESULTS.md)

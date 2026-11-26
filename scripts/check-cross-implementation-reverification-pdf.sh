@@ -9,7 +9,7 @@ HEADER="$ROOT/audit/formal/latex/cross-implementation-reverification/publication
 FILTER="$ROOT/audit/formal/latex/cross-implementation-reverification/filter.lua"
 TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
 CHECK_NAME="Cross-implementation re-verification PDF check"
-EXPECTED_PAGES="24"
+EXPECTED_PAGES="25"
 MODE="${1:---exact}"
 
 if [[ $# -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then
@@ -112,7 +112,11 @@ validate_pdf() {
       'PID-RS TECHNICAL REPORT SERIES' \
       'Percentile indices: defect and fix' \
       'Why the retired binary64 test reported ratios above one' \
-      'Correction: intrinsic-dimension provenance' \
+      'Exact tests on the seeded laws' \
+      '0.9999996544072924' \
+      'Why a tolerance cannot certify equality.' \
+      'Checking the reason for each refusal' \
+    'Correction: intrinsic-dimension provenance' \
       'Rust implementation and computational cost' \
       'Routes considered' \
       'Paired Gaussian reference diagnostic' \
@@ -220,9 +224,15 @@ expected_repository_uris = {
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_percentile_index.py",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_smt_obligations.py",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/checker_self_test.py",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/checker_self_test_v2.py",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/hostile-input-observer-2026-11-25.json",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/check_continuous.txt",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/check_discrete.txt",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/check_one_lambda.txt",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/check_one_lambda_integer.py",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/python/exact_local_bound.py",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/FINITE-CONTINUITY.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/one_lambda_independent.json",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/publication-profile-rebuilds.txt",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/reproduction-confirmation.txt",
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/cross-implementation-reverification-2026-09-26/results/test_suite_0e96b2b.log",
@@ -279,7 +289,7 @@ if len(form_xobjects) != 1:
     fail(f"form XObject inventory changed: {len(form_xobjects)}")
 if observed_repository_uris != expected_repository_uris:
     fail(f"repository-navigation URI inventory changed: {sorted(observed_repository_uris)}")
-expected_action_counts = {"/GoTo": 0, "/GoToR": 0, "/URI": 49}
+expected_action_counts = {"/GoTo": 0, "/GoToR": 0, "/URI": 56}
 if action_counts != expected_action_counts:
     fail(f"navigation inventory changed: {action_counts}")
 print(

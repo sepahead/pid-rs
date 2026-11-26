@@ -56,7 +56,7 @@ end
 function Para(element)
   -- The title page carries the author and date; drop the duplicated Markdown byline.
   if not dropped_byline and dropped_title
-      and pandoc.utils.stringify(element.content) == "Sepehr Mahmoudian · 26 September 2026" then
+      and pandoc.utils.stringify(element.content) == "Sepehr Mahmoudian · 26 September 2026 · Revised 25 November 2026" then
     dropped_byline = true
     return {}
   end

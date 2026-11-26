@@ -280,11 +280,28 @@ counterexamples, not executed studies or numerical certificates.
 
 ### The entropy ceiling can be approached, not always attained
 
-This argument allows source alphabets to vary. Let `X` be uniform on `L`
-labels, where `L` is a positive integer. Keep finite variables `U,V` and
-their laws fixed as `L` grows; let them be independent of each other and
-of `X`. Set `S1=X`, `S2` constant,
-`S3=(U,V)` and `T=(X,U)`. Then `H3=H(U)+H(V)`, `H3T=H(V)`, `G=H(U)`.
+Fix the probability laws of two independent finite variables $U$ and $V$.
+For each positive integer $L$, give $X_L$ the uniform law on $L$ labels
+and make $X_L$ independent of the *pair* $(U,V)$. Equivalently, use the
+following joint law at every supported triple:
+
+$$
+P(X_L=x,U=u,V=v)=L^{-1}P(U=u)P(V=v).
+$$
+
+In this paragraph, write $X=X_L$. Set $S_1=X$, take $S_2$ constant,
+set $S_3=(U,V)$ and $T=(X,U)$. Then $H_3=H(U,V\mid X)=H(U)+H(V)$,
+$H_{3T}=H(U,V\mid X,U)=H(V)$, and $G=H(U)$. The same fixed law of
+$(U,V)$ occurs in every term of the limiting sequence.
+
+Pairwise independence is insufficient. Take $U,V$ independent fair bits
+and let $X$ be their exclusive-or. The four triples $(X,U,V)$ are
+$(0,0,0)$, $(1,0,1)$, $(1,1,0)$ and $(0,1,1)$, each of probability $1/4$.
+Every pair of variables is independent. Given either value of $X$, two
+equiprobable pairs $(U,V)$ remain. Thus $H(U,V\mid X)=\ln2$ nats, while
+$H(U)+H(V)=2\ln2$. At the all-zero row, the event that $X=0$ or that
+$(U,V)=(0,0)$ has probability $1/2$. Its probability in the independent
+product family with $L=2$ is $5/8$. Use the product family for the limit below.
 
 For each supported pair `(u,v)`, let `p_uv=P(U=u,V=v)>0`. The `{3;12}`
 union has mass `1/L+(1-1/L)p_uv`; its target-conditioned mass is one.

@@ -154,6 +154,8 @@ Suppose a producer submits an ordered pair of output-grid integers $a\leq b$. If
 
 For the count-table verifier, $d=N2^{24}$ for total count $N\geq1$. A separate argument about the counted data supplies $u-l\leq1385(1+80N)$ when the input has up to 1,024 occupied rows. Nine stock Lean declarations include the deduction from this integer bound to $u-l<d$ and $W\leq2$. The real logarithm identity, the input bound and the relation to the program each need their own evidence. [Exact statements and stock replay](audit/research/signed-log-certificate-enclosure/grid/README.md) · [Proof, worked inputs and scope](audit/research/signed-log-certificate-enclosure/EXPOSITION.md)
 
+A separate Linux run checked two existing real inequalities from Mathlib, the Lean mathematics library. For an argument from zero up to one, excluding one, they bound the logarithm using a finite sum of odd powers. The stock compiler and a fresh checker accepted both declarations. The signed-logarithm study gives a separate written argument for the sharper tail and its connection to the integer sum. [Exact statements, worked interval and all three runs](audit/formal/real-log-library-read/HOSTED-RESULTS.md)
+
 ---
 
 ## Published methods and the results established in pid-rs

@@ -201,3 +201,25 @@ projection. The two report filters now preserve those spaces before TeX line spl
 cross-report PDF check requires the complete spaced command. The Markdown command was correct.
 The review also replaced a split short code token with equivalent prose. These are publication
 repairs, with no change to the scientific execution records.
+
+## November 2026 change to the hostile-input test
+
+The September result recorded a nonzero exit for each changed input. The November reproduction
+requires two successful original inputs and the expected diagnostic for each of those same 17
+changes. In a direct optimized run, the older self-test accepted a missing numerical dependency
+and a bad original input. Section 14.8 of the [report](../cross-implementation-reverification-2026-09-26.md)
+gives the conditions and outcomes. The dated September observations above retain their original scope.
+
+A later reading found that the first correction accepted a negative maximum absolute difference
+and a changed printed estimate. The current reader checks all four nonnegative maxima. For each
+of the two printed estimates, it verifies the signed difference against the submitted input and
+the two print precisions. The control suite changes each maximum and each printed estimate.
+
+A further source reading found that the observer accepted a negative zero maximum and extra
+printed digits. The current test checks each original numeric format. It also requires the
+complete stored numerical output on the two original inputs and three specific numerical
+refusals. The finite results on the original data passed again.
+
+## Equality in the local continuity panel
+
+The September program generated integer weights, then evaluated logarithms at 80 decimal digits. It counted a tie when the ratio was at least $1-10^{-60}$. It reported a violation when the maximum ratio exceeded $1+10^{-60}$. Its three Python assertions disappear under optimization. Two later programs generated the same 3,999 admissible pairs of laws and checked positive common support, total weight and movement with explicit conditions. Integer products give 39 informative, 51 misinformative and zero signed equalities among 634,112 row and antichain pairs. The rounded signed maximum is 0.9999996544. A valid three-cell example distinguishes a strict inequality from equality inside the old tolerance. Section 6.2 gives the calculation. [Integer comparison](python/check_one_lambda_integer.py) · [Second calculation](python/exact_local_bound.py) · [Original panel identity](python/original_panel_identity.py) · [Exact maximum](results/one_lambda_independent.json) [Independent finite proof and replay instructions](FINITE-CONTINUITY.md)

@@ -1,0 +1,89 @@
+"""Exercise the typed observation and rejection rules with constructed text."""
+
+from pathlib import Path
+import runpy
+
+checks = runpy.run_path(str(Path(__file__).with_name("observe.py")))
+positive = checks["positive"]
+negative = checks["false_control"]
+domain = "∀ {x : ℝ}, 0 ≤ x → x < 1 → ∀ (n : ℕ), "
+sum_terms = "∑ i ∈ Finset.range n, x ^ (2 * i + 1) / (2 * ↑i + 1)"
+log_term = "1 / 2 * Real.log ((1 + x) / (1 - x))"
+upper_tail = "x ^ (2 * n + 1) / (1 - x ^ 2)"
+lower = domain + sum_terms + " ≤ " + log_term
+upper = domain + log_term + " ≤ (" + sum_terms + ") + " + upper_tail
+names = checks["NAMES"]
+types = dict(zip(names, (lower,upper)))
+terms = "".join(f"theorem {key} : {types[key]} :=\nfun {{x}} h₀ h n => {original} h₀ h n\n"
+                for key,original in names.items())
+for key,original in names.items():
+    for name in (key,original):
+        terms += f"@{name} : {types[key]}\n"
+for key in (*names,*names.values()):
+    terms += f"'{key}' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+wrong = "False.lean:5:9: error: Type mismatch\n  this\nhas type\n  0 < 1\nbut is expected to have type\n  1 < 0\n"
+if len(positive(terms)) != 4:
+    raise ValueError("constructed mathematical observations")
+negative(wrong)
+mutants = [
+    (positive, terms.replace("Real.sum_range_le_log_div h₀ h n\n", "Real.other h₀ h n\n", 1)),
+    (positive, terms.replace("propext","sorryAx",1)),
+    (positive, terms+terms),
+    (positive, terms.replace("Classical.choice, ","",1)),
+    (positive, terms+"⋯\n"),
+    (positive, terms.replace(lower,"Type").replace(upper,"Type")),
+    (positive, terms.replace("x < 1","x ≤ 1",1)),
+    (positive, terms.replace(lower,upper,1)),
+    (positive, terms.replace("0 ≤ x → ","",1)),
+    (positive, terms.replace("x < 1 → ","x < 1 → 0 < x → ",1)),
+    (positive, terms.replace("x < 1","x ≤ 1")),
+    (positive, terms.replace(upper_tail,"x ^ (2 * n + 1) / (1 + x ^ 2)")),
+    (positive, terms.replace("1 + x","1 - x")),
+    (positive, terms.replace("((1 + x) / (1 - x))","(1 + x / (1 - x))")),
+    (positive, terms.replace("x ^ (2 * i + 1)","(x ^ 2) * i + 1")),
+    (positive, terms.replace(" / (1 - x ^ 2)"," / 1 - x ^ 2")),
+    (positive, terms.replace("@Real.sum_range_le_log_div :", "@Real.other :")),
+    (negative, wrong.replace("Type mismatch","unknown identifier")),
+    (negative, wrong.replace("1 < 0","1 ≤ 0")),
+    (negative, wrong.replace("0 < 1","reversed").replace("1 < 0","0 < 1").replace("reversed","1 < 0")),
+    (negative, wrong.replace("but is expected to have type", "and also contains")),
+    (negative, wrong + wrong),
+]
+# The stock printer can omit the parentheses around the whole sum.
+# Exercise the grammar for that form on a line-wrapped controlled transcript.
+wrapped = terms.replace("(" + sum_terms + ") + ", sum_terms + " + ").replace("0 ≤ x →", "0 ≤ x →\n  ")
+if positive(wrapped) != positive(terms):
+    raise ValueError("explicit and implicit sum grouping")
+mutants.extend([
+    (positive, terms.replace("(2 * ↑i + 1)", "(2 * i + 1)")),
+    (positive, terms.replace("x ^ (2 * i + 1)", "x ^ (2 * ↑i + 1)")),
+    (positive, terms.replace("x ^ (2 * n + 1)", "x ^ (2 * ↑n + 1)")),
+    (positive, wrapped.replace("x ^ (2 * i + 1) / (2 * ↑i + 1) + " + upper_tail,
+                               "(x ^ (2 * i + 1) / (2 * ↑i + 1) + " + upper_tail + ")")),
+    (positive, wrapped.replace("Real.log_div_le_sum_range_add h₀ h n", "Real.log_div_le_sum_range_add h h₀ n", 1)),
+    (positive, "Read.lean:22:0: error: Unknown option for display\n" + wrapped),
+    (positive, wrapped + "extra native output\n"),
+    (positive, wrapped.replace("Classical.choice, ", "")),
+])
+note = (
+    "\nNote: The following definitions were not unfolded because their definition is not exposed:\n"
+    "  Real.instLT ↦ 2\n"
+)
+negative(wrong + note)
+mutants.extend([
+    (negative, wrong + note.replace("Real.instLT", "Real.instLE")),
+    (negative, wrong + note.replace("↦ 2", "↦ 3")),
+    (negative, wrong + note + note),
+    (negative, wrong + note + "unrelated diagnostic\n"),
+    (negative, note + wrong),
+    (negative, wrong.replace("  this\n", "  otherTerm\n") + note),
+    (negative, wrong.replace("5:9", "5:2") + note),
+    (negative, wrong.replace("  1 < 0\n", "  0 < 1\n") + note),
+])
+for index,(read,text) in enumerate(mutants):
+    try:
+        read(text)
+    except ValueError:
+        continue
+    raise ValueError(f"mutated transcript {index+1} passed")
+print(f"Two constructed transcript forms and {len(mutants)} rejected mutations. No Lean process ran in this test.")

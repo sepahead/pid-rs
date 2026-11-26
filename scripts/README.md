@@ -1930,7 +1930,9 @@ publication give same-toolchain reproducibility. The builder accepts only an abs
 destination in an existing nonsymbolic directory.
 
 `check-cross-implementation-reverification-pdf.sh` validates the Markdown math, rebuilds the PDF
-and checks all 24 A4 pages. Its pinned pypdf object gate requires the source-derived trailer ID,
+and checks all 25 A4 pages. The November 2026 edition explains why each of the 17 changed
+inputs failed. Its current reproduction tests the original categorical and continuous data in
+ordinary and optimized Python before it checks each refusal. Its pinned pypdf object gate requires the source-derived trailer ID,
 `en-US` language, a marked structure tree, a bounded first-page `GoTo`, HTTPS-only external links,
 Link-only annotations and the exact inventory of repository-navigation URIs. It rejects
 JavaScript, attachments, forms, collection state, permissions and unknown actions, and it checks

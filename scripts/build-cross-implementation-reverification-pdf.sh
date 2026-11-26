@@ -13,7 +13,7 @@ JOB="cross-implementation-reverification"
 
 # Freeze renderer timestamps and PDF identifiers for same-source reproducibility. The date is the
 # publication date at 00:00 UTC; callers may override it only through SOURCE_DATE_EPOCH.
-export SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-1790380800}"
+export SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-1795564800}"
 export FORCE_SOURCE_DATE=1
 export TZ=UTC
 export LC_ALL=C
@@ -168,6 +168,7 @@ for sentinel in \
     'PID-RS TECHNICAL REPORT SERIES' \
     'Percentile indices: defect and fix' \
     'Why the retired binary64 test reported ratios above one' \
+    'Checking the reason for each refusal' \
     'Correction: intrinsic-dimension provenance' \
     'Rust implementation and computational cost' \
     'Routes considered'; do

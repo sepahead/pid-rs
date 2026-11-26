@@ -1,6 +1,7 @@
 # Research result map — 10 October 2026
 
 This navigation update does not replace method identities or claim decisions.
+The [current product-family construction](output/RESEARCH_NOTES_2026_10_10.md#the-entropy-ceiling-can-be-approached-not-always-attained) fixes the joint law of two independent finite variables. For each uniform alphabet size, the added variable must be independent of the pair. Four exclusive-or triples give the counterexample to pairwise independence.
 The [mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) and
 [5 October map](RESEARCH_RESULTS_2026_10_05.md) retain their scoped evidence.
 

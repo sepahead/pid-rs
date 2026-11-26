@@ -1,0 +1,172 @@
+{
+  "final_native_cache_objects": 10823,
+  "issued_on": "2026-11-25",
+  "lean_version": "4.34.1",
+  "official_lean_archive_sha256": "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+  "runs": [
+    {
+      "artifact": {
+        "bytes": 506658,
+        "id": 14993161799,
+        "members": {
+          "cache.txt": "32e0320537f463a92447a3e937c527c9f8a02d7c0eba8f84109d27b5a48c2cad",
+          "host.txt": "82298895d50e1c427b9c5e1b0c5d7660942d1d4007234fbb82f9c0f027922318",
+          "native/RESULT.json": "b2754e6d08b9b97bb5fd6075f1279e11bb4ea80b820222efc79d12bb3a6ea5e5",
+          "native/compile.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "native/compile.stdout": "5a9d21a636eea894cb61208e5e1fb4510363f5458b9e1612043314d1ed0f4999",
+          "native/compiled-cache-files.json": "c7135def08d55fb84fb1e2c01ca078607fa0855c1ee197bca74db1fa8ff96b33"
+        },
+        "sha256": "8792a974236a5858d12cabd2258694e6f632ee923364adcf33bad8bc03023f04"
+      },
+      "conclusion": "failure",
+      "execution": [
+        {
+          "elapsed_seconds": 0.992,
+          "exit": 1,
+          "label": "compile",
+          "max_sampled_group_rss_bytes": 1894338560,
+          "resource_stop": null,
+          "samples": 9
+        }
+      ],
+      "github_run": "https://github.com/sepahead/pid-rs/actions/runs/45548866600",
+      "job": 138984951208,
+      "native_result_sha256": "b2754e6d08b9b97bb5fd6075f1279e11bb4ea80b820222efc79d12bb3a6ea5e5",
+      "native_success": false,
+      "parent": "927e5138d23e0bd24b70f8df0fd38e610456a244",
+      "qualified": false,
+      "reason": "The stock compiler refused the unknown pp.width option at Read.lean line 22. The fresh kernel and false-source steps did not run.",
+      "run": 45548866600,
+      "source_commit": "b8d56195e774869fcd16cec1829dc183198f2ad6",
+      "source_tree": "4749243eaa38e2bf4717b08588921fc9cd237ac7"
+    },
+    {
+      "artifact": {
+        "bytes": 515484,
+        "id": 14993269301,
+        "members": {
+          "cache.txt": "5997d7181319fb2c7af62e082375dcc46da73211c7738288a16cadd00b5ce02c",
+          "host.txt": "6af8a107cf9a2087a93f85762ca971e3bffdc0cb4c9046b5ef57552856b8a713",
+          "native/RESULT.json": "658f9f480ba7ce4367e15cff657c468c1f6d8d8b9beeec1cc0135329b16f918c",
+          "native/compile.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "native/compile.stdout": "8209901c6643359210ed687f9abfcbbb8ad454c71409d5f5c55932dbf92ea61f",
+          "native/compiled-cache-files.json": "c7135def08d55fb84fb1e2c01ca078607fa0855c1ee197bca74db1fa8ff96b33",
+          "native/false.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "native/false.stdout": "53ff03bdd6d4539eccab6f6f6363ba7cfff3a925809b8cd28739c3eb4b20f661",
+          "native/fresh.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "native/fresh.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "native/objects/Read.ir": "6786a9c276a904d019e00d4267fa9c8ed4d60193e343db14272b7063b3e1b85e",
+          "native/objects/Read.ir.sig": "acaa9c9c92466f7d48c768dc6d80c0d6bf414772f6128e46af4f4b2b5905bdba",
+          "native/objects/Read.olean": "ea4ba98ef9eacbfbd2fd3c09bff68015cb1c9736d1529e105362151812a64476",
+          "native/objects/Read.olean.private": "ace0491472f4efc058f705c329ba1e18dfcb3f436c254a87052142137c2627a6",
+          "native/objects/Read.olean.server": "1f947273bf9774e882a024b4cd0aa4b22eb58b81d8cdda9007279a4660c67919"
+        },
+        "sha256": "6cfd540e543a181ac2ed9e0f6105393252b0a6fdff36ca4286e9cdd1ff5e9b4c"
+      },
+      "conclusion": "failure",
+      "execution": [
+        {
+          "elapsed_seconds": 0.996,
+          "exit": 0,
+          "label": "compile",
+          "max_sampled_group_rss_bytes": 1908256768,
+          "resource_stop": null,
+          "samples": 9
+        },
+        {
+          "elapsed_seconds": 221.544,
+          "exit": 0,
+          "label": "fresh",
+          "max_sampled_group_rss_bytes": 2883792896,
+          "resource_stop": null,
+          "samples": 2092
+        },
+        {
+          "elapsed_seconds": 0.856,
+          "exit": 1,
+          "label": "false",
+          "max_sampled_group_rss_bytes": 1894277120,
+          "resource_stop": null,
+          "samples": 8
+        }
+      ],
+      "github_run": "https://github.com/sepahead/pid-rs/actions/runs/45550896292",
+      "job": 138991539117,
+      "native_result_sha256": "658f9f480ba7ce4367e15cff657c468c1f6d8d8b9beeec1cc0135329b16f918c",
+      "native_success": false,
+      "parent": "b8d56195e774869fcd16cec1829dc183198f2ad6",
+      "qualified": false,
+      "reason": "Compiler, fresh checker and false-source compiler returned 0, 0 and 1. The fixed output predicate rejected the stock explanatory note printed after the expected false-source type mismatch.",
+      "run": 45550896292,
+      "source_commit": "4d0e99fda690c111e53e8d1664206bb081390a69",
+      "source_tree": "4f783dca5fe5cfb8846c167085fdc20c3859ce90"
+    },
+    {
+      "artifact": {
+        "bytes": 515682,
+        "id": 14994267900,
+        "members": {
+          "cache.txt": "19e571ef8559f7109c060076269204fc9641404c6859da1119edb08613f1f4fe",
+          "host.txt": "ab3817957f37579b06196b91799b0d2d829ecc14414a2b5dc93274adbe648acc",
+          "native/RESULT.json": "b7ffc18f2d9b0f28ffe4802681612c3a81c156fc06e3d7e85c361105496271d4",
+          "native/compile.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "native/compile.stdout": "8209901c6643359210ed687f9abfcbbb8ad454c71409d5f5c55932dbf92ea61f",
+          "native/compiled-cache-files.json": "c7135def08d55fb84fb1e2c01ca078607fa0855c1ee197bca74db1fa8ff96b33",
+          "native/false.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "native/false.stdout": "53ff03bdd6d4539eccab6f6f6363ba7cfff3a925809b8cd28739c3eb4b20f661",
+          "native/fresh.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "native/fresh.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "native/objects/Read.ir": "6786a9c276a904d019e00d4267fa9c8ed4d60193e343db14272b7063b3e1b85e",
+          "native/objects/Read.ir.sig": "acaa9c9c92466f7d48c768dc6d80c0d6bf414772f6128e46af4f4b2b5905bdba",
+          "native/objects/Read.olean": "ea4ba98ef9eacbfbd2fd3c09bff68015cb1c9736d1529e105362151812a64476",
+          "native/objects/Read.olean.private": "ace0491472f4efc058f705c329ba1e18dfcb3f436c254a87052142137c2627a6",
+          "native/objects/Read.olean.server": "1f947273bf9774e882a024b4cd0aa4b22eb58b81d8cdda9007279a4660c67919"
+        },
+        "sha256": "f51d0536622f68640053e2aec66994471efd90ad05c40b45791618ff4efc702a"
+      },
+      "conclusion": "success",
+      "execution": [
+        {
+          "elapsed_seconds": 1.112,
+          "exit": 0,
+          "label": "compile",
+          "max_sampled_group_rss_bytes": 1902686208,
+          "resource_stop": null,
+          "samples": 10
+        },
+        {
+          "elapsed_seconds": 247.057,
+          "exit": 0,
+          "label": "fresh",
+          "max_sampled_group_rss_bytes": 2883604480,
+          "resource_stop": null,
+          "samples": 2250
+        },
+        {
+          "elapsed_seconds": 0.986,
+          "exit": 1,
+          "label": "false",
+          "max_sampled_group_rss_bytes": 1894391808,
+          "resource_stop": null,
+          "samples": 9
+        }
+      ],
+      "github_run": "https://github.com/sepahead/pid-rs/actions/runs/45552656882",
+      "job": 138997199193,
+      "native_result_sha256": "b7ffc18f2d9b0f28ffe4802681612c3a81c156fc06e3d7e85c361105496271d4",
+      "native_success": true,
+      "parent": "4d0e99fda690c111e53e8d1664206bb081390a69",
+      "qualified": true,
+      "reason": "The native output matched the complete positive statements, transitive axiom inventories, and the expected false-source diagnostic with exactly the admitted optional stock note.",
+      "run": 45552656882,
+      "source_commit": "cb8de26f5c669e849c0a4abd08bd455b4555be26",
+      "source_tree": "aa9b109873f67f19a10246c664221886d4208291"
+    }
+  ],
+  "schema": "pid-rs/real-log-library-execution/1",
+  "scientific_candidates": 0,
+  "scientific_claim": "The two named declarations directly apply Real.sum_range_le_log_div and Real.log_div_le_sum_range_add. Each statement quantifies over real 0 <= x < 1 and natural n, including zero.",
+  "scope": "These were candidate-free stock inputs. Lean loaded compiled dependencies. Two negative historical fields and their full terminal predicates retain their original outcomes.",
+  "source_and_symbols": "Read.lean",
+  "upstream_mathlib": "d13f23b723b8a846827a245b89c10fc7d3f11612"
+}

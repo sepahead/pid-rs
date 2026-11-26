@@ -1,0 +1,13 @@
+{
+  "actual_original_tables": 3999,
+  "matches_independent_exact_program": true,
+  "ordered_original_panel_sha256": "c9b2b4f367d452c29d7d39261156c9373f3aad34e0dcbb052b3127681287a7cd",
+  "prefix_sha256": "83d0e7deaffc89e393b439f07937435e407e0d4d2447d3a78cd41beaf9761cb7",
+  "raw_original_assertions_under_false_premise": {
+    "double_optimized": "accepted",
+    "optimized": "accepted",
+    "ordinary": "rejected"
+  },
+  "source_sha256": "9567d9c221fcf44dfb7ac2468c2b591517c30a28efb8a7fa528b62dd1a2a9fa8",
+  "statement": "The unchanged prefix and independently generated complete vectors agree before the first logarithm. This is source-correspondence evidence, separate from running the original full decimal test."
+}

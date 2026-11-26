@@ -1,6 +1,6 @@
 # Cross-implementation re-verification of pid-rs estimators and mathematical results
 
-**Sepehr Mahmoudian** · 26 September 2026
+**Sepehr Mahmoudian** · 26 September 2026 · Revised 25 November 2026
 
 Cite this report as: Sepehr Mahmoudian (2026). *Cross-implementation re-verification of pid-rs
 estimators and mathematical results.* pid-rs repository report. Include the exact repository commit
@@ -11,10 +11,10 @@ defining method papers separately; Section 15 lists them.
 
 This report records a second implementation of the main pid-rs estimators, written from the
 published definitions, and compares it with pid-rs. It also re-derives several repository results,
-tests one repository bound in exact arithmetic, and records one defect and one citation error that
+checks one finite categorical bound, and records one defect and one citation error that
 the review found. The original implementation checks ran on commit `d1f401a` and again on commit `0e96b2b`, which
 contains the two fixes below. Section 14.7 records later defects found in two evidence checkers;
-those defects do not change the retained estimator outputs.
+those defects do not change the retained estimator outputs. Section 14.8 records a later correction to the test of 17 changed inputs. Section 6.2 distinguishes the original decimal test from two later integer checks of exact equality.
 
 A diagnostic recorded on 27 September 2026 at commit
 `676dcb60d3762ae81672087d5ecddd7023440130` is reported separately in Section 4.5. It compares
@@ -39,7 +39,7 @@ The main results are:
 3. **Test suite.** The complete `pid-core` test suite passed in release mode with all features:
    725 tests on `d1f401a` and 728 on `0e96b2b`, with 0 failures and 6
    ignored items each time.
-4. **A repository bound in exact arithmetic.** An exact-rational test of the one-$\Lambda$ local
+4. **A repository bound in exact arithmetic.** Two later integer comparisons of the one-$\Lambda$ local
    bound in the [dependency-colored concentration document](../../DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
    found no violation in 634,112 evaluations. The informative and misinformative components attain
    the bound exactly. An earlier binary64 version of the test reported ratios up to 4. Section 6
@@ -256,9 +256,10 @@ recomputes every quantity from the rows. It does not call pid-rs:
 
 The checker requires exactly 60 systems, 20 for each source count, and the expected length of
 every output list. It rejects duplicate JSON keys, duplicate antichains, non-numeric values and
-antichain sets that differ from its own enumeration. A retained self-test,
-[`python/checker_self_test.py`](cross-implementation-reverification-2026-09-26/python/checker_self_test.py),
-confirms that 17 malformed inputs make the two checkers fail.
+antichain sets that differ from its own enumeration. The [September self-test](cross-implementation-reverification-2026-09-26/python/checker_self_test.py)
+recorded a nonzero exit for each of 17 changed inputs. The [revised test](cross-implementation-reverification-2026-09-26/python/checker_self_test_v2.py)
+requires each checker to pass its original data first. For each changed input it checks the reason
+for refusal. Section 14.8 gives two cases that the earlier test missed.
 
 ### 3.2 Results
 
@@ -570,39 +571,35 @@ The net component contains three event probabilities, yet one $\Lambda$ bounds i
 strongest claim in that section, so it received a direct test. Note that the proof needs
 $\sum_z\Delta(z)=0$.
 
-### 6.2 Exact-rational method and results
+### 6.2 Exact tests on the seeded laws
 
-The script [`python/check_one_lambda.py`](cross-implementation-reverification-2026-09-26/python/check_one_lambda.py)
-draws 4000 random laws with seed 1. It uses two or three sources, alphabets of two or three states
-and random supports. Every law is a vector of integers over one common denominator. The script
-moves mass $\eta$ from one to three donor cells to a disjoint set of one to three receiver cells.
-Hence $q$ is again a probability law, its support equals the support of $p$, and $\delta=2\eta$
-exactly. One quarter of the trials use a small $\eta$, down to $10^{-12}p_{\min}$.
+The September program starts 4,000 trials with seed 1. It selects two or three sources and a target, each with two or three possible values. Each occupied joint cell has a positive integer weight. The sum of the weights is the common denominator of the two laws. The program moves a positive integer weight $h$ from up to three donor cells to up to three different receiver cells. Of the 4,000 trials, 3,999 supply a positive move on an admissible support. There are 994 draws from the small-move range. The smallest observed move divided by the least occupied weight is approximately $10^{-12}$. The [original program](cross-implementation-reverification-2026-09-26/python/check_one_lambda.py) used 80-digit decimal logarithms. It counted a tie when the ratio was at least $1-10^{-60}$. It reported a violation when the largest ratio exceeded $1+10^{-60}$. Three premise checks were Python assertions. Optimized Python can remove them. The [original numerical output](cross-implementation-reverification-2026-09-26/results/check_one_lambda.txt) records that tolerance.
 
-For every antichain and every supported realization, the script computes the three changes
-$|\Delta i^u_\alpha|$ and the ratio $|\Delta i^u_\alpha|/\Lambda$. It evaluates every ratio from
-the exact integers with 80-digit decimal logarithms. For the smallest tested $\Lambda$, about
-$10^{-12}$, the rounding error of a ratio is below $10^{-66}$. The script fails if any ratio exceeds
-$1+10^{-60}$.
+Two later programs check the same finite laws with integer products. Each checks equal total weight, equal occupied support, a positive move below the least occupied weight, and total absolute weight change $2h$. Fix an occupied row and a source antichain. Let $A$ be the event that at least one source group in the antichain agrees with the row. Let $C$ be agreement with its target, and $B=A\cap C$. Write $p_A,q_A$ for the integer weights of $A$ before and after the move. Use the same subscripts for $B$ and $C$. All six sums are positive because the row belongs to all three events and remains occupied. Exponentiating the change in each local term gives the positive factors
 
-| Quantity | Result |
-|---|---|
-| Trials used | 3999 of 4000 |
-| Realization–antichain evaluations | 634,112 |
-| Smallest tested $\eta/p_{\min}$ | $1.0\times10^{-12}$ |
-| Largest informative ratio | exactly 1 (bound attained) |
-| Largest misinformative ratio | exactly 1 (bound attained) |
-| Largest net ratio | $0.9999996544$ |
-| Violations | none |
+$$
+U_+=\frac{p_A}{q_A},\qquad
+U_-=\frac{q_Cp_B}{q_Bp_C},\qquad
+U_{\mathrm{sx}}=\frac{U_+}{U_-}.
+$$
 
-The informative ratio equals one in 39 evaluations. In each, the source event holds exactly one
-supported cell, which has mass $p_{\min}$ and loses all of $\eta$: $p(\mathfrak a)=p_{\min}$ and
-$q(\mathfrak a)=p_{\min}-\eta$. The misinformative ratio equals one in 51 evaluations. These need
-the same condition for the intersection event $\mathfrak t\cap\mathfrak a$, and also
-$q(\mathfrak t)=p(\mathfrak t)$, because the receivers have the same target value. So the bound
-is sharp for these two components. No evaluation attains it for the net component. The full
-output is
-[`results/check_one_lambda.txt`](cross-implementation-reverification-2026-09-26/results/check_one_lambda.txt).
+Let $m$ be the least occupied weight before the move. The common total cancels in $\Lambda=\log(m/(m-h))$. Write any one factor as $U=n/d$ with positive integers $n,d$. Monotonicity of the logarithm gives the following exact test, including equality:
+
+$$
+|\log U|\le\Lambda
+\quad\Longleftrightarrow\quad
+\max(n,d)(m-h)\le\min(n,d)m.
+$$
+
+| Local component | Strictly below the bound | Equal to the bound | Above the bound |
+|---|---:|---:|---:|
+| Informative | 634,073 | 39 | 0 |
+| Misinformative | 634,061 | 51 | 0 |
+| Signed | 634,112 | 0 | 0 |
+
+Each row of the table covers the same 634,112 pairs of an occupied row and an antichain, for 1,902,336 comparisons in total. In all 39 informative equalities, $A$ consists of one occupied cell of weight $m$ and it loses $h$. In all 51 misinformative equalities, $B$ consists of one such cell and the weight of $C$ stays fixed. These examples attain the bound for the two separate components. The signed maximum over this finite panel lies strictly between $0.9999996544072924$ and $0.9999996544072925$ times the bound. Only trial 776 attains it, at the row $(1,0,0,2)$ and the antichain containing the full three-source group. An integer screening calculation leaves two candidate locations. Rational bounds on their logarithms distinguish them. The result rounds to the ten decimal places printed in September. [Integer test](cross-implementation-reverification-2026-09-26/python/check_one_lambda_integer.py) · [Separate comparison and maximum calculation](cross-implementation-reverification-2026-09-26/python/exact_local_bound.py) · [Exact results and maximizing row](cross-implementation-reverification-2026-09-26/results/one_lambda_independent.json) · [Independent derivation](cross-implementation-reverification-2026-09-26/FINITE-CONTINUITY.md)
+
+**Why a tolerance cannot certify equality.** Set $m=10^{70}$. Give three occupied cells weights $(m+1,m,m)$ and move one unit from the first to the second. Choose a source group whose observed value singles out the first cell. Divide by $3m+1$ to obtain each probability law. The informative factor is $(m+1)/m$, strictly smaller than $m/(m-1)$. Yet its absolute logarithm divided by $\Lambda$ is within $10^{-60}$ of one. In fact, the distance is at most $m/(m^2-1)$. This follows from $\log(1+x)\le x$ for $x\ge0$ and $-\log(1-1/m)\ge1/m$. The integer products distinguish the two sides at once. The finite panel checks the stated examples. The proof for every admissible law is in Section 6.1.
 
 ### 6.3 Why the retired binary64 test reported ratios above one
 
@@ -643,7 +640,7 @@ $6.2\times10^{-17}$ and $2.0\times10^{-16}$.
 The excess $4\times10^{-13}$ in the largest ratio for $\delta\ge10^{-7}$ has a related cause. In
 that trial (number 1009), the binary64 construction of $q$ removed $2.4\times10^{-17}$ more mass than
 it added. Measured against the mass actually removed, the exact ratio is 1 in all 30 printed
-decimal places. The exact test of Section 6.2 removes both problems. The retired test, its output
+decimal places. The integer laws in Section 6.2 preserve total mass and support. Its cross products decide the inequalities exactly. The retired test, its output
 and the diagnostic output remain as negative evidence.
 
 ## 7. Percentile indices: defect and fix
@@ -951,7 +948,7 @@ that decision.
    passes both implementations. *Would change if:* an independent team wrote the second
    implementation.
 4. **Exact rational oracle for every quantity.** *Assumption:* exact arithmetic removes rounding
-   questions. *Evidence needed:* rational event probabilities and high-precision logarithms.
+   questions for rational comparisons. *Evidence needed:* rational event probabilities and integer order tests. Enclosures also suffice for the printed logarithmic maximum.
    *Decision:* used only for the one-$\Lambda$ bound. The existing Decimal oracle already covers
    two-, three- and four-source tables for the categorical atoms. *Would change if:* a rounding
    discrepancy above $10^{-12}$ appeared.
@@ -978,6 +975,8 @@ that decision.
     review plan were adopted.
 
 ## 11. Rust implementation and computational cost
+
+The November local-bound check uses integer weights for each occupied cell. Its largest possible input shape has three sources and a target, each with three values, giving 81 joint cells. The largest antichain list here contains 18 families. For each occupied row and family, the direct route sums weights across the joint cells and uses three integer comparisons. With $J$ joint cells, $s$ occupied rows and $F$ families, these sums use $O(sFJ)$ additions per law. The direct program caches event membership for the finite alphabet shapes. The second program encloses logarithms only for the candidate maxima left after rational screening. These are offline Python checks of fixed laws. They add no Rust runtime entry point or sampling guarantee. No timing is claimed for this panel.
 
 **Estimands and APIs.** The checks exercise these public functions:
 
@@ -1016,7 +1015,7 @@ $O(N^2\log N)$ time per estimator. All checks are offline batch computations on 
 measured times are in
 [`results/timing_0e96b2b.txt`](cross-implementation-reverification-2026-09-26/results/timing_0e96b2b.txt):
 the complete run on `0e96b2b`, with a cold release build and the test suite, took 160 s of wall
-time on an Apple M4 Max with macOS 26.5.1, rustc 1.96.0, Python 3.14.6 and NumPy 2.4.6. These are measurements of the checks, not benchmarks of pid-rs.
+time on an Apple M4 Max with macOS 26.5.1, rustc 1.96.0, Python 3.14.6 and NumPy 2.4.6, the Python numerical array package. These are measurements of the checks, not benchmarks of pid-rs.
 
 **Cost of the Section 4.5 diagnostic.** The selected release command enables
 `experimental-pipelines`, which enables the continuous route without enabling `parallel`.
@@ -1067,9 +1066,9 @@ audit/evidence/cross-implementation-reverification-2026-09-26/run.sh <commit> <f
 
 The work directory must not exist and must lie outside the checkout. The script exports the commit
 with `git archive` and copies the two generators into that export. It runs the generators with a
-private Cargo target directory. It then runs the four Python checks, the checker self-test, the
-SMT obligation check and its normal/optimized protocol controls (Section 14), and the archived
-binary64 diagnostic. The SMT check needs
+private Cargo target directory. It runs the four Python checks and verifies all 17 changed inputs
+with ordinary and optimized Python. It tests the reader of the results in both modes, then runs
+the SMT obligation check, its protocol controls (Section 14) and the archived binary64 diagnostic. The SMT check needs
 Z3 4.16.0 on the path. Finally, it compares each output with the retained copy and fails on any
 difference.
 After the outputs were retained, a second run on each commit matched all eight retained outputs of
@@ -1234,6 +1233,41 @@ an error maximum. Its 26 causal controls pass in normal and optimized Python; th
 checker fails seven of them. The retained 60-system output is unchanged. The
 [correction record](cross-implementation-reverification-2026-09-26/results/checker-rejection-correction.json)
 binds these checks; no scientific claim is upgraded.
+
+### 14.8 Checking the reason for each refusal
+
+The September test ran two numerical programs. One compared 60 categorical systems. The other
+compared six continuous cases. Each program reported differences in nats. The September driver
+ran both programs on the original data before it ran the test on 17 changed inputs.
+
+Python’s `-O` option removes assertion statements. A direct run with this option skipped both
+checks of the original data. The two assertions contained the calls to the programs. The children also ran without the parent's
+`-O` option. Two examples show the effect. With the NumPy package missing, neither checker could
+start its calculation. In a second example, the last categorical case declared five sources.
+The expected counts were 20 each with two, three and four sources. In both examples the old
+optimized test reported 17 rejections and returned success.
+
+The November test calls each program in the parent's optimization mode. It checks the complete
+numerical output for each original input, including the measured differences and the tolerance
+of $10^{-12}$ nats. It then makes the same 17 input changes. For a structural error, the program
+must name the expected defect. For a numerical error, the expected quantity must exceed the
+tolerance. For example, adding $10^{-9}$ to one informative categorical atom must fail the
+two-source informative-atom comparison. A missing program, import error, timeout or unrelated
+error stops the test.
+
+The original categorical and continuous comparisons passed on the retained data. Ordinary and
+optimized Python both passed the two original inputs and identified the expected reason for
+each of the 17 refusals. The calculation prints two estimates to four decimal places. It prints each difference
+in scientific notation with one digit after the decimal point. The test recovers a range for
+each estimate from the supplied input and signed difference. Both endpoints must round to
+the printed value. The four maxima of absolute differences must be nonnegative. A separate
+test accepted three expected transcripts and rejected 45 altered transcripts. It also
+accepted one signed rounding example and rejected two changed examples. The new test checks
+the full recorded output for the two unmodified inputs and the three numerical errors. This
+last comparison requires exact agreement on the printed numbers. A different numerical
+library could produce a different final printed digit within the scientific tolerance.
+The exact reproduction would then need a separate observation.
+[Reproduction record](cross-implementation-reverification-2026-09-26/results/hostile-input-observer-2026-11-25.json)
 
 ## 15. References
 

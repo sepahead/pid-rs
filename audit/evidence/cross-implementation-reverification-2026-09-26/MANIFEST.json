@@ -1,5 +1,5 @@
 {
-  "acceptance": "retrospective regression tolerance: 1e-12 nats for implementation agreement and 1e-60 for the exact one-Lambda ratios; not a sealed acceptance rule",
+  "acceptance": "The historical numerical comparisons used 1e-12 nats for implementation agreement and a dimensionless tolerance of 1e-60 for the one-Lambda ratios from rounded logarithms. The later finite tests use integer comparisons for equality and rational bounds for the reported signed maximum.",
   "author": "Sepehr Mahmoudian",
   "checked_commits": {
     "before_fixes": "d1f401a1eccec7fe2476f4bcf16538991f52a33f",
@@ -25,10 +25,34 @@
     "model review",
     "documentation"
   ],
+  "exact_local_continuity_2026_11_25": {
+    "attempted_trials": 4000,
+    "distinct_routes": "Both routes share the original seed, input law and definitions. The committed files retain each calculation, its output and original-source comparison.",
+    "historical_decisions": {
+      "tie": "ratio >= 1 - 10^-60",
+      "violation": "maximum ratio > 1 + 10^-60"
+    },
+    "individual_comparisons": 1902336,
+    "original_script": "9567d9c221fcf44dfb7ac2468c2b591517c30a28efb8a7fa528b62dd1a2a9fa8",
+    "original_stdout": "929a6178ee7dcc155d4ce79a181a7c9ebee5d73a15bcce0d29459172371e7a5a",
+    "previous_report_sha256": "f41e8b5c3ea4ac86bbae35a330a3fbf626e8befc855531449e522438a2f850df",
+    "row_antichain_pairs": 634112,
+    "seed": 1,
+    "ties_informative_misinformative_signed": [
+      39,
+      51,
+      0
+    ],
+    "valid_law_pairs": 3999
+  },
   "files": {
+    "FINITE-CONTINUITY.md": {
+      "bytes": 7675,
+      "sha256": "a1f26ac3fa9b25e1bb33072d83356d9cebcbcd1c0b6531c009dc3df3d37e87e2"
+    },
     "REVIEW.md": {
-      "bytes": 17613,
-      "sha256": "2d47d9a9336dd2c2e899f0a2d8ae02788dba48091a8a3c8a68d6ae8a75b80289"
+      "bytes": 19971,
+      "sha256": "576102a51b3dbce3ddf13cde4f457685a2918b77d6712747bb7b03cd6cfa7da7"
     },
     "inputs/continuous_dump.json": {
       "bytes": 167825,
@@ -58,6 +82,10 @@
       "bytes": 6797,
       "sha256": "9567d9c221fcf44dfb7ac2468c2b591517c30a28efb8a7fa528b62dd1a2a9fa8"
     },
+    "python/check_one_lambda_integer.py": {
+      "bytes": 7409,
+      "sha256": "8f78870baeeed8fa872524d541dab1bacfdcb6381c954264698afbb6cf0aeb9a"
+    },
     "python/check_percentile_index.py": {
       "bytes": 5099,
       "sha256": "7f2d056ac506d56e187e48901a59ac334587de7bbcf55242d51ffabcbc8f2b6a"
@@ -73,6 +101,22 @@
     "python/checker_self_test.py": {
       "bytes": 3875,
       "sha256": "cd3a9efc2436aa83ce26fe5b75ca8b9732038033d763131d39ddb7d8f0ac76c8"
+    },
+    "python/checker_self_test_v2.py": {
+      "bytes": 15039,
+      "sha256": "8512940e137bea707ae1757db9ab0f401a8d68af82917e6aaeb3d01770a10def"
+    },
+    "python/checker_self_test_v2_controls.py": {
+      "bytes": 8056,
+      "sha256": "fb214baacb2a427bb4d813838da0b733f6eee2fab98bda9c0e387980ea10143b"
+    },
+    "python/exact_local_bound.py": {
+      "bytes": 10805,
+      "sha256": "6ea8db1ae153edccaee49cf627f964d5e52d2e29edef813bbf022f67b74f2dcd"
+    },
+    "python/original_panel_identity.py": {
+      "bytes": 3096,
+      "sha256": "311dd9c7b82e779bc1f856fad2a0e397818f377231aac6506f51d1ea0a1916a0"
     },
     "results/archive/check_one_lambda_binary64_v1.txt": {
       "bytes": 404,
@@ -118,9 +162,33 @@
       "bytes": 748,
       "sha256": "2451176633af6c48f08263a9135a72db3459dd7f3a32c696feba67538e863466"
     },
+    "results/checker_self_test_v2.txt": {
+      "bytes": 841,
+      "sha256": "7fc1955b4fda2f317caf0c360a9e9e880ca45a555672cf06606dab93feb8741d"
+    },
+    "results/checker_self_test_v2_controls.txt": {
+      "bytes": 181,
+      "sha256": "93e7d564c8219318af7d191170f09342893eabcbe6d599261fcabeb3a4d2a72e"
+    },
     "results/claim-scope-clarification-visual-review.json": {
       "bytes": 3215,
       "sha256": "966793ce16ae5e1c8becda5f7734996b1ef790cb6dc813dd567325a85da9d19a"
+    },
+    "results/hostile-input-observer-2026-11-25.json": {
+      "bytes": 18086,
+      "sha256": "fd87d971ce265ec660b7972b11e2993fb699b518fbf8112c64de646479ea42cd"
+    },
+    "results/one_lambda_independent.json": {
+      "bytes": 16971,
+      "sha256": "72aaba7cf900e50a6ecb1cc176d1127ac53081752b3c11369f8fe78e5192a5c5"
+    },
+    "results/one_lambda_integer.json": {
+      "bytes": 408,
+      "sha256": "5d5a31cacb23c343819e8d121e5b3755b7915922756e6b799471b3479e29b491"
+    },
+    "results/one_lambda_original_panel.json": {
+      "bytes": 719,
+      "sha256": "5c16b7f914b5006a1a28ddd65fb512a0c7fea9a18e7c0c49363515ad78b33f09"
     },
     "results/publication-profile-rebuilds.txt": {
       "bytes": 3194,
@@ -159,8 +227,8 @@
       "sha256": "85b54d2781ba20bb4f5f5c1d115c187006ff51ebdd1471c434a7ac9693c2acba"
     },
     "run.sh": {
-      "bytes": 5636,
-      "sha256": "02044498ae9b50e016b84d26f04af355c52b35115879783986f755e4e59a8780"
+      "bytes": 7416,
+      "sha256": "296e8b159b530e6d84d3492fcc1bf81b498e2e3947839daeadb7c7bf16471b90"
     },
     "rust/audit_dump_continuous.rs": {
       "bytes": 4045,
@@ -170,6 +238,12 @@
       "bytes": 4390,
       "sha256": "579a8b3479e539c8045cd360940fcc2a2d07e55b037d551685f3d5a75d547684"
     }
+  },
+  "hostile_input_observer_2026_11_25": {
+    "panel": "Two observed valid inputs and seventeen original changed inputs. Fourteen changes require a specific structural diagnostic and three require a named numerical discrepancy. The two retained valid comparisons are evaluated in nats.",
+    "previous_manifest_sha256": "984c99849c3ab64b050787fa11471d425d9194f0c220e8caf20c0b18d75f6b49",
+    "record": "results/hostile-input-observer-2026-11-25.json",
+    "source_before_correction": "927e5138d23e0bd24b70f8df0fd38e610456a244"
   },
   "independence": {
     "custody": "none",

@@ -1,0 +1,364 @@
+{
+  "boundary": "The original generator data, numerical comparison programs and historical self-test remain available. These finite results give no estimator consistency, calibration or general checker soundness.",
+  "current_checkers": {
+    "python/checker_self_test_v2.py": {
+      "bytes": 15039,
+      "sha256": "8512940e137bea707ae1757db9ab0f401a8d68af82917e6aaeb3d01770a10def"
+    },
+    "python/checker_self_test_v2_controls.py": {
+      "bytes": 8056,
+      "sha256": "fb214baacb2a427bb4d813838da0b733f6eee2fab98bda9c0e387980ea10143b"
+    }
+  },
+  "current_true_runs": {
+    "double-optimized/missing-dependency": {
+      "exit_status": 1,
+      "last_line": "ModuleNotFoundError: No module named 'numpy'",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "double-optimized/received": {
+      "exit_status": 0,
+      "last_line": "17 of 17 hostile inputs rejected for the expected reasons",
+      "stdout_sha256": "7fc1955b4fda2f317caf0c360a9e9e880ca45a555672cf06606dab93feb8741d"
+    },
+    "double-optimized/wrong-discrete-baseline": {
+      "exit_status": 1,
+      "last_line": "discrete checker returned 1; expected 0. expected 20 cases each for 2, 3 and 4 sources",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "optimized/missing-dependency": {
+      "exit_status": 1,
+      "last_line": "ModuleNotFoundError: No module named 'numpy'",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "optimized/received": {
+      "exit_status": 0,
+      "last_line": "17 of 17 hostile inputs rejected for the expected reasons",
+      "stdout_sha256": "7fc1955b4fda2f317caf0c360a9e9e880ca45a555672cf06606dab93feb8741d"
+    },
+    "optimized/wrong-discrete-baseline": {
+      "exit_status": 1,
+      "last_line": "discrete checker returned 1; expected 0. expected 20 cases each for 2, 3 and 4 sources",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ordinary/missing-dependency": {
+      "exit_status": 1,
+      "last_line": "ModuleNotFoundError: No module named 'numpy'",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ordinary/received": {
+      "exit_status": 0,
+      "last_line": "17 of 17 hostile inputs rejected for the expected reasons",
+      "stdout_sha256": "7fc1955b4fda2f317caf0c360a9e9e880ca45a555672cf06606dab93feb8741d"
+    },
+    "ordinary/wrong-discrete-baseline": {
+      "exit_status": 1,
+      "last_line": "discrete checker returned 1; expected 0. expected 20 cases each for 2, 3 and 4 sources",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "date": "2026-11-25",
+  "fixed_original_numerical_comparisons": {
+    "changed_numerical_outputs": 3,
+    "original_valid_outputs": 2,
+    "rule": "The exact five complete result strings must agree with the recorded September checker output at their declared valid or invalid status. The independent mathematical threshold remains 1e-12 nats. A different last digit can cause failure of exact reproduction even when that threshold still holds."
+  },
+  "historical_files": {
+    "MANIFEST.json": {
+      "bytes": 7381,
+      "sha256": "984c99849c3ab64b050787fa11471d425d9194f0c220e8caf20c0b18d75f6b49"
+    },
+    "REVIEW.md": {
+      "bytes": 17613,
+      "sha256": "2d47d9a9336dd2c2e899f0a2d8ae02788dba48091a8a3c8a68d6ae8a75b80289"
+    },
+    "inputs/continuous_dump.json": {
+      "bytes": 167825,
+      "sha256": "16ff3f79b60ca027f60400b8146bb7676948327785cf114e94afe6d346a54ef5"
+    },
+    "inputs/discrete_dump.json": {
+      "bytes": 495004,
+      "sha256": "54d3836d7ea65418bf622fbf9a589f9ff0d54d1aadde7ad38b32370cc22316d6"
+    },
+    "python/check_continuous.py": {
+      "bytes": 6170,
+      "sha256": "cbc4a7fd28d3352c32d8d4d12bd02a1ab6a188d000c8b9e110e540268d218915"
+    },
+    "python/check_discrete.py": {
+      "bytes": 8940,
+      "sha256": "9fe06254d169948b3915b86b785439a4155e0f250be7ca1ce4561cc87001d0f9"
+    },
+    "python/checker_self_test.py": {
+      "bytes": 3875,
+      "sha256": "cd3a9efc2436aa83ce26fe5b75ca8b9732038033d763131d39ddb7d8f0ac76c8"
+    },
+    "results/check_continuous.txt": {
+      "bytes": 1185,
+      "sha256": "e009833bfa1f408f7029f620eedbfdd35351d6a4436ef07fdef56dbc3017cac5"
+    },
+    "results/check_discrete.txt": {
+      "bytes": 1259,
+      "sha256": "e342e7572b26a6e90a2c2f807a686fc151c122def71bf076b978565ced4e8ffe"
+    },
+    "results/checker_self_test.txt": {
+      "bytes": 748,
+      "sha256": "2451176633af6c48f08263a9135a72db3459dd7f3a32c696feba67538e863466"
+    },
+    "run.sh": {
+      "bytes": 5636,
+      "sha256": "02044498ae9b50e016b84d26f04af355c52b35115879783986f755e4e59a8780"
+    }
+  },
+  "historical_tree_commit": "927e5138d23e0bd24b70f8df0fd38e610456a244",
+  "original_changed_inputs": [
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 1,
+      "expected_input_error": "expected exactly 60 cases",
+      "expected_metric_above_tolerance": null,
+      "name": "discrete: empty list",
+      "observed_stderr_sha256": "eed2e211cd2d9a304930a1929f711ef94f816b8fa882b6e32abcd9de2c9cbe86",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 1,
+      "expected_input_error": "expected exactly 60 cases",
+      "expected_metric_above_tolerance": null,
+      "name": "discrete: four-source cases removed",
+      "observed_stderr_sha256": "eed2e211cd2d9a304930a1929f711ef94f816b8fa882b6e32abcd9de2c9cbe86",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "91482b24b3c1b15fbe80b4d30b494aaf18befb55d492f439ce518e3b25b157ae"
+    },
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 1,
+      "expected_input_error": "case 0 imin2: expected a list of 7 numbers",
+      "expected_metric_above_tolerance": null,
+      "name": "discrete: imin2 emptied",
+      "observed_stderr_sha256": "bdfeed9442da274a656325623b4bab07271b764d300286d8d3f2ffa2e0cd09aa",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "cb930e31c81ecddced0cf05752f865de639837b88a7e8b546816d2c3cc02d582"
+    },
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 1,
+      "expected_input_error": "case 0 imin2: expected a list of 7 numbers",
+      "expected_metric_above_tolerance": null,
+      "name": "discrete: imin2 truncated",
+      "observed_stderr_sha256": "bdfeed9442da274a656325623b4bab07271b764d300286d8d3f2ffa2e0cd09aa",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "f44884c0789f0f1c04c36996f9bdb2295886e0649285570f21b479f123927c03"
+    },
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 1,
+      "expected_input_error": "net: expected a finite number, got False",
+      "expected_metric_above_tolerance": null,
+      "name": "discrete: JSON false for a zero atom",
+      "observed_stderr_sha256": "3ef2c95eab5f35f27950d0257378b538e2b3b02db5d7267a1228ab4b99e27cc7",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "8f287249cd3b3a029999b979c0aefb1b0c173d6dd79184d13765ea1bf5c296da"
+    },
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 1,
+      "expected_input_error": null,
+      "expected_metric_above_tolerance": "n2_plus",
+      "name": "discrete: atom perturbed by 1e-9",
+      "observed_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed_stdout_sha256": "9f866423c3f33a8722d32af17039f07c5985df2f765add51015ab4224a242785",
+      "submitted_sha256": "c235d35da4a50ac55194cdfe5e6c6d79e7ef24cb7bb68a65403db57cce2e0255"
+    },
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 1,
+      "expected_input_error": "case 0: expected 4 antichains",
+      "expected_metric_above_tolerance": null,
+      "name": "discrete: duplicate antichain",
+      "observed_stderr_sha256": "536dec13b1e78b4abfb5e599b62cf6d0563280f11adf0349831bea5fae61c5a5",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "4a8079ce91a05afc7fd6150eacf64fadd11d8c0c83078f85672acddc71cb456d"
+    },
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 1,
+      "expected_input_error": "plus: expected a finite number, got 'NaN'",
+      "expected_metric_above_tolerance": null,
+      "name": "discrete: string value",
+      "observed_stderr_sha256": "877bd14af85bcab8ba1448d74fa6ef79472ff6e59fa0eb08453c3f49fe165876",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "8622bbe4257fce617867288ecc456b7b801577af8574407ff6bdd3f6d527a9f3"
+    },
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 1,
+      "expected_input_error": null,
+      "expected_metric_above_tolerance": "n2_subset_mi",
+      "name": "discrete: subset MI perturbed by 1e-9",
+      "observed_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed_stdout_sha256": "5dfc45445c9a42dfd225b95857c655c4dbb951580ef24ab28a978ba6b8c226e6",
+      "submitted_sha256": "63381630e18647192252e875ac83c32b2beae527abf821314943b8f4bbe602d9"
+    },
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 1,
+      "expected_input_error": "duplicate JSON key in ['imin2', 'n', 'n_joint_mi', 'n_sources', 'n_sources', 'n_subset_mis', 'sources', 'target', 'two']",
+      "expected_metric_above_tolerance": null,
+      "name": "discrete: duplicate JSON key",
+      "observed_stderr_sha256": "9fac66e0344047f6f941892b0c924b5e57cb6ae5da366c7b1cac5919b72445dc",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "6f6617a265790e2964fcebe420af3ee8c289177a08456136107bbe21a13ba119"
+    },
+    {
+      "checker": "check_continuous.py",
+      "exit_status": 1,
+      "expected_input_error": "expected exactly 6 cases",
+      "expected_metric_above_tolerance": null,
+      "name": "continuous: empty list",
+      "observed_stderr_sha256": "d2b3df445bce7726593f95e0539568b869d765dad19159acaf8c813451aaf26c",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "checker": "check_continuous.py",
+      "exit_status": 1,
+      "expected_input_error": "case n=60 incomplete PID3: expected 18 lattice entries",
+      "expected_metric_above_tolerance": null,
+      "name": "continuous: incomplete PID3 emptied",
+      "observed_stderr_sha256": "78888735fb8c104c19c249f8ae810a0b08af63b40a502684db20067f09a53134",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "befce6bf9ab18e5356c312f3401ecf44c7277920c815495e2a1d3b7978d6cbae"
+    },
+    {
+      "checker": "check_continuous.py",
+      "exit_status": 1,
+      "expected_input_error": "case n=60 incomplete PID3: every entry abstained",
+      "expected_metric_above_tolerance": null,
+      "name": "continuous: incomplete PID3 all abstaining",
+      "observed_stderr_sha256": "a5698d5baf0bd3f824d0c665e9e7915ec6c6ed61e5012af396684dd5eee085a6",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "19db12a0c9b3e75571894dba80c1d94fe8ca0e649c5ae28b0b0ca505171ea596"
+    },
+    {
+      "checker": "check_continuous.py",
+      "exit_status": 1,
+      "expected_input_error": "case n=60 full PID3: lattice entries are not the 18 distinct antichains",
+      "expected_metric_above_tolerance": null,
+      "name": "continuous: 18 copies of one full-PID3 antichain",
+      "observed_stderr_sha256": "842c32a0c5a1608095fd5575983ad4925b0d9c3d286e9b2294f03b3360894ecf",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "0f8a0a2979011c38856c3569b82ad036871805952de42140fe8bf0f8d120e5c1"
+    },
+    {
+      "checker": "check_continuous.py",
+      "exit_status": 1,
+      "expected_input_error": "case n=60: the full PID3 lattice is absent: 'error: unavailable'",
+      "expected_metric_above_tolerance": null,
+      "name": "continuous: full PID3 absent",
+      "observed_stderr_sha256": "991038b56d5defe8ff2696578b4b7e48b381c2ff41670ff4449bdfef40e33aea",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "58f304ab7bf8d62950d4398c9ba2c708b582be660cdbcc73a546dc36e5714334"
+    },
+    {
+      "checker": "check_continuous.py",
+      "exit_status": 1,
+      "expected_input_error": null,
+      "expected_metric_above_tolerance": "isx",
+      "name": "continuous: redundancy perturbed by 1e-9",
+      "observed_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed_stdout_sha256": "693c4e82db42b67425368741a06cef4e82f0007301a9c969629f6d56837176d1",
+      "submitted_sha256": "f7bdfa6193243e3ce4944d5a5b86eb79848ffb5a566dcda1f65f861b122f5f71"
+    },
+    {
+      "checker": "check_continuous.py",
+      "exit_status": 1,
+      "expected_input_error": "case n=60: wrong local-term or PID2 length",
+      "expected_metric_above_tolerance": null,
+      "name": "continuous: PID2 shortened",
+      "observed_stderr_sha256": "f9b34ee8978feeef76f5d5db0996d526e0c90e18ab8d5f698eac9c224089466f",
+      "observed_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "submitted_sha256": "3df3cc7a58d15883adc4fced1ff0e81f203a75b82fb987fa88d39bccbf86cba3"
+    }
+  ],
+  "positive_input_encoding": "The historical self-test wrote its two unmodified JSON values to fresh files. The complete serializer output is identified separately from the two distributed source files. The new self-test gives each original source file directly to its checker.",
+  "previous_optimized_failures": [
+    {
+      "case": "no installed NumPy",
+      "optimized_exit": 0,
+      "optimized_last_line": "17 of 17 hostile inputs rejected",
+      "optimized_stdout_sha256": "2451176633af6c48f08263a9135a72db3459dd7f3a32c696feba67538e863466",
+      "ordinary_exit": 1
+    },
+    {
+      "case": "last categorical case declares five sources",
+      "optimized_exit": 0,
+      "optimized_last_line": "17 of 17 hostile inputs rejected",
+      "optimized_stdout_sha256": "2451176633af6c48f08263a9135a72db3459dd7f3a32c696feba67538e863466",
+      "ordinary_exit": 1
+    }
+  ],
+  "previous_rounding_observer": {
+    "sha256": "173de81e4f2423755ee5fbd66b74c5d9f8d078377e51e56aa35b0ac2938cdd2f",
+    "status": "The two print-rounding and sign checks passed on the actual input. A later read found extra acceptance of a negative categorical zero and unexpected precision of recorded numerical maxima."
+  },
+  "printed_estimate_checks": {
+    "measured_estimates": [
+      "I0",
+      "red"
+    ],
+    "nonnegative_absolute_maxima": [
+      "ksg_local",
+      "pid2",
+      "inc_pid3",
+      "full_pid3"
+    ],
+    "printed_decimal_places": 4,
+    "printed_residual_digits_after_decimal_in_scientific_notation": 1,
+    "rule": "Subtract the signed residual from the value in the actual submitted file. Include decimal printing and binary64 subtraction uncertainty, using exact rational arithmetic. Require both bounds to round to the same four-decimal printed number. Check the perturbed redundancy against the changed input.",
+    "signed_scalar_residuals": [
+      "ksg_s0_t",
+      "ksg_s1_t",
+      "ksg_s0s1_t",
+      "isx"
+    ]
+  },
+  "prior_observer_attempt": {
+    "sha256": "0e405aedf082bff6dd741664470a6fac796ed5a8420efab462f0f26a58a02142",
+    "status": "The earlier observer accepted both a negative maximum absolute local difference and a false four-decimal estimate. It is superseded for this role. The original finite comparisons passed."
+  },
+  "purpose": "Require the two numerical baselines to pass before testing malformed or changed data. Check the reported reason for each of seventeen rejected inputs.",
+  "schema": "pid-rs/cross-implementation-hostile-input-observation/1",
+  "source_roles": "The original Rust generators supply the 60 categorical systems and six continuous cases. Two Python programs recompute the quantities on those supplied data. This is a finite implementation comparison in nats.",
+  "threshold_nats": "1e-12",
+  "transcript_tests": {
+    "additional_rounding_examples_accepted": 1,
+    "additional_rounding_examples_refused": 2,
+    "altered_transcripts_refused": 45,
+    "expected_transcripts_accepted": 3,
+    "mode_propagation": "A separate child process emitted its actual optimization level.",
+    "modes": [
+      "ordinary",
+      "-O",
+      "-OO"
+    ],
+    "retained_output_sha256": "93e7d564c8219318af7d191170f09342893eabcbe6d599261fcabeb3a4d2a72e"
+  },
+  "true_original_positive_returns": [
+    {
+      "checker": "check_discrete.py",
+      "exit_status": 0,
+      "normalized_input_sha256": "dbf5987b82595447ddaf508551ba59a7554941c85b603351a73b0ee807a4e007",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e342e7572b26a6e90a2c2f807a686fc151c122def71bf076b978565ced4e8ffe"
+    },
+    {
+      "checker": "check_continuous.py",
+      "exit_status": 0,
+      "normalized_input_sha256": "ab53c8ac3f20c4690bc56400932203dc854a771bcea0e1ef936cc09c950c1bdc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e009833bfa1f408f7029f620eedbfdd35351d6a4436ef07fdef56dbc3017cac5"
+    }
+  ]
+}

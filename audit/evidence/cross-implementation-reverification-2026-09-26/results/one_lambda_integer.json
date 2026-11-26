@@ -1,0 +1,28 @@
+{
+  "cell_antichain_pairs": 634112,
+  "equal": [
+    39,
+    51,
+    0
+  ],
+  "larger": [
+    0,
+    0,
+    0
+  ],
+  "law_sha256": "4b445198e8f691a0561effc8eb3b51390d1adf4be1d7c566ace9ea1315334a93",
+  "laws": 3999,
+  "order": [
+    "informative",
+    "misinformative",
+    "signed"
+  ],
+  "seed": 1,
+  "small_draws": 994,
+  "strictly_below": [
+    634073,
+    634061,
+    634112
+  ],
+  "trial_slots": 4000
+}

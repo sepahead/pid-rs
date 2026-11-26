@@ -6,7 +6,7 @@ Author: Sepehr Mahmoudian.
 
 The [current output notes](../../output/RESEARCH_NOTES_2026_10_10.md) give active,
 corrected successors to useful content in seven fully read archived source partners.
-The source is 899 lines, 47,983 bytes, SHA-256
+The source observed on 10 October was 899 lines and 47,983 bytes, with SHA-256
 `3039afa6a1481ca9ec1e8dc46ff1cd4563b12960e2f4dc90edddfadbff6bad5d`.
 It contains hand derivations, finite counterexamples, retained source-check failures
 and explicitly unrun application proposals. It grants no new formal, Rust,
@@ -176,3 +176,7 @@ The earlier reviewed notes remain preserved at SHA-256
 Qualified PDFs of the new notes and process guidance are still open. The
 original nineteen finite obligations, SxPID3 Programs A–E, hyperbolic,
 statistical/application qualification and v1 release gates are not closed.
+
+## Product-law clarification, 25 November 2026
+
+The [current entropy-ceiling proof](../../output/RESEARCH_NOTES_2026_10_10.md#the-entropy-ceiling-can-be-approached-not-always-attained) gives the joint product law for each alphabet size. It also gives the four-triple calculation that rules out pairwise independence as a substitute. The archived source and PDF retain the wording present at the original review.

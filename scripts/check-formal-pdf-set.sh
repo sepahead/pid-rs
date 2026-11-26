@@ -342,6 +342,14 @@ for checker in \
   python3 -I -S -B "$checker" --self-test
   python3 -O -I -S -B "$checker" --self-test
 done
+# The strict transcript controls use only the standard library. NumPy is
+# required for the full native comparison described by the September run.sh.
+python3 -I -S -B audit/evidence/cross-implementation-reverification-2026-09-26/python/checker_self_test_v2_controls.py
+python3 -O -I -S -B audit/evidence/cross-implementation-reverification-2026-09-26/python/checker_self_test_v2_controls.py
+python3 -I -S -B audit/evidence/cross-implementation-reverification-2026-09-26/python/check_one_lambda_integer.py --self-test
+python3 -O -I -S -B audit/evidence/cross-implementation-reverification-2026-09-26/python/check_one_lambda_integer.py --self-test
+python3 -I -S -B audit/formal/real-log-library-read/self_test.py
+python3 -O -I -S -B audit/formal/real-log-library-read/self_test.py
 python3 -I -S -B audit/research/angular-ray-monotonicity/sturm_crossing.py
 python3 -O -I -S -B audit/research/angular-ray-monotonicity/sturm_crossing.py
 

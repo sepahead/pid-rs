@@ -1,0 +1,1 @@
+Verified three expected transcripts and rejected 45 changed transcripts. Verified one signed rounding case and rejected 2 changed cases. Checked the actual child optimization mode.
