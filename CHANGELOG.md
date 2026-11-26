@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Include the dendritic stimulus, third-source budget, and robot copied-target papers in the PDF inventory test. Its original positive test omitted their Markdown and PDF files. The test now checks that each source and PDF is required and that a symbolic source which points to a regular file is refused. [Publication inventory tests](scripts/check-formal-pdf-set-self-test.sh)
+
 - Preserve the 18-page logarithm guide’s source profile. The secret scanner accepts the three exact published media checksums at this historical filename. Altered field names, values and nearby credentials still trigger the detector. [Checksum checks](scripts/check-guide-artifact-checksum-scan.py)
 
 - Compare class predictions and signed categorical information on the same 651 simulated settings and five robot task tables. Credit the published RndErr cancellation in MGW Table III and its Finn–Lizier input. Trace the copied-target support test to the earlier two-source factorization and its three-source extension. Give its cell criterion and two four-observation cases in which every Shannon subset entropy agrees. The results distinguish conditional information, predictive loss, Williams–Beer and categorical shared exclusions. On the same 117 LP4 episodes a target copied from the force sign gives zero added conditional information and 0.488674 nats across the absolute signed means. [Earlier two-source factorization and example](audit/evidence/finite-target-copy-mgw-synergy.md) · [Measured copied-target check](output/pdf/robot-wrist-copied-target.pdf) · [Worked studies and source](README.md#what-the-signed-categorical-results-add)

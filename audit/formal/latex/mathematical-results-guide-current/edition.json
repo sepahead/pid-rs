@@ -629,7 +629,7 @@
     "scripts/build-current-mathematical-results-guide.py": "a42899398f5b5299667c84e8d1af1e3fb041f5b1cf2430f2e1372080bd6a13b2",
     "scripts/build-finite-target-copy-mgw-pdf.py": "fc30e56a969b91cbbff5510fb77f63192c8d5bd22fcbc15ee9696e7f31b6e2a5",
     "scripts/check-cross-implementation-reverification-pdf.sh": "d7d80a0dd7faae47eb6a422f2e74b96001d22f892bdeef611e2828d9194a851d",
-    "scripts/check-lean-toolchain-freeze.py": "4690a3055675d6ca9ee65dacdf5b57c33b687bb67820c9a20ef7d1f032c557ee",
+    "scripts/check-lean-toolchain-freeze.py": "eb4dd06d4483c2608ee91dffd18671dc52f5fef257bb036c0ff54b30dbc13c33",
     "scripts/check-report-source-links.py": "2f42745e92ff662eef03cd6c9b39d380e7e5c890e6395044c2b768e44f699816",
     "scripts/check-research-report-publication.py": "7ec39c0ed6baf78ee6f107c951db9241829b1f0967c2ba1ffa92700893f2c965"
   },

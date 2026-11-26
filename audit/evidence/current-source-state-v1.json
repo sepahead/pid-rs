@@ -406,8 +406,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "c77d87f35f495202942657329605725049432e4648574f4081d8f3997eb1c605",
-        "size_bytes": 355449
+        "sha256": "da949d6ed5a354fe1ad12b05a1acbfa5b07737f528349b08901e7c3af3155f15",
+        "size_bytes": 355828
       },
       {
         "git_mode": "100644",
@@ -18538,7 +18538,7 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
-        "sha256": "660b6fb8ff944ea803f451d89b46754d71b1da791d13f74f1e9bbaed490c17e5",
+        "sha256": "68026f3acb078bc1d26bfb1585f10ce75c6014822aa1a707c3e6a7ab86f577fb",
         "size_bytes": 113055
       },
       {
@@ -40318,8 +40318,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "c72b6f6e7ef30db39f31a6ca5d7d25f71740177d48400590af49e6586d1b541d",
-        "size_bytes": 84828
+        "sha256": "ab77435ac40100cb5c2bcbdf9bee038dffd2bef66dcdee7b498ced00012a7ff2",
+        "size_bytes": 85427
       },
       {
         "git_mode": "100755",
@@ -40786,7 +40786,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "4690a3055675d6ca9ee65dacdf5b57c33b687bb67820c9a20ef7d1f032c557ee",
+        "sha256": "eb4dd06d4483c2608ee91dffd18671dc52f5fef257bb036c0ff54b30dbc13c33",
         "size_bytes": 140337
       },
       {
@@ -41792,7 +41792,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "1ab3404fbd55670fcc9bfbe996288d60f60e4ed3f1e9343da1294dbed4030a69",
+    "entries_sha256": "4bcc860fa719517d917e2018eaf073105f8c39e6a360bfcceadab0591ffc5a85",
     "entry_count": 6941
   },
   "subprojections": [
@@ -41805,7 +41805,7 @@
       ]
     },
     {
-      "entries_sha256": "9126c19c3e899f4d263a9a91645162aad87f7f480af71e2f2741c223e2570b04",
+      "entries_sha256": "354b37ab72a514193311597c7b15ccc004e9011036322dc89c3a74bc7d60d7fa",
       "entry_count": 2437,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -41821,7 +41821,7 @@
       ]
     },
     {
-      "entries_sha256": "70485f217c71c995f9c259b30e3e888bd0ec545a592863a60044283150ca46f1",
+      "entries_sha256": "b19911ea3c6d4e18a9b2953dbb38aa0b84284003731e21852a8bee882b3df893",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

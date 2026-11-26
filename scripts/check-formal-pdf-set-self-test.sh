@@ -79,6 +79,9 @@ MARKDOWN_SOURCES=(
   audit/research/nested-categorical-sources/EXPOSITION.md
   audit/research/signed-log-certificate-enclosure/EXPOSITION.md
   audit/research/robot-wrist-slope-signs/EXPOSITION.md
+  audit/research/dendritic-stimulus-resolution/README.md
+  audit/research/categorical-third-source-budget-sharpness/EXPOSITION.md
+  audit/research/robot-wrist-copied-target/README.md
   MATHEMATICAL_RESULTS_GUIDE_CURRENT.md
   FINITE_COPY_BOOTSTRAP_COVERAGE.md
   audit/research/three-source-alphabet-counts/README.md
@@ -119,6 +122,9 @@ STANDALONE=(
   nested-categorical-sources
   signed-log-certificate-enclosure
   robot-wrist-slope-signs
+  dendritic-stimulus-resolution
+  categorical-third-source-budget-sharpness
+  robot-wrist-copied-target
   mathematical-results-guide-current
   finite-copy-bootstrap-coverage
   three-source-alphabet-counts
@@ -1623,7 +1629,8 @@ mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed
 expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
-for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage three-source-alphabet-counts three-source-w02 normalized-shannon-arithmetic three-source-six-certificate-observations three-source-supported-states two-source-synergy-bound-example mathematical-results-guide-current angular-four-moment-radius angular-truncation-extremum angular-unit-boundary robot-wrist-slope-signs angular-quadrature-grid angular-ray-monotonicity categorical-state-token strict-neighbour-count-geometry nested-categorical-sources signed-log-certificate-enclosure; do
+for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview source-coupling-compression finite-copy-bootstrap-coverage three-source-alphabet-counts three-source-w02 normalized-shannon-arithmetic three-source-six-certificate-observations three-source-supported-states two-source-synergy-bound-example mathematical-results-guide-current angular-four-moment-radius angular-truncation-extremum angular-unit-boundary robot-wrist-slope-signs angular-quadrature-grid angular-ray-monotonicity categorical-state-token strict-neighbour-count-geometry nested-categorical-sources signed-log-certificate-enclosure \
+    dendritic-stimulus-resolution categorical-third-source-budget-sharpness robot-wrist-copied-target; do
   fixture="$TEST_ROOT/missing-$bias_stem-pdf"
   make_fixture "$fixture"
   mv "$fixture/output/pdf/$bias_stem.pdf" "$fixture/removed-bias-paper.pdf"
@@ -1661,8 +1668,12 @@ for markdown_source in "${MARKDOWN_SOURCES[@]}"; do
 
   fixture="$TEST_ROOT/symbolic-markdown-source-$source_stem"
   make_fixture "$fixture"
-  mv "$fixture/$markdown_source" "$fixture/markdown-source-target.md"
-  ln -s markdown-source-target.md "$fixture/$markdown_source"
+  mv "$fixture/$markdown_source" "$fixture/$markdown_source.target"
+  ln -s "$(basename "$markdown_source").target" "$fixture/$markdown_source"
+  if [[ ! -L "$fixture/$markdown_source" || ! -f "$fixture/$markdown_source" ]]; then
+    echo "$CHECK_NAME: symbolic Markdown fixture has no regular target: $markdown_source" >&2
+    exit 1
+  fi
   expect_failure "symbolic Markdown paper source $markdown_source is rejected" "$fixture" \
     "Markdown source is not a direct regular file"
 done
