@@ -53,6 +53,8 @@ STANDALONE_MARKDOWN_PAPERS=(
   "angular-ray-monotonicity"
   "categorical-state-token"
   "strict-neighbour-count-geometry"
+  "nested-categorical-sources"
+  "signed-log-certificate-enclosure"
   "robot-wrist-slope-signs"
   "mathematical-results-guide-current"
   "finite-copy-bootstrap-coverage"
@@ -92,6 +94,8 @@ STANDALONE_MARKDOWN_SOURCES=(
   "audit/research/angular-ray-monotonicity/EXPOSITION.md"
   "audit/research/categorical-state-token/README.md"
   "audit/research/strict-neighbour-count-geometry/README.md"
+  "audit/research/nested-categorical-sources/EXPOSITION.md"
+  "audit/research/signed-log-certificate-enclosure/EXPOSITION.md"
   "audit/research/robot-wrist-slope-signs/EXPOSITION.md"
   "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md"
   "FINITE_COPY_BOOTSTRAP_COVERAGE.md"
@@ -322,8 +326,8 @@ python3 -O -I -S -B scripts/check-report-source-links.py
 python3 -I -S -B audit/research/robot-wrist-slope-signs/trace_provenance.py --self-test
 python3 -O -I -S -B audit/research/robot-wrist-slope-signs/trace_provenance.py --self-test
 
-# Exercise each finite checker in both Python modes. The two formal studies
-# have separate stock-Lean replay commands that require the registered compiler.
+# Exercise the finite checkers in both Python modes. The stock Lean proof
+# replays have their own commands and require the specified compiler.
 for checker in \
   audit/research/angular-four-moment-radius/replay.py \
   audit/research/angular-truncation-extremum/replay.py \
@@ -333,6 +337,7 @@ for checker in \
   audit/research/angular-ray-monotonicity/replay.py \
   audit/research/categorical-state-token/finite.py \
   audit/research/strict-neighbour-count-geometry/check.py \
+  audit/research/nested-categorical-sources/replay.py \
   audit/formal/three-source-original-premises/replay.py; do
   python3 -I -S -B "$checker" --self-test
   python3 -O -I -S -B "$checker" --self-test
@@ -340,10 +345,23 @@ done
 python3 -I -S -B audit/research/angular-ray-monotonicity/sturm_crossing.py
 python3 -O -I -S -B audit/research/angular-ray-monotonicity/sturm_crossing.py
 
+python3 -I -S -B audit/research/signed-log-certificate-enclosure/check.py
+python3 -O -I -S -B audit/research/signed-log-certificate-enclosure/check.py
+(
+  counted_root="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-counted-logarithms.XXXXXX")"
+  trap 'rm -rf -- "$counted_root"' EXIT
+  python3 -I -S -B audit/research/signed-log-certificate-enclosure/counted-examples/replay.py --out "$counted_root/ordinary"
+  python3 -O -I -S -B audit/research/signed-log-certificate-enclosure/counted-examples/replay.py --out "$counted_root/optimized"
+)
+
+python3 -I -S -B scripts/check-research-report-publication.py --self-test
+python3 -O -I -S -B scripts/check-research-report-publication.py --self-test
+
 for study in \
   angular-four-moment-radius angular-truncation-extremum angular-unit-boundary robot-wrist-slope-signs \
-  angular-quadrature-grid angular-ray-monotonicity categorical-state-token strict-neighbour-count-geometry; do
+  angular-quadrature-grid angular-ray-monotonicity categorical-state-token strict-neighbour-count-geometry nested-categorical-sources signed-log-certificate-enclosure; do
   study_source="audit/research/$study"
+  python3 -I -S -B scripts/check-research-report-publication.py --study "$study"
   if [[ "$MODE" == "--exact" ]]; then
     (
       report_dir="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-study-pdf.XXXXXX")"
@@ -351,8 +369,8 @@ for study in \
       python3 -I -S -B "$study_source/build.py" --output "$report_dir/report.pdf"
       cmp "$report_dir/report.pdf" "output/pdf/$study.pdf"
     )
+    echo "Rebuilt and compared every PDF byte for $study."
   fi
-  echo "Checked the $study report with $MODE."
 done
 
 for check in \

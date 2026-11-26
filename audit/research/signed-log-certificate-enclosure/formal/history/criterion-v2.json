@@ -1,0 +1,16 @@
+{
+  "Contradiction.lean": "d9419f4ee268e69d4d8e6b168b5303b6fc75af3636bd3ea117c28ff9dc2c6110",
+  "LOOP-READER.md": "fed11539739b32eabb52887f24c2cb4cc41f278dee7b8b5e32d588f4f772efd7",
+  "Model.lean": "95dd0cdbd6530b9be462cfb388de070582b07a515496c6156657bb1824f28818",
+  "NAT-READER.md": "e4e2b2757f140e8b1822b9a2b7b982553f0da12dcbf2a932bbda937072252d43",
+  "Observer.lean": "df578ee82c46465cd11161768325e05c5193712918df138974b5a011a01d21f6",
+  "Proof.template": "110e2b9bd662c99de940a7b511c4e6df1a1d77dcca63189add8a2d8075ba9afd",
+  "REVISION.md": "9be850f82209c9b9e5b2757842059be342f1beb1dad263035f9e00ee66ea3ebf",
+  "ROUTES.md": "0a8ac888c60349b63cb6397768c0c08088f9f08aa2336d48dbe39838185428b5",
+  "RUNTIME.json": "b8853d653bfade354875ac96e1f3be09a0a5953d215a03efc6fac5e08de42e05",
+  "TASK.md": "45e3039d350bf24ece3e3abff8456ebfcdb09bbdc0c98775bc61e87def8785d4",
+  "arithmetic.py": "b8e01525e86297b370b845c0d63be5a21b1bcccc702c9d172a9af3664cc9f6e2",
+  "fixtures.json": "c6f7c5a5c38b1bfd668aea1f9ec3d72f5d84d20d975a569fec6d8cebf2f82aec",
+  "interface.py": "5d502fddcdf6e216287f1ed2adccaf20bcf25338ee359e16804f23896d79f1f3",
+  "judge.py": "1b90be2005cebe5709a397f9effaef991fd42e9fdf37974ca5526241007544f5"
+}

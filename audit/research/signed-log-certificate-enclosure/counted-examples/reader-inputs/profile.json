@@ -1,0 +1,257 @@
+{
+  "canonical": "ASCII subset of RFC 8785 with exactly one terminal LF; all object key sequences below are literal and sorted. No whitespace, BOM, escapes or alternate spelling. Arrays maintain semantic order.",
+  "digest_domains": {
+    "claim_sha256": {
+      "file": "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md",
+      "sha256": "3c0ce09a17d1925a01f54d35733c6f01effbdd6ae3d081d194a7fadf6e04b31b"
+    },
+    "input_sha256": "all actual B bytes including its sole final LF",
+    "registry_sha256": {
+      "file": "claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md",
+      "sha256": "2d14bea9d6f0a2d07493ddaf7d89a130f4ad62680319cb9efba465590c2250c7"
+    },
+    "resource_policy_sha256": {
+      "file": "claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md",
+      "sha256": "bffd5f422b109335070011fd315034d4d4aa7bed54032a4c9426d43dd2a6507b"
+    },
+    "source_manifest_sha256": "all bytes of the externally fixed framed raw-source manifest, as defined below; actual research and scientific roots remain externally prebound"
+  },
+  "ids": {
+    "antichain_registry": "sxpid3-antichains-18-masklex-v1",
+    "claim": "SX-CERTIFIED-AVERAGED-PID3-001",
+    "claim_revision": 1,
+    "coordinate_registry": "sxpid3-averaged-108-v1",
+    "definition_revision": "makkeh-gutknecht-wibral-2021-empirical-sxpid3-nats-v1",
+    "event_semantics": "mgw-sxpid3-dnf-target-intersection-v1",
+    "independent_schema": "pid-rs/certified-averaged-sxpid3-independent-verification/v1",
+    "input_schema": "pid-rs/categorical-sxpid3-count-table/v1",
+    "interval_schema": "pid-rs/outward-dyadic-interval/v1",
+    "producer_schema": "pid-rs/certified-averaged-sxpid3-report/v1",
+    "product_schema": "pid-rs/exact-positive-rational-product/v1",
+    "resource_policy": "sxpid3-certification-proposed-v1",
+    "units": "nats",
+    "zeta_registry": "sxpid3-zeta-row-cumulative-column-atom-v1"
+  },
+  "limits": {
+    "absolute_dyadic_exponent": 65536,
+    "absolute_expression_exponent": 1048576,
+    "aggregate_projected_bits": 8388608,
+    "coordinate_terms": 8192,
+    "decimal_count_digits": 4096,
+    "event_comparisons": 100000000,
+    "independent_report_bytes": 16777216,
+    "input_bytes": 4194304,
+    "payload_bytes": 62914560,
+    "planned_peak_heap_bytes": 536870912,
+    "positive_rows": 1024,
+    "producer_report_bytes": 67108864,
+    "projected_bits_per_coordinate": 262144,
+    "source_manifest_bytes": 33554432,
+    "source_member_bytes": 4194304,
+    "state_tokens": 64,
+    "token_bytes": 128,
+    "total_count_bits": 8192,
+    "verifier_source_bytes": 2097152,
+    "width_power_of_two": -160
+  },
+  "manifest": {
+    "domain_ascii_followed_by_one_NUL": "PIDRS-SXPID3-SOURCE-MANIFEST-V1",
+    "framing": "prefix; u32be member count; by increasing unsigned ASCII relative path: u16be path length, path bytes, u16be role bitmask, u8 verifier-source flag, u64be raw size, raw contents; no trailing bytes; member paths unique and every role covered; this hash excludes C and its own root",
+    "paths": "ASCII tokens [A-Za-z0-9._-]+ separated by slash; components . and .. and empty forbidden",
+    "role_bits_0_to_11": [
+      "canonical-parser",
+      "state-count-decoder",
+      "event-counts",
+      "antichain-registry",
+      "zeta-mobius",
+      "product-preflight",
+      "interval-producer",
+      "interval-reconstructor",
+      "sign-zero",
+      "report-serialization-verifier",
+      "lock-toolchain-features",
+      "mutation-corpus-gates"
+    ],
+    "verifier_source": "sum raw sizes of all independently designated verifier source members <= 2 MiB; actual completeness and per-file flags/roles require external source custody"
+  },
+  "output_boundary": "no production verified status accepted/emitted by synthetic judge; genuine independent verification report encoding is a separate deliverable; its byte budget applies to future outputs",
+  "paired_inputs": [
+    "B original canonical count-table file incl one LF",
+    "C canonical outer report file incl one LF"
+  ],
+  "precision_bits": {
+    "independent": [
+      256,
+      384,
+      512,
+      768,
+      1024,
+      1536,
+      2048
+    ],
+    "producer": [
+      128,
+      256,
+      512,
+      1024,
+      2048,
+      4096
+    ]
+  },
+  "profile": "pid-rs/research/three-source-paired-certificate-wire/1",
+  "registry_masks": [
+    [
+      1
+    ],
+    [
+      2
+    ],
+    [
+      3
+    ],
+    [
+      4
+    ],
+    [
+      5
+    ],
+    [
+      6
+    ],
+    [
+      7
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      6
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      3,
+      6
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      1,
+      2,
+      4
+    ],
+    [
+      3,
+      5,
+      6
+    ]
+  ],
+  "status": "unadopted representation proposal; current executable and approvals concern synthetic structural controls only",
+  "types": {
+    "bindings": "all five present in each coordinate; SHA-256 raw digest lower hex",
+    "component": [
+      "informative",
+      "misinformative",
+      "net"
+    ],
+    "coordinate": "scope.component.key",
+    "endpoint": "coefficient minimal signed decimal STRING (no plus, leading zero or -0); exponent minimal signed JSON integer; c=0 iff endpoint zero and e=0; nonzero coefficients odd. Zero exponent also valid for odd nonzero integers.",
+    "key": "two-digit hex of each mask, plus-separated; mask list in ascending cardinality-then-lex registry",
+    "masks": "JSON array of increasing integers 1..7, pairwise incomparable by bit inclusion, separate from and equal in meaning to key",
+    "product": "reduced gcd-one pair of strictly positive minimal unsigned decimal strings",
+    "resources": "all values exact nonnegative JSON integers, independently corroborated in the context of the specific producer and its own plan (independent implementation operation/heap counts may differ)",
+    "scope": [
+      "cumulative",
+      "atom"
+    ],
+    "sign": [
+      "negative",
+      "zero",
+      "positive"
+    ]
+  },
+  "wire": {
+    "C": [
+      "payload",
+      "schema"
+    ],
+    "bindings": [
+      "claim_sha256",
+      "input_sha256",
+      "registry_sha256",
+      "resource_policy_sha256",
+      "source_manifest_sha256"
+    ],
+    "coordinate": [
+      "bindings",
+      "component",
+      "coordinate",
+      "interval",
+      "key",
+      "masks",
+      "product",
+      "scope",
+      "sign"
+    ],
+    "endpoint": [
+      "coefficient",
+      "exponent"
+    ],
+    "interval": [
+      "lower",
+      "schema",
+      "upper"
+    ],
+    "payload": [
+      "antichain_registry",
+      "claim",
+      "claim_revision",
+      "coordinate_registry",
+      "coordinates",
+      "definition_revision",
+      "event_semantics",
+      "input_schema",
+      "resource_policy",
+      "resources",
+      "units",
+      "zeta_registry"
+    ],
+    "product": [
+      "denominator",
+      "numerator",
+      "schema"
+    ],
+    "resources": [
+      "aggregate_projected_product_bits",
+      "event_comparisons",
+      "maximum_absolute_exponent",
+      "maximum_coordinate_terms",
+      "maximum_projected_coordinate_bits",
+      "planned_peak_heap_bytes",
+      "positive_rows",
+      "total_count_bits"
+    ]
+  }
+}

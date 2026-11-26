@@ -1,0 +1,44 @@
+{
+  "axioms": {},
+  "commands": [
+    {
+      "exit": 0,
+      "label": "version",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "20f42f897511ec814f7616bd9a193ae7504aa2f52fb05299eb752936eb77ca6e"
+    },
+    {
+      "exit": 0,
+      "label": "Model-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit": 0,
+      "label": "Model-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "exit": 1,
+      "label": "Proof-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "46eb444a24ee8df66bf088ae4ac95a8ccdff94ad5f92bf51a570f3794faac3aa"
+    }
+  ],
+  "exact_original_receipt": "93686ae6d2ac477fe2779a760436ee174c2f6b7ae0a05dd0a451b51846d190ab",
+  "fixed": "0d1fa11a92ced0dadb2ac667234759dadf17496e53a19974c2bc9beb0cf38426",
+  "objects": {
+    "Model.olean": "7ea4737547aa0a9a901862c536394b3661bfc1f64a4f2900492ce3fd264a16c7"
+  },
+  "payload": "8dafff873d5090f28cb1d2c82a663fe62c62c23c0f7a241f993873c6246dd53e",
+  "reason": "Proof-compile",
+  "record_projection": "The command labels, exit codes and native stream hashes are retained. Local command paths are omitted.",
+  "sources": {
+    "Contradiction.lean": "f24f2f93e638064e05ee78e610b0f86b09e5d74bbe555fd505f281753dce8532",
+    "Model.lean": "4af6b1287b2f482b2c843999549b625dda937b91e4af9e81f9cef02cd3fa1210",
+    "Observer.lean": "d23b1c403e1e512612c01a6a20071d9772dd4bf59f93515302ea872141feeb60",
+    "Proof.lean": "093ed765dabe7e2caac86a70bb5a75bb55d33b3ed45dba4edf7a4f08c80678dd"
+  },
+  "success": false
+}

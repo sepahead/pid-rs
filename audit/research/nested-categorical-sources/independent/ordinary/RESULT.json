@@ -1,0 +1,44 @@
+{
+  "accepted": 13,
+  "explicit_refusals": [
+    [
+      "incomparable",
+      "finer state has two coarse values"
+    ],
+    [
+      "fine-to-coarse",
+      "finer state has two coarse values"
+    ],
+    [
+      "duplicate-state",
+      "duplicate complete state"
+    ],
+    [
+      "zero-count",
+      "positive count and finite state identifiers"
+    ],
+    [
+      "negative-count",
+      "positive count and finite state identifiers"
+    ],
+    [
+      "boolean-count",
+      "five integer fields"
+    ],
+    [
+      "fractional-count",
+      "five integer fields"
+    ],
+    [
+      "no-observations",
+      "no occupied row"
+    ]
+  ],
+  "frozen_sha256": "3a5ccf7d8bf0969cda98c926d1dad9d4b90f3d7107fa8f2cd0aa92af016041db",
+  "named_products": 1404,
+  "negative_local_positive_average": "32/57",
+  "products_sha256": "501525f21555b369a4c62912ac60585e3a6668d3c636e3ec6ebd03420fa2c67c",
+  "selected_source_sha256": "08be715a05b8ffaf60a1aff4e6d377983424ae61fef8400c80fefe5a44686acf",
+  "structural_ones": 585,
+  "uniform_key_mutation_detected": true
+}

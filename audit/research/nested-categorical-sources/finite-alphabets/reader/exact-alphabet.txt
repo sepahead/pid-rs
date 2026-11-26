@@ -1,0 +1,7 @@
+# Corollary when the exact number of occupied fine labels is known
+
+Let L be the number of distinct fine labels with positive observed count. Keep the earlier integer-count assumptions and allow any finite set of coarse labels. A failed map requires 1≤L≤N−1. When L=N each fine label occurs on only one observation and always determines its coarse label. When L>N the table cannot exist.
+
+For L=1, N≥2 the minimum positive count-cleared directed product is N^N/(N−1)^(N−1). For L=2, N≥3 it is 2N/(N−1). For 3≤L≤N−1, N≥4, the minimum is the original unrestricted product (1+1/u)(1+1/v), u=floor(N/2), v=ceil(N/2). Divide the natural logarithm of the applicable product by N to get the gap in nats.
+
+For the last case keep the original balanced two coarse rows and the one mixed fine label with unit counts in both rows. Each of the two remaining row masses u−1 and v−1 is positive. Divide these masses into positive integer parts carried by pure fine labels. Every total number of pure labels between two and (u−1)+(v−1)=N−2 is possible: start with one part in each row, then split any part of size at least two until each part is one. In particular, exactly L−1 pure labels are possible. These extra labels add factors one, preserving the original sharp product. This completes the cases for prescribed exactly occupied fine alphabet size, with no assumptions about target labels or empirical independence. Specifying an exact number of occupied coarse states greater than two, minimum cell counts or a population support restriction would be a new constraint.

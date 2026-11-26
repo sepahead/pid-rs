@@ -1,0 +1,3 @@
+Contradiction.lean:4:32: error: Tactic `decide` proved that the proposition
+  mixed.level = 3
+is false

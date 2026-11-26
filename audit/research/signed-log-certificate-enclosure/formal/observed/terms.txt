@@ -1,0 +1,500 @@
+'N2Round.ceil_upper' depends on axioms: [propext, Quot.sound]
+'N2Round.signed_ceiling' depends on axioms: [propext, Quot.sound]
+'N2Round.initial_interval' depends on axioms: [propext, Quot.sound]
+'N2Round.product_lower' depends on axioms: [propext]
+'N2Round.product_upper' depends on axioms: [propext, Quot.sound]
+'N2Round.product_interval' depends on axioms: [propext, Quot.sound]
+'N2Round.term_interval' depends on axioms: [propext, Quot.sound]
+'N2Round.add_interval' depends on axioms: [propext]
+'N2Round.square_steps' depends on axioms: [propext, Quot.sound]
+'N2Round.odd_power_step' depends on axioms: [propext, Quot.sound]
+'N2Round.all_prefixes' depends on axioms: [propext, Quot.sound]
+'N2Round.returned_finite' depends on axioms: [propext, Quot.sound]
+'N2Round.scheduled' depends on axioms: [propext, Quot.sound]
+theorem N2Round.ceil_upper : ∀ (a b : Nat), 0 < b → a ≤ up a b * b :=
+fun a b hb =>
+  id
+    (have h := Nat.lt_mul_div_succ (a + (b - 1)) hb;
+    Decidable.byContradiction fun a_1 =>
+      ceil_upper._proof_1_1 a b hb
+        (Eq.mp (congrArg (fun _a => a + (b - 1) < _a + b) (Nat.mul_comm b ((a + (b - 1)) / b)))
+          (Eq.mp (congrArg (fun _a => a + (b - 1) < b * ((a + (b - 1)) / b) + _a) (Nat.mul_one b))
+            (Eq.mp (congrArg (fun _a => a + (b - 1) < _a) (Nat.mul_add b ((a + (b - 1)) / b) 1)) h)))
+        a_1)
+theorem N2Round.signed_ceiling : DivisionClaim :=
+fun a b hb =>
+  Nat.casesAuxOn (motive := fun a_1 => b = a_1 → ↑(up a b) = -(-↑a / ↑b)) b
+    (fun h =>
+      Eq.ndrec (motive := fun b => 0 < b → ↑(up a b) = -(-↑a / ↑b))
+        (fun hb => Decidable.byContradiction fun a => signed_ceiling._proof_1_1 hb) (Eq.symm h) hb)
+    (fun n h =>
+      Eq.ndrec (motive := fun b => 0 < b → ↑(up a b) = -(-↑a / ↑b))
+        (fun hb =>
+          Nat.casesAuxOn (motive := fun a_1 => a = a_1 → ↑(up a (n + 1)) = -(-↑a / ↑(n + 1))) a
+            (fun h =>
+              Eq.symm h ▸
+                have h := Nat.div_eq_of_lt (Nat.lt_succ_self n);
+                of_eq_true
+                  (Eq.trans
+                    (congr
+                      (congrArg Eq
+                        (congrArg Nat.cast (Eq.trans (congrFun' (congrArg HDiv.hDiv (Nat.zero_add n)) (n + 1)) h)))
+                      (congrArg Neg.neg (Int.zero_ediv (↑n + 1))))
+                    (eq_self 0)))
+            (fun n_1 h =>
+              Eq.symm h ▸
+                have ht := Decidable.byContradiction fun a => signed_ceiling._proof_1_3 n hb n_1 a;
+                id
+                  (Eq.mpr (id (congrArg (fun _a => ↑(_a / (n + 1)) = -(-↑(n_1 + 1) / ↑(n + 1))) ht))
+                    (Eq.mpr
+                      (id
+                        (congrArg (fun _a => ↑_a = -(-↑(n_1 + 1) / ↑(n + 1))) (Nat.add_div_left n_1 (Nat.succ_pos n))))
+                      (Eq.refl ↑(n_1 / n.succ + 1)))))
+            (Eq.refl a))
+        (Eq.symm h) hb)
+    (Eq.refl b)
+theorem N2Round.initial_interval : ∀ (n d B : Nat), 0 < d → Encl B (n * B / d) (up (n * B) d) n d :=
+fun n d B hd =>
+  ⟨Eq.mpr (id (congrArg (fun _a => n * B / d * d ≤ _a) (Nat.mul_comm B n))) (Nat.div_mul_le_self (n * B) d),
+    Eq.mpr (id (congrArg (fun _a => _a ≤ up (n * B) d * d) (Nat.mul_comm B n))) (ceil_upper (n * B) d hd)⟩
+theorem N2Round.product_lower : ∀ {B l k p q t r : Nat},
+  0 < B → l * q ≤ B * p → k * r ≤ B * t → l * k / B * (q * r) ≤ B * (p * t) :=
+fun {B l k p q t r} hB h₁ h₂ =>
+  Nat.le_of_mul_le_mul_right
+    (trans
+      (trans
+        (trans
+          (trans
+            (of_eq_true
+              (Eq.trans
+                (congr
+                  (congrArg Eq
+                    (Eq.trans
+                      (congrFun'
+                        (congrArg HMul.hMul
+                          (Eq.trans (Nat.mul_left_comm (l * k / B) q r)
+                            (congrArg (HMul.hMul q) (Nat.mul_comm (l * k / B) r))))
+                        B)
+                      (Nat.mul_comm (q * (r * (l * k / B))) B)))
+                  (Eq.trans
+                    (Eq.trans (congrFun' (congrArg HMul.hMul (Nat.mul_comm (l * k / B) B)) (q * r))
+                      (Nat.mul_left_comm (B * (l * k / B)) q r))
+                    (Eq.trans
+                      (congrArg (HMul.hMul q)
+                        (Eq.trans (Nat.mul_comm (B * (l * k / B)) r) (Nat.mul_left_comm r B (l * k / B))))
+                      (Nat.mul_left_comm q B (r * (l * k / B))))))
+                (eq_self (B * (q * (r * (l * k / B)))))))
+            (Nat.mul_le_mul_right (q * r) (Nat.div_mul_le_self (l * k) B)))
+          (of_eq_true
+            (Eq.trans
+              (congr
+                (congrArg Eq
+                  (Eq.trans (Nat.mul_left_comm (l * k) q r)
+                    (Eq.trans
+                      (Eq.trans
+                        (congrArg (HMul.hMul q)
+                          (Eq.trans (Nat.mul_comm (l * k) r)
+                            (Eq.trans (Nat.mul_left_comm r l k) (congrArg (HMul.hMul l) (Nat.mul_comm r k)))))
+                        (Nat.mul_left_comm q l (k * r)))
+                      (congrArg (HMul.hMul l) (Nat.mul_left_comm q k r)))))
+                (Eq.trans (Nat.mul_left_comm (l * q) k r)
+                  (Eq.trans
+                    (congrArg (HMul.hMul k)
+                      (Eq.trans (Nat.mul_comm (l * q) r)
+                        (Eq.trans (Nat.mul_left_comm r l q) (congrArg (HMul.hMul l) (Nat.mul_comm r q)))))
+                    (Nat.mul_left_comm k l (q * r)))))
+              (eq_self (l * (k * (q * r)))))))
+        (Nat.mul_le_mul h₁ h₂))
+      (of_eq_true
+        (Eq.trans
+          (congr
+            (congrArg Eq
+              (Eq.trans (Nat.mul_left_comm (B * p) B t)
+                (congrArg (HMul.hMul B)
+                  (Eq.trans (Nat.mul_comm (B * p) t)
+                    (Eq.trans (Nat.mul_left_comm t B p) (congrArg (HMul.hMul B) (Nat.mul_comm t p)))))))
+            (Nat.mul_comm (B * (p * t)) B))
+          (eq_self (B * (B * (p * t)))))))
+    hB
+theorem N2Round.product_upper : ∀ {B h k p q t r : Nat},
+  0 < B → B * p ≤ h * q → B * t ≤ k * r → B * (p * t) ≤ up (h * k) B * (q * r) :=
+fun {B h k p q t r} hB h₁ h₂ =>
+  Nat.le_of_mul_le_mul_right
+    (trans
+      (trans
+        (trans
+          (trans
+            (of_eq_true
+              (Eq.trans
+                (congr (congrArg Eq (Nat.mul_comm (B * (p * t)) B))
+                  (Eq.trans (Nat.mul_left_comm (B * p) B t)
+                    (congrArg (HMul.hMul B)
+                      (Eq.trans (Nat.mul_comm (B * p) t)
+                        (Eq.trans (Nat.mul_left_comm t B p) (congrArg (HMul.hMul B) (Nat.mul_comm t p)))))))
+                (eq_self (B * (B * (p * t))))))
+            (Nat.mul_le_mul h₁ h₂))
+          (of_eq_true
+            (Eq.trans
+              (congr
+                (congrArg Eq
+                  (Eq.trans (Nat.mul_left_comm (h * q) k r)
+                    (Eq.trans
+                      (congrArg (HMul.hMul k)
+                        (Eq.trans (Nat.mul_comm (h * q) r)
+                          (Eq.trans (Nat.mul_left_comm r h q) (congrArg (HMul.hMul h) (Nat.mul_comm r q)))))
+                      (Nat.mul_left_comm k h (q * r)))))
+                (Eq.trans (Nat.mul_left_comm (h * k) q r)
+                  (Eq.trans
+                    (Eq.trans
+                      (congrArg (HMul.hMul q)
+                        (Eq.trans (Nat.mul_comm (h * k) r)
+                          (Eq.trans (Nat.mul_left_comm r h k) (congrArg (HMul.hMul h) (Nat.mul_comm r k)))))
+                      (Nat.mul_left_comm q h (k * r)))
+                    (congrArg (HMul.hMul h) (Nat.mul_left_comm q k r)))))
+              (eq_self (h * (k * (q * r)))))))
+        (Nat.mul_le_mul_right (q * r) (ceil_upper (h * k) B hB)))
+      (of_eq_true
+        (Eq.trans
+          (congr
+            (congrArg Eq
+              (Eq.trans
+                (Eq.trans (congrFun' (congrArg HMul.hMul (Nat.mul_comm (up (h * k) B) B)) (q * r))
+                  (Nat.mul_comm (B * up (h * k) B) (q * r)))
+                (Eq.trans (Nat.mul_left_comm (q * r) B (up (h * k) B))
+                  (congrArg (HMul.hMul B) (Nat.mul_assoc q r (up (h * k) B))))))
+            (Eq.trans
+              (congrFun'
+                (congrArg HMul.hMul (Eq.trans (Nat.mul_comm (up (h * k) B) (q * r)) (Nat.mul_assoc q r (up (h * k) B))))
+                B)
+              (Nat.mul_comm (q * (r * up (h * k) B)) B)))
+          (eq_self (B * (q * (r * up (h * k) B)))))))
+    hB
+theorem N2Round.product_interval : ∀ {B l h k j p q t r : Nat},
+  0 < B → Encl B l h p q → Encl B k j t r → Encl B (l * k / B) (up (h * j) B) (p * t) (q * r) :=
+fun {B l h k j p q t r} hB a b => ⟨product_lower hB a.left b.left, product_upper hB a.right b.right⟩
+theorem N2Round.term_interval : ∀ {B l h p q k : Nat},
+  0 < k → Encl B l h p q → Encl B (2 * l / k) (up (2 * h) k) (2 * p) (q * k) :=
+fun {B l h p q k} hk a =>
+  ⟨trans
+      (trans
+        (trans
+          (trans
+            (of_eq_true
+              (Eq.trans
+                (congr
+                  (congrArg Eq
+                    (Eq.trans
+                      (Eq.trans
+                        (congrFun' (congrArg HMul.hMul (congrFun' (congrArg HDiv.hDiv (Nat.mul_comm 2 l)) k)) (q * k))
+                        (Nat.mul_comm (l * 2 / k) (q * k)))
+                      (Nat.mul_assoc q k (l * 2 / k))))
+                  (Eq.trans
+                    (congrFun'
+                      (congrArg HMul.hMul
+                        (Eq.trans
+                          (congrFun' (congrArg HMul.hMul (congrFun' (congrArg HDiv.hDiv (Nat.mul_comm 2 l)) k)) k)
+                          (Nat.mul_comm (l * 2 / k) k)))
+                      q)
+                    (Nat.mul_comm (k * (l * 2 / k)) q)))
+                (eq_self (q * (k * (l * 2 / k))))))
+            (Nat.mul_le_mul_right q (Nat.div_mul_le_self (2 * l) k)))
+          (of_eq_true
+            (Eq.trans
+              (congr
+                (congrArg Eq
+                  (Eq.trans (Eq.trans (congrFun' (congrArg HMul.hMul (Nat.mul_comm 2 l)) q) (Nat.mul_comm (l * 2) q))
+                    (Nat.mul_left_comm q l 2)))
+                (Eq.trans (Nat.mul_comm 2 (l * q)) (Nat.mul_assoc l q 2)))
+              (eq_self (l * (q * 2))))))
+        (Nat.mul_le_mul_left 2 a.left))
+      (of_eq_true
+        (Eq.trans
+          (congr (congrArg Eq (Eq.trans (Nat.mul_comm 2 (B * p)) (Nat.mul_assoc B p 2)))
+            (congrArg (HMul.hMul B) (Nat.mul_comm 2 p)))
+          (eq_self (B * (p * 2))))),
+    trans
+      (trans
+        (trans
+          (trans
+            (of_eq_true
+              (Eq.trans
+                (congr (congrArg Eq (congrArg (HMul.hMul B) (Nat.mul_comm 2 p)))
+                  (Eq.trans (Nat.mul_comm 2 (B * p)) (Nat.mul_assoc B p 2)))
+                (eq_self (B * (p * 2)))))
+            (Nat.mul_le_mul_left 2 a.right))
+          (of_eq_true
+            (Eq.trans
+              (congr (congrArg Eq (Eq.trans (Nat.mul_comm 2 (h * q)) (Nat.mul_assoc h q 2)))
+                (Eq.trans (Eq.trans (congrFun' (congrArg HMul.hMul (Nat.mul_comm 2 h)) q) (Nat.mul_comm (h * 2) q))
+                  (Nat.mul_left_comm q h 2)))
+              (eq_self (h * (q * 2))))))
+        (Nat.mul_le_mul_right q (ceil_upper (2 * h) k hk)))
+      (of_eq_true
+        (Eq.trans
+          (congr
+            (congrArg Eq
+              (Eq.trans
+                (congrFun'
+                  (congrArg HMul.hMul
+                    (Eq.trans (congrFun' (congrArg HMul.hMul (congrFun' (congrArg up (Nat.mul_comm 2 h)) k)) k)
+                      (Nat.mul_comm (up (h * 2) k) k)))
+                  q)
+                (Nat.mul_comm (k * up (h * 2) k) q)))
+            (Eq.trans
+              (Eq.trans (congrFun' (congrArg HMul.hMul (congrFun' (congrArg up (Nat.mul_comm 2 h)) k)) (q * k))
+                (Nat.mul_comm (up (h * 2) k) (q * k)))
+              (Nat.mul_assoc q k (up (h * 2) k))))
+          (eq_self (q * (k * up (h * 2) k)))))⟩
+theorem N2Round.add_interval : ∀ {B l h k j p q t r : Nat},
+  Encl B l h p q → Encl B k j t r → Encl B (l + k) (h + j) (p * r + t * q) (q * r) :=
+fun {B l h k j p q t r} a b =>
+  ⟨have e :=
+      Eq.mpr
+        (id
+          (congr
+            (congrArg LE.le
+              (Eq.trans (Nat.mul_left_comm (l + k) q r)
+                (Eq.trans
+                  (Eq.trans
+                    (congrArg (HMul.hMul q)
+                      (Eq.trans (Nat.mul_comm (l + k) r)
+                        (Eq.trans (Nat.mul_add r l k)
+                          (congr (congrArg HAdd.hAdd (Nat.mul_comm r l)) (Nat.mul_comm r k)))))
+                    (Nat.mul_add q (l * r) (k * r)))
+                  (congr (congrArg HAdd.hAdd (Nat.mul_left_comm q l r)) (Nat.mul_left_comm q k r)))))
+            (Eq.trans (congrArg (HMul.hMul B) (congrArg (HAdd.hAdd (p * r)) (Nat.mul_comm t q)))
+              (Nat.mul_add B (p * r) (q * t)))))
+        (Eq.mp
+          (congr
+            (congrArg LE.le
+              (congr
+                (congrArg HAdd.hAdd
+                  (Eq.trans (Nat.mul_comm (l * q) r)
+                    (Eq.trans (Nat.mul_left_comm r l q) (congrArg (HMul.hMul l) (Nat.mul_comm r q)))))
+                (Eq.trans (Nat.mul_comm (k * r) q) (Nat.mul_left_comm q k r))))
+            (congr
+              (congrArg HAdd.hAdd
+                (Eq.trans (Nat.mul_comm (B * p) r)
+                  (Eq.trans (Nat.mul_left_comm r B p) (congrArg (HMul.hMul B) (Nat.mul_comm r p)))))
+              (Eq.trans (Nat.mul_comm (B * t) q) (Nat.mul_left_comm q B t))))
+          (Nat.add_le_add (Nat.mul_le_mul_right r a.left) (Nat.mul_le_mul_right q b.left)));
+    e,
+    have e :=
+      Eq.mpr
+        (id
+          (congr
+            (congrArg LE.le
+              (Eq.trans (congrArg (HMul.hMul B) (congrArg (HAdd.hAdd (p * r)) (Nat.mul_comm t q)))
+                (Nat.mul_add B (p * r) (q * t))))
+            (Eq.trans (Nat.mul_left_comm (h + j) q r)
+              (Eq.trans
+                (Eq.trans
+                  (congrArg (HMul.hMul q)
+                    (Eq.trans (Nat.mul_comm (h + j) r)
+                      (Eq.trans (Nat.mul_add r h j)
+                        (congr (congrArg HAdd.hAdd (Nat.mul_comm r h)) (Nat.mul_comm r j)))))
+                  (Nat.mul_add q (h * r) (j * r)))
+                (congr (congrArg HAdd.hAdd (Nat.mul_left_comm q h r)) (Nat.mul_left_comm q j r))))))
+        (Eq.mp
+          (congr
+            (congrArg LE.le
+              (congr
+                (congrArg HAdd.hAdd
+                  (Eq.trans (Nat.mul_comm (B * p) r)
+                    (Eq.trans (Nat.mul_left_comm r B p) (congrArg (HMul.hMul B) (Nat.mul_comm r p)))))
+                (Eq.trans (Nat.mul_comm (B * t) q) (Nat.mul_left_comm q B t))))
+            (congr
+              (congrArg HAdd.hAdd
+                (Eq.trans (Nat.mul_comm (h * q) r)
+                  (Eq.trans (Nat.mul_left_comm r h q) (congrArg (HMul.hMul h) (Nat.mul_comm r q)))))
+              (Eq.trans (Nat.mul_comm (j * r) q) (Nat.mul_left_comm q j r))))
+          (Nat.add_le_add (Nat.mul_le_mul_right r a.right) (Nat.mul_le_mul_right q b.right)));
+    e⟩
+theorem N2Round.square_steps : ∀ (n d s : Nat),
+  0 < d → Encl (scale s) (steps n d s).lo (steps n d s).hi (n * n) (d * d) :=
+fun n d s hd =>
+  have init := initial_interval n d (scale s) hd;
+  product_interval (Nat.two_pow_pos s) init init
+theorem N2Round.odd_power_step : ∀ (a i : Nat), a ^ (2 * (i + 1) + 1) = a ^ (2 * i + 1) * (a * a) :=
+fun a i =>
+  have h := Decidable.byContradiction fun a => odd_power_step._proof_1_1 i a;
+  Eq.mpr (id (congrArg (fun _a => a ^ _a = a ^ (2 * i + 1) * (a * a)) h))
+    (Eq.mpr (id (congrArg (fun _a => _a = a ^ (2 * i + 1) * (a * a)) (Nat.pow_add a (2 * i + 1) 2)))
+      (Eq.mpr (id (congrArg (fun _a => a ^ (2 * i + 1) * _a = a ^ (2 * i + 1) * (a * a)) (Nat.pow_two a)))
+        (Eq.refl (a ^ (2 * i + 1) * (a * a)))))
+theorem N2Round.all_prefixes : ∀ (n d s i : Nat), 0 < d → enclosedPrefix n d s i :=
+fun n d s i hd =>
+  Nat.recAux
+    (have h := initial_interval n d (scale s) hd;
+    have z :=
+      Eq.mpr
+        (id
+          (Eq.trans
+            (congr (congrArg And (Nat.lt_add_one._simp_1 0))
+              (congr
+                (congrArg And
+                  (congr
+                    (congrArg LE.le
+                      (congrArg (HMul.hMul (n * scale s / d))
+                        (Eq.trans (congrArg (HPow.hPow d) (Nat.zero_add 1)) (Nat.pow_one d))))
+                    (congrArg (HMul.hMul (scale s))
+                      (Eq.trans (congrArg (HPow.hPow n) (Nat.zero_add 1)) (Nat.pow_one n)))))
+                (Eq.trans
+                  (congr
+                    (congrArg And
+                      (congr
+                        (congrArg LE.le
+                          (congrArg (HMul.hMul (scale s))
+                            (Eq.trans (congrArg (HPow.hPow n) (Nat.zero_add 1)) (Nat.pow_one n))))
+                        (congrArg (HMul.hMul (up (n * scale s) d))
+                          (Eq.trans (congrArg (HPow.hPow d) (Nat.zero_add 1)) (Nat.pow_one d)))))
+                    (Eq.trans
+                      (congr
+                        (congrArg And (Eq.trans (congrFun' (congrArg LE.le (Nat.mul_one 0)) 0) (Std.le_refl._simp_1 0)))
+                        (Eq.trans (congrArg (LE.le 0) (Nat.mul_one 0)) (Std.le_refl._simp_1 0)))
+                      (and_self True)))
+                  (and_true (scale s * n ≤ up (n * scale s) d * d)))))
+            (true_and (n * scale s / d * d ≤ scale s * n ∧ scale s * n ≤ up (n * scale s) d * d))))
+        h;
+    z)
+    (fun n_1 a =>
+      And.casesOn a fun hp right =>
+        And.casesOn right fun hl right =>
+          And.casesOn right fun hh right =>
+            And.casesOn right fun hsl hsh =>
+              let v := loopState n d s n_1;
+              let t := partialSum n d n_1;
+              let k := 2 * n_1 + 1;
+              have hk := Nat.succ_pos (2 * n_1);
+              have power := ⟨hl, hh⟩;
+              have sums := ⟨hsl, hsh⟩;
+              have next := product_interval (Nat.two_pow_pos s) power (square_steps n d s hd);
+              have total := add_interval sums (term_interval hk power);
+              have hden := Nat.mul_pos hp (Nat.mul_pos (Nat.pow_pos hd) hk);
+              id
+                (Eq.mpr
+                  (id
+                    (congrArg (And (0 < (partialSum n d n_1).snd * (d ^ (2 * n_1 + 1) * (2 * n_1 + 1))))
+                      (congr
+                        (congrArg And
+                          (congr
+                            (congrArg LE.le
+                              (congrArg (HMul.hMul ((loopState n d s n_1).lo * (steps n d s).lo / scale s))
+                                (odd_power_step d n_1)))
+                            (congrArg (HMul.hMul (scale s)) (odd_power_step n n_1))))
+                        (congrFun'
+                          (congrArg And
+                            (congr (congrArg LE.le (congrArg (HMul.hMul (scale s)) (odd_power_step n n_1)))
+                              (congrArg (HMul.hMul (up ((loopState n d s n_1).hi * (steps n d s).hi) (scale s)))
+                                (odd_power_step d n_1))))
+                          (((loopState n d s n_1).sumLo + 2 * (loopState n d s n_1).lo / (2 * n_1 + 1)) *
+                                ((partialSum n d n_1).snd * (d ^ (2 * n_1 + 1) * (2 * n_1 + 1))) ≤
+                              scale s *
+                                ((partialSum n d n_1).fst * (d ^ (2 * n_1 + 1) * (2 * n_1 + 1)) +
+                                  2 * n ^ (2 * n_1 + 1) * (partialSum n d n_1).snd) ∧
+                            scale s *
+                                ((partialSum n d n_1).fst * (d ^ (2 * n_1 + 1) * (2 * n_1 + 1)) +
+                                  2 * n ^ (2 * n_1 + 1) * (partialSum n d n_1).snd) ≤
+                              ((loopState n d s n_1).sumHi + up (2 * (loopState n d s n_1).hi) (2 * n_1 + 1)) *
+                                ((partialSum n d n_1).snd * (d ^ (2 * n_1 + 1) * (2 * n_1 + 1))))))))
+                  ⟨hden, ⟨next.left, ⟨next.right, ⟨total.left, total.right⟩⟩⟩⟩))
+    i
+theorem N2Round.returned_finite : ∀ (n d s : Nat), 0 < d → returnedClaim n d s :=
+fun n d s hd =>
+  id
+    (id
+      (if hn : n = 0 then
+        of_eq_true
+          (Eq.trans
+            (ite_eq_left_of_eq_true
+              ((if n = 0 then (0, 0)
+                else
+                  have v := loopState n d s (count s);
+                  (v.sumLo, v.sumHi + 1)) =
+                (0, 0))
+              ((if n = 0 then (0, 0)
+                      else
+                        have v := loopState n d s (count s);
+                        (v.sumLo, v.sumHi + 1)).fst *
+                    (partialSum n d (count s)).snd ≤
+                  scale s * (partialSum n d (count s)).fst ∧
+                scale s * (partialSum n d (count s)).fst + (partialSum n d (count s)).snd ≤
+                  (if n = 0 then (0, 0)
+                      else
+                        have v := loopState n d s (count s);
+                        (v.sumLo, v.sumHi + 1)).snd *
+                    (partialSum n d (count s)).snd)
+              (Eq.trans (congrFun' (congrArg Eq hn) 0) (eq_self 0)))
+            (Eq.trans
+              (congrFun'
+                (congrArg Eq
+                  (ite_eq_left_of_eq_true (0, 0)
+                    (have v := loopState n d s (count s);
+                    (v.sumLo, v.sumHi + 1))
+                    (Eq.trans (congrFun' (congrArg Eq hn) 0) (eq_self 0))))
+                (0, 0))
+              (eq_self (0, 0))))
+      else
+        Eq.mpr
+          (id
+            (Eq.trans
+              (ite_congr (eq_false hn)
+                (fun a =>
+                  congrFun'
+                    (congrArg Eq
+                      (Eq.trans
+                        (ite_congr (eq_false hn) (fun a => Eq.refl (0, 0)) fun a =>
+                          Eq.refl ((loopState n d s (count s)).sumLo, (loopState n d s (count s)).sumHi + 1))
+                        (ite_false (0, 0) ((loopState n d s (count s)).sumLo, (loopState n d s (count s)).sumHi + 1))))
+                    (0, 0))
+                fun a =>
+                congr
+                  (congrArg And
+                    (congrFun'
+                      (congrArg LE.le
+                        (congrFun'
+                          (congrArg HMul.hMul
+                            (congrArg Prod.fst
+                              (Eq.trans
+                                (ite_congr (eq_false hn) (fun a => Eq.refl (0, 0)) fun a =>
+                                  Eq.refl ((loopState n d s (count s)).sumLo, (loopState n d s (count s)).sumHi + 1))
+                                (ite_false (0, 0)
+                                  ((loopState n d s (count s)).sumLo, (loopState n d s (count s)).sumHi + 1)))))
+                          (partialSum n d (count s)).snd))
+                      (scale s * (partialSum n d (count s)).fst)))
+                  (congrArg (LE.le (scale s * (partialSum n d (count s)).fst + (partialSum n d (count s)).snd))
+                    (congrFun'
+                      (congrArg HMul.hMul
+                        (congrArg Prod.snd
+                          (Eq.trans
+                            (ite_congr (eq_false hn) (fun a => Eq.refl (0, 0)) fun a =>
+                              Eq.refl ((loopState n d s (count s)).sumLo, (loopState n d s (count s)).sumHi + 1))
+                            (ite_false (0, 0)
+                              ((loopState n d s (count s)).sumLo, (loopState n d s (count s)).sumHi + 1)))))
+                      (partialSum n d (count s)).snd)))
+              (ite_false (((loopState n d s (count s)).sumLo, (loopState n d s (count s)).sumHi + 1) = (0, 0))
+                ((loopState n d s (count s)).sumLo * (partialSum n d (count s)).snd ≤
+                    scale s * (partialSum n d (count s)).fst ∧
+                  scale s * (partialSum n d (count s)).fst + (partialSum n d (count s)).snd ≤
+                    ((loopState n d s (count s)).sumHi + 1) * (partialSum n d (count s)).snd))))
+          (And.casesOn (all_prefixes n d s (count s) hd) fun hp right =>
+            And.casesOn right fun hl right =>
+              And.casesOn right fun hh right =>
+                And.casesOn right fun hsl hsh =>
+                  ⟨hsl,
+                    Eq.mpr
+                      (id
+                        (congrArg
+                          (fun _a => scale s * (partialSum n d (count s)).fst + (partialSum n d (count s)).snd ≤ _a)
+                          (Nat.add_mul (loopState n d s (count s)).sumHi 1 (partialSum n d (count s)).snd)))
+                      (Eq.mpr
+                        (id
+                          (congrArg
+                            (fun _a =>
+                              scale s * (partialSum n d (count s)).fst + (partialSum n d (count s)).snd ≤
+                                (loopState n d s (count s)).sumHi * (partialSum n d (count s)).snd + _a)
+                            (Nat.one_mul (partialSum n d (count s)).snd)))
+                        (Nat.add_le_add_right hsh (partialSum n d (count s)).snd))⟩)))
+theorem N2Round.scheduled : Statement :=
+⟨signed_ceiling, fun n d p hd hdom hp =>
+  ⟨fun i hi => all_prefixes n d (internalBits p) i hd, returned_finite n d (internalBits p) hd⟩⟩

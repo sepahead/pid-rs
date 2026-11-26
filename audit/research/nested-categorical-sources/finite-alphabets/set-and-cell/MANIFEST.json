@@ -1,0 +1,12 @@
+{
+  "README.md": "e4ad8ad3b36c7c829cd17b17234302e7e3bc487557bd9b2940bb5b8fca46e98f",
+  "RESULT.json": "34b7c37d5bc83604cf6271127785251a4f497ef2f9b194383acddd15817c9798",
+  "attempts.jsonl": "3a0e1e93564096717a929446523ae5ea4c10e749b3945ca81522bb27107d60ba",
+  "candidate/from_cells.py": "0c762e72d18942f8d1601d4fb477bfebb12ffe7b8e4534cd6e5fdb90ec7c8f1b",
+  "judge/BOUND.json": "ea51db5fa8e9065554b742e804395d0ee07d29a0ea456e39de89f222ba37df9f",
+  "judge/ENUMERATION-PACKET.md": "769449b7d7ab09286b759e96987fc6f854e28c4d9b86ef481c288289e3ede3e2",
+  "judge/FIRST.md": "06efee15c3943062a28f94fffc678f7ff8d98838467cbe57bf6bbe653d2ec268",
+  "judge/ONE-VALUE-FIRST.md": "841fd1de3992d7950d96e701837140ee2f333e04058fb907003191543dcda5a9",
+  "judge/check.py": "6e03ff0c6c925d3f1213fcfb0dc3f7c8ba9929f571e473517cb5343dd491e2f5",
+  "judge/previous_partitions.py": "46fe2b822d5c5e22a74ed8a98eadbc5440095c4a47371df4ad960e93c2fbb092"
+}

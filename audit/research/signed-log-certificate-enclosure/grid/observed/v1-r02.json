@@ -1,0 +1,105 @@
+{
+  "axioms": {},
+  "commands": [
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "--version"
+      ],
+      "exit": 0,
+      "label": "version",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "20f42f897511ec814f7616bd9a193ae7504aa2f52fb05299eb752936eb77ca6e"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Model.olean",
+        "Model.lean"
+      ],
+      "exit": 0,
+      "label": "Model-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/leanchecker",
+        "--fresh",
+        "Model"
+      ],
+      "exit": 0,
+      "label": "Model-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Proof.olean",
+        "Proof.lean"
+      ],
+      "exit": 0,
+      "label": "Proof-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/leanchecker",
+        "--fresh",
+        "Proof"
+      ],
+      "exit": 0,
+      "label": "Proof-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Observer.olean",
+        "Observer.lean"
+      ],
+      "exit": 1,
+      "label": "Observer-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "364e1de9eec1966087f9f11565c55d93ec97c0bd4e76d6168a56a32f086d7273"
+    }
+  ],
+  "fixed": "c2ce0183e979cf7a3c6b346b227c8e0987019b6c46ec0a2dcb2471a183ef563e",
+  "objects": {
+    "Model.olean": "5ed4aeae7f50bcde8c6793b144defaea9642b03d00c9844c82760b02c996accc",
+    "Proof.olean": "50c638f775bb645bb50b4e6d61bc5f631b1dd0b790ad83fde5b0c4a92a44a8ec"
+  },
+  "payload": "d81dae964ab7e4a2da7b01e9c670e4007fa6fd13f5f969d31788d8d44682ed7d",
+  "reason": "Observer-compile",
+  "sources": {
+    "FalseLower.lean": "5c5e910428e7fd4e776bad1ceb99af7976651ee7ec0da7c3790ae0cdb3b92837",
+    "FalseTruncate.lean": "b28405148e6b796ed26f9266477bbeeac652d749a1e2c15456acaa2f2473b3a0",
+    "FalseUpper.lean": "10d70b7f1be6f4d3f3c8ce6176a2f9cc6627d65a82d3d605a7429856e31c1ebd",
+    "FalseWidth.lean": "741fb3238191ca74f38dfe472d2df3bfe52d64d462a2458faecdcbe999493c2e",
+    "Model.lean": "4c972a5ff973a9c4ec12eb78cbf79ef9cf1e39fe408f046ef28a96a64154af45",
+    "Observer.lean": "7ca793114b217a5a9f874cb3d655938c94075903365dbf6ee1523eb732aee1c4",
+    "Proof.lean": "76b344534dbb0840119dc53b9bea59fd99fbbf819c9f19a1bc451d5e0b6745bb"
+  },
+  "success": false
+}

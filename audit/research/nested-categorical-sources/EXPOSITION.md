@@ -1,0 +1,189 @@
+# Information from three nested source partitions
+
+**Sepehr Mahmoudian · 25 November 2026**
+
+[Standalone report](../../../output/pdf/nested-categorical-sources.pdf) · [Exact calculations and evidence](EVIDENCE.md)
+
+<!-- body -->
+## What three readings can tell us
+
+A sensor records a three-bit value. From the same value, a program keeps the first bit, the first two bits, or all three bits. These readings are **nested**. Each finer reading determines the preceding one. If a target is also recorded, which parts of its information can the three readings share? How can a reader detect a failure of nesting from exact counts?
+
+**Result.** For the categorical shared-exclusions measure of Makkeh, Gutknecht and Wibral, nesting reduces 18 possible information locations to three. A location can carry three components. We give the three values at each location, prove that all nine can be positive at once, and derive an exact lower limit for a failed nesting test. These are project derivations for this published measure. [Defining paper](https://doi.org/10.1103/PhysRevE.103.032149)
+
+**First terms.** A *source* is a recorded variable. A *target* is the variable about which the sources give information. A *categorical* variable takes one of a finite set of named values. A *joint law* gives a probability to each combination of values. Its *support* consists of combinations with positive probability. A *partition* groups outcomes that have the same value. A *deterministic map* gives one output for each input on the support. Equal and constant partitions are allowed.
+
+A *branch* asks for a match on every source that it contains. A *node* asks for a match on at least one of its branches. A *cumulative* is the information assigned to a node under this rule. An *atom* is the increment left there after subtracting contributions from lower nodes. A *local* value refers to one occupied combination. An *average* weights every occupied combination by its probability. The informative and misinformative components measure the surprise of the match, before and after the target value is known. Subtract the second from the first for the signed net component. [Pointwise definition and order](https://arxiv.org/abs/2002.03356v5)
+
+**Symbols and units.** The letters $X_1,X_2,X_3$ name the coarse, middle and fine sources, in that order. The letter $T$ names the target, $P$ denotes probability, and $z$ denotes a supported joint category tuple consisting of the three source labels and the target label. The symbol $\ln$ means natural logarithm. Information is in nats. In a table of counts, $N$ is the positive total number of observations. If $c_z$ is the positive count of combination $z$, its empirical probability and averaging weight are $c_z/N$. The counts can define an empirical law without independent sampling.
+
+<!-- page -->
+## Why a whole node becomes a single event
+
+Suppose $X_1=f(X_2)$ and $X_2=g(X_3)$ everywhere on the support, for some functions $f,g$. Introduce a constant $X_0$. For these events, take the set of supported joint category tuples as the outcome space. At a fixed $z$ in that space, let $F_j$ contain the tuples whose $X_j$ value agrees with the value at $z$. The event $F_0$ is the whole space. The source maps give $F_3\subseteq F_2\subseteq F_1\subseteq F_0$. A table can test this assumption by grouping outcomes by each finer reading and counting the distinct preceding readings within the group.
+
+Give each source its position $1,2,3$ in this order. For a nonempty branch $B$, let $k(B)$ be its greatest position. For a node $\alpha$ with a nonempty family of nonempty branches, let $m(\alpha)$ be the least of these greatest positions. Redundant branches can be dropped. The remaining family is an *antichain*, which means that no member contains another. There are 18 nonempty antichains on three named sources. A fixed encoding enumerates them. [Original count-table study](../three-source-six-certificate-observations/README.md)
+
+An intersection of nested events is its smallest event. A union of nested events is its largest event. Thus the match event $E_\alpha$ for the node is
+$$
+E_\alpha=\bigcup_{B\in\alpha}\bigcap_{i\in B}F_i=F_{m(\alpha)}.
+$$
+This equality also holds after intersection with the event $T=t$, where $t$ is the observed target at $z$. Both the match probability and its probability conditional on $T=t$ are positive because the match contains $z$.
+
+For a finite variable $X$, its entropy $H(X)$ is the average of $-\ln P(X=x)$ over its occupied values $x$. The conditional entropy $H(X\mid T)$ averages the corresponding surprise using $P(X=x\mid T=t)$ at each occupied pair. Their difference $I(X;T)$ is mutual information. The local components for a node of level $m$ are
+$$
+-\ln P(F_m),\qquad -\ln P(F_m\mid T=t),\qquad
+\ln\frac{P(F_m\mid T=t)}{P(F_m)}.
+$$
+Averaging gives $H(X_m)$, $H(X_m\mid T)$ and $I(X_m;T)$, in this order. The events come from the specified categorical measure. The entropy identities use the usual finite definitions. [MGW, equations 6, 13–15 and section IV](https://arxiv.org/abs/2002.03356v5) · [Shannon information identities](https://doi.org/10.1002/047174882X)
+
+<!-- page -->
+## Why only three locations can contribute
+
+Write $\beta\preceq\alpha$ if every branch in $\alpha$ contains a branch of $\beta$. This order states which atoms contribute to the cumulative at $\alpha$. Let $\beta_j$ contain the singleton branches for positions $j$ through 3. Each branch in $\alpha$ contains such a singleton exactly when its greatest position is at least $j$. Therefore
+$$
+\beta_j\preceq\alpha\quad\Longleftrightarrow\quad j\le m(\alpha).
+$$
+For example, take branches $\{1,3\}$ and $\{2\}$. Their greatest positions are 3 and 2. The level is 2. Both branches meet the suffix of positions 2 and 3. The branch $\{2\}$ misses the suffix consisting only of position 3. [Order and its logical interpretation](https://doi.org/10.1098/rspa.2021.0110)
+
+For one component, write $h_j$ for its cumulative at level $j$ and set $h_0=0$. Place $h_j-h_{j-1}$ at $\beta_j$ for $j=1,2,3$. Place zero elsewhere. Summing these proposed atoms below $\alpha$ cancels consecutive terms and leaves $h_{m(\alpha)}$. These are the unique atoms. Starting from the lowest nodes, the known cumulative minus the sum at all proper lower nodes determines each next atom. The same argument works separately at each occupied $z$.
+
+At level $j$ let $C=X_{j-1}$ and $X=X_j$. Since $X$ determines $C$, the entropy chain rule gives the following average atoms at $\beta_j$. Conditional mutual information $I(X;T\mid C)$ is the weighted average of mutual information within each occupied class of $C$.
+
+| Component | Value at the level | Exactly zero when |
+|---|---|---|
+| Informative | $H(X\mid C)$ | Each occupied $C$ fixes $X$. |
+| Misinformative | $H(X\mid C,T)$ | Each occupied pair $(C,T)$ fixes $X$. |
+| Net | $I(X;T\mid C)$ | Within each occupied $C$, the conditional joint law of $X,T$ equals the product of its marginals. |
+
+The first two values average nonnegative surprises. For the third, within each class, let $p$ be the joint law and $q$ the product of its marginals. The inequality $-\ln u\ge 1-u$ gives $\sum_{p>0}p\ln(p/q)\ge1-\sum_{p>0}q\ge0$. Equality requires $p=q$ on the whole class. This proves the net sign and equality condition. Every component vanishes at the other 15 nodes. Equal adjacent partitions have zero increment, so exchanging their order preserves the indexed result.
+
+<!-- page -->
+## Recompute all 108 entries from counts
+
+At each occupied $z$ write $c_z$ for its positive integer count, $W$ for the count of $T=t$, $U_j$ for the count of $F_j$, and $V_j$ for the count of $F_j$ together with $T=t$. Set $U_0=N$ and $V_0=W$. The table gives one rational factor at $z$. For each named coordinate, raise its factor to $c_z$ and multiply across all occupied $z$. If the resulting positive fraction is $Q$, the mean information value is $(\ln Q)/N$ nats. A unit product thus represents zero information.
+
+| Coordinate | Informative factor | Misinformative factor | Net factor |
+|---|---|---|---|
+| Cumulative at level $m$ | $N/U_m$ | $W/V_m$ | $NV_m/(WU_m)$ |
+| Atom at $\beta_j$ | $U_{j-1}/U_j$ | $V_{j-1}/V_j$ | $U_{j-1}V_j/(U_jV_{j-1})$ |
+| Any other atom | $1$ | $1$ | $1$ |
+
+The second row comes from dividing consecutive cumulative factors at the same $z$. This explains why multiplicities matter. Doubling every count leaves the mean unchanged and squares $Q$. The 18 nodes, two coordinate types and three components give 108 named products. A mask is a bit pattern that names included sources. In input order coarse, middle, fine, the three singleton masks are 01, 02 and 04. The code joins the masks for the branches in a node. A nonzero atom can occur at only three of the 18 keys. They are **01+02+04**, **02+04** and **04**. If the input order changes, permute the masks with the source names.
+
+**All nine possible atom values can be positive together.** Let the finest source consist of three independent fair bits. At level $j$ retain its first $j$ bits. The target is a three-bit report. Flip each bit independently with probability $1/3$. Each of the 64 finest-source and target pairs has count $2^e$, where $e$ is its number of matching bits. Each input word has total count $(2+1)^3=27$, so $N=216$.
+
+One new fair bit contributes informative entropy $\ln 2$. Given its reported bit, the true bit agrees with probability $2/3$. Its conditional entropy is $\ln 3-(2/3)\ln 2$. Independence from the other bit pairs makes these the increments at every level. The signed increment is $(5/3)\ln 2-\ln 3>0$ since $32>27$. At each of the three active keys the products in component order are $2^{216}$, $3^{216}/2^{144}$ and $2^{360}/3^{216}$. This is an attaining finite law.
+
+<!-- page -->
+## Decide whether the finer label really fixes the coarser one
+
+Use any two finite source labels $X,Y$. We wish to decide whether $Y$ determines $X$. Their joint masses are $p_{xy}$ and their respective marginal masses are $a_x,b_y$. A match on $X$ has probability $a_x$. A match on $X$ or $Y$ has probability $a_x+b_y-p_{xy}$. Write $D$ for the informative cumulative at the singleton $X$ minus the informative cumulative for these two singleton branches. Then
+$$
+D=\sum_{p_{xy}>0}p_{xy}\ln\frac{a_x+b_y-p_{xy}}{a_x}.
+$$
+Each logarithm is nonnegative. At an occupied cell it vanishes exactly when $b_y=p_{xy}$. This means that the column for $y$ contains only its one occupied value of $X$. Thus $D=0$ exactly when the map exists on this support. Two adjacent tests decide the given three-source order. If the order is unknown, test the six possible orders. The target distribution does not enter this test.
+
+For integer counts now use $c_{xy}$ for a joint count and $a_x,b_y$ for marginal counts. The directed product is $G=\exp(ND)$, where $\exp$ is the exponential. The mean deficit is $(\ln G)/N$ nats. Thus
+$$
+G=\prod_{c_{xy}>0}\left(1+\frac{b_y-c_{xy}}{a_x}\right)^{c_{xy}}.
+$$
+If the map fails, one column contains two distinct rows, with marginal counts $a,b$. In each of those occupied cells the number of observations in other rows of the same column is at least one. Both exponents are at least one. All other factors are at least one. Hence $G\ge(1+1/a)(1+1/b)$.
+
+For a given integer $N\ge2$ we have $a+b\le N$. Larger margins lower the last bound. At $a+b=N$ the product equals $1+(N+1)/(ab)$. Its minimum occurs when $a,b$ are as equal as the integers permit. Moving one count from a larger margin to a smaller one increases $ab$ if they differ by more than one. Write $u=\lfloor N/2\rfloor$ and $v=\lceil N/2\rceil$, the two balanced integer sizes. Every failed map satisfies
+$$
+G\ \ge\ (1+1/u)(1+1/v),\qquad
+D\ \ge\ \frac{\ln[(1+1/u)(1+1/v)]}{N}.
+$$
+There is no failed map at $N=1$. An empty table has no probability law. A direct scan of columns is a simpler test of the map. The rational bound also checks a reported pair of informative products without computing two approximate logarithms.
+
+<!-- page -->
+## Equality, a visual example and two limits
+
+The bound is attained for every $N\ge2$. Use two rows of sizes $u,v$. In one common column put one count in each row. Put the remaining $u-1,v-1$ counts in separate pure columns. Only the two common cells contribute. Equality requires each step of the proof to be sharp. This forces these two balanced rows to contain all counts and the two common cells to contain one count each. Any further ambiguous cell increases the product strictly. The other columns may divide the remaining counts in any way, provided each contains only one row. The sharpness claim allows the finite alphabets to vary. Two coarse row labels and three fine column labels suffice. A prescribed smaller alphabet can prevent attainment.
+
+![The left panel groups eight three-bit readings at three levels. The right panel compares the least failed-map product for unrestricted alphabets (circles) and at most two fine labels (squares), for integer totals from two through twelve. The dashed line gives the unit product of a valid map.](figures/partitions-and-margin.svg)
+
+In the figure, the circles allow unrestricted finite alphabets. The next page proves the values of the squares for at most two fine labels. At $N=4$ the two row count vectors $(1,1,0)$ and $(1,0,1)$ give $G=9/4$. They attain the bound. Direction matters. At $N=3$ the rows $(1,1,0)$ and $(0,0,1)$ give $G=1$. Reversing the roles gives $G=4$. In contrast the first attempted direction check used a table whose two products both equaled 3. That example tested the bound, but could not detect an exchange of directions. [Original failing comparison and its replacement](EVIDENCE.md)
+
+**No fixed positive gap for arbitrary probabilities.** In one common column put mass $\delta$ in each of two rows. Give each row mass $1/2-\delta$ in its own pure column, with $0<\delta<1/2$. Then $D=2\delta\ln(1+2\delta)>0$ tends to zero with $\delta$. For integer counts the sharp gap in nats also tends to zero, with leading term $4/N^2$. Thus the finite gap depends on table size. A small observed value alone does not establish a population map.
+
+<!-- page -->
+## Sharp limits for one or two fine labels
+
+Suppose the fine reading $Y$ has at most two occupied labels. Its declared alphabet may also contain unused labels. The coarse reading $X$ can have any finite number of labels. For integer total $N\ge2$, the smallest directed product at a failed map is
+$$
+G_{\min}=\frac{2N}{N-1},\qquad D_{\min}=\frac{1}{N}\ln\frac{2N}{N-1}.
+$$
+At $N=4$, the rows $(1,2)$ and $(1,0)$ attain $8/3$. The preceding unrestricted bound is $9/4$. Its two balanced coarse classes would each need a separate pure fine label in addition to the shared label.
+
+**Reduce to two coarse labels.** Fix two coarse rows that both meet one fine column. Keep them distinct. Merge every other coarse row into the first. For each affected observation, the foreign count in its column can only fall, and its coarse row total increases. Thus its factor $1+(\text{foreign count})/(\text{row total})$ can only fall. For the selected observation in the shared column, the foreign count stays positive and the row total increases. Its factor falls strictly. The two chosen rows still conflict. It follows that no table with more than two occupied coarse rows minimizes the product.
+
+If both fine columns contain both remaining rows, every factor in a row of size $s$ is at least $1+1/s$. The row contributes at least $(1+1/s)^s\ge2$ by the binomial expansion. The two rows give at least 4, and this case requires $N\ge4$. Otherwise exactly one column is shared. Exchange the row names so that the other column, if occupied, belongs to the first row. Let $a,c\ge1$ be the two counts in the shared column. All $N-a-c$ other counts belong to the first row and have unit factors. Consequently
+$$
+G=\left(\frac{N}{N-c}\right)^a(1+a/c)^c
+\ \ge\ \frac{N}{N-c}(1+1/c)^c
+\ \ge\ \frac{2N}{N-1}.
+$$
+Equality requires $a=c=1$. The two row count vectors $(1,N-2)$ and $(1,0)$ meet that condition. These are all minimizers up to names and empty cells. At $N=2$ this uses one occupied fine label. Exactly two occupied fine labels permit a failed map from $N=3$ onward.
+
+**Exactly one occupied fine label.** With two coarse rows of sizes $a,N-a$, the product is $N^N/[a^a(N-a)^{N-a}]$. Convexity of $x\ln x$ on the positive line makes the denominator largest at $a=1$ or $a=N-1$. The same merging argument handles more coarse rows. The sharp product for this case is $N^N/(N-1)^{N-1}$.
+
+**Any prescribed number of occupied fine labels.** Write $L$ for that number. If $3\le L\le N-1$, then $N\ge4$ and both balanced rows in the unrestricted construction have a positive pure remainder. Start with one pure label per row and one common label. Successively split a pure label into two nonempty pure labels until there are $L-1$ pure labels. Their total is $N-2$, so every requested count of labels is possible. Their factors all stay one. The unrestricted sharp product is therefore attained. At $L=N$ each fine value occurs once and always determines the coarse reading. More than $N$ occupied labels are impossible. [Exact alphabet cases](finite-alphabets/reader/exact-alphabet.txt)
+
+At $N=4$ the smallest failing products are $256/27$, $8/3$ and $9/4$ for $L=1,2,3$ respectively. A failed map is impossible at $L=4$. A direct program grouped all 44,168 ordered pairs of partitions on one through six labeled observations by $L$. It also constructed 4,950 attaining tables, one for each pair $2\le N\le100$ and $1\le L<N$. [Exact finite checks](finite-alphabets/reader/EXACT-FINE-CLASSIFICATION.json)
+
+<!-- page -->
+## What an application can test
+
+**A nested reading.** If a device derives coarse and middle readings by dropping bits of its stored fine reading, its construction supplies the source maps. To examine a recorded target, align its labels and timestamps with the readings. Fix the grouping, handling of missing readings, sample weights and selection window. Count each occupied joint label and state the total. Apply the map checks before the product calculation. The three signed increments give the extra average information at each resolution about this target under the chosen law.
+
+If instead three instruments give nominally low-, middle- and high-resolution readings, uncertainty, drift or alignment can produce crossed partitions. Check for different coarse labels at the same fine value. A finite recording with no such conflict supports an empirical map. To assert a population map one also needs a device construction or a separately justified support model. No physical sensor deployment, held-out task, treatment effect, sampling interval or comparison of predictive performance is reported here.
+
+**A sign can reverse under averaging.** Set $X_1$ constant and $X_2=X_3=X$. Let the four counts for $(X,T)=(0,0),(0,1),(1,0),(1,1)$ be $1,3,3,1$. At $(0,0)$ the conditional and marginal probabilities of $X=0$ are $1/4$ and $1/2$. The local signed increment is $\ln(1/2)<0$. Across the four pairs its product is $(1/2)^2(3/2)^6=729/256>1$. The signed average is positive. As a second limit, take two independent fair sources, a third source that contains both, and a constant target. The first two partitions cross, but every signed average is zero. Signed sparsity alone cannot establish nesting.
+
+**Uniform binary marginals still permit arbitrarily small positive deficits.** For real probabilities put $(1-\varepsilon)/2$ in each diagonal cell and $\varepsilon/2$ in each other cell, for $0<\varepsilon<1$. Both marginals are uniform and both columns are shared. Direct substitution gives $D=(1-\varepsilon)\ln(1+\varepsilon)+\varepsilon\ln(2-\varepsilon)>0$. As $\varepsilon$ tends to zero this deficit tends to zero.
+
+**What the measures add.** Direct grouping answers whether a map exists. Conditional mutual information alone gives each average signed increment. The categorical decomposition also places it at a named node, separates the two kinds of surprise, and gives all the other zero coordinates. These results can check a general implementation. A simple task score or a test with and without the new bit is needed for a predictive-use question. A deterministic map is stronger than an ordering of entropies, mutual informations or prediction scores.
+
+**Related deterministic assumptions.** Chicharro, Pica and Panzeri studied how identity criteria constrain a decomposition when a source determines part of the target. Here the maps connect one source to another. The target can have any conditional distribution. [Chicharro, Pica and Panzeri, 2018](https://doi.org/10.3390/e20030169)
+
+**Scope of the mathematics.** The argument concerns the finite categorical functional of Makkeh, Gutknecht and Wibral. Continuous shared exclusions, nearest-neighbour estimates and other measures of redundancy require different source assumptions. The named product formulas close this special case. The general three-source certificate, its complete input decoder, numerical enclosures, executable correspondence and scientific deployment require separate evidence. [Original study and its limits](../three-source-six-certificate-observations/README.md)
+
+<!-- page -->
+## Which steps have a machine-checked proof?
+
+A proof assistant represents a mathematical statement in a formal language. Its *kernel* checks that a supplied proof term has the stated type. Here the formal object is a finite nonempty expression for a union of intersections. A leaf is a natural-number source level. A branch combines leaves by “and”, and a node combines branches by “or”. The formal model permits repeated leaves, repeated branches and ties.
+
+At one outcome, a predicate $p$ on levels is *decreasing* if $p(j)$ implies $p(i)$ whenever $i\le j$. A finer match then implies a coarser match. The following six propositions were submitted to the stock Lean 4.34.1 compiler and fresh kernel checker. The first five use the formal tree and its recursively calculated level. The last uses an integer-valued sequence. [Model, checked sources and reproduction](stock/README.md)
+
+| Formal result | Statement in ordinary language |
+|---|---|
+| Branch incidence | A branch contains a level at least $j$ exactly when its largest level is at least $j$. |
+| Node incidence | Each branch meets that suffix exactly when the least of the largest branch levels is at least $j$. |
+| Branch match | All the branch matches hold exactly when the finest match holds. |
+| Node match | Some branch succeeds exactly when the match at the node level holds. |
+| Equality of events | For decreasing matches at every outcome, the two predicates describe the same event on that outcome type. |
+| Integer sum | The sum of successive differences of an integer sequence through the node level equals its value there minus its initial value. |
+
+Twenty formal examples include nonconstant and repeated levels. A separate false claim that one explicit node has level three was rejected. Its actual level is two. The record includes the first proof attempt and its failed induction step. The checked propositions are conditional on the given source-level predicates. The integer sum does not formalize the real entropy differences. The translation of the 18 software keys, the probability and logarithm steps, the fixed-count inequality and the Rust results use other evidence. [Statements and individual axiom records](stock/README.md)
+
+A logical *axiom* is an assumption used by a proof. Here propositional extensionality identifies two logically equivalent propositions. Classical choice selects a witness from a nonempty type. Quotient soundness identifies the quotient images of related representatives. The two incidence proofs use all three. The two match proofs use propositional extensionality. Event equality and the integer sum use propositional extensionality and quotient soundness. All runs share the same Lean implementation.
+
+<!-- page -->
+## Rust implementation and computational cost
+
+The default public Rust interface for the general categorical law is **discrete_sxpid3_averaged** in **pid_core::stable::categorical**. It takes four aligned categorical matrices, one per source and one for the target. A row is one observation. A source or target state can combine several columns into one label. An empty input cannot define a law. The ordinary interface uses the default resource budget. Its variants accept an explicit allocation and operation budget and an optional cooperative cancellation token. They construct the empirical law and average in finite-precision arithmetic. There is no public Rust interface for these count-cleared rational products or the sharp directed gap. [Rust entry points](../../../crates/pid-core/src/sxpid.rs) · [Resource contract](../../../RUST_IMPLEMENTATION_AND_COST.md)
+
+**Reproduce the finite checks.** From this study directory, run the following commands with Python 3.14 and the shared repository sources installed. The first compares the complete scientific records. The second also replays the rejected direction control and checks the attaining example.
+
+    python3 -I -S -B replay.py
+    python3 -I -S -B -O replay.py --self-test
+
+The first comparison examined 49 admitted nested inputs, six crossed inputs and five malformed inputs. A direct calculation using general match events and finite inversion agreed on 5,292 named fractions. There were 318 negative local net atom entries when counting occupied combinations once, and 66 strictly positive net average atoms. A separate calculation compared all 1,404 fractions in 13 configurations. Six are permutations of one configuration. Separately, direct cell calculations checked 12,009 ordered tables. Enumeration of labeled partitions checked 44,168 ordered pairs on up to six individual observations. A third calculation examined 12,989 tables, including 10,553 failed maps, and attaining examples through total 256. These are distinct finite tests. [Code, exact outputs, controls and prior exposure](EVIDENCE.md)
+
+For $K$ occupied combinations the specialized route can hash the labels, verify a proposed order and accumulate three sets of marginal and joint counts in a number of dictionary operations proportional to $K$. Label lengths and hash costs also count. Space for these counts grows with $K$. The number of named coordinates is fixed at 108. Exact products can require a number of bits proportional to $N\log(N+1)$. Multiplication, cancellation and storage of these integers add cost. The public test accepts at most 64 occupied cells and a multiplicity up to 16 per cell. The mathematical theorem applies to every finite supported law. These offline calculations use no training, fitted quantizer or resampling.
+
+On one macOS host with Python 3.14, the complete 60-case check used 1.04 seconds wall time, and the 12,009-table check used 1.04 seconds. Each had a 60-second limit and a one-gibibyte memory allowance, or $2^{30}$ bytes. One memory sample per run was insufficient to estimate peak use. These measurements cover the checks only. [Reproduction and formal status](EVIDENCE.md)
+
+**Citation.** Sepehr Mahmoudian (2026), *Information from three nested source partitions*. Include the exact pid-rs commit or release. Cite the defining method separately. [Software citation](../../../CITATION.cff) · [Categorical shared exclusions](https://doi.org/10.1103/PhysRevE.103.032149) · [Order foundations](https://doi.org/10.1098/rspa.2021.0110)

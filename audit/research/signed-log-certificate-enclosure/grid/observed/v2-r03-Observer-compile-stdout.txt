@@ -1,0 +1,120 @@
+'GridProof.ceiling_le' depends on axioms: [propext, Quot.sound]
+'GridProof.width_residue' depends on axioms: [propext, Quot.sound]
+'GridProof.sharp_max' depends on axioms: [propext, Quot.sound]
+'GridProof.two_grid' depends on axioms: [propext, Quot.sound]
+'GridProof.next_width' depends on axioms: [propext, Quot.sound]
+'GridProof.both_padded' depends on axioms: [propext, Quot.sound]
+'GridProof.next_padding' depends on axioms: [propext, Quot.sound]
+'GridProof.unit_cell' depends on axioms: [propext, Quot.sound]
+'GridProof.counted_envelope' depends on axioms: [propext, Quot.sound]
+theorem GridProof.ceiling_le : ∀ (x b d : Int), 0 < d → (up x d ≤ b ↔ x ≤ b * d) :=
+fun x b d hd =>
+  id
+    {
+      mp := fun h =>
+        have hdiv := Decidable.byContradiction fun a => ceiling_le._proof_1_1 x b d h a;
+        have hmul := (Int.le_ediv_iff_mul_le hd).mp hdiv;
+        Decidable.byContradiction fun a =>
+          ceiling_le._proof_1_2 x b d (Eq.mp (congrArg (fun _a => _a ≤ -x) (Int.neg_mul b d)) hmul) a,
+      mpr := fun h =>
+        have hmul :=
+          Eq.mpr (id (congrArg (fun _a => _a ≤ -x) (Int.neg_mul b d)))
+            (Decidable.byContradiction fun a => ceiling_le._proof_1_3 x b d h a);
+        have hdiv := (Int.le_ediv_iff_mul_le hd).mpr hmul;
+        Decidable.byContradiction fun a => ceiling_le._proof_1_4 x b d hdiv a }
+theorem GridProof.width_residue : ∀ (l u d : Int), 0 < d → width l u d = up (l % d + (u - l)) d :=
+fun l u d hd =>
+  id
+    (id
+      (have base := Int.emod_add_ediv_mul l d;
+      have ident := Decidable.byContradiction fun a => width_residue._proof_1_1 l u d base a;
+      Eq.mpr (id (congrArg (fun _a => -(-u / d) - l / d = -(_a / d)) ident))
+        (Eq.mpr
+          (id (congrArg (fun _a => -(-u / d) - l / d = -_a) (Int.add_mul_ediv_right (-u) (l / d) (Int.ne_of_gt hd))))
+          (Decidable.byContradiction fun a => width_residue._proof_1_2 l u d a))))
+theorem GridProof.sharp_max : ∀ (d h : Int),
+  0 < d →
+    0 ≤ h →
+      (∀ (l u : Int), l ≤ u → u - l ≤ h → width l u d ≤ up (d - 1 + h) d) ∧
+        d - 1 ≤ d - 1 + h ∧ width (d - 1) (d - 1 + h) d = up (d - 1 + h) d :=
+fun d h hd hh =>
+  ⟨fun l u horder hg =>
+    Eq.mpr (id (congrArg (fun _a => _a ≤ up (d - 1 + h) d) (width_residue l u d hd)))
+      (id
+        (have hr := Int.emod_lt_of_pos l hd;
+        have hneg := Decidable.byContradiction fun a => sharp_max._proof_1_1 d h l u hg hr a;
+        have hdiv := Int.ediv_le_ediv hd hneg;
+        Decidable.byContradiction fun a => sharp_max._proof_1_2 d h l u hdiv a)),
+    ⟨Decidable.byContradiction fun a => sharp_max._proof_1_3 d h hh a,
+      Eq.mpr (id (congrArg (fun _a => _a = up (d - 1 + h) d) (width_residue (d - 1) (d - 1 + h) d hd)))
+        (have hr :=
+          Int.emod_eq_of_lt (Decidable.byContradiction fun a => sharp_max._proof_1_4 d h hd a)
+            (Decidable.byContradiction fun a => sharp_max._proof_1_5 d h a);
+        have hg := Decidable.byContradiction fun a => sharp_max._proof_1_6 d h a;
+        Eq.mpr (id (congrArg (fun _a => up (_a + (d - 1 + h - (d - 1))) d = up (d - 1 + h) d) hr))
+          (Eq.mpr (id (congrArg (fun _a => up (d - 1 + _a) d = up (d - 1 + h) d) hg)) (Eq.refl (up (d - 1 + h) d))))⟩⟩
+theorem GridProof.two_grid : ∀ (l u d : Int), 0 < d → l ≤ u → u - l ≤ d + 1 → 0 ≤ width l u d ∧ width l u d ≤ 2 :=
+fun l u d hd ho hg =>
+  ⟨id
+      (have hf := Int.ediv_mul_le l (Int.ne_of_gt hd);
+      have hu := (ceiling_le u (up u d) d hd).mp (Int.le_refl (up u d));
+      have hm := Decidable.byContradiction fun a => two_grid._proof_1_1 l u d ho hf hu a;
+      have he := Int.le_of_mul_le_mul_right hm hd;
+      Decidable.byContradiction fun a => two_grid._proof_1_2 l u d he a),
+    have hm :=
+      (sharp_max d (d + 1) hd (Decidable.byContradiction fun a => two_grid._proof_1_3 l u d hd a)).left l u ho hg;
+    have hx :=
+      (ceiling_le (d - 1 + (d + 1)) 2 d hd).mpr
+        (Eq.mpr (id (congrArg (fun _a => d - 1 + (d + 1) ≤ _a) (Int.two_mul d)))
+          (Decidable.byContradiction fun a => two_grid._proof_1_4 l u d a));
+    Decidable.byContradiction fun a => two_grid._proof_1_5 l u d hm hx a⟩
+theorem GridProof.next_width : ∀ (d : Int), 0 < d → width (d - 1) (d - 1 + (d + 2)) d = 3 :=
+fun d hd =>
+  have hg := (sharp_max d (d + 2) hd (Decidable.byContradiction fun a => next_width._proof_1_1 d hd a)).right.right;
+  have hi :=
+    (ceiling_le (d - 1 + (d + 2)) 3 d hd).mpr (Decidable.byContradiction fun a => next_width._proof_1_2 d hd a);
+  have lo := fun bad =>
+    have hv := (ceiling_le (d - 1 + (d + 2)) 2 d hd).mp bad;
+    next_width._proof_1_3 d hv;
+  Decidable.byContradiction fun a => next_width._proof_1_4 d hg hi lo a
+theorem GridProof.both_padded : ∀ (l u a b d : Int),
+  0 < d → overlap l u a b d → u - l ≤ d → a - 1 ≤ l / d ∧ up u d ≤ b + 1 :=
+fun l u a b d hd ho hg =>
+  And.casesOn ho fun horder right =>
+    And.casesOn right fun hab right =>
+      And.casesOn right fun hl hu =>
+        ⟨(Int.le_ediv_iff_mul_le hd).mpr
+            (Eq.mpr (id (congrArg (fun _a => _a ≤ l) (Int.sub_mul a 1 d)))
+              (Eq.mpr (id (congrArg (fun _a => a * d - _a ≤ l) (Int.one_mul d)))
+                (Decidable.byContradiction fun a_1 => both_padded._proof_1_1 l u a b d hg hu a_1))),
+          (ceiling_le u (b + 1) d hd).mpr
+            (Eq.mpr (id (congrArg (fun _a => u ≤ _a) (Int.add_mul b 1 d)))
+              (Eq.mpr (id (congrArg (fun _a => u ≤ b * d + _a) (Int.one_mul d)))
+                (Decidable.byContradiction fun a_1 => both_padded._proof_1_2 l u a b d hg hl a_1)))⟩
+theorem GridProof.next_padding : ∀ (d : Int),
+  0 < d → overlap (-d - 1) 0 0 0 d ∧ 0 - (-d - 1) = d + 1 ∧ (-d - 1) / d < -1 :=
+fun d hd =>
+  ⟨id
+      ⟨Decidable.byContradiction fun a => next_padding._proof_1_1 d hd a,
+        ⟨Int.le_refl 0,
+          ⟨Eq.mpr (id (congrArg (fun _a => -d - 1 ≤ _a) (Int.zero_mul d)))
+              (Decidable.byContradiction fun a => next_padding._proof_1_1 d hd a),
+            Eq.mpr (id (congrArg (fun _a => _a ≤ 0) (Int.zero_mul d))) (Int.le_refl 0)⟩⟩⟩,
+    ⟨Decidable.byContradiction fun a => next_padding._proof_1_2 d a,
+      (Int.ediv_lt_iff_lt_mul hd).mpr (Decidable.byContradiction fun a => next_padding._proof_1_3 d a)⟩⟩
+theorem GridProof.unit_cell : ∀ (l u a d : Int), 0 < d → l ≤ u → u - l ≤ d → l / d < a → up u d ≤ a + 1 :=
+fun l u a d hd ho hg below =>
+  have span := (two_grid l u d hd ho (Decidable.byContradiction fun a_1 => unit_cell._proof_1_1 l u a d hg a_1)).right;
+  Decidable.byContradiction fun a_1 => unit_cell._proof_1_2 l u a d below span a_1
+theorem GridProof.counted_envelope : ∀ (u l n : Int),
+  0 < n →
+    l ≤ u →
+      u - l ≤ 1385 * (1 + 80 * n) →
+        u - l < bitDivisor n ∧ 0 ≤ width l u (bitDivisor n) ∧ width l u (bitDivisor n) ≤ 2 :=
+fun u l n hn ho bound =>
+  id
+    (have positive := Decidable.byContradiction fun a => counted_envelope._proof_1_1 u l n hn a;
+    have small := Decidable.byContradiction fun a => counted_envelope._proof_1_2 u l n hn ho bound a;
+    ⟨small,
+      two_grid l u (n * 16777216) positive ho
+        (Decidable.byContradiction fun a => counted_envelope._proof_1_3 u l n small a)⟩)

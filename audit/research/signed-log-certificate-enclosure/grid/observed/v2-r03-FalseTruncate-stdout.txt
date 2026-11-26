@@ -1,0 +1,3 @@
+FalseTruncate.lean:4:31: error: Tactic `decide` proved that the proposition
+  -1 / 4 = 0
+is false

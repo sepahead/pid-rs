@@ -1,0 +1,1118 @@
+{
+  "fields": [
+    {
+      "all_admitted": [
+        {
+          "N": 1444,
+          "aggregate_projected_product_bits": 52200,
+          "erased_each": 5,
+          "input_sha256": "46e888c42614ca1671656a50a9c82e06dff4a7349069b3eea68e5dddb4f7e75b",
+          "m": 1434,
+          "max_projected_coordinate_bits": 4334,
+          "revealed_each": 717,
+          "side": "upper"
+        },
+        {
+          "N": 1672,
+          "aggregate_projected_product_bits": 60408,
+          "erased_each": 119,
+          "input_sha256": "5ea01c04d175242e685bfe652ba74bf71b5edcd8c22b29265958540b91917e2e",
+          "m": 1434,
+          "max_projected_coordinate_bits": 5018,
+          "revealed_each": 717,
+          "side": "upper"
+        },
+        {
+          "N": 2888,
+          "aggregate_projected_product_bits": 104184,
+          "erased_each": 727,
+          "input_sha256": "0c0969d054d7c67eb4f91cf5ae1be06ef1af7beb97d8f89efa1a095bc4db55b7",
+          "m": 1434,
+          "max_projected_coordinate_bits": 8666,
+          "revealed_each": 717,
+          "side": "upper"
+        },
+        {
+          "N": 3344,
+          "aggregate_projected_product_bits": 120600,
+          "erased_each": 955,
+          "input_sha256": "508eb71af6469c2f761f3139217f5c0a4c719eb135e9a57b46a17f86b5fee151",
+          "m": 1434,
+          "max_projected_coordinate_bits": 10034,
+          "revealed_each": 717,
+          "side": "upper"
+        }
+      ],
+      "counts": {
+        "lower": 0,
+        "upper": 4
+      },
+      "extra_truth_order_required": [],
+      "first_admitted": {
+        "lower": null,
+        "upper": {
+          "N": 1444,
+          "aggregate_projected_product_bits": 52200,
+          "erased_each": 5,
+          "input_sha256": "46e888c42614ca1671656a50a9c82e06dff4a7349069b3eea68e5dddb4f7e75b",
+          "m": 1434,
+          "max_projected_coordinate_bits": 4334,
+          "revealed_each": 717,
+          "side": "upper"
+        }
+      },
+      "original_input_refusals": [],
+      "pairs_examined": 998001,
+      "precision": 256
+    },
+    {
+      "all_admitted": [
+        {
+          "N": 1364,
+          "aggregate_projected_product_bits": 49320,
+          "erased_each": 97,
+          "input_sha256": "e1c2f7583962bf4c78f6658ff164ce29ebc80681cedf726d7cc2bb15b57b2b79",
+          "m": 1170,
+          "max_projected_coordinate_bits": 4094,
+          "revealed_each": 585,
+          "side": "upper"
+        }
+      ],
+      "counts": {
+        "lower": 0,
+        "upper": 1
+      },
+      "extra_truth_order_required": [],
+      "first_admitted": {
+        "lower": null,
+        "upper": {
+          "N": 1364,
+          "aggregate_projected_product_bits": 49320,
+          "erased_each": 97,
+          "input_sha256": "e1c2f7583962bf4c78f6658ff164ce29ebc80681cedf726d7cc2bb15b57b2b79",
+          "m": 1170,
+          "max_projected_coordinate_bits": 4094,
+          "revealed_each": 585,
+          "side": "upper"
+        }
+      },
+      "original_input_refusals": [],
+      "pairs_examined": 998001,
+      "precision": 384
+    },
+    {
+      "all_admitted": [
+        {
+          "N": 1866,
+          "aggregate_projected_product_bits": 67392,
+          "erased_each": 434,
+          "input_sha256": "919a9e90a8094de146c483173450e283be9c167e23aff5d09684824c331f7ca5",
+          "m": 998,
+          "max_projected_coordinate_bits": 5600,
+          "revealed_each": 499,
+          "side": "upper"
+        },
+        {
+          "N": 3110,
+          "aggregate_projected_product_bits": 112176,
+          "erased_each": 557,
+          "input_sha256": "997ddf9cc5683eb057b81e655dde464b6f2c5ca2e6f7fd166d287c282af69316",
+          "m": 1996,
+          "max_projected_coordinate_bits": 9332,
+          "revealed_each": 998,
+          "side": "upper"
+        },
+        {
+          "N": 3732,
+          "aggregate_projected_product_bits": 134568,
+          "erased_each": 868,
+          "input_sha256": "307793939b7d5e17f6785cc794c3fdb22c7098d4fd0db405e029f7630349b4c7",
+          "m": 1996,
+          "max_projected_coordinate_bits": 11198,
+          "revealed_each": 998,
+          "side": "upper"
+        }
+      ],
+      "counts": {
+        "lower": 0,
+        "upper": 3
+      },
+      "extra_truth_order_required": [],
+      "first_admitted": {
+        "lower": null,
+        "upper": {
+          "N": 1866,
+          "aggregate_projected_product_bits": 67392,
+          "erased_each": 434,
+          "input_sha256": "919a9e90a8094de146c483173450e283be9c167e23aff5d09684824c331f7ca5",
+          "m": 998,
+          "max_projected_coordinate_bits": 5600,
+          "revealed_each": 499,
+          "side": "upper"
+        }
+      },
+      "original_input_refusals": [],
+      "pairs_examined": 998001,
+      "precision": 512
+    },
+    {
+      "all_admitted": [
+        {
+          "N": 1708,
+          "aggregate_projected_product_bits": 61704,
+          "erased_each": 107,
+          "input_sha256": "2ada02e8df35300c7be7843b70bb1ca397df8d70ed1e319dcde03d501d20973e",
+          "m": 1494,
+          "max_projected_coordinate_bits": 5126,
+          "revealed_each": 747,
+          "side": "lower"
+        },
+        {
+          "N": 2072,
+          "aggregate_projected_product_bits": 74808,
+          "erased_each": 289,
+          "input_sha256": "fac306bb02f49f9fee801bad2342e7d47a2d9854e9544e5b403ea5452d0daf72",
+          "m": 1494,
+          "max_projected_coordinate_bits": 6218,
+          "revealed_each": 747,
+          "side": "lower"
+        },
+        {
+          "N": 2440,
+          "aggregate_projected_product_bits": 88056,
+          "erased_each": 473,
+          "input_sha256": "c2401a286446ab76d81e9b2109806e20fd3a54a43a0f1b024c57d4b4a403d068",
+          "m": 1494,
+          "max_projected_coordinate_bits": 7322,
+          "revealed_each": 747,
+          "side": "lower"
+        },
+        {
+          "N": 2498,
+          "aggregate_projected_product_bits": 90144,
+          "erased_each": 337,
+          "input_sha256": "b350299bff61bc829c92053ee50fa36c112ea6091b34e9bf53984c27db77f0ec",
+          "m": 1824,
+          "max_projected_coordinate_bits": 7496,
+          "revealed_each": 912,
+          "side": "upper"
+        },
+        {
+          "N": 2590,
+          "aggregate_projected_product_bits": 93456,
+          "erased_each": 548,
+          "input_sha256": "56bfcbc827e4ea5a9fc1349590f26810ee23a4817c1fefae907ab27e3250e497",
+          "m": 1494,
+          "max_projected_coordinate_bits": 7772,
+          "revealed_each": 747,
+          "side": "lower"
+        },
+        {
+          "N": 2960,
+          "aggregate_projected_product_bits": 106776,
+          "erased_each": 733,
+          "input_sha256": "9228b1345a77bda02be8c9335a825a1aae3a05825e22c129cd6ce9e773c41671",
+          "m": 1494,
+          "max_projected_coordinate_bits": 8882,
+          "revealed_each": 747,
+          "side": "lower"
+        },
+        {
+          "N": 3416,
+          "aggregate_projected_product_bits": 123192,
+          "erased_each": 961,
+          "input_sha256": "884ffa4ef732ae07694f765b66b644d4901dc7cab58d55cbba019184ce670283",
+          "m": 1494,
+          "max_projected_coordinate_bits": 10250,
+          "revealed_each": 747,
+          "side": "lower"
+        },
+        {
+          "N": 3786,
+          "aggregate_projected_product_bits": 136512,
+          "erased_each": 952,
+          "input_sha256": "c829fb65b4c218ce26eb59d043f0a11507775a1d38d42fb10ecc2dfdeecf6cb2",
+          "m": 1882,
+          "max_projected_coordinate_bits": 11360,
+          "revealed_each": 941,
+          "side": "lower"
+        }
+      ],
+      "counts": {
+        "lower": 7,
+        "upper": 1
+      },
+      "extra_truth_order_required": [],
+      "first_admitted": {
+        "lower": {
+          "N": 1708,
+          "aggregate_projected_product_bits": 61704,
+          "erased_each": 107,
+          "input_sha256": "2ada02e8df35300c7be7843b70bb1ca397df8d70ed1e319dcde03d501d20973e",
+          "m": 1494,
+          "max_projected_coordinate_bits": 5126,
+          "revealed_each": 747,
+          "side": "lower"
+        },
+        "upper": {
+          "N": 2498,
+          "aggregate_projected_product_bits": 90144,
+          "erased_each": 337,
+          "input_sha256": "b350299bff61bc829c92053ee50fa36c112ea6091b34e9bf53984c27db77f0ec",
+          "m": 1824,
+          "max_projected_coordinate_bits": 7496,
+          "revealed_each": 912,
+          "side": "upper"
+        }
+      },
+      "original_input_refusals": [],
+      "pairs_examined": 998001,
+      "precision": 768
+    },
+    {
+      "all_admitted": [
+        {
+          "N": 408,
+          "aggregate_projected_product_bits": 14904,
+          "erased_each": 11,
+          "input_sha256": "60a9632cc0877aee3a0183af8446f4f706737d2419e72657e403c64a1e8ac591",
+          "m": 386,
+          "max_projected_coordinate_bits": 1226,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 470,
+          "aggregate_projected_product_bits": 17136,
+          "erased_each": 42,
+          "input_sha256": "7dd9a18b461fb0860e8ecba4f6c46b18d537ac61cf8dd0c72cf203471c2c9a29",
+          "m": 386,
+          "max_projected_coordinate_bits": 1412,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 510,
+          "aggregate_projected_product_bits": 18576,
+          "erased_each": 62,
+          "input_sha256": "385f3c472b620f936fee69e2a48928a36364fe5f09c17bb4c5c215e2357cb08b",
+          "m": 386,
+          "max_projected_coordinate_bits": 1532,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 564,
+          "aggregate_projected_product_bits": 20520,
+          "erased_each": 89,
+          "input_sha256": "ffaccd4da1ca1cd18cd66566783b19f16970ff360bcd9afe4d0783201b62ceb4",
+          "m": 386,
+          "max_projected_coordinate_bits": 1694,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 680,
+          "aggregate_projected_product_bits": 24696,
+          "erased_each": 147,
+          "input_sha256": "794938db6035ae17ceec05eb0b219bddae7e3f0de6cb10b4ba228a5eed717e24",
+          "m": 386,
+          "max_projected_coordinate_bits": 2042,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 816,
+          "aggregate_projected_product_bits": 29592,
+          "erased_each": 22,
+          "input_sha256": "c33257918e2d302989f36f8fac793d533b7aaeaff41abeb473e0738910e9f3d7",
+          "m": 772,
+          "max_projected_coordinate_bits": 2450,
+          "revealed_each": 386,
+          "side": "upper"
+        },
+        {
+          "N": 940,
+          "aggregate_projected_product_bits": 34056,
+          "erased_each": 277,
+          "input_sha256": "8b82e2f2b0957501c4e5334cdbfa02eda924f5626b8a7a9eb061217d7cbe89f5",
+          "m": 386,
+          "max_projected_coordinate_bits": 2822,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 940,
+          "aggregate_projected_product_bits": 34056,
+          "erased_each": 84,
+          "input_sha256": "4025f501a639da61d1a2997507d8c724173f13f3d64e65abbe4bd46022abc85b",
+          "m": 772,
+          "max_projected_coordinate_bits": 2822,
+          "revealed_each": 386,
+          "side": "upper"
+        },
+        {
+          "N": 1020,
+          "aggregate_projected_product_bits": 36936,
+          "erased_each": 317,
+          "input_sha256": "dafc3eab6686f7e7025d4dbd29a35e816edf3adf4c9a283a5d7b331fd438dcb4",
+          "m": 386,
+          "max_projected_coordinate_bits": 3062,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 1020,
+          "aggregate_projected_product_bits": 36936,
+          "erased_each": 124,
+          "input_sha256": "4351a87a0827ebc1ab5c46a3c4ae841b97f0e5f9348ce5d1985ca662d54df212",
+          "m": 772,
+          "max_projected_coordinate_bits": 3062,
+          "revealed_each": 386,
+          "side": "upper"
+        },
+        {
+          "N": 1128,
+          "aggregate_projected_product_bits": 40824,
+          "erased_each": 371,
+          "input_sha256": "a99f1a687e206308394ee8b3ff356cec00edb5a6a3049bd247271636ba75524d",
+          "m": 386,
+          "max_projected_coordinate_bits": 3386,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 1128,
+          "aggregate_projected_product_bits": 40824,
+          "erased_each": 178,
+          "input_sha256": "98edce0dc23a00691c0fc9888f8e5729355a2e3c89533350d758248ccf89413e",
+          "m": 772,
+          "max_projected_coordinate_bits": 3386,
+          "revealed_each": 386,
+          "side": "upper"
+        },
+        {
+          "N": 1224,
+          "aggregate_projected_product_bits": 44280,
+          "erased_each": 33,
+          "input_sha256": "ee28b6cf7b1708a2a870840751af1ee0869e91c6c8ab69248c2f368c4e963d4f",
+          "m": 1158,
+          "max_projected_coordinate_bits": 3674,
+          "revealed_each": 579,
+          "side": "upper"
+        },
+        {
+          "N": 1360,
+          "aggregate_projected_product_bits": 49176,
+          "erased_each": 294,
+          "input_sha256": "204f4b8d7b2895044107462496ffeab5b1d6a8318e3923473c47ad0a8d20f09e",
+          "m": 772,
+          "max_projected_coordinate_bits": 4082,
+          "revealed_each": 386,
+          "side": "upper"
+        },
+        {
+          "N": 1410,
+          "aggregate_projected_product_bits": 50976,
+          "erased_each": 512,
+          "input_sha256": "7ff5c7c5bff149dca1b4db23f6ae91ebc38ba981ccc769621dc65f3679744a5c",
+          "m": 386,
+          "max_projected_coordinate_bits": 4232,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 1410,
+          "aggregate_projected_product_bits": 50976,
+          "erased_each": 319,
+          "input_sha256": "ec0970e19ffd647884331f845f33d66d9d0338df82694cef4ab11f6ae2c1e694",
+          "m": 772,
+          "max_projected_coordinate_bits": 4232,
+          "revealed_each": 386,
+          "side": "upper"
+        },
+        {
+          "N": 1410,
+          "aggregate_projected_product_bits": 50976,
+          "erased_each": 126,
+          "input_sha256": "56333583b4aceb6f377724bd8b5c3b0149f461f6efdbb6d8d6941d631facf29b",
+          "m": 1158,
+          "max_projected_coordinate_bits": 4232,
+          "revealed_each": 579,
+          "side": "upper"
+        },
+        {
+          "N": 1530,
+          "aggregate_projected_product_bits": 55296,
+          "erased_each": 186,
+          "input_sha256": "a71c359aac81925532944068037dd65b29a557cca07c4fa1b6643be2298c1e0a",
+          "m": 1158,
+          "max_projected_coordinate_bits": 4592,
+          "revealed_each": 579,
+          "side": "upper"
+        },
+        {
+          "N": 1598,
+          "aggregate_projected_product_bits": 57744,
+          "erased_each": 606,
+          "input_sha256": "b374321c465f85dfe0a7a94e3816513fbadd510a9706abe89606aa64ca0ece6f",
+          "m": 386,
+          "max_projected_coordinate_bits": 4796,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 1598,
+          "aggregate_projected_product_bits": 57744,
+          "erased_each": 413,
+          "input_sha256": "cba3d00012e5dce0a47776788220eceacc3d12488fad0904848d7a8189754e66",
+          "m": 772,
+          "max_projected_coordinate_bits": 4796,
+          "revealed_each": 386,
+          "side": "upper"
+        },
+        {
+          "N": 1598,
+          "aggregate_projected_product_bits": 57744,
+          "erased_each": 220,
+          "input_sha256": "9e38896ce46db106c47b22a7b6e7aa5f17cb2e4f1b1c9eb6136345d303b1d886",
+          "m": 1158,
+          "max_projected_coordinate_bits": 4796,
+          "revealed_each": 579,
+          "side": "upper"
+        },
+        {
+          "N": 1598,
+          "aggregate_projected_product_bits": 57744,
+          "erased_each": 27,
+          "input_sha256": "051527a89503e2f14fef431b2f69bbdbce069f84b0b7ea7102af250e04863058",
+          "m": 1544,
+          "max_projected_coordinate_bits": 4796,
+          "revealed_each": 772,
+          "side": "upper"
+        },
+        {
+          "N": 1632,
+          "aggregate_projected_product_bits": 58968,
+          "erased_each": 44,
+          "input_sha256": "782be0fbe0e8999168726c8aff7f40295e14c7c690143e8480d61f2985fe6a46",
+          "m": 1544,
+          "max_projected_coordinate_bits": 4898,
+          "revealed_each": 772,
+          "side": "upper"
+        },
+        {
+          "N": 1692,
+          "aggregate_projected_product_bits": 61128,
+          "erased_each": 267,
+          "input_sha256": "e03795630ccd756cc82b8168166c2e8008e99ecf654b48d55bbe9dd44819ada9",
+          "m": 1158,
+          "max_projected_coordinate_bits": 5078,
+          "revealed_each": 579,
+          "side": "upper"
+        },
+        {
+          "N": 1880,
+          "aggregate_projected_product_bits": 67896,
+          "erased_each": 747,
+          "input_sha256": "2accead64fbbe51848e12d3f145aab10db629caee91bcb588114801f8e998fc4",
+          "m": 386,
+          "max_projected_coordinate_bits": 5642,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 1880,
+          "aggregate_projected_product_bits": 67896,
+          "erased_each": 554,
+          "input_sha256": "b576250cd1e33186c70aca2723a9caf7085d3839e2e7846123a8cfe813a4a9bf",
+          "m": 772,
+          "max_projected_coordinate_bits": 5642,
+          "revealed_each": 386,
+          "side": "upper"
+        },
+        {
+          "N": 1880,
+          "aggregate_projected_product_bits": 67896,
+          "erased_each": 361,
+          "input_sha256": "c8084b1da4c562bc813ba37ac36583c4dcf717e0f97cf8d59ca351a2a5e5d0d6",
+          "m": 1158,
+          "max_projected_coordinate_bits": 5642,
+          "revealed_each": 579,
+          "side": "upper"
+        },
+        {
+          "N": 1880,
+          "aggregate_projected_product_bits": 67896,
+          "erased_each": 168,
+          "input_sha256": "0ab65bdae07c94aa7418b3dbb9b5ff0ed8596ceb4bbf2f00732ebd2609487b71",
+          "m": 1544,
+          "max_projected_coordinate_bits": 5642,
+          "revealed_each": 772,
+          "side": "upper"
+        },
+        {
+          "N": 2040,
+          "aggregate_projected_product_bits": 73656,
+          "erased_each": 827,
+          "input_sha256": "f995cd4b080fa4ee17271e1519b6427b3cffa35111982e1e8687f35c625174da",
+          "m": 386,
+          "max_projected_coordinate_bits": 6122,
+          "revealed_each": 193,
+          "side": "upper"
+        },
+        {
+          "N": 2040,
+          "aggregate_projected_product_bits": 73656,
+          "erased_each": 634,
+          "input_sha256": "2325e3bef39fdcdfc19bd32e61635f94d03c66b3ae788266c481fb42353bbf4b",
+          "m": 772,
+          "max_projected_coordinate_bits": 6122,
+          "revealed_each": 386,
+          "side": "upper"
+        },
+        {
+          "N": 2040,
+          "aggregate_projected_product_bits": 73656,
+          "erased_each": 441,
+          "input_sha256": "f7d59749750d9ac2288987f1671c23ce01153778314bbc4c7839dd316d114845",
+          "m": 1158,
+          "max_projected_coordinate_bits": 6122,
+          "revealed_each": 579,
+          "side": "upper"
+        },
+        {
+          "N": 2040,
+          "aggregate_projected_product_bits": 73656,
+          "erased_each": 248,
+          "input_sha256": "a2497b53d5762cb28b6b680b10c0bcce34e4bdc86ba17adaab6068c084b476e1",
+          "m": 1544,
+          "max_projected_coordinate_bits": 6122,
+          "revealed_each": 772,
+          "side": "upper"
+        },
+        {
+          "N": 2040,
+          "aggregate_projected_product_bits": 73656,
+          "erased_each": 55,
+          "input_sha256": "c0014fa8df9d57643c50fc4bcaca256d1f9b8bb473c0accd50ace5f69687e47c",
+          "m": 1930,
+          "max_projected_coordinate_bits": 6122,
+          "revealed_each": 965,
+          "side": "upper"
+        },
+        {
+          "N": 2256,
+          "aggregate_projected_product_bits": 81432,
+          "erased_each": 742,
+          "input_sha256": "5482ec7f364a8535fcaece3c2b548550122f245bbedb9a74226a6d5895ca9064",
+          "m": 772,
+          "max_projected_coordinate_bits": 6770,
+          "revealed_each": 386,
+          "side": "upper"
+        },
+        {
+          "N": 2256,
+          "aggregate_projected_product_bits": 81432,
+          "erased_each": 356,
+          "input_sha256": "abc8afa76a3f3d7148af1ff3393cf24c184c93b202cb6ddefb4f004b0e2da11b",
+          "m": 1544,
+          "max_projected_coordinate_bits": 6770,
+          "revealed_each": 772,
+          "side": "upper"
+        },
+        {
+          "N": 2350,
+          "aggregate_projected_product_bits": 84816,
+          "erased_each": 210,
+          "input_sha256": "680f74943732b0869166a6ad3a81c11f6c575b91b31a58d01fa7ff14f4553e4d",
+          "m": 1930,
+          "max_projected_coordinate_bits": 7052,
+          "revealed_each": 965,
+          "side": "upper"
+        },
+        {
+          "N": 2550,
+          "aggregate_projected_product_bits": 92016,
+          "erased_each": 310,
+          "input_sha256": "2da04aa9cb2b16c4a02ccbd92f2e1d02d774f7304e30bf4ce6f28eb69e3fb23f",
+          "m": 1930,
+          "max_projected_coordinate_bits": 7652,
+          "revealed_each": 965,
+          "side": "upper"
+        },
+        {
+          "N": 2720,
+          "aggregate_projected_product_bits": 98136,
+          "erased_each": 588,
+          "input_sha256": "7b089a4dffb0f21dec9eb85c415dde58c8b8a7d566e3cb222c5cd4552211e2b4",
+          "m": 1544,
+          "max_projected_coordinate_bits": 8162,
+          "revealed_each": 772,
+          "side": "upper"
+        },
+        {
+          "N": 2820,
+          "aggregate_projected_product_bits": 101736,
+          "erased_each": 831,
+          "input_sha256": "6cb16d9ad9be0f9b5f29aa4373ce8f38338436a32ccabbe5be72645615dcd346",
+          "m": 1158,
+          "max_projected_coordinate_bits": 8462,
+          "revealed_each": 579,
+          "side": "upper"
+        },
+        {
+          "N": 2820,
+          "aggregate_projected_product_bits": 101736,
+          "erased_each": 638,
+          "input_sha256": "9632dda2c7ed7e6fc6f8bc4a9aad5fa0c9e6d37123f2144669fad512ec297f24",
+          "m": 1544,
+          "max_projected_coordinate_bits": 8462,
+          "revealed_each": 772,
+          "side": "upper"
+        },
+        {
+          "N": 2820,
+          "aggregate_projected_product_bits": 101736,
+          "erased_each": 445,
+          "input_sha256": "d55a906e59ec3145da6372b61558f50fdf6cd22fde56a60e909bacd0a16c212a",
+          "m": 1930,
+          "max_projected_coordinate_bits": 8462,
+          "revealed_each": 965,
+          "side": "upper"
+        },
+        {
+          "N": 3060,
+          "aggregate_projected_product_bits": 110376,
+          "erased_each": 951,
+          "input_sha256": "7698ffc64be3c8fb2bf40a2f6dcf865ba9f9df7c4b76f337d6d62472dceb181d",
+          "m": 1158,
+          "max_projected_coordinate_bits": 9182,
+          "revealed_each": 579,
+          "side": "upper"
+        },
+        {
+          "N": 3196,
+          "aggregate_projected_product_bits": 115272,
+          "erased_each": 826,
+          "input_sha256": "cca01c65ebb232f57915043bf55ca6a7eebd9e6f4842b16f6c5bc78f50889005",
+          "m": 1544,
+          "max_projected_coordinate_bits": 9590,
+          "revealed_each": 772,
+          "side": "upper"
+        },
+        {
+          "N": 3196,
+          "aggregate_projected_product_bits": 115272,
+          "erased_each": 633,
+          "input_sha256": "ab12635a972acc508f16bd01720f1bcba9eb5352a3203660d527e879cdad2944",
+          "m": 1930,
+          "max_projected_coordinate_bits": 9590,
+          "revealed_each": 965,
+          "side": "upper"
+        },
+        {
+          "N": 3400,
+          "aggregate_projected_product_bits": 122616,
+          "erased_each": 735,
+          "input_sha256": "cb3da75cf4f45637dbcf26b053eb064441e80360ad69835c8c66f3e23a8e42a8",
+          "m": 1930,
+          "max_projected_coordinate_bits": 10202,
+          "revealed_each": 965,
+          "side": "upper"
+        }
+      ],
+      "counts": {
+        "lower": 0,
+        "upper": 45
+      },
+      "extra_truth_order_required": [],
+      "first_admitted": {
+        "lower": null,
+        "upper": {
+          "N": 408,
+          "aggregate_projected_product_bits": 14904,
+          "erased_each": 11,
+          "input_sha256": "60a9632cc0877aee3a0183af8446f4f706737d2419e72657e403c64a1e8ac591",
+          "m": 386,
+          "max_projected_coordinate_bits": 1226,
+          "revealed_each": 193,
+          "side": "upper"
+        }
+      },
+      "original_input_refusals": [],
+      "pairs_examined": 998001,
+      "precision": 1024
+    },
+    {
+      "all_admitted": [
+        {
+          "N": 1108,
+          "aggregate_projected_product_bits": 40104,
+          "erased_each": 27,
+          "input_sha256": "4d05e95552e763462659de3f7ea5bcd5a3c829f69908d81c092f00c985523c11",
+          "m": 1054,
+          "max_projected_coordinate_bits": 3326,
+          "revealed_each": 527,
+          "side": "upper"
+        },
+        {
+          "N": 1120,
+          "aggregate_projected_product_bits": 40536,
+          "erased_each": 33,
+          "input_sha256": "a8323612dbdbf2c7806e6311362a0a8d8d8ace17659718720e07510f85afae62",
+          "m": 1054,
+          "max_projected_coordinate_bits": 3362,
+          "revealed_each": 527,
+          "side": "upper"
+        },
+        {
+          "N": 1166,
+          "aggregate_projected_product_bits": 42192,
+          "erased_each": 97,
+          "input_sha256": "8f0d5ad5a128bd91d189a76b68f82c2122a61ebf1e78eac34a6509ba5a4fc83f",
+          "m": 972,
+          "max_projected_coordinate_bits": 3500,
+          "revealed_each": 486,
+          "side": "lower"
+        },
+        {
+          "N": 1822,
+          "aggregate_projected_product_bits": 65808,
+          "erased_each": 165,
+          "input_sha256": "ee8e941220df11dfbd46398432f1e9fb717c914bb3490a2d578eebdd05e21ee2",
+          "m": 1492,
+          "max_projected_coordinate_bits": 5468,
+          "revealed_each": 746,
+          "side": "upper"
+        },
+        {
+          "N": 2216,
+          "aggregate_projected_product_bits": 79992,
+          "erased_each": 581,
+          "input_sha256": "dc3e70196426c62d5551dca0a25c6442e6f03f9b0a684c6abcaefe9041eda374",
+          "m": 1054,
+          "max_projected_coordinate_bits": 6650,
+          "revealed_each": 527,
+          "side": "upper"
+        },
+        {
+          "N": 2240,
+          "aggregate_projected_product_bits": 80856,
+          "erased_each": 593,
+          "input_sha256": "2831e464984d03dc1067a8da0e07182b78231c4f68c5699e77275e2fc8c91262",
+          "m": 1054,
+          "max_projected_coordinate_bits": 6722,
+          "revealed_each": 527,
+          "side": "upper"
+        },
+        {
+          "N": 2332,
+          "aggregate_projected_product_bits": 84168,
+          "erased_each": 194,
+          "input_sha256": "cef1a3247691f515b5a58881c75e3933a1d4749ec9a5905dc13c76754bda5185",
+          "m": 1944,
+          "max_projected_coordinate_bits": 6998,
+          "revealed_each": 972,
+          "side": "lower"
+        },
+        {
+          "N": 2418,
+          "aggregate_projected_product_bits": 87264,
+          "erased_each": 463,
+          "input_sha256": "4a1474173541cec959078ed1e9086cdb81b4102872675efd6e8d5d782946fedd",
+          "m": 1492,
+          "max_projected_coordinate_bits": 7256,
+          "revealed_each": 746,
+          "side": "upper"
+        },
+        {
+          "N": 2606,
+          "aggregate_projected_product_bits": 94032,
+          "erased_each": 598,
+          "input_sha256": "75f8f0804a633684fdf88acbbb5ab4d77516ba59f8d1d6d6edec774346a1eeca",
+          "m": 1410,
+          "max_projected_coordinate_bits": 7820,
+          "revealed_each": 705,
+          "side": "upper"
+        },
+        {
+          "N": 2650,
+          "aggregate_projected_product_bits": 95616,
+          "erased_each": 839,
+          "input_sha256": "771542b43c9367ea0580f2b233cd85140d2eb9ef8a8834205383bd122ad1ae53",
+          "m": 972,
+          "max_projected_coordinate_bits": 7952,
+          "revealed_each": 486,
+          "side": "lower"
+        },
+        {
+          "N": 2650,
+          "aggregate_projected_product_bits": 95616,
+          "erased_each": 353,
+          "input_sha256": "d61678845f475d915956551e1429956bf8cffee16b680e7cf8eddd16781a07ba",
+          "m": 1944,
+          "max_projected_coordinate_bits": 7952,
+          "revealed_each": 972,
+          "side": "lower"
+        },
+        {
+          "N": 2750,
+          "aggregate_projected_product_bits": 99216,
+          "erased_each": 889,
+          "input_sha256": "bf745f8f8ee736fc5ab43ac4d717e5f82132bb2893901790d58938386df6785b",
+          "m": 972,
+          "max_projected_coordinate_bits": 8252,
+          "revealed_each": 486,
+          "side": "lower"
+        },
+        {
+          "N": 2750,
+          "aggregate_projected_product_bits": 99216,
+          "erased_each": 403,
+          "input_sha256": "01bef1e70458a96bb52edac1e81fa7ba74c1a2eeeb81a274e1af8a0136a7a72c",
+          "m": 1944,
+          "max_projected_coordinate_bits": 8252,
+          "revealed_each": 972,
+          "side": "lower"
+        },
+        {
+          "N": 2770,
+          "aggregate_projected_product_bits": 99936,
+          "erased_each": 858,
+          "input_sha256": "5595065ad1e168c648450c45facf69d545c8248d50d23528d87b654a2aeb8539",
+          "m": 1054,
+          "max_projected_coordinate_bits": 8312,
+          "revealed_each": 527,
+          "side": "upper"
+        }
+      ],
+      "counts": {
+        "lower": 6,
+        "upper": 8
+      },
+      "extra_truth_order_required": [],
+      "first_admitted": {
+        "lower": {
+          "N": 1166,
+          "aggregate_projected_product_bits": 42192,
+          "erased_each": 97,
+          "input_sha256": "8f0d5ad5a128bd91d189a76b68f82c2122a61ebf1e78eac34a6509ba5a4fc83f",
+          "m": 972,
+          "max_projected_coordinate_bits": 3500,
+          "revealed_each": 486,
+          "side": "lower"
+        },
+        "upper": {
+          "N": 1108,
+          "aggregate_projected_product_bits": 40104,
+          "erased_each": 27,
+          "input_sha256": "4d05e95552e763462659de3f7ea5bcd5a3c829f69908d81c092f00c985523c11",
+          "m": 1054,
+          "max_projected_coordinate_bits": 3326,
+          "revealed_each": 527,
+          "side": "upper"
+        }
+      },
+      "original_input_refusals": [],
+      "pairs_examined": 998001,
+      "precision": 1536
+    },
+    {
+      "all_admitted": [
+        {
+          "N": 1706,
+          "aggregate_projected_product_bits": 61632,
+          "erased_each": 584,
+          "input_sha256": "af8d1e6d82ac4198adca83c918650fe43c566659ec3223e1e3e5c903c7760494",
+          "m": 538,
+          "max_projected_coordinate_bits": 5120,
+          "revealed_each": 269,
+          "side": "lower"
+        },
+        {
+          "N": 1706,
+          "aggregate_projected_product_bits": 61632,
+          "erased_each": 315,
+          "input_sha256": "5f80334570d99e49585ca6e28bd777fa4198fa183a7509108e3ba987a5944ac0",
+          "m": 1076,
+          "max_projected_coordinate_bits": 5120,
+          "revealed_each": 538,
+          "side": "lower"
+        },
+        {
+          "N": 1706,
+          "aggregate_projected_product_bits": 61632,
+          "erased_each": 46,
+          "input_sha256": "825833d3eb15a412948602f47848bed62eca399149485889dec726cb29913022",
+          "m": 1614,
+          "max_projected_coordinate_bits": 5120,
+          "revealed_each": 807,
+          "side": "lower"
+        },
+        {
+          "N": 1934,
+          "aggregate_projected_product_bits": 69840,
+          "erased_each": 253,
+          "input_sha256": "6d92015fd00095fa47fe819c8b3a846a2dc5bf2fb4f8bebb5a74bffbb0f751b8",
+          "m": 1428,
+          "max_projected_coordinate_bits": 5804,
+          "revealed_each": 714,
+          "side": "upper"
+        },
+        {
+          "N": 2402,
+          "aggregate_projected_product_bits": 86688,
+          "erased_each": 301,
+          "input_sha256": "4d3e7fe4c72e4c5ab126952c31a633ce4c2260f96f9495a93dd7acd1811b8c81",
+          "m": 1800,
+          "max_projected_coordinate_bits": 7208,
+          "revealed_each": 900,
+          "side": "lower"
+        },
+        {
+          "N": 3288,
+          "aggregate_projected_product_bits": 118584,
+          "erased_each": 671,
+          "input_sha256": "38fa6b86a2b4f38e72c61c546aa41bdfa4f82aa1a757f952a937867dc126715c",
+          "m": 1946,
+          "max_projected_coordinate_bits": 9866,
+          "revealed_each": 973,
+          "side": "upper"
+        },
+        {
+          "N": 3316,
+          "aggregate_projected_product_bits": 119592,
+          "erased_each": 685,
+          "input_sha256": "d040b1ae9193befef7b958e25b1aa1fa95d6949474f87e83e4e9cb0f6b5a9bc3",
+          "m": 1946,
+          "max_projected_coordinate_bits": 9950,
+          "revealed_each": 973,
+          "side": "upper"
+        },
+        {
+          "N": 3412,
+          "aggregate_projected_product_bits": 123048,
+          "erased_each": 899,
+          "input_sha256": "311218d673c4616967590dc9060352fb049389e4d129079febb5c40d95f2070d",
+          "m": 1614,
+          "max_projected_coordinate_bits": 10238,
+          "revealed_each": 807,
+          "side": "lower"
+        },
+        {
+          "N": 3802,
+          "aggregate_projected_product_bits": 137088,
+          "erased_each": 918,
+          "input_sha256": "ead5e59b0aaceb56cc06ba7d7e9c0840e86e5fa2e320e0724070f2eb672c6751",
+          "m": 1966,
+          "max_projected_coordinate_bits": 11408,
+          "revealed_each": 983,
+          "side": "lower"
+        }
+      ],
+      "counts": {
+        "lower": 6,
+        "upper": 3
+      },
+      "extra_truth_order_required": [],
+      "first_admitted": {
+        "lower": {
+          "N": 1706,
+          "aggregate_projected_product_bits": 61632,
+          "erased_each": 584,
+          "input_sha256": "af8d1e6d82ac4198adca83c918650fe43c566659ec3223e1e3e5c903c7760494",
+          "m": 538,
+          "max_projected_coordinate_bits": 5120,
+          "revealed_each": 269,
+          "side": "lower"
+        },
+        "upper": {
+          "N": 1934,
+          "aggregate_projected_product_bits": 69840,
+          "erased_each": 253,
+          "input_sha256": "6d92015fd00095fa47fe819c8b3a846a2dc5bf2fb4f8bebb5a74bffbb0f751b8",
+          "m": 1428,
+          "max_projected_coordinate_bits": 5804,
+          "revealed_each": 714,
+          "side": "upper"
+        }
+      },
+      "original_input_refusals": [],
+      "pairs_examined": 998001,
+      "precision": 2048
+    }
+  ],
+  "finest_complete": {
+    "lower": {
+      "N": 1706,
+      "input_sha256": "af8d1e6d82ac4198adca83c918650fe43c566659ec3223e1e3e5c903c7760494",
+      "m": 538,
+      "reports": [
+        {
+          "bytes": 98271,
+          "coordinate_interval": "tight",
+          "sha256": "c869a398350d9bee2acf8bf25370ba5722d1297225bd41a51ccb788d672c682f",
+          "verdict": "independent interval containment"
+        },
+        {
+          "bytes": 98272,
+          "coordinate_interval": "lower",
+          "sha256": "fbbcc19c547183c3f2bfb338089abbac2c3b6fc6ca1299e28820f99da3feefcc",
+          "verdict": "108 pass"
+        },
+        {
+          "bytes": 98271,
+          "coordinate_interval": "upper",
+          "sha256": "4499a29f7ca43a3e3e3e84dedf24334ab1382312f679b763c24c291591db5e38",
+          "verdict": "independent interval containment"
+        },
+        {
+          "bytes": 98272,
+          "coordinate_interval": "both",
+          "sha256": "822d3429d43033ede1fdc4818ff21715304fd548e471173d7d0edb192d7ef26e",
+          "verdict": "108 pass"
+        }
+      ],
+      "side_needed": "lower",
+      "true_cell_lower_numerator": "7064148653955280452924350528892475870550498724177622196743486205860664590224120885653526880144858534488441434392189072993662192986187728752556022562570749159259625259858973925633842854484487224427189393526245929133188817929828593046945298055674341450136426262671440275629488036463432240394621375311657478380613693923742650387000623600581004164888968950455990173499155531271021917584176302037249978715202462097631569833048406422713863302149367308806536122015876501340262944400507545389512734116428690714623276414784154284475230419589436005401321084221799383243231665966048840442835955949464434429415483951909153579488"
+    },
+    "upper": {
+      "N": 1934,
+      "input_sha256": "6d92015fd00095fa47fe819c8b3a846a2dc5bf2fb4f8bebb5a74bffbb0f751b8",
+      "m": 1428,
+      "reports": [
+        {
+          "bytes": 99100,
+          "coordinate_interval": "tight",
+          "sha256": "67778f423ba21e6b10ff44fff902d14e9ce087f94359c9d617b0b104fdea174a",
+          "verdict": "independent interval containment"
+        },
+        {
+          "bytes": 99101,
+          "coordinate_interval": "lower",
+          "sha256": "1bbcd2cf2ee367ede2791da60593c69f66e533613080391ba9564fe4e77d51b4",
+          "verdict": "independent interval containment"
+        },
+        {
+          "bytes": 99099,
+          "coordinate_interval": "upper",
+          "sha256": "f08156aba0703bfb1d28acf8f7f44f67fc4d779f30e49e20e695aecae091c655",
+          "verdict": "108 pass"
+        },
+        {
+          "bytes": 99100,
+          "coordinate_interval": "both",
+          "sha256": "f166330242c2408e2bf0ce5f875f995998c103bc0ed847be12d9b90723b0e9ea",
+          "verdict": "108 pass"
+        }
+      ],
+      "side_needed": "upper",
+      "true_cell_lower_numerator": "16539726300643279977587342506497815607046731138617451659211397399652437052314785822246380820370305323104490368345312092334034319689891884588883816861843105797848712676368599461085282423241855076788997061436366154362111708882408191380607090562633878071043273081849507072999829514128937843075856389717796942015453171671494144220232865986264405448931111157120351400100232132784743105105284435999011242899183608988308325500857161975305900413526120198868036939543190937092361783400829286372676059447791862504336754205560334509925547857004529717101645743654398649751172715612592188622250613299760951833402141206424094425938"
+    }
+  },
+  "finest_wire_capacity_refusals": [],
+  "scope": "exact finite four-row equal-source reveal/erase family; counts per cell 1..999; full new synthetic reports only for chosen 2048 examples",
+  "source_arithmetic_sha256": "b8e01525e86297b370b845c0d63be5a21b1bcccc702c9d172a9af3664cc9f6e2",
+  "source_check_sha256": "9a6c3746937fa0db7ceaf1fc96a6753ce547948412133690778309781e60d1d6"
+}

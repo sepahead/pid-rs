@@ -1,0 +1,69 @@
+{
+  "branchReaches": [
+    "induction b",
+    "case one i => rfl",
+    "case both a b ha hb =>",
+    "  change (a.reaches j \u2228 b.reaches j) \u2194 j \u2264 max a.level b.level",
+    "  rw [ha, hb]",
+    "  omega"
+  ],
+  "suffix": [
+    "induction a",
+    "case branch b => exact branch_reaches j b",
+    "case either a b ha hb =>",
+    "  change (a.covers j \u2227 b.covers j) \u2194 j \u2264 min a.level b.level",
+    "  rw [ha, hb]",
+    "  omega"
+  ],
+  "branchMatches": [
+    "induction b",
+    "case one i => rfl",
+    "case both a b ha hb =>",
+    "  change (a.holds p \u2227 b.holds p) \u2194 p (max a.level b.level)",
+    "  rw [ha, hb]",
+    "  rcases Nat.le_total a.level b.level with hle | hge",
+    "  \u00b7 rw [Nat.max_eq_right hle]",
+    "    constructor",
+    "    \u00b7 exact And.right",
+    "    \u00b7 intro v",
+    "      exact \u27e8h _ _ hle v, v\u27e9",
+    "  \u00b7 rw [Nat.max_eq_left hge]",
+    "    constructor",
+    "    \u00b7 exact And.left",
+    "    \u00b7 intro v",
+    "      exact \u27e8v, h _ _ hge v\u27e9"
+  ],
+  "nodeMatches": [
+    "induction a",
+    "case branch b => exact branch_matches p h b",
+    "case either a b ha hb =>",
+    "  change (a.holds p \u2228 b.holds p) \u2194 p (min a.level b.level)",
+    "  rw [ha, hb]",
+    "  rcases Nat.le_total a.level b.level with hle | hge",
+    "  \u00b7 rw [Nat.min_eq_left hle]",
+    "    constructor",
+    "    \u00b7 rintro (v | v)",
+    "      \u00b7 exact v",
+    "      \u00b7 exact h _ _ hle v",
+    "    \u00b7 exact Or.inl",
+    "  \u00b7 rw [Nat.min_eq_right hge]",
+    "    constructor",
+    "    \u00b7 rintro (v | v)",
+    "      \u00b7 exact h _ _ hge v",
+    "      \u00b7 exact v",
+    "    \u00b7 exact Or.inr"
+  ],
+  "extensional": [
+    "funext w",
+    "apply propext",
+    "exact node_matches (fun i => F i w) (h w) a"
+  ],
+  "cumulative": [
+    "generalize a.level = d",
+    "induction d",
+    "case zero => simp [prefixSum]",
+    "case succ n ih =>",
+    "  rw [prefixSum, ih]",
+    "  omega"
+  ]
+}

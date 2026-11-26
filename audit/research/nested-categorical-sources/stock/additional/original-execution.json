@@ -1,0 +1,52 @@
+{
+  "example_source": "95544a5fee1b6e321588af518da0fb1af7ffdec1e2d01d56172866a0f0b160fa",
+  "original": {
+    "Contradiction.lean": "f24f2f93e638064e05ee78e610b0f86b09e5d74bbe555fd505f281753dce8532",
+    "Model.lean": "4af6b1287b2f482b2c843999549b625dda937b91e4af9e81f9cef02cd3fa1210",
+    "Observer.lean": "d23b1c403e1e512612c01a6a20071d9772dd4bf59f93515302ea872141feeb60",
+    "Proof.lean": "2643583066bf65770295ff4521c5e16b096dae0a834ea207cc81d79fba91d694"
+  },
+  "runs": [
+    [
+      "Model",
+      "build",
+      0
+    ],
+    [
+      "Model",
+      "fresh",
+      0
+    ],
+    [
+      "Proof",
+      "build",
+      0
+    ],
+    [
+      "Proof",
+      "fresh",
+      0
+    ],
+    [
+      "Observer",
+      "build",
+      0
+    ],
+    [
+      "Observer",
+      "fresh",
+      0
+    ],
+    [
+      "IndependentExamples",
+      "build",
+      0
+    ],
+    [
+      "IndependentExamples",
+      "fresh",
+      0
+    ]
+  ],
+  "semantics": "five worlds; finite proper nested fibres; different thresholds and wrong predicates; nonzero origin of integer prefix"
+}

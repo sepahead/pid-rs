@@ -1,0 +1,5 @@
+Proof.lean:96:8: error: unsolved goals
+case left.right.right.right
+d : Int
+hd : 0 < d
+⊢ 0 ≤ 0

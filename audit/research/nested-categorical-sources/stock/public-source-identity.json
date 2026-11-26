@@ -1,0 +1,11 @@
+{
+  "changes": [
+    "Accept an explicit path to the same pinned Lean release instead of deriving its location from the original machine.",
+    "Supply the corresponding public judge digest in the new manifest. Every other input in the protected original contract has identical bytes."
+  ],
+  "comparison": "Named source and object hashes, the native command sequence, exit statuses and both streams are compared to the original record. Each manifest has its own identity.",
+  "original_contract": "0d1fa11a92ced0dadb2ac667234759dadf17496e53a19974c2bc9beb0cf38426",
+  "original_judge": "21dcf32f7dcf473105bb39c8be4933038829d7856a460d7d5299888001388c7e",
+  "public_contract": "97ae5508036093f371d3a24a166f9a734834e8ef138e5edfd860e95bcadc090b",
+  "public_judge": "5051f0f0e349d130c0c62f78e889f0316a49c8ad476705d2fc00860a350e2844"
+}

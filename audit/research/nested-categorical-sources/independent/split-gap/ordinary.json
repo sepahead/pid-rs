@@ -1,0 +1,141 @@
+{
+  "adverse": {
+    "directed_products": [
+      "1",
+      "4"
+    ],
+    "real_weight_products": {
+      "1/16": "81/64",
+      "1/4": "9/4",
+      "1/8": "25/16"
+    }
+  },
+  "records": [
+    {
+      "attaining_pairs": 0,
+      "first_witness": null,
+      "functions": 1,
+      "minimum_product": null,
+      "n": 1,
+      "ordered_pairs": 1,
+      "partitions": 1,
+      "split_pairs": 0
+    },
+    {
+      "attaining_pairs": 1,
+      "first_witness": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "functions": 3,
+      "minimum_product": "4",
+      "n": 2,
+      "ordered_pairs": 4,
+      "partitions": 2,
+      "split_pairs": 1
+    },
+    {
+      "attaining_pairs": 6,
+      "first_witness": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "functions": 12,
+      "minimum_product": "3",
+      "n": 3,
+      "ordered_pairs": 25,
+      "partitions": 5,
+      "split_pairs": 13
+    },
+    {
+      "attaining_pairs": 12,
+      "first_witness": [
+        [
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          2
+        ]
+      ],
+      "functions": 60,
+      "minimum_product": "9/4",
+      "n": 4,
+      "ordered_pairs": 225,
+      "partitions": 15,
+      "split_pairs": 165
+    },
+    {
+      "attaining_pairs": 120,
+      "first_witness": [
+        [
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          2
+        ]
+      ],
+      "functions": 358,
+      "minimum_product": "2",
+      "n": 5,
+      "ordered_pairs": 2704,
+      "partitions": 52,
+      "split_pairs": 2346
+    },
+    {
+      "attaining_pairs": 360,
+      "first_witness": [
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          2,
+          2
+        ]
+      ],
+      "functions": 2471,
+      "minimum_product": "16/9",
+      "n": 6,
+      "ordered_pairs": 41209,
+      "partitions": 203,
+      "split_pairs": 38738
+    }
+  ],
+  "total_ordered_pairs": 44168
+}

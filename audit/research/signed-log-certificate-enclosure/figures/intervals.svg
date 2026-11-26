@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg aria-labelledby="title desc" xmlns="http://www.w3.org/2000/svg" width="960" height="415" viewBox="0 0 960 415" role="img">
+  <title id="title">Two roles of outward logarithm bounds</title>
+  <desc id="desc">Left: for x=1/3 at four internal bits, rounded partial-sum intervals in units of 1/16 are [10,12], [10,14] and [10,15]. Circles show the exact scaled finite sums. The one-unit tail allowance extends the third interval to [10,16]. Right: at Q=1+2^-2048, N=1 and p=2048, the producer interval covers zero to one and the independent verifier interval covers zero to two, in units of 2^-2048 nats. Both contain the true value.</desc>
+  <rect x="0" y="0" width="960" height="415" fill="#FFFFFF" />
+  <g font-family="Source Sans Pro, sans-serif">
+    <text text-anchor="start" font-size="24" fill="#1F3F60" font-weight="600" x="26" y="32">Rounding at each term</text>
+    <text text-anchor="start" font-size="17" fill="#2C3E50" font-weight="400" x="26" y="60">Argument x = 1/3, internal scale = 16</text>
+    <text text-anchor="start" font-size="15" fill="#2C3E50" font-weight="400" x="26" y="88">Value in units of 1/16</text>
+    <line x1="480" y1="16" x2="480" y2="399" stroke="#D2E0E2" stroke-width="2" />
+    <line x1="62" y1="304.0" x2="447" y2="304.0" stroke="#D2E0E2" stroke-width="1" />
+    <text text-anchor="end" font-size="15" fill="#2C3E50" font-weight="400" x="51" y="309.0">8</text>
+    <line x1="62" y1="258.0" x2="447" y2="258.0" stroke="#D2E0E2" stroke-width="1" />
+    <text text-anchor="end" font-size="15" fill="#2C3E50" font-weight="400" x="51" y="263.0">10</text>
+    <line x1="62" y1="212.0" x2="447" y2="212.0" stroke="#D2E0E2" stroke-width="1" />
+    <text text-anchor="end" font-size="15" fill="#2C3E50" font-weight="400" x="51" y="217.0">12</text>
+    <line x1="62" y1="166.0" x2="447" y2="166.0" stroke="#D2E0E2" stroke-width="1" />
+    <text text-anchor="end" font-size="15" fill="#2C3E50" font-weight="400" x="51" y="171.0">14</text>
+    <line x1="62" y1="120.0" x2="447" y2="120.0" stroke="#D2E0E2" stroke-width="1" />
+    <text text-anchor="end" font-size="15" fill="#2C3E50" font-weight="400" x="51" y="125.0">16</text>
+    <line x1="62" y1="304.0" x2="62" y2="120.0" stroke="#2C3E50" stroke-width="1" />
+    <line x1="62" y1="304.0" x2="447" y2="304.0" stroke="#2C3E50" stroke-width="1" />
+    <line x1="119" y1="258.0" x2="119" y2="212.0" stroke="#1F3F60" stroke-width="3" />
+    <line x1="111" y1="258.0" x2="127" y2="258.0" stroke="#1F3F60" stroke-width="3" />
+    <line x1="111" y1="212.0" x2="127" y2="212.0" stroke="#1F3F60" stroke-width="3" />
+    <circle cx="119" cy="242.6667" r="5.5" fill="#1F6968" />
+    <text text-anchor="middle" font-size="16" fill="#2C3E50" font-weight="400" x="119" y="325">1</text>
+    <line x1="241" y1="258.0" x2="241" y2="166.0" stroke="#1F3F60" stroke-width="3" />
+    <line x1="233" y1="258.0" x2="249" y2="258.0" stroke="#1F3F60" stroke-width="3" />
+    <line x1="233" y1="166.0" x2="249" y2="166.0" stroke="#1F3F60" stroke-width="3" />
+    <circle cx="241" cy="233.5802" r="5.5" fill="#1F6968" />
+    <text text-anchor="middle" font-size="16" fill="#2C3E50" font-weight="400" x="241" y="325">2</text>
+    <line x1="363" y1="258.0" x2="363" y2="143.0" stroke="#1F3F60" stroke-width="3" />
+    <line x1="355" y1="258.0" x2="371" y2="258.0" stroke="#1F3F60" stroke-width="3" />
+    <line x1="355" y1="143.0" x2="371" y2="143.0" stroke="#1F3F60" stroke-width="3" />
+    <circle cx="363" cy="232.9745" r="5.5" fill="#1F6968" />
+    <text text-anchor="middle" font-size="16" fill="#2C3E50" font-weight="400" x="363" y="325">3</text>
+    <line x1="363" y1="143.0" x2="363" y2="120.0" stroke="#743E37" stroke-width="3" stroke-dasharray="6,4" />
+    <line x1="355" y1="120.0" x2="371" y2="120.0" stroke="#743E37" stroke-width="3" />
+    <text text-anchor="middle" font-size="16" fill="#2C3E50" font-weight="400" x="249" y="348">Number of included terms</text>
+    <text text-anchor="start" font-size="15" fill="#2C3E50" font-weight="400" x="26" y="377">Circle = exact partial sum. Bar = rounded partial sum.</text>
+    <text text-anchor="start" font-size="15" fill="#2C3E50" font-weight="400" x="26" y="400">Dashed extension = one upper unit for the real remainder.</text>
+    <text text-anchor="start" font-size="23" fill="#1F3F60" font-weight="600" x="505" y="32">Two intervals can both be correct</text>
+    <text text-anchor="start" font-size="17" fill="#2C3E50" font-weight="400" x="505" y="60">Product Q = 1 + 2⁻²⁰⁴⁸, total N = 1</text>
+    <text text-anchor="start" font-size="17" fill="#2C3E50" font-weight="400" x="505" y="85">Output precision p = 2048 bits</text>
+    <line x1="580" y1="118" x2="580" y2="289" stroke="#D2E0E2" stroke-width="1" />
+    <line x1="740" y1="118" x2="740" y2="289" stroke="#D2E0E2" stroke-width="1" />
+    <line x1="900" y1="118" x2="900" y2="289" stroke="#D2E0E2" stroke-width="1" />
+    <text text-anchor="start" font-size="16" fill="#1F3F60" font-weight="600" x="505" y="140">Producer</text>
+    <line x1="580" y1="163" x2="740" y2="163" stroke="#1F3F60" stroke-width="4" />
+    <line x1="580" y1="157" x2="580" y2="169" stroke="#1F3F60" stroke-width="3" />
+    <line x1="740" y1="157" x2="740" y2="169" stroke="#1F3F60" stroke-width="3" />
+    <text text-anchor="start" font-size="16" fill="#743E37" font-weight="600" x="505" y="211">Verifier</text>
+    <line x1="580" y1="234" x2="900" y2="234" stroke="#743E37" stroke-width="4" stroke-dasharray="6,4" />
+    <line x1="580" y1="228" x2="580" y2="240" stroke="#743E37" stroke-width="3" />
+    <line x1="900" y1="228" x2="900" y2="240" stroke="#743E37" stroke-width="3" />
+    <line x1="580" y1="289" x2="900" y2="289" stroke="#2C3E50" stroke-width="1" />
+    <line x1="580" y1="285" x2="580" y2="293" stroke="#2C3E50" stroke-width="1" />
+    <text text-anchor="middle" font-size="16" fill="#2C3E50" font-weight="400" x="580" y="313">0</text>
+    <line x1="740" y1="285" x2="740" y2="293" stroke="#2C3E50" stroke-width="1" />
+    <text text-anchor="middle" font-size="16" fill="#2C3E50" font-weight="400" x="740" y="313">1</text>
+    <line x1="900" y1="285" x2="900" y2="293" stroke="#2C3E50" stroke-width="1" />
+    <text text-anchor="middle" font-size="16" fill="#2C3E50" font-weight="400" x="900" y="313">2</text>
+    <text text-anchor="middle" font-size="16" fill="#2C3E50" font-weight="400" x="737" y="347">Value in units of 2⁻²⁰⁴⁸ nats</text>
+    <text text-anchor="start" font-size="15" fill="#2C3E50" font-weight="400" x="505" y="377">The true value is strictly between grid points 0 and 1.</text>
+    <text text-anchor="start" font-size="15" fill="#2C3E50" font-weight="400" x="505" y="400">The producer interval excludes the verifier endpoint 2.</text>
+  </g>
+</svg>

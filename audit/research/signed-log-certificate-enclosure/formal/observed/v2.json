@@ -1,0 +1,180 @@
+{
+  "axioms": {
+    "N2Round.add_interval": [
+      "propext"
+    ],
+    "N2Round.all_prefixes": [
+      "Quot.sound",
+      "propext"
+    ],
+    "N2Round.ceil_upper": [
+      "Quot.sound",
+      "propext"
+    ],
+    "N2Round.initial_interval": [
+      "Quot.sound",
+      "propext"
+    ],
+    "N2Round.odd_power_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "N2Round.product_interval": [
+      "Quot.sound",
+      "propext"
+    ],
+    "N2Round.product_lower": [
+      "propext"
+    ],
+    "N2Round.product_upper": [
+      "Quot.sound",
+      "propext"
+    ],
+    "N2Round.returned_finite": [
+      "Quot.sound",
+      "propext"
+    ],
+    "N2Round.scheduled": [
+      "Quot.sound",
+      "propext"
+    ],
+    "N2Round.signed_ceiling": [
+      "Quot.sound",
+      "propext"
+    ],
+    "N2Round.square_steps": [
+      "Quot.sound",
+      "propext"
+    ],
+    "N2Round.term_interval": [
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "commands": [
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "--version"
+      ],
+      "exit": 0,
+      "label": "version",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "20f42f897511ec814f7616bd9a193ae7504aa2f52fb05299eb752936eb77ca6e"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Model.olean",
+        "Model.lean"
+      ],
+      "exit": 0,
+      "label": "Model-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/leanchecker",
+        "--fresh",
+        "Model"
+      ],
+      "exit": 0,
+      "label": "Model-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Proof.olean",
+        "Proof.lean"
+      ],
+      "exit": 0,
+      "label": "Proof-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/leanchecker",
+        "--fresh",
+        "Proof"
+      ],
+      "exit": 0,
+      "label": "Proof-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Observer.olean",
+        "Observer.lean"
+      ],
+      "exit": 0,
+      "label": "Observer-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "d468644d1a04dda4395e5dded716e0696d6deac40cb75921031c4f3b89ef4710"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/leanchecker",
+        "--fresh",
+        "Observer"
+      ],
+      "exit": 0,
+      "label": "Observer-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "Contradiction.lean"
+      ],
+      "exit": 1,
+      "label": "negative",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "536332d00a0bb06b8dd9ec06da96f4eeb5b548ad737e1945af5077e19e835cd9"
+    }
+  ],
+  "fixed": "f0e71157db2c0b28f48e9f28c39cd908615955df4c731cd2b3efc8e7ab869b24",
+  "objects": {
+    "Model.olean": "38d5ee4a639552509250c0958f4156638f357b92089c3cadf0f9b6b6561398cc",
+    "Observer.olean": "d53c1e3d4d2f873e630d4e2f4bf7c93cc1e385e3ad0daf435f6658bae1311d21",
+    "Proof.olean": "8311e84152f2dce2ba045c5b45c9b2ba5cb5b6ef618c4555524fa8ea041e08aa"
+  },
+  "payload": "13bc4e150daf491e511f332ecaf43da7812cf11efaac9bb8aaf4e2ee575fddd5",
+  "reason": null,
+  "sources": {
+    "Contradiction.lean": "d9419f4ee268e69d4d8e6b168b5303b6fc75af3636bd3ea117c28ff9dc2c6110",
+    "Model.lean": "95dd0cdbd6530b9be462cfb388de070582b07a515496c6156657bb1824f28818",
+    "Observer.lean": "df578ee82c46465cd11161768325e05c5193712918df138974b5a011a01d21f6",
+    "Proof.lean": "b501964561bb54c76b0ee1bcada1f10c28c07e0eb37eecb4dff5e4f3bb79da3d"
+  },
+  "success": true
+}

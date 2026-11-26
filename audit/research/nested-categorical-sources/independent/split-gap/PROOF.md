@@ -1,0 +1,17 @@
+# Sharp bound for the informative deficit at a split
+
+For N positive unit-weight observations, repetitions enter through positive integer counts. Denote the empirical probability measure by P. Let C(z) be the set of all observations with the same first reading as row z and F(z) the set with the same second reading. Use cardinalities that count every observation. The difference D between the informative cumulative at the first singleton and the informative cumulative at the union of the two singleton events is
+
+  D = (1/N) sum_z log( |C(z) union F(z)| / |C(z)| ).
+
+Both cumulatives here use the finite categorical Makkeh–Gutknecht–Wibral construction. This calculation uses natural logarithms, so the output is in nats. All ratios are at least one. Hence D=0 if and only if the first reading is a function of the second on these observations. In the forward direction every observed ratio must be one. Two rows with the same second but different first reading would give a ratio strictly greater than one. The converse follows from F(z) contained in C(z).
+
+For an observed failure of this function, N must be at least two. Put m=floor(N/2), k=ceil(N/2). Then
+
+  D >= log((1+1/m)(1+1/k))/N.
+
+The bound is positive and sharp for every integer N>=2. To prove it, take two observations in a second-reading fibre that meets two different first-reading fibres. Let a,b be the sizes of those two first fibres. Each chosen row gains at least one observation outside its first fibre when the union is taken. Other terms in N D are nonnegative. Thus its exponential is at least (1+1/a)(1+1/b). The fibres are disjoint, so a+b<=N. Increasing a positive denominator reduces the corresponding factor. For a fixed sum s=a+b the product equals 1+(s+1)/(ab), and the product ab is greatest for the two nearest integers to s/2. To see the last assertion, if b>a+1 then (a+1)(b-1)-ab=b-a-1>0. Fill any unused margin to N, then balance. These steps give the inequality.
+
+For equality exactly two observations can belong to split second fibres: otherwise at least one other summand would be strictly positive. They must share one such fibre and belong to distinct first fibres. Each contributes one row outside the other's first fibre. There must be just two occupied first fibres, of sizes m,k, since an unused first margin or an imbalance of at least two gives a strict reduction in the comparison. Conversely, choose two first fibres of those sizes. Give one row of each the same second reading and assign the remaining rows to second fibres entirely inside their own first fibre. Then precisely the two selected observations contribute, and the bound is attained. For N=2 it is log 2 nats. For odd N=2m+1 the product reduces to (m+2)/m. For N=1 an observed split is impossible. Empty input is outside the definition.
+
+With arbitrary positive real weights there is no uniform positive gap depending just on two first-reading categories. Give each first reading probability 1/2. Put mass epsilon in each first fibre at one shared second reading, and assign the remaining mass 1/2-epsilon in each fibre to a distinct second reading, with 0<epsilon<1/2. The deficit equals 2 epsilon log(1+2 epsilon) and tends to zero. All four cells remain occupied throughout the limit. A finite record does not, by itself, exclude a split in the population. Detecting an observed split is equivalent to checking whether the second-to-first map has a conflicting value. The logarithmic bound quantifies the smallest numerical effect on this named informative cumulative.

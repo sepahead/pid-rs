@@ -1,0 +1,256 @@
+[
+  {
+    "auxiliary_object": "4f3e4643e93d360fff8f9e25c23f37f610c263694a75719d0875f9bdf68fe461",
+    "exact_original_result": "a0353ae2e5528cfe590cf518028f0d5689761d15390091a5649ed67fc945c437",
+    "fixed": "97ae5508036093f371d3a24a166f9a734834e8ef138e5edfd860e95bcadc090b",
+    "max_sampled_process_group_bytes": 152879104,
+    "mode": "normal",
+    "native_argv": [
+      [
+        "lean",
+        "--version"
+      ],
+      [
+        "lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "./sources",
+        "-o",
+        "./objects/Model.olean",
+        "Model.lean"
+      ],
+      [
+        "leanchecker",
+        "--fresh",
+        "Model"
+      ],
+      [
+        "lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "./sources",
+        "-o",
+        "./objects/Proof.olean",
+        "Proof.lean"
+      ],
+      [
+        "leanchecker",
+        "--fresh",
+        "Proof"
+      ],
+      [
+        "lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "./sources",
+        "-o",
+        "./objects/Observer.olean",
+        "Observer.lean"
+      ],
+      [
+        "leanchecker",
+        "--fresh",
+        "Observer"
+      ],
+      [
+        "lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "./sources",
+        "Contradiction.lean"
+      ]
+    ],
+    "objects": {
+      "Model.olean": "7ea4737547aa0a9a901862c536394b3661bfc1f64a4f2900492ce3fd264a16c7",
+      "Observer.olean": "af1260598d1f38858adc96aca9534275e3c9a7d9a635da0d511865f8412dc8c0",
+      "Proof.olean": "fe658558ebc04bf8b553cb8ac3821e8f4d75de6330ed6dc436efdb5b9ec14db9"
+    },
+    "original_commitment": "0d1fa11a92ced0dadb2ac667234759dadf17496e53a19974c2bc9beb0cf38426",
+    "retained_native_commands": [
+      {
+        "exit": 0,
+        "label": "version",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "20f42f897511ec814f7616bd9a193ae7504aa2f52fb05299eb752936eb77ca6e"
+      },
+      {
+        "exit": 0,
+        "label": "Model-compile",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit": 0,
+        "label": "Model-fresh",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit": 0,
+        "label": "Proof-compile",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit": 0,
+        "label": "Proof-fresh",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit": 0,
+        "label": "Observer-compile",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "8429f7bf098c6af39c86eb821aaf0f06baa50527f9969064967f2d12576baac2"
+      },
+      {
+        "exit": 0,
+        "label": "Observer-fresh",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit": 1,
+        "label": "negative",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "a090539db20b741099a585884819752546f0f0f4d91a0b6a2afa67daf1d965f1"
+      }
+    ],
+    "wall_seconds": 7.230401666020043
+  },
+  {
+    "auxiliary_object": "4f3e4643e93d360fff8f9e25c23f37f610c263694a75719d0875f9bdf68fe461",
+    "exact_original_result": "a0353ae2e5528cfe590cf518028f0d5689761d15390091a5649ed67fc945c437",
+    "fixed": "97ae5508036093f371d3a24a166f9a734834e8ef138e5edfd860e95bcadc090b",
+    "max_sampled_process_group_bytes": 174473216,
+    "mode": "optimized",
+    "native_argv": [
+      [
+        "lean",
+        "--version"
+      ],
+      [
+        "lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "./sources",
+        "-o",
+        "./objects/Model.olean",
+        "Model.lean"
+      ],
+      [
+        "leanchecker",
+        "--fresh",
+        "Model"
+      ],
+      [
+        "lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "./sources",
+        "-o",
+        "./objects/Proof.olean",
+        "Proof.lean"
+      ],
+      [
+        "leanchecker",
+        "--fresh",
+        "Proof"
+      ],
+      [
+        "lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "./sources",
+        "-o",
+        "./objects/Observer.olean",
+        "Observer.lean"
+      ],
+      [
+        "leanchecker",
+        "--fresh",
+        "Observer"
+      ],
+      [
+        "lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "./sources",
+        "Contradiction.lean"
+      ]
+    ],
+    "objects": {
+      "Model.olean": "7ea4737547aa0a9a901862c536394b3661bfc1f64a4f2900492ce3fd264a16c7",
+      "Observer.olean": "af1260598d1f38858adc96aca9534275e3c9a7d9a635da0d511865f8412dc8c0",
+      "Proof.olean": "fe658558ebc04bf8b553cb8ac3821e8f4d75de6330ed6dc436efdb5b9ec14db9"
+    },
+    "original_commitment": "0d1fa11a92ced0dadb2ac667234759dadf17496e53a19974c2bc9beb0cf38426",
+    "retained_native_commands": [
+      {
+        "exit": 0,
+        "label": "version",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "20f42f897511ec814f7616bd9a193ae7504aa2f52fb05299eb752936eb77ca6e"
+      },
+      {
+        "exit": 0,
+        "label": "Model-compile",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit": 0,
+        "label": "Model-fresh",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit": 0,
+        "label": "Proof-compile",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit": 0,
+        "label": "Proof-fresh",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit": 0,
+        "label": "Observer-compile",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "8429f7bf098c6af39c86eb821aaf0f06baa50527f9969064967f2d12576baac2"
+      },
+      {
+        "exit": 0,
+        "label": "Observer-fresh",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit": 1,
+        "label": "negative",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout": "a090539db20b741099a585884819752546f0f0f4d91a0b6a2afa67daf1d965f1"
+      }
+    ],
+    "wall_seconds": 14.853776625008322
+  }
+]

@@ -1,0 +1,26 @@
+Proof.lean:45:44: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:47:26: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:49:24: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:56:34: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:58:26: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:60:35: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:72:38: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:74:24: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:76:24: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:78:30: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:80:24: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:82:33: error(lean.unknownIdentifier): Unknown constant `Lean.Data.AC.Variable`
+Proof.lean:101:36: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?a ^ 1
+in the target expression
+  a ^ (2 * i) * a * a ^ 2 = a ^ (2 * i) * a * (a * a)
+
+a i : Nat
+h : 2 * (i + 1) + 1 = 2 * i + 1 + 2
+⊢ a ^ (2 * i) * a * a ^ 2 = a ^ (2 * i) * a * (a * a)
+Proof.lean:129:19: error: `if_false` has been deprecated: Use `ite_false` instead
+Proof.lean:137:26: error: don't know how to synthesize placeholder for argument `right`
+context:
+⊢ PrefixClaim
+Proof.lean:136:33: error: unsolved goals
+⊢ Statement

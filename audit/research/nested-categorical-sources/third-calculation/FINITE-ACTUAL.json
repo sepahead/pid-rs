@@ -1,0 +1,184 @@
+{
+  "all_108_on_one_constant": {
+    "10": [
+      "1",
+      "1",
+      "1"
+    ],
+    "16": [
+      "1",
+      "1",
+      "1"
+    ],
+    "3": [
+      "1",
+      "1",
+      "1"
+    ]
+  },
+  "all_108_on_weighted_16_cells": {
+    "10": [
+      "1208925819614629174706176",
+      "28757398785746143963982676784746751590400000000000000000000/172059528513179009546687812398065163",
+      "172059528513179009546687812398065163/23787562743025189626598358154296875"
+    ],
+    "16": [
+      "1208925819614629174706176",
+      "876537494966282953256294918792717001737754310793562379322072405352161439044173139640582144/565848141253360083695363007029533342935255859629251062870025634765625",
+      "565848141253360083695363007029533342935255859629251062870025634765625/725054822011906345418521985883479732242430766396266209799360368569"
+    ],
+    "3": [
+      "1208925819614629174706176",
+      "698095475912019446238745968766431399427774093662109375/995602396262890554425048301568",
+      "1203609442912403781966217218189665866856505654240083968/698095475912019446238745968766431399427774093662109375"
+    ]
+  },
+  "gap": {
+    "(2, 3)": {
+      "2": {
+        "all": 21,
+        "equal": 3,
+        "failed": 3,
+        "least_in_tested_alphabet": "4",
+        "sharp_target": "4"
+      },
+      "3": {
+        "all": 56,
+        "equal": 12,
+        "failed": 18,
+        "least_in_tested_alphabet": "3",
+        "sharp_target": "3"
+      },
+      "4": {
+        "all": 126,
+        "equal": 6,
+        "failed": 60,
+        "least_in_tested_alphabet": "9/4",
+        "sharp_target": "9/4"
+      },
+      "5": {
+        "all": 252,
+        "equal": 12,
+        "failed": 150,
+        "least_in_tested_alphabet": "2",
+        "sharp_target": "2"
+      },
+      "6": {
+        "all": 462,
+        "equal": 6,
+        "failed": 316,
+        "least_in_tested_alphabet": "16/9",
+        "sharp_target": "16/9"
+      },
+      "7": {
+        "all": 792,
+        "equal": 12,
+        "failed": 594,
+        "least_in_tested_alphabet": "5/3",
+        "sharp_target": "5/3"
+      },
+      "8": {
+        "all": 1287,
+        "equal": 6,
+        "failed": 1029,
+        "least_in_tested_alphabet": "25/16",
+        "sharp_target": "25/16"
+      },
+      "9": {
+        "all": 2002,
+        "equal": 12,
+        "failed": 1676,
+        "least_in_tested_alphabet": "3/2",
+        "sharp_target": "3/2"
+      }
+    },
+    "(3, 2)": {
+      "2": {
+        "all": 21,
+        "equal": 6,
+        "failed": 6,
+        "least_in_tested_alphabet": "4",
+        "sharp_target": "4"
+      },
+      "3": {
+        "all": 56,
+        "equal": 12,
+        "failed": 32,
+        "least_in_tested_alphabet": "3",
+        "sharp_target": "3"
+      },
+      "4": {
+        "all": 126,
+        "equal": 0,
+        "failed": 93,
+        "least_in_tested_alphabet": "8/3",
+        "sharp_target": "9/4"
+      },
+      "5": {
+        "all": 252,
+        "equal": 0,
+        "failed": 210,
+        "least_in_tested_alphabet": "5/2",
+        "sharp_target": "2"
+      },
+      "6": {
+        "all": 462,
+        "equal": 0,
+        "failed": 411,
+        "least_in_tested_alphabet": "12/5",
+        "sharp_target": "16/9"
+      },
+      "7": {
+        "all": 792,
+        "equal": 0,
+        "failed": 732,
+        "least_in_tested_alphabet": "7/3",
+        "sharp_target": "5/3"
+      },
+      "8": {
+        "all": 1287,
+        "equal": 0,
+        "failed": 1218,
+        "least_in_tested_alphabet": "16/7",
+        "sharp_target": "25/16"
+      }
+    },
+    "(3, 3)": {
+      "2": {
+        "all": 45,
+        "equal": 9,
+        "failed": 9,
+        "least_in_tested_alphabet": "4",
+        "sharp_target": "4"
+      },
+      "3": {
+        "all": 165,
+        "equal": 36,
+        "failed": 75,
+        "least_in_tested_alphabet": "3",
+        "sharp_target": "3"
+      },
+      "4": {
+        "all": 495,
+        "equal": 18,
+        "failed": 324,
+        "least_in_tested_alphabet": "9/4",
+        "sharp_target": "9/4"
+      },
+      "5": {
+        "all": 1287,
+        "equal": 36,
+        "failed": 1008,
+        "least_in_tested_alphabet": "2",
+        "sharp_target": "2"
+      },
+      "6": {
+        "all": 3003,
+        "equal": 18,
+        "failed": 2589,
+        "least_in_tested_alphabet": "16/9",
+        "sharp_target": "16/9"
+      }
+    }
+  }
+}

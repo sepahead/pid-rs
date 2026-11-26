@@ -1,0 +1,76 @@
+{
+  "axioms": {},
+  "commands": [
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "--version"
+      ],
+      "exit": 0,
+      "label": "version",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "20f42f897511ec814f7616bd9a193ae7504aa2f52fb05299eb752936eb77ca6e"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Model.olean",
+        "Model.lean"
+      ],
+      "exit": 0,
+      "label": "Model-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/leanchecker",
+        "--fresh",
+        "Model"
+      ],
+      "exit": 0,
+      "label": "Model-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Proof.olean",
+        "Proof.lean"
+      ],
+      "exit": 1,
+      "label": "Proof-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "b7d6a7c644b9f769556f5508185c1da027f7d637e066e866f445483b3b484859"
+    }
+  ],
+  "fixed": "c2ce0183e979cf7a3c6b346b227c8e0987019b6c46ec0a2dcb2471a183ef563e",
+  "objects": {
+    "Model.olean": "5ed4aeae7f50bcde8c6793b144defaea9642b03d00c9844c82760b02c996accc"
+  },
+  "payload": "1ae661b03c0689870751988abbae2ba112ea714ae205ecc3f9a915256dd1baaf",
+  "reason": "Proof-compile",
+  "sources": {
+    "FalseLower.lean": "5c5e910428e7fd4e776bad1ceb99af7976651ee7ec0da7c3790ae0cdb3b92837",
+    "FalseTruncate.lean": "b28405148e6b796ed26f9266477bbeeac652d749a1e2c15456acaa2f2473b3a0",
+    "FalseUpper.lean": "10d70b7f1be6f4d3f3c8ce6176a2f9cc6627d65a82d3d605a7429856e31c1ebd",
+    "FalseWidth.lean": "741fb3238191ca74f38dfe472d2df3bfe52d64d462a2458faecdcbe999493c2e",
+    "Model.lean": "4c972a5ff973a9c4ec12eb78cbf79ef9cf1e39fe408f046ef28a96a64154af45",
+    "Observer.lean": "7ca793114b217a5a9f874cb3d655938c94075903365dbf6ee1523eb732aee1c4",
+    "Proof.lean": "1572eb508993af34032001519e78225c55106ad26585a9f391411fa69d5d452f"
+  },
+  "success": false
+}

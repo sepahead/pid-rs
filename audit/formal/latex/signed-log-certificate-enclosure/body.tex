@@ -1,0 +1,334 @@
+\section{Can a rounded logarithm certify an exact information value?}\label{can-a-rounded-logarithm-certify-an-exact-information-value}
+
+An instrument reports three categorical readings and a target label. Rows with the same four labels can be counted. The categorical shared-exclusions measure assigns information values to events built from these readings. The six-table certificate study represents each of 108 information coordinates by a positive rational product. Its verifier converts that product into an interval. How do we know that rounding has kept the true value inside? \href{https://doi.org/10.1103/PhysRevE.103.032149}{Categorical definition by Makkeh, Gutknecht and Wibral} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-six-certificate-observations/README.md}{Six-table study}
+
+\textbf{Words and symbols.} An \emph{occupied row} is a combination of labels with a positive integer count. The count is its multiplicity. Let \(N\) be the sum of the counts. Each count divided by \(N\) is the empirical probability of its row. A \emph{coordinate} names one cumulative information value or one increment in the decomposition. For a coordinate, raise each positive rational row factor to its count and multiply. Call the resulting fraction \(Q\). The natural logarithm is written \(\ln\). Its information unit is the \emph{nat}. An \emph{enclosure} is a closed interval that contains a specified real number. A \emph{dyadic} number is an integer divided by a power of two. A \emph{grid unit} at precision \(p\) is \(2^{-p}\). An \emph{upper allowance} extends the stored upper endpoint. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-six-certificate-observations/arithmetic.py}{Original arithmetic} · \href{https://dlmf.nist.gov/4.6.E4}{Logarithm series}
+
+The value to certify is \((\ln Q)/N\) nats. This study proves from the algorithm that its returned interval contains that value. Lean is a proof assistant. Its standard kernel checks the integer recurrence against an independently defined finite sum. A separate stock proof checks the final signed rounding under explicit integer premises. A separate real-variable argument gives the part omitted from the finite sum. A signed calculation then handles every positive rational product. For genuine admitted count tables with at most 1,024 occupied rows, the verifier interval is at most two output grid units wide. Two occupied rows suffice to attain this bound at every scheduled precision. These are project results about the verifier. The categorical measure and the logarithm series have prior published definitions.
+
+For an example, let all three readings and the target be the same binary value. The two values occur once each. At the first source\textquotesingle s match event the marginal probability is \(1/2\) and the match probability given the target is one. The ratio is two in each occupied row. The product is \(Q=4\), the total is \(N=2\), and the mean is \((\ln 4)/2=\ln 2\) nats. The rows define an empirical law. The calculation needs no assumption of independent sampling.
+
+\clearpage
+
+\section{How the integer loop rounds its powers and sums}\label{how-the-integer-loop-rounds-its-powers-and-sums}
+
+Let \(b\) be a nonnegative integer bit count, \(S=2^b\) its scale, and \(x=n/d\) for nonnegative integer \(n\) and positive integer \(d\). The real-logarithm branch uses \(0\le x\le1/3\). The floor of a real number is its greatest integer lower bound. The ceiling is its least integer upper bound. Define \(J=\lceil b/3\rceil+1\), the number of terms. The exact scaled partial sum after \(i\) terms is \[
+A_i=S\sum_{j=0}^{i-1}\frac{2x^{2j+1}}{2j+1},\qquad A_0=0.
+\] The loop uses small integers to bound \(A_i\). It calculates an initial power interval \(l_0=\lfloor Sx\rfloor\), \(h_0=\lceil Sx\rceil\) and two \emph{fixed} square multipliers \[
+v=\left\lfloor\frac{l_0^2}{S}\right\rfloor,
+\qquad u=\left\lceil\frac{h_0^2}{S}\right\rceil.
+\] The two recorded partial sums start at \(L_0=H_0=0\). For each integer \(i\) from zero to \(J-1\), put \(k=2i+1\). Use the current power bounds to update the sums and powers: \[
+\begin{aligned}
+ L_{i+1}&=L_i+\lfloor 2l_i/k\rfloor, &
+ H_{i+1}&=H_i+\lceil 2h_i/k\rceil,\\
+ l_{i+1}&=\lfloor l_i v/S\rfloor, &
+ h_{i+1}&=\lceil h_i u/S\rceil .
+\end{aligned}
+\] All quantities in these four integer divisions are nonnegative and all denominators are positive. At zero numerator the original source returns \((0,0)\) early. At positive numerator it returns \((L_J,H_J+1)\) in units of \(1/S\). \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-six-certificate-observations/arithmetic.py}{Original loop} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/formal/Model.lean}{Formal model}
+
+\textbf{Finite proof.} Initially \(l_0\le Sx\le h_0\) and \(v\le Sx^2\le u\). If \(l_i\le Sx^{2i+1}\le h_i\), multiply these nonnegative bounds by the square bounds and divide by \(S\). The last two outward roundings enclose the next scaled odd power. Dividing the current power bounds by \(k\) after multiplication by two encloses the scaled term. Adding it to \(L_i\le A_i\le H_i\) gives the next pair. Induction proves both inequalities after every finite number of steps. The rational sum in the model uses exact powers of \(n,d\) and exact fraction addition. It has no dependency on the proposed integer bounds. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/formal/Proof.lean}{Thirteen theorem sources}
+
+\clearpage
+
+\section{The stored recurrence matters}\label{the-stored-recurrence-matters}
+
+Take \(n=1\), \(d=3\), \(b=4\). Then \(S=16\), \(J=3\), the initial power pair is \((5,6)\) and the square multipliers are \((1,3)\). The following table gives the actual state. At each row \(i\) terms have entered the stored sums. An exact power is given before any integer rounding.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedleft
+Terms \(i\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Exact scaled next power
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Stored power pair
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Stored partial sum pair
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & \(16/3\) & \((5,6)\) & \((0,0)\) \\
+1 & \(16/27\) & \((0,2)\) & \((10,12)\) \\
+2 & \(16/243\) & \((0,1)\) & \((10,14)\) \\
+3 & \(16/2187\) & \((0,1)\) & \((10,15)\) \\
+\end{longtable}
+}
+
+For instance, after the first term the stored upper power is \(\lceil6\cdot3/16\rceil=2\). Directly rounding the exact next power gives \(\lceil16/27\rceil=1\). Both are upper bounds, but only the first value describes this implementation. The exact three-term sum is \[
+16\left(\frac{2}{3}+\frac{2}{81}+\frac{2}{1215}\right)
+=\frac{13472}{1215}.
+\] The stored upper sum grows by one further unit when the algorithm allows for the real remainder. The returned pair is \((10,16)\). Recomputing exact powers at each iteration would return \((10,15)\) for this input. Testing only that a supplied interval contains the true finite value cannot distinguish these algorithms.
+
+A second witness is \(n=0\). The actual answer is \((0,0)\). A wrong zero branch returning \((0,1)\) would still contain zero. Stock Lean rechecked the positive witness and rejected the two false equations that force the direct power or the extra zero endpoint. A separate live trace compared 2,299 calls to the original Python loop with exact arithmetic. It included 363 zero returns and observed 7,744 power and sum states on positive input. These are finite observations of that interpreter. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/typed-controls/Witness.lean}{Positive and false typed controls} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/numerical/trace.json}{Trace and exact results}
+
+\clearpage
+
+\section{The error after the last term}\label{the-error-after-the-last-term}
+
+For a real \(0\le x\le1/3\), write \(R_J(x)\) for the difference between \(\ln((1+x)/(1-x))\) and the first \(J\) unscaled terms. The finite sum has derivative \(2\sum_{i=0}^{J-1}x^{2i}\). The logarithm has derivative \(2/(1-x^2)\). Subtract the derivatives, use the finite geometric sum, and observe that the difference is zero at the origin. Integration gives \[
+R_J(x)=\int_0^x\frac{2t^{2J}}{1-t^2}\,dt.
+\] The factor \(1/(1-t^2)\) lies between one and \(1/(1-x^2)\) on this interval. Therefore \[
+\frac{2x^{2J+1}}{2J+1}\le R_J(x)
+\le\frac{2x^{2J+1}}{(2J+1)(1-x^2)}
+\le\frac{3}{4(2J+1)9^J}.
+\] For \(x>0\) the first two bounds on the integral are strict. The positive odd logarithm series gives the same upper bound by increasing each reciprocal omitted odd denominator to the first omitted one. \href{https://dlmf.nist.gov/4.6.E4}{Classical logarithm series}
+
+Let \(k=\lceil b/3\rceil\). Then \(J=k+1\) and \(2^b\le8^k\). Multiplication of the last bound by \(S=2^b\) gives \[
+0\le S R_J(x)\le \frac{1}{12(2k+3)}\left(\frac{8}{9}\right)^k
+\le\frac{1}{36}<1.
+\] One internal upper unit thus covers the entire omitted real tail. This proves the step from the finite sum to the real logarithm, including \(x=1/3\), where the true logarithm is \(\ln 2\).
+
+\textbf{Exact largest scaled tail.} At each \(J\), the integral increases with \(x>0\). For positive \(x\) the integral also gives \(R_{J+1}(x)<x^2 R_J(x)\). Within a block with fixed \(k\ge1\) the largest \(2^b\) occurs at \(b=3k\). Across consecutive block ends the scale grows by eight and the remainder shrinks by a factor strictly below \(1/9\) at \(x=1/3\). The first block is \(b=0\). Hence the unique maximum over all nonnegative bit counts and \(0\le x\le1/3\) is \(\ln2-2/3\), attained at \(b=0\), \(x=1/3\). This is a tail bound for the series. At the first production scale \(b=280\), the original rounded interval for \(\ln2\) is 106 internal units wide. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/numerical/tail.json}{Exact rational check of the maximum}
+
+\clearpage
+
+\section{From a positive fraction to a signed result}\label{from-a-positive-fraction-to-a-signed-result}
+
+Let \(Q=a/d_0\) with positive integers \(a,d_0\). For a positive integer \(k\), let \(h(k)\) be its bit length, so \(2^{h(k)-1}\le k<2^{h(k)}\). The provisional exponent \(g=h(a)-h(d_0)\) satisfies \(2^{g-1}<Q<2^{g+1}\). The code sets \(e=g-1\) if \(Q<2^g\), and otherwise sets \(e=g\). Thus \(e=\lfloor\log_2 Q\rfloor\). Integer shifts produce an exact fraction \(r=Q2^{-e}\) in \([1,2)\). Put \(x=(r-1)/(r+1)\). Then \(0\le x<1/3\) and \(\ln r=\ln((1+x)/(1-x))\). A separate call at \(x=1/3\) bounds \(\ln2\).
+
+Choose \(p\) from \(256,384,512,768,1024,1536,2048\). The inner scale has \(b=p+24\) bits. Let \([l,h]\) contain \(2^b\ln r\) and let \([v,u]\) contain \(2^b\ln2\). From \(\ln Q=\ln r+e\ln2\), the signed pair \([C,D]\) is \[
+[C,D]=\begin{cases}
+[l+e v,\ h+e u], & e\ge0,\\
+[l+e u,\ h+e v], & e<0 .
+\end{cases}
+\] Multiplication by a negative integer exchanges the endpoint roles. Divide by \(N2^{24}>0\). The final interval \[
+\left[\frac{\lfloor C/(N2^{24})\rfloor}{2^p},
+      \frac{\lceil D/(N2^{24})\rceil}{2^p}\right]
+\] contains \((\ln Q)/N\). Python integer division by a positive denominator gives the floor even when its numerator is negative. Its ceiling calculation negates the floor of the negative numerator. Both endpoints are thus rounded outward. The 24 extra bits control width. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-six-certificate-observations/arithmetic.py}{Pinned source}
+
+At \(Q=1\) the function returns the exact zero pair. For each other power of two \(Q=2^e\), the normalized fraction is \(r=1\). Its series argument is \(x=(r-1)/(r+1)=0\). This call returns two zeros. Only the signed multiple of the log-of-two interval contributes. For both \(Q=3/2\) and \(Q=3/4\) the normalized fraction is \(r=3/2\) and the series argument is \(x=1/5\). Their exponents are zero and minus one. For \(Q=7/15\) the provisional exponent is minus one, the final exponent is minus two, and \(x=13/43\). An independent rational sum used the unreduced fraction on these cases. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/numerical/outer.json}{Signed examples}
+
+\clearpage
+
+\section{Containing the true value and containing another interval}\label{containing-the-true-value-and-containing-another-interval}
+
+A producer supplies an interval for the same mean information. The interval test passes when the declared width is allowed and at least one complete computed interval lies inside the supplied interval. This requires both the verifier\textquotesingle s lower and upper endpoints to lie between the producer\textquotesingle s endpoints. An overlap alone is insufficient.
+
+\par
+
+\smallskip\noindent\makebox[\linewidth][c]{\includegraphics[width=0.94\linewidth]{intervals.pdf}}
+
+\par
+
+The left panel uses \(x=1/3\) and \(b=4\). The bar after the third included term ends at 15. One further unit gives the final upper endpoint 16. The circles mark the exact scaled partial sums. They are distinct from the stored integer endpoints.
+
+In the right panel take \(t=2^{-2048}\), \(Q=1+t\), \(N=1\). The interval \([0,t]\) is valid because \(0<\ln(1+t)<t\) for every \(t>0\). Its endpoints meet this panel\textquotesingle s representation rule and its width is comfortably below \(2^{-160}\). In units of \(2^{-2048}\) the true value lies strictly between grid points zero and one. The verifier at \(p=2048\) gives \([0,2t]\). At each of its six earlier precisions its upper endpoint is \(2^{-p}>t\). Every computed interval contains the true value and every one fails the producer-containment test. This scalar counterexample comes from the original reported finite schedule. Its existence does not require an empirical count table with this product. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-six-certificate-observations/check_schedule.py}{Published schedule example and second limit}
+
+\clearpage
+
+\section{How wide can the verifier interval be?}\label{how-wide-can-the-verifier-interval-be}
+
+The original preflight checks the proposed positive rational product before exponentiation. For each positive factor \(a_i/d_i\) with integer exponent \(c_i\), it requires \[
+2+\sum_i |c_i|\bigl(h(a_i)+h(d_i)\bigr)\le 262{,}144=2^{18}.
+\] Exact multiplication and cancellation therefore bound the bit lengths of the reduced numerator and denominator. In particular \(|e|+1\le2^{18}\) for the binary reduction above. The unit product is covered separately. When the product and the total count can be chosen independently, this size assumption gives a uniform width bound.
+
+For one inner logarithm, the initial upper integer satisfies \(h_0\le S/2\) and the difference \(h_0-l_0\) is at most one. The upper square multiplier obeys \(u\le S/4\). The square multiplier width obeys \(u-v<(h_0^2-l_0^2)/S+2\le3\), so \(u-v\le2\). Every update preserves \(h_i\le S/2\) since \(S\) is divisible by eight at every production precision. Writing \(\delta=h_i-l_i\), the next integer width satisfies \[
+\delta' < \frac{\delta u+l_i(u-v)}{S}+2\le\frac{\delta}{4}+3.
+\] Induction from \(\delta\le1\) gives \(\delta\le3\) at all subsequent steps. The first term contributes exactly \(2(h_0-l_0)\le2\) to the total width. For odd denominators three and five, the contributions are nonnegative integers strictly below \(2+6/3\) and \(2+6/5\), hence at most three in both cases. For a denominator at least seven the width is strictly below \(2+6/7<3\), hence at most two. The upper allowance then gives a width no greater than \(2J+3\) internal units per inner logarithm.
+
+Each signed combination has width at most \((1+|e|)(2J+3)\) internal units. The two final outward roundings enlarge its width by strictly less than two output units in total. The returned integer width \(w\), measured in units of \(2^{-p}\) nats, satisfies \[
+w< 2+\frac{2J+3}{64N}.
+\] At \(p=256\), \(J=95\), so \(w\le5\). At all seven precisions \(J\le692\), so \(w\le23\). These sufficient bounds apply to preflighted products and do not assert the largest attainable width. For arbitrary positive fractions with no size cap, take \(Q=2^E\), \(N=1\) and increase the integer \(E\). The positive log-of-two branch adds one upper unit to ordered finite sums. Its internal integer width is therefore at least one. The signed combination then grows without a uniform width bound at fixed \(p\).
+
+\clearpage
+
+\section{Exact scalar widths for the seven output precisions}\label{exact-scalar-widths-for-the-seven-output-precisions}
+
+The general bound of 23 is convenient, but the number of possible integer grid widths is small enough to determine the exact maximum. In this question \(N\) is chosen independently of \(Q\). Only the product-size limit on the preceding page restricts \(Q\). Let \(G=2^{24}\) and let \(C_p\) denote the actual integer width of the inner calculation at \(x=1/3\) and \(b=p+24\). The exact maximum at a given \(p,N\) is \[
+1+\left\lceil\frac{262141 C_p+2J}{NG}\right\rceil.
+\]
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedleft
+Bits \(p\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Terms \(J\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Width \(C_p\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Maximum at \(N=1\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+First \(N\) with maximum two thereafter
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+256 & 95 & 106 & 3 & 2 \\
+384 & 137 & 144 & 4 & 3 \\
+512 & 180 & 186 & 4 & 3 \\
+768 & 265 & 272 & 6 & 5 \\
+1,024 & 351 & 361 & 7 & 6 \\
+1,536 & 521 & 532 & 10 & 9 \\
+2,048 & 692 & 699 & 12 & 11 \\
+\end{longtable}
+}
+
+\textbf{Internal width.} The upper square multiplier satisfies \(u/S\le(1/3+1/S)^2+1/S<1/8\) because \(S\ge256\). The lower stored power obeys \(l_i/S\le x^{2i+1}\le1/3\). We already know \(u-v\le2\). If \(h_i-l_i\le2\), the exact difference between the next power operands before rounding is less than \(2/8+2/3<1\). Its outward integer endpoints are thus at most two apart. This proves \(h_i-l_i\le2\) by induction from a first difference at most one.
+
+For an odd denominator \(k\ge3\) the term width is at most \[
+\left\lfloor\frac{2(h_i-l_i)+2k-2}{k}\right\rfloor\le2.
+\] To see the first inequality, write the ceiling as integer division after adding \(k-1\). The remainder of the lower dividend adds at most a second \(k-1\). At \(k=1\) the width is at most two by the initial difference. Including the one-unit tail allowance gives the reduced-logarithm width at most \(2J+1\). A separate integer implementation of the fixed log-of-two loop reproduced every \(C_p\) in the table. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/numerical/SHARP-WIDTH.md}{Full proof} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/numerical/scalar_width.json}{Exact constants and witness exponents}
+
+\clearpage
+
+\section{Why the scalar maximum is attained}\label{why-the-scalar-maximum-is-attained}
+
+For each positive factor \(a/d\), \(|\log_2(a/d)|<h(a)+h(d)-1\), where \(h\) is bit length. Indeed, in either orientation, the positive logarithm of the larger numerator is smaller than its bit length. For a nonempty product plan, the size cap gives \(|\log_2 Q|<262141\), so the integer exponent in the reduction satisfies \(-262141\le e\le262140\). The combined internal width is consequently at most \(E=262141C_p+2J+1\).
+
+Let \(B=NG\). Write \(s\) for the Euclidean remainder of the combined lower integer endpoint \(c\) modulo \(B\), so \(0\le s\le B-1\). If the actual internal integer width is \(E'\), the final grid width is exactly \(\lceil(s+E')/B\rceil\). This gives at most \(1+\lceil(E-1)/B\rceil\), the expression on the preceding page. The separate \(Q=1\) branch gives zero.
+
+For each of the 32 precision and total pairs below the last column\textquotesingle s threshold, the exact calculation gives an exponent \(k\) such that both \(Q=2^k\) and \(Q=2^{-k}\) attain this upper bound. It checks the size of each single-factor plan and calls the original interval procedure on both signs. The source and output list every exponent. The other 107 plans used in this scalar size test are empty. These scalar witnesses make no claim to be whole empirical tables. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/numerical/scalar_width.py}{Reproducible finite witnesses}
+
+One common fraction attains two units for every larger total. Set \(T=2^{2080}\) and \(Q=(T-1)/T\). Its size passes the product preflight and its exponent is minus one. Its transformed argument \((T-2)/(3T-2)\) is smaller than \(1/3\) by exactly \(4/[3(3T-2)]\). Multiplication by \(S\) leaves this difference below \(1/3\) even at the finest scheduled precision. The fractional part of \(S/3\) is either \(1/3\) or \(2/3\). Thus the two arguments produce the same scaled initial floor and ceiling. Every later integer operation also agrees. Subtraction of the log-of-two pair gives internal indices \([-C_p,C_p]\). Since \(0<C_p<G\), the output is \([-2^{-p},2^{-p}]\) for every \(N\ge1\). Once the upper envelope reaches two, this construction proves equality at every later total. Its true logarithm is strictly negative although the computed interval also contains positive values. Compare \(Q\) directly with one to obtain a sign.
+
+\clearpage
+
+\section{A sharper width bound for the actual categorical coordinates}\label{a-sharper-width-bound-for-the-actual-categorical-coordinates}
+
+The preceding width bound allows any positive rational product that fits the size cap. The categorical construction supplies more structure. At an occupied row and a given node, let \(U\) count all rows in its source-match event, \(W\) count all rows with the observed target, and \(V\) count the rows in both events. Each count includes multiplicities. The occupied row belongs to both events. Thus \(1\le U\le N\) and \(1\le V\le W\le N\). The informative factor is \(N/U\); the misinformative factor is \(W/V\). Each lies in \([1,N]\). \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-six-certificate-observations/README.md}{Categorical construction and finite order}
+
+Here \(\log_2\) denotes the logarithm to base two, used to count binary scale exponents. Each cumulative product raises each row factor to that row\textquotesingle s count, whose sum is \(N\). Its informative and misinformative logarithms are both in \([0,N\log_2 N]\). The cumulative net logarithm is their difference, so it has magnitude at most \(N\log_2 N\).
+
+For three sources a \emph{branch} is a nonempty subset of the source names. A node is a nonempty family of mutually incomparable branches. A lower node contributes to an upper node if each branch of the upper node contains some branch of the lower one. The 18-by-18 \emph{incidence matrix} places one in these positions and zero elsewhere. It converts the 18 atoms to the 18 cumulative values. Its inverse converts cumulative logarithms to atom logarithms. In the published row order an exact rational elimination gives the sums of the absolute inverse coefficients \[
+2,2,4,2,4,4,8,2,2,4,2,4,4,4,4,4,1,8.
+\] The program builds the nodes from sets, verifies both matrix products equal the identity, and compares the keys and all entries with the source matrix and its inverse. Multiplication by each inverse row now gives \(|\log_2 Q|\le8N\log_2 N\) for all atom components. This bound also covers the cumulative components. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/numerical/order.json}{All matrix entries and row sums}
+
+A stronger support argument also works when some integer factors exceed the old product-size cap. Let \(c_z\) be the positive count of occupied joint row \(z\) and let \(r\) be the number of occupied joint rows. Since \(U,V\ge c_z\) and \(W\le N\), both factors are at most \(N/c_z\). Write \(w_z=c_z/N\). The base-two empirical entropy \(H=-\sum_z w_z\log_2 w_z\) bounds each average cumulative component above, and \(H\le\log_2 r\) by concavity of the logarithm applied to \(1/w_z\). For every genuine coordinate \(|\log_2 Q|\le8NH\). At \(r\le1024\) this gives \(|e|\le80N\). Thus the pre-round separation, in output-grid units, is at most \((1+80N)1385/(N2^{24})<1\), since \(2J+1\le1385\). After the two final outward roundings the integer width is below three and hence at most two. One occupied row gives only unit products for every \(N\), including \(N=1\). This mathematical bound assumes computed exact inputs and completion. It does not grant an over-budget table admission to the original verifier.
+
+\clearpage
+
+\section{Two data designs attain the bound}\label{two-data-designs-attain-the-bound}
+
+\textbf{A four-row law.} Take even integers \(N,m\) with \(0<m<N\). The first source \(A\) is binary and balanced, and the two other sources are constant. Of the \(N/2\) observations in each source class, \(m/2\) have target equal to \(A\). The others have the same third target label \(x\). Thus the conditional probability of erasure is identical in both source classes. In row order \((0,0),(0,x),(1,1),(1,x)\) for first source and target, the four counts are \(m/2,(N-m)/2,m/2,(N-m)/2\).
+
+For the singleton first-source cumulative net coordinate, the source-match probability is \(1/2\). Its conditional probability given a revealed target is one. Given an erasure it is \(1/2\). The informative, misinformative and net products are thus \(2^N,2^{N-m},2^m\). The exact net mean is \(m\ln(2)/N\) nats. At 256 bits the four counts are 717, 5, 717, 5. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/numerical/counted.json}{Four-row tables and complete grid indices}
+
+\textbf{A two-row law.} Take a two-state source and let all three sources and the target equal that state. Give its two values positive counts \(k\) and \(j=N-k\). At the same named coordinate each conditional match is certain. The two marginal probabilities are \(k/N\) and \(j/N\). The net product is therefore \(Q=N^N/(k^k j^j)\). With only one occupied joint row every match is certain, \(Q=1\) at all coordinates and every width is zero. At each precision, the two-row example below attains two output units. Thus \textbf{two is the least possible number of occupied joint rows} for this width. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/counted-examples/CHECKED.json}{Exact two-row calculation}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedleft
+Output bits
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Four-row total \(N\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Revealed \(m\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Two-row total \(N\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+First count \(k\)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+256 & 1,444 & 1,434 & 1,740 & 833 \\
+384 & 1,364 & 1,170 & 853 & 371 \\
+512 & 1,866 & 998 & 145 & 34 \\
+768 & 1,708 & 1,494 & 969 & 56 \\
+1,024 & 408 & 386 & 79 & 2 \\
+1,536 & 1,108 & 1,054 & 399 & 139 \\
+2,048 & 1,706 & 538 & 245 & 66 \\
+\end{longtable}
+}
+
+Both calculations exercise the original typed rows, resource checks and all 108 product plans. They test the stable coordinate key \texttt{cumulative.net.01}. These deliberately constructed examples establish attainment. The table gives no minimum total, prevalence in measured data or estimator calibration.
+
+\clearpage
+
+\section{A sufficient way to pass the containment check}\label{a-sufficient-way-to-pass-the-containment-check}
+
+For a genuine counted coordinate on at most 1,024 occupied rows, the previous proof bounds the width \emph{before} the last roundings by strictly less than one output unit. Write the true mean in output-grid units as \(y=2^p(\ln Q)/N\). Write its pre-rounding bounds in these units as \(c\le y\le d\). Let a producer submit an integer grid interval \([a,b]\) with \(a\le y\le b\). From \(d-c<1\) it follows that \(c>y-1\ge a-1\) and \(d<y+1\le b+1\). Therefore \[
+ [\lfloor c\rfloor,\lceil d\rceil]\ \subseteq\ [a-1,b+1].
+\] When the raw width is below one grid unit, adding one unit at each end of a true same-grid interval guarantees containment. For non-grid endpoints, first round them outward. The enlarged interval must meet the format and size rules. An independent scalar product can violate the width premise. At \(p=2048\), \(N=1\) and \(Q=2^{262140}\) its verifier width is 12 units. Adding one unit at each end of a true single cell gives width three.
+
+\textbf{An actual zero-padding failure.} Take the last four-row input in the table, with \(N=1706\), \(m=538\). Its true mean is \((538/1706)\ln2\). At \(p=2048\) its scaled mean is \(y=2^{2048}(538/1706)\ln2\). Its lower grid index is the integer \(a=\lfloor y\rfloor\). One evaluation bounds \(\ln2\) by summing the first 2,100 terms of \(\sum_{k\ge1}1/(k2^k)\). Its positive remainder is at most \(2^{-2100}/2101\). A second calculation sums 800 terms of the odd logarithm expansion. Both place the true scaled mean strictly inside the same cell \((a,a+1)\). \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/numerical/padding.json}{Direct first series and all seven original outputs} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/counted-examples/TRUE-CELLS.json}{Second series and complete certificates}
+
+The verifier\textquotesingle s first six intervals are each one unit wide on their own coarser grids. None fits inside the fine-grid cell \([a,a+1]\). The last interval is \([a-1,a+1]\) in fine-grid units. It extends one unit below the true cell. The enlarged interval \([a-1,a+2]\) contains it.
+
+The constructed count input has 492 bytes and four occupied rows. Each report contains 108 coordinate records. A baseline report of 97,191 bytes passed all coordinates at 256 bits. Replacing just this one coordinate\textquotesingle s interval by the true fine-grid cell gave a 98,271-byte report. The actual reader refused it for independent interval containment. Replacing it by the enlarged cell gave a 98,272-byte report. All 108 coordinates then passed, with the selected coordinate at 2,048 bits. Padding only the lower side also passes this last input; padding only the upper side fails. On the four-row examples the upper side is needed at 256, 384, 512, 1,024 and 1,536 bits. The lower side is needed at 768 and 2,048 bits. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/counted-examples/directed/SEVEN-GRID-SIDES.json}{Seven endpoint checks}
+
+At the same final precision of 2,048 bits, a second four-row input with \(N=1934\) and \(m=1428\) requires upper padding. It has 714 revealed and 253 erased observations per source value. Thus either fixed one-sided rule can fail at the same precision. An exhaustive check through 999 of each positive revealed and erased count verified 84 crossings among 6,986,007 precision and count pairs. The tested family had no lower-side case at four fields. This is a finite family restriction. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/counted-examples/directed/BOTH-SIDES-CENSUS.json}{Both directions and full reader responses}
+
+These are constructed, byte-reproducible certificates. The test uses the original reader but has no historical producer attribution. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/counted-examples/constructed/synthetic-B.json}{Constructed input} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/counted-examples/TRUE-CELLS.json}{Observed judgments}
+
+\clearpage
+
+\section{What the proof of the finite sum covers}\label{what-the-proof-of-the-finite-sum-covers}
+
+\emph{Lean} is a proof assistant. Its kernel checks a supplied proof term against its declared type. The model here uses natural numbers, including zero, and independently represents each finite partial sum by an exact numerator and a positive denominator. In the names below, a \emph{prefix} means the first specified number of terms. The models for an outer signed real logarithm and for an entire software interpreter would require additional definitions. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/formal/Model.lean}{Source model} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/formal/observed/terms.txt}{All statements and complete terms}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Named declaration or group
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Checked mathematical content
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{ceil\_upper}, \texttt{signed\_ceiling} & Natural ceiling is an upper bound; it equals the negated signed-floor expression for nonnegative numerators and positive denominators. \\
+\texttt{initial\_interval}, \texttt{product\_lower}, \texttt{product\_upper}, \texttt{product\_interval} & Start the interval, multiply two nonnegative intervals and round outward at a positive scale. \\
+\texttt{term\_interval}, \texttt{add\_interval} & Divide a doubled term by its positive odd denominator and add exact-fraction enclosures. \\
+\texttt{square\_steps}, \texttt{odd\_power\_step} & Enclose the fixed square multipliers and identify the next odd power. \\
+\texttt{all\_prefixes}, \texttt{returned\_finite}, \texttt{scheduled} & Enclose every finite partial sum, prove the zero and positive return cases, and specialize to the seven selected caller precisions. \\
+\end{longtable}
+}
+
+The original stock run used Lean 4.34.1 and 3,257 pinned release files. The observer checked 22 typed or concrete examples. The compiler and fresh kernel checker processed the model, proof and observer. Across the thirteen declared proof terms, two use only propositional extensionality, which identifies equivalent propositions. The other eleven also use quotient soundness, which gives equal quotient images to related representatives. The named terms use no choice axiom. The compiler, object loader and kernel implementation are shared dependencies. The fresh checker accepts declared axioms as axioms and skips unsafe or partial definitions. The submitted mathematical source contains no extra axiom, unsafe definition or incomplete proof. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/formal/README.md}{Exact source, axiom records and replay}
+
+The first test criterion rejected four successive attempts. The fourth compiled the whole proof but its observer requested an unavailable print option. The second criterion removed that option and accepted the same exposed fourth proof in ordinary and optimized interpreter modes. Each original failure is reproducible with its own fixed criterion. These thirteen results establish the finite-sum statements above. The signed real logarithm and the counted input bounds have separate written arguments. The next section gives the stock result for the final signed integer division. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/formal/history/attempts.jsonl}{Historical predicates and retained failures}
+
+\clearpage
+
+\section{Sharp rounding bounds for signed endpoints}\label{sharp-rounding-bounds-for-signed-endpoints}
+
+The verifier computes ordered integer numerators \(l\le u\). Let the positive integer \(d\) be the number of numerator units in one output unit. Rounding gives the indices \(L=\lfloor l/d\rfloor\) and \(U=\lceil u/d\rceil\). The integer width is \(W=U-L\). This definition also applies to negative numerators. The ceiling equals \(-\lfloor-u/d\rfloor\). For any integer \(b\), the inequality \(\lceil u/d\rceil\le b\) holds exactly when \(u\le bd\).
+
+Let \(s=l-dL\) be the remainder. Then \(0\le s<d\). Substitution for \(l\) gives \(W=\lceil(s+u-l)/d\rceil\). Fix an integer \(h\ge0\) and allow all ordered pairs with \(u-l\le h\). Since \(s\le d-1\), their \textbf{largest possible width} is \[
+ \max W=\left\lceil\frac{d-1+h}{d}\right\rceil .
+\] The choice \(l=d-1\) and \(u=l+h\) attains it. If \(u-l\le d+1\), the width lies between zero and two. A gap of \(d+2\) can give three. For example, \(d=4\) and \([l,u]=[3,9]\) give \([L,U]=[0,3]\).
+
+For padding, let \([a,b]\) be an ordered interval with integer endpoints on this output grid. Suppose it overlaps \([l/d,u/d]\). Equivalently, \(l\le bd\) and \(ad\le u\). If \(u-l\le d\), then \(l\ge(a-1)d\) and \(u\le(b+1)d\). Hence \(a-1\le L\le U\le b+1\). This threshold is sharp for a guarantee over all overlaps. At gap \(d+1\), take \([a,b]=[0,0]\) and \([l,u]=[-d-1,0]\). Its lower index is below \(-1\), so padding also fails for the supplied single cell \([0,1]\). With \(d=4\), raw numerators \([-1,1]\) round to \([-1,1]\). Both ends of a supplied singleton \([0,0]\) then need expansion. This is an abstract grid example. Another consequence at gap at most \(d\) is that \(L<a\) implies \(U\le a+1\), since \(W\le2\).
+
+For a positive total count \(N\), take \(d=N2^{24}\). The separate categorical argument gives \(u-l\le1385(1+80N)\) under its stated support and computation assumptions. These integer premises imply \(u-l<d\) and \(0\le W\le2\). The nine stock declarations cover these integer results. They take the bound on \(u-l\) as a hypothesis. The real logarithm and the source of that bound have their separate arguments. \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/grid/Proof.lean}{All nine statements and their proofs} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/grid/README.md}{Finite checks, proof attempts and replay}
+
+\clearpage
+
+\section{Rust implementation and computational cost}\label{rust-implementation-and-computational-cost}
+
+The actual Rust function \texttt{discrete\_sxpid3\_averaged} is in \texttt{pid\_core::stable::categorical} with default features. It takes three categorical source matrices and a target matrix with the same observation rows. Counts must be expanded with their multiplicities for this interface. Its output uses the 64-bit binary floating-point format. It returns 18 named mean atoms. The six-table certificate instead checks cumulative coordinates and atom coordinates, with three components per coordinate. There is no public Rust interface for the exact signed interval studied here. The old research producer used a separate multiprecision implementation. \href{https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/sxpid.rs}{Rust source} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/three-source-six-certificate-observations/README.md}{Six-table implementation and budgets}
+
+The scalar verifier takes one positive rational product, one positive integer total and one of seven output precisions. The binary reduction uses integer bit lengths, comparison and shifts. At precision \(p\) each new inner evaluation uses \(J=\lceil(p+24)/3\rceil+1\) iterations. The log-of-two pair can be reused at the same bit count. Each iteration uses a fixed number of integer additions, multiplications and divisions. The rounded recurrence uses a constant number of stored integers, each with size on the order of \(p\) bits apart from input reduction and the larger input product. The exact numerator and denominator used to prove the partial sum need not be materialized by the verifier. The product computation and input validation have separate costs. In the absence of enough memory, or if execution stops, there is no returned interval. The offline check uses no training, parameter fitting, resampling or statistical independence assumption. \href{https://github.com/sepahead/pid-rs/blob/main/RUST_IMPLEMENTATION_AND_COST.md}{Cost reference}
+
+The original proof experiment used Python 3.14 on Apple arm64. A separate pair of guarded portable runs with Python 3.15.0 replayed both historical acceptance criteria, including the four rejected attempts and the final accepted proof. The ordinary run took 35.45 seconds and its largest sampled process-group resident memory was 179,273,728 bytes. The optimized run took 28.96 seconds with 177,684,480 bytes sampled. The guard limited each run to 300 seconds and 1,073,741,824 bytes. A separate exact scalar panel took about 1.04 seconds per interpreter mode including process monitoring. These timings describe the finite-sum study. The final signed-integer study checks nine declarations, four rejected assertions and 4,464 finite signed endpoint cases. It also uses the official release and one process at a time. They do not measure Rust estimator throughput.
+
+\textbf{Use.} A reader can verify the sign of a coordinate by comparing \(Q\) with one. To compare its magnitude, the reader can now justify the independent numerical interval and its width. Rejection of a supplied interval can result from the containment rule even when both intervals are mathematically valid. The six historical tables had 648 accepted coordinates at \(p=256\). The proof here leaves general table parsing, producer completeness, source-to-runtime refinement, and inference about an unknown population as distinct obligations. A task outcome or a simpler event count answers a different application question.
+
+Cite Sepehr Mahmoudian, \emph{Signed logarithm enclosures for finite categorical information}, 2026, with the exact repository commit or release. Cite Makkeh, Gutknecht and Wibral separately for the categorical shared-exclusions definition. \href{https://github.com/sepahead/pid-rs/blob/main/CITATION.cff}{Software citation} · \href{https://doi.org/10.1103/PhysRevE.103.032149}{Defining paper} · \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/signed-log-certificate-enclosure/EVIDENCE.md}{Source and reproduction}

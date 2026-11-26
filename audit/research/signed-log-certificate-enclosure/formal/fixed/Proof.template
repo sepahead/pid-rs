@@ -1,0 +1,62 @@
+prelude
+import Model
+namespace N2Round
+open N2
+
+/-- The bounds are integers in units of 1/B. The exact fraction is p/q. -/
+def Encl (B l h p q : Nat) : Prop := l*q ≤ B*p ∧ B*p ≤ h*q
+
+theorem ceil_upper (a b : Nat) (hb : 0 < b) : a ≤ up a b * b := by
+@@upper@@
+
+theorem signed_ceiling : DivisionClaim := by
+@@division@@
+
+theorem initial_interval (n d B : Nat) (hd : 0 < d) :
+    Encl B (n*B/d) (up (n*B) d) n d := by
+@@initial@@
+
+theorem product_lower {B l k p q t r : Nat} (hB : 0 < B)
+    (h₁ : l*q ≤ B*p) (h₂ : k*r ≤ B*t) :
+    l*k/B*(q*r) ≤ B*(p*t) := by
+@@lowerProduct@@
+
+theorem product_upper {B h k p q t r : Nat} (hB : 0 < B)
+    (h₁ : B*p ≤ h*q) (h₂ : B*t ≤ k*r) :
+    B*(p*t) ≤ up (h*k) B*(q*r) := by
+@@upperProduct@@
+
+theorem product_interval {B l h k j p q t r : Nat} (hB : 0 < B)
+    (a : Encl B l h p q) (b : Encl B k j t r) :
+    Encl B (l*k/B) (up (h*j) B) (p*t) (q*r) := by
+@@product@@
+
+theorem term_interval {B l h p q k : Nat} (hk : 0 < k)
+    (a : Encl B l h p q) :
+    Encl B (2*l/k) (up (2*h) k) (2*p) (q*k) := by
+@@term@@
+
+theorem add_interval {B l h k j p q t r : Nat}
+    (a : Encl B l h p q) (b : Encl B k j t r) :
+    Encl B (l+k) (h+j) (p*r + t*q) (q*r) := by
+@@add@@
+
+theorem square_steps (n d s : Nat) (hd : 0 < d) :
+    Encl (scale s) (steps n d s).lo (steps n d s).hi (n*n) (d*d) := by
+@@square@@
+
+theorem odd_power_step (a i : Nat) :
+    a ^ (2*(i+1)+1) = a ^ (2*i+1) * (a*a) := by
+@@powerStep@@
+
+theorem all_prefixes (n d s i : Nat) (hd : 0 < d) :
+    enclosedPrefix n d s i := by
+@@allPrefixes@@
+
+theorem returned_finite (n d s : Nat) (hd : 0 < d) : returnedClaim n d s := by
+@@returnFinite@@
+
+theorem scheduled : Statement := by
+@@scheduled@@
+
+end N2Round

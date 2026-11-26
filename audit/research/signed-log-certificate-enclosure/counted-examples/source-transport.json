@@ -1,0 +1,17 @@
+{
+  "judge.py": {
+    "append_lf_bytes": 1,
+    "published_sha256": "eba779498ca34919a89269b979951beea4ecc2b16dc89c6d79aa0bc5b68e4f06",
+    "raw_sha256": "a9d3ef28d227722659aaa78119691cb569b9ae615d79b5a37144d052b668dc30"
+  },
+  "search.py": {
+    "append_lf_bytes": 1,
+    "published_sha256": "cf0aaa007668294741ca4cd42d55e0ccb468f5109344a2ae07c5534741ae3e54",
+    "raw_sha256": "12c6d3134cb5d9b87ae389b998cf0c4f75ef9fbf1c77248c038bc8b8163dad32"
+  },
+  "true_cell.py": {
+    "append_lf_bytes": 1,
+    "published_sha256": "ecc5ea3d59d4d9aab156dd7f64f82f9e774a79033898cc2aab3f73748730a72d",
+    "raw_sha256": "d56d8f272e2b0279c6c665e34cf5b40519f006356571c555dcdfc65131000044"
+  }
+}

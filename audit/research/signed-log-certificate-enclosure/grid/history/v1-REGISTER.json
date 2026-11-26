@@ -1,0 +1,11 @@
+{
+  "candidate_access": "fixed predicate before any payload",
+  "claims": 9,
+  "fixed": "c2ce0183e979cf7a3c6b346b227c8e0987019b6c46ec0a2dcb2471a183ef563e",
+  "independent_first": [
+    "6b105d79395f4641fb8522ed65efb6bd631f2fb987bafa1909655187565bafd1",
+    "edbb485d796ca2dd40f71ef18376e83f2b7b574f2d23910cf3d4d726d549b464"
+  ],
+  "new": true,
+  "utc": "2026-11-25T03:40:21.956237+00:00"
+}

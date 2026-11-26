@@ -1,0 +1,214 @@
+{
+  "axioms": {
+    "GridProof.both_padded": [
+      "Quot.sound",
+      "propext"
+    ],
+    "GridProof.ceiling_le": [
+      "Quot.sound",
+      "propext"
+    ],
+    "GridProof.counted_envelope": [
+      "Quot.sound",
+      "propext"
+    ],
+    "GridProof.next_padding": [
+      "Quot.sound",
+      "propext"
+    ],
+    "GridProof.next_width": [
+      "Quot.sound",
+      "propext"
+    ],
+    "GridProof.sharp_max": [
+      "Quot.sound",
+      "propext"
+    ],
+    "GridProof.two_grid": [
+      "Quot.sound",
+      "propext"
+    ],
+    "GridProof.unit_cell": [
+      "Quot.sound",
+      "propext"
+    ],
+    "GridProof.width_residue": [
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "commands": [
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "--version"
+      ],
+      "exit": 0,
+      "label": "version",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "20f42f897511ec814f7616bd9a193ae7504aa2f52fb05299eb752936eb77ca6e"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Model.olean",
+        "Model.lean"
+      ],
+      "exit": 0,
+      "label": "Model-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/leanchecker",
+        "--fresh",
+        "Model"
+      ],
+      "exit": 0,
+      "label": "Model-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Proof.olean",
+        "Proof.lean"
+      ],
+      "exit": 0,
+      "label": "Proof-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/leanchecker",
+        "--fresh",
+        "Proof"
+      ],
+      "exit": 0,
+      "label": "Proof-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Observer.olean",
+        "Observer.lean"
+      ],
+      "exit": 0,
+      "label": "Observer-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e2562a2c7b06e6966533930e4970d1755e710ebef496a710a1796efe6f581351"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/leanchecker",
+        "--fresh",
+        "Observer"
+      ],
+      "exit": 0,
+      "label": "Observer-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "FalseWidth.lean"
+      ],
+      "exit": 1,
+      "label": "FalseWidth",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "14a74632ba6e6c326f1d0f27c5c662b54d4de699e7faf77ce1d6911c937d5f3b"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "FalseLower.lean"
+      ],
+      "exit": 1,
+      "label": "FalseLower",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "5f494b69c8974d012df05de9dd72617ec95d32a2940f09961d4e35d226f0416d"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "FalseUpper.lean"
+      ],
+      "exit": 1,
+      "label": "FalseUpper",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "441044f6a8bbf954ac2b8ba96d57111b5bb259345418aa84b7ef0ff7f32c7447"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "FalseTruncate.lean"
+      ],
+      "exit": 1,
+      "label": "FalseTruncate",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "62b31dcbed691ea75bf23236992be98792585fb6e1c49c6fbeb3e4ef0a043a5b"
+    }
+  ],
+  "fixed": "cfc713f68bc10120d3e14809314bb46b9f2ae33e84ba59da181f9576c0b71b05",
+  "objects": {
+    "Model.olean": "5ed4aeae7f50bcde8c6793b144defaea9642b03d00c9844c82760b02c996accc",
+    "Observer.olean": "d53c1e3d4d2f873e630d4e2f4bf7c93cc1e385e3ad0daf435f6658bae1311d21",
+    "Proof.olean": "aee29340cf16251a04f1c826fe8312f28c647aa382981016dd1f01e4974b67b3"
+  },
+  "payload": "904be37511e64ac01a75c33ce69095426f17097ff47db95b9cccc4960f527269",
+  "reason": null,
+  "sources": {
+    "FalseLower.lean": "5c5e910428e7fd4e776bad1ceb99af7976651ee7ec0da7c3790ae0cdb3b92837",
+    "FalseTruncate.lean": "b28405148e6b796ed26f9266477bbeeac652d749a1e2c15456acaa2f2473b3a0",
+    "FalseUpper.lean": "10d70b7f1be6f4d3f3c8ce6176a2f9cc6627d65a82d3d605a7429856e31c1ebd",
+    "FalseWidth.lean": "741fb3238191ca74f38dfe472d2df3bfe52d64d462a2458faecdcbe999493c2e",
+    "Model.lean": "4c972a5ff973a9c4ec12eb78cbf79ef9cf1e39fe408f046ef28a96a64154af45",
+    "Observer.lean": "af2bb29f5f0d3af8418122cddb9d628016fcedac69eeeb65340a5d8f039ab2a4",
+    "Proof.lean": "93702715bf8f11533c00dd665e154287388f51a2de2fa9327acd1a65352cd464"
+  },
+  "success": true
+}

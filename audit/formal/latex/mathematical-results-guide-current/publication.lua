@@ -14,6 +14,8 @@ function Pandoc(doc)
     Image = function(image)
       local figures = {
         ["audit/research/angular-ray-monotonicity/figures/angular-ray-thresholds.svg"] = "angular-ray-thresholds.pdf",
+        ["audit/research/signed-log-certificate-enclosure/figures/intervals.svg"] = "intervals.pdf",
+        ["audit/research/nested-categorical-sources/figures/partitions-and-margin.svg"] = "partitions-and-margin.pdf",
         ["audit/research/strict-neighbour-count-geometry/figures/counts-and-distances.svg"] = "counts-and-distances.pdf"
       }
       local target = figures[image.src]

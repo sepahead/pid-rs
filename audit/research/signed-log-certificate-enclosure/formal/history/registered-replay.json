@@ -1,0 +1,11 @@
+{
+  "fixed": "f0e71157db2c0b28f48e9f28c39cd908615955df4c731cd2b3efc8e7ab869b24",
+  "modes": [
+    "ordinary",
+    "optimized"
+  ],
+  "payload": "13bc4e150daf491e511f332ecaf43da7812cf11efaac9bb8aaf4e2ee575fddd5",
+  "prior": "978c1d5423d648bb21951279715de09cc26dda276fe94f47c6de8b4a6e35b3ee",
+  "stop": "both native results on the single fixed exposed payload",
+  "time": "2026-11-25T02:43:18.652644+00:00"
+}

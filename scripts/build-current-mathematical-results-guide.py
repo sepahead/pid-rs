@@ -69,7 +69,7 @@ def verify(path, profile):
 
 
 def build_figures(work, env):
-    """Use the two original SVGs with the guide's embedded Source Sans Pro fonts."""
+    """Use the original SVGs with the guide's embedded Source Sans Pro fonts."""
     font_dir = work / "guide-fonts"
     font_dir.mkdir()
     archive = STYLE / "source-coupling-compression/fonts"
@@ -88,6 +88,8 @@ def build_figures(work, env):
     for study, diagram in (
         ("angular-ray-monotonicity", "angular-ray-thresholds"),
         ("strict-neighbour-count-geometry", "counts-and-distances"),
+        ("nested-categorical-sources", "partitions-and-margin"),
+        ("signed-log-certificate-enclosure", "intervals"),
     ):
         source = ROOT / "audit/research" / study / "figures" / (diagram + ".svg")
         command(["rsvg-convert", "--format=pdf", "--stylesheet", str(sheet),

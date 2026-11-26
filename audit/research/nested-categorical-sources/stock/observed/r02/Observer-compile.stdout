@@ -1,0 +1,65 @@
+'Nested.branch_reaches' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nested.suffix_incidence' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Nested.branch_matches' depends on axioms: [propext]
+'Nested.node_matches' depends on axioms: [propext]
+'Nested.event_extensional' depends on axioms: [propext, Quot.sound]
+'Nested.cumulative_sum' depends on axioms: [propext, Quot.sound]
+theorem Nested.branch_reaches : ∀ (j : Nat) (b : Branch), Branch.reaches j b ↔ j ≤ b.level :=
+fun j b =>
+  Branch.rec (fun a => Iff.rfl)
+    (fun a a_1 a_ih a_ih_1 =>
+      id
+        (Eq.mpr (id (congrArg (fun _a => _a ∨ Branch.reaches j a_1 ↔ j ≤ max a.level a_1.level) (propext a_ih)))
+          (Eq.mpr (id (congrArg (fun _a => j ≤ a.level ∨ _a ↔ j ≤ max a.level a_1.level) (propext a_ih_1)))
+            (Decidable.byContradiction fun a_2 => branch_reaches._proof_1_1 j a a_1 a_2))))
+    b
+theorem Nested.suffix_incidence : ∀ (j : Nat) (a : Node), Node.covers j a ↔ j ≤ a.level :=
+fun j a =>
+  Node.rec (fun a => branch_reaches j a)
+    (fun a a_1 a_ih a_ih_1 =>
+      id
+        (Eq.mpr (id (congrArg (fun _a => _a ∧ Node.covers j a_1 ↔ j ≤ min a.level a_1.level) (propext a_ih)))
+          (Eq.mpr (id (congrArg (fun _a => j ≤ a.level ∧ _a ↔ j ≤ min a.level a_1.level) (propext a_ih_1)))
+            (Decidable.byContradiction fun a_2 => suffix_incidence._proof_1_1 j a a_1 a_2))))
+    a
+theorem Nested.branch_matches : ∀ (p : Nat → Prop), Decreases p → ∀ (b : Branch), Branch.holds p b ↔ p b.level :=
+fun p h b =>
+  Branch.rec (fun a => Iff.rfl)
+    (fun a a_1 a_ih a_ih_1 =>
+      id
+        (Eq.mpr (id (congrArg (fun _a => _a ∧ Branch.holds p a_1 ↔ p (max a.level a_1.level)) (propext a_ih)))
+          (Eq.mpr (id (congrArg (fun _a => p a.level ∧ _a ↔ p (max a.level a_1.level)) (propext a_ih_1)))
+            (Or.casesOn (Nat.le_total a.level a_1.level)
+              (fun hle =>
+                Eq.mpr (id (congrArg (fun _a => p a.level ∧ p a_1.level ↔ p _a) (Nat.max_eq_right hle)))
+                  { mp := And.right, mpr := fun v => ⟨h a.level a_1.level hle v, v⟩ })
+              fun hge =>
+              Eq.mpr (id (congrArg (fun _a => p a.level ∧ p a_1.level ↔ p _a) (Nat.max_eq_left hge)))
+                { mp := And.left, mpr := fun v => ⟨v, h a_1.level a.level hge v⟩ }))))
+    b
+theorem Nested.node_matches : ∀ (p : Nat → Prop), Decreases p → ∀ (a : Node), Node.holds p a ↔ p a.level :=
+fun p h a =>
+  Node.rec (fun a => branch_matches p h a)
+    (fun a a_1 a_ih a_ih_1 =>
+      id
+        (Eq.mpr (id (congrArg (fun _a => _a ∨ Node.holds p a_1 ↔ p (min a.level a_1.level)) (propext a_ih)))
+          (Eq.mpr (id (congrArg (fun _a => p a.level ∨ _a ↔ p (min a.level a_1.level)) (propext a_ih_1)))
+            (Or.casesOn (Nat.le_total a.level a_1.level)
+              (fun hle =>
+                Eq.mpr (id (congrArg (fun _a => p a.level ∨ p a_1.level ↔ p _a) (Nat.min_eq_left hle)))
+                  { mp := fun a_2 => Or.casesOn a_2 (fun v => v) fun v => h a.level a_1.level hle v, mpr := Or.inl })
+              fun hge =>
+              Eq.mpr (id (congrArg (fun _a => p a.level ∨ p a_1.level ↔ p _a) (Nat.min_eq_right hge)))
+                { mp := fun a_2 => Or.casesOn a_2 (fun v => h a_1.level a.level hge v) fun v => v, mpr := Or.inr }))))
+    a
+theorem Nested.event_extensional.{u} : ∀ {W : Type u} (F : Nat → W → Prop),
+  (∀ (w : W), Decreases fun i => F i w) → ∀ (a : Node), (fun w => Node.holds (fun i => F i w) a) = F a.level :=
+fun {W} F h a => funext fun w => propext (node_matches (fun i => F i w) (h w) a)
+theorem Nested.cumulative_sum : ∀ (s : Nat → Int) (a : Node), prefixSum s a.level = s a.level - s 0 :=
+fun s a =>
+  Nat.recAux (of_eq_true (Eq.trans (congrArg (Eq 0) (Int.sub_self (s 0))) (eq_self 0)))
+    (fun n a =>
+      Eq.mpr (id (congrArg (fun _a => _a = s (n + 1) - s 0) (prefixSum.eq_2 s n)))
+        (Eq.mpr (id (congrArg (fun _a => _a + (s (n + 1) - s n) = s (n + 1) - s 0) a))
+          (Decidable.byContradiction fun a => cumulative_sum._proof_1_4 s n a)))
+    a.level

@@ -1,0 +1,33 @@
+{
+  "FIRST.md": {
+    "append_hex": "0a",
+    "original_sha256": "36e8753718f0f11d2f0d6deeb7bf1e0b29c16e5db88f2c80713494248038fa50",
+    "public_sha256": "202cbba1d9cb0c0b2e887cce35689ce34cd3f560131ae2b5c25b5681b58616a8",
+    "without_product_sign_sha256": "7885ffdf31a0a708aa8304654a7808acdf79fac1903c92099b27aa7f95ced7f9"
+  },
+  "NUMERICAL-PACKET.md": {
+    "append_hex": "0a",
+    "original_sha256": "e39dda341bd7780c6e6344e79887b3eabe6f4c91a8ff6f9ead23febf3d397ac1",
+    "public_sha256": "85a606b57ed2f672f733a81dc0e52d16b0ca583e13f2447e8664415dae538252"
+  },
+  "candidate/nested.py": {
+    "append_hex": "0a",
+    "original_sha256": "08be715a05b8ffaf60a1aff4e6d377983424ae61fef8400c80fefe5a44686acf",
+    "public_sha256": "b9e9a54fa410b9b48830a2bf9ad03fc2f90495fe05f601b1dd6f72b390e18f00"
+  },
+  "define_fixtures.py": {
+    "append_hex": "0a",
+    "original_sha256": "a237f24764a9e6118bd9c249e004bec9468aa27aa62d9cae47f86e0478ad2aa7",
+    "public_sha256": "ab5231220a46457b643ca85ae16a94d202ffd993e13c264419a2826cf580861a"
+  },
+  "direct.py": {
+    "append_hex": "0a",
+    "original_sha256": "6c1db32083fdd938fcb1a97291828b6610a9f4d612d2bc693b0c297f2756d3be",
+    "public_sha256": "7652aad2a3b81d41e34cf5fde89c6a70abccd4ef5d7c101210dda501d951e936"
+  },
+  "judge.py": {
+    "append_hex": "0a",
+    "original_sha256": "e27747e0ca1604c8d096f440c4487e8eb3f4b4155ce33726decdec9840da393c",
+    "public_sha256": "5fda02b583af3d20d37f097f322a4b7d1d836d41e14eed75420122bf620cf5e3"
+  }
+}

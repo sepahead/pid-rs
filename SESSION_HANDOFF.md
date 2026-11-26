@@ -1,5 +1,13 @@
 # Session handoff — updated 25 November 2026
 
+## Signed logarithm bounds for counted categorical inputs
+
+The independent verifier encloses the signed mean for each completed exact positive product and positive total. Stock Lean checks 13 statements about the finite sum and nine about the last signed rounding step. The real logarithm and the estimate on the raw gap have separate written proofs. For each returned coordinate of an admitted table with up to 1,024 occupied rows, the interval width is at most two output grid units. A table with two occupied rows attains it at each of the seven allowed precisions. At the finest field, two complete four-row reports require the interval to extend on opposite sides of the exact grid cell. Their unrounded verifier intervals are each narrower than one output unit. The six earlier tables still give 648 accepted coordinates. General input and producer verification remains open. [Interval proof and assumptions](audit/research/signed-log-certificate-enclosure/EXPOSITION.md) · [Worked examples and source files](audit/research/signed-log-certificate-enclosure/EVIDENCE.md) · [Illustrated report](output/pdf/signed-log-certificate-enclosure.pdf)
+
+## Three nested categorical readings
+
+When each finer reading determines the preceding reading on every supported joint state, only three of the 18 finite shared-exclusions nodes can carry a nonzero atom. A separate integer count test checks this directed relation in recorded data. For four observations, the smallest failing product is 9/4 with three occupied fine labels and 8/3 with two. The six stock Lean proofs cover the logic of source matches, their order and one integer sum. The full 108-coordinate formulas, the probability statements and the sharp count bound have separate written and numerical evidence. The earlier general certificate decision remains open. [Complete derivation and tests](audit/research/nested-categorical-sources/EXPOSITION.md) · [Print edition](output/pdf/nested-categorical-sources.pdf)
+
 ## Two angular thresholds, strict counts and categorical proof inputs
 
 In the fixed-radian population law for three source angles and one target, keep the three proper terms exact. For four even moments and strict relative error below one part per million, the first threshold lies between 0.292038608776134 and 0.292038608776135. The second lies between 0.340315168725 and 0.340315168726. All directions pass strictly between zero and the first threshold. Both outcomes occur from the first threshold up to the second, excluding the second. Every direction fails from the second threshold through one. Relative error is undefined at zero. A radius above one does not define the stated density. The numerical grid uses integer indices and covers all 1,860 selected tail comparisons. Sampling error, an implemented Rust evaluator for this law and the identity of every minimizing direction remain open. [Radial proof and three exact checks](audit/research/angular-ray-monotonicity/EXPOSITION.md) · [Grid selection and earlier omissions](audit/research/angular-quadrature-grid/EXPOSITION.md)
@@ -9,6 +17,8 @@ The count geometry study treats scalar KSG mutual information and the two-source
 The categorical field study proves both reading implications and uniqueness for one quoted state token. Its finite tests cover all 256 byte values and ten complete input and certificate pairs. A separate checker replays 65 original premise values and four further cases. Complete parser and certificate correctness, paper correspondence and the full three-source claim retain their separate obligations. [Field proofs](audit/research/categorical-state-token/README.md) · [Premise assignments](audit/formal/three-source-original-premises/README.md) · [Current claim decisions](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md)
 
 The first native Linux qualification of the original W03 order field stopped at its environment check. The job ran no Lean command. Its separate receiver was skipped. [First terminal and source diagnosis](audit/evidence/w03-host-origin-2026-11-25/README.md)
+
+The revised Linux host test and its separate receiving job passed. The receiving job checked 49 commands in two Python modes. The run scored zero candidate proofs. [Working-directory result](audit/research/three-source-w03-compositional-host/working-directory/HOSTED-RESULT.md)
 
 ## Earlier unit-amplitude calculation
 

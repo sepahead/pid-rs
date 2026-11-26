@@ -1,0 +1,102 @@
+{
+  "all_original_partition_pairs_through_six": 44168,
+  "constructed_N_2_to_100_all_1_le_L_lt_N": 4950,
+  "minima_by_N_L": {
+    "1": {
+      "1": {
+        "failed_maps": 0,
+        "smallest_positive_product": null
+      }
+    },
+    "2": {
+      "1": {
+        "failed_maps": 1,
+        "smallest_positive_product": "4"
+      },
+      "2": {
+        "failed_maps": 0,
+        "smallest_positive_product": null
+      }
+    },
+    "3": {
+      "1": {
+        "failed_maps": 4,
+        "smallest_positive_product": "27/4"
+      },
+      "2": {
+        "failed_maps": 9,
+        "smallest_positive_product": "3"
+      },
+      "3": {
+        "failed_maps": 0,
+        "smallest_positive_product": null
+      }
+    },
+    "4": {
+      "1": {
+        "failed_maps": 14,
+        "smallest_positive_product": "256/27"
+      },
+      "2": {
+        "failed_maps": 91,
+        "smallest_positive_product": "8/3"
+      },
+      "3": {
+        "failed_maps": 60,
+        "smallest_positive_product": "9/4"
+      },
+      "4": {
+        "failed_maps": 0,
+        "smallest_positive_product": null
+      }
+    },
+    "5": {
+      "1": {
+        "failed_maps": 51,
+        "smallest_positive_product": "3125/256"
+      },
+      "2": {
+        "failed_maps": 750,
+        "smallest_positive_product": "5/2"
+      },
+      "3": {
+        "failed_maps": 1175,
+        "smallest_positive_product": "2"
+      },
+      "4": {
+        "failed_maps": 370,
+        "smallest_positive_product": "2"
+      },
+      "5": {
+        "failed_maps": 0,
+        "smallest_positive_product": null
+      }
+    },
+    "6": {
+      "1": {
+        "failed_maps": 202,
+        "smallest_positive_product": "46656/3125"
+      },
+      "2": {
+        "failed_maps": 6231,
+        "smallest_positive_product": "12/5"
+      },
+      "3": {
+        "failed_maps": 17820,
+        "smallest_positive_product": "16/9"
+      },
+      "4": {
+        "failed_maps": 12220,
+        "smallest_positive_product": "16/9"
+      },
+      "5": {
+        "failed_maps": 2265,
+        "smallest_positive_product": "16/9"
+      },
+      "6": {
+        "failed_maps": 0,
+        "smallest_positive_product": null
+      }
+    }
+  }
+}

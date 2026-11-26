@@ -1,0 +1,25 @@
+Proof.lean:9:2: error: Alternative `one` has not been provided
+Proof.lean:9:2: error: Alternative `both` has not been provided
+Proof.lean:10:2: error: Case tag `one` not found.
+
+Note: There are no cases to select.
+Proof.lean:17:2: error: Alternative `branch` has not been provided
+Proof.lean:17:2: error: Alternative `either` has not been provided
+Proof.lean:18:2: error: Case tag `branch` not found.
+
+Note: There are no cases to select.
+Proof.lean:26:2: error: Alternative `one` has not been provided
+Proof.lean:26:2: error: Alternative `both` has not been provided
+Proof.lean:27:2: error: Case tag `one` not found.
+
+Note: There are no cases to select.
+Proof.lean:45:2: error: Alternative `branch` has not been provided
+Proof.lean:45:2: error: Alternative `either` has not been provided
+Proof.lean:46:2: error: Case tag `branch` not found.
+
+Note: There are no cases to select.
+Proof.lean:74:2: error: Alternative `zero` has not been provided
+Proof.lean:74:2: error: Alternative `succ` has not been provided
+Proof.lean:75:2: error: Case tag `zero` not found.
+
+Note: There are no cases to select.

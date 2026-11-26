@@ -1,0 +1,113 @@
+{
+  "directional_control": [
+    "4",
+    "1"
+  ],
+  "records": [
+    {
+      "attaining_one_two": [
+        0,
+        0
+      ],
+      "failures": 0,
+      "minimum_one_two": [
+        null,
+        null
+      ],
+      "n": 1,
+      "ordered_partitions": 1
+    },
+    {
+      "attaining_one_two": [
+        1,
+        0
+      ],
+      "failures": 1,
+      "minimum_one_two": [
+        "4",
+        null
+      ],
+      "n": 2,
+      "ordered_partitions": 4
+    },
+    {
+      "attaining_one_two": [
+        3,
+        6
+      ],
+      "failures": 13,
+      "minimum_one_two": [
+        "27/4",
+        "3"
+      ],
+      "n": 3,
+      "ordered_partitions": 20
+    },
+    {
+      "attaining_one_two": [
+        4,
+        12
+      ],
+      "failures": 105,
+      "minimum_one_two": [
+        "256/27",
+        "8/3"
+      ],
+      "n": 4,
+      "ordered_partitions": 120
+    },
+    {
+      "attaining_one_two": [
+        5,
+        20
+      ],
+      "failures": 801,
+      "minimum_one_two": [
+        "3125/256",
+        "5/2"
+      ],
+      "n": 5,
+      "ordered_partitions": 832
+    },
+    {
+      "attaining_one_two": [
+        6,
+        30
+      ],
+      "failures": 6433,
+      "minimum_one_two": [
+        "46656/3125",
+        "12/5"
+      ],
+      "n": 6,
+      "ordered_partitions": 6496
+    },
+    {
+      "attaining_one_two": [
+        7,
+        42
+      ],
+      "failures": 56001,
+      "minimum_one_two": [
+        "823543/46656",
+        "7/3"
+      ],
+      "n": 7,
+      "ordered_partitions": 56128
+    },
+    {
+      "attaining_one_two": [
+        8,
+        56
+      ],
+      "failures": 529665,
+      "minimum_one_two": [
+        "16777216/823543",
+        "16/7"
+      ],
+      "n": 8,
+      "ordered_partitions": 529920
+    }
+  ],
+  "total": 593521
+}

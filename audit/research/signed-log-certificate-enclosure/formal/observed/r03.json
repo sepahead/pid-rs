@@ -1,0 +1,73 @@
+{
+  "axioms": {},
+  "commands": [
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "--version"
+      ],
+      "exit": 0,
+      "label": "version",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "20f42f897511ec814f7616bd9a193ae7504aa2f52fb05299eb752936eb77ca6e"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Model.olean",
+        "Model.lean"
+      ],
+      "exit": 0,
+      "label": "Model-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/leanchecker",
+        "--fresh",
+        "Model"
+      ],
+      "exit": 0,
+      "label": "Model-fresh",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "TOOLCHAIN/bin/lean",
+        "-j",
+        "1",
+        "-DwarningAsError=true",
+        "-R",
+        "ATTEMPT/sources",
+        "-o",
+        "ATTEMPT/objects/Proof.olean",
+        "Proof.lean"
+      ],
+      "exit": 1,
+      "label": "Proof-compile",
+      "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "205142be3c1b602da26d8b0ac7f8a4b82208f07692ee58ba7d49013d62a784e7"
+    }
+  ],
+  "fixed": "c3de07658c867ae76aedc40a5dea0532ecd01b7f6136394e9021122f8fa6afe5",
+  "objects": {
+    "Model.olean": "38d5ee4a639552509250c0958f4156638f357b92089c3cadf0f9b6b6561398cc"
+  },
+  "payload": "9cd9ca830da3f5007ea6a8c47767ae43aa614afedb57610e083f5d3e4a321ec3",
+  "reason": "Proof-compile",
+  "sources": {
+    "Contradiction.lean": "d9419f4ee268e69d4d8e6b168b5303b6fc75af3636bd3ea117c28ff9dc2c6110",
+    "Model.lean": "95dd0cdbd6530b9be462cfb388de070582b07a515496c6156657bb1824f28818",
+    "Observer.lean": "795c4af0e74ad0b48cc6fbede582ff64f026e53018db03994a60e52a0979eb4e",
+    "Proof.lean": "18372655b33260e2666a64f2c0db06214147ad5eaedf69fc463f17198cdecd8c"
+  },
+  "success": false
+}

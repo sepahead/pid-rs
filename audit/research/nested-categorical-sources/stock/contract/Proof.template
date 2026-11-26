@@ -1,0 +1,31 @@
+prelude
+import Model
+
+namespace Nested
+
+universe u
+
+theorem branch_reaches (j : Nat) (b : Branch) : b.reaches j ↔ j ≤ b.level := by
+@@PROOF branchReaches@@
+
+theorem suffix_incidence (j : Nat) (a : Node) : a.covers j ↔ j ≤ a.level := by
+@@PROOF suffix@@
+
+theorem branch_matches (p : Nat → Prop) (h : Decreases p) (b : Branch) :
+    b.holds p ↔ p b.level := by
+@@PROOF branchMatches@@
+
+theorem node_matches (p : Nat → Prop) (h : Decreases p) (a : Node) :
+    a.holds p ↔ p a.level := by
+@@PROOF nodeMatches@@
+
+theorem event_extensional {W : Type u} (F : Nat → W → Prop)
+    (h : ∀ w : W, Decreases (fun i => F i w)) (a : Node) :
+    (fun w => a.holds (fun i => F i w)) = F a.level := by
+@@PROOF extensional@@
+
+theorem cumulative_sum (s : Nat → Int) (a : Node) :
+    prefixSum s a.level = s a.level - s 0 := by
+@@PROOF cumulative@@
+
+end Nested

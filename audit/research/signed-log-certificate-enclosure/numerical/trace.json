@@ -1,0 +1,120 @@
+{
+  "bounds": "0<=b<=10, 1<=d<=33, every 0<=n<=floor(d/3), 0<=i<=ceil(b/3)+1 including final positive-input state",
+  "ceil_positive_divisor_3": {
+    "-1": 0,
+    "-4": -1,
+    "0": 0,
+    "1": 1,
+    "4": 2
+  },
+  "first_sorted_witnesses": {
+    "accumulator_different": {
+      "bits": 0,
+      "d": 3,
+      "directly_rounded_state": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "exact_scaled_partial_sum": [
+        2,
+        3
+      ],
+      "exact_scaled_power": [
+        1,
+        27
+      ],
+      "i": 1,
+      "n": 1,
+      "stored_state": [
+        0,
+        1,
+        0,
+        2
+      ]
+    },
+    "power_different": {
+      "bits": 4,
+      "d": 3,
+      "directly_rounded_state": [
+        0,
+        1,
+        10,
+        11
+      ],
+      "exact_scaled_partial_sum": [
+        32,
+        3
+      ],
+      "exact_scaled_power": [
+        16,
+        27
+      ],
+      "i": 1,
+      "n": 1,
+      "stored_state": [
+        0,
+        2,
+        10,
+        12
+      ]
+    },
+    "terminal_with_directly_rounded_powers": {
+      "alternate": [
+        10,
+        15
+      ],
+      "bits": 4,
+      "count": 3,
+      "d": 3,
+      "exact_scaled_partial_sum": [
+        13472,
+        1215
+      ],
+      "n": 1,
+      "source": [
+        10,
+        16
+      ]
+    },
+    "terminal_with_exact_accumulator": {
+      "alternate": [
+        0,
+        2
+      ],
+      "bits": 0,
+      "count": 1,
+      "d": 3,
+      "exact_scaled_partial_sum": [
+        2,
+        3
+      ],
+      "n": 1,
+      "source": [
+        0,
+        3
+      ]
+    }
+  },
+  "input_records": 2299,
+  "positive_prefixes": 7744,
+  "reduced_fraction_observations": 1265,
+  "source_sha256": "b8e01525e86297b370b845c0d63be5a21b1bcccc702c9d172a9af3664cc9f6e2",
+  "zero_control": {
+    "input": [
+      0,
+      3,
+      0
+    ],
+    "original": [
+      0,
+      0
+    ],
+    "wrong_but_contains_zero": [
+      0,
+      1
+    ]
+  },
+  "zero_early_returns": 363
+}

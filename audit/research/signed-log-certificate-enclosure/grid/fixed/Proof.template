@@ -1,0 +1,42 @@
+prelude
+import Model
+namespace GridProof
+open SignedGrid
+
+theorem ceiling_le (x b d : Int) (hd : 0 < d) : up x d ≤ b ↔ x ≤ b * d := by
+@@ceiling_le@@
+
+theorem width_residue (l u d : Int) (hd : 0 < d) :
+    width l u d = up (l % d + (u-l)) d := by
+@@width_residue@@
+
+theorem sharp_max (d h : Int) (hd : 0 < d) (hh : 0 ≤ h) :
+    (∀ l u : Int, l ≤ u → u-l ≤ h → width l u d ≤ up (d-1+h) d) ∧
+    (d-1 ≤ d-1+h ∧ width (d-1) (d-1+h) d = up (d-1+h) d) := by
+@@sharp_max@@
+
+theorem two_grid (l u d : Int) (hd : 0 < d) (ho : l ≤ u) (hg : u-l ≤ d+1) :
+    0 ≤ width l u d ∧ width l u d ≤ 2 := by
+@@two_grid@@
+
+theorem next_width (d : Int) (hd : 0 < d) : width (d-1) (d-1+(d+2)) d = 3 := by
+@@next_width@@
+
+theorem both_padded (l u a b d : Int) (hd : 0 < d) (ho : overlap l u a b d)
+    (hg : u-l ≤ d) : a-1 ≤ l/d ∧ up u d ≤ b+1 := by
+@@both_padded@@
+
+theorem next_padding (d : Int) (hd : 0 < d) :
+    overlap (-d-1) 0 0 0 d ∧ 0-(-d-1) = d+1 ∧ (-d-1)/d < -1 := by
+@@next_padding@@
+
+theorem unit_cell (l u a d : Int) (hd : 0 < d) (ho : l ≤ u) (hg : u-l ≤ d)
+    (below : l/d < a) : up u d ≤ a+1 := by
+@@unit_cell@@
+
+theorem counted_envelope (u l n : Int) (hn : 0 < n) (ho : l ≤ u)
+    (bound : u-l ≤ 1385*(1+80*n)) :
+    u-l < bitDivisor n ∧ (0 ≤ width l u (bitDivisor n) ∧ width l u (bitDivisor n) ≤ 2) := by
+@@counted_envelope@@
+
+end GridProof

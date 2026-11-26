@@ -2,7 +2,7 @@
 
 **Sepehr Mahmoudian · 25 November 2026**
 
-Which information measures come from published work, and what can pid-rs establish about their values, estimates and uses? The guide covers finite categorical inputs, angular approximation and strict neighbour counts. The angular example gives two sharp pass thresholds and the least number of moments for the full amplitude range. The robot example compares two sets of class labels for the same 47 recorded cases. The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its [28-page PDF](output/pdf/mathematical-results-guide.pdf) cover nine result families.
+Which information measures come from published work, and what can pid-rs establish about their values, estimates and uses? The guide covers categorical counts, rounded logarithms, nested readings, angular approximation and strict neighbour counts. The angular example gives two sharp pass thresholds and the least number of moments for the full amplitude range. The robot example compares two sets of class labels for the same 47 recorded cases. The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its [28-page PDF](output/pdf/mathematical-results-guide.pdf) cover nine result families.
 
 ## Reading the results
 
@@ -109,6 +109,50 @@ A categorical state table lists occupied rows and their positive integer counts.
 For this field, the project defined a reader and writer in Lean. The stock checker verified four statements about the token. The reader consumes the exact written token and leaves every following byte in place. A successful read returns only an admitted token and its exact following bytes. The read therefore has an exact inverse on these words, and its split is unique. For the bytes spelling a quoted letter A followed by a comma, the reader returns A and leaves the comma. The enclosing row grammar still has to read that comma. A separate check tested all 256 individual byte values. Ten complete input and certificate pairs passed their finite checks. The general claim that the full certificate program accepts exactly the right files remains open. [Four statements and complete examples](audit/research/categorical-state-token/README.md) · [Illustrated token report](output/pdf/categorical-state-token.pdf)
 
 A second study asks whether the premises of 22 earlier logical checks actually have examples. A **premise** is an assumption put into a logical statement before its conclusion. A **solver** tests whether given conditions can hold together. The 65 fixed assignments made the recorded premises true in 44 cases and false in 21. Three premises were the constant true and could not fail. In one four-cell example the total count is 10. Six observations match the source event, five match both the event and the target, nine match the target, and the chosen cell has count two. A stock solver reproduced all 65 original responses. Four additional inputs check a second example and three changes to it. This tests the assumptions on listed inputs. The original statements and their proof records have their own scope. [Source assumptions, false inputs and complete solver record](audit/formal/three-source-original-premises/README.md)
+
+---
+
+## What three nested sensor readings can tell us
+
+Suppose each fine reading determines its middle reading, and each middle reading determines its coarse reading. Use only the joint category tuples with positive probability. The target may have any distribution on these tuples. For example, a three-bit sensor can report its first bit, its first two bits and all three bits. Check this relation in recorded data by grouping rows by the fine label and looking for conflicting middle labels. Repeat the check for middle and coarse labels. A conflict disproves the map on those rows. A device specification or an assumption on population support is needed to extend an observed map to new readings.
+
+Under these assumptions, each match event in the finite shared-exclusions method equals a match at one of the three resolutions. An **atom** is the part left at a node after removing the contributions from all lower nodes. Only three of the 18 nodes can carry nonzero atoms. With the labels ordered from coarse to fine, these nodes match at least one of all three labels, at least one of the middle and fine labels, or the fine label alone. At each level, the mean informative atom measures the uncertainty in the new label given the previous one. The mean misinformative atom measures the uncertainty left given both the previous label and the target. Their difference gives the extra mutual information about the target. Start with a constant previous label. For counted data, weight each occupied row by its count divided by the total.
+
+For two readings, subtract the mean informative value for matching either label from that for matching the coarse label alone. For a table of $N$ observations, this difference is $(\ln G)/N$, where $G$ is a positive rational product of count ratios. A valid map has $G=1$. In the figure, keys `01`, `02` and `04` name the coarse, middle and fine source, respectively. A plus sign joins alternative matches. For example, `02+04` requires a match of the middle or the fine label.
+
+![Three resolutions of one reading and the least product for a failed map](audit/research/nested-categorical-sources/figures/partitions-and-margin.svg)
+
+For four observations, the least product for a failed map is $256/27$, $8/3$ or $9/4$ with exactly one, two or three occupied fine labels, respectively. With four occupied fine labels, a failure is impossible. Direct grouping tests the map. The products also test an implementation and identify its nonzero information components. [Proof, assumptions and worked examples](audit/research/nested-categorical-sources/EXPOSITION.md) · [Illustrated report](output/pdf/nested-categorical-sources.pdf)
+
+---
+
+## How wide can a certified logarithm interval be?
+
+For one information coordinate, multiply its positive rational row factors. Raise each factor to its row count before multiplying. Call this product $Q$ and the total count $N>0$. Its exact mean is $(\ln Q)/N$ nats. Comparing $Q$ with one gives the sign. To bound the magnitude, the verifier returns two multiples of $2^{-p}$ that contain the mean. One **output grid unit** is $2^{-p}$ nats. The seven allowed values of $p$ are 256, 384, 512, 768, 1024, 1536 and 2048.
+
+The calculation uses 24 extra internal bits. It reduces the logarithm to an odd-power series at an argument between zero and one third. It rounds the lower terms down and the upper terms up. For a positive argument, it adds one internal unit to the upper sum for the omitted terms. At four internal bits and argument $1/3$, the upper endpoint increases from 15 to 16 in units of $1/16$. The left panel shows the three retained terms. The right panel uses a scalar product $Q=1+2^{-2048}$ with $N=1$. Both displayed intervals contain the exact value. Only the wider interval contains both endpoints computed by the verifier.
+
+![Rounded partial sums and two intervals for the same scalar logarithm](audit/research/signed-log-certificate-enclosure/figures/intervals.svg)
+
+For all 108 coordinates of an admitted three-source categorical table with up to 1,024 occupied rows, the verifier's width is at most **two output grid units** at every allowed precision. One occupied row gives zero width. Two rows suffice to attain the bound at each precision. For example, copy a binary label to all three sources and the target. At 256 bits, use counts 833 and 907. For the first source alone $Q=1740^{1740}/(833^{833}\cdot907^{907})$. Its mean has an interval two grid units wide. These are bounds on arithmetic for a specified table. Sampling uncertainty needs its own model. Thirteen stock Lean proofs cover the finite sum. Nine further declarations check the final signed rounding under stated integer assumptions. [Interval proof and assumptions](audit/research/signed-log-certificate-enclosure/EXPOSITION.md) · [Worked examples and source files](audit/research/signed-log-certificate-enclosure/EVIDENCE.md) · [Illustrated report](output/pdf/signed-log-certificate-enclosure.pdf)
+
+---
+
+## How does rounding change a signed interval?
+
+A verifier can store its two raw endpoints as integers, including negative integers. Let $l$ be the lower numerator and $u$ the upper numerator, with $l\leq u$. Let $d>0$ be the integer number of numerator units in one output unit. A floor rounds down to an integer. A ceiling rounds up. The returned endpoints are $\lfloor l/d\rfloor$ and $\lceil u/d\rceil$.
+
+Write $s=l-d\lfloor l/d\rfloor$. This remainder satisfies $0\leq s<d$, even for a negative lower endpoint. Subtract the lower endpoint from the upper one. The width, in output units, is
+
+$$
+W=\left\lceil\frac{s+u-l}{d}\right\rceil .
+$$
+
+For an integer gap limit $h\geq0$, the greatest width among pairs with $u-l\leq h$ is $\lceil(d-1+h)/d\rceil$. Take $l=d-1$ and $u=l+h$ to reach it. Thus a raw gap of at most $d+1$ guarantees $W\leq2$. The next integer gap can give width three. For $d=4$, the raw numerators $[3,9]$ give endpoints $0$ and $3$.
+
+Suppose a producer submits an ordered pair of output-grid integers $a\leq b$. If the raw interval $[l,u]$ intersects $[ad,bd]$ and $u-l\leq d$, the enlarged pair $[a-1,b+1]$ contains both returned endpoints. With $d=4$, the raw pair $[-5,0]$ intersects the producer pair $[0,0]$. Its gap is five. Its lower endpoint rounds to $-2$, outside the enlarged interval $[-1,1]$.
+
+For the count-table verifier, $d=N2^{24}$ for total count $N\geq1$. A separate argument about the counted data supplies $u-l\leq1385(1+80N)$ when the input has up to 1,024 occupied rows. Nine stock Lean declarations include the deduction from this integer bound to $u-l<d$ and $W\leq2$. The real logarithm identity, the input bound and the relation to the program each need their own evidence. [Exact statements and stock replay](audit/research/signed-log-certificate-enclosure/grid/README.md) · [Proof, worked inputs and scope](audit/research/signed-log-certificate-enclosure/EXPOSITION.md)
 
 ---
 

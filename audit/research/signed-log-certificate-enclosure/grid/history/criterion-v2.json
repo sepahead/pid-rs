@@ -1,0 +1,19 @@
+{
+  "COUNTED-ROUTES.md": "7bd7c11023c66bc26b4313ebd19b8d5cacd4562c00d82d81300bd546d785fa94",
+  "FIRST-GRID-READ.md": "edbb485d796ca2dd40f71ef18376e83f2b7b574f2d23910cf3d4d726d549b464",
+  "FIRST-INTEGER-READ.md": "6b105d79395f4641fb8522ed65efb6bd631f2fb987bafa1909655187565bafd1",
+  "FalseLower.lean": "5c5e910428e7fd4e776bad1ceb99af7976651ee7ec0da7c3790ae0cdb3b92837",
+  "FalseTruncate.lean": "b28405148e6b796ed26f9266477bbeeac652d749a1e2c15456acaa2f2473b3a0",
+  "FalseUpper.lean": "10d70b7f1be6f4d3f3c8ce6176a2f9cc6627d65a82d3d605a7429856e31c1ebd",
+  "FalseWidth.lean": "741fb3238191ca74f38dfe472d2df3bfe52d64d462a2458faecdcbe999493c2e",
+  "Model.lean": "4c972a5ff973a9c4ec12eb78cbf79ef9cf1e39fe408f046ef28a96a64154af45",
+  "Observer.lean": "af2bb29f5f0d3af8418122cddb9d628016fcedac69eeeb65340a5d8f039ab2a4",
+  "Proof.template": "83848d882360a5278350218579ad56a49eb4ef989737cd8c00ffa52bcec2aaa2",
+  "REVISION.md": "d06517308f6f0f5d2b388e5bf9c5f8235ba66af0e343542ce26d9be1e5149895",
+  "ROUTES.md": "81def282054a6dd60a8286c8f9109fc148571b5fd7bd25720d0e3e6f716b6717",
+  "RUNTIME.json": "b8853d653bfade354875ac96e1f3be09a0a5953d215a03efc6fac5e08de42e05",
+  "TASK.md": "b5b3cdd378a2eae11f2ea33ba6d28bf780b32e91627d2b073b7a1a8e3a6771d7",
+  "arithmetic.py": "b8e01525e86297b370b845c0d63be5a21b1bcccc702c9d172a9af3664cc9f6e2",
+  "interface.py": "d4f1c2d95c977fcc205b0d1aed60ab714b67b0b2f97e7eaaf04b76e133ebf9e9",
+  "judge.py": "cc608cd8d7b23e416a013d1657582dbe5e0e1c5df6e7e00eb734897adcf5e97b"
+}

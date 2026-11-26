@@ -1,0 +1,14 @@
+{
+  "axioms": {},
+  "commands": [],
+  "fixed": "c3de07658c867ae76aedc40a5dea0532ecd01b7f6136394e9021122f8fa6afe5",
+  "objects": {},
+  "payload": "30d719152d922e647e17c91ca1a1167eb70379e14377e4befb239c76f5aa5f9f",
+  "reason": "bullet tactic",
+  "sources": {
+    "Contradiction.lean": "d9419f4ee268e69d4d8e6b168b5303b6fc75af3636bd3ea117c28ff9dc2c6110",
+    "Model.lean": "95dd0cdbd6530b9be462cfb388de070582b07a515496c6156657bb1824f28818",
+    "Observer.lean": "795c4af0e74ad0b48cc6fbede582ff64f026e53018db03994a60e52a0979eb4e"
+  },
+  "success": false
+}

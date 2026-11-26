@@ -1,0 +1,3 @@
+Contradiction.lean:4:43: error: Tactic `decide` proved that the proposition
+  (loopState 1 3 2 1).hi = 0
+is false

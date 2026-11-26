@@ -1,0 +1,309 @@
+{
+  "all_larger_totals_example": "(2^2080-1)/2^2080 returns [-2^-p,+2^-p] for every N",
+  "coordinate_cost_max": 262144,
+  "empirical_qualification": "original 18-node projected products of a nonempty integer count table under the source bit budget; width <=2, N=1 gives zero; no sharpness or inclusion in a producer enclosure follows",
+  "every_precision_empirical_bound": 2,
+  "maximum_mobius_row_norm": 8,
+  "mobius_row_absolute_sums_in_original_order": [
+    2,
+    2,
+    4,
+    2,
+    4,
+    4,
+    8,
+    2,
+    2,
+    4,
+    2,
+    4,
+    4,
+    4,
+    4,
+    4,
+    1,
+    8
+  ],
+  "proof_bound_on_e": [
+    -262141,
+    262140
+  ],
+  "records": [
+    {
+      "exact_width_two_for_every_total_from": 2,
+      "exceptional_totals_witnessed_both_signs": [
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 3,
+          "total": 1
+        }
+      ],
+      "internal_bits": 280,
+      "log_two_pair_sha256": "a7a0c865303d8151a24652840ac51f290ed5e7e26c74c6678d6375f94472e542",
+      "log_two_width": 106,
+      "nonpower_extreme_grid_widths_positive_and_negative_log": [
+        3,
+        3
+      ],
+      "precision": 256,
+      "range_width_bound": 191,
+      "sharp_all_positive_totals": 3,
+      "terms": 95
+    },
+    {
+      "exact_width_two_for_every_total_from": 3,
+      "exceptional_totals_witnessed_both_signs": [
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 4,
+          "total": 1
+        },
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 3,
+          "total": 2
+        }
+      ],
+      "internal_bits": 408,
+      "log_two_pair_sha256": "20948eb6da5d835182da4b4b6437b1a7c4b4ecd5cdbf835024ec22c08d92d0a5",
+      "log_two_width": 144,
+      "nonpower_extreme_grid_widths_positive_and_negative_log": [
+        4,
+        4
+      ],
+      "precision": 384,
+      "range_width_bound": 275,
+      "sharp_all_positive_totals": 4,
+      "terms": 137
+    },
+    {
+      "exact_width_two_for_every_total_from": 3,
+      "exceptional_totals_witnessed_both_signs": [
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 4,
+          "total": 1
+        },
+        {
+          "plus_or_minus_power": 262139,
+          "sharp_width": 3,
+          "total": 2
+        }
+      ],
+      "internal_bits": 536,
+      "log_two_pair_sha256": "075817e312f8109eedc50ad0d0c526a0e57a32a94608d5d96956289ced8b3958",
+      "log_two_width": 186,
+      "nonpower_extreme_grid_widths_positive_and_negative_log": [
+        3,
+        3
+      ],
+      "precision": 512,
+      "range_width_bound": 361,
+      "sharp_all_positive_totals": 4,
+      "terms": 180
+    },
+    {
+      "exact_width_two_for_every_total_from": 5,
+      "exceptional_totals_witnessed_both_signs": [
+        {
+          "plus_or_minus_power": 262139,
+          "sharp_width": 6,
+          "total": 1
+        },
+        {
+          "plus_or_minus_power": 262137,
+          "sharp_width": 4,
+          "total": 2
+        },
+        {
+          "plus_or_minus_power": 262137,
+          "sharp_width": 3,
+          "total": 3
+        },
+        {
+          "plus_or_minus_power": 262137,
+          "sharp_width": 3,
+          "total": 4
+        }
+      ],
+      "internal_bits": 792,
+      "log_two_pair_sha256": "73a55017dae37dfdf07a7074e9c1ff0ade598e8a556c37c02c47bc27221b285b",
+      "log_two_width": 272,
+      "nonpower_extreme_grid_widths_positive_and_negative_log": [
+        5,
+        5
+      ],
+      "precision": 768,
+      "range_width_bound": 531,
+      "sharp_all_positive_totals": 6,
+      "terms": 265
+    },
+    {
+      "exact_width_two_for_every_total_from": 6,
+      "exceptional_totals_witnessed_both_signs": [
+        {
+          "plus_or_minus_power": 262129,
+          "sharp_width": 7,
+          "total": 1
+        },
+        {
+          "plus_or_minus_power": 262129,
+          "sharp_width": 4,
+          "total": 2
+        },
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 3,
+          "total": 3
+        },
+        {
+          "plus_or_minus_power": 262128,
+          "sharp_width": 3,
+          "total": 4
+        },
+        {
+          "plus_or_minus_power": 262127,
+          "sharp_width": 3,
+          "total": 5
+        }
+      ],
+      "internal_bits": 1048,
+      "log_two_pair_sha256": "16597ffefc87d2ff8489cda4c3f6f48e714352674a5940d90c8d021bd312339b",
+      "log_two_width": 361,
+      "nonpower_extreme_grid_widths_positive_and_negative_log": [
+        6,
+        6
+      ],
+      "precision": 1024,
+      "range_width_bound": 703,
+      "sharp_all_positive_totals": 7,
+      "terms": 351
+    },
+    {
+      "exact_width_two_for_every_total_from": 9,
+      "exceptional_totals_witnessed_both_signs": [
+        {
+          "plus_or_minus_power": 262139,
+          "sharp_width": 10,
+          "total": 1
+        },
+        {
+          "plus_or_minus_power": 262138,
+          "sharp_width": 6,
+          "total": 2
+        },
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 4,
+          "total": 3
+        },
+        {
+          "plus_or_minus_power": 262138,
+          "sharp_width": 4,
+          "total": 4
+        },
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 3,
+          "total": 5
+        },
+        {
+          "plus_or_minus_power": 262138,
+          "sharp_width": 3,
+          "total": 6
+        },
+        {
+          "plus_or_minus_power": 262112,
+          "sharp_width": 3,
+          "total": 7
+        },
+        {
+          "plus_or_minus_power": 262138,
+          "sharp_width": 3,
+          "total": 8
+        }
+      ],
+      "internal_bits": 1560,
+      "log_two_pair_sha256": "61d1a943d203039dba1fffcbc86d780510d9f16baaf51677f9074420edb55b1c",
+      "log_two_width": 532,
+      "nonpower_extreme_grid_widths_positive_and_negative_log": [
+        9,
+        9
+      ],
+      "precision": 1536,
+      "range_width_bound": 1043,
+      "sharp_all_positive_totals": 10,
+      "terms": 521
+    },
+    {
+      "exact_width_two_for_every_total_from": 11,
+      "exceptional_totals_witnessed_both_signs": [
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 12,
+          "total": 1
+        },
+        {
+          "plus_or_minus_power": 262139,
+          "sharp_width": 7,
+          "total": 2
+        },
+        {
+          "plus_or_minus_power": 262139,
+          "sharp_width": 5,
+          "total": 3
+        },
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 4,
+          "total": 4
+        },
+        {
+          "plus_or_minus_power": 262133,
+          "sharp_width": 4,
+          "total": 5
+        },
+        {
+          "plus_or_minus_power": 262139,
+          "sharp_width": 3,
+          "total": 6
+        },
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 3,
+          "total": 7
+        },
+        {
+          "plus_or_minus_power": 262140,
+          "sharp_width": 3,
+          "total": 8
+        },
+        {
+          "plus_or_minus_power": 262135,
+          "sharp_width": 3,
+          "total": 9
+        },
+        {
+          "plus_or_minus_power": 262133,
+          "sharp_width": 3,
+          "total": 10
+        }
+      ],
+      "internal_bits": 2072,
+      "log_two_pair_sha256": "6f8f4ebe0ec770e93a53364540596876b43c7d06ce588998e863cb0c0995732c",
+      "log_two_width": 699,
+      "nonpower_extreme_grid_widths_positive_and_negative_log": [
+        12,
+        12
+      ],
+      "precision": 2048,
+      "range_width_bound": 1385,
+      "sharp_all_positive_totals": 12,
+      "terms": 692
+    }
+  ],
+  "scalar_premises": "N is a positive integer independent of the reduced positive product; sum of factor bit-length costs plus two <= 262144",
+  "small_total_example": "each listed 2^k and 2^-k realizes the bound at that point",
+  "source_sha256": "b8e01525e86297b370b845c0d63be5a21b1bcccc702c9d172a9af3664cc9f6e2",
+  "units": "multiples of 2^(-p) in the final endpoints"
+}

@@ -1,0 +1,7 @@
+{
+  "criterion": "same proof declarations and no-choice policy; only concrete observer reducibility plus this change note",
+  "fixed": "cfc713f68bc10120d3e14809314bb46b9f2ae33e84ba59da181f9576c0b71b05",
+  "predecessor": "c2ce0183e979cf7a3c6b346b227c8e0987019b6c46ec0a2dcb2471a183ef563e",
+  "retained_reference": "d81dae964ab7e4a2da7b01e9c670e4007fa6fd13f5f969d31788d8d44682ed7d",
+  "time": "2026-11-25T03:48:21.381427+00:00"
+}

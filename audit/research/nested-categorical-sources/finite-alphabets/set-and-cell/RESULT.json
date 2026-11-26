@@ -1,0 +1,182 @@
+{
+  "balanced_binary_real_weight_fixtures": [
+    [
+      4,
+      "81/16"
+    ],
+    [
+      8,
+      "765625/65536"
+    ],
+    [
+      16,
+      "5147278302366225/281474976710656"
+    ],
+    [
+      32,
+      "7873920562507989699848394988669322313889/340282366920938463463374607431768211456"
+    ],
+    [
+      64,
+      "55788588219500015178550914889515007071690820206022529657897375104146437899451442503723809886815041/2135987035920910082395021706169552114602704522356652769947041607822219725780640550022962086936576"
+    ]
+  ],
+  "rows": [
+    {
+      "coarse": 1,
+      "n": 1,
+      "rows": {
+        "1": {
+          "attaining_binary": 0,
+          "attaining_one": 0,
+          "maps": 1,
+          "minimum": null,
+          "pairs": 1,
+          "violations": 0
+        },
+        "2": {
+          "attaining_binary": 0,
+          "attaining_one": 0,
+          "maps": 0,
+          "minimum": null,
+          "pairs": 0,
+          "violations": 0
+        }
+      }
+    },
+    {
+      "coarse": 2,
+      "n": 2,
+      "rows": {
+        "1": {
+          "attaining_binary": 1,
+          "attaining_one": 1,
+          "maps": 1,
+          "minimum": "4",
+          "pairs": 2,
+          "violations": 1
+        },
+        "2": {
+          "attaining_binary": 0,
+          "attaining_one": 0,
+          "maps": 2,
+          "minimum": null,
+          "pairs": 2,
+          "violations": 0
+        }
+      }
+    },
+    {
+      "coarse": 5,
+      "n": 3,
+      "rows": {
+        "1": {
+          "attaining_binary": 0,
+          "attaining_one": 3,
+          "maps": 1,
+          "minimum": "27/4",
+          "pairs": 5,
+          "violations": 4
+        },
+        "2": {
+          "attaining_binary": 6,
+          "attaining_one": 0,
+          "maps": 6,
+          "minimum": "3",
+          "pairs": 15,
+          "violations": 9
+        }
+      }
+    },
+    {
+      "coarse": 15,
+      "n": 4,
+      "rows": {
+        "1": {
+          "attaining_binary": 0,
+          "attaining_one": 4,
+          "maps": 1,
+          "minimum": "256/27",
+          "pairs": 15,
+          "violations": 14
+        },
+        "2": {
+          "attaining_binary": 12,
+          "attaining_one": 0,
+          "maps": 14,
+          "minimum": "8/3",
+          "pairs": 105,
+          "violations": 91
+        }
+      }
+    },
+    {
+      "coarse": 52,
+      "n": 5,
+      "rows": {
+        "1": {
+          "attaining_binary": 0,
+          "attaining_one": 5,
+          "maps": 1,
+          "minimum": "3125/256",
+          "pairs": 52,
+          "violations": 51
+        },
+        "2": {
+          "attaining_binary": 20,
+          "attaining_one": 0,
+          "maps": 30,
+          "minimum": "5/2",
+          "pairs": 780,
+          "violations": 750
+        }
+      }
+    },
+    {
+      "coarse": 203,
+      "n": 6,
+      "rows": {
+        "1": {
+          "attaining_binary": 0,
+          "attaining_one": 6,
+          "maps": 1,
+          "minimum": "46656/3125",
+          "pairs": 203,
+          "violations": 202
+        },
+        "2": {
+          "attaining_binary": 30,
+          "attaining_one": 0,
+          "maps": 62,
+          "minimum": "12/5",
+          "pairs": 6293,
+          "violations": 6231
+        }
+      }
+    },
+    {
+      "coarse": 877,
+      "n": 7,
+      "rows": {
+        "1": {
+          "attaining_binary": 0,
+          "attaining_one": 7,
+          "maps": 1,
+          "minimum": "823543/46656",
+          "pairs": 877,
+          "violations": 876
+        },
+        "2": {
+          "attaining_binary": 42,
+          "attaining_one": 0,
+          "maps": 126,
+          "minimum": "7/3",
+          "pairs": 55251,
+          "violations": 55125
+        }
+      }
+    }
+  ],
+  "three_fine_categories_four_rows": "9/4",
+  "total": 63601
+}

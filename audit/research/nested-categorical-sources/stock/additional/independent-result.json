@@ -1,0 +1,38 @@
+{
+  "axioms": {
+    "Nested.branch_matches": [
+      "propext"
+    ],
+    "Nested.branch_reaches": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Nested.cumulative_sum": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Nested.event_extensional": [
+      "Quot.sound",
+      "propext"
+    ],
+    "Nested.node_matches": [
+      "propext"
+    ],
+    "Nested.suffix_incidence": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "checks": "all original named native ordinary, optimized, #print proof terms, #print axioms and specified failed false theorem return original exact stdout/stderr and exit; fresh independent Fin 5 controls both statuses; original unsigned execution; scope separate",
+  "controls": "95544a5fee1b6e321588af518da0fb1af7ffdec1e2d01d56172866a0f0b160fa",
+  "fresh_genuine_receipts": [
+    "27f92304d98472a08bec8eec1e7c438774ebbfed47493434c231a4e77286b864",
+    "21c98d0bb34ccf6b3d8561487bf68e86e227ed0992fe2a3f43711d58c098e151",
+    "c36533bc294c7a511d94d140b212db768027773d3f6cb6d05115cc5e0721bb2b"
+  ],
+  "frozen": "0d1fa11a92ced0dadb2ac667234759dadf17496e53a19974c2bc9beb0cf38426",
+  "r01": "original proof syntax failure",
+  "source_sha256": "2643583066bf65770295ff4521c5e16b096dae0a834ea207cc81d79fba91d694"
+}
