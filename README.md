@@ -688,7 +688,7 @@ The [recorded office-sensor example](audit/evidence/real-occupancy-sensors-examp
 uses 20,560 UCI measurements. It fits light and CO₂ bins on training data, calculates categorical
 MGW atoms, and compares MI, CMI and fixed prediction scores. Its worked count calculation shows
 why signed contributions matter and why positive synergy alone cannot justify another sensor.
-The binary occupancy target produces an explicit refusal from the continuous estimator.
+The binary occupancy target produces an explicit refusal from the continuous estimator. On the later 9,752 minutes, adding CO₂ to light increased mean log loss. The gain rounded from the counts is **−0.003318968 nats per minute**. Adding the three rounded terms printed in the original display gives −0.003318969. A different calculation sets every carbon dioxide label to a constant. The sum of the four absolute changes in the signed contributions rounds to 0.911417033 nats from the counts and 0.911417034 from the previously printed contributions. [Count calculation and prediction rules](audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10.md)
 A reproduced follow-up uses MGW's source-matching union as a forecast. It has worse log loss
 and Brier score than light alone and joint matching on all three inspected recordings.
 The report retains the five-rule comparison and portable calculator; no predictive advantage

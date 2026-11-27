@@ -1,6 +1,8 @@
 # Shared-exclusions PID in analysis, learning and sensor selection
 
-Categorical Makkeh–Gutknecht–Wibral (MGW) PID describes a signed allocation of information under a specified joint law. It can help explain an interaction. A large synergy value alone does not establish that another sensor improves prediction, that a representation is useful, or that an action is worth its cost. The practical solution is to separate the allocation question from the decision objective, then test whether the allocation improves the decision.
+Sepehr Mahmoudian
+
+The categorical method of Makkeh, Gutknecht and Wibral (MGW) is a partial information decomposition (PID). Given the probabilities of the possible combinations of source readings and target values, it assigns signed contributions to their shared information, unique information and synergy. It can help explain an interaction. A large synergy value alone does not establish that another sensor improves prediction, that a representation is useful, or that an action is worth its cost. The practical solution is to separate the allocation question from the decision objective, then test whether the allocation improves the decision.
 
 This note uses the categorical shared-exclusions functional of Makkeh, Gutknecht and Wibral, version 5, with natural logarithms.[^mgw] Its [exact finite example](audit/evidence/mgw-fixed-world-added-information-2026-09-09.md) has retained [21-target Lean evidence](audit/formal/lean-mgw-fixed-world/PUBLICATION.md). The broader identities below have written derivations; their general Lean proofs remain open. Classical log-loss and information identities are not new PID methods. Proposed selection and learning procedures are not measured improvements.
 
@@ -90,7 +92,7 @@ Both $R$ and $S$ are thus determined by the source joint law $q$ within this tar
 
 ## Available information and learned prediction are different quantities
 
-Let $H$ denote all observations available before acquisition, $C$ the candidate observation, and $Y$ a finite target. All expressions in this section refer to one fixed finite joint law. An exact law needs no IID sampling assumption. Estimating it from physical records requires a separate sampling model.
+Let $H$ denote all observations available before acquisition, $C$ the candidate observation, and $Y$ a finite target. Use one joint probability distribution on the finitely many possible combinations of these three quantities. Calculations from its specified probabilities require no assumption about independence between observations. Estimating these probabilities from physical records requires a sampling model.
 
 For each supported context $h$, a normalized predictor $f_0(y\mid h)$ must be positive wherever the true conditional probability $p(y\mid h)$ is positive. Expanding a logarithm gives
 
@@ -138,12 +140,14 @@ The [count-based loss decomposition](audit/evidence/occupancy-fixed-predictor-lo
 | Earlier evaluation | 2,665 | 0.008709839 | 0.010744807 | 0.011425755 | 0.008028892 |
 | Later evaluation | 9,752 | 0.001558012 | 0.014359564 | 0.019236545 | −0.003318968 |
 
-On the later law, conditional entropy falls from $0.033083487$ to $0.031525474$ nats, while predictor KL discrepancy rises by $0.004876981$ nats. Consequently,
-
-$$
-G=0.001558012+0.014359564-0.019236545
-\mathrel{\approx}-0.003318968\text{ nats}.
-$$
+On the later recording, conditional entropy falls from about $0.033083487$ to
+$0.031525474$ nats per minute. The mean extra loss from the fitted probabilities
+increases by about $0.004876981$ nats per minute. The exact relation is
+$G=I(C;Y\mid H)+D_0-D_1$. Evaluation on the original counts gives
+$G\approx-0.003318968$ nats per minute. Substitution of the three rounded table
+entries gives $0.001558012+0.014359564-0.019236545=-0.003318969$.
+The [bounds on the gain](audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10/rounding-by-count.json)
+show which digit to print.
 
 This quantifies the mismatch between available information and the predictions actually made. It does not identify whether model class, sample size, distribution change or another mechanism caused that mismatch. All 19 reconstruction and historical-value comparisons are within the fixed $10^{-12}$-nat fixture tolerance; the largest residual is $1.53\times10^{-15}$ nats. The tolerance is not a proved floating-point error bound. Historical training predictor losses were absent and are not claimed as independently compared. No predictor was refitted for this calculation. All three recordings are now exposed development data; another analysis of them cannot be called untouched confirmation.
 
@@ -200,7 +204,7 @@ A sequential selector must condition on the actual available history, including 
 
 Pointwise PID has an additional data requirement: its argument includes the realized target and candidate reading. It can be evaluated after a labelled event for analysis or training diagnostics. It cannot be supplied to a deployed pre-acquisition gate when either value is unknown. A legal feature may instead summarize training data or integrate over a declared predictive observation model. Such a model-based feature has its own estimation error; it is not an observed exact PID value.
 
-Two conditional operations must be kept distinct. Fix a finite law $P(H,C,Y)$, and let $u_C^P,s^P$ be its pointwise MGW atoms. For each supported anchor,
+First compute the MGW contributions from the original joint distribution on the finite combinations of $H,C,Y$. Write $u_C^P$ for the local information unique to the candidate observation and $s^P$ for the local synergy. At a combination $(h,c,y)$ with $P(H=h,C=c,Y=y)>0$,
 
 $$
 u_C^P(h,c,y)+s^P(h,c,y)
@@ -291,7 +295,7 @@ The distinction matters in examples. For independent fair bits $A,B$ and $T=A\ma
 Three kinds of additional value deserve separate evaluation:
 
 1. **Scientific explanation.** Does the named allocation answer a predeclared question that MI/CMI, ablation and an applicable interaction attribution leave unresolved? A different number is insufficient; record the conclusion it changes and the evidence supporting that conclusion.
-2. **Reliable computation.** Can the same finite-law MGW result be computed with a proved error bound, fewer resources or a detectable implementation error? Compare with the direct calculation on the same law. A bound is useful even without improved classification, but runtime and numerical claims still need their own evidence.
+2. **Reliable computation.** Can a second calculation return the same MGW value for the specified distribution on finitely many outcomes, with a proved error bound, lower resource use or a way to detect a computing error? Compare its output with direct evaluation using those same probabilities. A bound is useful even without improved classification, but runtime and numerical claims still need their own evidence.
 3. **Predictive or decision benefit.** Does adding a fixed PID-derived diagnostic or selection rule improve the registered downstream criterion on untouched data? Compare the same base model with and without that addition. The base learner's success cannot be credited to a diagnostic computed afterward.
 
 Any proposed bounded or randomized MGW calculation must establish correspondence with the named functional and compare against direct evaluation of the same law. An exact mathematical construction alone does not establish a runtime gain or calibrate a population estimator.
@@ -309,7 +313,7 @@ Retain every registered outcome, including no advantage, unstable conclusions ac
 | Work | Concrete next step | Evidence needed to accept it |
 |---|---|---|
 | Preserve the fixed comparison | Keep its complete proof, source map, PDF and failed controls linked | Exact committed artifacts and required replay/integration evidence |
-| Close the general channel result | Reuse the retained finite-law interface; prove actual pushforward/event and support identities before the atom formula | Exact theorem types, kernel-checked proofs and admitted controls; no free cumulative hypotheses |
+| Close the general channel result | Reuse the existing interface for distributions on finitely many outcomes. Prove how the observation map changes the probabilities of the matching events and which outcomes have positive probability before deriving the atom formula | Exact theorem types, kernel-checked proofs and admitted controls; no free cumulative hypotheses |
 | Explain fitted-model failures | Completed for the three retained occupancy recordings; extend only under a new declared study | [Counts-based loss decomposition](audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10.md); no population claim |
 | Static two-to-four-sensor study | Compare affordable subsets on fixed features and on appropriately fitted alternatives | Same episode splits, target, cost and tuning budget; signed PID, CMI and chosen task losses |
 | PID-assisted learning | Add the signed diagnostic only as a separately tested component | Improvement beyond task-only and CMI-assisted controls, with failed outcomes retained |
@@ -326,3 +330,5 @@ The main negative findings are constructive: synergy alone can be insensitive to
 [^gp]: Krause, Singh and Guestrin. *Near-Optimal Sensor Placements in Gaussian Processes: Theory, Efficient Algorithms and Empirical Studies*. JMLR 9, 235–284, 2008. [Paper](https://www.jmlr.org/papers/volume9/krause08a/krause08a.pdf).
 [^ehrlich]: Ehrlich et al. *Partial Information Decomposition for Continuous Variables based on Shared Exclusions: Analytical Formulation and Estimation*. arXiv:2311.06373v3; Physical Review E 110, 014115, 2024. [Version 3](https://arxiv.org/html/2311.06373v3). Relative-scale and support assumptions remain separate from categorical MGW.
 [^hoeffding]: Hoeffding. *Probability Inequalities for Sums of Bounded Random Variables*. JASA 58(301), 13–30, 1963. [DOI 10.1080/01621459.1963.10500830](https://doi.org/10.1080/01621459.1963.10500830). Independent bounded-variable concentration; no PID calibration theorem is claimed.
+
+Cite Sepehr Mahmoudian, *Shared-exclusions PID in analysis, learning and sensor selection* (2026). Include the exact commit or release. [Software citation](CITATION.cff)

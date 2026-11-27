@@ -1,6 +1,6 @@
 # Mathematical results guide for November 2026
 
-**Sepehr Mahmoudian · 26 November 2026**
+**Sepehr Mahmoudian · 27 November 2026**
 
 Which claims about information measures can the project check? Pages 2–5 compare neuron stimuli, robot failure labels, matched count tables and a target copied from measured force. Later sections cover counts, logarithms, nested sources and strict neighbour counts. The angular example gives two sharp thresholds and the fewest moments for the full range. LP2 and LP3 assign different class labels to the same 47 recorded cases. The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its [28-page PDF](output/pdf/mathematical-results-guide.pdf) cover nine result families.
 
@@ -313,6 +313,14 @@ For a fitted quantizer, condition on training and keep the map fixed during eval
 MGW described the event that at least one source statement is true. It identifies the set of states compatible with such a report. A forecast also needs a rule for how the report arose. In the project's exact binary game the target equals source one and a report preserves at least one true field. Each of the two matching source pairs has probability $9/20$ and each differing pair $1/20$. The fair constant forecast minimizes the worst permitted expected log loss, attaining $\ln 2$ nats. The forecast conditioned on the compatible set has worst-case loss $0.9\ln(19/9)+0.1\ln 11$, which exceeds $\ln 2$. With a known channel uniform among each state's three allowed reports, the same conditional forecast instead minimizes ordinary expected loss.
 
 A separate simulation injected faults into two office recordings. When told the correct fault count, the forecast based on compatible states won 39 of 40 point comparisons against five baselines under random or stuck faults. Eight difference intervals included zero. In all four worst-case conditions the constant prior had lower loss. These were injected faults on previously examined recordings. [Finite game and reporting channel](output/RESEARCH_NOTES_2026_10_10.md) · [Office simulation, baselines and limits](audit/research/fault-tolerant-shared-exclusions/EXPOSITION.md)
+
+### Fixed occupancy forecasts on 9,752 later minutes
+
+Candanedo released the February 2015 office recordings through UCI in 2016. This project fitted four equal-width bins per sensor and both occupancy forecasts on the 8,143 training minutes. [UCI data release](https://doi.org/10.24432/C5X01N). Six of the 16 possible pairs are absent from training. Two of these six occur in both test recordings, (2, 1) and (3, 1). The rule predicts occupancy with probability $1/2$ for each absent pair. For light bin 2 and carbon dioxide bin 1, the later recording has two occupied minutes. Their fitted occupancy probabilities are $1/3$ with light alone and $1/2$ with both readings. These minutes contribute $(2/9752)\ln(3/2)$ nats to the mean gain.
+
+The mean log loss measures the surprise of the recorded outcome under a forecast, in nats per minute. On the later recording, the observed conditional mutual information for carbon dioxide given light is 0.001558012 nats to nine decimal places. Adding carbon dioxide to the fixed light forecast increases the loss. The gain rounded from the counts is −0.003318968 nats per minute. The three previously rounded terms add to −0.003318969. [Fixed predictors and original counts](audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10.md) · [Interval from integer counts](audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10/rounding-by-count.json)
+
+A separate calculation replaces every carbon dioxide label by one constant. The sum of the four absolute changes in the mean signed MGW contributions is 0.911417033 nats to nine decimal places. Using the rounded published contributions gives 0.911417034 nats. [Measured contributions](audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 
 ---
 

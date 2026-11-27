@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Correct the last digit in two displayed calculations of office prediction loss. On 9,752 minutes the gain rounds to −0.003318968 nats per minute. The three printed inputs add to −0.003318969. [Original counts, predictors and calculation](audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10.md)
+
 - Include the dendritic stimulus, third-source budget, and robot copied-target papers in the PDF inventory test. Its original positive test omitted their Markdown and PDF files. The test now checks that each source and PDF is required and that a symbolic source which points to a regular file is refused. [Publication inventory tests](scripts/check-formal-pdf-set-self-test.sh)
 
 - Preserve the 18-page logarithm guide’s source profile. The secret scanner accepts the three exact published media checksums at this historical filename. Altered field names, values and nearby credentials still trigger the detector. [Checksum checks](scripts/check-guide-artifact-checksum-scan.py)

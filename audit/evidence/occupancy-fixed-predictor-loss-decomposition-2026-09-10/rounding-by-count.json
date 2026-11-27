@@ -1,0 +1,28 @@
+{
+  "count_input_sha256": "15798710c848225b45276134fa26ae5c04f9ffb0535f2bea23e33a4e19cd3487",
+  "records": {
+    "datatest.txt": {
+      "lower_units_of_1e-16_nats_per_row": 80288918498610,
+      "occupied_cells": 10,
+      "rounded_gain_nats_per_row": "0.008028892",
+      "rows": 2665,
+      "upper_units_of_1e-16_nats_per_row": 80288918498611
+    },
+    "datatest2.txt": {
+      "lower_units_of_1e-16_nats_per_row": -33189684189505,
+      "occupied_cells": 16,
+      "rounded_gain_nats_per_row": "-0.003318968",
+      "rows": 9752,
+      "upper_units_of_1e-16_nats_per_row": -33189684189504
+    },
+    "datatraining.txt": {
+      "lower_units_of_1e-16_nats_per_row": 46369595303334,
+      "occupied_cells": 16,
+      "rounded_gain_nats_per_row": "0.004636960",
+      "rows": 8143,
+      "upper_units_of_1e-16_nats_per_row": 46369595303335
+    }
+  },
+  "rounded_inputs_sum": "-0.003318969",
+  "units": "nats per recorded observation"
+}

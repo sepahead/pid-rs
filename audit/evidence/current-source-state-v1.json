@@ -196,8 +196,8 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/ci.yml",
-        "sha256": "81cbeed0cdbb7d94a262946ccb1cf04cc2296142da78995f88b2feecdae85816",
-        "size_bytes": 103786
+        "sha256": "31095917dd56a0195b763ac93c17076eb8856146c2b4856555bf8d8ff98f3ce9",
+        "size_bytes": 104390
       },
       {
         "git_mode": "100644",
@@ -370,8 +370,8 @@
       {
         "git_mode": "100644",
         "path": ".gitleaks.toml",
-        "sha256": "789086bd0e3e3a2844efcea49876f1739fcb0a87d7b959e020d555dfab864857",
-        "size_bytes": 7501
+        "sha256": "b660551d674bed02e00d705b8a58c171f961dcdfb11c03e9131a0fab40043a78",
+        "size_bytes": 7927
       },
       {
         "git_mode": "100644",
@@ -406,8 +406,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "da949d6ed5a354fe1ad12b05a1acbfa5b07737f528349b08901e7c3af3155f15",
-        "size_bytes": 355828
+        "sha256": "c0dce73b5e96945f4be0ed93453bdada9347e5dfc2bef39e9ef091fe44bc4192",
+        "size_bytes": 356148
       },
       {
         "git_mode": "100644",
@@ -526,8 +526,8 @@
       {
         "git_mode": "100644",
         "path": "MATHEMATICAL_RESULTS_GUIDE_CURRENT.md",
-        "sha256": "c92aae43f611e51f8dcd9dd2107a435f1a9aa1d5f1f53c97244c3341b02afabb",
-        "size_bytes": 58724
+        "sha256": "99d4a7e5bf94ec01e8fa9f18a00235e91451a7e5bc64257ac4c16b6b518ef50e",
+        "size_bytes": 60497
       },
       {
         "git_mode": "100644",
@@ -562,8 +562,8 @@
       {
         "git_mode": "100644",
         "path": "PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md",
-        "sha256": "d9d9bde81580bac298715eda8f9796852283f2e4fceae7f12d58edaf463b9f5e",
-        "size_bytes": 40153
+        "sha256": "0b6fea84a5453f5868483caeb0fc94f911118fcd29c596342b373272c202acba",
+        "size_bytes": 41279
       },
       {
         "git_mode": "100644",
@@ -592,8 +592,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "82b40a2fbd614049d61c980d27f7b15e66be318b2f949d874def78ec92a672df",
-        "size_bytes": 109263
+        "sha256": "58c93e9e606edb0ff40a26ac677242812c87442a926ae3a97d85033014bdc3ea",
+        "size_bytes": 109849
       },
       {
         "git_mode": "100644",
@@ -658,8 +658,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "e07dfb33d1500b1b43b603be4b7d15f578d2ccc890b7aaf9632e52592605943f",
-        "size_bytes": 85132
+        "sha256": "80ac6983a361fc7a9c3144cc5bfbea5ecd73d05c262e384fcb24ea763ee5c366",
+        "size_bytes": 86024
       },
       {
         "git_mode": "100644",
@@ -3670,8 +3670,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/corrections-and-counterexamples.md",
-        "sha256": "27925b3718e7baf1ad03d1c8070f8b4006f97fe89971dc1a611504d60cf5a0e5",
-        "size_bytes": 27175
+        "sha256": "e5e5ad0ce7728daf1c6d33d0538fc9d17f3b3d48fa4b49ad66669b62ecb2d24c",
+        "size_bytes": 27544
       },
       {
         "git_mode": "100644",
@@ -6352,14 +6352,20 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10.md",
-        "sha256": "4547e473da5400f84dd85941c361f1891b72654d7d7e72b5574e3f1256095de7",
-        "size_bytes": 12155
+        "sha256": "dca12730382cbe0ae861a089b750a2aa54020bcb9468e12b6a90c6e7eedbb3f3",
+        "size_bytes": 15001
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10/calculate.py",
         "sha256": "8f74a60363f5141d9476ec66d216951895d8ffa39463941ac85d2f2424bc838a",
         "size_bytes": 6398
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10/check_rounding.py",
+        "sha256": "49011b5ffac5923b6c1cfe9f5918e39477dd2d4deadad33815bb3e5d2afb1678",
+        "size_bytes": 3554
       },
       {
         "git_mode": "100644",
@@ -6378,6 +6384,12 @@
         "path": "audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10/results.json",
         "sha256": "1bdea76f69523f1c9738e1837d6aab7772cc8f445c5ba30d87c5a32e2c65a417",
         "size_bytes": 4535
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10/rounding-by-count.json",
+        "sha256": "72b2fd99e4b443759bb1b547cf2736441941d910d16fc08107886995cfde1bed",
+        "size_bytes": 938
       },
       {
         "git_mode": "100644",
@@ -18537,20 +18549,26 @@
       },
       {
         "git_mode": "100644",
-        "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
+        "path": "audit/formal/latex/mathematical-results-guide-current/edition-2026-11-26-categorical-applications-and-measured-force-copy.json",
         "sha256": "68026f3acb078bc1d26bfb1585f10ce75c6014822aa1a707c3e6a7ab86f577fb",
         "size_bytes": 113055
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
+        "sha256": "a80b51619f50ec25f12f829908d0dcc70c665627f3b1861694fee1d67507ed83",
+        "size_bytes": 115123
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/publication.lua",
-        "sha256": "cdc3f2c153ac0bfd908c957212f49f409760614071951753fd9cefa7c202553e",
+        "sha256": "90a15074fd19d27676a8ef0236e20615fa550868336630bce16ea3f8250c2788",
         "size_bytes": 2256
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/publication.tex",
-        "sha256": "cfda213d048a4b2d48a5a16fbe24982f5c48055e4c3e2690ce1d4f73c9857778",
+        "sha256": "0d7c3ad651230e8c7d4cd8156186a8679e4c55c53751781c28fdd46711b25491",
         "size_bytes": 1535
       },
       {
@@ -39688,8 +39706,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-results-guide-current.pdf",
-        "sha256": "deed7ca4f110fc0a76aee0a79521cd1c6cba8c39141811fdaa97fa18ceabd765",
-        "size_bytes": 465075
+        "sha256": "b18aca39714557e2af07685bb53b448f1a431c74494835f3445eea5662169d40",
+        "size_bytes": 466946
       },
       {
         "git_mode": "100644",
@@ -40180,7 +40198,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "d6bfcc0e5af30fc19f0979d6e1ac0a6bc4c10c1c242d8ea75de1340e58daed6d",
+        "sha256": "61ab905cf336d9cd9f7a33b4e0d7b350ce1cdaebc3aa40fa4cf23568d73d8b71",
         "size_bytes": 90915
       },
       {
@@ -40366,8 +40384,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-guide-artifact-checksum-scan.py",
-        "sha256": "4383076a25fb2b18d14ee7b9ce3e90c197942c6314ab148dbd32343419b104cd",
-        "size_bytes": 7747
+        "sha256": "bfc48d3a705193625c589e052ea285a4fee977eb42532b4b85542b0d1e29af40",
+        "size_bytes": 8136
       },
       {
         "git_mode": "100755",
@@ -40786,7 +40804,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "eb4dd06d4483c2608ee91dffd18671dc52f5fef257bb036c0ff54b30dbc13c33",
+        "sha256": "8a111ccf0b19945eefadc672f9cad1ea97770e27bb6ca05be8b34e14de86b2ed",
         "size_bytes": 140337
       },
       {
@@ -41792,8 +41810,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "4bcc860fa719517d917e2018eaf073105f8c39e6a360bfcceadab0591ffc5a85",
-    "entry_count": 6941
+    "entries_sha256": "71da7136300db21c193b4745981bca53b2a35f5ee8b7f901fce9a4537c5b236b",
+    "entry_count": 6944
   },
   "subprojections": [
     {
@@ -41805,15 +41823,15 @@
       ]
     },
     {
-      "entries_sha256": "354b37ab72a514193311597c7b15ccc004e9011036322dc89c3a74bc7d60d7fa",
-      "entry_count": 2437,
+      "entries_sha256": "49140ee2a305451e7f96d269d2497c37b4827970f03152b3552d005e5e603c28",
+      "entry_count": 2438,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "2bcf0716a52529d04a33b97881620e18b915fda86f3c29afe5e677b7589bfa38",
+      "entries_sha256": "0efbd92c23964be7900738430b9f2700956b4d82d005a34b209bd86e032ad4fc",
       "entry_count": 65,
       "name": "generated_pdf_set",
       "selectors": [
@@ -41821,7 +41839,7 @@
       ]
     },
     {
-      "entries_sha256": "b19911ea3c6d4e18a9b2953dbb38aa0b84284003731e21852a8bee882b3df893",
+      "entries_sha256": "06ce97ee1e4aa7e70a983e2f8090b47ea9d1fe359fa7943e931b5ae0b196faa7",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

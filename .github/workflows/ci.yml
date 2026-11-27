@@ -1235,6 +1235,15 @@ jobs:
       - run: python3 -O scripts/generate-exact-binary64-sum-oracle.py
       - run: python3 scripts/generate-ksg-local-arithmetic-oracle.py
       - run: python3 scripts/generate-sxpid2-exhaustive-oracle.py
+      - name: Check the recorded office prediction losses
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence=audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10
+          python3 -I -S -B "$evidence/check_rounding.py" | tee "$RUNNER_TEMP/office-loss-ordinary.json"
+          cmp "$evidence/rounding-by-count.json" "$RUNNER_TEMP/office-loss-ordinary.json"
+          python3 -O -I -S -B "$evidence/check_rounding.py" | tee "$RUNNER_TEMP/office-loss-optimized.json"
+          cmp "$evidence/rounding-by-count.json" "$RUNNER_TEMP/office-loss-optimized.json"
       - run: python3 scripts/check-markdown-math.py
       - run: python3 scripts/check-markdown-math-self-test.py
       - run: python3 scripts/check-review-evidence.py

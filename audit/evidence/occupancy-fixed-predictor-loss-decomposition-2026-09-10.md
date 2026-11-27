@@ -1,5 +1,7 @@
 # Available information and fixed-predictor error in the occupancy recordings
 
+Sepehr Mahmoudian
+
 This calculation explains a negative predictive result in the [retained office
 sensor example](real-occupancy-sensors-example-2026-09-08.md). Adding CO₂ to light
 reduces empirical conditional entropy on the later recording, but the fixed
@@ -59,7 +61,7 @@ q(y\mid x)=\frac{M(x,y)+1}{M(x)+2}.
 $$
 
 The two predictions sum to one and are strictly positive. A context absent from
-training predicts $1/2$ for each label. This is a specified smoothing rule; no
+training predicts $1/2$ for each label. Of the 16 possible light and CO₂ bin pairs, six are absent from training. Two of these six occur in both test recordings, (2, 1) and (3, 1). Together they account for 25 earlier minutes and four later minutes. This is a specified smoothing rule; no
 Gaussian prior or population model is required for the calculation. If read as
 a Bayesian posterior mean, it would have its own Bernoulli/Beta model assumptions;
 that interpretation is not used here.
@@ -135,11 +137,13 @@ contains the complete binary64 values and residuals.
 | Later evaluation | 0.033083487 | 0.031525474 | 0.014359564 | 0.019236545 | −0.003318968 |
 
 The later empirical CMI is $J\approx0.001558012$ nats. The extra discrepancy is
-$D_1-D_0\approx0.004876981$ nats, which is larger. Therefore
-
-$$
-G\approx0.001558012-0.004876981=-0.003318968\text{ nats}.
-$$
+$D_1-D_0\approx0.004876981$ nats. The difference is larger than $J$.
+With the original counts, the mean log-loss gain $G=J+D_0-D_1$ rounds to
+$-0.003318968$ nats per recorded minute. Subtracting the two printed inputs gives
+$0.001558012-0.004876981=-0.003318969$ nats. Rounding the inputs before
+subtraction changes the last digit. The [count-based rounding check](occupancy-fixed-predictor-loss-decomposition-2026-09-10/check_rounding.py)
+bounds the loss gain for all three recordings. Its [outward bounds](occupancy-fixed-predictor-loss-decomposition-2026-09-10/rounding-by-count.json)
+use natural logarithms.
 
 This explains the retained loss increase from about $0.047443051$ to
 $0.050762019$ nats per row. It is compatible with the original MGW cancellation
@@ -149,6 +153,10 @@ additional classifications. The result illustrates why accuracy, probability
 quality, added information and a signed synergy coordinate should be reported
 separately.
 
+For example, the later recording contains two occupied minutes with light bin 2 and carbon dioxide bin 1. The training counts give occupancy probability $1/3$ for light alone and $1/2$ for both readings. These minutes contribute $(2/9752)\ln(3/2)$ nats to the mean gain. The mean gain over the whole recording is negative.
+
+A separate recording-specific calculation uses the signed categorical partial information decomposition of Makkeh, Gutknecht and Wibral. Replace every carbon dioxide label by a constant and keep every light reading and occupancy label. The sum of the four absolute changes in the mean signed contributions is 0.911417033 nats to nine decimal places. The same calculation using the four contributions already rounded to nine decimal places gives 0.911417034 nats. [Defining method, version 5](https://arxiv.org/abs/2002.03356v5) · [Observed table and contributions](real-occupancy-sensors-example-2026-09-08.md) · [Original calculation from printed inputs](../archive/retained-worktree-fragments-20261113/payload/shared-pending-v1/output/ALLOCATION_STABILITY_OCCUPANCY_EXAMPLE_2026_10_12.md.txt)
+
 Both evaluation recordings have positive gain available in their empirical laws;
 only the earlier one has a positive attained gain for these particular fixed
 predictors. This calculation does not identify why their errors differ. Model
@@ -156,6 +164,16 @@ restrictions, finite training data and changes across recordings are possible
 explanations to test, rather than established causes.
 
 ## Numerical evidence and reproduction
+
+Run `python3 audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10/check_rounding.py`
+from the repository root. The command checks the same train-only add-one forecasts on all
+three count tables. For each occupied cell it bounds the natural logarithm of the two-sensor
+forecast divided by the light-only forecast. It weights each bound by the cell count divided
+by the recording length. The 256-bit outward rounding uses the
+[project's scalar rational-logarithm routine](../research/signed-log-certificate-enclosure/grid/fixed/arithmetic.py).
+The result for the later recording lies between −0.0033189684189505 and
+−0.0033189684189504 nats per minute. The interval bounds numerical error on these counts.
+The one-minute target observations can be dependent. This check gives no sampling interval.
 
 The [calculator source](occupancy-fixed-predictor-loss-decomposition-2026-09-10/calculate.py)
 is publication tooling. It imports no pid-rs implementation. It shares the
@@ -228,3 +246,5 @@ PID contribution requires the realized target and candidate reading. Recomputing
 an empirical KL diagnostic for a new recording requires its labelled joint data.
 A prospective gate must use available history and fixed prior summaries, or an
 explicit model-based expectation over unavailable values.
+
+Cite Sepehr Mahmoudian, *Available information and fixed-predictor error in the occupancy recordings* (2026). Include the exact commit or release. [Software citation](../../CITATION.cff)

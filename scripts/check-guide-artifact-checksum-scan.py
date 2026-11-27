@@ -12,11 +12,13 @@ import tempfile
 
 ORIGIN = "45c4ef6f037f4b826230a065aab563119a744df1"
 GUIDE = "audit/formal/latex/mathematical-results-guide-current/"
+APPLICATION_PROFILE = GUIDE + "edition-2026-11-26-categorical-applications-and-measured-force-copy.json"
 PROFILES = (
     GUIDE + "edition.json",
     GUIDE + "edition-2026-11-25-categorical-inputs-angular-decisions-and-neighbour-counts.json",
     GUIDE + "edition-2026-11-25-nested-categorical-and-signed-logarithm-bounds.json",
     GUIDE + "edition-2026-11-25-logarithm-library-and-numerical-checks.json",
+    APPLICATION_PROFILE,
 )
 FIGURES = "audit/research/categorical-state-token/figures/"
 # The first review commit contains these three published files and their first guide profile.
@@ -77,6 +79,10 @@ def check_profiles(repository, originals):
         if not path.exists() and name != PROFILES[0]:
             continue
         require(path.is_file() and not path.is_symlink(), "guide profile must be a regular file")
+        if name == APPLICATION_PROFILE:
+            original = git(repository, "show",
+                           "7c300aa2d5c09227e24f311f2b7fae8777467f18:" + PROFILES[0])
+            require(path.read_bytes() == original, "dated application guide changed")
         inputs = json.loads(path.read_bytes(), object_pairs_hook=unique_fields)["inputs"]
         for key, value in originals.items():
             if name == PROFILES[0] and key in inputs:
