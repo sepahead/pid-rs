@@ -1,0 +1,175 @@
+{
+  "format": "Each original file is the exact Git blob under original-source-blobs/. Each of the two path maps gives its original repository name, Git mode, size and SHA-256. The historical workflows are stored only as inert blobs.",
+  "source_roles": {
+    "2d74ed32aa6e76fb5b0942d11457b9a061527e26": {
+      "parent": "287a2857269102eac6b17b0a7d752d7b2b67b4cd",
+      "paths": {
+        ".github/workflows/decoded-real-log-import.yml": {
+          "bytes": 3578,
+          "git_blob": "b7f55b88353249d092ea931ffad5b55c52760df7",
+          "mode": "100644",
+          "sha256": "e67303321ebe4d585966d60d209f35d8e4f59c37adc921ef5759738c34e3b28a"
+        },
+        "audit/formal/decoded-real-log-import/BINDINGS.json": {
+          "bytes": 985,
+          "git_blob": "27fe90915a2bab73d1eb833732a8de2670186bda",
+          "mode": "100644",
+          "sha256": "b66b2628b942fa11cb710a5e9025c953a2e56711899539f72da3c8f9a38b5b25"
+        },
+        "audit/formal/decoded-real-log-import/BasicRead.lean": {
+          "bytes": 586,
+          "git_blob": "b43ad5091eae74ce27b806b991babc6ca8c6a00e",
+          "mode": "100644",
+          "sha256": "fba62b119071f049964c9f8e306a8235626379fd4f10f77585b4cd3cbfad26da"
+        },
+        "audit/formal/decoded-real-log-import/JointRead.lean": {
+          "bytes": 558,
+          "git_blob": "bba6259a80573a03175ffe82ce91796b7f0918d9",
+          "mode": "100644",
+          "sha256": "b7ad5c57b0a78b17c4ed7faded51684ed0ed3608ffa729c22eef732fba73eab3"
+        },
+        "audit/formal/decoded-real-log-import/README.md": {
+          "bytes": 5002,
+          "git_blob": "191f0f2aa8f999b856e88b05b2e39f83f2a52ed3",
+          "mode": "100644",
+          "sha256": "5cc07e6f46dae88c02e638fe6060a2d045fd611419b4659ada8befe96a2379a0"
+        },
+        "audit/formal/decoded-real-log-import/WrongRealValue.lean": {
+          "bytes": 112,
+          "git_blob": "a54b7b076e267d26a175fb7442496c5f431fa794",
+          "mode": "100644",
+          "sha256": "b22d364630ea77dfce572216930f6bd781e0d745febc96cf40bc4ba6b53ed73c"
+        },
+        "audit/formal/decoded-real-log-import/WrongResultType.lean": {
+          "bytes": 229,
+          "git_blob": "9ba370ec7687f56510ec13a15e6fe27109d284df",
+          "mode": "100644",
+          "sha256": "7ad46cfb2df86626aa5cb78bd58efdbfd3084bb9c48c57d314be4339e5e6a218"
+        },
+        "audit/formal/decoded-real-log-import/basic-cache-identities.json.gz": {
+          "bytes": 465532,
+          "git_blob": "f8c7d0d7a11092ba8199f2723490776d3c7dcde5",
+          "mode": "100644",
+          "sha256": "b710961779abac47bd5adc60221bdfef383016aa668faeb9d016c91c496180b0"
+        },
+        "audit/formal/decoded-real-log-import/bounded.py": {
+          "bytes": 4146,
+          "git_blob": "4ed168663332c43319a54786cae9ebdffe740a15",
+          "mode": "100644",
+          "sha256": "72881ce3a880698e8cc8e272c6e3a7fe119d17ad11dcc91863e83b5084b5cea2"
+        },
+        "audit/formal/decoded-real-log-import/origins.json": {
+          "bytes": 4674,
+          "git_blob": "acaeb1ec801927bc33fb7c376cddffbc863cb625",
+          "mode": "100644",
+          "sha256": "52e2c92954af364b75aa188efa24648ed38594f02bbf15711ebdbdb1cebe3012"
+        },
+        "audit/formal/decoded-real-log-import/probe.py": {
+          "bytes": 14405,
+          "git_blob": "5418d6065710502376c71abba4bbe1830bc578d2",
+          "mode": "100644",
+          "sha256": "d6b77ad19c0e5b0f8432786b18bf43b1a1d97eba82f82675e03fa8f776b1900c"
+        },
+        "audit/formal/decoded-real-log-import/self_test.py": {
+          "bytes": 3893,
+          "git_blob": "d562445acb081269b75135719f4b71415979895f",
+          "mode": "100644",
+          "sha256": "a520f5cdcc51038d9e4f526ddd46fbb1b09aa8a809e4ccc09e6f2c2cd0dbe685"
+        },
+        "audit/formal/decoded-real-log-import/stock-sources.tar.gz": {
+          "bytes": 25411,
+          "git_blob": "0eebfe8fd7c28561ffa8e00f6000693c76e1b065",
+          "mode": "100644",
+          "sha256": "97e83bc31024efc4e255fe4f4a0e4a2f2fbc25b14ea4f8388e630fd8eb1b29e9"
+        }
+      },
+      "source_url": "https://github.com/sepahead/pid-rs/tree/2d74ed32aa6e76fb5b0942d11457b9a061527e26/audit/formal/decoded-real-log-import",
+      "tree": "f7f306cf8694f21d0257eeb02cbb2b3711ff788e"
+    },
+    "8c7b04add45b0fa4a4f065e090b9371769c52498": {
+      "parent": "2d74ed32aa6e76fb5b0942d11457b9a061527e26",
+      "paths": {
+        ".github/workflows/decoded-real-log-import.yml": {
+          "bytes": 3578,
+          "git_blob": "a1231651a6506e3f6f3e09b27b3d1c86a51dc9b6",
+          "mode": "100644",
+          "sha256": "0ada744c2e0fbe6f0faf56411e04c361de959249019683fb7e0078792a1bf0e5"
+        },
+        "audit/formal/decoded-real-log-import/BINDINGS.json": {
+          "bytes": 985,
+          "git_blob": "d1bb81ad8cc27b9fb2f0dec1e6b0ad8df057e735",
+          "mode": "100644",
+          "sha256": "cbee7f985ff7d4ac62eb5316f4160a641b20f70b881663694f7078ca8134bbfd"
+        },
+        "audit/formal/decoded-real-log-import/BasicRead.lean": {
+          "bytes": 586,
+          "git_blob": "b43ad5091eae74ce27b806b991babc6ca8c6a00e",
+          "mode": "100644",
+          "sha256": "fba62b119071f049964c9f8e306a8235626379fd4f10f77585b4cd3cbfad26da"
+        },
+        "audit/formal/decoded-real-log-import/JointRead.lean": {
+          "bytes": 545,
+          "git_blob": "0da0968fb8950cadf740a3b6d19619d2c98a217a",
+          "mode": "100644",
+          "sha256": "486776ffa0738f04d5b32c47e78080e3095c77fe48a75ecab3a04d8ca6dfa407"
+        },
+        "audit/formal/decoded-real-log-import/README.md": {
+          "bytes": 5543,
+          "git_blob": "fb67230cf7e02a0551ad29b4be6e1e7b5552ccfb",
+          "mode": "100644",
+          "sha256": "678fbfa3a20118348068378ae68e51d41fe368b0efd07727fe8e2d6c4f622649"
+        },
+        "audit/formal/decoded-real-log-import/WrongRealValue.lean": {
+          "bytes": 112,
+          "git_blob": "a54b7b076e267d26a175fb7442496c5f431fa794",
+          "mode": "100644",
+          "sha256": "b22d364630ea77dfce572216930f6bd781e0d745febc96cf40bc4ba6b53ed73c"
+        },
+        "audit/formal/decoded-real-log-import/WrongResultType.lean": {
+          "bytes": 216,
+          "git_blob": "bfd42d408e4f77cfaeeb1208d5cd50d8fc740007",
+          "mode": "100644",
+          "sha256": "755f762f13ec70bd9e08522fea8af3b2897e822f5749f61e1ea50ca5e46a29b0"
+        },
+        "audit/formal/decoded-real-log-import/basic-cache-identities.json.gz": {
+          "bytes": 465532,
+          "git_blob": "f8c7d0d7a11092ba8199f2723490776d3c7dcde5",
+          "mode": "100644",
+          "sha256": "b710961779abac47bd5adc60221bdfef383016aa668faeb9d016c91c496180b0"
+        },
+        "audit/formal/decoded-real-log-import/bounded.py": {
+          "bytes": 4146,
+          "git_blob": "4ed168663332c43319a54786cae9ebdffe740a15",
+          "mode": "100644",
+          "sha256": "72881ce3a880698e8cc8e272c6e3a7fe119d17ad11dcc91863e83b5084b5cea2"
+        },
+        "audit/formal/decoded-real-log-import/origins.json": {
+          "bytes": 4674,
+          "git_blob": "acaeb1ec801927bc33fb7c376cddffbc863cb625",
+          "mode": "100644",
+          "sha256": "52e2c92954af364b75aa188efa24648ed38594f02bbf15711ebdbdb1cebe3012"
+        },
+        "audit/formal/decoded-real-log-import/probe.py": {
+          "bytes": 14405,
+          "git_blob": "5418d6065710502376c71abba4bbe1830bc578d2",
+          "mode": "100644",
+          "sha256": "d6b77ad19c0e5b0f8432786b18bf43b1a1d97eba82f82675e03fa8f776b1900c"
+        },
+        "audit/formal/decoded-real-log-import/self_test.py": {
+          "bytes": 4555,
+          "git_blob": "c522b4fea2f75b715c1a45974ca41c4c9578b810",
+          "mode": "100644",
+          "sha256": "9ba80da78e0d4f17c5b47863d0d985eddd0274e1a3f381a26fbf28480888f64b"
+        },
+        "audit/formal/decoded-real-log-import/stock-sources.tar.gz": {
+          "bytes": 25411,
+          "git_blob": "0eebfe8fd7c28561ffa8e00f6000693c76e1b065",
+          "mode": "100644",
+          "sha256": "97e83bc31024efc4e255fe4f4a0e4a2f2fbc25b14ea4f8388e630fd8eb1b29e9"
+        }
+      },
+      "source_url": "https://github.com/sepahead/pid-rs/tree/8c7b04add45b0fa4a4f065e090b9371769c52498/audit/formal/decoded-real-log-import",
+      "tree": "3ef47e1fe6ab2171867bc3fe2502fa5fbe8d316e"
+    }
+  }
+}

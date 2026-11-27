@@ -1,0 +1,9 @@
+{
+  "attempt": "real-tail-02",
+  "candidate_sha256": "08888f06d3dd9ac20f56612a459a6226feac5eb3c4d10ed1252a1028a80cf759",
+  "contract_sha256": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9",
+  "created_utc": "2026-11-25T06:05:29.048290+00:00",
+  "observed": "Only the source grammar has passed locally. The stock Linux compiler, fresh proof replay, independent controls and public integration are pending.",
+  "pre_registration_sha256": "fe95944ed8866d8080250c0f02052da057ab7e6edc133c573553bd7496e5181a",
+  "prior_original_failure": "e2b278992234ebdaa47d58be930e358f052ae72a8987d94f5c7c45767131ac60"
+}

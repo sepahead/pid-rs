@@ -1,4 +1,10 @@
-# Session handoff — updated 25 November 2026
+# Session handoff — updated 28 November 2026
+
+## Real logarithm checks and their original outcomes, 28 November 2026
+
+The recorded-office and finite categorical reports link to the printed method catalog. Both current source profiles bind its corrected entries for logistic fitting, the experimental count score and the spread of nearby distances. Their earlier profiles remain available. [Office inputs](audit/formal/latex/real-occupancy-sensors/publication-inputs-v14.json) · [Finite categorical inputs](audit/formal/latex/mgw-fixed-world/publication-inputs-v17.json)
+
+The Linux records preserve three distinct results. Two existing library inequalities passed. A sharper remainder bound has a rejected source and three unsuccessful proof compilations. The decoded-count and real-logarithm modules loaded together after a source-header correction. The latter establishes an import and a type check. Its two original command records and all four proof attempts remain available. [Decoded factors and the real logarithm](audit/formal/decoded-real-log-import/HOSTED-RESULTS.md) · [Sharper remainder attempts](audit/formal/real-log-odd-tail/HOSTED-RESULTS.md)
 
 ## Distance spread on three represented points, 27 November 2026
 

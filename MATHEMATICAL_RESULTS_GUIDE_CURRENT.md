@@ -1,6 +1,6 @@
 # Mathematical results guide for November 2026
 
-**Sepehr Mahmoudian · 27 November 2026**
+**Sepehr Mahmoudian · 28 November 2026**
 
 Which claims about information measures can the project check? Pages 2–5 compare neuron stimuli, robot failure labels, matched count tables and a target copied from measured force. Later sections cover counts, logarithms, nested sources and strict neighbour counts. The angular example gives two sharp thresholds and the fewest moments for the full range. LP2 and LP3 assign different class labels to the same 47 recorded cases. The [foundation guide](MATHEMATICAL_RESULTS_GUIDE.md) and its [28-page PDF](output/pdf/mathematical-results-guide.pdf) cover nine result families.
 
@@ -361,3 +361,13 @@ For three rows at rank one, the smallest local contribution is $-1/2$ nat. Its s
 **What the recorded configuration means.** The uncertainty experiment chooses circular blocks of observations from a random starting position and samples blocks without replacement. Its run log now records that procedure. A separate exact binary64 sum keeps 34 unsigned 64-bit words for each sign on supported 32- and 64-bit systems, or 68 words in total. The normalized invariant report uses it for both a sum and a quotient. [Experiment and run-log test](crates/pid-core/src/bin/exp0.rs) · [Arithmetic and storage](NUMERICAL_ASSURANCE.md)
 
 **When different distances have a small spread.** Chebyshev distance is the largest absolute coordinate difference. Let $p=1-2^{-53}$, the binary64 value immediately below one. The points $(0,0),(p,0),(0,1)$ have pairwise distances $p,1,1$. Their nearest-neighbour distances are $p,p,1$. For each list of three distances, divide the sum of the squared deviations from its mean by three and take the square root. Both standard deviations equal $2^{-53}\sqrt{2}/3$, about $5.234\times10^{-17}$. The original calculation reported zero for the pairwise spread in one row order. Exchanging the last two rows gave about $6.410\times10^{-17}$. Subtracting a common offset retains the difference between adjacent represented distances. On 102 specified inputs, the revised code passed all 990 numerical comparisons and returned the expected errors on 12 inputs. [Original readings, correction and Rust tests](audit/evidence/geometry-distance-spread/README.md)
+
+---
+
+### What did the Linux logarithm checks establish?
+
+**Two existing inequalities.** Lean is a proof checker. Mathlib is its mathematics library. Let $x$ be a series parameter with $0 \leq x < 1$. Two Mathlib statements use a finite sum of odd powers of $x$ to bound one half of the natural logarithm of $(1+x)/(1-x)$. A Linux run checked both statements and repeated the check in a fresh process. [Statements and original runs](audit/formal/real-log-library-read/HOSTED-RESULTS.md)
+
+**A sharper bound.** The remainder is this half-logarithm minus the finite sum. With $n$ terms, the proposed upper bound divides the existing bound on the remainder by the next odd exponent, $2n+1$. Four proof attempts reached their limit. The first text used a forbidden expression. On each of the next three attempts, Lean compiled the model and rejected the proposed proof. The records retain the original expressions and compiler messages. [Four proof attempts and their outcomes](audit/formal/real-log-odd-tail/HOSTED-RESULTS.md)
+
+**A type check for a count-table function.** Given a categorical count table, a rule and a component, Lean checked the expression that converts a rational factor to a real number and takes its natural logarithm. The first Linux run stopped at the joint import. After a source-header correction, the three fresh checks passed. Lean also rejected the deliberately incorrect request for a natural-number result at the intended line. The run checked 53 commands. An equality between this logarithm and an empirical information average remains a separate mathematical question. [Original and corrected imports](audit/formal/decoded-real-log-import/HOSTED-RESULTS.md) · [Recorded commands and compiler outputs](audit/formal/decoded-real-log-import/history/two-linux-runs/README.md)

@@ -1,0 +1,6 @@
+WrongRealValue.lean:3:7: error: Type mismatch
+  Real.log_one
+has type
+  Real.log 1 = 0
+but is expected to have type
+  Real.log 1 = 1

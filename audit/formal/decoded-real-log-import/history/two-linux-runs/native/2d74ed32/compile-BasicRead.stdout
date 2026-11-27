@@ -1,0 +1,19 @@
+Real.log_one : Real.log 1 = 0
+@Real.log_mul : ∀ {x y : ℝ}, x ≠ 0 → y ≠ 0 → Real.log (x * y) = Real.log x + Real.log y
+@Real.log_div : ∀ {x y : ℝ}, x ≠ 0 → y ≠ 0 → Real.log (x / y) = Real.log x - Real.log y
+Real.log_pow : ∀ (x : ℝ) (n : ℕ), Real.log (x ^ n) = ↑n * Real.log x
+Real.log_zpow : ∀ (x : ℝ) (n : ℤ), Real.log (x ^ n) = ↑n * Real.log x
+@Real.log_prod : ∀ {α : Type u_1} {s : Finset α} {f : α → ℝ},
+  (∀ x ∈ s, f x ≠ 0) → Real.log (∏ i ∈ s, f i) = ∑ i ∈ s, Real.log (f i)
+@Real.log_pos_iff : ∀ {x : ℝ}, 0 ≤ x → (0 < Real.log x ↔ 1 < x)
+@Real.log_neg_iff : ∀ {x : ℝ}, 0 < x → (Real.log x < 0 ↔ x < 1)
+@Real.eq_one_of_pos_of_log_eq_zero : ∀ {x : ℝ}, 0 < x → Real.log x = 0 → x = 1
+'Real.log_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.log_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.log_div' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.log_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.log_zpow' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.log_prod' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.log_pos_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.log_neg_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.eq_one_of_pos_of_log_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]

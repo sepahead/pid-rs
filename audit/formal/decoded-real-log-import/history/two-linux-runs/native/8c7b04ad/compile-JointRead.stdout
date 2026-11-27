@@ -1,0 +1,23 @@
+fun rs l c i => Real.log ↑(A2.make rs l c i).2.2.2 : D1Whole.Table → A2.Layer → A1.Part → A2.Node → ℝ
+A2.Decoded.positive_value : ∀ (w : D1Whole.Bytes) (rs : D1Whole.Table),
+  D1Whole.readFile w = some rs → ∀ (l : A2.Layer) (c : A1.Part) (i : A2.Node), 0 < (A2.make rs l c i).2.2.2
+A2.Decoded.true_lower_interval : ∀ (w : D1Whole.Bytes) (rs : D1Whole.Table),
+  D1Whole.readFile w = some rs →
+    ∀ (c : A1.Part) (i : A2.Node),
+      (∀ (j : A2.Node),
+          (List.count (true, j) (A2.zeta i) = if CountOrder.bitOrder i j then 1 else 0) ∧
+            List.count (false, j) (A2.zeta i) = 0) ∧
+        A2.act A2.zeta (A2.atom rs c) i = A2.asRat (A1.reference rs (A1.node i) c)
+A2.Decoded.signed_from_counts : ∀ (w : D1Whole.Bytes) (rs : D1Whole.Table),
+  D1Whole.readFile w = some rs →
+    ∀ (i : A2.Node),
+      0 < A2.atom rs A1.Part.net i ∧
+        A2.atom rs A1.Part.net i = A2.atom rs A1.Part.informative i / A2.atom rs A1.Part.misinformative i ∧
+          A2.atom rs A1.Part.net i = A2.localAction (A2.mobius i) (A2.observationRows rs A1.Part.net rs)
+@Real.log_mul : ∀ {x y : ℝ}, x ≠ 0 → y ≠ 0 → Real.log (x * y) = Real.log x + Real.log y
+@Real.log_div : ∀ {x y : ℝ}, x ≠ 0 → y ≠ 0 → Real.log (x / y) = Real.log x - Real.log y
+'A2.Decoded.positive_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+'A2.Decoded.true_lower_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'A2.Decoded.signed_from_counts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.log_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Real.log_div' depends on axioms: [propext, Classical.choice, Quot.sound]

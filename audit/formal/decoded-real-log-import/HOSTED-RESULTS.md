@@ -1,0 +1,16 @@
+# Reading the Linux checks of decoded factors and the real logarithm
+
+**Sepehr Mahmoudian · 28 November 2026**
+
+Can Lean, a proof checker, check the type of a function that takes a real logarithm of a positive rational factor from a categorical count table? The input includes the table, the rule and its component. The checked expression converts the factor to a real number and takes its natural logarithm. The two Linux runs below tested whether this expression could be loaded and type-checked. Their source observations do not equate the result with an empirical average of local information. [Original check and its mathematical question](history/two-linux-runs/README.md)
+
+| Linux source | What the original runner observed |
+|---|---|
+| First import | The rational factors and the logarithm library each passed a fresh check on their own. The combined files stopped at their first line. The test for a deliberately wrong result type stopped at the same import, before the checker reached the proposed type. The original run recorded 52 commands. [Joint diagnostic](history/two-linux-runs/native/2d74ed32/compile-JointRead.stdout) · [Complete outcome](history/two-linux-runs/native/2d74ed32/OUTCOME.json) |
+| Repaired import | The combined file used a source header compatible with the older Lean modules. All three fresh checks passed. At line 5, the checker rejected a real-valued logarithm where a natural number was required. The original run recorded 53 commands and passed all 15 stages. [Type error](history/two-linux-runs/native/8c7b04ad/compile-WrongResultType.stdout) · [Complete outcome](history/two-linux-runs/native/8c7b04ad/OUTCOME.json) |
+
+The source README and scripts describe the original branch-specific workflow. Its exact workflow file is now an inactive archival record. The two-source map identifies all 13 original inputs for each run, including the six changed inputs. Each original command has a recorded name, exit status and hashes of both output streams. The archive contains the six decisive compiler outputs from each run. [Original inputs](history/two-linux-runs/SOURCE-MAP.json) · [Original workflow](history/import-workflow.source.yml) · [Public archive verifier](history/two-linux-runs/verify.py)
+
+A separate proof question asks how much error remains after adding finitely many terms of an odd-power series for a logarithm. For a series parameter $0 \leq x < 1$, Lean checked two existing library inequalities for one half of the natural logarithm of $(1+x)/(1-x)$. Four registered attempts to prove a sharper remainder bound ended without an accepted proof. The first stopped on a source rule. The other three compiled the model and failed while checking the proposed proof. The preserved records identify where each stopped. [Existing library inequalities](../real-log-library-read/HOSTED-RESULTS.md) · [Four attempts at the sharper bound](../real-log-odd-tail/HOSTED-RESULTS.md)
+
+Cite Sepehr Mahmoudian, *Reading the Linux checks of decoded factors and the real logarithm* (2026), with the exact pid-rs commit or release. [Software citation](../../../CITATION.cff)

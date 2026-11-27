@@ -1,0 +1,53 @@
+{
+  "artifact": 15033118876,
+  "artifact_sha256": "eafa1d7864664661210029151da79f33bae7e3cc359e3ba99f8e7543237bd809",
+  "attempt": 4,
+  "candidate_body_sha256": "7d79a9d29d8c0ab7cd0b19c7b765f9ed8c7d498e43c8ca5a69fe98600decb760",
+  "commands": {
+    "model": {
+      "exit": 0,
+      "sampled_peak_bytes": 1903464448,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "proof": {
+      "exit": 1,
+      "sampled_peak_bytes": 1957343232,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d6b91fa57b80f82f52765302313b1c182182cd73cf1c1f979dabfdd427659e12"
+    }
+  },
+  "commit": "647483be5d569ffbf495ce0e2c9b16876469bcb2",
+  "job": 139289397528,
+  "later_original_commands_executed": [],
+  "members": {
+    "cache.txt": "2f7a1360be1f847d4ff3ecf213c0b0ffd9b0991cda24cf51471f6f93853ccef6",
+    "host.txt": "ce0412fff392b175d9961784dbcaa9086b688069cf9ddfef2cd252bdf5aa1bdf",
+    "native/RESULT.json": "f51204cea08ea7ff1f032bb81c2190db0171e6ce2806ba59344facb7ccbc0bf0",
+    "native/cache-files.json": "c7135def08d55fb84fb1e2c01ca078607fa0855c1ee197bca74db1fa8ff96b33",
+    "native/model.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native/model.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native/modules/Check.lean": "09e9e4a3a7dfdd4cc0f7f7e559cac2631c88684987e382a63f6cd331ab3b4a3d",
+    "native/modules/False.lean": "5462acaf1e496c2ad9a0dfaefff0088aff8373255d7e8fdc1a2eca2624168c5a",
+    "native/modules/Model.lean": "0b50e915428545db53e08dfb082bc44615866b099dd97eb82692ac45905374ce",
+    "native/modules/Proof.lean": "0b6e6253e124bace5ad8b88f0627fc75a6597a731fd446df7f4372b233a8c003",
+    "native/objects/Model.ir": "88c86f4aad13b4f0e80e1c220e588571ab35235bccf14d54b744c196c7786141",
+    "native/objects/Model.ir.sig": "087e33072a6f68771696619cad3ec676b0cd4bb42e1acea21a16475ca018f5f4",
+    "native/objects/Model.olean": "80b1fc4229309d4c00c55535f7462cb0cbe1d271c374425d2aa5b233c67495a1",
+    "native/objects/Model.olean.private": "d174cd3a947a8be8cc5e7654f32228e55f37e2890654e3524ab7b4497cd21892",
+    "native/objects/Model.olean.server": "03f6f28711d2c52b76249a5f4e65f3266e351b5e5a4783a6d4ff4747578f83bd",
+    "native/proof.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native/proof.stdout": "d6b91fa57b80f82f52765302313b1c182182cd73cf1c1f979dabfdd427659e12"
+  },
+  "native_reason": "native return for proof: 1",
+  "native_result_sha256": "f51204cea08ea7ff1f032bb81c2190db0171e6ce2806ba59344facb7ccbc0bf0",
+  "proof_diagnostics": [
+    "Proof.lean:42:49: error: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice",
+    "Proof.lean:44:21: error: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice",
+    "Proof.lean:44:44: error: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice"
+  ],
+  "proof_output": "attempt-04-proof.stdout.txt",
+  "qualification": false,
+  "run": 45638237493,
+  "source_contract_sha256": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9"
+}

@@ -1,0 +1,260 @@
+{
+  "format": "pid-rs-retained-formal-sources-v1",
+  "selected": {
+    "audit/formal/decoded-real-log-import/BINDINGS.json": {
+      "blob": "d1bb81ad8cc27b9fb2f0dec1e6b0ad8df057e735",
+      "mode": "100644",
+      "sha256": "cbee7f985ff7d4ac62eb5316f4160a641b20f70b881663694f7078ca8134bbfd"
+    },
+    "audit/formal/decoded-real-log-import/BasicRead.lean": {
+      "blob": "b43ad5091eae74ce27b806b991babc6ca8c6a00e",
+      "mode": "100644",
+      "sha256": "fba62b119071f049964c9f8e306a8235626379fd4f10f77585b4cd3cbfad26da"
+    },
+    "audit/formal/decoded-real-log-import/JointRead.lean": {
+      "blob": "0da0968fb8950cadf740a3b6d19619d2c98a217a",
+      "mode": "100644",
+      "sha256": "486776ffa0738f04d5b32c47e78080e3095c77fe48a75ecab3a04d8ca6dfa407"
+    },
+    "audit/formal/decoded-real-log-import/README.md": {
+      "blob": "fb67230cf7e02a0551ad29b4be6e1e7b5552ccfb",
+      "mode": "100644",
+      "sha256": "678fbfa3a20118348068378ae68e51d41fe368b0efd07727fe8e2d6c4f622649"
+    },
+    "audit/formal/decoded-real-log-import/WrongRealValue.lean": {
+      "blob": "a54b7b076e267d26a175fb7442496c5f431fa794",
+      "mode": "100644",
+      "sha256": "b22d364630ea77dfce572216930f6bd781e0d745febc96cf40bc4ba6b53ed73c"
+    },
+    "audit/formal/decoded-real-log-import/WrongResultType.lean": {
+      "blob": "bfd42d408e4f77cfaeeb1208d5cd50d8fc740007",
+      "mode": "100644",
+      "sha256": "755f762f13ec70bd9e08522fea8af3b2897e822f5749f61e1ea50ca5e46a29b0"
+    },
+    "audit/formal/decoded-real-log-import/basic-cache-identities.json.gz": {
+      "blob": "f8c7d0d7a11092ba8199f2723490776d3c7dcde5",
+      "mode": "100644",
+      "sha256": "b710961779abac47bd5adc60221bdfef383016aa668faeb9d016c91c496180b0"
+    },
+    "audit/formal/decoded-real-log-import/bounded.py": {
+      "blob": "4ed168663332c43319a54786cae9ebdffe740a15",
+      "mode": "100644",
+      "sha256": "72881ce3a880698e8cc8e272c6e3a7fe119d17ad11dcc91863e83b5084b5cea2"
+    },
+    "audit/formal/decoded-real-log-import/history/import-workflow.source.yml": {
+      "blob": "a1231651a6506e3f6f3e09b27b3d1c86a51dc9b6",
+      "mode": "100644",
+      "sha256": "0ada744c2e0fbe6f0faf56411e04c361de959249019683fb7e0078792a1bf0e5"
+    },
+    "audit/formal/decoded-real-log-import/origins.json": {
+      "blob": "acaeb1ec801927bc33fb7c376cddffbc863cb625",
+      "mode": "100644",
+      "sha256": "52e2c92954af364b75aa188efa24648ed38594f02bbf15711ebdbdb1cebe3012"
+    },
+    "audit/formal/decoded-real-log-import/probe.py": {
+      "blob": "5418d6065710502376c71abba4bbe1830bc578d2",
+      "mode": "100644",
+      "sha256": "d6b77ad19c0e5b0f8432786b18bf43b1a1d97eba82f82675e03fa8f776b1900c"
+    },
+    "audit/formal/decoded-real-log-import/self_test.py": {
+      "blob": "c522b4fea2f75b715c1a45974ca41c4c9578b810",
+      "mode": "100644",
+      "sha256": "9ba80da78e0d4f17c5b47863d0d985eddd0274e1a3f381a26fbf28480888f64b"
+    },
+    "audit/formal/decoded-real-log-import/stock-sources.tar.gz": {
+      "blob": "0eebfe8fd7c28561ffa8e00f6000693c76e1b065",
+      "mode": "100644",
+      "sha256": "97e83bc31024efc4e255fe4f4a0e4a2f2fbc25b14ea4f8388e630fd8eb1b29e9"
+    },
+    "audit/formal/real-log-odd-tail/Check.lean": {
+      "blob": "258197158474cd7e9a0e20b007329d1e1032e04e",
+      "mode": "100644",
+      "sha256": "09e9e4a3a7dfdd4cc0f7f7e559cac2631c88684987e382a63f6cd331ab3b4a3d"
+    },
+    "audit/formal/real-log-odd-tail/False.lean": {
+      "blob": "8466199659c1fed3a5f9aa6f08df29bfab5603a6",
+      "mode": "100644",
+      "sha256": "5462acaf1e496c2ad9a0dfaefff0088aff8373255d7e8fdc1a2eca2624168c5a"
+    },
+    "audit/formal/real-log-odd-tail/HOSTED-RESULTS.md": {
+      "blob": "04cdf3c3e11a529b002edef34612cc9fc0c12fa8",
+      "mode": "100644",
+      "sha256": "254e67b54e3afe1e71461fe0a9911e4815505fe8eba3fedb4871350ddbe5cbdb"
+    },
+    "audit/formal/real-log-odd-tail/Model.lean": {
+      "blob": "092fcffdd8dccb6b5cde4c9f4f5453f148a90b99",
+      "mode": "100644",
+      "sha256": "0b50e915428545db53e08dfb082bc44615866b099dd97eb82692ac45905374ce"
+    },
+    "audit/formal/real-log-odd-tail/ProofPrefix.txt": {
+      "blob": "2619ea3b8d3a6a978cc1fe9b21bf3b0ac26a2818",
+      "mode": "100644",
+      "sha256": "ac49699fe79b9cd1ae4d7cfb06a19f01441e2ff3d7d9ae6f9f40bb8d59656a72"
+    },
+    "audit/formal/real-log-odd-tail/ProofSuffix.txt": {
+      "blob": "3e64ba90998bfb044a5d75f00cc642abb7e5888a",
+      "mode": "100644",
+      "sha256": "1218446e300aa1b2ec399e85dfe6ca6f2b92f6e107a70258f38b34e6c7ce3901"
+    },
+    "audit/formal/real-log-odd-tail/README.md": {
+      "blob": "3a50cf869434627dc3be97501e2241d7b5b4b490",
+      "mode": "100644",
+      "sha256": "3f7d8569f3fdabe9ca570f0334810936a6d2d52b9f1b9f9c80acaec38f9c0186"
+    },
+    "audit/formal/real-log-odd-tail/ROUTES.md": {
+      "blob": "26fad64fbf369eeed3d956c7fdd2fceaadb8dc69",
+      "mode": "100644",
+      "sha256": "411c941878fb12f9b160be5de7d0b6395e1e6594ef41262063aacd558ad0bbb5"
+    },
+    "audit/formal/real-log-odd-tail/allowed-identifiers.txt": {
+      "blob": "bc31731df08d0139b0c2f3b0b0818ec359fd3409",
+      "mode": "100644",
+      "sha256": "4d33ab67c0d8fb28f9c5227a81c27648a4287a30e00c1a241036f56b38e38c06"
+    },
+    "audit/formal/real-log-odd-tail/attempt-history.md": {
+      "blob": "47c7fa706af5527fc72dbdbcd594d7ec8ca5f2a8",
+      "mode": "100644",
+      "sha256": "339f4a6999d8ae430b5c31395873e2a4ecb4ad38aab30d094773515a2ce47a20"
+    },
+    "audit/formal/real-log-odd-tail/attempt.json": {
+      "blob": "55690da974bf954c06fc06c8013bc21d99a91615",
+      "mode": "100644",
+      "sha256": "df5bb48f4b0b60c052e9d5b534894d258e3b416b73c689be93f25b5039d360b0"
+    },
+    "audit/formal/real-log-odd-tail/candidate-proof.txt": {
+      "blob": "67b9a4b1d50fa8c91183da71694491c0a8205cf1",
+      "mode": "100644",
+      "sha256": "7d79a9d29d8c0ab7cd0b19c7b765f9ed8c7d498e43c8ca5a69fe98600decb760"
+    },
+    "audit/formal/real-log-odd-tail/frozen.json": {
+      "blob": "5616db302f8d3b74663ab6527aff011ca37f4c7a",
+      "mode": "100644",
+      "sha256": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-01-REGISTERED-BEFORE-CANDIDATE.json": {
+      "blob": "9d49fc34e5856b9c1681375ff4557b7627bb4db0",
+      "mode": "100644",
+      "sha256": "8ef86733e85fc954debe49e5408543d638cb8f115e362795715f79231a934fa7"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-01-TERMINAL.json": {
+      "blob": "9fe1dd6e09a71684614b506ee56f7134fabf9f65",
+      "mode": "100644",
+      "sha256": "e2b278992234ebdaa47d58be930e358f052ae72a8987d94f5c7c45767131ac60"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-01-candidate-proof.txt": {
+      "blob": "ae92214a445a5f0f4396bbf9c8e4aa255b9d3b6e",
+      "mode": "100644",
+      "sha256": "5b33151c2117dcea83ff4dcd9275ea67142f21d76aee97ef73333ccd29ccdf5a"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-02-REGISTERED-BEFORE-CANDIDATE.json": {
+      "blob": "f64f991bcb12c12a4a5f6e80057f7efd2d52fd8c",
+      "mode": "100644",
+      "sha256": "fe95944ed8866d8080250c0f02052da057ab7e6edc133c573553bd7496e5181a"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-02-TERMINAL.json": {
+      "blob": "087d2ff4932c7e5b63833614283857694e9da220",
+      "mode": "100644",
+      "sha256": "6fd533c8fd9ff2cd098612bde191a7e7c97553704e28acc412c9fd1c98b3fe3c"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-02-attempt.json": {
+      "blob": "9020c32548ed271b6781efb76a82f0c36e60932a",
+      "mode": "100644",
+      "sha256": "a7a00807f57fa8c8963f172f76399c5f071a0c31a6fc3b540a019fdfe0f625e2"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-02-candidate-proof.txt": {
+      "blob": "fbf071879a07149ead0b9d4915af50cc4f00ff53",
+      "mode": "100644",
+      "sha256": "08888f06d3dd9ac20f56612a459a6226feac5eb3c4d10ed1252a1028a80cf759"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-02-native-evidence.json": {
+      "blob": "40247ff419fb2a5bc1b67dbe1bc14a2fc7dd9c2a",
+      "mode": "100644",
+      "sha256": "2e9e36f83627274b17ee643b1b397544b224e86c63d0f2da095578ace1626619"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-02-proof.stdout.txt": {
+      "blob": "fbc01df393c13090c4b20d5c439fe49479e3704c",
+      "mode": "100644",
+      "sha256": "6f34580204c7dcb7f610849d736043636c3c07786677978bc1dbdc1d35f57e68"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-02-registered.json": {
+      "blob": "f64f991bcb12c12a4a5f6e80057f7efd2d52fd8c",
+      "mode": "100644",
+      "sha256": "fe95944ed8866d8080250c0f02052da057ab7e6edc133c573553bd7496e5181a"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-03-REGISTERED-BEFORE-CANDIDATE.json": {
+      "blob": "6dc89b5e84ca59e84a7637c83859262fbe925a8c",
+      "mode": "100644",
+      "sha256": "86d0ea2146278bd0836e7e79f952e668192c77cdd96d2583260f4e3de5f741d1"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-03-TERMINAL.json": {
+      "blob": "5e1ac1cb8c8f86e0478cdb4a0be77482e655d8f7",
+      "mode": "100644",
+      "sha256": "70b4ac1b9359fe8e280b32b37af24ea0d16e67cb216b1d2d0882eb2d37505e80"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-03-attempt.json": {
+      "blob": "5fbecaad548e35cc7e228adb16d70a9870b7d201",
+      "mode": "100644",
+      "sha256": "bb70949b94886dd355254848c69f393cf6b3f27b0536883cc60252b2423108a5"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-03-candidate-proof.txt": {
+      "blob": "fc208d74ff1278a609e9fcd0501cf56cb143774a",
+      "mode": "100644",
+      "sha256": "27a7b8079d7a2f4e89d626140527c7ff5b5e419e25479999eada58ea1c58922b"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-03-native-evidence.json": {
+      "blob": "b25105bbc9559078ca663d5d9065bc38b47702f0",
+      "mode": "100644",
+      "sha256": "9b7d0b2c80b5d9bafad91281f8cca21b506bb8623834b6a8c8865282495bd953"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-03-proof.stdout.txt": {
+      "blob": "1e9d002504788a3ae9107b517c16b57dba051105",
+      "mode": "100644",
+      "sha256": "9821c6ec1f72eb379cf78837eedb975be039e6f76c88d73d35c2512b681bdebf"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-04-REGISTERED-BEFORE-CANDIDATE.json": {
+      "blob": "735863b271f8e288725213817fb490353cb49366",
+      "mode": "100644",
+      "sha256": "fb31df65a3647089cf87b4fee7e08242e26263df2593c8605cf823417db287fd"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-04-native-evidence.json": {
+      "blob": "f281455423f61278df005143196382ecb7831770",
+      "mode": "100644",
+      "sha256": "f8f21de29cca41db5b7dd5563784a5ff58aaccac4ef83a50b3a7879563bffa8c"
+    },
+    "audit/formal/real-log-odd-tail/history/attempt-04-proof.stdout.txt": {
+      "blob": "5120a3bd73b9d3eb3330f6be2a851df4b9ff55bc",
+      "mode": "100644",
+      "sha256": "d6b91fa57b80f82f52765302313b1c182182cd73cf1c1f979dabfdd427659e12"
+    },
+    "audit/formal/real-log-odd-tail/history/original-route-register.md.txt": {
+      "blob": "054f4d9bb498d5e059fb5aed5ddd60868c926df1",
+      "mode": "100644",
+      "sha256": "d21fb0917ec4eeb5954193e32b817eecb61d429408f0fd534ea58b1d0028f6de"
+    },
+    "audit/formal/real-log-odd-tail/history/registered-submission-readme.md.txt": {
+      "blob": "8bac51cccf69fc99943ead1646e36598b08eccb6",
+      "mode": "100644",
+      "sha256": "3d9cc9c01af4c3ede382163c6fb26e3a8775ad354dc0a1e7ba2bb404e8c638a9"
+    },
+    "audit/formal/real-log-odd-tail/judge.py": {
+      "blob": "da7497cbc984cf218d4a95f04ac96714945ded3b",
+      "mode": "100644",
+      "sha256": "6452d42d84917bc3e0431795e1a372739ab3e6b156a38e37892a3070f9f95815"
+    },
+    "audit/formal/real-log-odd-tail/self_test.py": {
+      "blob": "7e0f3e6cb2f36932c0ae5979acb246d4d6383b21",
+      "mode": "100644",
+      "sha256": "afa80ee0008c0dfe53e8ed965347cab14b6ef299b8afa395a65ff64536ba4c12"
+    },
+    "audit/formal/real-log-odd-tail/third-stock-result.md": {
+      "blob": "8ad581dd547a04f254c4e52a509b87698b07a4b0",
+      "mode": "100644",
+      "sha256": "f3e9e909cc2618f165a1b948de28c7ecc8d8139275c376a44db83bace91c0c41"
+    },
+    "audit/formal/real-log-odd-tail/workflow.source.yml": {
+      "blob": "d0c2573bbf643328127da57d624bec79f323a8e2",
+      "mode": "100644",
+      "sha256": "a94d4723848befea39e432fd244d5b22cbef009fd562a36cfe6373cb479c1fbc"
+    }
+  }
+}

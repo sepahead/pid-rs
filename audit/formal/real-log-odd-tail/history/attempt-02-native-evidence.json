@@ -1,0 +1,51 @@
+{
+  "artifact": 15001035585,
+  "artifact_sha256": "d35d2dd787402a7ef2c1a963831e2b499980ac65cfe5f800e1ad61906900d5f7",
+  "attempt": 2,
+  "candidate_body_sha256": "08888f06d3dd9ac20f56612a459a6226feac5eb3c4d10ed1252a1028a80cf759",
+  "commands": {
+    "model": {
+      "exit": 0,
+      "sampled_peak_bytes": 1894539264,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "proof": {
+      "exit": 1,
+      "sampled_peak_bytes": 1955303424,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6f34580204c7dcb7f610849d736043636c3c07786677978bc1dbdc1d35f57e68"
+    }
+  },
+  "commit": "f5bf4607b98156adc4e2aa4c2c1f521224371e01",
+  "job": 139046511327,
+  "later_original_commands_executed": [],
+  "members": {
+    "cache.txt": "2ca79bfaf5e17d73fecab2bc169f799a5101c9682a60554a70d53d3ef6c66b7e",
+    "host.txt": "a552fa30dede7f815eb04dcb45a11d384f50e43851b6419f586a86838f4856d9",
+    "native/RESULT.json": "66e6182b3a14313c5c5e8277624c66265aa8d358058877753027db2e2feb81b8",
+    "native/cache-files.json": "c7135def08d55fb84fb1e2c01ca078607fa0855c1ee197bca74db1fa8ff96b33",
+    "native/model.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native/model.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native/modules/Check.lean": "09e9e4a3a7dfdd4cc0f7f7e559cac2631c88684987e382a63f6cd331ab3b4a3d",
+    "native/modules/False.lean": "5462acaf1e496c2ad9a0dfaefff0088aff8373255d7e8fdc1a2eca2624168c5a",
+    "native/modules/Model.lean": "0b50e915428545db53e08dfb082bc44615866b099dd97eb82692ac45905374ce",
+    "native/modules/Proof.lean": "412e6c841140d40610b5737b7e656dfe574dc308871b5b421edc825ee1916dd9",
+    "native/objects/Model.ir": "88c86f4aad13b4f0e80e1c220e588571ab35235bccf14d54b744c196c7786141",
+    "native/objects/Model.ir.sig": "087e33072a6f68771696619cad3ec676b0cd4bb42e1acea21a16475ca018f5f4",
+    "native/objects/Model.olean": "80b1fc4229309d4c00c55535f7462cb0cbe1d271c374425d2aa5b233c67495a1",
+    "native/objects/Model.olean.private": "d174cd3a947a8be8cc5e7654f32228e55f37e2890654e3524ab7b4497cd21892",
+    "native/objects/Model.olean.server": "03f6f28711d2c52b76249a5f4e65f3266e351b5e5a4783a6d4ff4747578f83bd",
+    "native/proof.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native/proof.stdout": "6f34580204c7dcb7f610849d736043636c3c07786677978bc1dbdc1d35f57e68"
+  },
+  "native_reason": "native return for proof: 1",
+  "native_result_sha256": "66e6182b3a14313c5c5e8277624c66265aa8d358058877753027db2e2feb81b8",
+  "proof_diagnostics": [
+    "Proof.lean:24:51: error(lean.invalidField): Invalid field `symm`: The environment does not contain `Function.symm`, so it is not possible to project the field `symm` from an expression"
+  ],
+  "proof_output": "attempt-02-proof.stdout.txt",
+  "qualification": false,
+  "run": 45567721612,
+  "source_contract_sha256": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9"
+}

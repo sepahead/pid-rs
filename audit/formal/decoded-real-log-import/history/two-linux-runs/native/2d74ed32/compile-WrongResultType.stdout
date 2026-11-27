@@ -1,0 +1,1 @@
+WrongResultType.lean:1:0: error: cannot import non-`module` JoinProof from `module`

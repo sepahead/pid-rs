@@ -1,0 +1,454 @@
+{
+  "attempt": 1,
+  "command_count": 52,
+  "commands": {
+    "compile-A1Fixtures": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-A1Model": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-A1Proof": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-A2Fixtures": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-A2Model": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-A2Proof": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-A2Rows": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-BasicRead": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "60497505fef1f20f8b5a2a49c6a21b1a80498283aeb7b142dd814c862c6170bd"
+    },
+    "compile-CountProof": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-EventAudit": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "430acb401b624b8e7bedb371b3b7f6844ec318bce42b858d30addc3b059fc3d5"
+    },
+    "compile-EventChecks": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-EventFixtures": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-EventModel": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-EventProof": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-ExpressionDag": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-Fixtures": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-JoinAudit": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "4f9ec5ae17ada07c22f429f56f20a176f3e8e020de92b8db45015ad8949a5b05"
+    },
+    "compile-JoinControl": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-JoinProof": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-JointRead": {
+      "returncode": 1,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "54c85ca5c3d5d9384140d3a47d6bdadb8eb54b9ad4d55e33a23f94c8454a3b87"
+    },
+    "compile-Model": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-OrderModel": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-OrderProof": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-Proof": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-RegistryData": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-StateModel": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-StateProof": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-WholeModel": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-WholeProof": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-WrongRealValue": {
+      "returncode": 1,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "7f7e9d7ddbf0da51056dcec12b9ed627a52ef41778c9ec838c443954e4263bea"
+    },
+    "compile-WrongResultType": {
+      "returncode": 1,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "37193e3677c629eee4a149bf7e9db35bea55596aa3c90c71481aa1e93279b53a"
+    },
+    "compile-WrongSignedValue": {
+      "returncode": 1,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "0dec173701d15eb0bdb91a95bf4de91df50bae55672bcbb22ff27ca7f8289d95"
+    },
+    "download-release": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "extract-release": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fresh-BasicRead": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "fresh-JoinAudit": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lean-githash": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e8905851835bf12aa23cdca8b9ea6980d9cbe8d45ba5878a9a09b1f6264e5747"
+    },
+    "lean-version": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "355a9a028f81641782d75d6e6b58dec70f29d2f61238a9e271690259d9bf5680"
+    },
+    "mathlib-checkout": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "a0bb7af7ae0fa5e2cc405332624d7b50a0ed8d31605c0b4b526558ffd20d50a1",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "mathlib-commit": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d26684ea790064f49bcb150415b3a062ec30b5e646b207927aa3fc5fcbb43fbe"
+    },
+    "mathlib-fetch": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "56a9c709fa42a138a71cef4abafc00e97d480b8e106800c3c34fa21edbceed12",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "mathlib-init": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "mathlib-remote": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "package-Cli": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "2e20e2a649dd57be51b7d287730d045342813e1fa6e2e7de3e2a6c249e2c51c1"
+    },
+    "package-LeanSearchClient": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "969f2fabfb7ffe3973dce9836aa523b36b30aba71950f358c0148f7daf1909cd"
+    },
+    "package-Qq": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6ea0e5d827cd28719f0f8303c77c64ffd115d117fb873c61dcc064c789b49021"
+    },
+    "package-aesop": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e2f238dae0ad15ad802261fd5664fbb7264ca23028ec463653ee359dedad69b1"
+    },
+    "package-batteries": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a10c5cc1562c7e05002879cbb387405d1e84dfb2b052e4a9da3d7b0915278e17"
+    },
+    "package-importGraph": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "b7befbf415605485d009aa7b002b346adb7ee3ce028e97b697fe5f259d320274"
+    },
+    "package-plausible": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8e19735519205e6e1b0a59824699f406af5b5ce84a32d2a6c583717ce045b900"
+    },
+    "package-proofwidgets": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5c6fde3e5ec3bc7c00fcedc25e51a7d1d68b2dd0ba1057f4cd3a742f780cfc1d"
+    },
+    "targeted-cache": {
+      "returncode": 0,
+      "status": "returned",
+      "stderr_sha256": "d2722a961618fe9bd0da7f3c78e6a3907ae43f7beb83b6c864e9dfdeda2702f9",
+      "stdout_sha256": "fff0e93b45ed6057fcac849ac9c9743b10f4c24229f88fe74272cc0fe66c36b4"
+    }
+  },
+  "job": 140271925258,
+  "lean_release": [
+    "https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst",
+    "47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4",
+    "5045d0056413266e57c625dcd7c365b10e377c52",
+    "Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)",
+    {
+      "lean": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+      "leanchecker": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe"
+    }
+  ],
+  "log_axioms_as_printed": {
+    "Real.eq_one_of_pos_of_log_eq_zero": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Real.log_div": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Real.log_mul": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Real.log_neg_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Real.log_one": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Real.log_pos_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Real.log_pow": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Real.log_prod": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "Real.log_zpow": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "original_command_log_sha256": "a2d5f18132d513307b3970e3d528fd48df3f420a4b37b48155df0e4159664f31",
+  "original_provider_archive_bytes": 33769,
+  "original_provider_archive_sha256": "c9d20f9ddb40a72737153b5843d09d188ccb29921c62d10cf76ea81dbeb4b34b",
+  "original_provider_members": 114,
+  "original_result_sha256": "7e4d1177f5b840e55b1716d96c87eea1e75ccc7921ca493d2c581baa17a89caf",
+  "outcome": "failed",
+  "pinned_cache_observation": [
+    9715,
+    1943,
+    "b710961779abac47bd5adc60221bdfef383016aa668faeb9d016c91c496180b0"
+  ],
+  "provider_artifact_id": 15167541404,
+  "provider_url": "https://github.com/sepahead/pid-rs/actions/runs/45927419805/job/140271925258",
+  "run": 45927419805,
+  "schema": "recorded-linux-decoded-and-real-log-import-v1",
+  "source_commit": "2d74ed32aa6e76fb5b0942d11457b9a061527e26",
+  "stages": {
+    "basic-fresh": {
+      "status": "passed"
+    },
+    "basic-read": {
+      "status": "passed"
+    },
+    "joint-fresh": {
+      "prerequisites": [
+        "joint-read"
+      ],
+      "status": "blocked"
+    },
+    "joint-negative": {
+      "detail": "source position of expected negative",
+      "exception": "ValueError",
+      "status": "failed"
+    },
+    "joint-read": {
+      "detail": "compile-JointRead returned 1, native status",
+      "exception": "ValueError",
+      "status": "failed"
+    },
+    "mathlib-source": {
+      "status": "passed"
+    },
+    "real-negative": {
+      "status": "passed"
+    },
+    "source": {
+      "status": "passed"
+    },
+    "stock-audit": {
+      "status": "passed"
+    },
+    "stock-build": {
+      "status": "passed"
+    },
+    "stock-controls": {
+      "status": "passed"
+    },
+    "stock-fresh": {
+      "status": "passed"
+    },
+    "stock-negative": {
+      "status": "passed"
+    },
+    "target-cache": {
+      "status": "passed"
+    },
+    "tools": {
+      "status": "passed"
+    }
+  },
+  "verbatim_streams": [
+    "compile-BasicRead.stdout",
+    "compile-JoinAudit.stdout",
+    "compile-JointRead.stdout",
+    "compile-WrongRealValue.stdout",
+    "compile-WrongResultType.stdout",
+    "compile-WrongSignedValue.stdout"
+  ]
+}

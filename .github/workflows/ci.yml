@@ -1235,6 +1235,17 @@ jobs:
       - run: python3 -O scripts/generate-exact-binary64-sum-oracle.py
       - run: python3 scripts/generate-ksg-local-arithmetic-oracle.py
       - run: python3 scripts/generate-sxpid2-exhaustive-oracle.py
+      - name: Check preserved proof inputs and both Linux import outcomes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -S -B audit/formal/decoded-real-log-import/check-preserved-sources.py
+          python3 -I -S -B -O audit/formal/decoded-real-log-import/check-preserved-sources.py
+          python3 -I -S -B audit/formal/decoded-real-log-import/history/two-linux-runs/verify.py
+          python3 -I -S -B -O audit/formal/decoded-real-log-import/history/two-linux-runs/verify.py
+          python3 -I -S -B audit/formal/decoded-real-log-import/self_test.py
+          python3 -I -S -B -O audit/formal/decoded-real-log-import/self_test.py
+
       - name: Check the finite distance spread on represented coordinates
         shell: bash
         run: |

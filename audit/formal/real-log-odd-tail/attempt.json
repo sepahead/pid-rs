@@ -1,0 +1,9 @@
+{
+  "attempt": "real-tail-04",
+  "candidate_sha256": "7d79a9d29d8c0ab7cd0b19c7b765f9ed8c7d498e43c8ca5a69fe98600decb760",
+  "contract_sha256": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9",
+  "created_utc": "2026-11-25T11:53:48.031189+00:00",
+  "observed": "Only the unchanged source grammar has accepted this body. All stock compiler, fresh, axiom and trusted-negative stages need the original independent field.",
+  "pre_registration_sha256": "fb31df65a3647089cf87b4fee7e08242e26263df2593c8605cf823417db287fd",
+  "prior_original_failure": "70b4ac1b9359fe8e280b32b37af24ea0d16e67cb216b1d2d0882eb2d37505e80"
+}

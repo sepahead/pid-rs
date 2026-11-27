@@ -1,0 +1,14 @@
+# Two Linux checks of decoded factors and the real logarithm
+
+These records answer a build question. Can Lean load the previously checked positive rational factors from a decoded count table and the Mathlib real logarithm in one environment? Each source table has counts for three categorical sources and a target. The expression takes a decoded rational factor, converts it to a real number, and applies the natural logarithm.
+
+| Source revision | Original Linux observation |
+|---|---|
+| `2d74ed32` | Of 15 stages, 12 passed, two failed and one was blocked. The two libraries each passed a separate fresh check. Lean rejected the joint observer's import at line 1. It also rejected the deliberately wrong result type at that same import. The required type check on line 5 was never reached. The runner recorded 52 commands. [Original run](https://github.com/sepahead/pid-rs/actions/runs/45927419805) |
+| `8c7b04ad` | All 15 stages passed. Ordinary imports brought both sources into one environment. Lean printed the real type of the joint expression and the named prior positive-factor and reconstruction statements. The joint fresh check completed. Lean rejected the wrong signed ratio, the wrong value of the logarithm of one, and the real logarithm given a natural-number type. The final refusal was at line 5, column 2. The runner recorded 53 commands. [Original run](https://github.com/sepahead/pid-rs/actions/runs/45931621691) |
+
+The second observer introduces no new theorem. It checks that the expression has the intended type in this pinned environment. An identity equating its value with an independently defined empirical mean would require a separate proof. The three decoded statements and the two real-logarithm rules in the joint output each report `propext`, `Classical.choice` and `Quot.sound` as dependencies. [Joint source at its original revision](https://github.com/sepahead/pid-rs/blob/8c7b04add45b0fa4a4f065e090b9371769c52498/audit/formal/decoded-real-log-import/JointRead.lean)
+
+The source map contains all 13 original scientific and workflow paths at each revision. Six changed, leaving 19 distinct Git blobs. The two outcome records contain all original command names, exit codes and stream digests. Six verbatim compiler outputs per run include the printed declarations and every decisive compiler refusal. Each outcome provides the original provider job and complete archive digest. The latter identifies the original command logs, including the omitted runner configuration. [Source map](SOURCE-MAP.json) · [First outcome](native/2d74ed32/OUTCOME.json) · [Corrected outcome](native/8c7b04ad/OUTCOME.json)
+
+Run `python3 verify.py` or `python3 -O verify.py` in this directory to check the retained public source hashes, the two separate native outcomes and their decisive printed diagnostics. This command reads the archived evidence. The actual Lean executions occurred in the two linked jobs.

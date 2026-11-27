@@ -1,0 +1,94 @@
+name: Stock proof of the odd-power logarithm remainder
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/real-log-odd-tail.yml
+      - audit/formal/real-log-odd-tail/**
+
+permissions:
+  contents: read
+
+jobs:
+  observe:
+    name: Check the real remainder on the whole stated interval
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      LEAN_RELEASE: https://github.com/leanprover/lean4/releases/download/v4.34.1/lean-4.34.1-linux.tar.zst
+      LEAN_SHA256: 47bf4bbd78f70c2e9670598ab7124d92b6efb7330ff33e5fbb4030f6fd72e4e4
+      MATHLIB_REV: d13f23b723b8a846827a245b89c10fc7d3f11612
+      MATHLIB_NO_CACHE_ON_UPDATE: "1"
+      LEAN_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+
+      - name: Record the host and verify the original stock archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          mkdir "$RUNNER_TEMP/odd-tail-results"
+          {
+            git rev-parse HEAD HEAD^{tree}
+            uname -a
+            python3 --version
+            getconf _NPROCESSORS_ONLN
+            cat /proc/meminfo
+            for field in memory.max cpu.max pids.max; do
+              if test -f "/sys/fs/cgroup/$field"; then
+                cat "/sys/fs/cgroup/$field"
+              fi
+            done
+            df -h "$RUNNER_TEMP"
+          } > "$RUNNER_TEMP/odd-tail-results/host.txt"
+          curl --fail --location --retry 4 --proto '=https' --tlsv1.2 \
+            --output "$RUNNER_TEMP/stock-lean.tar.zst" "$LEAN_RELEASE"
+          printf '%s  %s\n' "$LEAN_SHA256" "$RUNNER_TEMP/stock-lean.tar.zst" | sha256sum --check --strict
+          tar --zstd -xf "$RUNNER_TEMP/stock-lean.tar.zst" -C "$RUNNER_TEMP"
+          stock="$RUNNER_TEMP/lean-4.34.1-linux/bin"
+          test "$("$stock/lean" --githash)" = 5045d0056413266e57c625dcd7c365b10e377c52
+          printf '%s\n' "$stock" >> "$GITHUB_PATH"
+
+      - name: Acquire the pinned source and the targeted compiled library
+        shell: bash
+        run: |
+          set -euo pipefail
+          library="$RUNNER_TEMP/real-log-mathlib"
+          git init -q "$library"
+          git -C "$library" remote add origin https://github.com/leanprover-community/mathlib4.git
+          git -C "$library" fetch --no-tags --depth 1 origin "$MATHLIB_REV"
+          git -C "$library" checkout --detach FETCH_HEAD
+          test "$(git -C "$library" rev-parse HEAD)" = "$MATHLIB_REV"
+          cd "$library"
+          printf '%s  %s\n' 8f67b2cf24143ac091cdb425e886c2164b2fc2d6fbccd6db9454b697f9541a67 lake-manifest.json \
+            8d89d4b427d64327c296cf27bc14d4e3af4cfefbae6832b261b5da2bb8d5d834 Mathlib/Analysis/SpecialFunctions/Log/Deriv.lean \
+            | sha256sum --check --strict
+          source_object=".lake/build/lib/lean/Mathlib/Analysis/SpecialFunctions/Log/Deriv.olean"
+          lake exe cache get --cache-from=master Mathlib.Analysis.SpecialFunctions.Log.Deriv \
+            2>&1 | tee "$RUNNER_TEMP/odd-tail-results/cache.txt"
+          test -s "$source_object"
+
+      - name: Check the contract, actual proof, independent types and a false bound
+        shell: bash
+        run: |
+          set -euo pipefail
+          ulimit -f 65536
+          field=audit/formal/real-log-odd-tail
+          python3 -I -S -B "$field/self_test.py"
+          python3 -O -I -S -B "$field/self_test.py"
+          python3 -I -S -B "$field/judge.py" \
+            --lean-bin "$RUNNER_TEMP/lean-4.34.1-linux/bin" \
+            --mathlib "$RUNNER_TEMP/real-log-mathlib" --archive "$RUNNER_TEMP/stock-lean.tar.zst" \
+            --out "$RUNNER_TEMP/odd-tail-results/native"
+
+      - name: Retain available native observations and failures
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: odd-power-tail-${{ github.sha }}
+          path: ${{ runner.temp }}/odd-tail-results
+          if-no-files-found: error

@@ -1,0 +1,85 @@
+name: Check the decoded-count and real-logarithm imports
+
+"on":
+  workflow_dispatch:
+  push:
+    branches:
+      - review/decoded-real-log-import-20261127
+    paths:
+      - .github/workflows/decoded-real-log-import.yml
+      - audit/formal/decoded-real-log-import/**
+
+permissions:
+  contents: read
+
+jobs:
+  import:
+    if: github.ref == 'refs/heads/review/decoded-real-log-import-20261127'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Enroll this run and its single source
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$RUNNER_TEMP/decoded-real-log-probe/evidence"
+          mkdir -p "$output"
+          printf '%s\n' "$GITHUB_REPOSITORY" "$GITHUB_SHA" "$GITHUB_REF" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" > "$output/START"
+          { uname -a; cat /etc/os-release; python3 --version; getconf _NPROCESSORS_ONLN; df -B1 "$RUNNER_TEMP"; } > "$output/host.txt"
+          for field in memory.max cpu.max pids.max; do
+            if [[ -r "/sys/fs/cgroup/$field" ]]; then
+              printf '%s ' "$field" >> "$output/host.txt"
+              cat "/sys/fs/cgroup/$field" >> "$output/host.txt"
+            fi
+          done
+
+      - name: Check out the exact event
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Verify and run the three fixed import checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          field=audit/formal/decoded-real-log-import
+          evidence="$RUNNER_TEMP/decoded-real-log-probe/evidence"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git rev-parse HEAD 'HEAD^{tree}' > "$evidence/source.txt"
+          printf '%s  %s\n' cbee7f985ff7d4ac62eb5316f4160a641b20f70b881663694f7078ca8134bbfd "$field/BINDINGS.json" | sha256sum --check --strict
+          (cd "$field" && python3 -I -S -B - <<'PY'
+          from pathlib import Path
+          from hashlib import sha256
+          import json
+          for name, digest in json.loads(Path("BINDINGS.json").read_bytes()).items():
+              if Path(name).name != name or sha256(Path(name).read_bytes()).hexdigest() != digest:
+                  raise SystemExit("input mismatch: " + name)
+          PY
+          )
+          python3 -I -S -B "$field/self_test.py" > "$evidence/ordinary-self-test.txt"
+          python3 -I -O -S -B "$field/self_test.py" > "$evidence/optimized-self-test.txt"
+          python3 -I -S -B "$field/probe.py" --root "$RUNNER_TEMP/decoded-real-log-probe"
+
+      - name: Preserve the final execution status
+        if: ${{ always() }}
+        shell: bash
+        env:
+          JOB_OUTCOME: ${{ job.status }}
+        run: |
+          set -eu
+          output="$RUNNER_TEMP/decoded-real-log-probe/evidence"
+          mkdir -p "$output"
+          printf '%s\n' "$JOB_OUTCOME" > "$output/job-status-before-upload.txt"
+          if [[ ! -s "$output/RESULT.json" ]]; then
+            printf '%s\n' '{"status":"incomplete","detail":"The native observer did not write a result. Read the preceding job steps."}' > "$output/RESULT.json"
+          fi
+
+      - name: Return native input identities and all available observations
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: decoded-real-log-import-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/decoded-real-log-probe/evidence
+          if-no-files-found: error
+          retention-days: 14

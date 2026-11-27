@@ -1,0 +1,3 @@
+WrongSignedValue.lean:8:0: error: Expression
+  projected A1.Examples.negative 100 == some (mkRat 16 9)
+did not evaluate to `true`

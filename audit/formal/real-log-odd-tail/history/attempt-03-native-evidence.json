@@ -1,0 +1,51 @@
+{
+  "artifact": 15006188981,
+  "artifact_sha256": "191481f4e5cc39a1a477ad237791886dc130a822c5e959c5dfda5fc90fec9ca8",
+  "attempt": 3,
+  "candidate_body_sha256": "27a7b8079d7a2f4e89d626140527c7ff5b5e419e25479999eada58ea1c58922b",
+  "commands": {
+    "model": {
+      "exit": 0,
+      "sampled_peak_bytes": 1910665216,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "proof": {
+      "exit": 1,
+      "sampled_peak_bytes": 1955225600,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "9821c6ec1f72eb379cf78837eedb975be039e6f76c88d73d35c2512b681bdebf"
+    }
+  },
+  "commit": "6f60c931ab1a0fb0cdb5f391475c06b86497c553",
+  "job": 139093263561,
+  "later_original_commands_executed": [],
+  "members": {
+    "cache.txt": "6f82f1aab02da907d37354eb285e59ad8d528fadeb0d8472b41d6b909b6c760a",
+    "host.txt": "6ba476125b1182f82c01388237cc218595f12d628f1e84d6a9b971a78d89df04",
+    "native/RESULT.json": "f8453e6c887fc54c695f73e20d2bd784f580afefb13a706e6f71da95100a74ea",
+    "native/cache-files.json": "c7135def08d55fb84fb1e2c01ca078607fa0855c1ee197bca74db1fa8ff96b33",
+    "native/model.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native/model.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native/modules/Check.lean": "09e9e4a3a7dfdd4cc0f7f7e559cac2631c88684987e382a63f6cd331ab3b4a3d",
+    "native/modules/False.lean": "5462acaf1e496c2ad9a0dfaefff0088aff8373255d7e8fdc1a2eca2624168c5a",
+    "native/modules/Model.lean": "0b50e915428545db53e08dfb082bc44615866b099dd97eb82692ac45905374ce",
+    "native/modules/Proof.lean": "244bdba55c21d592f85ff50d23eb8bb6dafa4d521bd0b5df471c4dd2e4ac8077",
+    "native/objects/Model.ir": "88c86f4aad13b4f0e80e1c220e588571ab35235bccf14d54b744c196c7786141",
+    "native/objects/Model.ir.sig": "087e33072a6f68771696619cad3ec676b0cd4bb42e1acea21a16475ca018f5f4",
+    "native/objects/Model.olean": "80b1fc4229309d4c00c55535f7462cb0cbe1d271c374425d2aa5b233c67495a1",
+    "native/objects/Model.olean.private": "d174cd3a947a8be8cc5e7654f32228e55f37e2890654e3524ab7b4497cd21892",
+    "native/objects/Model.olean.server": "03f6f28711d2c52b76249a5f4e65f3266e351b5e5a4783a6d4ff4747578f83bd",
+    "native/proof.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native/proof.stdout": "9821c6ec1f72eb379cf78837eedb975be039e6f76c88d73d35c2512b681bdebf"
+  },
+  "native_reason": "native return for proof: 1",
+  "native_result_sha256": "f8453e6c887fc54c695f73e20d2bd784f580afefb13a706e6f71da95100a74ea",
+  "proof_diagnostics": [
+    "Proof.lean:42:77: error: Unused tactic linter: `ring` does nothing"
+  ],
+  "proof_output": "attempt-03-proof.stdout.txt",
+  "qualification": false,
+  "run": 45581754714,
+  "source_contract_sha256": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9"
+}

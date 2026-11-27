@@ -1,0 +1,34 @@
+A2.Decoded.base_positive : ∀ (w : D1Whole.Bytes) (rs : D1Whole.Table),
+  D1Whole.readFile w = some rs → ∀ (c : A1.Part) (i : A2.Node), A1.positive (A1.cumulative rs (A1.node i) c)
+'A2.Decoded.base_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+A2.Decoded.exact_recovery : ∀ (w : D1Whole.Bytes) (rs : D1Whole.Table),
+  D1Whole.readFile w = some rs →
+    ∀ (c : A1.Part) (i : A2.Node),
+      0 < A2.cumulative rs c i ∧ 0 < A2.atom rs c i ∧ A2.act A2.zeta (A2.atom rs c) i = A2.cumulative rs c i
+'A2.Decoded.exact_recovery' depends on axioms: [propext, Classical.choice, Quot.sound]
+A2.Decoded.positive_value : ∀ (w : D1Whole.Bytes) (rs : D1Whole.Table),
+  D1Whole.readFile w = some rs → ∀ (l : A2.Layer) (c : A1.Part) (i : A2.Node), 0 < (A2.make rs l c i).snd.snd.snd
+'A2.Decoded.positive_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+A2.Decoded.all_positions : ∀ (w : D1Whole.Bytes) (rs : D1Whole.Table),
+  D1Whole.readFile w = some rs →
+    ∀ (j : Fin 108),
+      ∃ xs,
+        A2.read108 w = some xs ∧ xs.length = 108 ∧ xs[↑j]? = some (A2.coord rs ↑j) ∧ 0 < (A2.coord rs ↑j).snd.snd.snd
+'A2.Decoded.all_positions' depends on axioms: [propext, Classical.choice, Quot.sound]
+A2.Decoded.true_lower_interval : ∀ (w : D1Whole.Bytes) (rs : D1Whole.Table),
+  D1Whole.readFile w = some rs →
+    ∀ (c : A1.Part) (i : A2.Node),
+      (∀ (j : A2.Node),
+          (List.count (true, j) (A2.zeta i) = if CountOrder.bitOrder i j then 1 else 0) ∧
+            List.count (false, j) (A2.zeta i) = 0) ∧
+        A2.act A2.zeta (A2.atom rs c) i = A2.asRat (A1.reference rs (A1.node i) c)
+'A2.Decoded.true_lower_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+A2.Decoded.signed_from_counts : ∀ (w : D1Whole.Bytes) (rs : D1Whole.Table),
+  D1Whole.readFile w = some rs →
+    ∀ (i : A2.Node),
+      0 < A2.atom rs A1.Part.net i ∧
+        A2.atom rs A1.Part.net i = A2.atom rs A1.Part.informative i / A2.atom rs A1.Part.misinformative i ∧
+          A2.atom rs A1.Part.net i = A2.localAction (A2.mobius i) (A2.observationRows rs A1.Part.net rs)
+'A2.Decoded.signed_from_counts' depends on axioms: [propext, Classical.choice, Quot.sound]
+A2.Decoded.rejected_input : ∀ (w : D1Whole.Bytes), D1Whole.readFile w = none → A1.read54 w = none ∧ A2.read108 w = none
+'A2.Decoded.rejected_input' depends on axioms: [propext, Classical.choice, Quot.sound]

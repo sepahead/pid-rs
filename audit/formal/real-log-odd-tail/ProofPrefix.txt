@@ -1,0 +1,14 @@
+module
+public import Model
+
+set_option autoImplicit false
+
+@[expose] public section
+
+open Set Finset
+
+namespace PIDRealTail
+
+theorem sharp {x : ℝ} (n : ℕ) (h₀ : 0 ≤ x) (h₁ : x < 1) :
+    0 ≤ halfTail n x ∧ halfTail n x ≤ upper n x ∧
+    (0 < x → 0 < halfTail n x ∧ halfTail n x < upper n x) := by

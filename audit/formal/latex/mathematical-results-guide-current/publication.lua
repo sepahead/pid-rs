@@ -3,7 +3,7 @@ function Pandoc(doc)
   if doc.blocks[1].t ~= "Header" or pandoc.utils.stringify(doc.blocks[1]) ~= "Mathematical results guide for November 2026" then
     error("unexpected current guide title")
   end
-  if pandoc.utils.stringify(doc.blocks[2]) ~= "Sepehr Mahmoudian · 27 November 2026" then
+  if pandoc.utils.stringify(doc.blocks[2]) ~= "Sepehr Mahmoudian · 28 November 2026" then
     error("unexpected current guide byline")
   end
   doc.blocks:remove(1)

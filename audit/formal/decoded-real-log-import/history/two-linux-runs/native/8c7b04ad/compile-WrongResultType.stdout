@@ -1,0 +1,7 @@
+WrongResultType.lean:5:2: error: Type mismatch
+  Real.log ↑(A2.make rs l c i).2.2.2
+has type
+  ℝ
+but is expected to have type
+  ℕ
+fun rs l c i => sorry : (rs : D1Whole.Table) → (l : A2.Layer) → (c : A1.Part) → (i : A2.Node) → ?m.8 rs l c i

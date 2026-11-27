@@ -1,0 +1,11 @@
+{
+  "before_candidate": true,
+  "contract": "acb9ccdb0ba9269cfd8ae7016a4e3f9b90f9dccfb167f9a40daa7c03850730a9",
+  "id": "real-tail-04",
+  "original_stock_archive": "191481f4e5cc39a1a477ad237791886dc130a822c5e959c5dfda5fc90fec9ca8",
+  "permitted_only": "candidate-proof.txt",
+  "previous": "70b4ac1b9359fe8e280b32b37af24ea0d16e67cb216b1d2d0882eb2d37505e80",
+  "prior_body": "27a7b8079d7a2f4e89d626140527c7ff5b5e419e25479999eada58ea1c58922b",
+  "route": "Remove the final redundant ring invocation from precisely the first derivative proof flagged by the immutable linter. Keep the second derivative proof, trusted toolchain, checker, fixed declaration, warnings-as-errors policy, false controls and limited four-attempt stopping rule.",
+  "utc": "2026-11-25T11:53:02.627102+00:00"
+}
