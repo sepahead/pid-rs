@@ -1957,7 +1957,7 @@
     {
       "category": "diagnostic",
       "code_availability": "local",
-      "constraint_count": 2,
+      "constraint_count": 3,
       "definition_origin": "project-defined",
       "depends_on": [
         "mutual-information.ksg1-raw",
@@ -1985,7 +1985,7 @@
       "summary": "Research-only heuristic baselines for comparison with continuous shared exclusions.",
       "title": "Continuous shared-exclusions heuristics",
       "validation": {
-        "evidence_path_count": 22,
+        "evidence_path_count": 23,
         "level": "unit-and-integration"
       }
     },
@@ -2273,6 +2273,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "d7f3b8b79ddbbe19ad1e629ada21586d815cfec3b081a04ef9877a0fc0cc89bd"
+    "sha256": "f7c3d0e692ed2c8ab24cc5926f70bd0d06ea2c806e2d8a7464bfdd209b04b7b9"
   }
 }

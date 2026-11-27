@@ -957,8 +957,9 @@ fn compute_mi_report(
 ///
 /// `method="ehrlich_ksg"` selects the paper-defined continuous shared-exclusions
 /// `I^sx_∩` estimator. The other accepted method tokens select project-defined,
-/// formula-labelled heuristic baselines; their outputs are not estimates of that
-/// shared-exclusions functional.
+/// formula-labelled heuristic baselines. At fixed neighbor rank, the exact-arithmetic lower
+/// bound for `method="heuristic_sketch"` grows with sample size even under independence.
+/// Use that scalar only as a diagnostic of the formula.
 #[pyfunction]
 #[allow(clippy::too_many_arguments)]
 #[pyo3(signature = (s1, s2, target, k=3, method="ehrlich_ksg", metric="chebyshev", tie_epsilon=0.0, support_contract="unspecified"))]
@@ -1009,7 +1010,9 @@ fn compute_co_information(
 /// All methods use KSG MI terms. `method="ehrlich_ksg"` composes them with the
 /// paper-defined continuous shared-exclusions redundancy `I^sx_∩`; the other
 /// accepted method tokens instead compose project-defined, formula-labelled
-/// heuristic baselines and must not be interpreted as the Ehrlich functional.
+/// heuristic baselines. The `heuristic_sketch` score grows with sample size in exact
+/// arithmetic even under independence. Its composed coordinates can have opposing signs,
+/// and the binary64 reconstruction guard can refuse the result.
 ///
 /// The core uses `NegativeHandling::Allow` to preserve the raw MI estimates. In exact
 /// arithmetic the atoms sum to the supplied joint coordinate, including after a marginal is

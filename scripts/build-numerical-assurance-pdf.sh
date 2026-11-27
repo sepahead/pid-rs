@@ -163,7 +163,7 @@ trailer_id="$(shasum -a 256 "$source_digest_record" | awk '{print toupper(substr
     --include-in-header="$TAGPDF_OPENACTION_COMPAT" \
     --metadata=title:'Represented-binary64 assurance for PID' \
     --metadata=author:'Sepehr Mahmoudian' \
-    --metadata=date:'31 August 2026' \
+    --metadata=date:'31 August 2026, revised 27 November 2026' \
     --variable=colorlinks=true --variable=linkcolor:PidTeal --variable=toccolor:PidTeal \
     --variable=urlcolor:PidBronze --variable=citecolor:PidTeal \
     --variable=papersize:a4 --variable=fontsize:10pt --variable=geometry:margin=18mm \

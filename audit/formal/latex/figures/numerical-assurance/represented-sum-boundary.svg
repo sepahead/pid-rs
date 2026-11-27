@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="168mm" height="88mm" viewBox="0 0 1680 880" role="img" aria-labelledby="title desc">
   <title id="title">Represented binary64 exact-sum boundary</title>
-  <desc id="desc">A left-to-right pipeline separates mathematical or estimated quantities, already rounded binary64 input bit patterns, a 34-limb exact fixed-point accumulator, exact positive-minus-negative subtraction, and one round-to-nearest ties-to-even binary64 result. A lower band states the permitted arithmetic claim and prohibits inference to exact PID estimation.</desc>
+  <desc id="desc">A left-to-right pipeline separates mathematical or estimated quantities, already rounded binary64 input bit patterns, an exact fixed-point accumulator with 34 unsigned 64-bit words per sign, 68 words in total, exact positive-minus-negative subtraction, and one round-to-nearest ties-to-even binary64 result. A lower band states the permitted arithmetic claim and prohibits inference to exact PID estimation.</desc>
   <defs>
     <pattern id="cv-grid" width="22" height="22" patternUnits="userSpaceOnUse">
       <path d="M0 11 H22 M11 0 V22" stroke="#F7F3E9" stroke-width="1.4" opacity="0.15"/>

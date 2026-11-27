@@ -154,7 +154,7 @@ FIGURE_SPECS = (
     },
     {
         "source": "audit/formal/latex/figures/numerical-assurance/represented-sum-boundary.svg",
-        "source_sha256": "142ff6540f13be02d88a5db09d0f909aac3fa43e653f0d956a093802d0e1d217",
+        "source_sha256": "282a0c462393c853b841ce7279befd7998d5dae16642071fe55c691b52476b44",
         "output": "represented-sum-boundary.pdf",
         "font_programs": {
             "SourceSansPro-Regular",

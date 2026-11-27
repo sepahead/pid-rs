@@ -1,0 +1,73 @@
+{
+  "atom_keys": [
+    "1",
+    "1+2",
+    "1+2+4",
+    "1+4",
+    "1+6",
+    "2",
+    "2+4",
+    "2+5",
+    "3",
+    "3+4",
+    "3+5",
+    "3+5+6",
+    "3+6",
+    "4",
+    "5",
+    "5+6",
+    "6",
+    "7"
+  ],
+  "copied_target_joint_nats_hex": "0x1.62e42fefa39efp-1",
+  "design": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "max_bijection_difference_hex": "0x0.0p+0",
+  "merged_joint_nats_hex": "0x0.0p+0",
+  "observed_joint_states": 8,
+  "positive_vs_nonpositive": true,
+  "raw_float_refusal": "TypeError",
+  "sample_count": 8,
+  "wheel": "860d42953cc2f58a5d42c6f4eb9bd401ef82bed48af3dba429c52b428eaed3ad",
+  "zero_increments": 1
+}

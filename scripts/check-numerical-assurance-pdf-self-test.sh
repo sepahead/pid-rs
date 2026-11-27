@@ -338,7 +338,7 @@ required_once = (
     'if not isinstance(open_action, DictionaryObject) or str(open_action.get("/S")) != "/GoTo":',
     'if kind in forbidden_action_kinds or kind not in allowed_action_kinds:',
     'if observed_repository_uris != expected_repository_uris:',
-    'expected_action_counts = {"/GoTo": 34, "/GoToR": 0, "/URI": 15}',
+    'expected_action_counts = {"/GoTo": 34, "/GoToR": 0, "/URI": 16}',
     'pdftoppm -f 1 -l 23 -r 36 -png "$candidate" "$render_prefix" >/dev/null 2>&1',
     '[[ "$rendered_count" == "23" ]] || {',
     'validate_pdf "$PDF" committed',
@@ -568,7 +568,7 @@ run_contract_mutation "repository-navigation inventory weakening is detected" \
   'if observed_repository_uris != expected_repository_uris:' \
   'if not observed_repository_uris.issubset(expected_repository_uris):'
 run_contract_mutation "action-count weakening is detected" \
-  'expected_action_counts = {"/GoTo": 34, "/GoToR": 0, "/URI": 15}' \
+  'expected_action_counts = {"/GoTo": 34, "/GoToR": 0, "/URI": 16}' \
   'expected_action_counts = action_counts'
 run_contract_mutation "all-page raster command weakening is detected" \
   'pdftoppm -f 1 -l 23 -r 36' \

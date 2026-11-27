@@ -55,7 +55,8 @@ end
 
 function Link(element)
   if FORMAT:match("latex")
-      and element.target == "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md" then
+      and (element.target == "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
+          or element.target == "CITATION.cff") then
     -- Keep the canonical Markdown link repository-relative, but make its PDF projection usable
     -- after download and through GitHub's viewer. This is live navigation, not an immutable
     -- provenance identity.

@@ -748,6 +748,7 @@ fn make_seeds(n: usize) -> Result<Vec<u64>, Exp0Error> {
 /// recovery, so a failure here is a strong NO-GO signal rather than an expected
 /// curse-of-dimensionality artefact.
 const UNCERTAINTY_DIM: usize = 10;
+const SUBSAMPLE_SCHEME: &str = "random_origin_circular_blocks_without_replacement";
 
 // ---------------------------------------------------------------------------
 // Curated strict band (--strict-band / --strict-gate target)
@@ -1332,7 +1333,7 @@ fn uncertainty_json(u: &UncertaintySummary) -> Result<serde_json::Value, Exp0Err
             "status": "requested",
             "block_size": u.block_size,
             "subsample_len": subsample_len,
-            "subsample_scheme": "fixed_grid_blocks_without_replacement",
+            "subsample_scheme": SUBSAMPLE_SCHEME,
             "subsample_interpretation": "raw_m_sample_quantiles_not_n_sample_confidence_intervals",
         }),
         None => json!({"status": "not_requested"}),
@@ -1468,7 +1469,7 @@ fn write_exp0_runlog(
             "alpha": config.uncertainty.alpha,
             "seed": config.uncertainty.seed,
             "subsample_scheme": if config.uncertainty.n_boot > 0 {
-                Some("fixed_grid_blocks_without_replacement")
+                Some(SUBSAMPLE_SCHEME)
             } else {
                 None
             },
@@ -5219,6 +5220,26 @@ mod tests {
         let validation = pid_runlog::validate_events(&events).unwrap();
         assert!(validation.is_valid(), "{:?}", validation.issues);
         let summary = pid_runlog::summarize_events(&events).unwrap();
+
+        let expected_scheme = "random_origin_circular_blocks_without_replacement";
+        let summary_json = uncertainty_json(&u).unwrap();
+        assert_eq!(
+            summary_json["bootstrap_config"]["subsample_scheme"],
+            expected_scheme
+        );
+        let (config, hash) = events
+            .iter()
+            .find_map(|event| match event {
+                RunLogEvent::ConfigLogged {
+                    config,
+                    config_hash,
+                    ..
+                } => Some((config, config_hash)),
+                _ => None,
+            })
+            .unwrap();
+        assert_eq!(config["uncertainty"]["subsample_scheme"], expected_scheme);
+        assert_eq!(&pid_runlog::canonical_json_hash_v2(config).unwrap(), hash);
         // Uncertainty events are EvaluationMetric, so the six PidMetric gate events
         // are unchanged; the CI smoke greps rely on this invariant.
         assert_eq!(summary.pid_metrics, 6);

@@ -589,8 +589,15 @@ lattice PID. Their result motivates reporting lattice computability, properties 
 chosen redundancy functional, and broader consistency desiderata separately; it is not by itself
 evidence of a pid-rs code defect or a direct refutation of categorical SxPID.
 
-Heuristic shared-exclusions methods are research-only. Their presence behind a feature is not a
-consistency or calibration claim.
+The default-off `experimental-heuristics` feature includes the project-defined
+`heuristic_sketch_baseline`. On a sample that passes the support and distance checks, let
+$n$ be its row count, $k$ its neighbor rank and $\psi$ the digamma function. The exact
+score lies between $(3\psi(k)+\psi(n))/2$ and $\psi(k)+\psi(n)$. Both endpoints occur.
+The lower bound grows without limit at fixed $k$, even for tie-free data from independent
+sources and target. This score cannot estimate finite population redundancy. The raw PID2
+composition can return large opposing coordinates or fail its binary64 reconstruction check.
+Complete PID2 reports require the Ehrlich estimator. The other two heuristics use different
+formulas. [Derivation, assumptions and original Rust checks](audit/evidence/heuristic-sketch-sample-size.md)
 
 ## Software-added Gaussian noise
 
@@ -677,6 +684,8 @@ transform, including its block size or minimum shift, before evaluating the obse
 These checks and complete failure retention do not establish the caller's sampling assumptions or
 calibrate a generic statistic. Cooperative cancellation returns no partial estimate and does not
 make an intrinsically expensive procedure cheap.
+
+When a diagnostic run requests subsampling, the experiment summary and run-log configuration identify random-origin circular blocks drawn without replacement. Earlier output can label this algorithm `fixed_grid_blocks_without_replacement`. Use the producing revision to interpret an earlier record. The corrected scheme name enters the configuration hash when subsampling is enabled.
 
 The cited moving-block, permutation, add-one p-value, and BH/BY procedures remain distinct from
 pid-rs's project-defined typed assumption records, scheduling, failure-retention, and report

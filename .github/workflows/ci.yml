@@ -1235,6 +1235,15 @@ jobs:
       - run: python3 -O scripts/generate-exact-binary64-sum-oracle.py
       - run: python3 scripts/generate-ksg-local-arithmetic-oracle.py
       - run: python3 scripts/generate-sxpid2-exhaustive-oracle.py
+      - name: Check the finite sample bounds for the experimental heuristic
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence=audit/evidence/heuristic-sketch-check
+          python3 -I -S -B "$evidence/check_results.py" "$evidence/native.tsv" | tee "$RUNNER_TEMP/heuristic-counts-ordinary.json"
+          cmp "$evidence/RESULT.json" "$RUNNER_TEMP/heuristic-counts-ordinary.json"
+          python3 -O -I -S -B "$evidence/check_results.py" "$evidence/native.tsv" | tee "$RUNNER_TEMP/heuristic-counts-optimized.json"
+          cmp "$evidence/RESULT.json" "$RUNNER_TEMP/heuristic-counts-optimized.json"
       - name: Check the recorded office prediction losses
         shell: bash
         run: |

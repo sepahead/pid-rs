@@ -1910,8 +1910,8 @@ pass only explicit cross-toolchain mode. The suite uses a fake builder to isolat
 does not test builder failure modes or prove mathematics, visual equivalence, accessibility, or
 general cross-toolchain equivalence.
 
-The paper derives the 2,098-bit single-operand bound and the 34-limb supported-target bound; gives
-the exact ties-to-even branches; and distinguishes exact reduction of represented operands from
+The paper derives the 2,098-bit single-operand bound and the bound of 34 unsigned 64-bit words per sign on 32- and 64-bit targets. It gives
+the exact ties-to-even branches and distinguishes exact reduction of represented operands from
 exact estimation. It explains all repaired call sites, retained witnesses, rejected transfers,
 resource charges, quantizer-cardinality semantics, oracle nonindependence, and open refinement
 edges. Twelve implementation routes and a fifty-lens hostile review document the selected design

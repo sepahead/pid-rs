@@ -234,6 +234,35 @@ fn every_continuous_isx_method_rejects_an_ambiguous_positive_shell() {
 
 #[cfg(feature = "experimental-heuristics")]
 #[test]
+fn historical_sketch_attains_both_sample_size_bounds() {
+    use pid_core::experimental::isx_heuristics::heuristic_sketch_baseline;
+
+    // With k=2 each compressed source gives one strict target neighbor per row.
+    // Wide source spacings put all three other targets inside its joint radius.
+    let target = [0.0, 1.0, 4.0, 10.0];
+    let source1 = [0.0, 0.03125, 0.09375, 0.0625];
+    let compressed = [0.03125, 0.09375, 0.0, 0.0625];
+    let wide = [0.0, 32.0, 128.0, 512.0];
+    let config = IsxConfig {
+        k: 2,
+        ..IsxConfig::assume_regular_full_dimensional()
+    };
+    let gamma = 0.577_215_664_901_532_9_f64;
+    let s1 = MatRef::new(&source1, 4, 1).unwrap();
+    let t = MatRef::new(&target, 4, 1).unwrap();
+    for (source2, expected) in [(&compressed, 17.0 / 6.0), (&wide, 29.0 / 12.0)] {
+        let s2 = MatRef::new(source2, 4, 1).unwrap();
+        let observed = heuristic_sketch_baseline(s1, s2, t, &config).unwrap();
+        let expected = expected - 2.0 * gamma;
+        assert!(
+            (observed - expected).abs() < 1e-12,
+            "{observed} vs {expected}"
+        );
+    }
+}
+
+#[cfg(feature = "experimental-heuristics")]
+#[test]
 fn exp0_isx_redundancy_heuristic_sketch_smoke() {
     let mut rng = Rng64::new(2028);
     let n = 200;

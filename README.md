@@ -13,6 +13,8 @@ Author: **Sepehr Mahmoudian**. See [authorship and citation](AUTHORSHIP.md).
   <strong>Shared-exclusions partial information decomposition and mutual-information estimators in Rust.</strong>
 </p>
 
+Stable categorical calculations accept instrument states or a fixed physical coding. The experimental logistic fit reports a numerical stopping result. The experimental neighbour-count heuristic can grow with sample size even when its inputs are independent. [Fixed categorical coding](audit/evidence/fixed-categorical-coding/README.md) · [Logistic solver](crates/pid-core/src/logistic.rs) · [Heuristic bounds](audit/evidence/heuristic-sketch-sample-size.md)
+
 ## What the signed categorical results add
 
 Four examples compare Makkeh, Gutknecht and Wibral's categorical shared exclusions (MGW) with simpler calculations on the **same counts**. An information contribution, also called an *atom*, is the part assigned to one combination of sources. Its signed mean can be negative. Natural logarithms give units of nats.
@@ -288,7 +290,7 @@ Selected boundaries that are easy to confuse:
 | Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, cross-fit, exact-reduction, and represented-coordinate compatibility contracts. The [revision-4 arithmetic assurance](PID2_REPRESENTED_COORDINATE_ASSURANCE.md) and its [checked PDF](output/pdf/pid2-represented-coordinate-assurance.pdf) derive the represented-coordinate policy, exact witnesses, counterexamples, checker boundary, costs, and nonclaims. They check bounded binary64 fixtures, hostile mutations, and binding parity; they do not validate estimator consistency, population support, calibration, external replication, or all possible input tuples. |
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
 | General mixed-variable shared exclusions | Schick-Poland et al.'s arXiv v2 proposes an auxiliary-indicator/RCP/Radon–Nikodým construction for a finite source family under stated Radon/Borel premises, intended to cover discrete, continuous, and mixed variables. pid-rs neither implements it nor adjudicates pointwise existence or version-independence at null conditioning events or for target-local Radon–Nikodým representatives. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
-| Heuristics / Lorentz KSG | Heuristics are project-defined research baselines; Lorentz KSG is a paper-derived research adaptation. Neither has a pid-rs consistency result for the claimed target setting. |
+| Heuristics / Lorentz KSG | The project-defined `heuristic_sketch` score has a lower bound that grows with sample size even under independence. Use it only as a formula diagnostic. The other heuristics and the paper-derived Lorentz KSG adaptation have no pid-rs consistency result for their target settings. [Proof and finite checks](audit/evidence/heuristic-sketch-sample-size.md) |
 | Shannon redundancy/vulnerability | Target-based $\bar r$ and $\bar v$ use mutual information about a specified target. The project-defined $\mathrm{Red}^{\circ}$ and $\mathrm{Vul}^{\circ}$ use only the source entropies. The complete source tuple as target gives the special case below. [Definitions and arithmetic](audit/research/normalized-shannon-arithmetic/README.md) |
 | Resampling and testing | Moving-block bootstrap, permutation schemes, and BH/BY use cited or standard procedures; pid-rs adds typed assumptions, failure retention, and provenance, not a generic calibration theorem. |
 | Run logs and Python bindings | Project engineering around the estimator code; no statistical-method paper is claimed for the schema, replay tooling, wrappers, or result classes. |
@@ -599,7 +601,13 @@ redundancy equal to $I(S_1;S_2)$, which is zero for these independent sources. T
 axiom, not every PID axiom; properties established for a functional in its defining paper and
 broader PID desiderata should be stated separately.
 
-When starting from continuous measurements, opt into equal-width binning explicitly:
+A physical rule can turn a measured quantity into categorical states. For example, the sign of
+a force trend gives the three states negative, zero and positive. The direct categorical function
+takes those labels. Its atoms describe the encoded readings. Record the rule, its boundary
+cases and any data used to choose it. [Worked sensor example](audit/research/robot-wrist-slope-signs/EXPOSITION.md)
+
+To learn equal-width bins from training rows, fit the transform once and reuse its edges on the
+evaluation rows.
 
 ```rust,ignore
 use pid_core::stable::quantized::{
@@ -1140,13 +1148,13 @@ entries with no dedicated paper, is in [`METHODS.md`](METHODS.md).
 | Component | Reference |
 |---|---|
 | KSG mutual information | Kraskov, Stögbauer & Grassberger (2004), *Physical Review E* 69, 066138 |
-| Discrete shared exclusions | Makkeh, Gutknecht & Wibral (2021), *Physical Review E* 103, 032149; [Abzinger/SxPID](https://github.com/Abzinger/SxPID) |
-| PID parthood foundation | Gutknecht, Wibral & Makkeh (2021), [arXiv:2008.09535](https://arxiv.org/abs/2008.09535) |
-| Continuous shared exclusions | Ehrlich et al. (2024), [Physical Review E 110, 014115](https://doi.org/10.1103/PhysRevE.110.014115); [external validation code](https://gitlab.gwdg.de/wibral/continuouspidestimator) |
-| $I_{\min}$ PID | Williams & Beer (2010), [arXiv:1004.2515](https://arxiv.org/abs/1004.2515) |
-| $\bar r$ and $\bar v$ | Gutknecht et al. (2025), [arXiv:2504.15779](https://arxiv.org/abs/2504.15779) |
+| Discrete shared exclusions | Makkeh, Gutknecht & Wibral (2021). [Defining paper](https://doi.org/10.1103/PhysRevE.103.032149) · [Reference implementation](https://github.com/Abzinger/SxPID) |
+| PID parthood foundation | Gutknecht, Wibral & Makkeh (2021). [Published paper](https://doi.org/10.1098/rspa.2021.0110) · [Preprint v2](https://arxiv.org/abs/2008.09535v2) |
+| Continuous shared exclusions | Ehrlich et al. (2024), [Physical Review E 110, 014115](https://doi.org/10.1103/PhysRevE.110.014115) · [Authors’ estimator code](https://gitlab.gwdg.de/wibral/continuouspidestimator) |
+| $I_{\min}$ PID | Williams & Beer (2010). [Defining preprint, v1](https://arxiv.org/abs/1004.2515v1) |
+| $\bar r$ and $\bar v$ | Gutknecht et al. called the degrees *Shannon invariants* in 2025. The November 2026 revision calls them *Shannon observables*. [2025 definitions, v1](https://arxiv.org/abs/2504.15779v1) · [2026 revision, v2](https://arxiv.org/abs/2504.15779v2) |
 | O-information | Rosas et al. (2019), [Physical Review E 100, 032305](https://doi.org/10.1103/PhysRevE.100.032305) |
-| kNN sample complexity | Gao, Ver Steeg & Galstyan (2015), [arXiv:1411.2003](https://arxiv.org/abs/1411.2003) |
+| kNN sample complexity | Gao, Ver Steeg & Galstyan (2015). [Published paper](https://proceedings.mlr.press/v38/gao15.html) |
 
 If you use this software in academic work, cite the specific method papers identified in
 [`METHODS.md`](METHODS.md) and the software metadata in [`CITATION.cff`](CITATION.cff).

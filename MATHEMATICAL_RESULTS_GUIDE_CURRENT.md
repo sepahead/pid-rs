@@ -72,6 +72,8 @@ The torque-only mean is **−0.244337 nats per episode**. The force-with-torque 
 
 ## What a fitted quantizer fixes
 
+The direct categorical functions accept finite state labels. A fixed physical rule can supply them, such as the sign of a sensor change. [Eight observations with fixed labels](audit/evidence/fixed-categorical-coding/README.md)
+
 A **quantizer** assigns each raw observation a categorical label. A fitted quantizer depends on the training data. The map must be measurable using only the training information and its current raw input. After conditioning on training, this fixes the map. The evaluation rows must then be conditionally independent and identically distributed for the stated convergence result. Independent held-out rows are one way to meet the premise. Pooling outputs from different fitted maps leads to a different question. [Convergence theorem and conditional counterexamples](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md)
 
 Let $Q$ be the fitted map, $W$ one raw evaluation row and $P_Q$ the conditional law of $Q(W)$ given training. The categorical estimate targets the chosen quantity of $P_Q$. Nonlinearity matters. For example, if separate training outcomes select opposite constant labels for every variable, each conditional law has zero entropy. An equally weighted mixture of the two point masses has entropy $\ln 2$ nats.
@@ -347,3 +349,13 @@ Write $x$ and $y$ for one plus the numbers of other rows with source or target d
 ![Ten possible count pairs and the source and target distances of four neighbours from one row](audit/research/strict-neighbour-count-geometry/figures/counts-and-distances.svg)
 
 For three rows at rank one, the smallest local contribution is $-1/2$ nat. Its smallest possible mean over all three anchors is $-1/3$ nat. For one fixed five-row two-source example the exact mean is $1/4$ nat. The Rust report gave 0.25000000000000017 nat. The five Lean declarations cover integer distance triples. The real-coordinate and sample-mean proofs are separate written arguments. A count test alone does not identify the two population functionals. [Construction, open sets, sample means and exact examples](audit/research/strict-neighbour-count-geometry/README.md) · [Illustrated report](output/pdf/strict-neighbour-count-geometry.pdf) · [KSG estimator](https://doi.org/10.1103/PhysRevE.69.066138) · [Continuous shared exclusions](https://doi.org/10.1103/PhysRevE.110.014115)
+
+---
+
+### Which numerical result has a finite interpretation?
+
+**Fitting a probability.** Binary logistic regression fits a probability to an outcome with two possible labels. When a feature separates the two labels, an unpenalized fit can keep increasing its coefficients. A small gradient alone can then give a misleading signal that the fit is complete. The unpenalized solver checks how its fitted scores order the two classes. Its stopping rule checks the largest change in fitted log odds. It also checks a gradient and curvature measure called the Newton decrement. In the test panel it returned errors for six separated or weakly separated designs. It also fitted three finite cases with a ridge penalty and a distant observation. The checks describe those designs. They give no general test for the existence of an unpenalized optimum. [Solver and regression tests](crates/pid-core/src/logistic.rs) · [Method and limits](METHODS.md)
+
+**A score that grows with sample size.** The experimental neighbour-count heuristic uses target counts inside two source-dependent radii. With the neighbour rank fixed, its lowest possible score grows as half the natural logarithm of the number of observations, up to a bounded term. Independent sources and target can attain positive scores. On four specified observations at rank two, the lower and upper endpoints are about 1.262 and 1.679 nats. The exact count bounds and the floating-point tests concern this project-defined heuristic. [Derivation and Rust comparison](audit/evidence/heuristic-sketch-sample-size.md)
+
+**What the recorded configuration means.** The uncertainty experiment chooses circular blocks of observations from a random starting position and samples blocks without replacement. Its run log now records that procedure. A separate exact binary64 sum keeps 34 unsigned 64-bit words for each sign on supported 32- and 64-bit systems, or 68 words in total. The normalized invariant report uses it for both a sum and a quotient. [Experiment and run-log test](crates/pid-core/src/bin/exp0.rs) · [Arithmetic and storage](NUMERICAL_ASSURANCE.md)

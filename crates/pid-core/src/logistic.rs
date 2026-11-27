@@ -24,8 +24,8 @@
 //! is Newton's method (iteratively reweighted least squares): each step solves the
 //! penalized normal equations `(XᵀWX + λR) Δ = Xᵀ(y - p) - λR β` with `W = diag(p(1-p))`
 //! and `R = diag(0, 1, …, 1)`. With `λ > 0` the penalized Hessian is positive
-//! definite, so the solve is via Cholesky (LU fallback) and perfect separation does
-//! not blow the weights up.
+//! definite when both labels occur. The implementation uses Cholesky with an LU fallback.
+//! Floating-point solves can still fail on ill-conditioned designs.
 //!
 //! Fitting is fully deterministic (no randomness): identical inputs yield identical
 //! coefficients. Cost is `O(iters · (n·d² + d³))`; for high-dimensional embeddings,
@@ -93,13 +93,30 @@ fn sigmoid(z: f64) -> f64 {
     }
 }
 
+// An intercept shift can put zero between ordered class scores. In exact arithmetic this
+// yields a separating direction if at least one score is strictly on its class side.
+// In binary64, treat such an observed ordering as an inconclusive unpenalized fit.
+fn ordered_class_scores(scores: &[f64], labels: &[bool]) -> bool {
+    let mut ranges = [(f64::INFINITY, f64::NEG_INFINITY); 2];
+    for (&score, &positive) in scores.iter().zip(labels) {
+        let (minimum, maximum) = &mut ranges[usize::from(positive)];
+        *minimum = minimum.min(score);
+        *maximum = maximum.max(score);
+    }
+    let [(min_negative, max_negative), (min_positive, max_positive)] = ranges;
+    let nonconstant = min_negative.min(min_positive) < max_negative.max(max_positive);
+    nonconstant && (max_negative <= min_positive || max_positive <= min_negative)
+}
+
 impl LogisticRegression {
     /// Fit the model on design matrix `x` (`n × d`) and boolean labels `y` (length `n`).
     ///
     /// # Errors
     /// Returns an error if dimensions mismatch, inputs are non-finite, the config is
-    /// invalid, the labels contain only one class, the penalized Hessian is singular (only
-    /// possible with `l2 == 0` on degenerate data), or Newton iteration does not converge.
+    /// invalid, the labels contain only one class, the linear solve fails, or the numerical
+    /// convergence criteria are inconclusive. An unpenalized fit also rejects separated or
+    /// touching class ranges on a nonconstant fitted score. Other separating directions can
+    /// exist. A singular design can admit finite fitted logits with nonunique coefficients.
     pub fn fit(x: MatRef<'_>, y: &[bool], cfg: &LogisticRegressionConfig) -> PidResult<Self> {
         Self::fit_with_budget(x, y, cfg, ResourceBudget::default())
     }
@@ -276,25 +293,40 @@ impl LogisticRegression {
                 xa[(i, active_j + 1)] = v;
             }
         }
-        let yv = na::DVector::<f64>::from_iterator(n, y.iter().map(|&b| if b { 1.0 } else { 0.0 }));
 
         // Ridge selector: 0 for the intercept, l2 for the weights.
         let mut ridge = na::DVector::<f64>::from_element(p, cfg.l2);
         ridge[0] = 0.0;
 
         let mut beta = na::DVector::<f64>::zeros(p);
+        let mut eta = na::DVector::<f64>::zeros(n);
         let mut converged = false;
         let mut n_iters = 0;
         for iter in 0..cfg.max_iters {
             cancellation.check("LogisticRegression::fit", iter, cfg.max_iters)?;
             n_iters = iter + 1;
-            // Predictions and IRLS weights.
-            let eta = &xa * &beta;
-            let pvec = eta.map(sigmoid);
-            let w = pvec.map(|pi| (pi * (1.0 - pi)).max(1e-12));
+            // Evaluate each label's residual and the Bernoulli curvature from the smaller
+            // tail. Forming 1 - sigmoid(eta) would prematurely discard a positive tail.
+            let mut residual = na::DVector::zeros(n);
+            let mut w = na::DVector::zeros(n);
+            for i in 0..n {
+                let e = (-eta[i].abs()).exp();
+                let tail = e / (1.0 + e);
+                let error_probability = if y[i] == (eta[i] >= 0.0) {
+                    tail
+                } else {
+                    1.0 - tail
+                };
+                residual[i] = if y[i] {
+                    -error_probability
+                } else {
+                    error_probability
+                };
+                w[i] = tail * (1.0 - tail);
+            }
 
             // Gradient of penalized NLL: Xᵀ(p - y) + λR β.
-            let mut grad = xa.tr_mul(&(&pvec - &yv));
+            let mut grad = xa.tr_mul(&residual);
             for k in 0..p {
                 grad[k] += ridge[k] * beta[k];
             }
@@ -349,6 +381,18 @@ impl LogisticRegression {
                 });
             }
 
+            eta = &xa * &beta;
+            if eta.iter().any(|value| !value.is_finite()) {
+                return Err(PidError::NumericalInstability {
+                    context: "LogisticRegression::fit: non-finite fitted logit",
+                });
+            }
+            if cfg.l2 == 0.0 && ordered_class_scores(eta.as_slice(), y) {
+                return Err(PidError::NumericalInstability {
+                    context: "LogisticRegression::fit: unpenalized fitted class ranges are separated or touch",
+                });
+            }
+
             if max_logit_delta <= cfg.tol && decrement_sq.sqrt() <= cfg.tol {
                 converged = true;
                 break;
@@ -389,7 +433,8 @@ impl LogisticRegression {
         self.n_iters
     }
 
-    /// Whether the Newton iteration converged within `max_iters`.
+    /// Whether the numerical logit-change and Newton-decrement tests passed within `max_iters`.
+    /// These tests alone do not certify existence or identifiability of an unpenalized estimate.
     pub fn converged(&self) -> bool {
         self.converged
     }
@@ -616,6 +661,77 @@ mod tests {
         let preds = model.predict(x.as_ref(), 0.5).unwrap();
         let acc = preds.iter().zip(&y).filter(|(a, b)| a == b).count() as f64 / n as f64;
         assert!(acc > 0.95, "separable accuracy {acc}");
+    }
+
+    #[test]
+    fn ordered_scores_allow_a_shared_boundary_in_either_orientation() {
+        let labels = [false, false, true, true];
+        assert!(ordered_class_scores(&[-1.0, 0.0, 0.0, 2.0], &labels));
+        assert!(ordered_class_scores(&[1.0, 0.0, 0.0, -2.0], &labels));
+        assert!(!ordered_class_scores(&[0.0; 4], &labels));
+        assert!(!ordered_class_scores(&[-1.0, 2.0, 0.0, 1.0], &labels));
+    }
+
+    #[test]
+    fn unpenalized_fit_rejects_ordered_classes_including_a_shared_boundary() {
+        let config = LogisticRegressionConfig {
+            l2: 0.0,
+            ..Default::default()
+        };
+        let separated = [-40.0, 0.0, 0.0, 4.0, 5.0, 1.0, 2.0, 3.0, 40.0, -50.0];
+        let labels = [true, true, false, true, false];
+        let design = MatRef::new(&separated, labels.len(), 2).unwrap();
+        for y in [labels, labels.map(|label| !label)] {
+            assert!(matches!(
+                LogisticRegression::fit(design, &y, &config),
+                Err(PidError::NumericalInstability { .. })
+            ));
+        }
+
+        let x = MatRef::new(&[-1.0, 0.0, 0.0, 1.0], 4, 1).unwrap();
+        let y = [false, true, false, true];
+        let loose = LogisticRegressionConfig {
+            tol: 10.0,
+            ..config
+        };
+        assert!(matches!(
+            LogisticRegression::fit(x, &y, &loose),
+            Err(PidError::NumericalInstability { .. })
+        ));
+    }
+
+    #[test]
+    fn ridge_fits_a_distant_observation_using_bernoulli_curvature() {
+        // On the four other observations, let p = sigmoid(b-w). The two score equations
+        // give w = 2p and sigmoid(b+w) = (2-p)/3. The distant observation's score
+        // is smaller than 1e-2000 throughout the neighbourhood of this optimum.
+        let y = [false, true, true, false, true];
+        for far in [1e4, 1e8, 1e12] {
+            let data = [-1.0, 1.0, 1.0, 1.0, far];
+            let model = LogisticRegression::fit(
+                MatRef::new(&data, y.len(), 1).unwrap(),
+                &y,
+                &LogisticRegressionConfig::default(),
+            )
+            .unwrap();
+            assert!((model.weights()[0] - 0.5833767441530806).abs() < 1e-8);
+            assert!((model.intercept() + 0.3038213916675162).abs() < 1e-8);
+        }
+    }
+
+    #[test]
+    fn overlapping_classes_can_have_a_saturated_fitted_probability() {
+        let data = [-1.0, -1.0, -1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 10000.0];
+        let y = [true, false, false, false, true, true, true, false, true];
+        let x = MatRef::new(&data, y.len(), 1).unwrap();
+        let config = LogisticRegressionConfig {
+            l2: 0.0,
+            ..Default::default()
+        };
+        let model = LogisticRegression::fit(x, &y, &config).unwrap();
+        assert!(model.intercept().abs() < 1e-8);
+        assert!((model.weights()[0] - 3.0_f64.ln()).abs() < 1e-8);
+        assert_eq!(model.predict_proba(x).unwrap()[8], 1.0);
     }
 
     #[test]

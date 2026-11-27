@@ -55,7 +55,7 @@ nonclaims, and future work. Section 12 gives the primary references and exact re
 | Defining arithmetic standard | IEEE 754-2019 supplies binary64 formats and round-to-nearest, ties-to-even semantics. It does not define pid-rs's accumulator layout or prove the Rust code. |
 | Classical numerical background | Exact or highly accurate summation with a wide accumulator is classical. Kulisch and Bohlender describe exact fixed-point accumulation followed by one rounding. Neal gives fast exact superaccumulator algorithms. Rump, Ogita, and Oishi analyze accurate floating-point summation. |
 | PID sources | Makkeh--Gutknecht--Wibral define the categorical shared-exclusions functional. Williams--Beer define $I_{\min}$. Ehrlich et al. define the continuous shared-exclusions PID construction. KSG supplies the mutual-information estimator used in the continuous composition. These objects remain distinct. |
-| Project-defined contribution | pid-rs selects a fixed 34-limb, two-magnitude binary64 reduction policy and applies it only at witnessed call sites. It adds quantizer-reachability diagnostics, resource contracts, and bounded positive and negative evidence. This is implementation, API, diagnostic, and assurance work. It is not claimed as a new summation theorem or a new PID measure. |
+| Project-defined contribution | pid-rs selects binary64 reduction with 34 unsigned 64-bit words per sign and applies it only at witnessed call sites. It adds quantizer-reachability diagnostics, resource contracts, and bounded positive and negative evidence. This is implementation, API, diagnostic, and assurance work. It is not claimed as a new summation theorem or a new PID measure. |
 | Domain and units | Reducer inputs are finite binary64 values. PID outputs are in nats. Quantizer inputs are finite binary64 training and evaluation coordinates. |
 | Open correspondence edges | There is no deductive Rust-to-mathematics refinement proof, no global elementary-function error theorem, no universal estimator guarantee, and no application-validity theorem. |
 
@@ -882,8 +882,8 @@ could hide that the requested quantizer exceeded the available binary64 resoluti
 
 ## 6. Cost and latency
 
-The reducer has fixed $L=34$ limbs. One accumulator holds a positive and negative array with a
-544-byte limb payload plus one `usize` accepted-term counter. SxPID retains these accumulators.
+On 32- and 64-bit targets, each sign has $L=34$ unsigned 64-bit words. The two arrays contain
+68 words in total (544 bytes). One separate `usize` counter records the number of accepted terms. SxPID retains these accumulators.
 Its public preflight charges their compiled `size_of` value. The scalar $I_{\min}$ PID2 and
 continuous PID2 reducers are short-lived stack values. Their public `estimated_bytes` fields do not
 separately charge that stack storage.
@@ -1038,14 +1038,16 @@ evidence status. Reviewer preference does not change that status.
 | 5. Kahan instead of Neumaier | Another established compensated route. | Rejected for the same contract mismatch as route 2. Neither method gives an exact represented-input sum for all orders. |
 | 6. Arbitrary-precision rational production sum | Direct exact-real representation of the binary64 operands. | Rejected for routine calls because dynamic allocation, denominator bookkeeping, and unbounded resource behavior are unnecessary for a fixed binary format. Retained in the bounded Python oracle. |
 | 7. Dynamic big-integer common-grid sum | Exact and simpler to reason about than floating compensation. | Rejected for production because heap allocation and data-dependent capacity complicate the public resource envelope. Useful as a possible independent checker. |
-| 8. Fixed two-magnitude superaccumulator | Exact common-grid sum, one final rounding, fixed storage, and permutation independence. | Selected only at witnessed final-average and two-source residual sites. The 34-limb bound follows from binary64 and `usize` term capacity. |
+| 8. Fixed two-magnitude superaccumulator | Exact common-grid sum, one final rounding, fixed storage, and permutation independence. | Selected in August for the witnessed final averages and two-source residuals. Each sign uses 34 limbs, as required by the binary64 and `usize` bounds. |
 | 9. Floating-point expansion | Can retain rounding residues efficiently and support reproducible sums. | Not selected: a canonical correctly rounded result and fixed worst-case resource proof would require an additional algorithm and proof effort. Reconsider only if profiling shows the fixed-limb route is material. |
 | 10. Hardware or compiler-specific long accumulator | Potentially much faster on supported targets. | Rejected as the portable repository contract because availability and semantics differ across targets. A future acceleration must be bit-identical to route 8. |
 | 11. Return an interval or exact dyadic object | Exposes arithmetic uncertainty or exact represented sum. | Not selected because it changes public result types and downstream meaning. It remains a research/API alternative, not a compatible repair. |
 | 12. Optional order-dependent fast mode | Preserves old cost for latency-sensitive users. | Rejected because scientific output would depend on a mode with different scalar semantics. Optimize only under exact-output parity. |
 
-The selected design is deliberately mixed. It uses route 8 at the explicitly named, retained
-final-averaging and two-source residual sites.
+The August selection used route 8 at the final averages and two-source residuals described above.
+On 27 November four production modules use the reducer. They are `sxpid`, `discrete_pid`,
+`pid2` and `invariants`. In the fourth, `normalized_invariant_report` rounds the sum and its
+ratio to the positive joint mutual information directly from the represented operands.
 It uses route 1 where no retained defect justifies scalar churn. Quantizer reachability uses
 fail-closed diagnostics. This is not inconsistency. The call sites have different evidence and
 different semantic roles.
@@ -1077,7 +1079,7 @@ boundary. It is internal, correlated project review rather than external replica
 | 18 | Oracle diversity | Python avoids pid-rs imports but remains correlated by the shared specification. |
 | 19 | Formal-method boundary | No Lean-to-Rust refinement or universal floating-point proof is asserted. |
 | 20 | Latency | No new estimator is added. Fixed costs are explicit and workload costs remain benchmark questions. |
-| 21 | Bit-width derivation | 2,098 value bits plus `usize::BITS` carry bits give 34 limbs on supported targets. |
+| 21 | Bit-width derivation | 2,098 value bits plus `usize::BITS` carry bits give 34 limbs for each sign on supported targets. |
 | 22 | Counter saturation | An addition at `usize::MAX` is rejected without mutating accumulator state. |
 | 23 | Carry saturation | Defensive carry-beyond-capacity paths roll back rather than return a corrupted sum. |
 | 24 | Final rounding | Guard, sticky, halfway, carry-out, and overflow branches are all represented in the oracle corpus. |
@@ -1228,7 +1230,7 @@ repair does not need them.
    [manuscript](https://grouper.ieee.org/groups/1788/email/pdfVGPWGgR1kE.pdf). Classical background
    for exact fixed-point accumulation followed by one final rounding. Its worked format uses a
    custom 9-bit exponent, 54-bit significand, and `ubit`. It is not an IEEE-binary64 layout or a
-   specification for pid-rs's 34-limb accumulator.
+   specification for the pid-rs accumulator with 34 unsigned 64-bit words per sign.
 3. A. Neumaier, “Rundungsfehleranalyse einiger Verfahren zur Summation endlicher Summen,” *ZAMM*
    54(1), 39--51 (1974),
    [DOI record](https://doi.org/10.1002/zamm.19740540106). Original source for
@@ -1292,3 +1294,5 @@ The first two commands must reconstruct the committed corpus, digest, and genera
 exactly. The Rust command then exercises the production array and streaming implementations. These
 commands are necessary regression evidence for this numerical layer. They are not a substitute for
 the repository's estimator, formal, cross-platform, Python-wheel, documentation, or release gates.
+
+**Author and citation.** Sepehr Mahmoudian (2026), *Represented-Binary64 Assurance for PID Reconstruction and Quantization*. Include the exact repository commit or release when citing this report. [Software citation](CITATION.cff)

@@ -551,9 +551,10 @@ pub struct Pid2CrossFitReport {
 ///
 /// The redundancy term follows `cfg.isx.method`. `IsxMethod::EhrlichKsg` (the default) is the
 /// cited restricted-domain construction; the crate does not claim a general consistency theorem.
-/// The other methods are experimental baselines, and combining them with the KSG MI terms
-/// mixes estimators with different bias profiles — interpret such atoms with care (see the `isx`
-/// module docs).
+/// The other methods are experimental baselines. With `HeuristicSketch`, the redundancy
+/// score has a lower bound that grows with sample size at fixed neighbor rank, even under
+/// independence. Combining this score with finite MI terms can produce large opposing
+/// diagnostic coordinates or fail the reconstruction guard. Complete reports require EhrlichKsg.
 ///
 /// Relative source units/preprocessing are part of the continuous shared-exclusions estimand;
 /// record them and do not compare atoms across schemes. For a required MI `I(X;T)`, `X` denotes

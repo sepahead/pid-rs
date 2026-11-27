@@ -105,10 +105,12 @@ pub enum IsxMethod {
     ///
     /// Note: This is the default method for `IsxConfig`.
     EhrlichKsg,
-    /// Experimental heuristic sketch estimator.
-    ///
-    /// Provided as an explicit, clearly-labelled research baseline only. Synthetic checks can
-    /// characterize bounded cases but do not make it an estimator of the cited functional.
+    /// Historical sample-size-dependent diagnostic. For an accepted sample of size `n` and
+    /// neighbor rank `k`, its exact-arithmetic score lies between
+    /// `(3*psi(k) + psi(n))/2` and `psi(k) + psi(n)`, where `psi` is the digamma function.
+    /// Both endpoints can occur. At fixed `k` the lower bound grows without limit, including
+    /// on tie-free inputs from independent sources and target. Compare this score only as a
+    /// formula diagnostic; it cannot estimate finite population shared information.
     #[cfg(feature = "experimental-heuristics")]
     HeuristicSketch,
     /// Approximate shared-exclusions redundancy by taking the samplewise minimum

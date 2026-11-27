@@ -106,8 +106,13 @@ fn main() -> Result<(), pid_core::PidError> {
 }
 ```
 
-For numeric inputs, fit `stable::quantized::EqualWidthQuantizer` on training rows and apply its
-fixed edges to evaluation rows. Exact edges, separate domain-tagged hashes of the training input,
+A fixed rule can also turn measured values into categorical states. For example, use negative,
+zero and positive as the three signs of a sensor trend. Supply the resulting labels to the direct
+categorical function. Its atoms describe these states. State how you chose the rule and how you
+treat ties. [Worked wrist-sensor example](../../audit/research/robot-wrist-slope-signs/EXPOSITION.md)
+
+For the project's fitted equal-width method, fit `stable::quantized::EqualWidthQuantizer` on
+training rows and apply its fixed edges to evaluation rows. Exact edges, separate domain-tagged hashes of the training input,
 transform input, and categorical output, scaling description, out-of-range policy, and occupancy
 travel in `QuantizationReport`. This defines a quantized estimand; it does not estimate continuous
 PID. Use `stable::quantized::fitted_quantized_sxpid2`,

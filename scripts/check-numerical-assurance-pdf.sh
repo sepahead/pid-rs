@@ -212,6 +212,7 @@ forbidden_action_kinds = {
 allowed_action_kinds = {"/GoTo", "/GoToR", "/URI"}
 action_counts = {kind: 0 for kind in allowed_action_kinds}
 expected_repository_uris = {
+    "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
     "https://github.com/sepahead/pid-rs/blob/main/"
     "PID2_REPRESENTED_COORDINATE_ASSURANCE.md",
     "https://github.com/sepahead/pid-rs/blob/main/"
@@ -261,7 +262,7 @@ if len(form_xobjects) != 2:
     fail(f"canonical figure-form inventory changed: {len(form_xobjects)}")
 if observed_repository_uris != expected_repository_uris:
     fail(f"repository-navigation URI inventory changed: {sorted(observed_repository_uris)}")
-expected_action_counts = {"/GoTo": 34, "/GoToR": 0, "/URI": 15}
+expected_action_counts = {"/GoTo": 34, "/GoToR": 0, "/URI": 16}
 if action_counts != expected_action_counts:
     fail(f"navigation inventory changed: {action_counts}")
 print(

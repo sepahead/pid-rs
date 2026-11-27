@@ -1,0 +1,68 @@
+endpoint	4	1	false	false	3fe5b990b1cb3fb4
+endpoint	4	1	false	true	3fe5b990b1cb3fb4
+endpoint	4	1	true	false	bfce6f128e285680
+endpoint	4	1	true	true	bfce6f128e285680
+endpoint	4	2	false	false	3ffadcc858e59fd9
+endpoint	4	2	false	true	3ffadcc858e59fd9
+endpoint	4	2	true	false	3ff4321dae3af52f
+endpoint	4	2	true	true	3ff4321dae3af52f
+endpoint	4	3	false	false	40016e642c72cfec
+endpoint	4	3	false	true	40016e642c72cfec
+endpoint	4	3	true	false	4000190ed71d7a97
+endpoint	4	3	true	true	4000190ed71d7a97
+endpoint	8	1	false	false	3ff703cac90ca249
+endpoint	8	1	false	true	3ff703cac90ca249
+endpoint	8	1	true	false	3fc22cf73273b338
+endpoint	8	1	true	true	3fc22cf73273b338
+endpoint	8	2	false	false	400381e564865124
+endpoint	8	2	false	true	400381e564865124
+endpoint	8	2	true	false	3ffa459ee64e7666
+endpoint	8	2	true	true	3ffa459ee64e7666
+endpoint	8	7	false	false	400f1b7efe1feabe
+endpoint	8	7	false	true	400f1b7efe1feabe
+endpoint	8	7	true	false	400e8935d98da19a
+endpoint	8	7	true	true	400e8935d98da19a
+endpoint	16	1	false	false	40014f75263c9aee
+endpoint	16	1	false	true	40014f75263c9aee
+endpoint	16	1	true	false	3fe0265d50098062
+endpoint	16	1	true	true	3fe0265d50098062
+endpoint	16	2	false	false	40094f75263c9aed
+endpoint	16	2	false	true	40094f75263c9aed
+endpoint	16	2	true	false	4000099754026018
+endpoint	16	2	true	true	4000099754026018
+endpoint	16	15	false	false	4015a95421144408
+endpoint	16	15	false	true	4015a95421144408
+endpoint	16	15	true	false	40158731fef221e6
+endpoint	16	15	true	true	40158731fef221e6
+endpoint	32	1	false	false	4006fb85d60320fa
+endpoint	32	1	false	true	4006fb85d60320fa
+endpoint	32	1	true	false	3feb7e7eaf968c78
+endpoint	32	1	true	true	3feb7e7eaf968c78
+endpoint	32	2	false	false	400efb85d60320f9
+endpoint	32	2	false	true	400efb85d60320f9
+endpoint	32	2	true	false	4002df9fabe5a31e
+endpoint	32	2	true	true	4002df9fabe5a31e
+endpoint	32	31	false	false	401b78a0d30e8a37
+endpoint	32	31	false	true	401b78a0d30e8a37
+endpoint	32	31	true	false	401b681cb2064826
+endpoint	32	31	true	true	401b681cb2064826
+sample	8	400664f195495d55	3fb3bbbbbbbbbbc8	bf74b94b94b94be0	3fb5555555555558	400664f195495d55
+pid2	8	accepted	400664f195495d55	c005c713b76b7f77	c0066f4e3b13b9fb	40067c1b07e086c7
+report	8	pid2_isx_report	complete PID2 reports require the cited IsxMethod::EhrlichKsg construction; heuristic scalar baselines do not have complete neighborhood reports
+sample	32	40109969341d93e1	3fc0b878e38888c2	3fb69c7c1230f8e6	bf8e78b3be8dbef4	40109969341d93e1
+pid2	32	refused	Pid2Result::from_estimate reconstructed coordinates exceed compatibility guard
+report	32	pid2_isx_report	complete PID2 reports require the cited IsxMethod::EhrlichKsg construction; heuristic scalar baselines do not have complete neighborhood reports
+sample	128	40165feb99262968	3fc2f62edd574734	bfb0cde8d6ee8a0d	3f960359a349b1f8	40165feb99262968
+pid2	128	refused	Pid2Result::from_estimate reconstructed coordinates exceed compatibility guard
+report	128	pid2_isx_report	complete PID2 reports require the cited IsxMethod::EhrlichKsg construction; heuristic scalar baselines do not have complete neighborhood reports
+sample	256	401925b01cd11d32	bf822f56035fb8ce	bf9af6ed71616b22	bfb16663354c37f8	401925b01cd11d32
+pid2	256	refused	Pid2Result::from_estimate reconstructed coordinates exceed compatibility guard
+report	256	pid2_isx_report	complete PID2 reports require the cited IsxMethod::EhrlichKsg construction; heuristic scalar baselines do not have complete neighborhood reports
+refusal	rank_zero	InvalidK { k: 0, n_samples: 4 }
+refusal	rank_n	InvalidK { k: 4, n_samples: 4 }
+refusal	unspecified	SupportContractRequired { context: "isx_redundancy" }
+refusal	epsilon	InvalidConfig { context: "isx_redundancy", message: "tie_epsilon must be exactly 0; strict counting uses next-down semantics" }
+refusal	dimension	SourceDimensionMismatch { context: "isx_redundancy", left_cols: 1, right_cols: 2 }
+refusal	target_duplicate	ObservedContinuousSampleIncompatibility { context: "isx_redundancy", input_index: 2, coordinate: Some(0), unique_values: 3, n_samples: 4, max_multiplicity: 2 }
+refusal	ambiguous	AmbiguousKthNeighborShell { context: "isx_redundancy_heuristic_sketch (s1,target)", query_index: 0, k: 2, radius: 1.0, interior_count: 1, boundary_count: 2 }
+target2	3ffadcc858e59fd9

@@ -1667,9 +1667,11 @@ fn invert2(cum: [f64; 4]) -> [f64; 4] {
 /// Discrete 2-source shared-exclusions PID (`i^sx_∩`).
 ///
 /// Inputs are categorical state labels. Numeric spacing has no meaning: sparse IDs and any
-/// bijective relabeling produce the same decomposition. For continuous measurements, fit and
-/// apply [`crate::stable::quantized::EqualWidthQuantizer`] on training/evaluation rows explicitly,
-/// then pass the resulting categorical matrices here.
+/// bijective relabeling produce the same mathematical decomposition. A fixed rule can map
+/// measured values to finite states, such as negative, zero and positive trend. Supply those
+/// states as labels. For data-dependent equal-width bins, fit
+/// [`crate::stable::quantized::EqualWidthQuantizer`] on the training rows and apply the same
+/// edges to the evaluation rows. Each choice defines a PID for its encoded variables.
 ///
 /// # Example
 /// ```
@@ -2061,8 +2063,11 @@ fn sxpid2_from_states_with_cancellation(
 
 /// Direct empirical-PMF categorical 3-source shared-exclusions PID over the 18-antichain lattice.
 ///
-/// Only equality of complete rows matters. Continuous measurements must first be transformed with
-/// a fitted [`crate::stable::quantized::EqualWidthQuantizer`].
+/// Only equality of complete rows matters. Supply categorical labels from an instrument or
+/// from a specified map to finite states. For example, the sign of a measured change gives
+/// three states with fixed meanings. If you choose fitted equal-width bins, use
+/// [`crate::stable::quantized::EqualWidthQuantizer`] and retain its training and transform
+/// records. The atoms describe the categorical variables supplied to this function.
 pub fn discrete_sxpid3(
     s0: DiscreteMatRef<'_>,
     s1: DiscreteMatRef<'_>,

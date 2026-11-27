@@ -139,6 +139,7 @@ or object-store availability monitor.
 
 Categorical calls take two-dimensional `numpy.int64` arrays. Labels may be signed and arbitrarily
 large within `int64`; only equality matters, and Rust dense-encodes them deterministically.
+An instrument can supply these labels. You can also supply states defined by a fixed physical rule, such as the sign of a force change. If the labels use fitted bin edges, reuse the training edges for evaluation. [Fixed coding example](../../audit/evidence/fixed-categorical-coding/README.md)
 The stable binding returns only averaged atoms and therefore names their class
 `SxAveragedAtom`; there is no ambiguous `SxAtom` alias. Its immutable `interpretation` records
 the `shared_exclusions_sxpid` measure, `empirical_pmf_average` aggregation, the antichain

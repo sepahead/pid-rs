@@ -7,6 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Check changes in fitted log odds and the Newton decrement before reporting convergence of experimental logistic regression. The regression tests cover separated designs and finite ridge fits with a distant observation.
+- Clarify the two 34-word sign magnitudes in the exact binary64 sum and the normalized invariant report's use of its sum and quotient.
+The optional `exp0` uncertainty summary and run log now identify the random-origin circular block sampler. The scheme name enters the configuration hash when subsampling is enabled. [Sampling assumptions and earlier records](KNOWN_LIMITATIONS.md)
+
+- Clarify which categorical states the direct two- and three-source shared-exclusions functions accept. A fixed physical coding needs no fitted bin edges. Give the train-and-apply procedure for the separate fitted equal-width route. [Native example and prior wording](audit/evidence/fixed-categorical-coding/README.md)
+- Pin the 2025 Shannon degrees to the defining preprint revision and identify the November 2026 revision separately. Link the defining sources for the categorical and continuous methods.
 - Correct the last digit in two displayed calculations of office prediction loss. On 9,752 minutes the gain rounds to −0.003318968 nats per minute. The three printed inputs add to −0.003318969. [Original counts, predictors and calculation](audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10.md)
 
 - Include the dendritic stimulus, third-source budget, and robot copied-target papers in the PDF inventory test. Its original positive test omitted their Markdown and PDF files. The test now checks that each source and PDF is required and that a symbolic source which points to a regular file is refused. [Publication inventory tests](scripts/check-formal-pdf-set-self-test.sh)

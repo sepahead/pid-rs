@@ -275,6 +275,9 @@ pub mod experimental {
         use crate::isx::{isx_redundancy, IsxConfig, IsxMethod};
         use crate::{MatRef, PidResult};
 
+        /// Historical sample-size-dependent score in nats. On admitted inputs its ideal lower
+        /// bound is `(3*psi(k) + psi(n))/2` for sample size `n` and neighbor rank `k`.
+        /// This bound grows even under complete independence. See [`IsxMethod::HeuristicSketch`].
         pub fn heuristic_sketch_baseline(
             s1: MatRef<'_>,
             s2: MatRef<'_>,

@@ -1,5 +1,13 @@
 # Session handoff — updated 25 November 2026
 
+## Numerical corrections from 27 November 2026
+
+The experimental logistic solver checks its stopping condition on separated samples and on distant observations with a finite ridge fit. The method catalog distinguishes this finite test panel from a general existence test. The experimental neighbour-count heuristic has sharp lower and upper bounds that grow with sample size at fixed neighbour rank. The uncertainty run log records the actual random-origin circular block scheme. The binary64 sum has 34 words per sign, including its use in the normalized invariant report. [Logistic solver](crates/pid-core/src/logistic.rs) · [Heuristic bounds](audit/evidence/heuristic-sketch-sample-size.md) · [Numerical assurance](NUMERICAL_ASSURANCE.md)
+
+## Direct categorical inputs and method citations, 27 November 2026
+
+The direct two- and three-source shared-exclusions functions accept finite state labels. An instrument can supply the labels. A fixed physical rule can also define them. When a rule learns equal-width bins, fit its edges on training observations and reuse those edges on evaluation observations. On eight specified observations, changing only the integer names preserved all 54 reported atom values. The citation table identifies both versions of the published Shannon degrees. [Fixed sensor coding and numerical check](audit/evidence/fixed-categorical-coding/README.md) · [Method references](README.md#references)
+
 ## Office prediction loss on 9,752 minutes, 27 November 2026
 
 The two probability forecasts use the same light and CO₂ bins fitted on the training recording. The later recording gives a mean log-loss gain of −0.003318968 nats per minute when CO₂ is added to light. The last digit differs when the three inputs are rounded first. The score report gives the integer counts and a signed interval for the original calculation. A different calculation sets every carbon dioxide label to a constant. The sum of the four absolute changes in the signed contributions rounds to 0.911417033 nats from the counts and 0.911417034 from the previously printed contributions. [Fixed forecasts and score](audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10.md) · [Count-based interval](audit/evidence/occupancy-fixed-predictor-loss-decomposition-2026-09-10/rounding-by-count.json)
