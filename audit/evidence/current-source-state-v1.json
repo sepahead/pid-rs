@@ -201,6 +201,12 @@
       },
       {
         "git_mode": "100644",
+        "path": ".github/workflows/decoded-real-log-import.yml",
+        "sha256": "e67303321ebe4d585966d60d209f35d8e4f59c37adc921ef5759738c34e3b28a",
+        "size_bytes": 3578
+      },
+      {
+        "git_mode": "100644",
         "path": ".github/workflows/finite-smt39-qualification.yml",
         "sha256": "da3ddc7d7b94f201f9471075bceae821e51c68f252969af74112c66582808f31",
         "size_bytes": 3001
@@ -16308,6 +16314,78 @@
         "path": "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
         "sha256": "1eb6173125cd4af33b9af015643361292d944ef3ffc6e450e7098ebfbfaaa6da",
         "size_bytes": 16917
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/BINDINGS.json",
+        "sha256": "b66b2628b942fa11cb710a5e9025c953a2e56711899539f72da3c8f9a38b5b25",
+        "size_bytes": 985
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/BasicRead.lean",
+        "sha256": "fba62b119071f049964c9f8e306a8235626379fd4f10f77585b4cd3cbfad26da",
+        "size_bytes": 586
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/JointRead.lean",
+        "sha256": "b7ad5c57b0a78b17c4ed7faded51684ed0ed3608ffa729c22eef732fba73eab3",
+        "size_bytes": 558
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/README.md",
+        "sha256": "5cc07e6f46dae88c02e638fe6060a2d045fd611419b4659ada8befe96a2379a0",
+        "size_bytes": 5002
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/WrongRealValue.lean",
+        "sha256": "b22d364630ea77dfce572216930f6bd781e0d745febc96cf40bc4ba6b53ed73c",
+        "size_bytes": 112
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/WrongResultType.lean",
+        "sha256": "7ad46cfb2df86626aa5cb78bd58efdbfd3084bb9c48c57d314be4339e5e6a218",
+        "size_bytes": 229
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/basic-cache-identities.json.gz",
+        "sha256": "b710961779abac47bd5adc60221bdfef383016aa668faeb9d016c91c496180b0",
+        "size_bytes": 465532
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/bounded.py",
+        "sha256": "72881ce3a880698e8cc8e272c6e3a7fe119d17ad11dcc91863e83b5084b5cea2",
+        "size_bytes": 4146
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/origins.json",
+        "sha256": "52e2c92954af364b75aa188efa24648ed38594f02bbf15711ebdbdb1cebe3012",
+        "size_bytes": 4674
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/probe.py",
+        "sha256": "d6b77ad19c0e5b0f8432786b18bf43b1a1d97eba82f82675e03fa8f776b1900c",
+        "size_bytes": 14405
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/self_test.py",
+        "sha256": "a520f5cdcc51038d9e4f526ddd46fbb1b09aa8a809e4ccc09e6f2c2cd0dbe685",
+        "size_bytes": 3893
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/decoded-real-log-import/stock-sources.tar.gz",
+        "sha256": "97e83bc31024efc4e255fe4f4a0e4a2f2fbc25b14ea4f8388e630fd8eb1b29e9",
+        "size_bytes": 25411
       },
       {
         "git_mode": "100644",
@@ -40994,8 +41072,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "31f3640daba70d5722c1fcefde0bf2a15d0bc43f6655ed3e3c979651821b67d3",
-    "entry_count": 6808
+    "entries_sha256": "fd62e44ddd08e060ae05369b089f3df2df04ce63a4d5a0c1989a26977dc83ab5",
+    "entry_count": 6821
   },
   "subprojections": [
     {
@@ -41007,8 +41085,8 @@
       ]
     },
     {
-      "entries_sha256": "ac91b65a3d903ad06f3ff5ffe58bc38878685eff5fd5470d6880536d8c038bb5",
-      "entry_count": 2429,
+      "entries_sha256": "0563b53542a6ffd4c6c47e797a6f7b0541b840bc0eef730327f5f741ba84062b",
+      "entry_count": 2441,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
