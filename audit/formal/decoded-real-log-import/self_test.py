@@ -54,13 +54,24 @@ def main():
         rejected(probe.rejected_real,name,b+b)
     rejected(probe.rejected_real,"WrongRealValue",wrong.replace(b"1 = 0",b"1 = 2"))
     rejected(probe.rejected_real,"WrongResultType",wrong_type.replace("ℕ".encode(),b"Bool"))
+    # The original hosted negative stopped before the marked expression on line five.
+    first_error=":1:0: error: cannot import non-`module` JoinProof from `module`\n"
+    for stopped in ("JointRead","WrongResultType"):
+        rejected(probe.rejected_real,"WrongResultType",(stopped+".lean"+first_error).encode())
+
     cached=json.loads(gzip.decompress((HERE/"basic-cache-identities.json.gz").read_bytes()))
     require(len(cached)==9715 and cached["mathlib/Mathlib/Analysis/SpecialFunctions/Log/Basic.olean"]==
             [270064,"b5e6f29c201a62428e3acdeee42aa5292a431d7c01f4c5e8e0f77f3b313ad5fc"],"actual prior object")
     for name in ("BasicRead","JointRead","WrongRealValue","WrongResultType"):
         text=(HERE/(name+".lean")).read_text()
-        imports=re.findall(r"^public import (\S+)$",text,re.M)
-        require(probe.BASIC in imports and set(imports)<={probe.BASIC,"JoinProof"},"scoped imports")
+        lines=text.splitlines()
+        if name in ("JointRead","WrongResultType"):
+            expected_header=["prelude","import JoinProof","import "+probe.BASIC]
+        else:
+            expected_header=["module","public import "+probe.BASIC]
+        require(lines[:len(expected_header)]==expected_header,"exact header and module import order")
+        require(all(not re.match(r"(?:public |private |meta )?import ", line)
+                    for line in lines[len(expected_header):]),"no later import")
         require(not re.search(r"\b(?:axiom|theorem|def|sorry|unsafe|partial|run_tac|native_decide)\b",text),
                 "import-only observer")
     print("Retained 30 original objects, the 9,715 scoped Linux identities, 4 import observers and positive and adverse parser controls.")

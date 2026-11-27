@@ -47,7 +47,7 @@ jobs:
           evidence="$RUNNER_TEMP/decoded-real-log-probe/evidence"
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           git rev-parse HEAD 'HEAD^{tree}' > "$evidence/source.txt"
-          printf '%s  %s\n' b66b2628b942fa11cb710a5e9025c953a2e56711899539f72da3c8f9a38b5b25 "$field/BINDINGS.json" | sha256sum --check --strict
+          printf '%s  %s\n' cbee7f985ff7d4ac62eb5316f4160a641b20f70b881663694f7078ca8134bbfd "$field/BINDINGS.json" | sha256sum --check --strict
           (cd "$field" && python3 -I -S -B - <<'PY'
           from pathlib import Path
           from hashlib import sha256

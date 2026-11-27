@@ -2,6 +2,8 @@
 
 This probe asks whether the exact decoded-count modules and the pinned real logarithm library can share one Lean environment on the observed Ubuntu runner. The original seven decoded-count theorems concern positive rational values. To form the new expression the observer takes the rational value at one table, table part, component and rule, casts it to a real number and applies the natural logarithm. It defines no theorem.
 
+The first Linux run built and freshly checked the two libraries separately. Its joint observer used Lean’s explicit module format. Lean stopped on the first line because that format could not import the earlier stock file. The intended type error in the joint negative test therefore did not run. The revised joint observers use an ordinary import for each library and keep the same expression on line five. The old job and its source remain available. [First Linux execution](https://github.com/sepahead/pid-rs/actions/runs/45927419805)
+
 ## Run the fixed inputs
 
 The workflow accepts a push to `review/decoded-real-log-import-20261127` or a manual dispatch on that exact ref after the workflow exists on the default branch. The human release operator selects the repository and commits. Checkout has read-only content access and leaves its credentials outside repository configuration. The acquisition and Lean processes receive a fresh home, a fixed executable search path and no GitHub credentials.
