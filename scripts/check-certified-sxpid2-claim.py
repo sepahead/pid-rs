@@ -56,7 +56,7 @@ EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "5ab6489c2e89745151072da6ff77d3c045b68db7cf26c5b808824100f3dd14d5"
+        "06953e5f8fa382c047b624e76cf13f1f767e9af76a763443e62e8b42f79b6107"
     ),
     "justfile": ("5eef6bbb7d4f0d4ecb42af5f302da20b6943b6db2ced093c07db290708d02032"),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (

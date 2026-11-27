@@ -201,13 +201,77 @@ def controls(root):
     return {"accepted": 1, "refused": refused}
 
 
+
+# The report-label profile has its own historical commit. The later CLI correction
+# changes two held source files. The numeric checker changes only their two digests.
+REPORT_LABEL = "570c9c67800affde745032cd9d7296f29839f2ba"
+CORRECTED_INPUTS = "77f93cfd5a93d613c09357c23bb488769d8bfc32"
+CURRENT_SOURCES = {'crates/pid-core/src/pid2.rs': ('f8cce5ece132a54df30a19f3b867c1296b5325e725408f628143c619ac814146', '8c330ac9d2b4d74dd6938924088fd1cfeb64f958c714e279a3232ae53597aa20'), 'crates/pid-core/src/bin/exp0.rs': ('c2a28c24442f850fa033a8f89ae889ae22c818efddfccbaff75e8b026164924e', '1d6e7d9731b0b33cd3e9134707085f02342f8f6505022ad7478929196951367d')}
+COORDINATE_CHECKER = "scripts/check-pid2-represented-coordinate-v4.py"
+CURRENT_CHECKER_SHA256 = "c25af032b2d4fcd8234eab71ac929bd8ade830164841b7c2cd965dbd5c8f184f"
+
+
+def current_files(root):
+    previous, _, historic = expectation(root)
+    old = {p: previous.blob(root, REPORT_LABEL, p) for p in historic}
+    previous.compare(historic, old, "issued report-label files")
+    required = old.copy()
+    checker = old[COORDINATE_CHECKER]
+    for path, (before, after) in CURRENT_SOURCES.items():
+        revised = previous.blob(root, CORRECTED_INPUTS, path)
+        require(sha(old[path]) == before and sha(revised) == after,
+                f"original or corrected input differs: {path}")
+        require(checker.count(before.encode()) == 1, f"historical checker digest is absent: {path}")
+        checker = checker.replace(before.encode(), after.encode(), 1)
+        required[path] = revised
+    require(sha(checker) == CURRENT_CHECKER_SHA256, "corrected two-field checker differs")
+    required[COORDINATE_CHECKER] = checker
+    return previous, old, required
+
+
+def current_source(root):
+    previous, _, expected = current_files(root)
+    head = git(root, "rev-parse", "--verify", "HEAD^{commit}").decode("ascii").strip()
+    git(root, "merge-base", "--is-ancestor", CORRECTED_INPUTS, head)
+    previous.compare(expected, {p: previous.blob(root, head, p) for p in expected},
+                     "committed current files")
+    previous.compare(expected, {p: previous.regular(root, p) for p in expected},
+                     "working current files")
+    for path in expected:
+        now = git(root, "ls-tree", head, "--", path).split(None, 1)[0]
+        original = git(root, "ls-tree", REPORT_LABEL, "--", path).split(None, 1)[0]
+        require(now == original and now in (b"100644", b"100755")
+                and bool((root / path).stat().st_mode & 0o111) == (now == b"100755"),
+                f"source mode differs: {path}")
+    return {"commit": head, "report_label_commit": REPORT_LABEL, "corrected_inputs": CORRECTED_INPUTS,
+            "protected_files": {p: sha(data) for p, data in expected.items()}}
+
+
+def current_controls(root):
+    previous, old, expected = current_files(root)
+    previous.compare(expected, expected.copy(), "positive control")
+    changed = {p: old[p] for p in (*CURRENT_SOURCES, COORDINATE_CHECKER)}
+    changed["crates/pid-core/src/exact_binary64.rs"] = expected["crates/pid-core/src/exact_binary64.rs"] + b"\n"
+    diagnostics = {}
+    for path, other in changed.items():
+        try:
+            previous.compare(expected, expected | {path: other}, "control")
+        except ValueError as error:
+            require(str(error) == "control differs: " + path, f"wrong diagnosis: {path}")
+            diagnostics[path] = str(error)
+        else:
+            raise ValueError(f"accepted an altered file: {path}")
+    return {"accepted": 1, "refused": diagnostics}
+
 def main():
     cli = argparse.ArgumentParser(description=__doc__)
-    cli.add_argument("operation", choices=("source", "controls"))
+    cli.add_argument("operation", choices=("source", "controls", "current", "current-controls"))
     cli.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[1])
     args = cli.parse_args()
     root = args.repo_root.resolve(strict=True)
-    result = source(root) if args.operation == "source" else controls(root)
+    operations = {"source": source, "controls": controls, "current": current_source,
+                  "current-controls": current_controls}
+    result = operations[args.operation](root)
     print(json.dumps(result, indent=2, sort_keys=True))
 
 

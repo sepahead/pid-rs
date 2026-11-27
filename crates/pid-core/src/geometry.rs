@@ -111,7 +111,8 @@ pub struct DistanceConcentrationStats {
 struct RunningMoments {
     n: u64,
     scale: f64,
-    mean: f64,
+    origin: f64,
+    mean_offset: f64,
     m2: f64,
 }
 
@@ -120,7 +121,8 @@ impl RunningMoments {
         Self {
             n: 0,
             scale: 0.0,
-            mean: 0.0,
+            origin: 0.0,
+            mean_offset: 0.0,
             m2: 0.0,
         }
     }
@@ -132,37 +134,61 @@ impl RunningMoments {
         let Some(next_n) = self.n.checked_add(1) else {
             return false;
         };
-        let magnitude = x.abs();
-        if magnitude > self.scale {
-            let ratio = if self.scale == 0.0 {
-                0.0
-            } else {
-                self.scale / magnitude
-            };
-            self.mean *= ratio;
-            self.m2 *= ratio * ratio;
-            self.scale = magnitude;
+        if self.n == 0 {
+            self.n = next_n;
+            self.origin = x;
+            self.scale = x.abs();
+            return true;
         }
-        let scaled = if self.scale == 0.0 {
+
+        // As in CenteredMoments, use the endpoint nearest zero as the origin of a
+        // one-sided range. Subtract it before scaling to retain nearby spacings.
+        let origin = 0.0_f64.clamp(self.origin.min(x), self.origin.max(x));
+        let scale = self.scale.max(x.abs());
+        let (previous_mean, previous_m2) = if origin != self.origin || scale != self.scale {
+            let ratio = self.scale / scale;
+            let shift = (self.origin - origin) / scale;
+            (
+                self.mean_offset.mul_add(ratio, shift),
+                (self.m2 * ratio) * ratio,
+            )
+        } else {
+            (self.mean_offset, self.m2)
+        };
+        let offset = if scale == 0.0 {
             0.0
         } else {
-            x / self.scale
+            (x - origin) / scale
         };
-        let delta = scaled - self.mean;
-        let next_mean = self.mean + delta / (next_n as f64);
-        let delta2 = scaled - next_mean;
-        let next_m2 = self.m2 + delta * delta2;
+        let delta = offset - previous_mean;
+        let count = next_n as f64;
+        let next_mean = previous_mean + delta / count;
+        // The one-point merge adds delta² * n/(n+1). This avoids subtracting
+        // the newly rounded mean from the observation a second time.
+        let next_m2 = (delta * delta).mul_add(self.n as f64 / count, previous_m2);
         if !next_mean.is_finite() || !next_m2.is_finite() {
             return false;
         }
         self.n = next_n;
-        self.mean = next_mean;
+        self.origin = origin;
+        self.scale = scale;
+        self.mean_offset = next_mean;
         self.m2 = next_m2;
         true
     }
 
     fn mean(&self) -> f64 {
-        self.scale * self.mean
+        self.mean_offset
+            .mul_add(self.scale, self.origin)
+            .clamp(-self.scale, self.scale)
+    }
+
+    fn scaled_mean(&self) -> f64 {
+        if self.scale == 0.0 {
+            0.0
+        } else {
+            (self.origin / self.scale + self.mean_offset).clamp(-1.0, 1.0)
+        }
     }
 
     fn std_population(&self) -> f64 {
@@ -173,10 +199,11 @@ impl RunningMoments {
     }
 
     fn cv_population(&self) -> f64 {
-        if self.n == 0 || self.mean <= 0.0 || self.m2 < 0.0 {
+        let mean = self.scaled_mean();
+        if self.n == 0 || mean <= 0.0 || self.m2 < 0.0 {
             return f64::NAN;
         }
-        (self.m2 / self.n as f64).sqrt() / self.mean
+        (self.m2 / self.n as f64).sqrt() / mean
     }
 
     fn standard_error_of_mean(&self, context: &'static str) -> PidResult<Option<f64>> {
@@ -203,14 +230,12 @@ impl RunningMoments {
     }
 
     fn mean_ratio(&self, denominator: &Self) -> f64 {
-        if self.scale <= 0.0
-            || self.mean <= 0.0
-            || denominator.scale <= 0.0
-            || denominator.mean <= 0.0
-        {
+        let numerator_mean = self.scaled_mean();
+        let denominator_mean = denominator.scaled_mean();
+        if numerator_mean <= 0.0 || denominator_mean <= 0.0 {
             return f64::NAN;
         }
-        (self.scale / denominator.scale) * (self.mean / denominator.mean)
+        (self.scale / denominator.scale) * (numerator_mean / denominator_mean)
     }
 }
 
@@ -1860,7 +1885,8 @@ mod tests {
         let moments = RunningMoments {
             n: 1,
             scale: 2.0,
-            mean: 0.5,
+            origin: 0.0,
+            mean_offset: 0.5,
             m2: 0.0,
         };
 
@@ -1872,7 +1898,8 @@ mod tests {
         let moments = RunningMoments {
             n: 2,
             scale: 2.0,
-            mean: 0.5,
+            origin: 0.0,
+            mean_offset: 0.5,
             m2: -64.0 * f64::EPSILON,
         };
 
@@ -1884,7 +1911,8 @@ mod tests {
         let moments = RunningMoments {
             n: 2,
             scale: 2.0,
-            mean: 0.5,
+            origin: 0.0,
+            mean_offset: 0.5,
             m2: -1.0e-6,
         };
 

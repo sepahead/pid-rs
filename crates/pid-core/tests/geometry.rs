@@ -376,6 +376,76 @@ fn distance_concentration_keeps_subnormal_dimensionless_summaries() {
 }
 
 #[test]
+fn nearby_distances_retain_their_spread_in_every_row_order() {
+    let orders = [
+        [0, 1, 2],
+        [0, 2, 1],
+        [1, 0, 2],
+        [1, 2, 0],
+        [2, 0, 1],
+        [2, 1, 0],
+    ];
+    let config = DistanceConcentrationConfig::default();
+    for high in [f64::from_bits(16), f64::MIN_POSITIVE, 1.0, f64::MAX] {
+        let low = f64::from_bits(high.to_bits() - 1);
+        let rows = [[0.0, 0.0], [low, 0.0], [0.0, high]];
+        let gap = high - low;
+        let relative_gap = gap / high;
+        // The pair distances are {low, high, high}. The nearest distances are
+        // {low, low, high}. Both population standard deviations are gap*sqrt(2)/3.
+        let expected_std = gap * (2.0_f64.sqrt() / 3.0);
+        let pair_cv = relative_gap * (2.0_f64.sqrt() / (3.0 - relative_gap));
+        let nn_cv = relative_gap * (2.0_f64.sqrt() / (3.0 - 2.0 * relative_gap));
+        for order in orders {
+            let data = order.map(|i| rows[i]).concat();
+            let input = MatRef::new(&data, 3, 2).unwrap();
+            let result = distance_concentration_stats(input, &config).unwrap();
+            for (actual, expected) in [
+                (result.pairwise_std, expected_std),
+                (result.nn_std, expected_std),
+                (result.pairwise_cv, pair_cv),
+                (result.nn_cv, nn_cv),
+            ] {
+                assert_eq!(actual == 0.0, expected == 0.0);
+                assert!(
+                    actual.to_bits().abs_diff(expected.to_bits()) <= 4,
+                    "high={high:e}, order={order:?}, actual={actual:e}, expected={expected:e}"
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn sampled_four_point_standard_error_retains_adjacent_delta_values() {
+    // Rows are distance vectors of five points on a perturbed cycle. Their
+    // Chebyshev distances equal the distances encoded in the matrix.
+    let mut rows = [0.0_f64; 25];
+    for i in 0_usize..5 {
+        for j in 0_usize..5 {
+            let steps = i.abs_diff(j);
+            rows[i * 5 + j] = [0.0, 1.0, 15.0 / 8.0][steps.min(5 - steps)];
+        }
+    }
+    rows[1] = f64::from_bits(1.0_f64.to_bits() - 1);
+    rows[5] = rows[1];
+    let config = HyperbolicityConfig::default()
+        .with_seed(0)
+        .with_n_samples(16);
+    let summary =
+        sampled_four_point_delta_summary(MatRef::new(&rows, 5, 5).unwrap(), &config).unwrap();
+
+    // Under this seed, {0,1,2,4} occurs twice and has delta 7/16 + 2^-54.
+    // The other 14 draws have delta 7/16. Estimated SE² is 2^-108 * 7/960.
+    let expected_se = 2.0_f64.powi(-54) * (7.0_f64 / 960.0).sqrt();
+    let actual_se = summary.monte_carlo_standard_error.unwrap();
+    assert!(
+        actual_se.to_bits().abs_diff(expected_se.to_bits()) <= 4,
+        "actual={actual_se:e}, expected={expected_se:e}"
+    );
+}
+
+#[test]
 fn intrinsic_dimension_uses_stable_log_ratios_across_extreme_scales() {
     let data = [
         0.0, 1.0e-308, 2.0e-308, 1.0e307, 1.1e307, 1.3e307, 1.7e307, 2.5e307,

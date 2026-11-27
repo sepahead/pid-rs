@@ -62,18 +62,25 @@ jobs:
           printf '%s\n' "$GITHUB_SHA" > "$result/profile-commit.txt"
           previous="$RUNNER_TEMP/pid2-rustdoc-predecessor"
           git -C profile worktree add --detach "$previous" 9411667f972af0547d391a0be6d95b011b515171
+          report_label="$RUNNER_TEMP/pid2-issued-report-label"
+          git -C profile worktree add --detach "$report_label" 570c9c67800affde745032cd9d7296f29839f2ba
           python3 --version > "$result/python-version.txt"
           for mode in normal optimized; do
             flags=()
             if test "$mode" = optimized; then flags=(-O); fi
             for op in source controls; do
               python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-rustdoc-profile.py "$op" --repo-root "$previous" > "$result/rustdoc-$op-$mode.json"
-              python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-report-label-profile.py "$op" --repo-root profile > "$result/report-label-$op-$mode.json"
-              python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-source-profile.py "$op" --repo-root production > "$result/$op-$mode.json"
+              python3 -I -S -B "${flags[@]}" "$report_label/scripts/check-pid2-shannon-report-label-profile.py" "$op" --repo-root "$report_label" > "$result/report-label-$op-$mode.json"
+              python3 -I -S -B "${flags[@]}" "$report_label/scripts/check-pid2-shannon-source-profile.py" "$op" --repo-root production > "$result/$op-$mode.json"
+            done
+            for op in current current-controls; do
+              python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-shannon-report-label-profile.py "$op" --repo-root profile > "$result/$op-$mode.json"
             done
             python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-represented-coordinate-v4-self-test.py > "$result/pid2-controls-$mode.txt"
           done
           cmp "$result/report-label-source-normal.json" "$result/report-label-source-optimized.json"
+          cmp "$result/current-normal.json" "$result/current-optimized.json"
+          cmp "$result/current-controls-normal.json" "$result/current-controls-optimized.json"
           cmp "$result/report-label-controls-normal.json" "$result/report-label-controls-optimized.json"
           cmp "$result/rustdoc-source-normal.json" "$result/rustdoc-source-optimized.json"
           cmp "$result/rustdoc-controls-normal.json" "$result/rustdoc-controls-optimized.json"
@@ -89,13 +96,16 @@ jobs:
           set -euo pipefail
           result="$RUNNER_TEMP/pid2-source-qualification"
           export CARGO_TARGET_DIR="$RUNNER_TEMP/pid2-native-target"
-          python3 -I -S -B profile/scripts/check-pid2-shannon-source-profile.py native --repo-root production --output "$result/native" > "$result/native.json"
+          report_label="$RUNNER_TEMP/pid2-issued-report-label"
+          python3 -I -S -B "$report_label/scripts/check-pid2-shannon-source-profile.py" native --repo-root production --output "$result/native" > "$result/native.json"
           for mode in normal optimized; do
             flags=()
             if test "$mode" = optimized; then flags=(-O); fi
-            python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-represented-coordinate-v4.py --scope full --repo-root production > "$result/full-$mode.txt"
+            python3 -I -S -B "${flags[@]}" "$report_label/scripts/check-pid2-represented-coordinate-v4.py" --scope full --repo-root production > "$result/full-$mode.txt"
+            python3 -I -S -B "${flags[@]}" profile/scripts/check-pid2-represented-coordinate-v4.py --scope full --repo-root profile > "$result/current-full-$mode.txt"
           done
           cmp "$result/full-normal.txt" "$result/full-optimized.txt"
+          cmp "$result/current-full-normal.txt" "$result/current-full-optimized.txt"
           test -z "$(git -C production status --porcelain --untracked-files=all)"
       - name: Retain complete native observations and source profiles
         if: ${{ always() }}

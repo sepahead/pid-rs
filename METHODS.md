@@ -22,8 +22,8 @@ The catalog records method provenance, software availability, and bounded valida
 ## Frozen semantic authority
 
 - **Authority schema:** `pid-rs/method-catalog-semantic-authority` revision `1`.
-- **Ordered root SHA-256:** `65681d9de96ccb4b2eb20311b3b39010cd6218845820cecf32f777648bac3b33`.
-- **Catalog SHA-256:** `f7c3d0e692ed2c8ab24cc5926f70bd0d06ea2c806e2d8a7464bfdd209b04b7b9`.
+- **Ordered root SHA-256:** `951db5b07089f4af94005a2451069cef2d6132e910b92d2e8c7db47efaa17569`.
+- **Catalog SHA-256:** `755af2a2d1b2924ab65dc8685b849906b7c2dd3ec5daa4efb7108e5d967cf0e4`.
 - **Reference-registry SHA-256:** `3d473e6e9b55df619f742c13caa3b18e7247f5d7bb92cc8743044d3829686779`.
 - **Alias/confusable diagnostic:** revision `1`; normalization `unicode-nfkc-casefold-curated-latin-confusable-ascii-alnum-skeleton-v1`.
 - **`data_domain` semantics:** Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.
@@ -206,9 +206,9 @@ Finite-sample distance coefficient-of-variation and ratio summaries motivated by
 - **Scientific novelty claim:** `none`.
 - **Typed semantic facts:** data domain `numeric-matrix`; population support `finite-sample-diagnostic-only`; conditioning `unconditioned`; estimand family `distance-concentration-diagnostic`.
 - **Observed alias families (diagnostic revision 1):** —.
-- **Reviewed semantic payload SHA-256:** `4afb6fd8afc664476e75e9b3a3f118bef66e137656ebf40b5f210542d3e06e06`.
+- **Reviewed semantic payload SHA-256:** `7d960a1f394b2925a76ef6f3d1bafa9cc8d65a7e5bf10dd484a1cabe24eaf3ab`.
 - **Constraints:** The coefficient-of-variation and distance-ratio summaries are finite-sample diagnostics, not a theorem that nearest neighbors are meaningful.
-- **Bounded validation:** `unit-and-integration` — Deterministic Euclidean fixtures, budgets, and degenerate inputs. Limitations: Observed concentration cannot prove or disprove a population support model. Evidence: `crates/pid-core/tests/geometry.rs`.
+- **Bounded validation:** `unit-and-integration` — Deterministic Chebyshev fixtures, resource budgets, degenerate inputs, and pairwise and nearest-neighbor spreads of adjacent represented distances across six row orders and four scales. Limitations: Observed concentration cannot prove or disprove a population support model. Evidence: `crates/pid-core/tests/geometry.rs`.
 
 ### `diagnostics.distance-matrix` — Symmetric distance-matrix infrastructure
 
@@ -250,9 +250,9 @@ Seeded finite-sample summaries of four-point delta values.
 - **Scientific novelty claim:** `none`.
 - **Typed semantic facts:** data domain `numeric-matrix`; population support `finite-sample-diagnostic-only`; conditioning `unconditioned`; estimand family `four-point-delta-diagnostic`.
 - **Observed alias families (diagnostic revision 1):** —.
-- **Reviewed semantic payload SHA-256:** `25bc3f16a5cbc7ebd3512544fa776df17f148ab4a92c1c43816f8a83351f06c2`.
+- **Reviewed semantic payload SHA-256:** `5d2de2392d32199ad77b4704c10e4a08392017b09f88409d05547b72bd58354b`.
 - **Constraints:** Sampled quantiles and maxima are summaries of sampled quadruples, not estimates of the defining all-quadruple supremum.
-- **Bounded validation:** `unit-and-integration` — Known metric fixtures, deterministic sampling, and resource bounds. Limitations: Sampling can miss rare high-delta quadruples. Evidence: `crates/pid-core/tests/geometry.rs`.
+- **Bounded validation:** `unit-and-integration` — Known metric fixtures, deterministic sampling, resource bounds, and the sample mean standard error for two nearby represented delta values in the same 16 draws. Limitations: Sampling can miss rare high-delta quadruples. Evidence: `crates/pid-core/tests/geometry.rs`.
 
 ### `diagnostics.hyperbolic` — Hyperbolic support and geometry diagnostics
 
@@ -272,9 +272,9 @@ Research-only Lorentz-metric variants of support, distance, concentration, intri
 - **Scientific novelty claim:** `none`.
 - **Typed semantic facts:** data domain `lorentz-continuous`; population support `finite-sample-diagnostic-only`; conditioning `unconditioned`; estimand family `hyperbolic-geometry-diagnostic`.
 - **Observed alias families (diagnostic revision 1):** —.
-- **Reviewed semantic payload SHA-256:** `579382c3ffd119f3f308a39d0d0f6a8784cff7291e1df4a6c2893d7351c5f1ae`.
+- **Reviewed semantic payload SHA-256:** `73fced3f616db25ebc6c814884b7895bf707867bd077035350fe1e7b88ce7e3f`.
 - **Constraints:** These diagnostics use the declared Lorentz metric and inspect a finite embedding; they do not prove a population manifold model or MI-estimator consistency.<br>The sampled four-point maximum is not the defining all-quadruple supremum.
-- **Bounded validation:** `analytic-oracle` — Lorentz-coordinate validation, Euclidean/hyperbolic dispatch, diagnostic summaries, resources, and cancellation. Limitations: Known-coordinate and parity fixtures do not establish suitability for a dataset or consistency of a downstream estimator. Evidence: `crates/pid-core/tests/hyperbolic_diagnostics.rs`, `crates/pid-core/tests/continuous_resource_contracts.rs`.
+- **Bounded validation:** `analytic-oracle` — Lorentz-coordinate validation, metric dispatch, diagnostic summaries, resources, and cancellation. The Lorentz and Chebyshev distance summaries share a moment calculation; the adjacent-value regression uses Chebyshev rows. Limitations: Known-coordinate and parity fixtures do not establish suitability for a dataset or consistency of a downstream estimator. Evidence: `crates/pid-core/tests/hyperbolic_diagnostics.rs`, `crates/pid-core/tests/continuous_resource_contracts.rs`.
 
 ### `diagnostics.intrinsic-dimension` — Intrinsic-dimension diagnostics
 

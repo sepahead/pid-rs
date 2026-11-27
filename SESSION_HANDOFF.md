@@ -1,5 +1,9 @@
 # Session handoff — updated 25 November 2026
 
+## Distance spread on three represented points, 27 November 2026
+
+The original distance diagnostic lost or distorted differences between adjacent binary64 values. The corrected recurrence uses a common origin for near-equal distances. The actual test covers 102 inputs, including 12 expected refusals. [Recomputable three-point example and finite checks](audit/evidence/geometry-distance-spread/README.md)
+
 ## Numerical corrections from 27 November 2026
 
 The experimental logistic solver checks its stopping condition on separated samples and on distant observations with a finite ridge fit. The method catalog distinguishes this finite test panel from a general existence test. The experimental neighbour-count heuristic has sharp lower and upper bounds that grow with sample size at fixed neighbour rank. The uncertainty run log records the actual random-origin circular block scheme. The binary64 sum has 34 words per sign, including its use in the normalized invariant report. [Logistic solver](crates/pid-core/src/logistic.rs) · [Heuristic bounds](audit/evidence/heuristic-sketch-sample-size.md) · [Numerical assurance](NUMERICAL_ASSURANCE.md)

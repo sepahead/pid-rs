@@ -15,6 +15,8 @@ Author: **Sepehr Mahmoudian**. See [authorship and citation](AUTHORSHIP.md).
 
 Stable categorical calculations accept instrument states or a fixed physical coding. The experimental logistic fit reports a numerical stopping result. The experimental neighbour-count heuristic can grow with sample size even when its inputs are independent. [Fixed categorical coding](audit/evidence/fixed-categorical-coding/README.md) · [Logistic solver](crates/pid-core/src/logistic.rs) · [Heuristic bounds](audit/evidence/heuristic-sketch-sample-size.md)
 
+The geometry diagnostic now retains the spread of adjacent binary64 distances. Three specified points have pairwise standard deviation about $5.234\times10^{-17}$. The original result depended on their row order. [Worked example and original Rust output](audit/evidence/geometry-distance-spread/README.md)
+
 ## What the signed categorical results add
 
 Four examples compare Makkeh, Gutknecht and Wibral's categorical shared exclusions (MGW) with simpler calculations on the **same counts**. An information contribution, also called an *atom*, is the part assigned to one combination of sources. Its signed mean can be negative. Natural logarithms give units of nats.

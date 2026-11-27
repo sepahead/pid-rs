@@ -1235,6 +1235,12 @@ jobs:
       - run: python3 -O scripts/generate-exact-binary64-sum-oracle.py
       - run: python3 scripts/generate-ksg-local-arithmetic-oracle.py
       - run: python3 scripts/generate-sxpid2-exhaustive-oracle.py
+      - name: Check the finite distance spread on represented coordinates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -B audit/evidence/geometry-distance-spread/replay.py --recorded
+          python3 -O -B audit/evidence/geometry-distance-spread/replay.py --recorded
       - name: Check the finite sample bounds for the experimental heuristic
         shell: bash
         run: |

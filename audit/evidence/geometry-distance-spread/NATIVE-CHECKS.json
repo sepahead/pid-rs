@@ -1,0 +1,66 @@
+{
+  "candidate_sources": {
+    "crates/pid-core/src/geometry.rs": "eb6526af8320735c6fa071878a20412b6cb85fdfd4b813037b9d996df6e2462c",
+    "crates/pid-core/tests/geometry.rs": "9811f7fbd54c8759f5d08a2e5516d197e7447e9b79762f489b0ff3eb9c439f81"
+  },
+  "commands": [
+    {
+      "operation": "format",
+      "seconds": 0.064801,
+      "status": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "operation": "unit-and-geometry",
+      "seconds": 18.584302,
+      "status": 0,
+      "stderr_sha256": "1d1090ce9224df10e6d24dd6527d0375b4c40654a3994db45166e96c821582b8",
+      "stdout_sha256": "5d31eb894d30b031e127801284a3f0743880ccfae0043c4473ee4c0aa138d42c"
+    },
+    {
+      "operation": "lorentz-geometry",
+      "seconds": 2.313481,
+      "status": 0,
+      "stderr_sha256": "3797d93c6ac7524b273f3f29a0f53e8abad27e41e97803428655d1edf253c5d5",
+      "stdout_sha256": "cb612d6dd023f1242c2a1942664aa6d8a0ff805bb07bea247939ba3552b2dfe9"
+    },
+    {
+      "operation": "clippy",
+      "seconds": 12.929441,
+      "status": 0,
+      "stderr_sha256": "7ba8de6a077a97e129e15276d622058c04a2291ec3b23777a8d82bf6ad3eb834",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "duration_seconds_for_build_and_checks": 34.945036499993876,
+  "fixed_cases": {
+    "corrected_nearest_sd_f64_hex": "3c8e2b7dddfefa66",
+    "corrected_pair_sd_f64_hex": "3c8e2b7dddfefa66",
+    "nearest_before_in_both_shown_orders": "6.40987562127854605e-17",
+    "nearest_sd": "sqrt(2) * 2^-53 / 3",
+    "ordinary_original_pair_sd": "0",
+    "pairwise_sd": "sqrt(2) * 2^-53 / 3",
+    "reordered_original_pair_sd": "6.40987562127854605e-17"
+  },
+  "measurement_scope": "Times cover compilation and finite verification on one host. No stand-alone diagnostic timing or new population claim.",
+  "memory_cap_bytes": 1073741824,
+  "original_geometry_git": "4825ba1d1f9d9ad5886223406e10a22bf3b1dc71",
+  "original_public_revision": "7c300aa2d5c09227e24f311f2b7fae8777467f18",
+  "sampled_peak_process_group_bytes": 516440064,
+  "test_outcomes": {
+    "clippy_warnings_as_errors": "pass",
+    "default_free_unit": {
+      "ignored": 1,
+      "passed": 142
+    },
+    "geometry_integration": 22,
+    "lorentz_geometry_integration": 11,
+    "rustfmt": "pass"
+  },
+  "toolchain": {
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "python3": "Python 3.15.0",
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)"
+  }
+}

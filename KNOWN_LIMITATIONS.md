@@ -638,6 +638,14 @@ Intrinsic-dimension and distance-concentration outputs are sample diagnostics, n
 certificates. Local dimension can vary across a dataset, and nonlocal radii invalidate small-ball
 interpretations.
 
+The distance-concentration report takes the population standard deviation of the represented
+distances. For the Chebyshev rows $(0,0)$, $(1-2^{-53},0)$, and $(0,1)$, both the pairwise and
+nearest-neighbor standard deviations are $2^{-53}\sqrt{2}/3$. An earlier update returned zero
+for the pairwise spread in this row order. The current update subtracts a common offset before
+computing the spread. It calculates the coefficient of variation in scaled units, so a positive
+coefficient can survive when the absolute spread rounds to zero. The same correction applies
+to the reported standard error of the mean of sampled four-point values. [Finite checks and replay](audit/evidence/geometry-distance-spread/README.md) · [Geometry regression tests](crates/pid-core/tests/geometry.rs)
+
 Lorentz-hyperbolic distance conversion is numerically guarded, but pairwise hyperbolic KSG remains
 research-only because correct distance computation does not prove an entropy/MI estimator on that
 manifold. Hyperbolic shared exclusions and PID are unsupported.

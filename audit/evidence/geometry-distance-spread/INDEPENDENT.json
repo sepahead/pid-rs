@@ -1,0 +1,21 @@
+{
+  "all_fields_per_success": 11,
+  "approved": true,
+  "candidate_failed_fields": 0,
+  "candidate_guard": "448bb40030f6d65e1842e784f09bdad64d936eaf635fdf14cc54544d0f5ad094",
+  "candidate_maximum_observed_ULP_distance_admitted": 2,
+  "candidate_raw": "c9f1108c62b60d3f08e70557172836dff95096b79490360784dc146189d712a8",
+  "candidate_source": "eb6526af8320735c6fa071878a20412b6cb85fdfd4b813037b9d996df6e2462c",
+  "candidate_two_mode_exact_receiver": "4d94f1dc634c2d5a6078825036d52dbc073269d3e4f62c843edc70339f741f92",
+  "expected_zero_and_overflow_refusals": 12,
+  "frozen": "522f8ccda881f35e9b84c4dbcf9a433ec7629fcb2407f421f408199badbc9e9f",
+  "original_failed_fields": 228,
+  "original_guard": "04ffdca36214042921f44483e8147f3625c4519ca1a160d625ce3ce287d57996",
+  "original_raw": "41dcc84329eec8378c45d9a5be4f412d67d8c637da4290533b8e4ccf15c79b72",
+  "original_source": "349fa7ff6b114514eaca63ff17d133c7ce711ccbded4ac05b02537114cf181eb",
+  "original_two_mode_exact_receiver": "49e8f768c4f7137b5dfd7598b444c5a109faaef32e142446920fe75b50157d8c",
+  "permuted_inputs": 102,
+  "schema": "finite-chebyshev-moments-two-originals-v1",
+  "scope": "Direct Rust public Chebyshev, 90 admitted + 12 domain refusals across familiar three-row finite designs. The exact dyadic sum-of-squares and ratio reader was fixed before viewing candidate. No broad forward-error, distributional or cross-metric theorem.",
+  "total_designs": 17
+}

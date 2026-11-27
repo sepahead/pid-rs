@@ -254,7 +254,7 @@
         ],
         "level": "unit-and-integration",
         "limitations": "Observed concentration cannot prove or disprove a population support model.",
-        "scope": "Deterministic Euclidean fixtures, budgets, and degenerate inputs."
+        "scope": "Deterministic Chebyshev fixtures, resource budgets, degenerate inputs, and pairwise and nearest-neighbor spreads of adjacent represented distances across six row orders and four scales."
       }
     },
     {
@@ -346,7 +346,7 @@
         ],
         "level": "unit-and-integration",
         "limitations": "Sampling can miss rare high-delta quadruples.",
-        "scope": "Known metric fixtures, deterministic sampling, and resource bounds."
+        "scope": "Known metric fixtures, deterministic sampling, resource bounds, and the sample mean standard error for two nearby represented delta values in the same 16 draws."
       }
     },
     {
@@ -426,7 +426,7 @@
         ],
         "level": "analytic-oracle",
         "limitations": "Known-coordinate and parity fixtures do not establish suitability for a dataset or consistency of a downstream estimator.",
-        "scope": "Lorentz-coordinate validation, Euclidean/hyperbolic dispatch, diagnostic summaries, resources, and cancellation."
+        "scope": "Lorentz-coordinate validation, metric dispatch, diagnostic summaries, resources, and cancellation. The Lorentz and Chebyshev distance summaries share a moment calculation; the adjacent-value regression uses Chebyshev rows."
       }
     },
     {

@@ -122,11 +122,11 @@ EXPECTED_BINDINGS = {
             "audit/formal/latex/mathematical-results-guide/"
             "open-font-figure-regeneration-v1.json"
         ),
-        "sha256": "9918831ac46a02111b4f8116f9be97cc30e0661eb2d61d2c0d148ed064a104f8",
+        "sha256": "339451f347c460aff0f2d89638064006cb866bce5ee44a797324908993abf69d",
     },
     "regenerator": {
         "path": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
-        "sha256": "8c45cc8c490db81f84084054549a7654a272abcdaecd897cf7fc80a0439d6d6a",
+        "sha256": "732f43a795630daa9344dd1a1b30e4cb55b034f4a5c59f43e9d066c54c100c3e",
     },
     "third_party_notice": {
         "path": "THIRD_PARTY_NOTICES.md",

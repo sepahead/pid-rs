@@ -7,6 +7,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve the spread of nearby represented distances in the geometry diagnostics and the standard error of the sampled four-point mean. The original three-row case returned different spreads after reordering two rows. [Evidence and replay](audit/evidence/geometry-distance-spread/README.md)
 - Check changes in fitted log odds and the Newton decrement before reporting convergence of experimental logistic regression. The regression tests cover separated designs and finite ridge fits with a distant observation.
 - Clarify the two 34-word sign magnitudes in the exact binary64 sum and the normalized invariant report's use of its sum and quotient.
 The optional `exp0` uncertainty summary and run log now identify the random-origin circular block sampler. The scheme name enters the configuration hash when subsampling is enabled. [Sampling assumptions and earlier records](KNOWN_LIMITATIONS.md)
