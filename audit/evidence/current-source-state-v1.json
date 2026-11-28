@@ -41182,8 +41182,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py",
-        "sha256": "5452ee3ebd838e5fa17c04317df72ec66bdafb9d7d5d50d85a92ba15e324d056",
-        "size_bytes": 21157
+        "sha256": "a16dabfe96db72e031b035655a172bcb3eb30b68778473b4281c5f0a135e0754",
+        "size_bytes": 21369
       },
       {
         "git_mode": "100644",
@@ -42542,7 +42542,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "65e6432c19a3aec3803872591417d727f329632d243599610e16ec44dc4d1208",
+    "entries_sha256": "c69e744e4fd172916071bea365179a49ae749f98169492e58a68439bb4326958",
     "entry_count": 7066
   },
   "subprojections": [

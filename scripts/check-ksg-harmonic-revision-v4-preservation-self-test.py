@@ -119,6 +119,10 @@ def run_checker(
             *arguments,
         )
     )
+    # The historical replay verifies its Git source and runs four mutation suites in sequence.
+    timeout_seconds = (
+        3 * 60 * 60 if arguments == ("--historical-tree-replay",) else 900
+    )
     return subprocess.run(
         command,
         cwd=ROOT,
@@ -127,7 +131,7 @@ def run_checker(
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=False,
-        timeout=900,
+        timeout=timeout_seconds,
     )
 
 
