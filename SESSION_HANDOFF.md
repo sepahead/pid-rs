@@ -6,6 +6,8 @@ The recorded-office and finite categorical reports link to the printed method ca
 
 The Linux records preserve three distinct results. Two existing library inequalities passed. A sharper remainder bound has a rejected source and three unsuccessful proof compilations. The decoded-count and real-logarithm modules loaded together after a source-header correction. The latter establishes an import and a type check. Its two original command records and all four proof attempts remain available. [Decoded factors and the real logarithm](audit/formal/decoded-real-log-import/HOSTED-RESULTS.md) · [Sharper remainder attempts](audit/formal/real-log-odd-tail/HOSTED-RESULTS.md)
 
+The real logarithm route now gives the integral and geometric series proofs, the corrected derivative, and both original source passages. [Integral proof](audit/formal/real-log-odd-tail/ROUTES.md#integral-proof) · [Geometric series proof](audit/formal/real-log-odd-tail/ROUTES.md#geometric-series-proof) · [Derivative and endpoint](audit/formal/real-log-odd-tail/ROUTES.md#derivative-after-clearing-the-denominator)
+
 ## Distance spread on three represented points, 27 November 2026
 
 The original distance diagnostic lost or distorted differences between adjacent binary64 values. The corrected recurrence uses a common origin for near-equal distances. The actual test covers 102 inputs, including 12 expected refusals. [Recomputable three-point example and finite checks](audit/evidence/geometry-distance-spread/README.md)

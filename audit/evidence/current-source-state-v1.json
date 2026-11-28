@@ -658,8 +658,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "982e8ea07663348d7a0c48c48344f27e4219559150eeaa097af3970754689c83",
-        "size_bytes": 88977
+        "sha256": "1b013367be1d56c212fd15e0ded7d535aabbb87691db02fe61d356d2eec142f5",
+        "size_bytes": 89396
       },
       {
         "git_mode": "100644",
@@ -16498,8 +16498,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/decoded-real-log-import/HOSTED-RESULTS.md",
-        "sha256": "c882a7197458f301b913d61d3fa46a40030b7b45adf64da73bfe765e6b1da809",
-        "size_bytes": 3117
+        "sha256": "92d211b5a0cfb8c1040dc49b0bf55378cf0bfd45a57539a3c41d88c5ee198d2b",
+        "size_bytes": 3724
       },
       {
         "git_mode": "100644",
@@ -16540,8 +16540,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/decoded-real-log-import/check-preserved-sources.py",
-        "sha256": "c57ff7cc7c723e3242a16c3448845bc007609d870674583f3a078cbf3b0980cb",
-        "size_bytes": 3114
+        "sha256": "46bdcee78bc772e8bb6e3b8d06d05f807f546d6796772836f748e00fe7b28edf",
+        "size_bytes": 3379
       },
       {
         "git_mode": "100644",
@@ -19030,8 +19030,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide-current/edition.json",
-        "sha256": "e98b09bb3ca6b292827eff2aa529b657bcca5ab2b807ddc0eaff8b7b1beba679",
-        "size_bytes": 136744
+        "sha256": "767e4419f8f5dcb9cfd88211de0ad1ed137919a8f3357c4d37c37a0d8b86bbde",
+        "size_bytes": 137033
       },
       {
         "git_mode": "100644",
@@ -31378,8 +31378,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/real-log-odd-tail/ROUTES.md",
-        "sha256": "411c941878fb12f9b160be5de7d0b6395e1e6594ef41262063aacd558ad0bbb5",
-        "size_bytes": 7401
+        "sha256": "9c08517fc95aaba1596eba6d4eaf11ce1a0a1ee4283e12603d5825ff774b7e5b",
+        "size_bytes": 10368
       },
       {
         "git_mode": "100644",
@@ -31536,6 +31536,12 @@
         "path": "audit/formal/real-log-odd-tail/history/registered-submission-readme.md.txt",
         "sha256": "3d9cc9c01af4c3ede382163c6fb26e3a8775ad354dc0a1e7ba2bb404e8c638a9",
         "size_bytes": 4814
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/real-log-odd-tail/history/selected-routes-before-notation-2026-11-28.md.txt",
+        "sha256": "411c941878fb12f9b160be5de7d0b6395e1e6594ef41262063aacd558ad0bbb5",
+        "size_bytes": 7401
       },
       {
         "git_mode": "100644",
@@ -42542,8 +42548,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "c69e744e4fd172916071bea365179a49ae749f98169492e58a68439bb4326958",
-    "entry_count": 7066
+    "entries_sha256": "09d9fb7ae223283041d466ab179b8e7b990119aa32cf76a392264ba3e07bb07a",
+    "entry_count": 7067
   },
   "subprojections": [
     {
@@ -42555,8 +42561,8 @@
       ]
     },
     {
-      "entries_sha256": "670d25a8c8e98493f78ef44e6b9c4b076d5017b8a6fb63f2aaf29de2340af181",
-      "entry_count": 2533,
+      "entries_sha256": "5d4f23562385b9529753e1298eb69c6389341c199c75af5bfe42128d8e56b6f4",
+      "entry_count": 2534,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"

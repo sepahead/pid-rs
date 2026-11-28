@@ -16,6 +16,8 @@ EXPECTED_CATALOG = "f17dd5c5de306e80a5ff6c1bfbe6b354d4c23523eb8ad6af89567ce9a293
 IMPORT_WORKFLOW = ".github/workflows/decoded-real-log-import.yml"
 ODD_WORKFLOW = ".github/workflows/real-log-odd-tail.yml"
 ODD_PREFIX = "audit/formal/real-log-odd-tail/"
+SELECTED_ROUTE = ODD_PREFIX + "ROUTES.md"
+ARCHIVED_ROUTE = ODD_PREFIX + "history/selected-routes-before-notation-2026-11-28.md.txt"
 
 
 def require(condition: bool, message: str) -> None:
@@ -50,7 +52,8 @@ def verify() -> dict[str, int]:
     require(ODD_PREFIX + "workflow.source.yml" in odd_paths, "missing archived proof workflow")
 
     for name, row in entries.items():
-        file = ROOT / name
+        # The original selection records this file at its former reader-facing path.
+        file = ROOT / (ARCHIVED_ROUTE if name == SELECTED_ROUTE else name)
         require(file.resolve() == file and file.is_file(), f"missing original regular file {name}")
         mode = file.stat().st_mode
         require(stat.S_ISREG(mode), f"wrong file kind for {name}")
